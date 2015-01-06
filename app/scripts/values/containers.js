@@ -7,50 +7,96 @@
  * # containers
  * Constant in the transcripticApp.
  */
-angular.module('transcripticApp').constant('containers', {
-  "96-pcr": {
-    "max": 160,
-    "dead": 15,
-    "capabilities": ["pipette", "sangerseq", "spin", "thermocycle", "incubate", "gel_separate"]
-  },
-  "96-flat": {
-    "max": 360,
-    "dead": 20,
-    "capabilities": ["pipette", "sangerseq", "spin", "absorbance", "fluorescence", "luminescence", "incubate", "gel_separate"]
-  },
-  "96-flat-uv": {
-    "max": 360,
-    "dead": 20,
-    "capabilities": ["pipette", "sangerseq", "spin", "absorbance", "fluorescence", "luminescence", "incubate", "gel_separate"]
-  },
-  "96-deep": {
-    "max": 2000,
-    "dead": 15,
-    "capabilities": ["pipette", "sangerseq", "spin", "incubate", "gel_separate"]
+angular.module('transcripticApp').constant('ContainerOptions', {
+  "384-flat": {
+    name: "384-well UV flat-bottom plate",
+    well_count: 384,
+    well_type: null,
+    well_depth_mm: null,
+    well_volume_ul: 112.0,
+    well_coating: null,
+    sterile: false,
+    is_tube: false,
+    capabilities: ["spin", "incubate", "absorbance",  "fluorescence", "luminescence"],
+    shortname: "384-flat",
+    col_count: 24
   },
   "384-pcr": {
-    "max": 50,
-    "dead": 8,
-    "capabilities": ["pipette", "sangerseq", "spin", "thermocycle", "incubate", "gel_separate"]
+    name: "384-well PCR plate",
+    well_count: 384,
+    well_type: null,
+    well_depth_mm: null,
+    well_volume_ul: 50.0,
+    well_coating: null,
+    sterile: null,
+    is_tube: false,
+    capabilities: ["thermocycle", "spin", "incubate"],
+    shortname: "384-pcr",
+    col_count: 24
   },
-  "384-flat": {
-    "max": 112,
-    "dead": 12,
-    "capabilities": ["pipette", "sangerseq", "spin", "absorbance", "fluorescence", "luminescence", "incubate", "gel_separate"]
+  "96-flat": {
+    name: "96-well flat-bottom plate",
+    well_count: 96,
+    well_type: null,
+    well_depth_mm: null,
+    well_volume_ul: 360.0,
+    well_coating: null,
+    sterile: false,
+    is_tube: false,
+    capabilities: ["spin", "incubate", "absorbance", "fluorescence", "luminescence"],
+    shortname: "96-flat",
+    col_count: 12
   },
-  "pcr-0.5": {
-    "max": 500,
-    "dead": 15,
-    "capabilities": ["pipette", "sangerseq", "spin", "incubate", "gel_separate"]
+  "96-pcr": {
+    name: "96-well PCR plate",
+    well_count: 96,
+    well_type: null,
+    well_depth_mm: null,
+    well_volume_ul: null,
+    well_coating: null,
+    sterile: null,
+    is_tube: false,
+    capabilities: ["thermocycle", "spin", "incubate"],
+    shortname: "96-pcr",
+    col_count: 12
   },
-  "micro-1.5": {
-    "max": 1500,
-    "dead": 15,
-    "capabilities": ["pipette", "sangerseq", "spin", "incubate", "gel_separate"]
+  "96-deep": {
+    name: "96-well extended capacity plate",
+    well_count: 96,
+    well_type: null,
+    well_depth_mm: null,
+    well_volume_ul: 2000.0,
+    well_coating: null,
+    sterile: false,
+    capabilities: ["incubate"],
+    shortname: "96-deep",
+    is_tube: false,
+    col_count: 12
   },
   "micro-2.0": {
-    "max": 2000,
-    "dead": 15,
-    "capabilities": ["pipette", "sangerseq", "spin", "incubate", "gel_separate"]
+    name: "2mL Microcentrifuge tube",
+    well_count: 1,
+    well_type: null,
+    well_depth_mm: null,
+    well_volume_ul: 2000.0,
+    well_coating: null,
+    sterile: false,
+    capabilities: ["spin", "incubate"],
+    shortname: "micro-2.0",
+    is_tube: true,
+    col_count: 1
+  },
+  "micro-1.5": {
+    name: "1.5mL Microcentrifuge tube",
+    well_count: 1,
+    well_type: null,
+    well_depth_mm: null,
+    well_volume_ul: 1500.0,
+    well_coating: null,
+    sterile: false,
+    capabilities: ["spin", "incubate"],
+    shortname: "micro-1.5",
+    is_tube: true,
+    col_count: 1
   }
 });

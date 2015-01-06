@@ -7,7 +7,7 @@
  * # dimensions
  * Constant in the transcripticApp.
  */
-angular.module('transcripticApp').constant('dimensions', {
+angular.module('transcripticApp').constant('DimensionOptions', {
   "duration": ["millisecond", "second", "minute", "hour"],
   "volume": ["nanoliter", "microliter", "milliliter"],
   "speed": ["rpm"],

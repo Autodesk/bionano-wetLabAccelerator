@@ -8,31 +8,33 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('MainCtrl', function ($scope, Communication, Run) {
+  .controller('MainCtrl', function ($scope, Container, Run) {
 
-    var req = {
-      "title": "Incubate bacteria",
-      "protocol": {
-        "refs": {
-          "plate1": {
-            "id": "ct17aabqfrmy4y",
-            "store": { "where": "cold_4" }
-          }
-        },
-        "instructions": [
-          {
-            "op": "incubate",
-            "object": "plate1",
-            "where": "warm_37",
-            "duration": "2:hour",
-            "shaking": true
-          }
-        ]
-      }
-    };
+    this.containers = Container.list();
 
-    $scope.submitDemo = function () {
-      Run.submit({project: "p17a7q9dd7zcy"}, req);
+    this.runs = Run.list({project: "p17a7q9dd7zcy"});
+
+    this.submitDemo = function () {
+      Run.submit({project: "p17a7q9dd7zcy"}, {
+        "title": "Incubate bacteria",
+        "protocol": {
+          "refs": {
+            "plate1": {
+              "id": "ct17aabqfrmy4y",
+              "store": { "where": "cold_4" }
+            }
+          },
+          "instructions": [
+            {
+              "op": "incubate",
+              "object": "plate1",
+              "where": "warm_37",
+              "duration": "2:hour",
+              "shaking": true
+            }
+          ]
+        }
+      });
     };
 
   });

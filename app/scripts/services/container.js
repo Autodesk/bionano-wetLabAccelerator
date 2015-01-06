@@ -8,7 +8,8 @@
  * Factory in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .factory('Container', function ($resource, Communication, Auth) {
+  .factory('Container', function ($resource, ContainerOptions, Communication, Auth) {
+
     return $resource(Communication.root + ':organization/containers/:id',
       //defaults
       {
@@ -24,7 +25,11 @@ angular.module('transcripticApp')
         list: Communication.defaultResourceActions({
           method: "GET",
           url: Communication.root + ':organization/containers',
-          isArray: true
+          isArray: true,
+          transformResponse: function (data, headers) {
+            //todo - check for more than 1 page
+            return data.results;
+          }
         }),
 
         /**
