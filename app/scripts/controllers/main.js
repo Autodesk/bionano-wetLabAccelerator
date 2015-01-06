@@ -10,16 +10,12 @@
 angular.module('transcripticApp')
   .controller('MainCtrl', function ($scope, Communication, Run) {
 
-    console.log(Communication.defaultResourceActions({
-      method: "POST"
-    }));
-
     var req = {
       "title": "Incubate bacteria",
       "protocol": {
         "refs": {
           "plate1": {
-            "id": "ct139xhhctkphy",
+            "id": "ct17aabqfrmy4y",
             "store": { "where": "cold_4" }
           }
         },

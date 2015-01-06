@@ -91,8 +91,15 @@ module.exports = function (grunt) {
           {
             context: '/transcriptic',
             host: 'secure.transcriptic.com',
+            https: true,
             port: 443,
-            https: true
+            changeOrigin: true, //todo - see if can drop this
+            headers: {
+              'Access-Control-Accept-Origin' : '*'
+            },
+            rewrite: {
+              '^/transcriptic': ''
+            }
           }
         ]
       },

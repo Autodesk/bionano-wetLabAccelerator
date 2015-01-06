@@ -22,8 +22,7 @@ angular.module('transcripticApp').service('Auth', function () {
       "X-User-Email": self.email,
       "X-User-Token": self.key,
       "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Access-Control-Allow-Origin": "*"
+      "Accept": "application/json"
     };
   };
 });
