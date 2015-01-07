@@ -1,0 +1,20 @@
+<form class="form-inline">
+  <select class="form-control"
+          ng-options="proj.url as (proj.name + '  [' + proj.runs.length + ' runs]') for proj in dataCtrl.projects"
+          ng-model="current.project"></select>
+
+  <select class="form-control"
+          ng-options="run.id as run.title for run in dataCtrl.runs | filter:filterToProject"
+          ng-disabled="!current.project"
+          ng-model="current.run"></select>
+
+  <button class="btn btn-primary"
+          ng-disabled="!current.project || !current.run"
+          ng-click="dataCtrl.view(current.project, current.run)">View Data</button>
+</form>
+
+  {{current | json}}
+
+<div ng-repeat="d in dataCtrl.data">{{d | json}}</div>
+
+  {{dataCtrl.data | json}}

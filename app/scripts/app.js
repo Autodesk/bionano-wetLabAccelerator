@@ -33,6 +33,11 @@ angular
         controller: 'MainCtrl',
         controllerAs: 'mainCtrl'
       })
+      .when('/data', {
+        templateUrl: 'views/data.html',
+        controller: 'DataCtrl',
+        controllerAs: 'dataCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

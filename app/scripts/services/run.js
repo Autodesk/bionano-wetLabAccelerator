@@ -8,8 +8,8 @@
  * Factory in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .factory('Run', function ($resource, Communication, Auth) {
-    return $resource(Communication.root + ':organization/:project/runs',
+  .factory('Run', function ($resource, $q, Communication, Auth, Project) {
+    var runResource = $resource(Communication.root + ':organization/:project/runs',
       //defaults
       {
         organization: Auth.organization
@@ -22,31 +22,83 @@ angular.module('transcripticApp')
          * @description Submit a run
          * @param parameters {Object} with keys:
          * project {String} Project ID
-         * @param postData {Protocol} A well-formed Protocol JSON
+         * @param postData {Object} consisting of:
+         * title {String} Name of Run
+         * protocol {Protocol} well-formed protocol
+         *
+         * @example
+
+         Run.submit({project: "p17a7q9dd7zcy"}, {
+            "title": "Incubate bacteria",
+            "protocol": {
+              "refs": {
+                "plate1": {
+                  "id": "ct17aabqfrmy4y",
+                  "store": { "where": "cold_4" }
+                }
+              },
+              "instructions": [
+                {
+                  "op": "incubate",
+                  "object": "plate1",
+                  "where": "warm_37",
+                  "duration": "2:hour",
+                  "shaking": true
+                }
+              ]
+            }
+          });
+
          */
-        submit : Communication.defaultResourceActions({
+        submit: Communication.defaultResourceActions({
           method: "POST"
         }),
 
         /**
          * @name list
-         * @description Get a list of all runs
+         * @description Get a list of runs for a project
+         * @param parameters {Object} consisting of:
+         * project {String} Project ID
          */
         list: Communication.defaultResourceActions({
+          method: "GET",
+          url: Communication.root + ':organization/:project',
+          isArray: true,
+          transformResponse: function (data, headers) {
+            return data.runs;
+          }
+        }),
+
+        //todo
+        listCurrent: Communication.defaultResourceActions({
           method: "GET",
           isArray: true
         }),
 
         /**
-         * @name monitor
+         * @name view
          * @description Monitor the status of a run
          * @param parameters {Object} with keys:
          * project {String} Project ID
          * run {String} Run ID
          */
-        monitor: Communication.defaultResourceActions({
+        view: Communication.defaultResourceActions({
           method: "GET",
           url: Communication.root + ":organization/:project/runs/:run"
         })
+      });
+
+    //todo - maybe it makes sense to just make this a resource for consistency
+    return angular.extend(runResource, {
+        listAll: function () {
+          return Project.list().$promise.then(function (projects) {
+            return $q.all(projects.map(function (proj) {
+              return runResource.list({project: proj.url}).$promise;
+            })).
+            then(function (allRuns) {
+              return _.flatten(allRuns);
+            });
+          });
+        }
       });
   });

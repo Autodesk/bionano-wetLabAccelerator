@@ -10,7 +10,7 @@
 angular.module('transcripticApp')
   .factory('Container', function ($resource, ContainerOptions, Communication, Auth) {
 
-    return $resource(Communication.root + ':organization/containers/:id',
+    return $resource(Communication.root + ':organization/containers',
       //defaults
       {
         organization: Auth.organization
@@ -24,10 +24,9 @@ angular.module('transcripticApp')
          */
         list: Communication.defaultResourceActions({
           method: "GET",
-          url: Communication.root + ':organization/containers',
           isArray: true,
           transformResponse: function (data, headers) {
-            //todo - check for more than 1 page
+            //todo - check for more than 1 page / pass param for more than 10
             return data.results;
           }
         }),
@@ -39,7 +38,20 @@ angular.module('transcripticApp')
          * id {String} Container
          */
         view: Communication.defaultResourceActions({
-          method: "GET"
+          method: "GET",
+          url: Communication.root + ':organization/containers/:id'
+        }),
+
+        /**
+         * @name view
+         * @description Get details about a container
+         * @param parameters {null}
+         * @param payload {Object} consisting of:
+         * container_type {String} Container shortname
+         * test_mode {Boolean} Whether container is in test_mode
+         */
+        create: Communication.defaultResourceActions({
+          method: "POST"
         })
       });
   });
