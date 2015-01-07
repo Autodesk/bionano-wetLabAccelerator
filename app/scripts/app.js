@@ -19,7 +19,14 @@ angular
     'ngSanitize',
     'ui.bootstrap'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, AuthProvider) {
+
+    angular.extend(AuthProvider, {
+      email : "max.bates@autodesk.com",
+      key : "U4J-_G7vy-CKZwQsDNMw",
+      organization : "autodesk-cyborg"
+    });
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',

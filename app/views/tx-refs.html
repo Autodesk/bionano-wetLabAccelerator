@@ -1,0 +1,52 @@
+<form class="panel panel-default">
+  <div class="panel-heading">Refs</div>
+  <pre class="panel-body">{{refs | json}}</pre>
+  <div class="list-group">
+    <div class="list-group-item"
+         ng-class="{'list-group-item-warning' : !refIsValid(ref)}"
+         ng-repeat="(key, ref) in refs track by key"
+         ng-init="pseudoKey = key; isNew = !ref.id.length; pseudoStore = ref.discard ? discardKey : ref.store.where">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control"
+                 ng-model="pseudoKey"
+                 ng-change="changeRefKey(pseudoKey, key)"
+                 ng-model-options="{updateOn: 'blur'}">
+          <span class="input-group-addon">
+            <label><input type="checkbox" ng-model="isNew"> New?</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-addon">{{isNew ? 'type' : 'ID'}}</span>
+            <select class="form-control"
+                    ng-if="isNew"
+                    ng-options="c as info.name for (c, info) in containerOptions"
+                    ng-model="ref.new"></select>
+            <select class="form-control"
+                    ng-if="!isNew"
+                    ng-options="c.id for c in containers track by c.id"
+                    ng-model="ref.id"></select>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-addon">storage</span>
+            <select class="form-control"
+                    ng-options="o for o in storageOptions"
+                    ng-model="pseudoStore"
+                    ng-change="changeStorage(ref, pseudoStore)"></select>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-sm btn-default" ng-click="addRef()">New Ref</button>
+  </div>
+</form>

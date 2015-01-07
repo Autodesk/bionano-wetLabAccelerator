@@ -10,9 +10,26 @@
 angular.module('transcripticApp')
   .controller('MainCtrl', function ($scope, Container, Run) {
 
-    this.containers = Container.list();
+    //this.containers = Container.list();
 
-    this.runs = Run.list({project: "p17a7q9dd7zcy"});
+    //this.runs = Run.list({project: "p17a7q9dd7zcy"});
+
+    $scope.myDimension = "";
+
+    $scope.myRefs = {
+      "cells": {
+        "id": "ct17ab4pbtpjmh",
+        "store": { "where": "cold_20" }
+      },
+      "pcr": {
+        "new": "96-pcr",
+        "store": { "where": "ambient" }
+      },
+      "primer": {
+        "id": "ct17ab4ppqsrmv",
+        "discard": true
+      }
+    };
 
     this.submitDemo = function () {
       Run.submit({project: "p17a7q9dd7zcy"}, {

@@ -19,7 +19,8 @@ angular.module('transcripticApp').constant('ContainerOptions', {
     is_tube: false,
     capabilities: ["spin", "incubate", "absorbance",  "fluorescence", "luminescence"],
     shortname: "384-flat",
-    col_count: 24
+    col_count: 24,
+    dead_volume: 12
   },
   "384-pcr": {
     name: "384-well PCR plate",
@@ -32,7 +33,8 @@ angular.module('transcripticApp').constant('ContainerOptions', {
     is_tube: false,
     capabilities: ["thermocycle", "spin", "incubate"],
     shortname: "384-pcr",
-    col_count: 24
+    col_count: 24,
+    dead_volume: 8
   },
   "96-flat": {
     name: "96-well flat-bottom plate",
@@ -45,20 +47,22 @@ angular.module('transcripticApp').constant('ContainerOptions', {
     is_tube: false,
     capabilities: ["spin", "incubate", "absorbance", "fluorescence", "luminescence"],
     shortname: "96-flat",
-    col_count: 12
+    col_count: 12,
+    dead_volume: 20
   },
   "96-pcr": {
     name: "96-well PCR plate",
     well_count: 96,
     well_type: null,
     well_depth_mm: null,
-    well_volume_ul: null,
+    well_volume_ul: 160.0,
     well_coating: null,
     sterile: null,
     is_tube: false,
     capabilities: ["thermocycle", "spin", "incubate"],
     shortname: "96-pcr",
-    col_count: 12
+    col_count: 12,
+    dead_volume: 15
   },
   "96-deep": {
     name: "96-well extended capacity plate",
@@ -71,7 +75,8 @@ angular.module('transcripticApp').constant('ContainerOptions', {
     capabilities: ["incubate"],
     shortname: "96-deep",
     is_tube: false,
-    col_count: 12
+    col_count: 12,
+    dead_volume: 15
   },
   "micro-2.0": {
     name: "2mL Microcentrifuge tube",
@@ -84,7 +89,8 @@ angular.module('transcripticApp').constant('ContainerOptions', {
     capabilities: ["spin", "incubate"],
     shortname: "micro-2.0",
     is_tube: true,
-    col_count: 1
+    col_count: 1,
+    dead_volume: 15
   },
   "micro-1.5": {
     name: "1.5mL Microcentrifuge tube",
@@ -97,6 +103,7 @@ angular.module('transcripticApp').constant('ContainerOptions', {
     capabilities: ["spin", "incubate"],
     shortname: "micro-1.5",
     is_tube: true,
-    col_count: 1
+    col_count: 1,
+    dead_volume: 15
   }
 });

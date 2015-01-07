@@ -7,22 +7,53 @@
  * # Auth
  * Service in the transcripticApp.
  */
-angular.module('transcripticApp').service('Auth', function () {
+angular.module('transcripticApp').provider('Auth', function () {
 
   var self = this;
 
-  //future - use getter setters for some security
-  this.email = "max.bates@autodesk.com";
-  this.key = "U4J-_G7vy-CKZwQsDNMw";
+  var email = "",
+      key = "",
+      organization = "";
 
-  this.organization = "autodesk-cyborg";
+  //todo - more validation + security
+  Object.defineProperties(this, {
+    email: {
+      get: function () {
+        return email;
+      },
+      set: function (val) {
+        email = val
+      }
+    },
+    key: {
+      get: function () {
+        return key;
+      },
+      set: function (val) {
+        key = val
+      }
+    },
+    organization: {
+      get: function () {
+        return organization;
+      },
+      set: function (val) {
+        organization = val
+      }
+    }
+  });
 
-  this.headers = function () {
+  this.$get = function () {
     return {
-      "X-User-Email": self.email,
-      "X-User-Token": self.key,
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    };
-  };
+      "organization" : self.organization,
+      "headers" : function () {
+        return {
+          "X-User-Email": self.email,
+          "X-User-Token": self.key,
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        };
+      }
+    }
+  }
 });
