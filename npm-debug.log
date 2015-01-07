@@ -1,0 +1,105 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save-dev',
+1 verbose cli   'grunt-connect-proxy@1.10' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 warn package.json transcriptic@0.0.0 No description
+5 warn package.json transcriptic@0.0.0 No repository field.
+6 warn package.json transcriptic@0.0.0 No README data
+7 verbose readDependencies using package.json deps
+8 verbose cache add [ 'grunt-connect-proxy@1.10', null ]
+9 verbose cache add name=undefined spec="grunt-connect-proxy@1.10" args=["grunt-connect-proxy@1.10",null]
+10 verbose parsed url { protocol: null,
+10 verbose parsed url   slashes: null,
+10 verbose parsed url   auth: null,
+10 verbose parsed url   host: null,
+10 verbose parsed url   port: null,
+10 verbose parsed url   hostname: null,
+10 verbose parsed url   hash: null,
+10 verbose parsed url   search: null,
+10 verbose parsed url   query: null,
+10 verbose parsed url   pathname: 'grunt-connect-proxy@1.10',
+10 verbose parsed url   path: 'grunt-connect-proxy@1.10',
+10 verbose parsed url   href: 'grunt-connect-proxy@1.10' }
+11 verbose cache add name="grunt-connect-proxy" spec="1.10" args=["grunt-connect-proxy","1.10"]
+12 verbose parsed url { protocol: null,
+12 verbose parsed url   slashes: null,
+12 verbose parsed url   auth: null,
+12 verbose parsed url   host: null,
+12 verbose parsed url   port: null,
+12 verbose parsed url   hostname: null,
+12 verbose parsed url   hash: null,
+12 verbose parsed url   search: null,
+12 verbose parsed url   query: null,
+12 verbose parsed url   pathname: '1.10',
+12 verbose parsed url   path: '1.10',
+12 verbose parsed url   href: '1.10' }
+13 verbose addNamed [ 'grunt-connect-proxy', '1.10' ]
+14 verbose addNamed [ null, '>=1.10.0-0 <1.11.0-0' ]
+15 silly lockFile 66f0d64e-grunt-connect-proxy-1-10 grunt-connect-proxy@1.10
+16 verbose lock grunt-connect-proxy@1.10 /Users/maxwellbates/.npm/66f0d64e-grunt-connect-proxy-1-10.lock
+17 silly addNameRange { name: 'grunt-connect-proxy',
+17 silly addNameRange   range: '>=1.10.0-0 <1.11.0-0',
+17 silly addNameRange   hasData: false }
+18 verbose request where is /grunt-connect-proxy
+19 verbose request registry https://registry.npmjs.org/
+20 verbose request id c81d4cba2895d503
+21 verbose url raw /grunt-connect-proxy
+22 verbose url resolving [ 'https://registry.npmjs.org/', './grunt-connect-proxy' ]
+23 verbose url resolved https://registry.npmjs.org/grunt-connect-proxy
+24 verbose request where is https://registry.npmjs.org/grunt-connect-proxy
+25 info trying registry request attempt 1 at 09:41:30
+26 verbose etag "1QJHVTTER826INCZV7YBWV8EO"
+27 http GET https://registry.npmjs.org/grunt-connect-proxy
+28 http 304 https://registry.npmjs.org/grunt-connect-proxy
+29 silly registry.get cb [ 304,
+29 silly registry.get   { date: 'Tue, 06 Jan 2015 17:41:30 GMT',
+29 silly registry.get     server: 'Apache',
+29 silly registry.get     via: '1.1 varnish',
+29 silly registry.get     'last-modified': 'Tue, 06 Jan 2015 17:40:57 GMT',
+29 silly registry.get     'cache-control': 'max-age=60',
+29 silly registry.get     etag: '"1QJHVTTER826INCZV7YBWV8EO"',
+29 silly registry.get     age: '33',
+29 silly registry.get     'x-served-by': 'cache-lax1421-LAX',
+29 silly registry.get     'x-cache': 'HIT',
+29 silly registry.get     'x-cache-hits': '1',
+29 silly registry.get     'x-timer': 'S1420566090.453452,VS0,VE0',
+29 silly registry.get     vary: 'Accept',
+29 silly registry.get     'content-length': '0',
+29 silly registry.get     'keep-alive': 'timeout=10, max=50',
+29 silly registry.get     connection: 'Keep-Alive' } ]
+30 verbose etag https://registry.npmjs.org/grunt-connect-proxy from cache
+31 silly addNameRange number 2 { name: 'grunt-connect-proxy',
+31 silly addNameRange   range: '>=1.10.0-0 <1.11.0-0',
+31 silly addNameRange   hasData: true }
+32 silly addNameRange versions [ 'grunt-connect-proxy',
+32 silly addNameRange   [ '0.1.0',
+32 silly addNameRange     '0.1.1',
+32 silly addNameRange     '0.1.2',
+32 silly addNameRange     '0.1.3',
+32 silly addNameRange     '0.1.4',
+32 silly addNameRange     '0.1.5',
+32 silly addNameRange     '0.1.6',
+32 silly addNameRange     '0.1.7',
+32 silly addNameRange     '0.1.8',
+32 silly addNameRange     '0.1.10',
+32 silly addNameRange     '0.1.11' ] ]
+33 silly lockFile 66f0d64e-grunt-connect-proxy-1-10 grunt-connect-proxy@1.10
+34 silly lockFile 66f0d64e-grunt-connect-proxy-1-10 grunt-connect-proxy@1.10
+35 error notarget No compatible version found: grunt-connect-proxy@'>=1.10.0-0 <1.11.0-0'
+35 error notarget Valid install targets:
+35 error notarget ["0.1.11","0.1.0","0.1.1","0.1.2","0.1.3","0.1.4","0.1.5","0.1.6","0.1.7","0.1.8","0.1.10","0.1.11"]
+35 error notarget
+35 error notarget This is most likely not a problem with npm itself.
+35 error notarget In most cases you or one of your dependencies are requesting
+35 error notarget a package version that doesn't exist.
+36 error System Darwin 14.0.0
+37 error command "node" "/usr/local/bin/npm" "install" "--save-dev" "grunt-connect-proxy@1.10"
+38 error cwd /Users/maxwellbates/Projects/transcriptic
+39 error node -v v0.10.32
+40 error npm -v 1.4.28
+41 error code ETARGET
+42 verbose exit [ 1, true ]

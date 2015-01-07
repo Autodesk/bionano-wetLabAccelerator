@@ -16,6 +16,8 @@ angular.module('transcripticApp')
       },
       link: function postLink(scope, element, attrs) {
 
+        //todo - create a Ref class and move lots of logic in there
+
         var discardKey = "DISCARD";
         scope.discardKey = discardKey;
 
@@ -27,12 +29,7 @@ angular.module('transcripticApp')
           return (ref.id || ref.new) && (ref.discard || (ref.store && ref.store.where));
         };
 
-        scope.addRef = function () {
-          scope.refs["myRef"] = {};
-        };
-
         scope.changeStorage = function (ref, newval) {
-          console.log('called storage', ref, newval, newval == discardKey);
           if (newval == discardKey) {
             delete ref.store;
             ref.discard = true;
@@ -44,6 +41,10 @@ angular.module('transcripticApp')
 
         //todo - handle clicking new - remove ID or type respectively
         //todo - handle clicking discard - remove discard / store respectively
+
+        scope.addRef = function () {
+          scope.refs["myRef"] = {};
+        };
 
         scope.changeRefKey = function (newkey, oldkey) {
           scope.refs[newkey] = angular.copy(scope.refs[oldkey]);
