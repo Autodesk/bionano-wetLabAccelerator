@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('MainCtrl', function ($scope, Container, Run) {
+  .controller('MainCtrl', function ($scope, Container, Run, RefFactory) {
 
     //this.containers = Container.list();
 
@@ -17,18 +17,18 @@ angular.module('transcripticApp')
     $scope.myDimension = "";
 
     $scope.myRefs = {
-      "cells": {
+      "cells": new RefFactory({
         "id": "ct17ab4pbtpjmh",
         "store": { "where": "cold_20" }
-      },
-      "pcr": {
+      }),
+      "pcr": new RefFactory({
         "new": "96-pcr",
         "store": { "where": "ambient" }
-      },
-      "primer": {
+      }),
+      "primer": new RefFactory({
         "id": "ct17ab4ppqsrmv",
         "discard": true
-      }
+      })
     };
 
     this.submitDemo = function () {

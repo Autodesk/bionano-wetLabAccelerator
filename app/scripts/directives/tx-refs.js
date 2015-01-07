@@ -7,7 +7,7 @@
  * # txRefs
  */
 angular.module('transcripticApp')
-  .directive('txRefs', function (Container, ContainerOptions, StorageOptions) {
+  .directive('txRefs', function (Container, ContainerOptions, StorageOptions, RefFactory) {
     return {
       templateUrl: 'views/tx-refs.html',
       restrict: 'E',
@@ -16,34 +16,15 @@ angular.module('transcripticApp')
       },
       link: function postLink(scope, element, attrs) {
 
-        //todo - create a Ref class and move lots of logic in there
-
-        var discardKey = "DISCARD";
+        var discardKey = new RefFactory().getDiscardKey();
         scope.discardKey = discardKey;
 
         scope.containers = Container.list();
         scope.containerOptions = ContainerOptions;
         scope.storageOptions = [discardKey].concat(StorageOptions.storage);
 
-        scope.refIsValid = function (ref) {
-          return (ref.id || ref.new) && (ref.discard || (ref.store && ref.store.where));
-        };
-
-        scope.changeStorage = function (ref, newval) {
-          if (newval == discardKey) {
-            delete ref.store;
-            ref.discard = true;
-          } else {
-            delete ref.discard;
-            ref.store = {where: newval};
-          }
-        };
-
-        //todo - handle clicking new - remove ID or type respectively
-        //todo - handle clicking discard - remove discard / store respectively
-
         scope.addRef = function () {
-          scope.refs["myRef"] = {};
+          scope.refs["myRef"] = new RefFactory();
         };
 
         scope.changeRefKey = function (newkey, oldkey) {

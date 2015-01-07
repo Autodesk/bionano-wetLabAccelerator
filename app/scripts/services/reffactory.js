@@ -16,20 +16,21 @@ angular.module('transcripticApp').factory('RefFactory', function (StorageOptions
 
     var self = this;
 
-    this.prototype.isValid.call(initial) && _.extend(this, initial);
+    (!_.isEmpty(initial) && Ref.prototype.isValid.call(initial)) && _.extend(this, initial);
 
-    Object.defineProperties(this, {
-      isNew : {
-        get: function () {
-          return _.isDefined(self.new) && !self.id;
-        }
-      },
-      toStore: {
-        get: function () {
-          return _.isDefined(self.store) && self.discard !== true;
-        }
+    this.isNew = function (newval) {
+      if (angular.isDefined(newval)) {
+        self.changeReference(!!newval, '')
       }
-    });
+      return angular.isDefined(self.new) && !angular.isDefined(self.id);
+    };
+
+    this.toStore = function (newval) {
+      if (angular.isDefined(newval)) {
+        !!newval ? self.changeStorage(storageOptions[0]) : self.changeStorage(discardKey)
+      }
+      return angular.isDefined(self.store) && self.discard !== true;
+    };
   }
 
   Ref.prototype.isValid = function () {
@@ -51,14 +52,17 @@ angular.module('transcripticApp').factory('RefFactory', function (StorageOptions
 
   Ref.prototype.changeReference = function (isNew, newRef) {
     console.assert(_.isString(newRef), 'new reference is not a string');
-    this.isNew = !!isNew;
-    if (this.isNew) {
+    if (isNew) {
       delete this.id;
       this.new = newRef;
     } else {
       delete this.new;
       this.id = newRef;
     }
+  };
+
+  Ref.prototype.getDiscardKey = function () {
+    return discardKey;
   };
 
   return Ref;
