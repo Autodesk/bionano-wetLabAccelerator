@@ -10,10 +10,12 @@
          ng-repeat="(key, ref) in refs track by key"
          ng-init="pseudoKey = key; pseudoStore = ref.discard ? discardKey : ref.store.where">
       <div class="form-group">
-        <input class="form-control"
-               ng-model="pseudoKey"
-               ng-change="changeRefKey(pseudoKey, key)"
-               ng-model-options="{updateOn: 'blur'}">
+        <div contenteditable
+             strip-br="true"
+             ng-model="pseudoKey"
+             ng-change="changeRefKey(pseudoKey, key)"
+             ng-model-options="{updateOn: 'blur'}"
+             required></div>
       </div>
 
       <div class="row">

@@ -18,6 +18,7 @@ angular.module('transcripticApp').factory('RefFactory', function (StorageOptions
 
     (!_.isEmpty(initial) && Ref.prototype.isValid.call(initial)) && _.extend(this, initial);
 
+    //use getterSetters this way to play nice with angular, rather than real get / set functions
     this.isNew = function (newval) {
       if (angular.isDefined(newval)) {
         self.changeReference(!!newval, '')
