@@ -12,9 +12,10 @@
        ng-include="'views/instructions/' + instruction.op + '.html'"></div>
   <textarea json-editor
             ng-show="showJson"
-            ng-model="instruction"
+            ng-model="protocol.instructions[instructionIndex]"
             rows="8"
             name="InstJson"
             class="form-control"></textarea>
   <p ng-show="InstForm.InstJson.$error.json">JSON is invalid!</p>
+  {{instruction | json}}
 </div>

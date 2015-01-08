@@ -8,22 +8,15 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('RefsCtrl', function ($scope, Container, Run, RefFactory) {
+  .controller('RefsCtrl', function ($scope, $http, ProtocolFactory) {
 
     $scope.myDimension = "25:microliter";
 
-    $scope.myRefs = {
-      "cells": new RefFactory({
-        "id": "ct17ab4pbtpjmh",
-        "store": { "where": "cold_20" }
-      }),
-      "pcr": new RefFactory({
-        "new": "96-pcr",
-        "store": { "where": "ambient" }
-      }),
-      "primer": new RefFactory({
-        "id": "ct17ab4ppqsrmv",
-        "discard": true
-      })
-    };
+    $http.get('demo_protocols/ref-stanza-example.json').success(function(data) {
+      var protocol = new ProtocolFactory({
+        refs: data
+      });
+
+      $scope.myRefs = protocol.refs;
+    });
   });

@@ -8,11 +8,17 @@
  * note that this is a UI focused project (so far) so this is kinda secondary.
  */
 angular.module('transcripticApp')
-  .factory('ProtocolFactory', function () {
+  .factory('ProtocolFactory', function (RefFactory) {
 
-    function Protocol () {
-      this.refs = {};
-      this.instructions = [];
+    function Protocol (input) {
+      angular.extend(this, {
+        refs: {},
+        instructions: []
+      }, input);
+
+      angular.forEach(this.refs, function (ref, key) {
+        this.refs[key] = new RefFactory(ref);
+      }.bind(this));
     }
 
     Protocol.prototype.addInstruction = function (inst) {
@@ -20,7 +26,7 @@ angular.module('transcripticApp')
     };
 
     Protocol.prototype.ref = function (name, params) {
-      this.refs[name] = params;
+      this.refs[name] = new RefFactory(params);
     };
 
     return Protocol;

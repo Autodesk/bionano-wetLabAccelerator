@@ -1,6 +1,10 @@
 <div ng-form="absoranceForm">
-  <tx-measure label="dataref"
-              ng-model="instruction.dataref"></tx-measure>
+
+  <tx-inputwrap label="dataref">
+    <input type="text"
+           class="form-control"
+           ng-model="instruction.dataref">
+  </tx-inputwrap>
 
   <tx-container ng-model="instruction.object"
                 refs="protocol.refs"></tx-container>
@@ -16,6 +20,10 @@
               min="300"
               max="1000"></tx-measure>
 
-  <tx-measure label="num_flashes"
-              ng-model="instruction.num_flashes"></tx-measure>
+  <tx-inputwrap label="num_flashes">
+    <input type="number"
+           class="form-control"
+           ng-model="instruction.num_flashes">
+  </tx-inputwrap>
+
 </div>

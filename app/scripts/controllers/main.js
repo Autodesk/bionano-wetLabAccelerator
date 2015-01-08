@@ -8,8 +8,8 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('MainCtrl', function ($scope, $http) {
-    $http.get('demo_protocols/growth-curve-generic.json').success(function(data) {
-      $scope.exampleProtocol = data;
-    })
+  .controller('MainCtrl', function ($scope, $http, ProtocolFactory) {
+    $http.get('demo_protocols/aaron-growth.json').success(function(data) {
+      $scope.exampleProtocol = new ProtocolFactory(data);
+    });
   });

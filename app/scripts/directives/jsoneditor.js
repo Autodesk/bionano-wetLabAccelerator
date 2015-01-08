@@ -33,8 +33,7 @@ angular.module('transcripticApp').directive('jsonEditor', function () {
           //returning undefined results in a parser error as of angular-1.3-rc.0, and will not go through $validators
           ngModelCtrl.$setValidity('json', false);
           return undefined;
-          //todo - how to handle
-          return text;
+          //return text; //allows setting nasty string...
         }
       }
 

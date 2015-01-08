@@ -10,6 +10,8 @@ Angular Transcriptic UI
 
 - get json-editor directive in sync
 
+- allow passage of object as attrs for input in tx-measure -- need to support input[type] though
+
 - move away from selects to some other dropdown?
 
 - Protocol UI

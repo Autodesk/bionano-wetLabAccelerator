@@ -6,7 +6,7 @@
  * @description
  * # txWell
  */
-//todo - support for multiple attribute
+//todo - support for multiple attribute? Need example where only allow one well (pipette?)
 angular.module('transcripticApp')
   .directive('txWell', function () {
     return {

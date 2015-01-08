@@ -3,11 +3,18 @@
 /**
  * @ngdoc directive
  * @name transcripticApp.directive:txMeasure
+ * @attr dimensionValue
+ * @attr label
  * @description
- * # txMeasure
- * //todo - option for array
- * //todo - look at making attribute directive on input instead of whole template
+ * Input directive which is used for dimensional values (i.e. "value:unit" format)
+ *
+ * Cf. tx-inputwrap, wihch wraps an input with appropriate styling and label.
+ *
+ * Use tx-inputwrap for primitives, or inputs which have specific validation (e.g. max/min)
+ * Use tx-measure for inputs which are dimensional. Gets options from DimensionOptions service.
  */
+
+//todo - ability to pass in parameters to input
 angular.module('transcripticApp')
   .directive('txMeasure', function (DimensionOptions) {
     return {
