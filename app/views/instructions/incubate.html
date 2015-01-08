@@ -10,16 +10,16 @@
             ng-model="instruction.where"></select>
   </div>
 
+  <tx-inputwrap label="where">
+    <select class="form-control"
+            ng-options="o for o in storageOptions"
+            ng-model="instruction.where"></select>
+  </tx-inputwrap>
+
   <tx-measure dimension-type="duration"
               label="duration"
               ng-model="instruction.duration"></tx-measure>
 
-  <div class="checkbox">
-    <label>
-      <input type="checkbox"
-             ng-model="instruction.shaking">
-      Shaking
-    </label>
-  </div>
-
+  <tx-boolean label="shaking"
+              ng-model="instruction.shaking"></tx-boolean>
 </div>
