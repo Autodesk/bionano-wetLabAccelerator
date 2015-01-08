@@ -2,6 +2,7 @@
      class="panel panel-default">
   <div class="panel-heading">
     <button class="btn btn-default btn-sm pull-right"
+            ng-class="{'btn-primary' : showJson}"
             ng-disabled="InstForm.InstJson.$error.json"
             ng-click="showJson = !showJson">JSON</button>
     <h3 class="panel-title"
@@ -10,12 +11,12 @@
   <div class="panel-body"
        ng-show="!showJson"
        ng-include="'views/instructions/' + instruction.op + '.html'"></div>
-  <textarea json-editor
-            ng-show="showJson"
-            ng-model="protocol.instructions[instructionIndex]"
-            rows="8"
-            name="InstJson"
-            class="form-control"></textarea>
+
+  <pre json-editor
+       contenteditable
+       ng-show="showJson"
+       name="InstJson"
+       ng-model="instruction"></pre>
+
   <p ng-show="InstForm.InstJson.$error.json">JSON is invalid!</p>
-  {{instruction | json}}
 </div>

@@ -18,11 +18,15 @@ Angular Transcriptic UI
   - refs need to be converted to class from JSON for within directive
   - adding instructions
   - sorting instructions
+  
+- better well UI
 
 - wire up so can actually send a protocol
 
 - add in notes / catches etc.
 
 - google analytics
+
+---
 
 - look into Haxe, migrating Autoprotocol into it
