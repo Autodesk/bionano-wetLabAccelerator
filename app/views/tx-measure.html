@@ -1,15 +1,24 @@
-<div ng-form class="form-inline">
-  <div ng-if="isDimensional">
+<div ng-if="isDimensional"
+     class="form-inline">
+  <div class="input-group">
+    <span ng-if="label"
+          ng-bind="label"
+          class="input-group-addon"></span>
     <input class="form-control"
            type="number"
            ng-model="dim.value"
            ng-required="true">
-    <select class="form-control"
-            ng-disabled="options.length == 1"
-            ng-options="opt for opt in options"
-            ng-model="dim.unit"></select>
   </div>
-  <div ng-if="!isDimensional">
-    <input ng-model="internalValue">
-  </div>
+  <select class="form-control"
+          ng-disabled="options.length == 1"
+          ng-options="opt for opt in options"
+          ng-model="dim.unit"></select>
+</div>
+<div ng-if="!isDimensional"
+     class="input-group">
+  <span ng-if="label"
+        ng-bind="label"
+        class="input-group-addon"></span>
+  <input ng-model="dim.internal"
+         class="form-control">
 </div>

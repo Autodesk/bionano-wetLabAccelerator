@@ -2,6 +2,7 @@
      class="panel panel-default">
   <div class="panel-heading">
     <button class="btn btn-default btn-sm pull-right"
+            ng-disabled="InstForm.InstJson.$error.json"
             ng-click="showJson = !showJson">JSON</button>
     <h3 class="panel-title"
         ng-bind="instruction.op"></h3>

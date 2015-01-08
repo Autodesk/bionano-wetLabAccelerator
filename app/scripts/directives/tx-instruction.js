@@ -7,15 +7,20 @@
  * # txInstruction
  */
 angular.module('transcripticApp')
-  .directive('txInstruction', function () {
+  .directive('txInstruction', function (StorageOptions) {
     return {
       templateUrl: 'views/tx-instruction.html',
       restrict: 'E',
       scope: {
-        instruction: '='
+        protocol: '=',
+        instructionIndex: '@'
       },
       link: function postLink(scope, element, attrs) {
+        scope.instruction = scope.protocol.instructions[scope.instructionIndex];
 
+        scope.containers = scope.protocol.refs;
+
+        scope.storageOptions = StorageOptions.storage;
       }
     };
   });

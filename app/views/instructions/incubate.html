@@ -1,1 +1,25 @@
-<p>This is the instructions/incubation view.</p>
+<div ng-form="incubateForm">
+
+  <tx-container ng-model="instruction.object"
+                refs="protocol.refs"></tx-container>
+
+  <div class="input-group">
+    <span class="input-group-addon">where</span>
+    <select class="form-control"
+            ng-options="o for o in storageOptions"
+            ng-model="instruction.where"></select>
+  </div>
+
+  <tx-measure dimension-type="duration"
+              label="duration"
+              ng-model="instruction.duration"></tx-measure>
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox"
+             ng-model="instruction.shaking">
+      Shaking
+    </label>
+  </div>
+
+</div>

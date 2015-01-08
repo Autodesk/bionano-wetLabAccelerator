@@ -1,7 +1,11 @@
 <div class="input-group">
   <span class="input-group-addon">container</span>
   <select class="form-control"
+          ng-if="!limitToRefs"
           ng-options="c.id as (c.label || c.id) for c in containers"
-          ng-change="setModel()"
-          ng-model="containerId"></select>
+          ng-model="internalModel"></select>
+  <select class="form-control"
+          ng-if="limitToRefs"
+          ng-options="r as r for (r, details) in refs"
+          ng-model="internalModel"></select>
 </div>

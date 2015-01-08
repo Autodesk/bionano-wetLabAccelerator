@@ -13,12 +13,15 @@ angular.module('transcripticApp')
       templateUrl: 'views/tx-container.html',
       require: 'ngModel',
       restrict: 'E',
+      scope: {
+        internalModel: '=ngModel',
+        refs: '='
+      },
       link: function postLink(scope, element, attrs, ngModel) {
 
+        scope.limitToRefs = angular.isDefined(attrs.refs);
         scope.containers = Container.list();
         scope.containerOptions = ContainerOptions;
-
-        scope.setModel = ngModel.$setViewValue;
       }
     };
   });

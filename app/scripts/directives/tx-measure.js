@@ -6,6 +6,7 @@
  * @description
  * # txMeasure
  * //todo - option for array
+ * //todo - look at making attribute directive on input instead of whole template
  */
 angular.module('transcripticApp')
   .directive('txMeasure', function (DimensionOptions) {
@@ -14,7 +15,8 @@ angular.module('transcripticApp')
       require: 'ngModel',
       restrict: 'E',
       scope: {
-        dimensionType: '@'
+        dimensionType: '@',
+        label: '@'
       },
       link: function postLink(scope, element, attrs, ngModel) {
 
@@ -45,9 +47,11 @@ angular.module('transcripticApp')
         }
 
         function handlePrimitiveValue (newType) {
-          scope.internalValue = ngModel.$modelValue;
+          scope.dim = {
+            internal : ngModel.$modelValue
+          };
 
-          internalValueWatcher = scope.$watch('internalValue', function (newval) {
+          internalValueWatcher = scope.$watch('dim.internal', function (newval) {
             primitiveIsValid(newType) && ngModel.$setViewValue(newval);
           }, true);
         }

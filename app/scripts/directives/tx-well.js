@@ -6,13 +6,20 @@
  * @description
  * # txWell
  */
+//todo - support for multiple attribute
 angular.module('transcripticApp')
   .directive('txWell', function () {
     return {
-      template: '<div></div>',
+      templateUrl: 'views/tx-well.html',
       restrict: 'E',
-      link: function postLink(scope, element, attrs) {
-        element.text('this is the txWell directive');
+      require: 'ngModel',
+      scope: {
+        internalValue: '=ngModel',
+        container: '=',
+        label: '@',
+        multiple: '@'
+      },
+      link: function postLink(scope, element, attrs, ngModel) {
       }
     };
   });

@@ -9,7 +9,7 @@
  */
 angular.module('transcripticApp')
   .controller('MainCtrl', function ($scope, $http) {
-    $http.get('demo_protocols/growth-curve.json').success(function(data) {
+    $http.get('demo_protocols/growth-curve-generic.json').success(function(data) {
       $scope.exampleProtocol = data;
     })
   });

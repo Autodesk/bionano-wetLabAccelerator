@@ -5,6 +5,7 @@
   </tx-refs>
   <div class="panel-body">
     <tx-instruction ng-repeat="inst in protocol.instructions"
-                    instruction="inst"></tx-instruction>
+                    protocol="protocol"
+                    instruction-index="{{$index}}"></tx-instruction>
   </div>
 </div>

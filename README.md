@@ -8,8 +8,14 @@ Angular Transcriptic UI
   - how to scale for each method? esp. re: UI
   - may need separate UI for each step? at least a way of capturing step-specific metadata
 
-- UI for constructing protocol
+- get json-editor directive in sync
+
+- move away from selects to some other dropdown?
+
+- Protocol UI
   - refs need to be converted to class from JSON for within directive
+  - adding instructions
+  - sorting instructions
 
 - wire up so can actually send a protocol
 

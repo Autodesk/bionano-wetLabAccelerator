@@ -6,7 +6,7 @@
  * @description
  * # txRefs
  */
-//todo - need to convert to Ref, probably internally to directive
+//todo - need to convert to Ref, probably internally to directive? or external as processing step?
 angular.module('transcripticApp')
   .directive('txRefs', function (Container, ContainerOptions, StorageOptions, RefFactory) {
     return {
