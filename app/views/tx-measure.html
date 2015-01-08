@@ -1,10 +1,15 @@
-<form class="form-inline">
-  <input class="form-control"
-         type="number"
-         ng-model="dim.value"
-         ng-required="true">
-  <select class="form-control"
-          ng-disabled="options.length == 1"
-          ng-options="opt for opt in options"
-          ng-model="dim.unit"></select>
-</form>
+<div ng-form class="form-inline">
+  <div ng-if="isDimensional">
+    <input class="form-control"
+           type="number"
+           ng-model="dim.value"
+           ng-required="true">
+    <select class="form-control"
+            ng-disabled="options.length == 1"
+            ng-options="opt for opt in options"
+            ng-model="dim.unit"></select>
+  </div>
+  <div ng-if="!isDimensional">
+    <input ng-model="internalValue">
+  </div>
+</div>

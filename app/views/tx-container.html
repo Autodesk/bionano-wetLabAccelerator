@@ -1,0 +1,7 @@
+<div class="input-group">
+  <span class="input-group-addon">container</span>
+  <select class="form-control"
+          ng-options="c.id as (c.label || c.id) for c in containers"
+          ng-change="setModel()"
+          ng-model="containerId"></select>
+</div>

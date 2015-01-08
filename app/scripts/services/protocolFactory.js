@@ -4,28 +4,24 @@
  * @ngdoc service
  * @name transcripticApp.Protocol
  * @description
- * Local Factory for Protocols
+ * initial work for a javascript like autoprotocol generator
+ * note that this is a UI focused project (so far) so this is kinda secondary.
  */
 angular.module('transcripticApp')
   .factory('ProtocolFactory', function () {
 
-    var self = this;
-
-    this.refs = {};
-    this.instructions = [];
-
-    function addInstruction(inst) {
-      //todo - validation
-      self.instructions.push(inst);
+    function Protocol () {
+      this.refs = {};
+      this.instructions = [];
     }
 
-    Object.defineProperties(this.prototype, {
-      ref: {
-        value: function (name, params) {
-          self.refs[name] = params;
-        }
-      }
-    });
+    Protocol.prototype.addInstruction = function (inst) {
+      this.instructions.push(inst);
+    };
 
-    return this;
+    Protocol.prototype.ref = function (name, params) {
+      this.refs[name] = params;
+    };
+
+    return Protocol;
   });

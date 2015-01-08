@@ -4,8 +4,12 @@
  * @ngdoc service
  * @name transcripticApp.instructions
  * @description
- * # instructions
- * Constant in the transcripticApp.
+ * Enumeration of possible instructions
+ *
+ * todo
+ * - basic scaffolding schema
+ * - support types and type checks
+ * - preconditions
  */
 angular.module('transcripticApp').constant('InstructionOptions', {
   //pipetting
@@ -34,7 +38,7 @@ angular.module('transcripticApp').constant('InstructionOptions', {
   "fluorescence" : {},
   "luminesence" : {},
 
-  "gel_separate" : {},
+  "gel_separate" : {}
 
-  "flow" : {}
+  //todo - add forthcoming protocols
 });

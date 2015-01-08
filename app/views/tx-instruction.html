@@ -1,1 +1,19 @@
-<p>This is a instruction step</p>
+<div ng-form="InstForm"
+     class="panel panel-default">
+  <div class="panel-heading">
+    <button class="btn btn-default btn-sm pull-right"
+            ng-click="showJson = !showJson">JSON</button>
+    <h3 class="panel-title"
+        ng-bind="instruction.op"></h3>
+  </div>
+  <div class="panel-body"
+       ng-show="!showJson"
+       ng-include="'views/instructions/' + instruction.op + '.html'"></div>
+  <textarea json-editor
+            ng-show="showJson"
+            ng-model="instruction"
+            rows="8"
+            name="InstJson"
+            class="form-control"></textarea>
+  <p ng-show="InstForm.InstJson.$error.json">JSON is invalid!</p>
+</div>

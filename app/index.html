@@ -23,10 +23,14 @@
     <div class="container">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
+          <li><a ng-href="#/">Home</a></li>
+          <li><a ng-href="#/data">Data</a></li>
+          <li><a ng-href="#/refs">Ref Stanza</a></li>
         </ul>
         <h3 class="text-muted">transcriptic</h3>
       </div>
+
+      <hr>
 
       <div ng-view=""></div>
     </div>
@@ -65,32 +69,35 @@
     <script src="bower_components/lodash/dist/lodash.js"></script>
     <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/values/instructions.js"></script>
-        <script src="scripts/directives/tx-instruction.js"></script>
-        <script src="scripts/values/dimensionOptions.js"></script>
-        <script src="scripts/values/storageOptions.js"></script>
-        <script src="scripts/services/run.js"></script>
-        <script src="scripts/values/containerOptions.js"></script>
-        <script src="scripts/services/auth.js"></script>
-        <script src="scripts/services/project.js"></script>
-        <script src="scripts/services/communication.js"></script>
-        <script src="scripts/services/container.js"></script>
-        <script src="scripts/services/protocolFactory.js"></script>
-        <script src="scripts/services/instructionFactory.js"></script>
-        <script src="scripts/directives/txcontainer.js"></script>
-        <script src="scripts/services/containerfactory.js"></script>
-        <script src="scripts/services/autoprotocol.js"></script>
-        <script src="scripts/values/orderingoptions.js"></script>
-        <script src="scripts/values/dyeoptions.js"></script>
-        <script src="scripts/directives/tx-measure.js"></script>
-        <script src="scripts/directives/tx-refs.js"></script>
-        <script src="scripts/services/reffactory.js"></script>
-        <script src="scripts/directives/contenteditable.js"></script>
-        <script src="scripts/controllers/data.js"></script>
-        <script src="scripts/services/data.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/data.js"></script>
+    <script src="scripts/controllers/refs.js"></script>
+    <script src="scripts/values/instructions.js"></script>
+    <script src="scripts/values/dimensionOptions.js"></script>
+    <script src="scripts/values/storageOptions.js"></script>
+    <script src="scripts/values/containerOptions.js"></script>
+    <script src="scripts/values/orderingoptions.js"></script>
+    <script src="scripts/values/dyeoptions.js"></script>
+    <script src="scripts/services/comm/auth.js"></script>
+    <script src="scripts/services/comm/communication.js"></script>
+    <script src="scripts/services/comm/run.js"></script>
+    <script src="scripts/services/comm/project.js"></script>
+    <script src="scripts/services/comm/container.js"></script>
+    <script src="scripts/services/comm/data.js"></script>
+    <script src="scripts/services/protocolFactory.js"></script>
+    <script src="scripts/services/reffactory.js"></script>
+    <script src="scripts/services/autoprotocol.js"></script>
+    <script src="scripts/directives/contenteditable.js"></script>
+    <script src="scripts/directives/tx-instruction.js"></script>
+    <script src="scripts/directives/tx-container.js"></script>
+    <script src="scripts/directives/tx-measure.js"></script>
+    <script src="scripts/directives/tx-refs.js"></script>
+    <script src="scripts/directives/tx-well.js"></script>
+    <script src="scripts/values/geloptions.js"></script>
+    <script src="scripts/directives/tx-protocol.js"></script>
+    <script src="scripts/directives/jsoneditor.js"></script>
+    <!-- endbuild -->
 </body>
 </html>

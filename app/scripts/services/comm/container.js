@@ -27,7 +27,7 @@ angular.module('transcripticApp')
           isArray: true,
           transformResponse: function (data, headers) {
             //todo - check for more than 1 page / pass param for more than 10
-            return data.results;
+            return angular.isArray(data.results) ? data.results : data;
           }
         }),
 

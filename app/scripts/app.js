@@ -38,6 +38,10 @@ angular
         controller: 'DataCtrl',
         controllerAs: 'dataCtrl'
       })
+      .when('/refs', {
+        templateUrl: 'views/refs.html',
+        controller: 'RefsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

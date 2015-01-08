@@ -1,0 +1,10 @@
+<div class="panel panel-info">
+  <div class="panel-heading">Protocol</div>
+  <tx-refs refs="protocol.refs"
+           class="panel-body">
+  </tx-refs>
+  <div class="panel-body">
+    <tx-instruction ng-repeat="inst in protocol.instructions"
+                    instruction="inst"></tx-instruction>
+  </div>
+</div>

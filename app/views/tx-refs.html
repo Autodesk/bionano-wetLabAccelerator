@@ -21,9 +21,7 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="input-group">
-            <span class="input-group-addon">
-              <label><input type="checkbox" ng-model="ref.isNew" ng-model-options="{getterSetter: true}"> New?</label>
-            </span>
+            <span class="input-group-addon">container</span>
             <select class="form-control"
                     ng-if="ref.isNew()"
                     ng-options="c as info.name for (c, info) in containerOptions"
@@ -32,7 +30,14 @@
                     ng-if="!ref.isNew()"
                     ng-options="c.id as (c.label || c.id) for c in containers"
                     ng-model="ref.id"></select>
-            <span class="input-group-addon">{{ref.isNew() ? 'type' : 'ID'}}</span>
+            <span class="input-group-addon">
+              <label>
+                <input type="checkbox"
+                       ng-model="ref.isNew"
+                       ng-model-options="{getterSetter: true}">
+                New?
+              </label>
+            </span>
           </div>
         </div>
 
@@ -46,7 +51,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </form>

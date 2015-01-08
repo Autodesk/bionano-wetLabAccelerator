@@ -2,17 +2,17 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txInstruction
+ * @name transcripticApp.directive:txProtocol
  * @description
- * # txInstruction
+ * # txProtocol
  */
 angular.module('transcripticApp')
-  .directive('txInstruction', function () {
+  .directive('txProtocol', function () {
     return {
-      templateUrl: 'views/tx-instruction.html',
+      templateUrl: 'views/tx-protocol.html',
       restrict: 'E',
       scope: {
-        instruction: '='
+        protocol: '='
       },
       link: function postLink(scope, element, attrs) {
 

@@ -6,6 +6,7 @@
  * @description
  * # txRefs
  */
+//todo - need to convert to Ref, probably internally to directive
 angular.module('transcripticApp')
   .directive('txRefs', function (Container, ContainerOptions, StorageOptions, RefFactory) {
     return {
