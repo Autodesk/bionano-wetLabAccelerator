@@ -25,6 +25,7 @@ angular.module('transcripticApp')
         list: Communication.defaultResourceActions({
           method: "GET",
           isArray: true,
+          cache: true, //todo - create abstract class which delegates to calls, but caches
           transformResponse: function (data, headers) {
             //todo - check for more than 1 page / pass param for more than 10
             return angular.isArray(data.results) ? data.results : data;

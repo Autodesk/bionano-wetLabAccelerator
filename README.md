@@ -19,6 +19,8 @@ Angular Transcriptic UI
   - adding instructions
   - sorting instructions
   
+- high level ordering API
+  
 - better well UI
 
 - wire up so can actually send a protocol

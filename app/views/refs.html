@@ -1,3 +1,10 @@
+<tx-well label="toWells"
+         ng-model="protocol.instructions[0].groups[0].distribute.to"
+         specify-container="true"
+         refs="protocol.refs"></tx-well>
+
+<pre ng-bind="protocol.instructions[0].groups[0].distribute | json"></pre>
+
 <tx-refs refs="myRefs"></tx-refs>
 
   <hr>

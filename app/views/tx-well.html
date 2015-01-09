@@ -1,9 +1,15 @@
-<!-- todo - make this a map of buttons to click instead of just an array -->
 <div class="input-group">
   <span ng-if="label"
         ng-bind="label"
         class="input-group-addon"></span>
-  <input ng-model="internalValue"
+  <select class="form-control"
+          ng-if="specifyContainer"
+          style="width: 30%"
+          ng-options="r as r for (r, details) in refs"
+          ng-model="internal.container"></select>
+  <input type="text"
+         ng-model="internal.wells"
          ng-list
+         ng-style="{'width' : specifyContainer ? '70%' : null}"
          class="form-control">
 </div>

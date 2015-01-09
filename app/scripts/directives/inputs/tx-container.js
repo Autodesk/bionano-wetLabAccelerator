@@ -7,7 +7,6 @@
  * # txContainer
  */
 //todo - combine with Ref stanza?? (allowing for new container + handling diff model)
-//note - use ng-show in template (not ng-if) to prevent new scope creation
 angular.module('transcripticApp')
   .directive('txContainer', function (Container, ContainerOptions) {
     return {
@@ -24,7 +23,6 @@ angular.module('transcripticApp')
           ngModel.$setViewValue(scope.internalModel);
         };
 
-        scope.limitToRefs = angular.isDefined(attrs.refs);
         scope.containers = Container.list();
         scope.containerOptions = ContainerOptions;
       }

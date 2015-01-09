@@ -3,13 +3,6 @@
   <tx-container ng-model="instruction.object"
                 refs="protocol.refs"></tx-container>
 
-  <div class="input-group">
-    <span class="input-group-addon">where</span>
-    <select class="form-control"
-            ng-options="o for o in storageOptions"
-            ng-model="instruction.where"></select>
-  </div>
-
   <tx-inputwrap label="where">
     <select class="form-control"
             ng-options="o for o in storageOptions"

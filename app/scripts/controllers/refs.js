@@ -19,4 +19,9 @@ angular.module('transcripticApp')
 
       $scope.myRefs = protocol.refs;
     });
+
+    $http.get('demo_protocols/aaron-growth.json').success(function(data) {
+      $scope.protocol = new ProtocolFactory(data);
+    });
+
   });
