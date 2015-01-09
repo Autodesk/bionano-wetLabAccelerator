@@ -7,7 +7,7 @@
  * # txProtocol
  */
 angular.module('transcripticApp')
-  .directive('txProtocol', function () {
+  .directive('txProtocol', function (Run, Project) {
     return {
       templateUrl: 'views/tx-protocol.html',
       restrict: 'E',

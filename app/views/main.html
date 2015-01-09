@@ -1,1 +1,23 @@
-<tx-protocol protocol="exampleProtocol"></tx-protocol>
+<form class="form-inline">
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon">Project</span>
+      <select class="form-control"
+              ng-options="p.url as p.name for p in mainCtrl.projects"
+              ng-model="mainCtrl.project"></select>
+    </div>
+  </div>
+
+  <button class="btn btn-primary"
+          ng-disabled="!mainCtrl.project || !mainCtrl.exampleProtocol"
+          ng-click="mainCtrl.submit(mainCtrl.project, mainCtrl.exampleProtocol)">Submit Run</button>
+</form>
+
+<div ng-show="response"
+     class="alert alert-success">
+  <p>Protocol Submitted!</p>
+</div>
+
+<hr>
+
+<tx-protocol protocol="mainCtrl.exampleProtocol"></tx-protocol>
