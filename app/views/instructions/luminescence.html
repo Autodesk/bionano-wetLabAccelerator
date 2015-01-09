@@ -1,1 +1,10 @@
-<p>This is the instructions/luminescence view.</p>
+<div ng-form="luminescenceForm">
+
+  <tx-dataref ng-model="instruction.dataref"></tx-dataref>
+
+  <tx-container ng-model="instruction.object"
+                refs="protocol.refs"></tx-container>
+
+  <tx-well ng-model="instruction.wells"
+           multiple="true"></tx-well>
+</div>

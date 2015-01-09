@@ -15,6 +15,7 @@
  * if need to specify container, must pass specifyContainer and refs
  *
  */
+//note - weird backspace behavior because of ng-list... may want to smooth out
 //todo - add required flags
 angular.module('transcripticApp')
   .directive('txWell', function () {
@@ -66,8 +67,6 @@ angular.module('transcripticApp')
 
         //deep watch, propagate up changes
         scope.$watch('internal', function (newval) {
-          console.log(newval);
-
           if (angular.isUndefined(newval.wells) || newval.wells.length == 0) return;
 
           ngModel.$setValidity('multiple', (scope.multiple && !scope.specifyContainer) || newval.wells.length == 1);

@@ -6,7 +6,7 @@
             ng-disabled="InstForm.InstJson.$error.json"
             ng-click="showJson = !showJson">JSON</button>
     <h3 class="panel-title"
-        ng-bind="instruction.op"></h3>
+        ng-bind="instruction.op || 'INVALID'"></h3>
   </div>
   <div class="panel-body"
        ng-show="!showJson"

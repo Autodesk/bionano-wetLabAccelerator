@@ -1,1 +1,24 @@
-<p>This is the instructions/gel_separate view.</p>
+<div ng-form="gel_separateForm" ng-controller="GelSeparateCtrl as gelCtrl">
+
+  <tx-dataref ng-model="instruction.dataref"></tx-dataref>
+
+  <tx-well ng-model="instruction.objects"
+           multiple="true"></tx-well>
+
+  <tx-measure ng-model="instruction.duration"
+              label="duration"
+              dimension-type="duration"></tx-measure>
+
+  <tx-inputwrap label="ladder">
+    <select ng-model="instruction.ladder"
+            class="form-control"
+            ng-options="l as l for l in gelCtrl.ladders"></select>
+  </tx-inputwrap>
+
+  <tx-inputwrap label="matrix">
+    <select ng-model="instruction.matrix"
+            class="form-control"
+            ng-options="m as m for m in gelCtrl.matrices"></select>
+  </tx-inputwrap>
+
+</div>

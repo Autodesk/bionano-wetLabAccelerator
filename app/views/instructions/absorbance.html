@@ -1,10 +1,6 @@
 <div ng-form="absoranceForm">
 
-  <tx-inputwrap label="dataref">
-    <input type="text"
-           class="form-control"
-           ng-model="instruction.dataref">
-  </tx-inputwrap>
+  <tx-dataref ng-model="instruction.dataref"></tx-dataref>
 
   <tx-container ng-model="instruction.object"
                 refs="protocol.refs"></tx-container>

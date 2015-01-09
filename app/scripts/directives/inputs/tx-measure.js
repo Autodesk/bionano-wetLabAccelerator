@@ -14,7 +14,7 @@
  * Use tx-measure for inputs which are dimensional. Gets options from DimensionOptions service.
  */
 
-//todo - ability to pass in parameters to input
+//todo - ability to pass in parameters to input (sp. min and max)
 angular.module('transcripticApp')
   .directive('txMeasure', function (DimensionOptions) {
     return {

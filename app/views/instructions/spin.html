@@ -1,1 +1,15 @@
-<p>This is the instructions/spin view.</p>
+<div ng-form="spinForm">
+  <tx-container ng-model="instruction.object"
+              refs="protocol.refs"></tx-container>
+
+  <tx-inputwrap label="speed">
+    <input type="number"
+           ng-model="instruction.speed"
+           min="0"
+           max="4000">
+  </tx-inputwrap>
+
+  <tx-measure dimension-type="duration"
+              label="duration"></tx-measure>
+
+</div>

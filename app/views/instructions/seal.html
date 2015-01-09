@@ -1,1 +1,9 @@
-<p>This is the instructions/seal view.</p>
+<div ng-form="sealForm">
+  <tx-container ng-model="instruction.object"
+              refs="protocol.refs"></tx-container>
+
+  <tx-inputwrap label="lid">
+    <select ng-options="['standard', 'universal', 'low_evaporation']"
+            ng-model="instruction.lid"></select>
+  </tx-inputwrap>
+</div>
