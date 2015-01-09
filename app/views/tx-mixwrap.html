@@ -1,0 +1,21 @@
+<div class="form-inline">
+  <div class="input-group">
+    <span class="input-group-addon">volume</span>
+    <input class="form-control"
+           type="number"
+           ng-model="model.volume"
+           ng-required="true">
+  </div>
+
+ <tx-measure label="speed"
+             dimension-type="flowrate"
+             ng-model="model.speed"></tx-measure>
+
+  <div class="input-group">
+    <span class="input-group-addon">reps</span>
+    <input class="form-control"
+           type="number"
+           ng-model="model.repetitions"
+           ng-required="true">
+  </div>
+</div>

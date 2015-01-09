@@ -15,6 +15,7 @@
  */
 
 //todo - ability to pass in parameters to input (sp. min and max)
+//todo - ability to declare required etc.
 angular.module('transcripticApp')
   .directive('txMeasure', function (DimensionOptions) {
     return {

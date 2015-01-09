@@ -13,9 +13,6 @@ angular.module('transcripticApp')
       restrict: 'E',
       scope: {
         protocol: '='
-      },
-      link: function postLink(scope, element, attrs) {
-
       }
     };
   });

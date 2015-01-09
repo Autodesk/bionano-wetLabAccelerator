@@ -20,6 +20,11 @@ angular.module('transcripticApp')
       $scope.myRefs = protocol.refs;
     });
 
+    this.wellParams = {
+      volume: '100:microliter',
+      speed: '100:microliter/second'
+    };
+
     $http.get('demo_protocols/aaron-growth.json').success(function(data) {
       $scope.protocol = new ProtocolFactory(data);
     });

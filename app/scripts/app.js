@@ -40,7 +40,8 @@ angular
       })
       .when('/refs', {
         templateUrl: 'views/refs.html',
-        controller: 'RefsCtrl'
+        controller: 'RefsCtrl',
+        controllerAs: 'refsCtrl'
       })
       .otherwise({
         redirectTo: '/'

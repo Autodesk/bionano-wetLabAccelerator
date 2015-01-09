@@ -1,0 +1,18 @@
+<div ng-form="mixForm">
+
+  <tx-container ng-model="instruction.object"
+                refs="protocol.refs"></tx-container>
+
+  <tx-measure dimension-type="volume"
+              label="volume"
+              ng-model="group.volume"></tx-measure>
+
+  <tx-measure dimension-type="flowrate"
+              label="speed"
+              ng-model="group.speed"></tx-measure>
+
+  <tx-inputwrap label="reps">
+    <input type="number"
+           ng-model="group.repetitions">
+  </tx-inputwrap>
+</div>

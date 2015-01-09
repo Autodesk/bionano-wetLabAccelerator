@@ -1,18 +1,20 @@
 <tx-well label="toWells"
          ng-model="protocol.instructions[0].groups[0].distribute.to"
+         multiple="true"
          specify-container="true"
+         multiple-zip="refsCtrl.wellParams"
          refs="protocol.refs"></tx-well>
+
+<tx-measure ng-model="refsCtrl.wellParams.volume"
+            dimension-type="volume"></tx-measure>
+
+<tx-measure ng-model="refsCtrl.wellParams.speed"
+            dimension-type="flowrate"></tx-measure>
 
 <pre ng-bind="protocol.instructions[0].groups[0].distribute | json"></pre>
 
 <tx-refs refs="myRefs"></tx-refs>
 
-  <hr>
-
-<tx-measure ng-model="myDimension" dimension-type="volume"></tx-measure>
-
-{{myDimension}}
-
-  <hr>
+<hr>
 
 <tx-container ng-model="myContainer"></tx-container>
