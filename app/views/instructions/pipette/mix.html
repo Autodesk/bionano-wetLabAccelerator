@@ -1,18 +1,25 @@
-<div ng-form="mixForm">
+<div ng-form="mixForm"
+     ng-init="params = {volume: '50:microliter', speed: '100:microliter/second', repetitions: 10}">
 
-  <tx-container ng-model="instruction.object"
-                refs="protocol.refs"></tx-container>
+  <!-- todo - verify that ng-model="group" is correct and works -->
+
+  <tx-well label="from"
+           ng-model="group"
+           multiple="true"
+           specify-container="true"
+           multiple-zip="params"
+           refs="protocol.refs"></tx-well>
 
   <tx-measure dimension-type="volume"
               label="volume"
-              ng-model="group.volume"></tx-measure>
+              ng-model="params.volume"></tx-measure>
 
   <tx-measure dimension-type="flowrate"
               label="speed"
-              ng-model="group.speed"></tx-measure>
+              ng-model="params.speed"></tx-measure>
 
   <tx-inputwrap label="reps">
     <input type="number"
-           ng-model="group.repetitions">
+           ng-model="params.repetitions">
   </tx-inputwrap>
 </div>

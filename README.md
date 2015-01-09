@@ -16,7 +16,8 @@ Angular Transcriptic UI
   - refs need to be converted to class from JSON for within directive
   - adding instructions
   - sorting instructions
-
+  
+- verify mix template
 
 #### Pretty + Nice features
 

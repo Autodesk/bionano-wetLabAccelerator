@@ -1,24 +1,28 @@
-<div ng-form="consolidateForm">
+<div ng-form="consolidateForm"
+     ng-init="params = {volume: '50:microliter', aspirate_speed: '100:microliter/second'}">
+
   <tx-well label="to"
            ng-model="group.to"
            specify-container="true"
-           refs="protcol.refs"></tx-well>
+           refs="protocol.refs"></tx-well>
 
   <tx-well label="from"
            ng-model="group.from"
            multiple="true"
            specify-container="true"
-           multiple-zip="{volume: fromVolume, aspirate_speed: fromAspirate_speed}"
+           multiple-zip="params"
            refs="protocol.refs"></tx-well>
 
   <tx-measure dimension-type="volume"
-              ng-model="fromVolume"></tx-measure>
+              label="volume"
+              ng-model="params.volume"></tx-measure>
 
   <tx-measure dimension-type="flowrate"
-              ng-model="fromAspirate_speed"></tx-measure>
+              label="aspirate_speed"
+              ng-model="params.aspirate_speed"></tx-measure>
 
-  <!-- todo - zip up volume and aspirate speed into tx-wells... as attr?-->
-
-  <tx-mixwrap ng-model="group.mix_before"></tx-mixwrap>
+  <tx-measure dimension-type="flowrate"
+              label="dispense_speed"
+              ng-model="group.dispense_speed"></tx-measure>
 
 </div>

@@ -1,1 +1,33 @@
-<p>This is the instructions/pipette/distribute view.</p>
+<div ng-form="distributeForm"
+     ng-init="params = {volume: '50:microliter', dispense_speed: '100:microliter/second'}">
+
+  <tx-well label="from"
+           ng-model="group.from"
+           specify-container="true"
+           refs="protocol.refs"></tx-well>
+
+  <tx-well label="to"
+           ng-model="group.to"
+           multiple="true"
+           specify-container="true"
+           multiple-zip="params"
+           refs="protocol.refs"></tx-well>
+
+  <tx-measure dimension-type="volume"
+              label="volume"
+              ng-model="params.volume"></tx-measure>
+
+  <tx-measure dimension-type="flowrate"
+              label="dispense_speed"
+              ng-model="params.dispense_speed"></tx-measure>
+
+  <tx-measure dimension-type="flowrate"
+              label="aspirate_speed"
+              ng-model="group.aspirate_speed"></tx-measure>
+
+  <tx-boolean ng-model="allow_carryover"
+              label="allow_carryover"></tx-boolean>
+
+  <tx-mixwrap ng-model="group.mix_after"></tx-mixwrap>
+
+</div>

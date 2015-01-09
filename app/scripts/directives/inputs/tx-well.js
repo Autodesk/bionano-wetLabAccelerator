@@ -18,6 +18,7 @@
 //note - weird backspace behavior because of ng-list... may want to smooth out
 //todo - add required flags
 //todo - validation (and therefore passage of container)
+//todo - alphanumeric <--> numeric conversion
 angular.module('transcripticApp')
   .directive('txWell', function () {
 
@@ -31,7 +32,7 @@ angular.module('transcripticApp')
       return str.split(containerWellJoiner);
     }
 
-    function parseContainerWell (str, isArrayObjs) {
+    function parseContainerWell (str) {
       //i.e. scope.multiple
       if (angular.isArray(str)) {
         return {
@@ -45,11 +46,11 @@ angular.module('transcripticApp')
         if (split.length == 2) {
           return {
             container : split[0],
-            wells : split[1]
+            wells : [split[1]]
           }
         } else {
           return {
-            wells : split[0]
+            wells : [split[0]]
           }
         }
       }
@@ -141,7 +142,7 @@ angular.module('transcripticApp')
         scope.$watch('externalModel', function (newval) {
           if (!newval) return;
 
-          if (scope.multiple && scope.specifyContainer) {
+          if (!!scope.multiple && !!scope.specifyContainer) {
             var parsed = parseContainerWellObjects(newval, scope.multipleZip);
 
             scope.internal = parsed.internal;
@@ -152,6 +153,9 @@ angular.module('transcripticApp')
         });
 
         scope.$watch('multipleZip', function (newval) {
+          if (!newval) return;
+          if (!scope.internal.container || !scope.internal.wells) return;
+
           ngModel.$setViewValue(multipleWellsToObjects(scope.internal.container, scope.internal.wells, newval));
         }, true);
       }

@@ -10,7 +10,7 @@ angular.module('transcripticApp')
   .directive('txMixwrap', function () {
     return {
       templateUrl: 'views/tx-mixwrap.html',
-      restrict: 'E',
+      restrict: 'A', //fixme - temporarily disabling...
       require: 'ngModel',
       scope: {
         model: '=ngModel'

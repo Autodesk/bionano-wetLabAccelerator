@@ -9,11 +9,12 @@
  */
 angular.module('transcripticApp')
   .controller('PipetteCtrl', function ($scope) {
+    //note assumes there is only one key for each group - the liquid handling step
     this.groupKey = function (group) {
-      return group.keys()[0];
+      return Object.keys(group)[0];
     };
 
     this.groupUrl = function (group) {
       return 'views/instructions/pipette/' + this.groupKey(group) + '.html';
-    }.bind(this);
+    };
   });
