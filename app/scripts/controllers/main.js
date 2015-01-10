@@ -12,7 +12,7 @@ angular.module('transcripticApp')
 
     var self = this;
 
-    $http.get('demo_protocols/aaron-growth.json').success(function(data) {
+    $http.get('demo_protocols/pcr-example.json').success(function(data) {
       this.exampleProtocol = new ProtocolFactory(data);
     }.bind(this));
 
