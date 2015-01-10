@@ -1,3 +1,11 @@
+<div class="pagination pagination-sm">
+  <li ng-repeat="p in mainCtrl.protocols"
+      ng-class="{'active' : p == mainCtrl.selectedProtocol}">
+    <a ng-bind="p"
+       ng-click="mainCtrl.retrieve(p)"></a>
+  </li>
+</div>
+
 <form class="form-inline">
   <div class="form-group">
     <div class="input-group">

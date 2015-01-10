@@ -12,11 +12,18 @@ angular.module('transcripticApp')
 
     var self = this;
 
-    $http.get('demo_protocols/pcr-example.json').success(function(data) {
-      this.exampleProtocol = new ProtocolFactory(data);
-    }.bind(this));
+    self.protocols = ['aaron-growth', 'growth-curve-generic', 'pcr-example'];
 
-    function constuctPayload () {
+    self.retrieve = function (protocol) {
+      self.selectedProtocol = protocol;
+      $http.get('demo_protocols/' + protocol + '.json').success(function(data) {
+        self.exampleProtocol = new ProtocolFactory(data);
+      });
+    };
+
+    self.retrieve(self.protocols[1]);
+
+    function constructRunPayload () {
       return {
         title: self.runTitle,
         protocol: self.exampleProtocol
@@ -24,7 +31,7 @@ angular.module('transcripticApp')
     }
 
     this.submit = function () {
-      Run.submit({project : self.project}, constuctPayload()).$promise.
+      Run.submit({project : self.project}, constructRunPayload()).$promise.
       then(function (d) {
         console.log(d);
         $scope.error = false;
@@ -36,7 +43,7 @@ angular.module('transcripticApp')
     };
 
     this.analyze = function () {
-      Run.analyze({project : self.project}, constuctPayload()).$promise.
+      Run.analyze({project : self.project}, constructRunPayload()).$promise.
       then(function (d) {
         console.log(d);
         $scope.error = false;
