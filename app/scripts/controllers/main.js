@@ -16,14 +16,34 @@ angular.module('transcripticApp')
       this.exampleProtocol = new ProtocolFactory(data);
     }.bind(this));
 
-    this.submit = function (projectId) {
-      if (!angular.isString(projectId)) return;
+    function constuctPayload () {
+      return {
+        title: self.runTitle,
+        protocol: self.exampleProtocol
+      }
+    }
 
-      console.log('submitting');
-
-      Run.submit({project : projectId}, $scope.protocol).$promise.then(function (d) {
+    this.submit = function () {
+      Run.submit({project : self.project}, constuctPayload()).$promise.
+      then(function (d) {
         console.log(d);
+        $scope.error = false;
         $scope.response = d;
+      }, function (e) {
+        $scope.error = true;
+        $scope.response = e.data.protocol;
+      });
+    };
+
+    this.analyze = function () {
+      Run.analyze({project : self.project}, constuctPayload()).$promise.
+      then(function (d) {
+        console.log(d);
+        $scope.error = false;
+        $scope.response = d;
+      }, function (e) {
+        $scope.error = true;
+        $scope.response = e.data.protocol;
       });
     };
 

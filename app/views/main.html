@@ -8,14 +8,35 @@
     </div>
   </div>
 
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon">Run Title</span>
+      <input type="text"
+             class="form-control"
+             ng-model="mainCtrl.runTitle">
+    </div>
+  </div>
+
+<div class="btn-group">
   <button class="btn btn-primary"
-          ng-disabled="!mainCtrl.project || !mainCtrl.exampleProtocol"
-          ng-click="mainCtrl.submit(mainCtrl.project, mainCtrl.exampleProtocol)">Submit Run</button>
+          ng-disabled="!mainCtrl.project || !mainCtrl.exampleProtocol || !mainCtrl.runTitle"
+          ng-click="mainCtrl.analyze()">Verify Run</button>
+  <button class="btn btn-primary"
+          ng-disabled="!mainCtrl.project || !mainCtrl.exampleProtocol || !mainCtrl.runTitle"
+          ng-click="mainCtrl.submit()">Submit Run</button>
+</div>
 </form>
 
 <div ng-show="response"
-     class="alert alert-success">
-  <p>Protocol Submitted!</p>
+     class="alert"
+     ng-class="{'alert-success' : !error, 'alert-warning' : error}">
+  <div ng-show="!error">
+    Protocol successful!
+  </div>
+  <div ng-show="error">
+    Uh oh! There was an error:
+    <pre ng-bind="response | json"></pre>
+  </div>
 </div>
 
 <hr>

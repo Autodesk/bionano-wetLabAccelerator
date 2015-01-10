@@ -34,6 +34,7 @@ angular.module('transcripticApp')
         //set up watches for changes to external model, or dimension type
 
         scope.$watch('externalModel', function (newval, oldval) {
+          if (!newval) return;
           scope.isDimensional ? setInternal_dimensional(newval) : setInternal_primitive(newval);
         });
 
@@ -90,7 +91,7 @@ angular.module('transcripticApp')
         //checks + helpers
 
         function dimIsValid (dim) {
-          return dim.value > -1 && dim.unit != '';
+          return dim.value > 0 && dim.unit != '';
         }
 
         function convertToDimString (dim) {

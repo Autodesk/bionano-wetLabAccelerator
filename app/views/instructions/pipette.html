@@ -1,10 +1,10 @@
 <div ng-form="pipetteForm" ng-controller="PipetteCtrl as pipeCtrl">
   <div class="panel panel-default"
-       ng-repeat="groupDeclaration in instruction.groups">
+       ng-repeat="groupDeclaration in instruction.groups track by $index"
+       ng-init="group = instruction.groups[$index][pipeCtrl.groupKey(groupDeclaration)]">
     <div class="panel-heading"
          ng-bind="pipeCtrl.groupKey(groupDeclaration)"></div>
     <div class="panel-body"
-         ng-include="pipeCtrl.groupUrl(groupDeclaration)"
-         ng-init="group = groupDeclaration[pipeCtrl.groupKey(groupDeclaration)]"></div>
+         ng-include="pipeCtrl.groupUrl(groupDeclaration)"></div>
   </div>
 </div>

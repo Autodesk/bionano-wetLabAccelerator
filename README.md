@@ -4,20 +4,22 @@ Angular Transcriptic UI
 
 ### TODO
 
-
 - pipette steps
-  - passage of form in
+  - verify mix
+  - do transfer
+  
+- thermocycle step
 
 - support high level ordering API
 
-- scaffolds for each instruction? or just add required for templates?
+- enable deletion / duplication of steps
 
-- Protocol UI
-  - refs need to be converted to class from JSON for within directive
-  - adding instructions
-  - sorting instructions
-  
-- verify mix template
+- enable addition of arbitrary instructions in protocol
+  - scaffolds for each instruction? or just add required for templates?  
+
+- enable sorting of steps (ui-sortable is easy)
+
+- fix tx-well blur issue
 
 #### Pretty + Nice features
 
@@ -26,8 +28,6 @@ Angular Transcriptic UI
 - better well UI
 
 - move away from selects to some other dropdown?
-
-- wire up so can actually send a protocol
 
 - add in notes / catches etc.
 

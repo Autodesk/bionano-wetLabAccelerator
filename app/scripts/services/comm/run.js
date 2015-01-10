@@ -55,6 +55,20 @@ angular.module('transcripticApp')
         }),
 
         /**
+         * @name submit
+         * @description Submit a run
+         * @param parameters {Object} with keys:
+         * project {String} Project ID
+         * @param postData {Object} consisting of:
+         * title {String} Name of Run
+         * protocol {Protocol} well-formed protocol
+         */
+        analyze: Communication.defaultResourceActions({
+          method: "POST",
+          url: Communication.root + ':organization/:project/runs/analyze'
+        }),
+
+        /**
          * @name list
          * @description Get a list of runs for a project
          * @param parameters {Object} consisting of:
