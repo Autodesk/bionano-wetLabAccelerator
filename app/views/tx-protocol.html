@@ -1,9 +1,25 @@
-<div class="panel panel-info">
-  <div class="panel-heading">Protocol</div>
-  <tx-refs refs="protocol.refs"></tx-refs>
-  <div class="panel-body">
-    <tx-instruction ng-repeat="inst in protocol.instructions"
-                    protocol="protocol"
-                    instruction-index="{{$index}}"></tx-instruction>
+<div ng-form="ProtocolForm" class="panel panel-info">
+  <div class="panel-heading">
+    <button class="btn btn-default btn-sm pull-right"
+            ng-class="{'btn-primary' : showJson}"
+            ng-disabled="ProtocolForm.ProtocolJsonEditor.$error.json"
+            ng-click="showJson = !showJson">JSON</button>
+    Protocol
   </div>
+
+  <div ng-hide="showJson">
+    <tx-refs refs="protocol.refs"></tx-refs>
+    <div class="panel-body">
+      <tx-instruction ng-repeat="inst in protocol.instructions"
+                      protocol="protocol"
+                      instruction-index="{{$index}}"></tx-instruction>
+    </div>
+  </div>
+
+  <pre json-editor
+       contenteditable
+       ng-show="showJson"
+       name="ProtocolJsonEditor"
+       ng-model="protocol"></pre>
+
 </div>
