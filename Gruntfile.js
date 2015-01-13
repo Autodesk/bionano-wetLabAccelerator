@@ -412,7 +412,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'wiredep',
+      //'wiredep', // doesn't work without internet
       'configureProxies:livereload',
       'concurrent:server',
       'autoprefixer',

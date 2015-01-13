@@ -1,13 +1,19 @@
 <div ng-form="transferForm"
      ng-init="params = {from: '', volume: '50:microliter', dispense_speed: '100:microliter/second', aspirate_speed: '100:microliter/second'}">
 
-  <!-- may need controller to wrap up into an array ... see mix step + verify -->
+  <!--
+   todo - json binding -- can't use ng-init
+   may need controller to wrap up into an array...
+   probably need controller for parsing...
+   see mix step + verify both
+   -->
 
   <tx-well label="to"
            ng-model="group"
            multiple="true"
            specify-container="true"
            multiple-zip="params"
+           multiple-parse-key="to"
            refs="protocol.refs"></tx-well>
 
   <tx-well label="from"

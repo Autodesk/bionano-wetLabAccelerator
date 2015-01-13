@@ -61,14 +61,14 @@ angular.module('transcripticApp')
     }
 
     //todo - checks to make sure all same container + otherFields
-    function parseContainerWellObjects (input, otherFields) {
+    function parseContainerWellObjects (input, otherFields, forceKey) {
       var wells = [],
           container,
           otherKeys = Object.keys(otherFields),
           otherValues = {};
 
       input.forEach(function (wellObj, index) {
-        var split = splitContainerWell(wellObj.well);
+        var split = splitContainerWell(wellObj[forceKey]);
 
         if (index == 0) {
           container = split[0];
@@ -91,9 +91,11 @@ angular.module('transcripticApp')
       }
     }
 
-    function multipleWellsToObjects (container, wells, alsoZip) {
+    function multipleWellsToObjects (container, wells, alsoZip, forceKey) {
       return _.map(wells, function (well) {
-        return _.extend({well : joinContainerWell(container, well)}, alsoZip);
+        var obj =  _.extend({}, alsoZip);
+        obj[forceKey] = joinContainerWell(container, well); //waiting for ES6...
+        return obj;
       });
     }
 
@@ -114,6 +116,9 @@ angular.module('transcripticApp')
         //set up inheritance
         scope.internal = {};
 
+        //hack
+        var forceKey = angular.isDefined(attrs.multipleParseKey) ? attrs.multipleParseKey : 'well';
+
         //deep watch, propagate up changes
         scope.$watch('internal', function (newval) {
           if (angular.isUndefined(newval.wells) || newval.wells.length == 0) return;
@@ -122,7 +127,7 @@ angular.module('transcripticApp')
           if (scope.multiple) {
             if (scope.specifyContainer) {
               if (angular.isUndefined(newval.container)) return;
-              ngModel.$setViewValue(multipleWellsToObjects(newval.container, newval.wells, scope.multipleZip));
+              ngModel.$setViewValue(multipleWellsToObjects(newval.container, newval.wells, scope.multipleZip, forceKey));
             } else {
               ngModel.$setViewValue(newval.wells);
             }
@@ -143,7 +148,7 @@ angular.module('transcripticApp')
           if (!newval) return;
 
           if (!!scope.multiple && !!scope.specifyContainer) {
-            var parsed = parseContainerWellObjects(newval, scope.multipleZip);
+            var parsed = parseContainerWellObjects(newval, scope.multipleZip, forceKey);
 
             scope.internal = parsed.internal;
             angular.extend(scope.multipleZip, parsed.meta);
@@ -156,7 +161,7 @@ angular.module('transcripticApp')
           if (!newval) return;
           if (!scope.internal.container || !scope.internal.wells) return;
 
-          ngModel.$setViewValue(multipleWellsToObjects(scope.internal.container, scope.internal.wells, newval));
+          ngModel.$setViewValue(multipleWellsToObjects(scope.internal.container, scope.internal.wells, newval, forceKey));
         }, true);
       }
     }

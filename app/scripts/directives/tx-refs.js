@@ -29,7 +29,7 @@ angular.module('transcripticApp')
         };
 
         scope.changeRefKey = function (newkey, oldkey) {
-          scope.refs[newkey] = angular.copy(scope.refs[oldkey]);
+          scope.refs[newkey] = new RefFactory(scope.refs[oldkey]);
           delete scope.refs[oldkey];
         };
       }

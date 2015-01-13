@@ -12,7 +12,7 @@ angular.module('transcripticApp')
 
     var self = this;
 
-    self.protocols = ['aaron-growth', 'growth-curve-generic', 'pcr-example'];
+    self.protocols = ['aaron-growth', 'growth-curve-generic', 'pcr-example', 'many-steps'];
 
     self.retrieve = function (protocol) {
       self.selectedProtocol = protocol;

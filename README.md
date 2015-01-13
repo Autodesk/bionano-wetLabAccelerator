@@ -4,6 +4,8 @@ Angular Transcriptic UI
 
 ### TODO
 
+- fix tx-refs --- losing class? 
+
 - pipette steps
   - verify mix
   - do transfer
@@ -20,6 +22,8 @@ Angular Transcriptic UI
 - enable sorting of steps (ui-sortable is easy)
 
 - fix tx-well blur issue
+
+- ability to pass in own credentials
 
 #### Pretty + Nice features
 
