@@ -1,5 +1,34 @@
-<div ng-form="transferForm">
+<div ng-form="transferForm"
+     ng-init="params = {from: '', volume: '50:microliter', dispense_speed: '100:microliter/second', aspirate_speed: '100:microliter/second'}">
 
-  todo!
+  <!-- may need controller to wrap up into an array ... see mix step + verify -->
+
+  <tx-well label="to"
+           ng-model="group"
+           multiple="true"
+           specify-container="true"
+           multiple-zip="params"
+           refs="protocol.refs"></tx-well>
+
+  <tx-well label="from"
+           ng-model="params.from"
+           specify-container="true"
+           refs="protocol.refs"></tx-well>
+
+  <tx-measure dimension-type="volume"
+              label="volume"
+              ng-model="params.volume"></tx-measure>
+
+  <tx-measure dimension-type="flowrate"
+              label="dispense_speed"
+              ng-model="params.dispense_speed"></tx-measure>
+
+  <tx-measure dimension-type="flowrate"
+              label="aspirate_speed"
+              ng-model="group.aspirate_speed"></tx-measure>
+
+  <tx-mixwrap ng-model="group.mix_before"></tx-mixwrap>
+
+  <tx-mixwrap ng-model="group.mix_after"></tx-mixwrap>
 
 </div>
