@@ -17,7 +17,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ui.sortable'
   ])
   .config(function ($routeProvider, AuthProvider) {
 

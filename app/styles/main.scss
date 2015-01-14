@@ -19,3 +19,7 @@ pre {
 *:focus {
   outline: none;
 }
+
+tx-instruction {
+  display: block; //for ui-sortable
+}

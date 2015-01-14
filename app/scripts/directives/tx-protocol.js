@@ -13,6 +13,15 @@ angular.module('transcripticApp')
       restrict: 'E',
       scope: {
         protocol: '='
+      },
+      link: function (scope, element, attrs) {
+        scope.sortableOptions = {
+          axis: 'y',
+          update: function (e, ui) {
+            //see https://github.com/angular-ui/ui-sortable/blob/master/API.md#uiitemsortable-api-documentation
+            console.log('update event!', ui);
+          }
+        }
       }
     };
   });

@@ -23,7 +23,6 @@ angular.module('transcripticApp').provider('Auth', function () {
       },
       set: function (val) {
         if (angular.isString(val)) {
-          console.log('setting email');
           email = val
         }
       }
@@ -34,7 +33,6 @@ angular.module('transcripticApp').provider('Auth', function () {
       },
       set: function (val) {
         if (angular.isString(val)) {
-          console.log('setting key');
           key = val
         }
       }
@@ -45,7 +43,6 @@ angular.module('transcripticApp').provider('Auth', function () {
       },
       set: function (val) {
         if (angular.isString(val)) {
-          console.log('setting organization');
           organization = val;
         }
       }
