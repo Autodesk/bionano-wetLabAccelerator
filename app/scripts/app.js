@@ -38,10 +38,15 @@ angular
         controller: 'DataCtrl',
         controllerAs: 'dataCtrl'
       })
-      .when('/refs', {
-        templateUrl: 'views/refs.html',
+      .when('/testing', {
+        templateUrl: 'views/testing.html',
         controller: 'RefsCtrl',
         controllerAs: 'refsCtrl'
+      })
+      .when('/auth', {
+        templateUrl: 'views/auth.html',
+        controller: 'AuthCtrl',
+        controllerAs: 'authCtrl'
       })
       .otherwise({
         redirectTo: '/'

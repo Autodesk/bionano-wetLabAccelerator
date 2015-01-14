@@ -4,13 +4,7 @@ Angular Transcriptic UI
 
 ### TODO
 
-- fix tx-refs --- losing class? 
-
-- pipette steps
-  - verify mix
-  - do transfer
-  
-- thermocycle step
+- fix tx-well binding for list (at least in transfer template)
 
 - support high level ordering API
 
@@ -20,10 +14,6 @@ Angular Transcriptic UI
   - scaffolds for each instruction? or just add required for templates?  
 
 - enable sorting of steps (ui-sortable is easy)
-
-- fix tx-well blur issue
-
-- ability to pass in own credentials
 
 #### Pretty + Nice features
 

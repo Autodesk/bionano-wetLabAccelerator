@@ -22,7 +22,10 @@ angular.module('transcripticApp').provider('Auth', function () {
         return email;
       },
       set: function (val) {
-        email = val
+        if (angular.isString(val)) {
+          console.log('setting email');
+          email = val
+        }
       }
     },
     key: {
@@ -30,7 +33,10 @@ angular.module('transcripticApp').provider('Auth', function () {
         return key;
       },
       set: function (val) {
-        key = val
+        if (angular.isString(val)) {
+          console.log('setting key');
+          key = val
+        }
       }
     },
     organization: {
@@ -38,22 +44,46 @@ angular.module('transcripticApp').provider('Auth', function () {
         return organization;
       },
       set: function (val) {
-        organization = val
+        if (angular.isString(val)) {
+          console.log('setting organization');
+          organization = val;
+        }
       }
     }
   });
 
   this.$get = function () {
+
+    var organization = function (newval) {
+      if (newval) { self.organization = newval; }
+      return self.organization;
+    };
+
+    var email = function (newval) {
+      if (newval) { self.email = newval; }
+      return self.email;
+    };
+
+    var key = function (newval) {
+      if (newval) { self.key = newval; }
+      return self.key;
+    };
+
+    //todo - closure issues / security?
+    var headers = function () {
+      return {
+        "X-User-Email": this.email,
+        "X-User-Token": this.key,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      };
+    };
+
     return {
-      "organization" : self.organization,
-      "headers" : function () {
-        return {
-          "X-User-Email": self.email,
-          "X-User-Token": self.key,
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        };
-      }
-    }
+      organization: organization,
+      key: key,
+      email: email,
+      headers: headers
+    };
   }
 });
