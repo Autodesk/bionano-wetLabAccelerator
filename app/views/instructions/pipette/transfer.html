@@ -9,7 +9,7 @@
    -->
 
   <tx-well label="to"
-           ng-model="group"
+           ng-model="groupObj[groupKey]"
            multiple="true"
            specify-container="true"
            multiple-zip="params"
@@ -31,10 +31,10 @@
 
   <tx-measure dimension-type="flowrate"
               label="aspirate_speed"
-              ng-model="group.aspirate_speed"></tx-measure>
+              ng-model="params.aspirate_speed"></tx-measure>
 
-  <tx-mixwrap ng-model="group.mix_before"></tx-mixwrap>
+  <tx-mixwrap ng-model="params.mix_before"></tx-mixwrap>
 
-  <tx-mixwrap ng-model="group.mix_after"></tx-mixwrap>
+  <tx-mixwrap ng-model="params.mix_after"></tx-mixwrap>
 
 </div>

@@ -2,8 +2,9 @@
      ng-controller="PipetteCtrl as pipeCtrl">
   <div class="panel panel-default"
        ng-repeat="groupDeclaration in instruction.groups track by $index"
-       ng-init="group = instruction.groups[$index][pipeCtrl.groupKey(groupDeclaration)]">
-    <!-- todo - update binding for array types, otherwise doesn't work-->
+       ng-init="groupKey = pipeCtrl.groupKey(groupDeclaration);
+                groupObj = instruction.groups[$index];
+                group = groupObj[groupKey]">
     <div class="panel-heading"
          ng-bind="pipeCtrl.groupKey(groupDeclaration)"></div>
     <div class="panel-body"
