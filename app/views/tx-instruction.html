@@ -1,10 +1,20 @@
 <div ng-form="InstForm"
      class="panel panel-default">
   <div class="panel-heading">
-    <button class="btn btn-default btn-sm pull-right"
-            ng-class="{'btn-primary' : showJson}"
-            ng-disabled="InstForm.InstJson.$error.json"
-            ng-click="showJson = !showJson">JSON</button>
+    <div class="btn-group btn-middle pull-right">
+      <button class="btn btn-default btn-sm"
+              ng-click="removeInstruction()">
+        <span class="glyphicon glyphicon-minus"></span>
+      </button>
+      <button class="btn btn-default btn-sm"
+              ng-click="duplicateInstruction()">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+      <button class="btn btn-default btn-sm"
+              ng-class="{'btn-primary' : showJson}"
+              ng-disabled="InstForm.InstJson.$error.json"
+              ng-click="showJson = !showJson">JSON</button>
+    </div>
     <h3 class="panel-title"
         ng-bind="instruction.op || 'INVALID'"></h3>
   </div>

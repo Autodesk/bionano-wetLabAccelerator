@@ -4,20 +4,21 @@ Angular Transcriptic UI
 
 ### TODO
 
-- fix tx-well binding for list (at least in transfer template)
+- fix tx-well binding (maybe all bindings - at least in transfer template)
+
+- enable addition of arbitrary instructions in protocol - drag and drop
+  - scaffolds for each instruction? or just add required for templates?
 
 - support high level ordering API
 
-- enable deletion / duplication of steps
-
-- enable addition of arbitrary instructions in protocol
-  - scaffolds for each instruction? or just add required for templates?  
-
-- enable sorting of steps (ui-sortable is easy)
+- list of containers, projects, etc. for side?
 
 #### Pretty + Nice features
 
-- allow passage of object as attrs for input in tx-measure -- need to support input[type] though
+- refactor tx-measure
+  - need to support input[type] + ideally other input attributes
+  - maybe as attribute directive? but need dropdown or something
+  - allow passage of object as attrs for input?
     
 - better well UI
 

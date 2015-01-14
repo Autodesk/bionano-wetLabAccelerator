@@ -21,6 +21,14 @@ angular.module('transcripticApp')
         scope.containers = scope.protocol.refs;
 
         scope.storageOptions = StorageOptions.storage;
+
+        scope.removeInstruction = function () {
+          scope.protocol.instructions.splice(scope.instructionIndex, 1);
+        };
+
+        scope.duplicateInstruction = function () {
+          scope.protocol.instructions.splice(scope.instructionIndex, 0, angular.copy(scope.instruction));
+        };
       }
     };
   });
