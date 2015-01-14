@@ -17,7 +17,8 @@ angular.module('transcripticApp')
     self.retrieve = function (protocol) {
       self.selectedProtocol = protocol;
       $http.get('demo_protocols/' + protocol + '.json').success(function(data) {
-        self.exampleProtocol = new ProtocolFactory(data);
+        //self.exampleProtocol = new ProtocolFactory(data);
+        self.exampleProtocol = data;
       });
     };
 

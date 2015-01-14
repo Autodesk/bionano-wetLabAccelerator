@@ -16,9 +16,11 @@ angular.module('transcripticApp')
         instructions: []
       }, input);
 
+      /*
       angular.forEach(this.refs, function (ref, key) {
         this.refs[key] = new RefFactory(ref);
       }.bind(this));
+      */
     }
 
     Protocol.prototype.addInstruction = function (inst) {

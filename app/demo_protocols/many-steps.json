@@ -1,9 +1,28 @@
 {
   "refs" : {
-    "water" : {},
-    "plate0": {},
-    "plate1": {},
-    "my_plate": {}
+    "water" : {
+      "new": "96-deep",
+      "store": {
+        "where": "warm_37"
+      }
+    },
+    "plate0": {
+      "new": "96-deep",
+      "store": {
+        "where": "warm_37"
+      }},
+    "plate1": {
+      "new": "96-deep",
+      "store": {
+        "where": "warm_37"
+      }
+    },
+    "my_plate": {
+      "new": "96-deep",
+      "store": {
+        "where": "warm_37"
+      }
+    }
   },
   "instructions" : [
     {"op": "pipette",

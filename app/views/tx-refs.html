@@ -5,9 +5,11 @@
   </div>
   <div class="list-group">
     <div class="list-group-item"
-         ng-class="{'list-group-item-warning' : !ref.isValid()}"
          ng-repeat="(key, ref) in refs track by key"
-         ng-init="pseudoKey = key; pseudoStore = ref.discard ? discardKey : ref.store.where">
+         ng-class="{'list-group-item-warning' : !refIsValid(ref)}"
+         ng-init="pseudoKey = key;
+                  pseudoStore = !!ref.discard ? discardKey : ref.store.where;
+                  pseudoNew = refIsNew(ref)">
       <div class="form-group">
         <div contenteditable
              strip-br="true"
@@ -22,18 +24,18 @@
           <div class="input-group">
             <span class="input-group-addon">container</span>
             <select class="form-control"
-                    ng-if="ref.isNew()"
+                    ng-if="refIsNew(ref)"
                     ng-options="c as info.name for (c, info) in containerOptions"
                     ng-model="ref.new"></select>
             <select class="form-control"
-                    ng-if="!ref.isNew()"
+                    ng-if="!refIsNew(ref)"
                     ng-options="c.id as (c.label || c.id) for c in containers"
                     ng-model="ref.id"></select>
             <span class="input-group-addon">
               <label>
                 <input type="checkbox"
-                       ng-model="ref.isNew"
-                       ng-model-options="{getterSetter: true}">
+                       ng-model="pseudoNew"
+                       ng-change="refIsNew(ref, pseudoNew)">
                 New?
               </label>
             </span>
@@ -46,7 +48,7 @@
             <select class="form-control"
                     ng-options="o for o in storageOptions"
                     ng-model="pseudoStore"
-                    ng-change="ref.changeStorage(pseudoStore)"></select>
+                    ng-change="changeStorage(ref, pseudoStore)"></select>
           </div>
         </div>
       </div>
