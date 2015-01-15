@@ -55,5 +55,16 @@ angular.module('transcripticApp')
       });
     };
 
+    this.runIsValid = function () {
+      return !!this.project && !_.isEmpty(this.exampleProtocol) && !!this.runTitle;
+    };
+
+    this.addProject = function (name) {
+      Project.create({}, {name: name}).$promise.
+      then(function () {
+        self.projects = Project.list();
+      });
+    };
+
     this.projects = Project.list();
   });

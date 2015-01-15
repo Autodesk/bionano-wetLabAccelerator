@@ -1,52 +1,84 @@
-<div class="pagination pagination-sm">
-  <li ng-repeat="p in mainCtrl.protocols"
-      ng-class="{'active' : p == mainCtrl.selectedProtocol}">
-    <a ng-bind="p"
-       ng-click="mainCtrl.retrieve(p)"></a>
-  </li>
+<div class="col-md-4 col-lg-3">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Projects
+      <button class="btn btn-default btn-sm btn-middle pull-right"
+              ng-class="{'btn-primary' : showNewProject}"
+              ng-click="showNewProject = !showNewProject">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+    </div>
+    <div class="list-group">
+      <div class="list-group-item"
+           ng-show="showNewProject">
+        <div class="input-group">
+          <input type="text"
+                 class="form-control"
+                 ng-model="newProjectName">
+          <div class="input-group-btn">
+            <button class="btn btn-default"
+                    ng-disabled="!newProjectName"
+                    ng-click="mainCtrl.addProject(newProjectName); newProjectName = ''; showNewProject = false;">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="list-group-item"
+           ng-repeat="p in mainCtrl.projects"
+           ng-click="mainCtrl.project = p.url"
+           ng-class="{'active' : p.url == mainCtrl.project}"
+           ng-bind="p.name"></div>
+    </div>
+  </div>
 </div>
 
-<form class="form-inline">
-  <div class="form-group">
-    <div class="input-group">
-      <span class="input-group-addon">Project</span>
-      <select class="form-control"
-              ng-options="p.url as p.name for p in mainCtrl.projects"
-              ng-model="mainCtrl.project"></select>
+<div class="col-md-8 col-lg-9">
+  <div class="pagination pagination-sm">
+    <li ng-repeat="p in mainCtrl.protocols"
+        ng-class="{'active' : p == mainCtrl.selectedProtocol}">
+      <a ng-bind="p"
+         ng-click="mainCtrl.retrieve(p)"></a>
+    </li>
+  </div>
+
+  <form class="form-inline">
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Run Title</span>
+        <input type="text"
+               class="form-control"
+               ng-model="mainCtrl.runTitle">
+      </div>
+    </div>
+
+    <div class="btn-group"
+         tooltip="{{mainCtrl.runIsValid() ? '' : 'select a project + run title'}}"
+         tooltip-append-to-body="true">
+      <button class="btn btn-primary"
+              ng-disabled="!mainCtrl.runIsValid()"
+              ng-click="mainCtrl.analyze()">Verify Run</button>
+      <button class="btn btn-primary"
+              ng-disabled="!mainCtrl.runIsValid()"
+              ng-click="mainCtrl.submit()">Submit Run</button>
+    </div>
+  </form>
+
+  <div ng-show="response"
+       class="alert"
+       style="margin-top: 10px"
+       ng-class="{'alert-success' : !error, 'alert-warning' : error}">
+    <div ng-show="!error">
+      Protocol successful!
+    </div>
+    <div ng-show="error">
+      Uh oh! There was an error:
+      <pre ng-bind="response | json"></pre>
     </div>
   </div>
 
-  <div class="form-group">
-    <div class="input-group">
-      <span class="input-group-addon">Run Title</span>
-      <input type="text"
-             class="form-control"
-             ng-model="mainCtrl.runTitle">
-    </div>
-  </div>
+  <hr>
 
-<div class="btn-group">
-  <button class="btn btn-primary"
-          ng-disabled="!mainCtrl.project || !mainCtrl.exampleProtocol || !mainCtrl.runTitle"
-          ng-click="mainCtrl.analyze()">Verify Run</button>
-  <button class="btn btn-primary"
-          ng-disabled="!mainCtrl.project || !mainCtrl.exampleProtocol || !mainCtrl.runTitle"
-          ng-click="mainCtrl.submit()">Submit Run</button>
+  <tx-protocol protocol="mainCtrl.exampleProtocol"></tx-protocol>
+
 </div>
-</form>
-
-<div ng-show="response"
-     class="alert"
-     ng-class="{'alert-success' : !error, 'alert-warning' : error}">
-  <div ng-show="!error">
-    Protocol successful!
-  </div>
-  <div ng-show="error">
-    Uh oh! There was an error:
-    <pre ng-bind="response | json"></pre>
-  </div>
-</div>
-
-<hr>
-
-<tx-protocol protocol="mainCtrl.exampleProtocol"></tx-protocol>
