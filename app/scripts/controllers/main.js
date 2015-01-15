@@ -39,7 +39,7 @@ angular.module('transcripticApp')
         processing: true
       };
 
-      Run[func]({project : self.project}, constructRunPayload()).$promise.
+      Run[func]({project : self.project.url}, constructRunPayload()).$promise.
       then(function runSuccess (d) {
         angular.extend($scope[scopeToModify], {
           processing: false,
@@ -63,13 +63,4 @@ angular.module('transcripticApp')
     this.canSubmitRun = function () {
       return !!this.project && !_.isEmpty(this.exampleProtocol) && !!this.runTitle;
     };
-
-    this.addProject = function (name) {
-      Project.create({}, {name: name}).$promise.
-      then(function () {
-        self.projects = Project.list();
-      });
-    };
-
-    this.projects = Project.list();
   });

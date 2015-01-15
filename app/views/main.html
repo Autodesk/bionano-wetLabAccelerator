@@ -1,36 +1,5 @@
 <div class="col-md-3">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Projects
-      <button class="btn btn-default btn-sm btn-middle pull-right"
-              ng-class="{'btn-primary' : showNewProject}"
-              ng-click="showNewProject = !showNewProject">
-        <span class="glyphicon glyphicon-plus"></span>
-      </button>
-    </div>
-    <div class="list-group">
-      <div class="list-group-item"
-           ng-show="showNewProject">
-        <div class="input-group">
-          <input type="text"
-                 class="form-control"
-                 ng-model="newProjectName">
-          <div class="input-group-btn">
-            <button class="btn btn-default"
-                    ng-disabled="!newProjectName"
-                    ng-click="mainCtrl.addProject(newProjectName); newProjectName = ''; showNewProject = false;">
-              <span class="glyphicon glyphicon-plus"></span>
-            </button>
-          </div>
-        </div>
-      </div>
-      <a class="list-group-item"
-         ng-repeat="p in mainCtrl.projects"
-         ng-click="mainCtrl.project = p.url"
-         ng-class="{'active' : p.url == mainCtrl.project}"
-         ng-bind="p.name"></a>
-    </div>
-  </div>
+  <tx-projectlist ng-model="mainCtrl.project"></tx-projectlist>
 </div>
 
 <div class="col-md-9">

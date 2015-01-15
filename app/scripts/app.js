@@ -49,6 +49,11 @@ angular
         controller: 'AuthCtrl',
         controllerAs: 'authCtrl'
       })
+      .when('/ordering', {
+        templateUrl: 'views/ordering.html',
+        controller: 'OrderingCtrl',
+        controllerAs: 'orderCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

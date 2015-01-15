@@ -1,0 +1,44 @@
+<div class="col-md-3">
+  <tx-projectlist ng-model="orderCtrl.project"></tx-projectlist>
+</div>
+
+<div class="col-md-9">
+  <div class="pagination pagination-sm">
+    <li ng-repeat="t in orderCtrl.orderingOptions"
+        ng-class="{'active' : t == orderCtrl.orderType}">
+      <a ng-bind="t"
+         ng-click="orderCtrl.orderType = t"></a>
+    </li>
+  </div>
+
+  <form class="form-inline">
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Project</span>
+        <select class="form-control"
+                ng-options="p.url as p.name for p in orderCtrl.projects"
+                ng-model="orderCtrl.project"></select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Order Title</span>
+        <input type="text"
+               class="form-control"
+               ng-model="orderCtrl.orderTitle">
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary"
+              ng-disabled="!orderCtrl.project || !orderCtrl.orderTitle"
+              ng-click="orderCtrl.analyze()">Price it!</button>
+  </div>
+  </form>
+
+  <pre ng-bind="orderCtrl.order | json"></pre>
+
+  <tx-order order="orderCtrl.order"
+            order-type="orderCtrl.orderType"></tx-order>
+</div>

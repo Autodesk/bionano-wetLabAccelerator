@@ -23,6 +23,8 @@ To get it running you'll need to install (might need to sudo):
 
 - abstraction for project / container etc. lists so all update when changed
 
+- upgrade to angular 1.4 (longer-term) ??
+
 #### Pretty + Nice features
 
 - refactor tx-measure
