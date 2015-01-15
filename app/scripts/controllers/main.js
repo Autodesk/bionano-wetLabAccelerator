@@ -31,31 +31,36 @@ angular.module('transcripticApp')
       }
     }
 
-    this.submit = function () {
-      Run.submit({project : self.project}, constructRunPayload()).$promise.
-      then(function (d) {
-        console.log(d);
-        $scope.error = false;
-        $scope.response = d;
-      }, function (e) {
-        $scope.error = true;
-        $scope.response = e.data.protocol;
-      });
-    };
+    function runOrSubmitWrap (toRun) {
+      var func = !!toRun ? 'submit' : 'analyze' ,
+          scopeToModify = !!toRun ? 'runResponse' : 'analysisResponse';
 
-    this.analyze = function () {
-      Run.analyze({project : self.project}, constructRunPayload()).$promise.
-      then(function (d) {
-        console.log(d);
-        $scope.error = false;
-        $scope.response = d;
-      }, function (e) {
-        $scope.error = true;
-        $scope.response = e.data.protocol;
-      });
-    };
+      $scope[scopeToModify] = {
+        processing: true
+      };
 
-    this.runIsValid = function () {
+      Run[func]({project : self.project}, constructRunPayload()).$promise.
+      then(function runSuccess (d) {
+        angular.extend($scope[scopeToModify], {
+          processing: false,
+          error: false,
+          response: d
+        });
+        console.log(d);
+      }, function runFailure (e) {
+        angular.extend($scope[scopeToModify], {
+          processing: false,
+          error: true,
+          response: e.data.protocol
+        });
+        console.log(e);
+      });
+    }
+
+    this.analyze = angular.bind(self, runOrSubmitWrap, false);
+    this.submit = angular.bind(self, runOrSubmitWrap, true);
+
+    this.canSubmitRun = function () {
       return !!this.project && !_.isEmpty(this.exampleProtocol) && !!this.runTitle;
     };
 

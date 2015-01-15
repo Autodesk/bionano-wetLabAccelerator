@@ -35,7 +35,7 @@ angular.module('transcripticApp')
         //might make sense to abstract this into directive if use elsewhere e.g. for data
         scope.downloadJson = function () {
           var a = document.createElement("a"),
-              blob = new Blob([angular.toJson(scope.protocol, true)], {type: "application/json"});
+              blob = new Blob([angular.toJson(scope.protocol, true)], {type: "application/json"}),
               url = $window.URL.createObjectURL(blob);
 
           a.style = "display: none";
