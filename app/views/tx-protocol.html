@@ -4,12 +4,16 @@
   <div class="panel-heading">
     <div class="btn-group btn-middle pull-right">
       <button class="btn btn-default btn-sm"
+              tooltip="Toggle visibility of all steps"
+              tooltip-append-to-body="true"
               ng-click="toggleInstructionCollapsed()">
         <span class="glyphicon"
               ng-class="{'glyphicon-eye-open' : allVisible, 'glyphicon-eye-close' : !allVisible}"></span>
       </button>
       <button class="btn btn-default btn-sm"
          ng-disabled="ProtocolForm.ProtocolJsonEditor.$error.json"
+         tooltip="Download Protocol"
+         tooltip-append-to-body="true"
          ng-click="downloadJson()">
         <span class="glyphicon glyphicon-download"></span>
       </button>

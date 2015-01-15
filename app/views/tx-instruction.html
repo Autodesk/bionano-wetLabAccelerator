@@ -4,15 +4,21 @@
   <div class="panel-heading">
     <div class="btn-group btn-middle pull-right">
       <button class="btn btn-default btn-sm"
+              tooltip="Toggle visibility"
+              tooltip-append-to-body="true"
               ng-click="showStep = !showStep">
         <span class="glyphicon"
               ng-class="{'glyphicon-eye-open' : showStep, 'glyphicon-eye-close' : !showStep}"></span>
       </button>
       <button class="btn btn-default btn-sm"
+              tooltip="Delete"
+              tooltip-append-to-body="true"
               ng-click="removeInstruction()">
         <span class="glyphicon glyphicon-minus"></span>
       </button>
       <button class="btn btn-default btn-sm"
+              tooltip="Duplicate"
+              tooltip-append-to-body="true"
               ng-click="duplicateInstruction()">
         <span class="glyphicon glyphicon-plus"></span>
       </button>

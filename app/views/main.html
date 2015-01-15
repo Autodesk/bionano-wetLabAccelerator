@@ -24,11 +24,11 @@
           </div>
         </div>
       </div>
-      <div class="list-group-item"
-           ng-repeat="p in mainCtrl.projects"
-           ng-click="mainCtrl.project = p.url"
-           ng-class="{'active' : p.url == mainCtrl.project}"
-           ng-bind="p.name"></div>
+      <a class="list-group-item"
+         ng-repeat="p in mainCtrl.projects"
+         ng-click="mainCtrl.project = p.url"
+         ng-class="{'active' : p.url == mainCtrl.project}"
+         ng-bind="p.name"></a>
     </div>
   </div>
 </div>

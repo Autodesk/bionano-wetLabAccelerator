@@ -10,23 +10,18 @@ To get it running you'll need to install (might need to sudo):
 - in this directory: `npm install && bower install`
 - run the server: `grunt serve`
 
-
 ### TODO
 
 - enable addition of arbitrary instructions in protocol - drag and drop
   - scaffolds for each instruction? or just add required for templates?
 
-- support high level ordering API
+- required fields + UI feedback
 
-- list of containers, projects, etc. for side?
+- support high level ordering API
 
 - json editor - have a save so that model doesn't reposition cursor, but need to validate
 
-- ability to download JSON
-
-- more complete pricing / verification
-
-- accordion
+- abstraction for project / container etc. lists so all update when changed
 
 #### Pretty + Nice features
 
@@ -36,6 +31,11 @@ To get it running you'll need to install (might need to sudo):
   - allow passage of object as attrs for input?
 
 - better well UI
+
+- ability to drop in new JSON 
+- copy JSON like bootstrap
+
+- UI for making aliquots?
 
 - move away from selects to some other dropdown?
 
