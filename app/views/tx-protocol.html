@@ -1,4 +1,6 @@
-<div ng-form="ProtocolForm" class="panel panel-info">
+<div ng-form="ProtocolForm"
+     class="panel panel-info"
+     ng-init="showJson = false">
   <div class="panel-heading">
     <button class="btn btn-default btn-sm btn-middle pull-right"
             ng-class="{'btn-primary' : showJson}"
@@ -20,6 +22,7 @@
 
   <pre json-editor
        contenteditable
+       json-editor-active="{{showJson}}"
        ng-show="showJson"
        name="ProtocolJsonEditor"
        ng-model="protocol"></pre>

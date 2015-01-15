@@ -1,5 +1,6 @@
 <div ng-form="InstForm"
-     class="panel panel-default">
+     class="panel panel-default"
+     ng-init="showJson = false">
   <div class="panel-heading">
     <div class="btn-group btn-middle pull-right">
       <button class="btn btn-default btn-sm"
@@ -24,6 +25,7 @@
 
   <pre json-editor
        contenteditable
+       json-editor-active="{{showJson}}"
        ng-show="showJson"
        name="InstJson"
        ng-model="instruction"></pre>

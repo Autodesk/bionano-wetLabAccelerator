@@ -17,6 +17,7 @@ angular.module('transcripticApp')
       link: function (scope, element, attrs) {
         scope.sortableOptions = {
           axis: 'y',
+          handle: '.panel-heading',
           update: function (e, ui) {
             //see https://github.com/angular-ui/ui-sortable/blob/master/API.md#uiitemsortable-api-documentation
             console.log('update event!', ui);

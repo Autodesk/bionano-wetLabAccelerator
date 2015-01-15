@@ -8,6 +8,9 @@
  * Invalid JSON will set the value to undefined.
  * It is recommended you do not allow saving etc. while this field is invalid.
  * Handles validation under the `json` attribute.
+ *
+ * Attribute json-editor-active (one-way binding) can be used to toggle the model check.
+ * Use for performance
  * @example
 
     <form name="myForm">
@@ -23,19 +26,55 @@ angular.module('transcripticApp').directive('jsonEditor', function () {
 		require: 'ngModel',
 		link: function (scope, element, attrs, ngModelCtrl) {
 
-      // Listen for model changes
-      // $render not triggered unless both viewValue and $modelValue change
-      // but because its an object and not deep-checked, do it ourselves
-      scope.$watch(function () {
-        return ngModelCtrl.$modelValue;
-      }, function (newval) {
-        if (_.isEmpty(newval)) return;
+      var unwatch = angular.noop;
 
-        //under assumption that model only set when valid
-        ngModelCtrl.$setValidity('json', true);
-        ngModelCtrl.$setViewValue(angular.toJson(newval, true));
-        ngModelCtrl.$render()
-      }, true);
+      //hack - need to run $parser after have model, used for jsonEditorActive
+      // otherwise using bindOnce for model watch cancelled by jsonEditorActive before runs
+      var initialModelSet = false;
+
+      if (angular.isDefined(attrs.jsonEditorActive)) {
+        setupToggledModelWatch();
+      } else {
+        setupModelWatch();
+      }
+
+      function setupModelWatch(bindOnce) {
+        // Listen for model changes
+        // $render not triggered unless both viewValue and $modelValue change
+        // but because its an object and not deep-checked, do it ourselves
+        //for performance reasons, recommend you use the attr.jsonEditorActive
+        unwatch = scope.$watch(function () {
+          return ngModelCtrl.$modelValue;
+        }, function (newval) {
+          if (_.isEmpty(newval)) return;
+
+          initialModelSet = true;
+
+          //under assumption that model only set when valid
+          ngModelCtrl.$setValidity('json', true);
+          ngModelCtrl.$setViewValue(angular.toJson(newval, true));
+          ngModelCtrl.$render();
+
+          !!bindOnce && unwatch();
+        }, true);
+      }
+
+      function setupToggledModelWatch () {
+        scope.$watch(function () {
+          return scope.$eval(attrs.jsonEditorActive);
+        }, function (newval) {
+          if (!!newval) {
+            setupModelWatch();
+          } else {
+            initialModelSet && unwatch();
+          }
+        });
+
+        //set up an initial watch if we're inactive to start, using hack initialModelSet
+        if ( ! scope.$eval(attrs.jsonEditorActive) ) {
+          setupModelWatch(true);
+        }
+      }
 
       //need to do validation here, because validator is passed the model, which will not work for strings -- i.e. passing "" here will work, but when parsed to validator quotes will be stripped
       function string2JSON(text) {
