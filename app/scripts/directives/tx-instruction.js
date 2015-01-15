@@ -29,6 +29,10 @@ angular.module('transcripticApp')
         scope.duplicateInstruction = function () {
           scope.protocol.instructions.splice(scope.instructionIndex, 0, angular.copy(scope.instruction));
         };
+
+        scope.$on('instruction:toggleVisible', function (event, visible) {
+          scope.showStep = !!visible;
+        })
       }
     };
   });

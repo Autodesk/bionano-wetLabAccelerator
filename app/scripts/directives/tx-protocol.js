@@ -25,6 +25,13 @@ angular.module('transcripticApp')
           }
         };
 
+        scope.allVisible = true;
+
+        scope.toggleInstructionCollapsed = function () {
+          scope.allVisible = !scope.allVisible;
+          scope.$broadcast('instruction:toggleVisible', scope.allVisible)
+        };
+
         //might make sense to abstract this into directive if use elsewhere e.g. for data
         scope.downloadJson = function () {
           var a = document.createElement("a"),
