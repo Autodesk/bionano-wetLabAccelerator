@@ -13,22 +13,29 @@ To get it running you'll need to install (might need to sudo):
 ### TODO
 
 - adding instructions
-  - ability to add to pipette, thermocycle templates
-  - scaffolds for each instruction as defaults????
+  - ability to add thermocycle templates
+  - scaffolds for each instruction as defaults?
   
 - thermocycle template clean up
 
-- json editor - have a save so that model doesn't reposition cursor, but need to validate
-
-- ngMessages support
-
-- upgrade to angular 1.4 (longer-term) ??
+- json editor 
+  - have a save so that model doesn't reposition cursor, but still validate each key
+  - ability to drop in new JSON (requires filereader... not too hard though)
+  - copy JSON like bootstrap docs (see https://github.com/blog/1365-a-more-transparent-clipboard-button)
+  
+- clean up dirty checks 
+  - get tool for assessing perf?
+  - tx-well when click JSON for protocol
+  - tx-protocol when changing protocl
 
 #### Pretty + Nice features
 
+- add in notes / catches etc.
+  - ngMessages for errors / warnings. in addition to just red boxes
+
 - abstraction for project / container etc. lists so all update when changed
 
-- simlpe-sticky jank on element resizing
+- simlpe-sticky jank on element resizing / ability to pin to another element
 
 - refactor tx-measure
   - need to support input[type] + ideally other input attributes
@@ -39,16 +46,11 @@ To get it running you'll need to install (might need to sudo):
 
 - smart checks for covers, seals, etc.
 
-- ability to drop in new JSON 
-- copy JSON like bootstrap
-
 - UI for making aliquots?
 
 - move away from selects to some other dropdown?
 
-- add in notes / catches etc., 
-  - ngMessages for errors / warnings. 
-  - Better required / optional markers
+- upgrade to angular 1.4 (longer-term) ??
 
 - google analytics
 

@@ -3,8 +3,7 @@
                         speed: '100:microliter/second',
                         repetitions: 10}">
 
-  <tx-well label="from"
-           ng-model="groupObj[groupKey]"
+  <tx-well ng-model="instruction.groups[$index][pipeCtrl.groupKey(groupDeclaration)]"
            multiple="true"
            specify-container="true"
            multiple-zip="params"
@@ -21,6 +20,7 @@
 
   <tx-inputwrap label="reps">
     <input type="number"
+           class="form-control"
            ng-model="params.repetitions">
   </tx-inputwrap>
 </div>

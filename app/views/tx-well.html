@@ -1,14 +1,17 @@
 <div class="input-group"
-     ng-class="{'has-error': !internal.wells.length}">
+     ng-form="wellForm"
+     ng-class="{'has-error': wellForm.$invalid}">
   <span ng-bind="label ? label : (!!multiple ? 'wells' : 'well')"
         class="input-group-addon"></span>
   <select class="form-control"
           ng-if="specifyContainer"
+          ng-required="specifyContainer"
           style="width: 30%"
           ng-options="r as r for (r, details) in refs"
           ng-model="internal.container"></select>
   <input type="text"
          ng-model="internal.wells"
+         required
          ng-list
          ng-style="{'width' : specifyContainer ? '70%' : null}"
          class="form-control">

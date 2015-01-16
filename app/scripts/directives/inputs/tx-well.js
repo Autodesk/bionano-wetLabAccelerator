@@ -19,6 +19,7 @@
 //todo - add required flags
 //todo - validation (and therefore passage of container)
 //todo - alphanumeric <--> numeric conversion
+//todo - this is all getting kinda hacky, esp in dealing with potentially empty models (fixme)
 angular.module('transcripticApp')
   .directive('txWell', function () {
 
@@ -62,12 +63,18 @@ angular.module('transcripticApp')
 
     //todo - checks to make sure all same container + otherFields
     function parseContainerWellObjects (input, otherFields, forceKey) {
+
+      if (_.isEmpty(input)) { return {}; }
+
+      console.log(input);
+
       var wells = [],
           container,
           otherKeys = Object.keys(otherFields),
           otherValues = {};
 
-      input.forEach(function (wellObj, index) {
+      //todo - better error handling
+      angular.forEach(input, function (wellObj, index) {
         var split = splitContainerWell(wellObj[forceKey]);
 
         if (index == 0) {
@@ -114,14 +121,13 @@ angular.module('transcripticApp')
       link: function postLink(scope, element, attrs, ngModel) {
 
         //set up inheritance
-        scope.internal = {};
+        scope.internal = {wells: [], container: ''};
 
-        //hack
         var forceKey = angular.isDefined(attrs.multipleParseKey) ? attrs.multipleParseKey : 'well';
 
         //deep watch, propagate up changes
         scope.$watch('internal', function (newval) {
-          if (angular.isUndefined(newval.wells) || newval.wells.length == 0) return;
+          if (_.isEmpty(newval) || angular.isUndefined(newval.wells) || newval.wells.length == 0) return;
 
           //set as an array
           if (scope.multiple) {
@@ -145,7 +151,7 @@ angular.module('transcripticApp')
         }, true);
 
         scope.$watch('externalModel', function (newval) {
-          if (!newval) return;
+          if (_.isEmpty(newval)) return;
 
           if (!!scope.multiple && !!scope.specifyContainer) {
             var parsed = parseContainerWellObjects(newval, scope.multipleZip, forceKey);
@@ -159,7 +165,7 @@ angular.module('transcripticApp')
 
         scope.$watch('multipleZip', function (newval) {
           if (!newval) return;
-          if (!scope.internal.container || !scope.internal.wells) return;
+          if (_.isEmpty(scope.internal) || !scope.internal.container || !scope.internal.wells) return;
 
           ngModel.$setViewValue(multipleWellsToObjects(scope.internal.container, scope.internal.wells, newval, forceKey));
         }, true);

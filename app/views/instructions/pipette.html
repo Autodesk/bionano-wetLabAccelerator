@@ -1,13 +1,33 @@
 <div ng-form="pipetteForm"
      ng-controller="PipetteCtrl as pipeCtrl">
+
+  <div class="pipette-instructions"
+       ui-sortable="pipeCtrl.sortableInstructions"
+       ng-model="instruction.groups">
+    <div class="panel panel-default drag-handle"
+         ng-repeat="groupDeclaration in instruction.groups"
+         ng-init="groupKey = pipeCtrl.groupKey(groupDeclaration);
+                  groupObj = instruction.groups[$index];
+                  group = groupObj[groupKey]">
+      <div class="panel-heading"
+           ng-bind="pipeCtrl.groupKey(groupDeclaration)"></div>
+      <div class="panel-body"
+           ng-include="pipeCtrl.groupUrl(groupDeclaration)"></div>
+    </div>
+  </div>
+
+
   <div class="panel panel-default"
-       ng-repeat="groupDeclaration in instruction.groups track by $index"
-       ng-init="groupKey = pipeCtrl.groupKey(groupDeclaration);
-                groupObj = instruction.groups[$index];
-                group = groupObj[groupKey]">
-    <div class="panel-heading"
-         ng-bind="pipeCtrl.groupKey(groupDeclaration)"></div>
-    <div class="panel-body"
-         ng-include="pipeCtrl.groupUrl(groupDeclaration)"></div>
+       ng-init="showAdditions = false"
+       ng-mouseenter="showAdditions = true"
+       ng-mouseleave="showAdditions = false">
+    <div class="panel-heading">Add Pipette Step</div>
+    <div class="list-group"
+         ng-show="showAdditions">
+      <a class="list-group-item"
+         ng-repeat="pi in pipeCtrl.pipetteInstructions"
+         ng-bind="pi"
+         ng-click="pipeCtrl.addPipetteInstruction(pi)"></a>
+    </div>
   </div>
 </div>

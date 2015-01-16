@@ -16,7 +16,7 @@ angular.module('transcripticApp').constant('InstructionOptions', {
   "pipette" : {},
 
   /*
-  //ignoring these, make available only in pipette
+  //ignoring these, make available only in pipette controller
   "transfer" : {},
   "distribute" : {},
   "consolidate" : {},

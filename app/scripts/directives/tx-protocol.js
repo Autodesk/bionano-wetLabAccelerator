@@ -30,7 +30,8 @@ angular.module('transcripticApp')
 
         scope.instructionSortableOptions = {
           axis: 'y',
-          handle: '.panel-heading'
+          scroll: true,
+          handle: '.drag-handle'
         };
 
         scope.newSortableOptions = {
