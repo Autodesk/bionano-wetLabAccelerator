@@ -25,10 +25,10 @@
       <div class="btn-group"
            tooltip="{{mainCtrl.canSubmitRun() ? '' : 'select a project + run title'}}"
            tooltip-append-to-body="true">
-        <button class="btn btn-primary"
+        <button class="btn btn-info"
                 ng-disabled="!mainCtrl.canSubmitRun()"
                 ng-click="mainCtrl.analyze()">Verify + Price</button>
-        <button class="btn btn-primary"
+        <button class="btn btn-info"
                 ng-disabled="!mainCtrl.canSubmitRun()"
                 ng-click="mainCtrl.submit()">Submit</button>
       </div>

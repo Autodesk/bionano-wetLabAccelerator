@@ -16,12 +16,7 @@ To get it running you'll need to install (might need to sudo):
   - ability to add to pipette, thermocycle templates
   - scaffolds for each instruction as defaults????
   
-- thermocycle template
-
-- directive for response to order / run
-  - abstract so can pass in strings dep on type
-  - link to transcriptic page
-  - ability to toggle rest of alert by clicking corner
+- thermocycle template clean up
 
 - json editor - have a save so that model doesn't reposition cursor, but need to validate
 

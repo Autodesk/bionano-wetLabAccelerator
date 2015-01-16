@@ -10,8 +10,10 @@
 angular.module('transcripticApp')
   .service('Communication', function (Auth) {
 
+    this.transcripticRoot = "https://secure.transcriptic.com/";
+
     //default
-    //this.root = "https://secure.transcriptic.com/";
+    //this.root = this.transcripticRoot;
 
     //proxy
     this.root = "/transcriptic/";

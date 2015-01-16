@@ -21,13 +21,23 @@
  * textError {String} text displayed when error != true
  */
 angular.module('transcripticApp')
-  .directive('txRequestresponse', function () {
+  .directive('txRequestresponse', function (Auth, Communication) {
     return {
       templateUrl: 'views/tx-requestresponse.html',
       restrict: 'E',
       scope: {
         config: '=',
         response: '='
+      },
+      link: function (scope, element, attrs) {
+        scope.transcripticLink = function () {
+          if (_.isEmpty(scope.response) || !scope.response.id) { return null; }
+
+          return Communication.transcripticRoot +
+            Auth.organization() +
+            '/' + scope.response.project.url +
+            '/runs/' + scope.response.id;
+        }
       }
     };
   });

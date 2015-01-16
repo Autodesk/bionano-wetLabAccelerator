@@ -2,10 +2,19 @@
      class="alert protocol-response"
      ng-class="{'alert-success' : !config.error,
                 'alert-warning' : config.error}">
-  <span class="text-corner"
-        ng-click="hideResponse = !hideResponse">
-    {{config.type}}
-  </span>
+  <div class="corner-group">
+    <a class="btn btn-sm"
+       ng-if="response.id"
+       ng-href="{{transcripticLink()}}">
+      Visit Transcriptic
+    </a>
+    <a class="btn btn-sm"
+       tooltip="Toggle Visible"
+       tooltip-append-to-body="true"
+       ng-click="hideResponse = !hideResponse">
+      {{config.type}}
+    </a>
+  </div>
   <div ng-hide="hideResponse">
     <div ng-show="config.processing">
       {{config.textProcessing}}

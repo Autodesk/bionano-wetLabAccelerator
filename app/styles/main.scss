@@ -3,6 +3,8 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+// all the misc stuff
+
 [contenteditable] {
   cursor: pointer;
 }
@@ -20,39 +22,19 @@ pre {
   outline: none;
 }
 
-tx-instruction {
-  display: block; //for ui-sortable
-
-  .panel-heading {
-    cursor: all-scroll;
-  }
-}
-
-.btn-corner,
-.text-corner {
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  display: block;
-  padding: 5px 8px;
-  font-size: 12px;
-  color: #777;
-  background-color: #fff;
-  border: 1px solid #e1e1e8;
-  border-radius: 0 4px 0 4px;
-}
-
-.btn-corner {
-  cursor: pointer;
-
-  &:hover {
-    color: #fff;
-    background-color: #563d7c;
-    border-color: #563d7c;
-  }
+.drag-handle {
+  cursor: all-scroll;
 }
 
 .protocol-response {
   position: relative;
-
 }
+
+[ng-click] {
+  cursor: pointer;
+}
+
+//imports
+
+@import 'corner';
+@import 'tx-instruction';

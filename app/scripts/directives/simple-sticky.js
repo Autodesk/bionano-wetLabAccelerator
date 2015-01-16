@@ -72,6 +72,7 @@ angular.module('transcripticApp')
             handleAffixing(shouldAffix);
           } else {
             //fixme - get a lot of jank
+            //todo - attr.alignWith to give element to match?
             //startFromTop = calcStartFromTop(element[0]);
           }
         }
