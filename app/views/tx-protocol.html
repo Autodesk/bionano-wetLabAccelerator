@@ -1,21 +1,23 @@
 <div class="row">
 
-  <div class="col-md-3">
+  <div class="col-md-3"
+       simple-sticky="20"
+       style="position: absolute;">
     <div class="panel panel-default">
       <div class="panel-heading">
         Instructions
       </div>
-      <div class="list-group">
+      <div class="list-group"
+           ui-sortable="newSortableOptions"
+           ng-model="instructionOptions">
         <a class="list-group-item"
-           ng-repeat="p in projects"
-           ng-click="selectProject(p)"
-           ng-class="{'active' : p.url == selectedProject.url}"
-           ng-bind="p.name"></a>
+           ng-repeat="i in instructionOptions track by i"
+           ng-bind="i"></a>
       </div>
     </div>
   </div>
 
-  <div class="col-md-9">
+  <div class="col-md-9 col-md-offset-3">
     <div ng-form="ProtocolForm"
          class="panel panel-info"
          ng-init="showJson = false">
@@ -49,9 +51,10 @@
 
       <div ng-hide="showJson">
         <tx-refs refs="protocol.refs"></tx-refs>
-        <div class="panel-body"
-             ui-sortable="sortableOptions"
+        <div class="panel-body instructionDropTarget"
+             ui-sortable="instructionSortableOptions"
              ng-model="protocol.instructions">
+          <!-- note: can't use track by when using ui-sortable -->
           <tx-instruction ng-repeat="inst in protocol.instructions"
                           protocol="protocol"
                           instruction-index="{{$index}}"></tx-instruction>

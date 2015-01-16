@@ -12,8 +12,9 @@ To get it running you'll need to install (might need to sudo):
 
 ### TODO
 
-- enable addition of arbitrary instructions in protocol - drag and drop
-  - scaffolds for each instruction? or just add required for templates?
+- adding instructions
+  - ability to add to pipette, thermocycle templates
+  - scaffolds for each instruction as defaults
 
 - required fields + UI feedback
 

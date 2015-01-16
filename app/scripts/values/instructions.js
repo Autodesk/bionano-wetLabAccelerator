@@ -36,9 +36,7 @@ angular.module('transcripticApp').constant('InstructionOptions', {
   //spectrometry
   "absorbance" : {},
   "fluorescence" : {},
-  "luminesence" : {},
+  "luminescence" : {},
 
   "gel_separate" : {}
-
-  //todo - add forthcoming protocols
 });

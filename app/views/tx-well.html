@@ -1,6 +1,5 @@
 <div class="input-group">
-  <span ng-if="label"
-        ng-bind="label || 'well'"
+  <span ng-bind="label ? label : (!!multiple ? 'wells' : 'well')"
         class="input-group-addon"></span>
   <select class="form-control"
           ng-if="specifyContainer"

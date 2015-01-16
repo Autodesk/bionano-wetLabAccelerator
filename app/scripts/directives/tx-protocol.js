@@ -8,7 +8,7 @@
  */
 
 angular.module('transcripticApp')
-  .directive('txProtocol', function ($window, $document) {
+  .directive('txProtocol', function (InstructionOptions) {
     return {
       templateUrl: 'views/tx-protocol.html',
       restrict: 'E',
@@ -16,14 +16,6 @@ angular.module('transcripticApp')
         protocol: '='
       },
       link: function (scope, element, attrs) {
-        scope.sortableOptions = {
-          axis: 'y',
-          handle: '.panel-heading',
-          update: function (e, ui) {
-            //see https://github.com/angular-ui/ui-sortable/blob/master/API.md#uiitemsortable-api-documentation
-            console.log('update event!', ui);
-          }
-        };
 
         scope.allStepsVisibleState = true;
 
@@ -32,6 +24,39 @@ angular.module('transcripticApp')
           scope.$broadcast('instruction:toggleVisible', scope.allStepsVisibleState)
         };
 
+        scope.instructionOptions = Object.keys(InstructionOptions);
+
+        //sortable options
+
+        scope.instructionSortableOptions = {
+          axis: 'y',
+          handle: '.panel-heading'
+        };
+
+        scope.newSortableOptions = {
+          scroll: true,
+          connectWith: ".instructionDropTarget",
+          update: function (e, ui) {
+            //reset the list
+            // note - previously, was cancelling and listening for receive event,
+            // but issues with setting model and ui-sortable in sync
+            scope.instructionOptions = Object.keys(InstructionOptions);
+          },
+          stop: function (e, ui) {
+            var type = ui.item.sortable.model,
+              dropIndex = ui.item.sortable.dropindex;
+
+            //todo - logic for handling pipette subtasks
+
+            //hack - probably a better way. ng-include trying to get empty template unless has ng-if
+            scope.$apply(function () {
+              //need to replace here so that ng-model + ui-sortable stay in sync
+              scope.protocol.instructions[dropIndex] = {
+                op: type
+              };
+            });
+          }
+        };
 
       }
     };

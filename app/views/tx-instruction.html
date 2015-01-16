@@ -32,6 +32,7 @@
   </div>
   <div class="panel-body"
        ng-show="!showJson && showStep"
+       ng-if="instruction.op"
        ng-include="'views/instructions/' + instruction.op + '.html'"></div>
 
   <pre json-editor
