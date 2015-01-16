@@ -1,48 +1,71 @@
-<div ng-form="ProtocolForm"
-     class="panel panel-info"
-     ng-init="showJson = false">
-  <div class="panel-heading">
-    <div class="btn-group btn-middle pull-right">
-      <button class="btn btn-default btn-sm"
-              tooltip="Toggle visibility of all steps"
-              tooltip-append-to-body="true"
-              ng-click="toggleInstructionCollapsed()">
+<div class="row">
+
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Instructions
+      </div>
+      <div class="list-group">
+        <a class="list-group-item"
+           ng-repeat="p in projects"
+           ng-click="selectProject(p)"
+           ng-class="{'active' : p.url == selectedProject.url}"
+           ng-bind="p.name"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-9">
+    <div ng-form="ProtocolForm"
+         class="panel panel-info"
+         ng-init="showJson = false">
+      <div class="panel-heading">
+        <div class="btn-group btn-middle pull-right">
+          <button class="btn btn-default btn-sm"
+                  tooltip="Toggle visibility of all steps"
+                  tooltip-append-to-body="true"
+                  ng-click="toggleInstructionCollapsed()">
         <span class="glyphicon"
-              ng-class="{'glyphicon-eye-open' : allVisible, 'glyphicon-eye-close' : !allVisible}"></span>
-      </button>
-      <button class="btn btn-default btn-sm"
-         ng-disabled="ProtocolForm.ProtocolJsonEditor.$error.json"
-         tooltip="Download Protocol"
-         tooltip-append-to-body="true"
-         ng-click="downloadJson()">
-        <span class="glyphicon glyphicon-download"></span>
-      </button>
-      <button class="btn btn-default btn-sm"
-              ng-class="{'btn-primary' : showJson}"
-              ng-disabled="ProtocolForm.ProtocolJsonEditor.$error.json"
-              ng-click="showJson = !showJson">
-        JSON
-      </button>
-    </div>
-    Protocol
-  </div>
+              ng-class="{'glyphicon-eye-open' : allStepsVisibleState, 'glyphicon-eye-close' : !allStepsVisibleState}"></span>
+          </button>
+          <button class="btn btn-default btn-sm"
+                  ng-disabled="ProtocolForm.ProtocolJsonEditor.$error.json"
+                  tooltip="Download Protocol"
+                  tooltip-append-to-body="true"
+                  tx-downloadjson
+                  filename="protocol.json"
+                  download-model="protocol">
+            <span class="glyphicon glyphicon-download"></span>
+          </button>
+          <button class="btn btn-default btn-sm"
+                  ng-class="{'btn-primary' : showJson}"
+                  ng-disabled="ProtocolForm.ProtocolJsonEditor.$error.json"
+                  ng-click="showJson = !showJson">
+            JSON
+          </button>
+        </div>
+        Protocol
+      </div>
 
-  <div ng-hide="showJson">
-    <tx-refs refs="protocol.refs"></tx-refs>
-    <div class="panel-body"
-         ui-sortable="sortableOptions"
-         ng-model="protocol.instructions">
-      <tx-instruction ng-repeat="inst in protocol.instructions"
-                      protocol="protocol"
-                      instruction-index="{{$index}}"></tx-instruction>
+      <div ng-hide="showJson">
+        <tx-refs refs="protocol.refs"></tx-refs>
+        <div class="panel-body"
+             ui-sortable="sortableOptions"
+             ng-model="protocol.instructions">
+          <tx-instruction ng-repeat="inst in protocol.instructions"
+                          protocol="protocol"
+                          instruction-index="{{$index}}"></tx-instruction>
+        </div>
+      </div>
+
+      <pre json-editor
+           contenteditable
+           json-editor-active="{{showJson}}"
+           ng-show="showJson"
+           name="ProtocolJsonEditor"
+           ng-model="protocol"></pre>
+
     </div>
   </div>
-
-  <pre json-editor
-       contenteditable
-       json-editor-active="{{showJson}}"
-       ng-show="showJson"
-       name="ProtocolJsonEditor"
-       ng-model="protocol"></pre>
 
 </div>

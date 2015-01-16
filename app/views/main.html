@@ -1,80 +1,79 @@
-<div class="col-md-3">
-  <tx-projectlist ng-model="mainCtrl.project"></tx-projectlist>
-</div>
-
-<div class="col-md-9">
-  <div class="pagination pagination-sm">
-    <li ng-repeat="p in mainCtrl.protocols"
-        ng-class="{'active' : p == mainCtrl.selectedProtocol}">
-      <a ng-bind="p"
-         ng-click="mainCtrl.retrieve(p)"></a>
-    </li>
+<div class="row">
+  <div class="col-md-3">
+    <tx-projectlist ng-model="mainCtrl.project"></tx-projectlist>
   </div>
 
-  <form class="form-inline" style="margin-bottom: 20px;">
-    <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-addon">Run Title</span>
-        <input type="text"
-               class="form-control"
-               ng-model="mainCtrl.runTitle">
+  <div class="col-md-9">
+    <div class="pagination pagination-sm">
+      <li ng-repeat="p in mainCtrl.protocols"
+          ng-class="{'active' : p == mainCtrl.selectedProtocol}">
+        <a ng-bind="p"
+           ng-click="mainCtrl.retrieve(p)"></a>
+      </li>
+    </div>
+
+    <form class="form-inline" style="margin-bottom: 20px;">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Run Title</span>
+          <input type="text"
+                 class="form-control"
+                 ng-model="mainCtrl.runTitle">
+        </div>
       </div>
-    </div>
 
-    <div class="btn-group"
-         tooltip="{{mainCtrl.canSubmitRun() ? '' : 'select a project + run title'}}"
-         tooltip-append-to-body="true">
-      <button class="btn btn-primary"
-              ng-disabled="!mainCtrl.canSubmitRun()"
-              ng-click="mainCtrl.analyze()">Verify + Price</button>
-      <button class="btn btn-primary"
-              ng-disabled="!mainCtrl.canSubmitRun()"
-              ng-click="mainCtrl.submit()">Submit</button>
-    </div>
-  </form>
+      <div class="btn-group"
+           tooltip="{{mainCtrl.canSubmitRun() ? '' : 'select a project + run title'}}"
+           tooltip-append-to-body="true">
+        <button class="btn btn-primary"
+                ng-disabled="!mainCtrl.canSubmitRun()"
+                ng-click="mainCtrl.analyze()">Verify + Price</button>
+        <button class="btn btn-primary"
+                ng-disabled="!mainCtrl.canSubmitRun()"
+                ng-click="mainCtrl.submit()">Submit</button>
+      </div>
+    </form>
 
-  <div ng-show="analysisResponse.initiated"
-       class="alert protocol-response"
-       ng-class="{'alert-success' : !analysisResponse.error,
+    <div ng-show="analysisResponse.initiated"
+         class="alert protocol-response"
+         ng-class="{'alert-success' : !analysisResponse.error,
                   'alert-warning' : analysisResponse.error}">
-    <span class="text-corner">Verification</span>
-    <div ng-show="runResponse.processing">
-      Processing Verification...
-    </div>
-    <div ng-hide="runResponse.processing">
-      <div ng-hide="analysisResponse.error">
-        <p><strong>Protocol valid</strong></p>
-        <p>cost: {{runResponse.response.total_cost}}</p>
+      <span class="text-corner">Verification</span>
+      <div ng-show="runResponse.processing">
+        Processing Verification...
       </div>
-      <div ng-show="analysisResponse.error">
-        <p>Problems with Protocol listed below:</p>
-        <pre ng-bind="analysisResponse.response | json"></pre>
+      <div ng-hide="runResponse.processing">
+        <div ng-hide="analysisResponse.error">
+          <p><strong>Protocol valid</strong></p>
+          <p>cost: {{runResponse.response.total_cost}}</p>
+        </div>
+        <div ng-show="analysisResponse.error">
+          <p>Problems with Protocol listed below:</p>
+          <pre ng-bind="analysisResponse.response | json"></pre>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div ng-show="runResponse.initiated"
-       class="alert protocol-response"
-       ng-class="{'alert-success' : !runResponse.error,
+    <div ng-show="runResponse.initiated"
+         class="alert protocol-response"
+         ng-class="{'alert-success' : !runResponse.error,
                   'alert-danger' : runResponse.error}">
-    <span class="text-corner">Run</span>
-    <div ng-show="runResponse.processing">
-      Processing Run...
-    </div>
-    <div ng-hide="runResponse.processing">
-      <div ng-hide="runResponse.error">
-        <p><strong>Protocol initiated</strong></p>
-        <p>cost: {{runResponse.response.total_cost}}</p>
+      <span class="text-corner">Run</span>
+      <div ng-show="runResponse.processing">
+        Processing Run...
       </div>
-      <div ng-show="runResponse.error">
-        <p>There was an error running your protocol:</p>
-        <pre ng-bind="runResponse.response | json"></pre>
+      <div ng-hide="runResponse.processing">
+        <div ng-hide="runResponse.error">
+          <p><strong>Protocol initiated</strong></p>
+          <p>cost: {{runResponse.response.total_cost}}</p>
+        </div>
+        <div ng-show="runResponse.error">
+          <p>There was an error running your protocol:</p>
+          <pre ng-bind="runResponse.response | json"></pre>
+        </div>
       </div>
     </div>
   </div>
-
-  <hr>
-
-  <tx-protocol protocol="mainCtrl.exampleProtocol"></tx-protocol>
-
 </div>
+
+<tx-protocol protocol="mainCtrl.exampleProtocol"></tx-protocol>

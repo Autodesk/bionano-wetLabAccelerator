@@ -12,6 +12,8 @@ angular.module('transcripticApp')
 
     var self = this;
 
+    // PROTOCOLS
+
     self.protocols = ['aaron-growth', 'growth-curve-generic', 'pcr-example', 'many-steps'];
 
     self.retrieve = function (protocol) {
@@ -23,6 +25,12 @@ angular.module('transcripticApp')
     };
 
     self.retrieve(self.protocols[1]);
+
+    // INSTRUCTIONS
+
+
+
+    // SUBMIT / ANALYZE RUNS
 
     function constructRunPayload () {
       return {

@@ -25,29 +25,14 @@ angular.module('transcripticApp')
           }
         };
 
-        scope.allVisible = true;
+        scope.allStepsVisibleState = true;
 
         scope.toggleInstructionCollapsed = function () {
-          scope.allVisible = !scope.allVisible;
-          scope.$broadcast('instruction:toggleVisible', scope.allVisible)
+          scope.allStepsVisibleState = !scope.allStepsVisibleState;
+          scope.$broadcast('instruction:toggleVisible', scope.allStepsVisibleState)
         };
 
-        //might make sense to abstract this into directive if use elsewhere e.g. for data
-        scope.downloadJson = function () {
-          var a = document.createElement("a"),
-              blob = new Blob([angular.toJson(scope.protocol, true)], {type: "application/json"}),
-              url = $window.URL.createObjectURL(blob);
 
-          a.style = "display: none";
-          a.href = url;
-          a.download = 'protocol.json';
-
-          element.append(a);
-          a.click();
-
-          $window.URL.revokeObjectURL(url);
-          element[0].removeChild(a);
-        };
       }
     };
   });

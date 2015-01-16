@@ -17,7 +17,9 @@ To get it running you'll need to install (might need to sudo):
 
 - required fields + UI feedback
 
-- directive for response to order / run ... abstract so can pass in strings dep on type
+- directive for response to order / run
+  - abstract so can pass in strings dep on type
+  - link to transcriptic page
 
 - json editor - have a save so that model doesn't reposition cursor, but need to validate
 
