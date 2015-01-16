@@ -1,6 +1,6 @@
 <div ng-if="isDimensional"
      class="form-inline"
-     ng-class="{'has-error' : !isValid}">
+     ng-class="{'has-error' : !isValid && !unrequired}">
   <div class="input-group">
     <span ng-if="label"
           ng-bind="label"
@@ -8,7 +8,7 @@
     <input class="form-control"
            type="number"
            ng-model="dim.value"
-           ng-required="true">
+           ng-required="!unrequired">
   </div>
   <select class="form-control"
           ng-disabled="options.length == 1"

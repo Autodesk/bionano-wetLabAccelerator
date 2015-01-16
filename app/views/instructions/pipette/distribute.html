@@ -20,10 +20,12 @@
 
   <tx-measure dimension-type="flowrate"
               label="dispense_speed"
+              not-required
               ng-model="params.dispense_speed"></tx-measure>
 
   <tx-measure dimension-type="flowrate"
               label="aspirate_speed"
+              not-required
               ng-model="group.aspirate_speed"></tx-measure>
 
   <tx-boolean ng-model="group.allow_carryover"

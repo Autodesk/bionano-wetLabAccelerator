@@ -5,6 +5,7 @@
  * @name transcripticApp.directive:txMeasure
  * @attr dimensionValue
  * @attr label
+ * @attr notRequired Force so UI won't show as required (this is less common, so requies flag)
  * @description
  * Input directive which is used for dimensional values (i.e. "value:unit" format)
  *
@@ -15,6 +16,7 @@
  */
 
 //todo - ability to pass in parameters to input (sp. min and max)
+//todo - clearer UI when not set - don't set if scope.unrequired
 angular.module('transcripticApp')
   .directive('txMeasure', function (DimensionOptions) {
     return {
@@ -29,6 +31,8 @@ angular.module('transcripticApp')
       link: function postLink(scope, element, attrs, ngModel) {
 
         var internalValueWatcher = angular.noop;
+
+        scope.unrequired = angular.isDefined(attrs.notRequired);
 
         //set up watches for changes to external model, or dimension type
 
@@ -53,7 +57,7 @@ angular.module('transcripticApp')
         function setInternal_dimensional (newval) {
           newval = newval || ngModel.$modelValue;
           scope.dim = convertStringToDim(newval) || {
-            value: 0,
+            value: null,
             unit: scope.options[0]
           };
         }

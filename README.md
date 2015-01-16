@@ -14,17 +14,17 @@ To get it running you'll need to install (might need to sudo):
 
 - adding instructions
   - ability to add to pipette, thermocycle templates
-  - scaffolds for each instruction as defaults
+  - scaffolds for each instruction as defaults????
   
 - thermocycle template
-
-- required fields + UI feedback
 
 - directive for response to order / run
   - abstract so can pass in strings dep on type
   - link to transcriptic page
 
 - json editor - have a save so that model doesn't reposition cursor, but need to validate
+
+- ngMessages support
 
 - upgrade to angular 1.4 (longer-term) ??
 
@@ -38,6 +38,8 @@ To get it running you'll need to install (might need to sudo):
   - allow passage of object as attrs for input?
 
 - better well UI
+
+- smart checks for covers, seals, etc.
 
 - ability to drop in new JSON 
 - copy JSON like bootstrap
