@@ -9,15 +9,19 @@
               label="duration"
               dimension-type="duration"></tx-measure>
 
-  <tx-inputwrap label="ladder">
+  <tx-inputwrap label="ladder"
+                ng-class="{'has-error': !instruction.ladder}">
     <select ng-model="instruction.ladder"
             class="form-control"
+            required
             ng-options="l as l for l in gelCtrl.ladders"></select>
   </tx-inputwrap>
 
-  <tx-inputwrap label="matrix">
+  <tx-inputwrap label="matrix"
+                ng-class="{'has-error': !instruction.matrix}">
     <select ng-model="instruction.matrix"
             class="form-control"
+            required
             ng-options="m as m for m in gelCtrl.matrices"></select>
   </tx-inputwrap>
 

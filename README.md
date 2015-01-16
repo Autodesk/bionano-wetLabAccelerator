@@ -15,6 +15,8 @@ To get it running you'll need to install (might need to sudo):
 - adding instructions
   - ability to add to pipette, thermocycle templates
   - scaffolds for each instruction as defaults
+  
+- thermocycle template
 
 - required fields + UI feedback
 

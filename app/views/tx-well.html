@@ -1,4 +1,5 @@
-<div class="input-group">
+<div class="input-group"
+     ng-class="{'has-error': !internal.wells.length}">
   <span ng-bind="label ? label : (!!multiple ? 'wells' : 'well')"
         class="input-group-addon"></span>
   <select class="form-control"

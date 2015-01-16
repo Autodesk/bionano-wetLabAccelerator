@@ -1,5 +1,6 @@
 <div ng-if="isDimensional"
-     class="form-inline">
+     class="form-inline"
+     ng-class="{'has-error' : !isValid}">
   <div class="input-group">
     <span ng-if="label"
           ng-bind="label"
@@ -15,7 +16,8 @@
           ng-model="dim.unit"></select>
 </div>
 <div ng-if="!isDimensional"
-     class="input-group">
+     class="input-group"
+     ng-class="{'has-error' : !isValid}">
   <span ng-if="label"
         ng-bind="label"
         class="input-group-addon"></span>

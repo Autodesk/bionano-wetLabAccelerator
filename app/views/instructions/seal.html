@@ -2,9 +2,10 @@
   <tx-container ng-model="instruction.object"
               refs="protocol.refs"></tx-container>
 
-  <tx-inputwrap label="lid">
+  <tx-inputwrap label="lid" ng-class="{'has-error': !instruction.lid}">
     <select ng-options="o for o in ['standard', 'universal', 'low_evaporation']"
             ng-model="instruction.lid"
+            required
             class="form-control"></select>
   </tx-inputwrap>
 </div>

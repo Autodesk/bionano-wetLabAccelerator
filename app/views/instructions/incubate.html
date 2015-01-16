@@ -3,9 +3,10 @@
   <tx-container ng-model="instruction.object"
                 refs="protocol.refs"></tx-container>
 
-  <tx-inputwrap label="where">
+  <tx-inputwrap label="where" ng-class="{'has-error': !instruction.where}">
     <select class="form-control"
             ng-options="o for o in storageOptions"
+            required
             ng-model="instruction.where"></select>
   </tx-inputwrap>
 

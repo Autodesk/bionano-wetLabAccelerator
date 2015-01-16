@@ -15,7 +15,6 @@
  */
 
 //todo - ability to pass in parameters to input (sp. min and max)
-//todo - ability to declare required etc.
 angular.module('transcripticApp')
   .directive('txMeasure', function (DimensionOptions) {
     return {
@@ -74,8 +73,9 @@ angular.module('transcripticApp')
           setInternal_dimensional();
 
           internalValueWatcher = scope.$watch('dim', function (newval) {
-            //dimIsValid(newval) && ngModel.$setViewValue(convertToDimString(newval));
-            if (dimIsValid(newval)) scope.externalModel = convertToDimString(newval);
+            if (scope.isValid = dimIsValid(newval)) {
+              scope.externalModel = convertToDimString(newval);
+            }
           }, true);
         }
 
@@ -83,8 +83,9 @@ angular.module('transcripticApp')
           setInternal_primitive();
 
           internalValueWatcher = scope.$watch('dim.internal', function (newval) {
-            //primitiveIsValid(newType) && ngModel.$setViewValue(newval);
-            if (primitiveIsValid(newval)) scope.externalModel = newval;
+            if (scope.isValid = primitiveIsValid(newval)) {
+              scope.externalModel = newval;
+            }
           }, true);
         }
 

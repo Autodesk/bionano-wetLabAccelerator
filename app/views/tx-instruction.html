@@ -1,5 +1,6 @@
 <div ng-form="InstForm"
      class="panel panel-default"
+     ng-class="{'panel-danger' : InstForm.$invalid}"
      ng-init="showJson = false; showStep = true;">
   <div class="panel-heading">
     <div class="btn-group btn-middle pull-right">
