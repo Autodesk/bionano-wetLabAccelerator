@@ -13,9 +13,6 @@ angular.module('transcripticApp')
     var self = this;
 
     self.projects = Project.list();
-
     self.orderingOptions = Object.keys(OrderingOptions);
-
-    self.order = {"blah" : "yada"};
 
   });

@@ -19,7 +19,8 @@
     </form>
 
  */
-
+//fixme - resets model when don't prototypically inherit / model undefined initially
+//rpobably has to do with compilation / linking orders
 angular.module('transcripticApp').directive('jsonEditor', function () {
 	return {
 		restrict: 'A',
@@ -48,12 +49,12 @@ angular.module('transcripticApp').directive('jsonEditor', function () {
         }, function (newval) {
           if (_.isEmpty(newval)) return;
 
-          initialModelSet = true;
-
           //under assumption that model only set when valid
           ngModelCtrl.$setValidity('json', true);
           ngModelCtrl.$setViewValue(angular.toJson(newval, true));
           ngModelCtrl.$render();
+
+          initialModelSet = true;
 
           !!bindOnce && unwatch();
         }, true);
@@ -83,8 +84,10 @@ angular.module('transcripticApp').directive('jsonEditor', function () {
           ngModelCtrl.$setValidity('json', true);
           return j;
         } catch (err) {
-          //returning undefined results in a parser error as of angular-1.3-rc.0, and will not go through $validators
+          //note - $parsers may run before model actually set... todo if valid model not set, do something
+
           ngModelCtrl.$setValidity('json', false);
+          //returning undefined results in a parser error as of angular-1.3-rc.0, and will not go through $validators
           return undefined; //will set a parse error
           //return text; //allows setting nasty string...
         }

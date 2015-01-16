@@ -10,16 +10,15 @@
   </div>
 
   <div ng-hide="showJson">
-    <!-- todo - scoping issue -->
-    <div class="panel panel-default"
+    <div class="panel-body"
          ng-include="'views/orders/' + orderType + '.html'"></div>
   </div>
 
   <pre json-editor
        contenteditable
-       json-editor-active="{{showJson}}"
+       ng-model="order"
        ng-show="showJson"
-       name="OrderJsonEditor"
-       ng-model="order"></pre>
+       json-editor-active="{{showJson}}"
+       name="OrderJsonEditor"></pre>
 
 </div>

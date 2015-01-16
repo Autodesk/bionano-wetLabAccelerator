@@ -11,9 +11,20 @@ angular.module('transcripticApp')
     return {
       templateUrl: 'views/tx-order.html',
       restrict: 'E',
+      require: 'ngModel',
       scope: {
-        order: '=',
+        order: '=ngModel',
         orderType: '='
+      },
+      link: function (scope, element, attrs, ngModelCtrl) {
+        //note hack - json-editor will reset json unless set in link b/c initially undefined
+        scope.$watch('orderType', function (newval) {
+          if (!!newval) {
+            scope.order = {
+              type: newval
+            };
+          }
+        });
       }
     };
   });

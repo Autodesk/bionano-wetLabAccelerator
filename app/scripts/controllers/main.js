@@ -61,6 +61,6 @@ angular.module('transcripticApp')
     this.submit = angular.bind(self, runOrSubmitWrap, true);
 
     this.canSubmitRun = function () {
-      return !!this.project && !_.isEmpty(this.exampleProtocol) && !!this.runTitle;
+      return !_.isEmpty(this.project) && !_.isEmpty(this.exampleProtocol) && !!this.runTitle;
     };
   });
