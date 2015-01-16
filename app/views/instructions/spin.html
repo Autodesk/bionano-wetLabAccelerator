@@ -1,6 +1,6 @@
 <div ng-form="spinForm">
   <tx-container ng-model="instruction.object"
-              refs="protocol.refs"></tx-container>
+                refs="protocol.refs"></tx-container>
 
   <tx-inputwrap label="speed">
     <input type="number"
@@ -10,6 +10,7 @@
   </tx-inputwrap>
 
   <tx-measure dimension-type="duration"
+              ng-model="instruction.duration"
               label="duration"></tx-measure>
 
 </div>
