@@ -33,7 +33,7 @@
     </div>
   </form>
 
-  <div ng-show="analysisResponse"
+  <div ng-show="analysisResponse.initiated"
        class="alert protocol-response"
        ng-class="{'alert-success' : !analysisResponse.error,
                   'alert-warning' : analysisResponse.error}">
@@ -53,7 +53,7 @@
     </div>
   </div>
 
-  <div ng-show="runResponse"
+  <div ng-show="runResponse.initiated"
        class="alert protocol-response"
        ng-class="{'alert-success' : !runResponse.error,
                   'alert-danger' : runResponse.error}">

@@ -31,24 +31,23 @@ angular.module('transcripticApp')
       }
     }
 
-    function runOrSubmitWrap (toRun) {
-      var func = !!toRun ? 'submit' : 'analyze' ,
-          scopeToModify = !!toRun ? 'runResponse' : 'analysisResponse';
-
-      $scope[scopeToModify] = {
+    //todo - merge with ordering controller
+    function resourceWrap (funcToRun, toModify) {
+      angular.copy({
+        initiated: true,
         processing: true
-      };
+      }, toModify);
 
-      Run[func]({project : self.project.url}, constructRunPayload()).$promise.
+      funcToRun({project : self.project.url}, constructRunPayload()).$promise.
       then(function runSuccess (d) {
-        angular.extend($scope[scopeToModify], {
+        angular.extend(toModify, {
           processing: false,
           error: false,
           response: d
         });
         console.log(d);
       }, function runFailure (e) {
-        angular.extend($scope[scopeToModify], {
+        angular.extend(toModify, {
           processing: false,
           error: true,
           response: e.data.protocol
@@ -57,8 +56,10 @@ angular.module('transcripticApp')
       });
     }
 
-    this.analyze = angular.bind(self, runOrSubmitWrap, false);
-    this.submit = angular.bind(self, runOrSubmitWrap, true);
+    $scope.analysisResponse = {};
+    $scope.runResponse = {};
+    this.analyze = angular.bind(self, resourceWrap, Run.analyze, $scope.analysisResponse);
+    this.submit = angular.bind(self, resourceWrap, Run.submit, $scope.runResponse);
 
     this.canSubmitRun = function () {
       return !_.isEmpty(this.project) && !_.isEmpty(this.exampleProtocol) && !!this.runTitle;

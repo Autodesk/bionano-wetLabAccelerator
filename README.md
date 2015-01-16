@@ -17,15 +17,15 @@ To get it running you'll need to install (might need to sudo):
 
 - required fields + UI feedback
 
-- support high level ordering API
+- directive for response to order / run ... abstract so can pass in strings dep on type
 
 - json editor - have a save so that model doesn't reposition cursor, but need to validate
-
-- abstraction for project / container etc. lists so all update when changed
 
 - upgrade to angular 1.4 (longer-term) ??
 
 #### Pretty + Nice features
+
+- abstraction for project / container etc. lists so all update when changed
 
 - refactor tx-measure
   - need to support input[type] + ideally other input attributes

@@ -7,7 +7,7 @@
  * # txOrder
  */
 angular.module('transcripticApp')
-  .directive('txOrder', function () {
+  .directive('txOrder', function (OligoOptions) {
     return {
       templateUrl: 'views/tx-order.html',
       restrict: 'E',
@@ -25,6 +25,9 @@ angular.module('transcripticApp')
             };
           }
         });
+
+        scope.purityOptions = OligoOptions.purity;
+        scope.scaleOptions = OligoOptions.scale;
       }
     };
   });

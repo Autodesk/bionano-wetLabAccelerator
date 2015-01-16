@@ -11,7 +11,7 @@
     </li>
   </div>
 
-  <form class="form-inline">
+  <form class="form-inline" style="margin-bottom: 20px;">
     <div class="form-group">
       <div class="input-group">
         <span class="input-group-addon">Order Title</span>
@@ -24,11 +24,31 @@
     <div class="btn-group">
       <button class="btn btn-primary"
               ng-disabled="!orderCtrl.project.url || !orderCtrl.orderTitle"
-              ng-click="orderCtrl.analyze()">Price</button>
+              ng-click="orderCtrl.priceOrder()">Price</button>
   </div>
   </form>
 
-  <pre ng-bind="orderCtrl.order | json"></pre>
+  <div ng-show="priceResponse.initiated"
+       class="alert protocol-response"
+       ng-class="{'alert-success' : !priceResponse.error,
+                  'alert-danger' : priceResponse.error}">
+    <span class="text-corner">Run</span>
+    <div ng-show="priceResponse.processing">
+      Processing Pricing...
+    </div>
+    <div ng-hide="priceResponse.processing">
+      <div ng-hide="priceResponse.error">
+        <p><strong>Pricing Successful</strong></p>
+        <p>cost: {{priceResponse.response['has_quote?'] ?
+                   priceResponse.response.total_cost :
+                   'pending'}}</p>
+      </div>
+      <div ng-show="priceResponse.error">
+        <p>There was an error in getting a price:</p>
+        <pre ng-bind="priceResponse.response | json"></pre>
+      </div>
+    </div>
+  </div>
 
   <tx-order ng-model="orderCtrl.order"
             order-type="orderCtrl.orderType"></tx-order>
