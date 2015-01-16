@@ -24,30 +24,38 @@ angular.module('transcripticApp')
 
     //todo - merge with main controller
     function resourceWrap (funcToRun, toModify) {
-      angular.copy({
+      angular.extend(toModify.config, {
         initiated: true,
         processing: true
-      }, toModify);
+      });
 
       funcToRun({project : self.project.url}, constructOrderPayload()).$promise.
         then(function runSuccess (d) {
-          angular.extend(toModify, {
+          angular.extend(toModify.config, {
             processing: false,
-            error: false,
-            response: d
+            error: false
           });
+          angular.extend(toModify.response, d);
           console.log(d);
         }, function runFailure (e) {
-          angular.extend(toModify, {
+          angular.extend(toModify.config, {
             processing: false,
-            error: true,
-            response: e.data.protocol
+            error: true
           });
+          angular.extend(toModify.response, e.data.protocol);
           console.log(e);
         });
     }
 
-    $scope.priceResponse = {};
+    $scope.priceResponse = {
+      config: {
+        type: "Run",
+        textProcessing: "Processing Pricing...",
+        textSuccess: "Pricing Successful",
+        textError: "There was an error in getting a price"
+      },
+      response: {}
+    };
     this.priceOrder = angular.bind(self, resourceWrap, Order.price, $scope.priceResponse);
 
   });

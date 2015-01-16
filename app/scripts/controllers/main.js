@@ -41,31 +41,48 @@ angular.module('transcripticApp')
 
     //todo - merge with ordering controller
     function resourceWrap (funcToRun, toModify) {
-      angular.copy({
+      angular.extend(toModify.config, {
         initiated: true,
         processing: true
-      }, toModify);
+      });
 
       funcToRun({project : self.project.url}, constructRunPayload()).$promise.
       then(function runSuccess (d) {
-        angular.extend(toModify, {
+        angular.extend(toModify.config, {
           processing: false,
-          error: false,
-          response: d
+          error: false
         });
+        angular.extend(toModify.response, d);
         console.log(d);
       }, function runFailure (e) {
-        angular.extend(toModify, {
+        angular.extend(toModify.config, {
           processing: false,
-          error: true,
-          response: e.data.protocol
+          error: true
         });
+        angular.extend(toModify.response, e.data.protocol);
         console.log(e);
       });
     }
 
-    $scope.analysisResponse = {};
-    $scope.runResponse = {};
+    $scope.analysisResponse = {
+      config: {
+        type: "Verification",
+        textProcessing: "Processing Verification...",
+        textSuccess: "Protocol valid",
+        textError: "Problems with Protocol listed below"
+      },
+      response: {}
+    };
+    $scope.runResponse = {
+      config: {
+        type: "Run",
+        textProcessing: "Processing Run...",
+        textSuccess: "Protocol initiated",
+        textError: "There was an error running your protocol"
+      },
+      response: {}
+    };
+
     this.analyze = angular.bind(self, resourceWrap, Run.analyze, $scope.analysisResponse);
     this.submit = angular.bind(self, resourceWrap, Run.submit, $scope.runResponse);
 

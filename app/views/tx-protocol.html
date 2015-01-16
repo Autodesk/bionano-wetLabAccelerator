@@ -12,7 +12,7 @@
            ng-model="instructionOptions">
         <a class="list-group-item"
            ng-repeat="i in instructionOptions track by i"
-           ng-bind="i"></a>
+           ng-bind="i | capfirst"></a>
       </div>
     </div>
   </div>

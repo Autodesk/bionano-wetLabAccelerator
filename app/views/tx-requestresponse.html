@@ -1,0 +1,24 @@
+<div ng-show="config.initiated"
+     class="alert protocol-response"
+     ng-class="{'alert-success' : !config.error,
+                'alert-warning' : config.error}">
+  <span class="text-corner"
+        ng-click="hideResponse = !hideResponse">
+    {{config.type}}
+  </span>
+  <div ng-hide="hideResponse">
+    <div ng-show="config.processing">
+      {{config.textProcessing}}
+    </div>
+    <div ng-hide="config.processing">
+      <div ng-hide="config.error">
+        <p><strong>{{config.textSuccess}}</strong></p>
+        <p>Cost: {{response['has_quote?'] ? response.total_cost : 'pending'}}</p>
+      </div>
+      <div ng-show="config.error">
+        <p>{{config.textError}}</p>
+        <pre ng-bind="response | json"></pre>
+      </div>
+    </div>
+  </div>
+</div>

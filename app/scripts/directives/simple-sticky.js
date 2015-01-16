@@ -15,7 +15,6 @@
  *
  * <div class="myStickyDiv" simple-sticky="20"></div>
  */
-
 angular.module('transcripticApp')
   .directive('simpleSticky', function ($window) {
 
@@ -27,6 +26,10 @@ angular.module('transcripticApp')
       return (angular.isDefined($window.pageYOffset) ?
         $window.pageYOffset :
         $window.document[0].documentElement.scrollTop);
+    }
+
+    function calcStartFromTop (nativeElement) {
+      return nativeElement.getBoundingClientRect().top + getYOffset()
     }
 
     //the function will be run
@@ -56,7 +59,7 @@ angular.module('transcripticApp')
         var showFromTopSticky = parseInt(attrs.simpleSticky, 10) || 20,
           positionNormal = element.css('position'),
           showFromTopNormal = element.css('top'),
-          startFromTop = element[0].getBoundingClientRect().top + getYOffset(),
+          startFromTop = calcStartFromTop(element[0]),
           isAffixed;
 
         //check if affix state has changed
@@ -65,7 +68,11 @@ angular.module('transcripticApp')
 
           if (shouldAffix !== isAffixed) {
             isAffixed = shouldAffix;
+            //run a check in case elements have changed in page, don't wanna run too often
             handleAffixing(shouldAffix);
+          } else {
+            //fixme - get a lot of jank
+            //startFromTop = calcStartFromTop(element[0]);
           }
         }
 

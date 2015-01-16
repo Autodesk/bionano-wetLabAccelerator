@@ -34,45 +34,12 @@
       </div>
     </form>
 
-    <div ng-show="analysisResponse.initiated"
-         class="alert protocol-response"
-         ng-class="{'alert-success' : !analysisResponse.error,
-                  'alert-warning' : analysisResponse.error}">
-      <span class="text-corner">Verification</span>
-      <div ng-show="runResponse.processing">
-        Processing Verification...
-      </div>
-      <div ng-hide="runResponse.processing">
-        <div ng-hide="analysisResponse.error">
-          <p><strong>Protocol valid</strong></p>
-          <p>cost: {{runResponse.response.total_cost}}</p>
-        </div>
-        <div ng-show="analysisResponse.error">
-          <p>Problems with Protocol listed below:</p>
-          <pre ng-bind="analysisResponse.response | json"></pre>
-        </div>
-      </div>
-    </div>
+    <tx-requestresponse config="analysisResponse.config"
+                        response="analysisResponse.response"></tx-requestresponse>
 
-    <div ng-show="runResponse.initiated"
-         class="alert protocol-response"
-         ng-class="{'alert-success' : !runResponse.error,
-                  'alert-danger' : runResponse.error}">
-      <span class="text-corner">Run</span>
-      <div ng-show="runResponse.processing">
-        Processing Run...
-      </div>
-      <div ng-hide="runResponse.processing">
-        <div ng-hide="runResponse.error">
-          <p><strong>Protocol initiated</strong></p>
-          <p>cost: {{runResponse.response.total_cost}}</p>
-        </div>
-        <div ng-show="runResponse.error">
-          <p>There was an error running your protocol:</p>
-          <pre ng-bind="runResponse.response | json"></pre>
-        </div>
-      </div>
-    </div>
+    <tx-requestresponse config="runResponse.config"
+                        response="runResponse.response"></tx-requestresponse>
+
   </div>
 </div>
 

@@ -21,6 +21,7 @@ To get it running you'll need to install (might need to sudo):
 - directive for response to order / run
   - abstract so can pass in strings dep on type
   - link to transcriptic page
+  - ability to toggle rest of alert by clicking corner
 
 - json editor - have a save so that model doesn't reposition cursor, but need to validate
 
@@ -31,6 +32,8 @@ To get it running you'll need to install (might need to sudo):
 #### Pretty + Nice features
 
 - abstraction for project / container etc. lists so all update when changed
+
+- simlpe-sticky jank on element resizing
 
 - refactor tx-measure
   - need to support input[type] + ideally other input attributes

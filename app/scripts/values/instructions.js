@@ -14,10 +14,14 @@
 angular.module('transcripticApp').constant('InstructionOptions', {
   //pipetting
   "pipette" : {},
+
+  /*
+  //ignoring these, make available only in pipette
   "transfer" : {},
   "distribute" : {},
   "consolidate" : {},
   "mix" : {},
+  */
 
   //cover / seal
   "seal": {},
