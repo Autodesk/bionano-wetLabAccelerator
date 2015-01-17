@@ -39,8 +39,7 @@ angular.module('transcripticApp')
     this.pipetteInstructions = ["transfer", "distribute", "consolidate", "mix"];
 
     this.addPipetteInstruction = function (type) {
-      //need to check if groups is defined, because if they dropped it in, it won't be
-      //todo - refactor to scaffolds for each step in InstructionOptions
+      //this shouldn't happen when using scaffold, but can't hurt
       if (angular.isUndefined($scope.instruction.groups)) {
         $scope.instruction.groups = []
       }
@@ -51,7 +50,6 @@ angular.module('transcripticApp')
     this.removePI = function (index) {
       $scope.instruction.groups.splice(index, 1);
     };
-
 
     this.duplicatePI = function (index) {
       $scope.instruction.groups.splice(index, 0, angular.copy($scope.instruction.groups[index]));

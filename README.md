@@ -12,11 +12,11 @@ To get it running you'll need to install (might need to sudo):
 
 ### TODO
 
-- adding instructions
-  - ability to add thermocycle templates
-  - scaffolds for each instruction as defaults?
+- scaffolds for each instruction as defaults
   
-- thermocycle template clean up
+- thermocycle
+  - template clean up
+  - ability to add steps
 
 - json editor 
   - have a save so that model doesn't reposition cursor, but still validate each key
@@ -26,16 +26,23 @@ To get it running you'll need to install (might need to sudo):
 - clean up dirty checks 
   - get tool for assessing perf?
   - tx-well when click JSON for protocol
-  - tx-protocol when changing protocl
+  - tx-protocol when changing protocol
+
+- tx-responseRequest - handle 404 error
 
 #### Pretty + Nice features
 
-- add in notes / catches etc.
+- groups! ability to lump duplications
+
+- add in notes for each container, reference, project, etc. (move away from select) 
+  - arrow popover extensions
+  
+- better error messages
   - ngMessages for errors / warnings. in addition to just red boxes
 
 - abstraction for project / container etc. lists so all update when changed
 
-- simlpe-sticky jank on element resizing / ability to pin to another element
+- updating tx-refs name -> update protocol references
 
 - refactor tx-measure
   - need to support input[type] + ideally other input attributes

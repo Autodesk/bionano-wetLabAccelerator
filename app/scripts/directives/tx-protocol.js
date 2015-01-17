@@ -47,14 +47,12 @@ angular.module('transcripticApp')
             var type = ui.item.sortable.model,
               dropIndex = ui.item.sortable.dropindex;
 
-            //todo - logic for handling pipette subtasks
+            //todo - logic for handling pipette subtasks? or just keep in pipette template
 
             //hack - probably a better way. ng-include trying to get empty template unless has ng-if
             scope.$apply(function () {
               //need to replace here so that ng-model + ui-sortable stay in sync
-              scope.protocol.instructions[dropIndex] = {
-                op: type
-              };
+              scope.protocol.instructions[dropIndex] = InstructionOptions[type].scaffold;
             });
           }
         };

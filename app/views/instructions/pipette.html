@@ -2,29 +2,29 @@
      ng-controller="PipetteCtrl as pipeCtrl">
 
   <div class="pipette-instructions"
-       ui-sortable="pipeCtrl.sortableInstructions"
+       ui-sortable="pipeCtrl.sortableOptions"
        ng-model="instruction.groups">
-    <div class="panel panel-default drag-handle protocol-instruction"
+    <div class="panel panel-default protocol-instruction"
          ng-repeat="groupDeclaration in instruction.groups"
          ng-init="groupKey = pipeCtrl.groupKey(groupDeclaration);
                   groupObj = instruction.groups[$index];
                   group = groupObj[groupKey]">
-      <div class="panel-heading">
+      <div class="panel-heading drag-handle">
         <div class="btn-group btn-middle pull-right">
           <button class="btn btn-default btn-sm"
                   tooltip="Delete Instruction"
                   tooltip-append-to-body="true"
-                  ng-click="pipeCtrl.removePI()">
+                  ng-click="pipeCtrl.removePI($index)">
             <span class="glyphicon glyphicon-minus"></span>
           </button>
           <button class="btn btn-default btn-sm"
                   tooltip="Duplicate Instruction"
                   tooltip-append-to-body="true"
-                  ng-click="pipeCtrl.duplicatePI()">
+                  ng-click="pipeCtrl.duplicatePI($index)">
             <span class="glyphicon glyphicon-plus"></span>
           </button>
         </div>
-        {{pipeCtrl.groupKey(groupDeclaration)}}
+        {{pipeCtrl.groupKey(groupDeclaration) | capfirst}}
       </div>
       <div class="panel-body"
            ng-include="pipeCtrl.groupUrl(groupDeclaration)"></div>

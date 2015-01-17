@@ -28,6 +28,10 @@ angular.module('transcripticApp')
           scope.refs["myRef"] = {};
         };
 
+        scope.removeRef = function (key) {
+          delete scope.refs[key];
+        };
+
         scope.changeRefKey = function (newkey, oldkey) {
           scope.refs[newkey] = angular.copy(scope.refs[oldkey]);
           delete scope.refs[oldkey];

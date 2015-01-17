@@ -3,17 +3,18 @@
      ng-class="{'alert-success' : !config.error,
                 'alert-warning' : config.error}">
   <div class="corner-group">
-    <a class="btn btn-sm"
-       ng-if="response.id"
+    <a ng-if="response.id"
        ng-href="{{transcripticLink()}}">
-      Visit Transcriptic
+      Transcriptic <span class="glyphicon glyphicon-share-alt"></span>
     </a>
-    <a class="btn btn-sm"
-       tooltip="Toggle Visible"
+    <a tooltip="Toggle Visible"
        tooltip-append-to-body="true"
        ng-click="hideResponse = !hideResponse">
-      {{config.type}}
+      <span class="glyphicon"
+            ng-class="{'glyphicon-eye-open' : !hideResponse,
+                       'glyphicon-eye-close' : hideResponse}"></span>
     </a>
+    <span class="disabled" ng-bind="config.type"></span>
   </div>
   <div ng-hide="hideResponse">
     <div ng-show="config.processing">

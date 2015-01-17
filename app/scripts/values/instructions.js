@@ -4,43 +4,108 @@
  * @ngdoc service
  * @name transcripticApp.instructions
  * @description
- * Enumeration of possible instructions
- *
- * todo
- * - basic scaffolding schema
- * - support types and type checks
- * - preconditions
+ * Enumeration of possible instructions, with minimal schema also provided.
+ * todo - metadata
+ *    description, etc. for a popover?
+ *    requirements (e.g. sealed)
  */
 angular.module('transcripticApp').constant('InstructionOptions', {
   //pipetting
-  "pipette" : {},
+  "pipette" : {
+    scaffold: {
+      op: "pipette",
+      groups: []
+    },
+    meta: {}
+  },
 
-  /*
-  //ignoring these, make available only in pipette controller
-  "transfer" : {},
-  "distribute" : {},
-  "consolidate" : {},
-  "mix" : {},
-  */
+  "thermocycle": {
+    scaffold: {
+      op: "thermocycle",
+      groups: []
+    },
+    meta: {}
+  },
 
   //cover / seal
-  "seal": {},
-  "unseal": {},
-  "cover": {},
-  "uncover": {},
-
-  "sangerseq": {},
-
-  "spin": {},
-
-  "thermocycle": {},
-
-  "incubate": {},
+  "seal": {
+    scaffold: {
+      op: "seal"
+    },
+    meta: {}
+  },
+  "unseal": {
+    scaffold: {
+      op: "unseal"
+    },
+    meta: {}
+  },
+  "cover": {
+    scaffold: {
+      op: "cover"
+    },
+    meta: {}
+  },
+  "uncover": {
+    scaffold: {
+      op: "uncover"
+    },
+    meta: {}
+  },
 
   //spectrometry
-  "absorbance" : {},
-  "fluorescence" : {},
-  "luminescence" : {},
+  "absorbance" : {
+    scaffold: {
+      op: "absorbance"
+    },
+    meta: {}
+  },
+  "fluorescence" : {
+    scaffold: {
+      op: "fluorescence"
+    },
+    meta: {}
+  },
+  "luminescence" : {
+    scaffold: {
+      op: "luminescence"
+    },
+    meta: {}
+  },
 
-  "gel_separate" : {}
+  "sangerseq": {
+    scaffold: {
+      op: "sangerseq"
+    },
+    meta: {}
+  },
+
+  "spin": {
+    scaffold: {
+      op: "spin"
+    },
+    meta: {}
+  },
+
+  "incubate": {
+    scaffold: {
+      op: "incubate"
+    },
+    meta: {}
+  },
+
+  "gel_separate" : {
+    scaffold: {
+      op: "gel_separate"
+    },
+    meta: {}
+  }
+
+  /*
+   //todo - make available only in pipette controller
+   "transfer" : {},
+   "distribute" : {},
+   "consolidate" : {},
+   "mix" : {},
+   */
 });

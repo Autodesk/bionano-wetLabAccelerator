@@ -24,7 +24,7 @@ angular.module('transcripticApp')
       });
     };
 
-    self.retrieve(self.protocols[1]);
+    self.retrieve(self.protocols[0]);
 
     // INSTRUCTIONS
 

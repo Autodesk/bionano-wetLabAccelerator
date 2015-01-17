@@ -9,7 +9,9 @@
  * @param response {Object} Polymorphic - acutal response provided from transcriptic, with fields
  *    on error, whole response will be shown (so pass what should be shown)
  *    on success, expects the following fields:
+ *        project (object minimally with key 'id')
  *        total_cost
+ *        id (run ID)
  *
  * @param config {Object} Pass in a config with set of string to display for following situations:
  * type {String} text displayed in the corner
