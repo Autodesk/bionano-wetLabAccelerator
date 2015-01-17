@@ -15,6 +15,7 @@
  *
  * <div class="myStickyDiv" simple-sticky="20"></div>
  */
+//todo - attr.alignWith to give element to match?
 angular.module('transcripticApp')
   .directive('simpleSticky', function ($window) {
 
@@ -42,6 +43,7 @@ angular.module('transcripticApp')
       _.remove(checks, fn);
     }
 
+    //ideally, throttle to rAF (try angular service?)
     var throttleRunChecks = _.throttle(function () {
       var pageYOffset = getYOffset();
 
@@ -67,18 +69,20 @@ angular.module('transcripticApp')
           var shouldAffix = (pageYOffset + showFromTopSticky) > startFromTop;
 
           if (shouldAffix !== isAffixed) {
-            isAffixed = shouldAffix;
-            //run a check in case elements have changed in page, don't wanna run too often
             handleAffixing(shouldAffix);
-          } else {
-            //fixme - get a lot of jank
-            //todo - attr.alignWith to give element to match?
-            //startFromTop = calcStartFromTop(element[0]);
+
+            //run a check in case elements have changed in page, don't wanna run too often
+            //todo - time this better
+            if (!shouldAffix && !isAffixed) {
+              startFromTop = calcStartFromTop(element[0]);
+            }
+
           }
         }
 
         //handle class changes, CSS changes
         function handleAffixing(shouldAffix) {
+          isAffixed = shouldAffix;
           if (shouldAffix) {
             //don't worry - we are't triggering paint storms because these only run when cross threshold (transform
             // isn't really appropriate)
