@@ -46,8 +46,14 @@ angular.module('transcripticApp')
       }
 
       $scope.instruction.groups.push(constructEmptyPI(type));
+    };
 
-      //console.log($scope, $scope.instruction, $scope.protocol.instructions[$scope.instructionIndex]);
-      //$scope.protocol.instructions[$scope.instructionIndex].groups.push();
+    this.removePI = function (index) {
+      $scope.instruction.groups.splice(index, 1);
+    };
+
+
+    this.duplicatePI = function (index) {
+      $scope.instruction.groups.splice(index, 0, angular.copy($scope.instruction.groups[index]));
     };
   });

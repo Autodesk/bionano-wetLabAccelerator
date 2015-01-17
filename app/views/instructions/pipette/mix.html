@@ -3,7 +3,7 @@
                         speed: '100:microliter/second',
                         repetitions: 10}">
 
-  <tx-well ng-model="instruction.groups[$index][pipeCtrl.groupKey(groupDeclaration)]"
+  <tx-well ng-model="groupObj[groupKey]"
            multiple="true"
            specify-container="true"
            multiple-zip="params"

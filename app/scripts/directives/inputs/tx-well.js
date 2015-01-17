@@ -66,8 +66,6 @@ angular.module('transcripticApp')
 
       if (_.isEmpty(input)) { return {}; }
 
-      console.log(input);
-
       var wells = [],
           container,
           otherKeys = Object.keys(otherFields),

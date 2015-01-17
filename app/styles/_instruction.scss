@@ -1,5 +1,8 @@
 tx-instruction {
   display: block; //for ui-sortable
+}
+
+.protocol-instruction {
 
   &.ng-enter,
   &.ng-leave {
