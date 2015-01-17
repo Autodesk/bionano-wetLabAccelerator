@@ -21,13 +21,14 @@
  */
 //fixme - resets model when don't prototypically inherit / model undefined initially
 //rpobably has to do with compilation / linking orders
-angular.module('transcripticApp').directive('jsonEditor', function () {
+angular.module('transcripticApp').directive('jsonEditor', function ($timeout) {
 	return {
 		restrict: 'A',
 		require: 'ngModel',
 		link: function (scope, element, attrs, ngModelCtrl) {
 
       var unwatch = angular.noop;
+      var lastValidModel = null;
 
       //hack - need to run $parser after have model, used for jsonEditorActive
       // otherwise using bindOnce for model watch cancelled by jsonEditorActive before runs
@@ -37,6 +38,34 @@ angular.module('transcripticApp').directive('jsonEditor', function () {
         setupToggledModelWatch();
       } else {
         setupModelWatch();
+      }
+
+      //if set ngModelOptions.updateOn, lets validate each keystroke
+      //assumption is you would pass in 'blur' or something to prevent every keystroke
+      if ( angular.isDefined(attrs.ngModelOptions) && angular.isDefined( scope.$eval(attrs.ngModelOptions)['updateOn'] ) ) {
+        //validate on any change
+        element.on('change keyup', function () {
+          scope.$apply(string2JSON(element.text()));
+        });
+
+        //escape key, rollback
+        //todo - clean up
+        element.on('keydown', function (e) {
+           if (e.keyCode == 27) {
+             scope.$apply(function () {
+               // if they have already set the model (i.e. to undefined),
+               // and committed an invalid $viewValue,
+               // then need to set the $viewValue ourselves based on last valid model
+               if (!string2JSON(ngModelCtrl.$viewValue)) {
+                 ngModelCtrl.$viewValue = JSON2String(lastValidModel);
+                 ngModelCtrl.$render();
+                 ngModelCtrl.$commitViewValue();
+               } else {
+                ngModelCtrl.$rollbackViewValue();
+               }
+             });
+           }
+        });
       }
 
       function setupModelWatch(bindOnce) {
@@ -50,6 +79,7 @@ angular.module('transcripticApp').directive('jsonEditor', function () {
           if (_.isEmpty(newval)) return;
 
           //under assumption that model only set when valid
+          lastValidModel = newval;
           ngModelCtrl.$setValidity('json', true);
           ngModelCtrl.$setViewValue(angular.toJson(newval, true));
           ngModelCtrl.$render();

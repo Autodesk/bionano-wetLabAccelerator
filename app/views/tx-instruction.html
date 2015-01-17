@@ -41,7 +41,12 @@
        json-editor-active="{{showJson}}"
        ng-show="showJson && showStep"
        name="InstJson"
-       ng-model="instruction"></pre>
+       ng-model="instruction"
+       ng-model-options="{updateOn: 'blur'}"></pre>
 
-  <p ng-show="InstForm.InstJson.$error.json">JSON is invalid!</p>
+  <div class="alert alert-danger"
+       style="margin-bottom: 0;"
+       ng-show="InstForm.InstJson.$error.json">
+    JSON is invalid! Hit <code>ESC</code> to revert
+  </div>
 </div>

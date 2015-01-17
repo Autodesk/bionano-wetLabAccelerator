@@ -12,14 +12,11 @@ To get it running you'll need to install (might need to sudo):
 
 ### TODO
 
-- scaffolds for each instruction as defaults
-  
 - thermocycle
   - template clean up
   - ability to add steps
 
 - json editor 
-  - have a save so that model doesn't reposition cursor, but still validate each key
   - ability to drop in new JSON (requires filereader... not too hard though)
   - copy JSON like bootstrap docs (see https://github.com/blog/1365-a-more-transparent-clipboard-button)
   

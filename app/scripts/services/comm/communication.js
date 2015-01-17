@@ -26,7 +26,7 @@ angular.module('transcripticApp')
         headers: Auth.headers(),
         withCredentials: true,
         cache: false,
-        timeout: 5000,
+        timeout: 7000,
         responseType: "json"
       }, params)
     };

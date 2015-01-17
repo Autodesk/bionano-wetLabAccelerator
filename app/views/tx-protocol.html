@@ -1,25 +1,9 @@
 <div class="row">
 
-  <div class="col-md-3"
-       simple-sticky="20"
-       style="position: absolute;">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Instructions
-      </div>
-      <div class="list-group"
-           ui-sortable="newSortableOptions"
-           ng-model="instructionOptions">
-        <a class="list-group-item drag-handle"
-           ng-repeat="i in instructionOptions track by i"
-           ng-bind="i | capfirst"></a>
-      </div>
-    </div>
-  </div>
-
   <div class="col-md-9 col-md-offset-3">
     <div ng-form="ProtocolForm"
          class="panel panel-info"
+         ng-class="{'panel-danger' : ProtocolForm.ProtocolJsonEditor.$invalid}"
          ng-init="showJson = false">
       <div class="panel-heading">
         <div class="btn-group btn-middle pull-right">
@@ -67,8 +51,35 @@
            json-editor-active="{{showJson}}"
            ng-show="showJson"
            name="ProtocolJsonEditor"
-           ng-model="protocol"></pre>
+           ng-model="protocol"
+           ng-model-options="{updateOn: 'blur'}"></pre>
 
+    </div>
+  </div>
+
+  <!-- put this second for z-index stacking so that it shows above protocol itself -->
+  <div class="col-md-3"
+       simple-sticky="20"
+       style="position: absolute;">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Instructions
+      </div>
+      <div class="list-group"
+           ui-sortable="newSortableOptions"
+           ng-model="instructionOptions">
+        <a class="list-group-item drag-handle"
+           ng-repeat="i in instructionOptions track by i"
+           ng-bind="i | capfirst"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container"
+       ng-if="ProtocolForm.ProtocolJsonEditor.$invalid"
+       style="position: fixed; top: 20px;">
+    <div class="alert alert-danger">
+      <p>Looks like your JSON is invalid :( You can hit <code>ESC</code> to revert.</p>
     </div>
   </div>
 
