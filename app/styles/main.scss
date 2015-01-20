@@ -7,6 +7,15 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 // all the misc stuff
 
+#logo {
+  width: 300px;
+  height: 50px;
+  margin: 15px 0;
+  display: block;
+  background-image: url('../images/logo.png');
+  background-size: cover;
+}
+
 [contenteditable] {
   cursor: pointer;
 }
