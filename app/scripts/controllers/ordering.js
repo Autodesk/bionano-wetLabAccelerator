@@ -42,7 +42,12 @@ angular.module('transcripticApp')
             processing: false,
             error: true
           });
-          angular.extend(toModify.response, e.data.protocol);
+          //use as simple check for something like a 404 error - i.e. not protocol error but $http error
+          if (angular.isUndefined(e.data.protocol)) {
+            angular.extend(toModify.response, {"error" : "Request did not go through... check the console"})
+          } else {
+            angular.extend(toModify.response, e.data.protocol);
+          }
           console.log(e);
         });
     }

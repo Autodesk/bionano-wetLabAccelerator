@@ -16,8 +16,6 @@ To get it running you'll need to install (might need to sudo):
   - template clean up
   - ability to add steps
   
-- tx-responseRequest - handle 404 error
-
 - abstraction for project / container etc. lists so all update when changed, also meta + non-comm methods
 
 #### Performance

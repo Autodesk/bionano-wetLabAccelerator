@@ -48,19 +48,24 @@ angular.module('transcripticApp')
 
       funcToRun({project : self.project.url}, constructRunPayload()).$promise.
       then(function runSuccess (d) {
+        console.log(d);
         angular.extend(toModify.config, {
           processing: false,
           error: false
         });
         angular.extend(toModify.response, d);
-        console.log(d);
       }, function runFailure (e) {
+        console.log(e);
         angular.extend(toModify.config, {
           processing: false,
           error: true
         });
-        angular.extend(toModify.response, e.data.protocol);
-        console.log(e);
+        //use as simple check for something like a 404 error - i.e. not protocol error but $http error
+        if (angular.isUndefined(e.data.protocol)) {
+          angular.extend(toModify.response, {"error" : "Request did not go through... check the console"})
+        } else {
+          angular.extend(toModify.response, e.data.protocol);
+        }
       });
     }
 
