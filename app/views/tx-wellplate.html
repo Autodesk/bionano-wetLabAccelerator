@@ -1,0 +1,13 @@
+<div class="well-plate">
+  <div ng-repeat="col in (containerReference.col_count | arrayify)"
+       class="well-plate-col">
+    <div ng-repeat="row in ((containerReference.well_count / containerReference.col_count) | arrayify)"
+         ng-init="alphaNum = alphanumericWell(row, col + 1)"
+         ng-click="selectWell(alphaNum)"
+         ng-class="{'selected' : isSelected(alphaNum)}"
+         tooltip="{{alphaNum}}"
+         tooltip-append-to-body="true"
+         class="well-plate-well">
+    </div>
+  </div>
+</div>

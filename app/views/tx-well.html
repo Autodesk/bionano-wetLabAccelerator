@@ -1,18 +1,34 @@
-<div class="input-group"
-     ng-form="wellForm"
-     ng-class="{'has-error': wellForm.$invalid}">
-  <span ng-bind="label ? label : (!!multiple ? 'wells' : 'well')"
-        class="input-group-addon"></span>
-  <select class="form-control"
-          ng-if="specifyContainer"
-          ng-required="specifyContainer"
-          style="width: 30%"
-          ng-options="r as r for (r, details) in refs"
-          ng-model="internal.container"></select>
-  <input type="text"
-         ng-model="internal.wells"
-         required
-         ng-list
-         ng-style="{'width' : specifyContainer ? '70%' : null}"
-         class="form-control">
+<div ng-init="showPlateUI = false">
+  <div class="input-group"
+       ng-form="wellForm"
+       ng-class="{'has-error': wellForm.$invalid}">
+    <span ng-bind="label ? label : (!!multiple ? 'wells' : 'well')"
+          class="input-group-addon"></span>
+      <span ng-click="showPlateUI = !showPlateUI"
+            class="input-group-addon">
+        <span class="glyphicon"
+              ng-class="{'glyphicon-th' : showPlateUI,
+                         'glyphicon-option-horizontal' : !showPlateUI}"></span>
+    </span>
+    <select class="form-control"
+            ng-if="specifyContainer"
+            ng-required="specifyContainer"
+            style="width: 30%"
+            ng-options="r as r for (r, details) in refs"
+            ng-model="internal.container"></select>
+    <input type="text"
+           ng-if="!showPlateUI"
+           ng-style="{'width' : specifyContainer ? '70%' : null}"
+           ng-model="internal.wells"
+           required
+           ng-list
+           class="form-control">
+    <tx-wellplate ng-if="showPlateUI"
+                  container-reference="containerReference"
+                  ng-model="internal.wells"
+                  multiple="multiple"
+                  ng-style="{'width' : specifyContainer ? '70%' : null}"
+                  class="well-plate form-control"></tx-wellplate>
+  </div>
+
 </div>

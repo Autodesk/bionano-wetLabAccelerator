@@ -51,6 +51,7 @@
   <div ng-if="instruction.dyes">
     <div ng-repeat="(dye, wells) in instruction.dyes">
       <tx-well label="{{dye}}"
+               container="instruction.object"
                ng-model="instruction.dyes[dye]"
                multiple="true"
     </div>

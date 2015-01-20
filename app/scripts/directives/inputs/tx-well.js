@@ -12,16 +12,15 @@
  * specify container, one well
  * specify container, multiple wells -- get array in form [ {well : "<container>/<well>" }]
  *
+ * In the final scenario, can also pass multipleZip attr wtih values to include in the object
+ *
  * if need to specify container, must pass specifyContainer and refs
  *
  */
-//note - weird backspace behavior because of ng-list... may want to smooth out
-//todo - add required flags
 //todo - validation (and therefore passage of container)
 //todo - alphanumeric <--> numeric conversion
-//todo - this is all getting kinda hacky, esp in dealing with potentially empty models (fixme)
 angular.module('transcripticApp')
-  .directive('txWell', function () {
+  .directive('txWell', function (ContainerOptions, Container) {
 
     var containerWellJoiner = '/';
 
@@ -33,6 +32,21 @@ angular.module('transcripticApp')
       return str.split(containerWellJoiner);
     }
 
+    function colRowToAlphanumeric (row, col) {
+      var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+      return letters[row] + '' + col;
+    }
+
+    //returns promise
+    function getContainerFromID (id) {
+      return Container.view({}, {id: id});
+    }
+
+    function numericToAlphanumeric (number, container) {
+
+    }
+
+    //todo - convert numeric to alphanumeric on initial parse
     function parseContainerWell (str) {
       //i.e. scope.multiple
       if (angular.isArray(str)) {
@@ -61,7 +75,6 @@ angular.module('transcripticApp')
       }
     }
 
-    //todo - checks to make sure all same container + otherFields
     function parseContainerWellObjects (input, otherFields, forceKey) {
 
       if (_.isEmpty(input)) { return {}; }
@@ -71,7 +84,7 @@ angular.module('transcripticApp')
           otherKeys = Object.keys(otherFields),
           otherValues = {};
 
-      //todo - better error handling
+      //todo - better error handling - checks to make sure all same container + otherFields
       angular.forEach(input, function (wellObj, index) {
         var split = splitContainerWell(wellObj[forceKey]);
 
@@ -110,11 +123,12 @@ angular.module('transcripticApp')
       require: 'ngModel',
       scope: {
         externalModel: '=ngModel',
-        label: '@',
-        multiple: '@',
-        specifyContainer: '@',
-        multipleZip: '=', //if multiple and specifyContainer, other fields to include in array. MUST BE ASSIGNABLE (i.e. single object)
-        refs: '=?'
+        refs: '=', //protocol references
+        label: '@', //text label override
+        multiple: '@', //allow multiple well selection
+        specifyContainer: '@', // UI for specify container, include in model (e.g. container/well)
+        container: '=', //if not specifying, pass in ref
+        multipleZip: '=' //if multiple and specifyContainer, other fields to include in array. MUST BE ASSIGNABLE (i.e. single object)
       },
       link: function postLink(scope, element, attrs, ngModel) {
 
@@ -122,6 +136,21 @@ angular.module('transcripticApp')
         scope.internal = {wells: [], container: ''};
 
         var forceKey = angular.isDefined(attrs.multipleParseKey) ? attrs.multipleParseKey : 'well';
+
+        scope.$watch(function () {
+          return scope.specifyContainer ? scope.internal.container : scope.container;
+        }, function (newval) {
+          if (!newval || !angular.isString(newval)) return;
+
+          var ref;
+          if (ref = scope.refs[newval]) {
+            if (ref.new) {
+              scope.containerReference = ContainerOptions[ref.new];
+            } else {
+              scope.containerReference = getContainerFromID(ref.id);
+            }
+          }
+        });
 
         //deep watch, propagate up changes
         scope.$watch('internal', function (newval) {

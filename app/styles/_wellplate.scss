@@ -1,0 +1,29 @@
+
+//probably use with form-control
+.well-plate {
+  display: table;
+  height: auto;
+
+  .well-plate-col {
+    display: table-cell;
+    width: 1%;
+  }
+
+  .well-plate-well {
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    border: 1px solid $gray;
+    text-align: center;
+    padding-bottom: 20%;
+
+    &.selected {
+      background: $brand-primary;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}

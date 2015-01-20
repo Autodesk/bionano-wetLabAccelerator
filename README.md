@@ -16,14 +16,18 @@ To get it running you'll need to install (might need to sudo):
   - template clean up
   - ability to add steps
   
-- clean up dirty checks 
-  - get tool for assessing perf?
-  - tx-well when click JSON for protocol
-  - tx-protocol when changing protocol
-
 - tx-responseRequest - handle 404 error
 
 - abstraction for project / container etc. lists so all update when changed, also meta + non-comm methods
+
+#### Performance
+
+- tx-protocol
+ - use ng-if for json-editor (require proto inheritance model to propagate properly?)
+- tx-well
+  - lots of checks (e.g. when click JSON for protocol)
+- tx-wellplate  
+  - move to map internally? skip indexOf?
 
 #### Pretty + Nice features
 
@@ -33,10 +37,11 @@ To get it running you'll need to install (might need to sudo):
   - ability to drop in new JSON (requires filereader... not too hard though)
   - copy JSON like bootstrap docs (see https://github.com/blog/1365-a-more-transparent-clipboard-button)
 
-
 - add in notes for each container, reference, project, etc. (move away from select) 
   - arrow popover extensions
   - container capabilities
+  
+- update gel_separate & sangerseq well format pending Tali response
   
 - better error messages
   - ngMessages for errors / warnings. in addition to just red boxes
@@ -48,7 +53,8 @@ To get it running you'll need to install (might need to sudo):
   - maybe as attribute directive? but need dropdown or something
   - allow passage of object as attrs for input?
 
-- better well UI
+- tx-wellplate
+  - ability to drag to select multiple
 
 - smart checks for covers, seals, etc.
 
