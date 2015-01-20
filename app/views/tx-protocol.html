@@ -11,8 +11,9 @@
                   tooltip="Toggle visibility of all steps"
                   tooltip-append-to-body="true"
                   ng-click="toggleInstructionCollapsed()">
-        <span class="glyphicon"
-              ng-class="{'glyphicon-eye-open' : allStepsVisibleState, 'glyphicon-eye-close' : !allStepsVisibleState}"></span>
+            <span class="glyphicon"
+                  ng-class="{'glyphicon-eye-open' : allStepsVisibleState,
+                             'glyphicon-eye-close' : !allStepsVisibleState}"></span>
           </button>
           <button class="btn btn-default btn-sm"
                   ng-disabled="ProtocolForm.ProtocolJsonEditor.$error.json"

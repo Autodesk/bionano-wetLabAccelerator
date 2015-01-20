@@ -22,10 +22,18 @@ angular
   ])
   .config(function ($routeProvider, AuthProvider) {
 
+    /*
     angular.extend(AuthProvider, {
       email : "max.bates@autodesk.com",
       key : "U4J-_G7vy-CKZwQsDNMw",
       organization : "autodesk-cyborg"
+    });
+    */
+
+    angular.extend(AuthProvider, {
+      email : "aaron.berliner@autodesk.com",
+      key : "xoZMp61vS-ceV6PuUjrP",
+      organization : "autodesk"
     });
 
     $routeProvider
