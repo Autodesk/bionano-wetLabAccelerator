@@ -15,10 +15,6 @@ To get it running you'll need to install (might need to sudo):
 - thermocycle
   - template clean up
   - ability to add steps
-
-- json editor 
-  - ability to drop in new JSON (requires filereader... not too hard though)
-  - copy JSON like bootstrap docs (see https://github.com/blog/1365-a-more-transparent-clipboard-button)
   
 - clean up dirty checks 
   - get tool for assessing perf?
@@ -27,17 +23,23 @@ To get it running you'll need to install (might need to sudo):
 
 - tx-responseRequest - handle 404 error
 
+- abstraction for project / container etc. lists so all update when changed, also meta + non-comm methods
+
 #### Pretty + Nice features
 
 - groups! ability to lump duplications
 
+- json editor 
+  - ability to drop in new JSON (requires filereader... not too hard though)
+  - copy JSON like bootstrap docs (see https://github.com/blog/1365-a-more-transparent-clipboard-button)
+
+
 - add in notes for each container, reference, project, etc. (move away from select) 
   - arrow popover extensions
+  - container capabilities
   
 - better error messages
   - ngMessages for errors / warnings. in addition to just red boxes
-
-- abstraction for project / container etc. lists so all update when changed
 
 - updating tx-refs name -> update protocol references
 
