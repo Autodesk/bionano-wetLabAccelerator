@@ -8,7 +8,7 @@
  */
 
 angular.module('transcripticApp')
-  .directive('txProtocol', function (InstructionOptions) {
+  .directive('txProtocol', function (InstructionOptions, $window) {
     return {
       templateUrl: 'views/tx-protocol.html',
       restrict: 'E',
@@ -47,8 +47,6 @@ angular.module('transcripticApp')
             var type = ui.item.sortable.model,
               dropIndex = ui.item.sortable.dropindex;
 
-            //todo - logic for handling pipette subtasks? or just keep in pipette template
-
             //hack - probably a better way. ng-include trying to get empty template unless has ng-if
             scope.$apply(function () {
               //need to replace here so that ng-model + ui-sortable stay in sync
@@ -57,6 +55,24 @@ angular.module('transcripticApp')
           }
         };
 
+        scope.onFileDrop = function (files, event, rejected) {
+          if ($window.FileReader) {
+
+            var fileReader = new FileReader();
+
+            fileReader.onload = function(e) {
+              scope.$apply(function() {
+                try {
+                  scope.protocol = angular.fromJson(e.target.result);
+                } catch (e) {
+                  console.log('couldnt parse dropped JSON', e);
+                }
+              });
+            };
+
+            fileReader.readAsText(files[0]);
+          }
+        };
       }
     };
   });

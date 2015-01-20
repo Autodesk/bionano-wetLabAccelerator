@@ -18,7 +18,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ui.bootstrap',
-    'ui.sortable'
+    'ui.sortable',
+    'angularFileUpload'
   ])
   .config(function ($routeProvider, AuthProvider) {
 

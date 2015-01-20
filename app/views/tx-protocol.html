@@ -47,13 +47,19 @@
         </div>
       </div>
 
-      <pre json-editor
-           contenteditable
-           json-editor-active="{{showJson}}"
-           ng-show="showJson"
-           name="ProtocolJsonEditor"
-           ng-model="protocol"
-           ng-model-options="{updateOn: 'blur'}"></pre>
+      <div ng-show="showJson"
+           ng-file-drop
+           ng-multiple="false"
+           accept="application/json"
+           drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+           ng-file-change="onFileDrop($files, $event, $rejectedFiles)">
+        <pre json-editor
+             contenteditable
+             json-editor-active="{{showJson}}"
+             name="ProtocolJsonEditor"
+             ng-model="protocol"
+             ng-model-options="{updateOn: 'blur'}"></pre>
+      </div>
 
     </div>
   </div>

@@ -61,6 +61,16 @@ tx-refs .panel {
   }
 }
 
+.dragover,
+.dragover pre {
+  background: $panel-success-heading-bg;
+}
+
+.dragover-err,
+.dragover-err pre {
+  background: $panel-danger-heading-bg;
+}
+
 //imports
 
 @import 'corner';
