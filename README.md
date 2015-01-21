@@ -31,8 +31,7 @@ To get it running you'll need to install (might need to sudo):
 
 - groups! ability to lump duplications
 
-- json editor 
-  - ability to drop in new JSON (requires filereader... not too hard though)
+- json editor
   - copy JSON like bootstrap docs (see https://github.com/blog/1365-a-more-transparent-clipboard-button)
 
 - add in notes for each container, reference, project, etc. (move away from select) 
@@ -50,9 +49,6 @@ To get it running you'll need to install (might need to sudo):
   - need to support input[type] + ideally other input attributes
   - maybe as attribute directive? but need dropdown or something
   - allow passage of object as attrs for input?
-
-- tx-wellplate
-  - ability to drag to select multiple
 
 - smart checks for covers, seals, etc.
 

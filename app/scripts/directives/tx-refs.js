@@ -50,7 +50,10 @@ angular.module('transcripticApp')
         };
 
         scope.changeReference = function (ref, isNew, newRef) {
-          console.assert(_.isString(newRef), 'new reference is not a string');
+          if (!_.isString(newRef)) {
+            console.log('new reference is not a string');
+            return;
+          }
           if (isNew) {
             delete ref.id;
             ref.new = newRef;

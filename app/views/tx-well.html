@@ -5,6 +5,8 @@
     <span ng-bind="label ? label : (!!multiple ? 'wells' : 'well')"
           class="input-group-addon"></span>
       <span ng-click="showPlateUI = !showPlateUI"
+            tooltip="Toggle Plate UI / List"
+            tooltip-append-to-body="true"
             class="input-group-addon">
         <span class="glyphicon"
               ng-class="{'glyphicon-th' : showPlateUI,
