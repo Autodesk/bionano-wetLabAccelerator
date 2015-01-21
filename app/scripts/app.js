@@ -34,7 +34,7 @@ angular
 
     angular.extend(AuthProvider, {
       email : "aaron.berliner@autodesk.com",
-      key : "xoZMp61vS-ceV6PuUjrP",
+      key : "6sDy-YH1qEoj_yUyn4JX",
       organization : "autodesk"
     });
 
