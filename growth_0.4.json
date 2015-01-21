@@ -1,0 +1,239 @@
+{
+  "refs": {
+    "growth_plate": {
+      "new": "96-flat",
+      "store": {
+        "where": "warm_37"
+      }
+    },
+    "ecoli_flask": {
+      "id": "ct17btezchpfa6",
+      "store": {
+        "where": "cold_20"
+      }
+    },
+    "lb_flask": {
+      "id": "ct17bteysz5nx2",
+      "store": {
+        "where": "cold_20"
+      }
+    }
+  },
+  "instructions": [
+    {
+      "groups": [
+        {
+          "distribute": {
+            "to": [
+              {
+                "volume": "100:microliter",
+                "dispense_speed": "100:microliter/second",
+                "well": "growth_plate/A1"
+              },
+              {
+                "volume": "100:microliter",
+                "dispense_speed": "100:microliter/second",
+                "well": "growth_plate/B1"
+              }
+            ],
+            "from": "lb_flask/0",
+            "allow_carryover": false
+          }
+        },
+        {
+          "distribute": {
+            "from": "ecoli_flask/0",
+            "to": [
+              {
+                "volume": "50:microliter",
+                "dispense_speed": "100:microliter/second",
+                "well": "growth_plate/A1"
+              }
+            ]
+          }
+        }
+      ],
+      "op": "pipette"
+    },
+    {
+      "dataref": "sample_growth_1",
+      "object": "growth_plate",
+      "wells": [
+        "A1",
+        "B1"
+      ],
+      "num_flashes": 25,
+      "wavelength": "600:nanometer",
+      "op": "absorbance"
+    },
+    {
+      "duration": "60:minute",
+      "where": "warm_37",
+      "object": "growth_plate",
+      "shaking": true,
+      "op": "incubate"
+    },
+    {
+      "dataref": "sample_growth_2",
+      "object": "growth_plate",
+      "wells": [
+        "A1",
+        "B1"
+      ],
+      "num_flashes": 25,
+      "wavelength": "600:nanometer",
+      "op": "absorbance"
+    },
+    {
+      "duration": "60:minute",
+      "where": "warm_37",
+      "object": "growth_plate",
+      "shaking": true,
+      "op": "incubate"
+    },
+    {
+      "dataref": "sample_growth_3",
+      "object": "growth_plate",
+      "wells": [
+        "A1",
+        "B1"
+      ],
+      "num_flashes": 25,
+      "wavelength": "600:nanometer",
+      "op": "absorbance"
+    },
+    {
+      "duration": "60:minute",
+      "where": "warm_37",
+      "object": "growth_plate",
+      "shaking": true,
+      "op": "incubate"
+    },
+    {
+      "dataref": "sample_growth_4",
+      "object": "growth_plate",
+      "wells": [
+        "A1",
+        "B1"
+      ],
+      "num_flashes": 25,
+      "wavelength": "600:nanometer",
+      "op": "absorbance"
+    },
+    {
+      "duration": "60:minute",
+      "where": "warm_37",
+      "object": "growth_plate",
+      "shaking": true,
+      "op": "incubate"
+    },
+    {
+      "dataref": "sample_growth_5",
+      "object": "growth_plate",
+      "wells": [
+        "A1",
+        "B1"
+      ],
+      "num_flashes": 25,
+      "wavelength": "600:nanometer",
+      "op": "absorbance"
+    },
+    {
+      "duration": "60:minute",
+      "where": "warm_37",
+      "object": "growth_plate",
+      "shaking": true,
+      "op": "incubate"
+    },
+    {
+      "dataref": "sample_growth_6",
+      "object": "growth_plate",
+      "wells": [
+        "A1",
+        "B1"
+      ],
+      "num_flashes": 25,
+      "wavelength": "600:nanometer",
+      "op": "absorbance"
+    },
+    {
+      "duration": "60:minute",
+      "where": "warm_37",
+      "object": "growth_plate",
+      "shaking": true,
+      "op": "incubate"
+    },
+    {
+      "dataref": "sample_growth_7",
+      "object": "growth_plate",
+      "wells": [
+        "A1",
+        "B1"
+      ],
+      "num_flashes": 25,
+      "wavelength": "600:nanometer",
+      "op": "absorbance"
+    },
+    {
+      "duration": "60:minute",
+      "where": "warm_37",
+      "object": "growth_plate",
+      "shaking": true,
+      "op": "incubate"
+    },
+    {
+      "dataref": "sample_growth_8",
+      "object": "growth_plate",
+      "wells": [
+        "A1",
+        "B1"
+      ],
+      "num_flashes": 25,
+      "wavelength": "600:nanometer",
+      "op": "absorbance"
+    },
+    {
+      "duration": "60:minute",
+      "where": "warm_37",
+      "object": "growth_plate",
+      "shaking": true,
+      "op": "incubate"
+    },
+    {
+      "dataref": "sample_growth_9",
+      "object": "growth_plate",
+      "wells": [
+        "A1",
+        "B1"
+      ],
+      "num_flashes": 25,
+      "wavelength": "600:nanometer",
+      "op": "absorbance"
+    },
+    {
+      "duration": "60:minute",
+      "where": "warm_37",
+      "object": "growth_plate",
+      "shaking": true,
+      "op": "incubate"
+    },
+    {
+      "dataref": "sample_growth_10",
+      "object": "growth_plate",
+      "wells": [
+        "A1",
+        "B1"
+      ],
+      "num_flashes": 25,
+      "wavelength": "600:nanometer",
+      "op": "absorbance"
+    },
+    {
+      "duration": "60:minute",
+      "where": "warm_37",
+      "object": "growth_plate",
+      "shaking": true,
+      "op": "incubate"
+    }
+  ]
+}
