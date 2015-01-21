@@ -7,7 +7,7 @@
  * # txProjectlist
  */
 angular.module('transcripticApp')
-  .directive('txProjectlist', function (Project) {
+  .directive('txProjectlist', function (Project, Auth) {
     return {
       templateUrl: 'views/tx-projectlist.html',
       restrict: 'E',
@@ -26,7 +26,9 @@ angular.module('transcripticApp')
           ngModelCtrl.$setViewValue(proj);
         };
 
-        scope.projects = Project.list();
+        Auth.watch(function () {
+          scope.projects = Project.list();
+        });
       }
     };
   });

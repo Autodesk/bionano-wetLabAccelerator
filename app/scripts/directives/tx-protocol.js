@@ -78,6 +78,7 @@ angular.module('transcripticApp')
           }
         };
 
+        //todo - update refs in protocol with new name
         scope.$watchCollection('protocol.refs', function (newval, oldval) {
           console.log(newval, oldval, _.uniq(newval));
         });

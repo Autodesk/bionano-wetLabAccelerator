@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('MainCtrl', function ($scope, $http, ProtocolFactory, Run, Project) {
+  .controller('MainCtrl', function ($scope, $http, Run) {
 
     var self = this;
 

@@ -9,30 +9,43 @@
  */
 angular.module('transcripticApp')
   .controller('FirebaseLoginCtrl', function($scope, simpleLogin) {
+
     $scope.email = null;
     $scope.pass = null;
     $scope.confirm = null;
     $scope.createMode = false;
+    $scope.isLoggedIn = false;
 
     $scope.login = function(email, pass) {
       $scope.err = null;
       simpleLogin.login(email, pass)
-        .then(function(user) {
-          console.log(user);
-        }, function(err) {
-          $scope.err = errMessage(err);
-        });
+      .then(function(user) {
+        console.log(user);
+      }, function(err) {
+        $scope.err = errMessage(err);
+      });
     };
+
+    simpleLogin.watch(function(user) {
+      $scope.isLoggedIn = !!user;
+      if ($scope.isLoggedIn) {
+        $scope.email = user.password.email;
+        $scope.createMode = false;
+        $scope.err = null;
+      }
+    });
+
+    $scope.logout = simpleLogin.logout;
 
     $scope.createAccount = function() {
       $scope.err = null;
       if( assertValidAccountProps() ) {
         simpleLogin.createAccount($scope.email, $scope.pass)
-          .then(function(user) {
-            console.log(user);
-          }, function(err) {
-            $scope.err = errMessage(err);
-          });
+        .then(function(user) {
+          console.log(user);
+        }, function(err) {
+          $scope.err = errMessage(err);
+        });
       }
     };
 

@@ -8,7 +8,7 @@
  */
 //todo - combine with Ref stanza?? (allowing for new container + handling diff model)
 angular.module('transcripticApp')
-  .directive('txContainer', function (Container, ContainerOptions) {
+  .directive('txContainer', function (Container, ContainerOptions, Auth) {
     return {
       templateUrl: 'views/tx-container.html',
       require: 'ngModel',
@@ -23,7 +23,9 @@ angular.module('transcripticApp')
           ngModel.$setViewValue(scope.internalModel);
         };
 
-        scope.containers = Container.list();
+        Auth.watch(function () {
+          scope.containers = Container.list();
+        });
         scope.containerOptions = ContainerOptions;
       }
     };

@@ -24,6 +24,11 @@ To get it running you'll need to install (might need to sudo):
 
 - container provisioning, esp reservations
 
+- move firebase stuff to own module
+  - patch undefined error (e.g. for form controls when invalid)
+  
+- combine tx-container and tx-refs container listing
+
 #### Performance
 
 - tx-protocol

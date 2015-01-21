@@ -8,7 +8,7 @@
  */
 //todo - need to convert to Ref, probably internally to directive? or external as processing step?
 angular.module('transcripticApp')
-  .directive('txRefs', function (Container, ContainerOptions, StorageOptions, RefFactory) {
+  .directive('txRefs', function (Container, ContainerOptions, StorageOptions, Auth) {
     return {
       templateUrl: 'views/tx-refs.html',
       restrict: 'E',
@@ -20,7 +20,9 @@ angular.module('transcripticApp')
         var discardKey = "DISCARD";
         scope.discardKey = discardKey;
 
-        scope.containers = Container.list();
+        Auth.watch(function () {
+          scope.containers = Container.list();
+        });
         scope.containerOptions = ContainerOptions;
         scope.storageOptions = [discardKey].concat(StorageOptions.storage);
 

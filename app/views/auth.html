@@ -1,6 +1,7 @@
 <div class="panel panel-info" ng-controller="FirebaseLoginCtrl">
   <div class="panel-heading">Firebase</div>
   <form name="loginForm"
+        ng-submit="login(email, pass)"
         class="panel-body form-horizontal">
 
     <div class="form-group">
@@ -16,7 +17,7 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-hide="isLoggedIn">
       <label for="fbPassword" class="col-sm-2 control-label">Password</label>
       <div class="col-sm-10">
         <input type="text"
@@ -30,7 +31,7 @@
     </div>
 
     <div class="form-group"
-         ng-show="createMode">
+         ng-show="createMode && !isLoggedIn">
       <label for="fbPassword" class="col-sm-2 control-label">Confirm</label>
       <div class="col-sm-10">
         <input type="text"
@@ -47,28 +48,35 @@
          ng-bind="err"></div>
 
     <div class="col-md-offset-2">
-      <button class="btn btn-primary"
-              ng-click="login(email, pass)"
-              ng-disabled="loginForm.$invalid"
-              ng-hide="createMode">Log In</button>
-      <button class="btn btn-default"
-              ng-click="createMode = true"
-              ng-hide="createMode">Register</button>
-      <button class="btn btn-primary"
-              ng-cloak
-              ng-show="createMode"
-              ng-disabled="loginForm.$invalid"
-              ng-click="createAccount()">Create Account</button>
-      <button class="btn btn-warning"
-              ng-cloak
-              ng-show="createMode"
-              ng-click="createMode = false">Cancel</button>
+      <div ng-show-auth>
+        <button class="btn btn-danger"
+                ng-click="logout()">Logout</button>
+      </div>
+      <div ng-hide-auth>
+        <button class="btn btn-primary"
+                ng-click="login(email, pass)"
+                ng-disabled="loginForm.$invalid"
+                ng-hide="createMode">Log In</button>
+        <button class="btn btn-default"
+                ng-click="createMode = true"
+                ng-hide="createMode">Register</button>
+        <button class="btn btn-primary"
+                ng-cloak
+                ng-show="createMode"
+                ng-disabled="loginForm.$invalid"
+                ng-click="createAccount()">Create Account</button>
+        <button class="btn btn-warning"
+                ng-cloak
+                ng-show="createMode"
+                ng-click="createMode = false">Cancel</button>
+      </div>
     </div>
 
   </form>
 </div>
 
-<div class="panel panel-info">
+<div class="panel panel-info"
+     ng-controller="AuthCtrl as authCtrl">
   <div class="panel-heading">Transcriptic</div>
   <form name="authForm"
         class="panel-body form-horizontal">
@@ -77,8 +85,7 @@
       <label for="inputEmail" class="col-sm-2 control-label">Email</label>
       <div class="col-sm-10">
         <input type="email"
-               ng-model="Auth.email"
-               ng-model-options="{getterSetter: true}"
+               ng-model="auth.email"
                name="authEmail"
                class="form-control"
                id="inputEmail"
@@ -90,8 +97,7 @@
       <label for="inputKey" class="col-sm-2 control-label">Key</label>
       <div class="col-sm-10">
         <input type="text"
-               ng-model="Auth.key"
-               ng-model-options="{getterSetter: true}"
+               ng-model="auth.key"
                name="authKey"
                class="form-control"
                id="inputKey"
@@ -102,9 +108,8 @@
     <div class="form-group">
       <label for="inputOrg" class="col-sm-2 control-label">Organization</label>
       <div class="col-sm-10">
-        <input type="email"
-               ng-model="Auth.organization"
-               ng-model-options="{getterSetter: true}"
+        <input type="text"
+               ng-model="auth.organization"
                name="authOrg"
                class="form-control"
                id="inputOrg"

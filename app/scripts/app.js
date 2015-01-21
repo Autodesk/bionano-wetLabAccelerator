@@ -22,49 +22,34 @@ angular
     'angularFileUpload',
     'firebase'
   ])
-  .config(function ($routeProvider, AuthProvider) {
-
-    /*
-    angular.extend(AuthProvider, {
-      email : "max.bates@autodesk.com",
-      key : "U4J-_G7vy-CKZwQsDNMw",
-      organization : "autodesk-cyborg"
-    });
-    */
-
-    angular.extend(AuthProvider, {
-      email : "aaron.berliner@autodesk.com",
-      key : "6sDy-YH1qEoj_yUyn4JX",
-      organization : "autodesk"
-    });
+  .config(function ($routeProvider) {
 
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'mainCtrl'
-      })
-      .when('/data', {
-        templateUrl: 'views/data.html',
-        controller: 'DataCtrl',
-        controllerAs: 'dataCtrl'
-      })
-      .when('/testing', {
-        templateUrl: 'views/testing.html',
-        controller: 'RefsCtrl',
-        controllerAs: 'refsCtrl'
-      })
-      .when('/auth', {
-        templateUrl: 'views/auth.html',
-        controller: 'AuthCtrl',
-        controllerAs: 'authCtrl'
-      })
-      .when('/ordering', {
-        templateUrl: 'views/ordering.html',
-        controller: 'OrderingCtrl',
-        controllerAs: 'orderCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+    .when('/', {
+      templateUrl: 'views/main.html',
+      controller: 'MainCtrl',
+      controllerAs: 'mainCtrl'
+    })
+    .when('/data', {
+      templateUrl: 'views/data.html',
+      controller: 'DataCtrl',
+      controllerAs: 'dataCtrl'
+    })
+    .when('/testing', {
+      templateUrl: 'views/testing.html',
+      controller: 'RefsCtrl',
+      controllerAs: 'refsCtrl'
+    })
+    .when('/auth', {
+      templateUrl: 'views/auth.html'
+    })
+    .when('/ordering', {
+      templateUrl: 'views/ordering.html',
+      controller: 'OrderingCtrl',
+      controllerAs: 'orderCtrl'
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
+  })
+  .run(function (simpleLogin) {});

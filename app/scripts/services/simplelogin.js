@@ -9,9 +9,11 @@
  */
 angular.module('transcripticApp')
   .constant('FBURL', 'https://transcriptic.firebaseio.com')
-  /*
-  Ref wrapper
-   */
+  /**
+  * @name firebaseRef
+  * @param {String|Array...} path relative path to the root folder in Firebase instance
+  * @return a Firebase instance
+  */
   .factory('fbref', function ($window, FBURL) {
     function pathRef(args) {
       for (var i = 0; i < args.length; i++) {
@@ -25,19 +27,6 @@ angular.module('transcripticApp')
       return args.join('/');
     }
 
-    /**
-     * Example:
-     * <code>
-     *    function(firebaseRef) {
-         *       var ref = firebaseRef('path/to/data');
-         *    }
-     * </code>
-     *
-     * @function
-     * @name firebaseRef
-     * @param {String|Array...} path relative path to the root folder in Firebase instance
-     * @return a Firebase instance
-     */
     function firebaseRef(path) {
       var ref = new $window.Firebase(FBURL);
       var args = Array.prototype.slice.call(arguments);
@@ -48,6 +37,15 @@ angular.module('transcripticApp')
     }
 
     return firebaseRef;
+  })
+  /*
+  Factory for profile, can pass in UID and child paths
+   */
+  .factory('FBProfile', function ($firebase, fbref) {
+    return function (uid) {
+      if (!angular.isString(uid)) { throw new Error('uid required for FBProfile'); }
+      return $firebase(fbref.apply(null, ['users'].concat(Array.prototype.slice.call(arguments))));
+    }
   })
   /*
   Simple login helper
@@ -138,7 +136,8 @@ angular.module('transcripticApp')
    */
   .factory('createProfile',  function(fbref, $q, $timeout) {
     return function (id, email, name) {
-      var ref = fbref('users', id), def = $q.defer();
+      var ref = fbref('users', id),
+          def = $q.defer();
       ref.set({email: email, name: name || firstPartOfEmail(email)}, function (err) {
         $timeout(function () {
           if (err) {
@@ -261,6 +260,85 @@ angular.module('transcripticApp')
 
       function authNewAccount() {
         return simpleLogin.login(ctx.curr.email, password);
+      }
+    };
+  })
+/**
+ * Wraps ng-cloak so that, instead of simply waiting for Angular to compile, it waits until
+ * simpleLogin resolves with the remote Firebase services.
+ *
+ * <code>
+ *    <div ng-cloak>Authentication has resolved.</div>
+ * </code>
+ */
+  .config(function($provide) {
+    // adapt ng-cloak to wait for auth before it does its magic
+    $provide.decorator('ngCloakDirective', function($delegate, simpleLogin) {
+      var directive = $delegate[0];
+      // make a copy of the old directive
+      var _compile = directive.compile;
+      directive.compile = function(element, attr) {
+        simpleLogin.getUser().then(function() {
+          // after auth, run the original ng-cloak directive
+          _compile.call(directive, element, attr);
+        });
+      };
+      // return the modified directive
+      return $delegate;
+    });
+  })
+/**
+ * A directive that shows elements only when user is logged in.
+ */
+  .directive('ngShowAuth', function (simpleLogin, $timeout) {
+    var isLoggedIn;
+    simpleLogin.watch(function(user) {
+      isLoggedIn = !!user;
+    });
+
+    return {
+      restrict: 'A',
+      link: function(scope, el) {
+        el.addClass('ng-cloak'); // hide until we process it
+
+        function update() {
+          // sometimes if ngCloak exists on same element, they argue, so make sure that
+          // this one always runs last for reliability
+          $timeout(function () {
+            el.toggleClass('ng-cloak', !isLoggedIn);
+          }, 0);
+        }
+
+        update();
+        simpleLogin.watch(update, scope);
+      }
+    };
+  })
+
+/**
+ * A directive that shows elements only when user is logged out.
+ */
+  .directive('ngHideAuth', function (simpleLogin, $timeout) {
+    var isLoggedIn;
+    simpleLogin.watch(function(user) {
+      isLoggedIn = !!user;
+    });
+
+    return {
+      restrict: 'A',
+      link: function(scope, el) {
+        function update() {
+          el.addClass('ng-cloak'); // hide until we process it
+
+          // sometimes if ngCloak exists on same element, they argue, so make sure that
+          // this one always runs last for reliability
+          $timeout(function () {
+            el.toggleClass('ng-cloak', isLoggedIn !== false);
+          }, 0);
+        }
+
+        update();
+        simpleLogin.watch(update, scope);
       }
     };
   });
