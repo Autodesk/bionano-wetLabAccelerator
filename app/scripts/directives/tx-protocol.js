@@ -13,7 +13,8 @@ angular.module('transcripticApp')
       templateUrl: 'views/tx-protocol.html',
       restrict: 'E',
       scope: {
-        protocol: '='
+        protocol: '=',
+        meta: '='
       },
       link: function (scope, element, attrs) {
 
@@ -64,6 +65,9 @@ angular.module('transcripticApp')
               scope.$apply(function() {
                 try {
                   scope.protocol = angular.fromJson(e.target.result);
+                  scope.meta = {
+                    name : files[0].name
+                  }
                 } catch (e) {
                   console.log('couldnt parse dropped JSON', e);
                 }
@@ -73,6 +77,10 @@ angular.module('transcripticApp')
             fileReader.readAsText(files[0]);
           }
         };
+
+        scope.$watchCollection('protocol.refs', function (newval, oldval) {
+          console.log(newval, oldval, _.uniq(newval));
+        });
       }
     };
   });

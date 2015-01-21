@@ -20,6 +20,9 @@ angular.module('transcripticApp')
       self.selectedProtocol = protocol;
       $http.get('demo_protocols/' + protocol + '.json').success(function(data) {
         //self.exampleProtocol = new ProtocolFactory(data);
+        self.protocolMeta = {
+          name : protocol
+        };
         self.exampleProtocol = data;
       });
     };
