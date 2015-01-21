@@ -93,7 +93,7 @@ module.exports = function (grunt) {
             host: 'secure.transcriptic.com',
             https: true,
             port: 443,
-            changeOrigin: true, //todo - see if can drop this
+            changeOrigin: true, //change our request to come from their host... doesn't work otherwise
             headers: {
               'Access-Control-Accept-Origin' : '*'
             },

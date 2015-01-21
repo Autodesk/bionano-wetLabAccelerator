@@ -1,5 +1,75 @@
+<div class="panel panel-info" ng-controller="FirebaseLoginCtrl">
+  <div class="panel-heading">Firebase</div>
+  <form name="loginForm"
+        class="panel-body form-horizontal">
+
+    <div class="form-group">
+      <label for="fbEmail" class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-10">
+        <input type="email"
+               class="form-control"
+               ng-model="email"
+               name="fbEmail"
+               id="fbEmail"
+               required
+               placeholder="Email">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fbPassword" class="col-sm-2 control-label">Password</label>
+      <div class="col-sm-10">
+        <input type="text"
+               class="form-control"
+               ng-model="pass"
+               name="fbPassword"
+               id="fbPassword"
+               required
+               placeholder="Password">
+      </div>
+    </div>
+
+    <div class="form-group"
+         ng-show="createMode">
+      <label for="fbPassword" class="col-sm-2 control-label">Confirm</label>
+      <div class="col-sm-10">
+        <input type="text"
+               class="form-control"
+               ng-model="confirm"
+               name="fbConfirm"
+               id="fbConfirm"
+               placeholder="Confirm">
+      </div>
+    </div>
+
+    <div class="alert alert-danger"
+         ng-show="err"
+         ng-bind="err"></div>
+
+    <div class="col-md-offset-2">
+      <button class="btn btn-primary"
+              ng-click="login(email, pass)"
+              ng-disabled="loginForm.$invalid"
+              ng-hide="createMode">Log In</button>
+      <button class="btn btn-default"
+              ng-click="createMode = true"
+              ng-hide="createMode">Register</button>
+      <button class="btn btn-primary"
+              ng-cloak
+              ng-show="createMode"
+              ng-disabled="loginForm.$invalid"
+              ng-click="createAccount()">Create Account</button>
+      <button class="btn btn-warning"
+              ng-cloak
+              ng-show="createMode"
+              ng-click="createMode = false">Cancel</button>
+    </div>
+
+  </form>
+</div>
+
 <div class="panel panel-info">
-  <div class="panel-heading">Transcriptic Authentication</div>
+  <div class="panel-heading">Transcriptic</div>
   <form name="authForm"
         class="panel-body form-horizontal">
 

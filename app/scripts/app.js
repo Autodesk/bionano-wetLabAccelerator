@@ -19,7 +19,8 @@ angular
     'ngSanitize',
     'ui.bootstrap',
     'ui.sortable',
-    'angularFileUpload'
+    'angularFileUpload',
+    'firebase'
   ])
   .config(function ($routeProvider, AuthProvider) {
 

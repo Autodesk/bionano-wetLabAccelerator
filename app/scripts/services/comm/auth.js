@@ -7,7 +7,8 @@
  * # Auth
  * Service in the transcripticApp.
  */
-angular.module('transcripticApp').provider('Auth', function () {
+angular.module('transcripticApp')
+  .provider('Auth', function () {
 
   var self = this;
 
@@ -49,7 +50,7 @@ angular.module('transcripticApp').provider('Auth', function () {
     }
   });
 
-  this.$get = function () {
+  this.$get = function ($window, $firebaseAuth) {
 
     var organization = function (newval) {
       if (newval) { self.organization = newval; }

@@ -18,6 +18,12 @@ To get it running you'll need to install (might need to sudo):
   
 - abstraction for project / container etc. lists so all update when changed, also meta + non-comm methods
 
+- updating tx-refs name -> update protocol references
+
+- basic data visualizations
+
+- container provisioning, esp reservations
+
 #### Performance
 
 - tx-protocol
@@ -42,8 +48,6 @@ To get it running you'll need to install (might need to sudo):
   
 - better error messages
   - ngMessages for errors / warnings. in addition to just red boxes
-
-- updating tx-refs name -> update protocol references
 
 - refactor tx-measure
   - need to support input[type] + ideally other input attributes
