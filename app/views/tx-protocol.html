@@ -20,7 +20,7 @@
                   tooltip="Download Protocol"
                   tooltip-append-to-body="true"
                   tx-downloadjson
-                  filename="protocol.json"
+                  filename="{{(meta.name ? meta.name : 'protocol') + '.json'}}"
                   download-model="protocol">
             <span class="glyphicon glyphicon-download"></span>
           </button>
@@ -31,8 +31,7 @@
             JSON
           </button>
         </div>
-        Protocol
-        <span ng-show="meta.name" ng-bind="' : ' + meta.name"></span>
+        <span contenteditable ng-model="meta.name"></span>
       </div>
 
       <div ng-hide="showJson">
