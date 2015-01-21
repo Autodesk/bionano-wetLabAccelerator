@@ -13,6 +13,8 @@ angular.module('transcripticApp').directive('contenteditable', function() {
     link: function(scope, element, attrs, ngModel) {
       if (!ngModel) return; // do nothing if no ng-model
 
+      var lastVal;
+
       // Specify how UI should be updated
       ngModel.$render = function() {
         element.text(ngModel.$viewValue || '');
@@ -29,7 +31,8 @@ angular.module('transcripticApp').directive('contenteditable', function() {
       // Write data to the model
       function read(forceVal) {
         var text = angular.isString(forceVal) ? forceVal : element.text();
-        ngModel.$setViewValue(text);
+        lastVal = text;
+        (lastVal != text) && ngModel.$setViewValue(text);
       }
     }
   };
