@@ -19,14 +19,20 @@ angular.module('transcripticApp')
       },
       link: function postLink(scope, element, attrs, ngModel) {
 
-        scope.updateModel = function () {
-          ngModel.$setViewValue(scope.internalModel);
+        scope.updateModel = function (forceVal) {
+          ngModel.$setViewValue(forceVal || scope.internalModel);
         };
 
         Auth.watch(function () {
           scope.containers = Container.list();
         });
         scope.containerOptions = ContainerOptions;
+
+        scope.$on('protocol:refKeyChange', function (event, oldkey, newkey) {
+          if (scope.internalModel == oldkey) {
+            scope.updateModel(newkey);
+          }
+        });
       }
     };
   });

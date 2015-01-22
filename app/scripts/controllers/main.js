@@ -41,7 +41,7 @@ angular.module('transcripticApp')
           instructions: []
         }
       }).then(function (ref) {
-        self.protocol = self.firebaseProtocolSync.$getRecord(ref.key());
+        self.protocol = self.firebaseProtocols.$getRecord(ref.key());
       });
     };
 

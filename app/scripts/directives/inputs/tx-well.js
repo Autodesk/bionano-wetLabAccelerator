@@ -143,7 +143,8 @@ angular.module('transcripticApp')
           if (!newval || !angular.isString(newval)) return;
 
           var ref;
-          if (ref = scope.refs[newval]) {
+          if (!_.isEmpty(scope.refs) && scope.refs[newval]) {
+            ref = scope.refs[newval];
             if (ref.new) {
               scope.containerReference = ContainerOptions[ref.new];
             } else {
@@ -196,6 +197,12 @@ angular.module('transcripticApp')
 
           ngModel.$setViewValue(multipleWellsToObjects(scope.internal.container, scope.internal.wells, newval, forceKey));
         }, true);
+
+        scope.$on('protocol:refKeyChange', function (event, oldkey, newkey) {
+          if (scope.specifyContainer && scope.internal.container == oldkey) {
+            scope.internal.container = newkey;
+          }
+        });
       }
     }
   });

@@ -32,7 +32,11 @@ angular.module('transcripticApp')
 
         scope.$on('instruction:toggleVisible', function (event, visible) {
           scope.showStep = !!visible;
-        })
+        });
+
+        scope.$on('protocol:refKeyChange', function (event, oldkey, newkey) {
+
+        });
       }
     };
   });

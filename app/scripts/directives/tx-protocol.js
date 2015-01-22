@@ -46,6 +46,7 @@ angular.module('transcripticApp')
             scope.instructionOptions = Object.keys(InstructionOptions);
 
             //firebase will reset values if children all empty
+            //note - this changes the reference...
             scope.protocol = angular.extend({
               refs : {},
               instructions: []
@@ -86,9 +87,18 @@ angular.module('transcripticApp')
           }
         };
 
-        //todo - update refs in protocol with new name
+        //todo - optimize (not run frequently but still)
         scope.$watchCollection('protocol.refs', function (newval, oldval) {
-          console.log(newval, oldval, _.uniq(newval));
+          if (newval != oldval) {
+            var newkeys = _.keys(newval),
+                oldkeys = _.keys(oldval);
+            if (newkeys.length && (newkeys.length == oldkeys.length)) {
+              var newkey = _.difference(newkeys, oldkeys)[0];
+              var oldkey = _.difference(oldkeys, newkeys)[0];
+              console.log('key change!', oldkey, newkey, oldkeys, newkeys);
+              scope.$broadcast('protocol:refKeyChange', oldkey, newkey)
+            }
+          }
         });
       }
     };

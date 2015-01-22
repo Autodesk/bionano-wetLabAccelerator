@@ -12,17 +12,16 @@ To get it running you'll need to install (might need to sudo):
 
 ### TODO
 
+- well number -> alphanumeric conversion 
+
+- prettify labels
+- draggable instructions more buttony, clarify dragging, enable clicking
+  
 - thermocycle
   - template clean up
   - ability to add steps
   
-- abstraction for project / container etc. lists so all update when changed, also meta + non-comm methods
-
 - updating tx-refs name -> update protocol references
-
-- basic data visualizations
-
-- container provisioning, esp reservations
 
 - move firebase stuff to own module
   - patch undefined error (e.g. for form controls when invalid)
@@ -31,6 +30,13 @@ To get it running you'll need to install (might need to sudo):
 
 - prevent resources from running if missing organization
 
+#### New Pages
+
+- basic data visualizations
+
+- inventory page? why repeat transcriptic?
+  - container provisioning, esp reservations
+  
 #### Performance
 
 - tx-protocol
