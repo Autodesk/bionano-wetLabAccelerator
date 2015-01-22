@@ -8,37 +8,80 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('MainCtrl', function ($scope, $http, Run) {
+  .controller('MainCtrl', function ($scope, $http, Run, simpleLogin, FBProfile) {
 
     var self = this;
 
-    // PROTOCOLS
+    /*
+    // local protocols
 
-    self.protocols = ['aaron-growth', 'growth-curve-generic', 'pcr-example', 'many-steps'];
+    self.localProtocols = ['aaron-growth', 'growth-curve-generic', 'pcr-example', 'many-steps'];
 
-    self.retrieve = function (protocol) {
+    self.retrieveLocal = function (protocol) {
       self.selectedProtocol = protocol;
       $http.get('demo_protocols/' + protocol + '.json').success(function(data) {
         //self.exampleProtocol = new ProtocolFactory(data);
         self.protocolMeta = {
           name : protocol
         };
-        self.exampleProtocol = data;
+        self.protocolSelected = data;
       });
     };
 
-    self.retrieve(self.protocols[0]);
+    self.retrieveLocal(self.localProtocols[0]);
+    */
 
-    // INSTRUCTIONS
+    self.newProtocol = function () {
+      self.firebaseProtocols.$add({
+        meta: {
+          name : "myProtocol"
+        },
+        protocol: {
+          refs: {},
+          instructions: []
+        }
+      }).then(function (ref) {
+        self.protocol = self.firebaseProtocolSync.$getRecord(ref.key());
+      });
+    };
 
+    self.canSubmitRun = function () {
+      return !_.isEmpty(self.project) && !_.isEmpty(self.protocol) && !!self.runTitle;
+    };
 
+    //firebase protocols
+
+    var userid;
+
+    simpleLogin.watch(function(user) {
+      if (!!user) {
+        userid = user.uid;
+        self.firebaseProtocolSync = new FBProfile(userid, 'protocols');
+        self.firebaseProtocols = self.firebaseProtocolSync.$asArray();
+      }
+    });
+
+    self.retrieveFirebase = function (p) {
+      self.protocol = self.firebaseProtocols.$getRecord(p.$id);
+    };
+
+    self.saveProtocolToFirebase = function () {
+      //todo - clean up
+      self.firebaseProtocols.$save(self.protocol);
+    };
+
+    self.deleteFirebaseProtocol = function (id) {
+      if (id) {
+        self.firebaseProtocols.$remove(id);
+      }
+    };
 
     // SUBMIT / ANALYZE RUNS
 
     function constructRunPayload () {
       return {
         title: self.runTitle,
-        protocol: self.exampleProtocol
+        protocol: self.protocol.protocol
       }
     }
 
@@ -93,8 +136,4 @@ angular.module('transcripticApp')
 
     this.analyze = angular.bind(self, resourceWrap, Run.analyze, $scope.analysisResponse);
     this.submit = angular.bind(self, resourceWrap, Run.submit, $scope.runResponse);
-
-    this.canSubmitRun = function () {
-      return !_.isEmpty(this.project) && !_.isEmpty(this.exampleProtocol) && !!this.runTitle;
-    };
   });

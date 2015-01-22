@@ -4,12 +4,20 @@
   </div>
 
   <div class="col-md-9">
-    <div class="pagination pagination-sm">
-      <li ng-repeat="p in mainCtrl.protocols"
-          ng-class="{'active' : p == mainCtrl.selectedProtocol}">
-        <a ng-bind="p"
-           ng-click="mainCtrl.retrieve(p)"></a>
-      </li>
+    <div class="btn-toolbar"
+         style="margin-bottom: 20px;">
+      <div class="btn-group">
+        <a class="btn btn-default"
+           ng-repeat="p in mainCtrl.firebaseProtocols"
+           ng-class="{'active' : p.$id == mainCtrl.protocol.$id}"
+           ng-bind="p.meta.name || p.$id"
+           ng-click="mainCtrl.retrieveFirebase(p)"></a>
+        </a>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-default"
+           ng-click="mainCtrl.newProtocol()">New Protocol</a>
+      </div>
     </div>
 
     <form class="form-inline" style="margin-bottom: 20px;">
@@ -43,5 +51,8 @@
   </div>
 </div>
 
-<tx-protocol protocol="mainCtrl.exampleProtocol"
-             meta="mainCtrl.protocolMeta"></tx-protocol>
+<tx-protocol ng-if="mainCtrl.protocol"
+             protocol="mainCtrl.protocol.protocol"
+             on-save="mainCtrl.saveProtocolToFirebase($protocol, $meta)"
+             on-delete="mainCtrl.deleteFirebaseProtocol(mainCtrl.protocol.$id)"
+             meta="mainCtrl.protocol.meta"></tx-protocol>

@@ -22,7 +22,14 @@
                   tx-downloadjson
                   filename="{{(meta.name ? meta.name : 'protocol') + '.json'}}"
                   download-model="protocol">
-            <span class="glyphicon glyphicon-download"></span>
+            <span class="glyphicon glyphicon-save-file"></span>
+          </button>
+          <button class="btn btn-default btn-sm"
+                  ng-disabled="ProtocolForm.ProtocolJsonEditor.$error.json"
+                  ng-click="onSave({$protocol : protocol, $meta : meta})"
+                  tooltip="Save Protocol"
+                  tooltip-append-to-body="true">
+            <span class="glyphicon glyphicon-cloud-download"></span>
           </button>
           <button class="btn btn-default btn-sm"
                   ng-class="{'btn-primary' : showJson}"
@@ -31,7 +38,11 @@
             JSON
           </button>
         </div>
-        <span contenteditable ng-model="meta.name"></span>
+        <p contenteditable
+           ng-model="meta.name"
+           ng-bind="meta.name"
+           ng-model-options="{updateOn: 'blur'}"
+           style="margin-bottom: 0;"></p>
       </div>
 
       <div ng-hide="showJson">

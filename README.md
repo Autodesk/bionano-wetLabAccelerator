@@ -29,6 +29,8 @@ To get it running you'll need to install (might need to sudo):
   
 - combine tx-container and tx-refs container listing
 
+- prevent resources from running if missing organization
+
 #### Performance
 
 - tx-protocol

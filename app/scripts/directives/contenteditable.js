@@ -31,8 +31,8 @@ angular.module('transcripticApp').directive('contenteditable', function() {
       // Write data to the model
       function read(forceVal) {
         var text = angular.isString(forceVal) ? forceVal : element.text();
-        lastVal = text;
         (lastVal != text) && ngModel.$setViewValue(text);
+        lastVal = text;
       }
     }
   };

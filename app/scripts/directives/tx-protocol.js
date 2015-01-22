@@ -14,7 +14,8 @@ angular.module('transcripticApp')
       restrict: 'E',
       scope: {
         protocol: '=',
-        meta: '='
+        meta: '=',
+        onSave: '&'
       },
       link: function (scope, element, attrs) {
 
@@ -43,6 +44,13 @@ angular.module('transcripticApp')
             // note - previously, was cancelling and listening for receive event,
             // but issues with setting model and ui-sortable in sync
             scope.instructionOptions = Object.keys(InstructionOptions);
+
+            //firebase will reset values if children all empty
+            scope.protocol = angular.extend({
+              refs : {},
+              instructions: []
+            }, scope.protocol);
+
           },
           stop: function (e, ui) {
             var type = ui.item.sortable.model,
