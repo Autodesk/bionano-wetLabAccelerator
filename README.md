@@ -12,7 +12,8 @@ To get it running you'll need to install (might need to sudo):
 
 ### TODO
 
-- well number -> alphanumeric conversion 
+- well number -> alphanumeric conversion
+  - how to handle container changes?
 
 - prettify labels
 - draggable instructions more buttony, clarify dragging, enable clicking
@@ -20,8 +21,6 @@ To get it running you'll need to install (might need to sudo):
 - thermocycle
   - template clean up
   - ability to add steps
-  
-- updating tx-refs name -> update protocol references
 
 - move firebase stuff to own module
   - patch undefined error (e.g. for form controls when invalid)

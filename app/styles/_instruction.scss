@@ -1,5 +1,10 @@
 tx-instruction {
   display: block; //for ui-sortable
+
+  .input-group .input-group-addon:first-child,
+  .input-group-addon:first-child {
+    width: 130px;
+  }
 }
 
 .protocol-instruction {

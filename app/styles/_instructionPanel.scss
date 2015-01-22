@@ -1,0 +1,25 @@
+.instruction-panel {
+  .panel {
+    background-color: $panel-default-heading-bg;
+    border: 0;
+  }
+  .panel-heading {
+    border: 0;
+  }
+  .list-group-item {
+    border: 0;
+    margin: 5px;
+  }
+}
+
+//hack for position fixed / absolute instruciton panel in tx-protocol
+@media (min-width: $screen-md-min) {
+  .instruction-panel {
+    max-width: 243px;
+  }
+}
+@media (min-width: $screen-lg-min) {
+  .instruction-panel {
+    max-width: 293px;
+  }
+}

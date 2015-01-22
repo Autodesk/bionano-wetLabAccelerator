@@ -49,16 +49,8 @@ tx-refs .panel {
   margin-bottom: 0;
 }
 
-//hack for position fixed / absolute instruciton panel in tx-protocol
-@media (min-width: $screen-md-min) {
-  .instruction-panel {
-    max-width: 243px;
-  }
-}
-@media (min-width: $screen-lg-min) {
-  .instruction-panel {
-    max-width: 293px;
-  }
+tx-boolean btn-checkbox {
+  width: 172px;
 }
 
 .dragover,
@@ -76,3 +68,4 @@ tx-refs .panel {
 @import 'corner';
 @import 'instruction';
 @import 'wellplate';
+@import 'instructionPanel';

@@ -37,13 +37,14 @@ angular.module('transcripticApp')
       return letters[row] + '' + col;
     }
 
-    //returns promise
-    function getContainerFromID (id) {
-      return Container.view({}, {id: id});
-    }
-
     function numericToAlphanumeric (number, container) {
 
+    }
+
+    //returns promise
+    //todo - should ideally get from list()
+    function getContainerFromID (id) {
+      return Container.view({}, {id: id});
     }
 
     //todo - convert numeric to alphanumeric on initial parse
