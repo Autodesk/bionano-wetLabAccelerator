@@ -16,12 +16,12 @@
     border: 1px solid $gray;
     text-align: center;
 
-    &.selected {
-      background: $brand-primary;
+    &:hover {
+      border: 2px solid $brand-info;
     }
 
-    &:last-child {
-      padding-bottom: 0;
+    &.selected {
+      background: $brand-primary;
     }
   }
 }

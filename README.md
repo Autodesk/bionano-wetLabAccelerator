@@ -11,9 +11,10 @@ To get it running you'll need to install (might need to sudo):
 - run the server: `grunt serve`
 
 ### TODO
-
-- well number -> alphanumeric conversion
-  - how to handle container changes?
+- tx-well
+  - allow passage of data (like tx website)
+  - well number -> alphanumeric conversion
+    - how to handle container changes?
   
 - thermocycle
   - template clean up
@@ -46,15 +47,15 @@ To get it running you'll need to install (might need to sudo):
 
 - groups! ability to lump duplications
 
+- update gel_separate & sangerseq well format pending Tali response
+
 - json editor
   - copy JSON like bootstrap docs (see https://github.com/blog/1365-a-more-transparent-clipboard-button)
 
 - add in notes for each container, reference, project, etc. (move away from select) 
   - arrow popover extensions
   - container capabilities
-  
-- update gel_separate & sangerseq well format pending Tali response
-  
+    
 - better error messages
   - ngMessages for errors / warnings. in addition to just red boxes
 

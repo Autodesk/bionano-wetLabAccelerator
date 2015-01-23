@@ -6,7 +6,8 @@
  * @description
  * # txWellplate
  */
-//todo - support multiple T/F
+//todo - might make sense to move canvas or something
+// todo - handle clicking element outside well
 angular.module('transcripticApp')
   .directive('txWellplate', function () {
 
@@ -23,32 +24,48 @@ angular.module('transcripticApp')
       scope: {
         model: '=ngModel',
         multiple: '=',
-        containerReference: '='
+        containerReference: '=',
+        onWellHover: '&',
+        onWellSelect: '&'
       },
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope, element, attrs, ngModelCtrl) {
         scope.alphanumericWell = colRowToAlphanumeric;
 
-        scope.selectWell = function (alphanum) {
-          var ind = scope.model.indexOf(alphanum);
-          if (ind >= 0) {
-            scope.model.splice(ind, 1);
-          } else {
-            if (scope.multiple || scope.model.length <= 1) {
-              scope.model.push(alphanum);
-            }
-          }
+        var selectedWells = {},
+            initMousedown = null;
+
+        scope.selectWells = function (alphanums) {
+          angular.forEach(alphanums, function (alphanum) {
+            selectedWells[alphanum] = !selectedWells[alphanum];
+          });
+
+          var actuallySelected = getSelectedWellsArray();
+
+          scope.onWellSelect({$wells : actuallySelected});
+          scope.model = actuallySelected;
         };
 
-        //todo - perf -- move to map?
         scope.isSelected = function (alphanum) {
-          return scope.model.indexOf(alphanum) >= 0;
+          return !!selectedWells[alphanum];
         };
 
-        // handling drag selections
-        // todo - handle clicking element outside well
+        scope.$watchCollection('model', arrayToMap);
 
-        var initMousedown;
+        //utils
 
+        //get only the truthy wells
+        function getSelectedWellsArray () {
+          return _.keys(_.pick(selectedWells, _.identity));
+        }
+
+        function arrayToMap (array) {
+          selectedWells = {};
+          _.forEach(array, function (alphanum) {
+            selectedWells[alphanum] = true;
+          });
+        }
+
+        //given start and end, figure all wells between
         function findSetSelected(start, end) {
           var rows = [letters.indexOf(start.charAt(0)), letters.indexOf(end.charAt(0))].sort();
           var cols = [start.substr(1), end.substr(1)].sort();
@@ -61,6 +78,12 @@ angular.module('transcripticApp')
           return grid;
         }
 
+        // handling drag selections
+
+        function onMouseenter (e) {
+          scope.onWellHover({$well : angular.element(e.target).scope().alphaNum});
+        }
+
         function onMousedown (e) {
           initMousedown = angular.element(e.target).scope().alphaNum;
           e.preventDefault();
@@ -70,16 +93,20 @@ angular.module('transcripticApp')
           var finalMousedown = angular.element(e.target).scope().alphaNum;
 
           if (finalMousedown == initMousedown || !finalMousedown) {
-            initMousedown && scope.selectWell(initMousedown);
+            scope.$apply(function () {
+              initMousedown && scope.selectWells([initMousedown]);
+            });
           } else {
             scope.$apply(function () {
-              (initMousedown && finalMousedown) && findSetSelected(initMousedown, finalMousedown).forEach(scope.selectWell)
+              (initMousedown && finalMousedown) && scope.selectWells(findSetSelected(initMousedown, finalMousedown));
             });
           }
 
           initMousedown = null;
+          e.preventDefault();
         }
 
+        element.on('mouseenter', onMouseenter);
         element.on('mousedown', onMousedown);
         element.on('mouseup', onMouseup);
 
