@@ -27,6 +27,8 @@ angular.module('transcripticApp')
         scope.storageOptions = [discardKey].concat(StorageOptions.storage);
 
         scope.addRef = function () {
+          //need to check because firebase will unset when empty
+          if (angular.isUndefined(scope.refs)) { scope.refs = {}; }
           scope.refs["myRef"] = {};
         };
 
