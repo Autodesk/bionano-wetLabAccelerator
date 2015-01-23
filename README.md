@@ -14,9 +14,6 @@ To get it running you'll need to install (might need to sudo):
 
 - well number -> alphanumeric conversion
   - how to handle container changes?
-
-- prettify labels
-- draggable instructions more buttony, clarify dragging, enable clicking
   
 - thermocycle
   - template clean up

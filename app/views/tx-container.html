@@ -2,7 +2,7 @@
      ng-class="{'has-error' : !internalModel}">
   <span class="input-group-addon">container</span>
   <select class="form-control"
-          ng-options="{{refs ? 'r as r for (r, details) in refs' : 'c.id as (c.label || c.id) for c in containers'}}"
+          ng-options="{{refs ? 'r as r for (r, details) in refs' : 'c.id as (c.label || c.name || c.id) for c in containers'}}"
           ng-change="updateModel()"
           ng-required="true"
           ng-model="internalModel"></select>

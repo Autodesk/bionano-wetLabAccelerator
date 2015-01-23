@@ -44,7 +44,7 @@ angular.module('transcripticApp')
     //returns promise
     //todo - should ideally get from list()
     function getContainerFromID (id) {
-      return Container.view({}, {id: id});
+      return Container.view({id: id});
     }
 
     //todo - convert numeric to alphanumeric on initial parse

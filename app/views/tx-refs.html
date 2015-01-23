@@ -31,7 +31,7 @@
                     ng-model="ref.new"></select>
             <select class="form-control"
                     ng-if="!refIsNew(ref)"
-                    ng-options="c.id as (c.label || c.id) for c in containers"
+                    ng-options="c.id as (c.label || c.name || c.id) for c in containers"
                     ng-model="ref.id"></select>
             <span class="input-group-addon">
               <label>
