@@ -70,9 +70,10 @@ angular.module('transcripticApp')
       self.firebaseProtocols.$save(self.protocol);
     };
 
-    self.deleteFirebaseProtocol = function (id) {
-      if (id) {
-        self.firebaseProtocols.$remove(id);
+    self.deleteFirebaseProtocol = function (protocol) {
+      if (protocol) {
+        self.firebaseProtocols.$remove(protocol);
+        delete self.protocol;
       }
     };
 

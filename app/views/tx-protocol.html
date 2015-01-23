@@ -8,15 +8,15 @@
       <div class="panel-heading">
         <div class="btn-group btn-middle pull-right">
           <button class="btn btn-default btn-sm"
-                  tooltip="Toggle visibility of all steps"
-                  tooltip-append-to-body="true"
-                  ng-click="toggleInstructionCollapsed()">
-            <span class="glyphicon"
-                  ng-class="{'glyphicon-eye-open' : allStepsVisibleState,
-                             'glyphicon-eye-close' : !allStepsVisibleState}"></span>
+                  ng-init="deleteClickedOnce = false;"
+                  ng-class="{'btn-danger' : deleteClickedOnce}"
+                  ng-click="handleDelete()"
+                  tooltip="{{deleteClickedOnce ? (allowDelete ? 'Click again to Delete' : 'Wait...') : 'Delete Protocol'}}"
+                  tooltip-append-to-body="true">
+            <span class="glyphicon glyphicon-minus"></span>
           </button>
           <button class="btn btn-default btn-sm"
-                  ng-disabled="ProtocolForm.ProtocolJsonEditor.$error.json"
+                  ng-class="{'btn-warning' : ProtocolForm.$invalid}"
                   tooltip="Download Protocol"
                   tooltip-append-to-body="true"
                   tx-downloadjson
@@ -25,11 +25,20 @@
             <span class="glyphicon glyphicon-save-file"></span>
           </button>
           <button class="btn btn-default btn-sm"
-                  ng-disabled="ProtocolForm.ProtocolJsonEditor.$error.json"
+                  ng-disabled="ProtocolForm.$error.json"
+                  ng-class="{'btn-info' : ProtocolForm.$dirty}"
                   ng-click="onSave({$protocol : protocol, $meta : meta})"
                   tooltip="Save Protocol"
                   tooltip-append-to-body="true">
-            <span class="glyphicon glyphicon-cloud-download"></span>
+            <span class="glyphicon glyphicon-cloud-upload"></span>
+          </button>
+          <button class="btn btn-default btn-sm"
+                  tooltip="Toggle visibility of all steps"
+                  tooltip-append-to-body="true"
+                  ng-click="toggleInstructionCollapsed()">
+            <span class="glyphicon"
+                  ng-class="{'glyphicon-eye-open' : allStepsVisibleState,
+                             'glyphicon-eye-close' : !allStepsVisibleState}"></span>
           </button>
           <button class="btn btn-default btn-sm"
                   ng-class="{'btn-primary' : showJson}"

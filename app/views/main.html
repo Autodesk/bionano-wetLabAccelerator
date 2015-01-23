@@ -53,5 +53,5 @@
 <tx-protocol ng-if="mainCtrl.protocol"
              protocol="mainCtrl.protocol.protocol"
              on-save="mainCtrl.saveProtocolToFirebase($protocol, $meta)"
-             on-delete="mainCtrl.deleteFirebaseProtocol(mainCtrl.protocol.$id)"
+             on-delete="mainCtrl.deleteFirebaseProtocol(mainCtrl.protocol)"
              meta="mainCtrl.protocol.meta"></tx-protocol>

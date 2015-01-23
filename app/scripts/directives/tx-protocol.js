@@ -8,14 +8,15 @@
  */
 
 angular.module('transcripticApp')
-  .directive('txProtocol', function (InstructionOptions, $window) {
+  .directive('txProtocol', function (InstructionOptions, $window, $timeout) {
     return {
       templateUrl: 'views/tx-protocol.html',
       restrict: 'E',
       scope: {
         protocol: '=',
         meta: '=',
-        onSave: '&'
+        onSave: '&',
+        onDelete: '&'
       },
       link: function (scope, element, attrs) {
 
@@ -29,6 +30,23 @@ angular.module('transcripticApp')
         scope.instructionOptions = Object.keys(InstructionOptions);
 
         //sortable options
+
+        scope.handleDelete = function () {
+          if (scope.allowDelete) {
+            scope.onDelete();
+          }
+
+          else if (!scope.deleteClickedOnce) {
+            scope.deleteClickedOnce = true;
+            $timeout(function () {
+              scope.allowDelete = true;
+            }, 500);
+            $timeout(function () {
+              scope.deleteClickedOnce = false;
+              scope.allowDelete = false;
+            }, 3000);
+          }
+        };
 
         scope.instructionSortableOptions = {
           axis: 'y',
