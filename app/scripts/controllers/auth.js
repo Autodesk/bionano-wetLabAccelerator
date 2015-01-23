@@ -14,8 +14,12 @@ angular.module('transcripticApp')
     simpleLogin.watch(function(user) {
       if (!!user) {
         bindtoWatcher();
-        //todo - set up unbinding properly
-        bindtoWatcher = new FBProfile(user.uid, 'txAuth').$asObject().$bindTo($scope, 'auth');
+        new FBProfile(user.uid, 'txAuth')
+        .$asObject()
+        .$bindTo($scope, 'auth')
+        .then(function (unbind) {
+           bindtoWatcher = unbind;
+        });
       }
     });
   });
