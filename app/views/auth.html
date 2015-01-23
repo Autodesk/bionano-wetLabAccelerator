@@ -20,12 +20,12 @@
     <div class="form-group" ng-hide="isLoggedIn">
       <label for="fbPassword" class="col-sm-2 control-label">Password</label>
       <div class="col-sm-10">
-        <input type="text"
+        <input type="password"
                class="form-control"
                ng-model="pass"
                name="fbPassword"
                id="fbPassword"
-               required
+               ng-required="!isLoggedIn"
                placeholder="Password">
       </div>
     </div>
@@ -34,7 +34,7 @@
          ng-show="createMode && !isLoggedIn">
       <label for="fbPassword" class="col-sm-2 control-label">Confirm</label>
       <div class="col-sm-10">
-        <input type="text"
+        <input type="password"
                class="form-control"
                ng-model="confirm"
                name="fbConfirm"
