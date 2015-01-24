@@ -19,13 +19,24 @@ angular.module('transcripticApp')
       //actions
       {
         /**
-         * @name view
-         * @description Get details about a container
+         * @name run
+         * @description Get details about a run
          * @param parameters {Object} consisting of:
          * project {String} Project ID
          * run {String} Run ID
          */
-        view: Communication.defaultResourceActions({
+        run: Communication.defaultResourceActions({
+          method: "GET"
+        }),
+
+        /**
+         * @name dataref
+         * @description Get details about a dataref (i.e. one part of a run)
+         * @param parameters {Object} consisting of:
+         * dataref {String} dataref ID
+         */
+        dataref: Communication.defaultResourceActions({
+          url: Communication.root + "data/:dataref",
           method: "GET"
         })
       });

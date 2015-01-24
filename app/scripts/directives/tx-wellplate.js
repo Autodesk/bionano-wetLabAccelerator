@@ -80,10 +80,6 @@ angular.module('transcripticApp')
 
         // handling drag selections
 
-        function onMouseenter (e) {
-          scope.onWellHover({$well : angular.element(e.target).scope().alphaNum});
-        }
-
         function onMousedown (e) {
           initMousedown = angular.element(e.target).scope().alphaNum;
           e.preventDefault();
@@ -106,7 +102,6 @@ angular.module('transcripticApp')
           e.preventDefault();
         }
 
-        element.on('mouseenter', onMouseenter);
         element.on('mousedown', onMousedown);
         element.on('mouseup', onMouseup);
 

@@ -7,14 +7,31 @@
           ng-options="run.id as run.title for run in dataCtrl.runs"
           ng-disabled="!current.project"
           ng-model="current.run"></select>
-
-  <button class="btn btn-primary"
-          ng-disabled="!current.project || !current.run"
-          ng-click="dataCtrl.view(current.project, current.run)">view data</button>
 </form>
 
-  {{current | json}}
+<div class="row" ng-if="dataCtrl.rundata">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">Instructions</div>
+      <div ng-repeat="inst in dataCtrl.runinfo.instructions"
+           ng-click="selectInstruction(inst)"
+           class="list-group-item">
+        <p>{{inst.operation.op}}</p>
+        <span ng-if="inst.data_name" ng-bind="inst.data_name + ' - ' + inst.operation.object"></span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <tx-wellplate container-reference="dataCtrl.currentContainer"
+                  ng-model="dataCtrl.selectedWells"
+                  multiple="true"
+                  class="well-plate form-control"
+                  on-well-hover="dataCtrl.wellHover($well)"
+                  on-well-select="dataCtrl.wellSelect($wells)"></tx-wellplate>
 
-<div ng-repeat="d in dataCtrl.data">{{d | json}}</div>
+    <tx-plategraph data="dataCtrl.parsedData"
+                   style="width: 600px; height: 400px; display: block;"></tx-plategraph>
+  </div>
+</div>
 
-  {{dataCtrl.data | json}}
+<pre ng-bind="dataCtrl.rundata | json"></pre>

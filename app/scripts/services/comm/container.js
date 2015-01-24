@@ -20,7 +20,7 @@ angular.module('transcripticApp')
       {
         /**
          * @name list
-         * @description Get a list of all runs
+         * @description Get a list of all containers
          */
         list: Communication.defaultResourceActions({
           method: "GET",

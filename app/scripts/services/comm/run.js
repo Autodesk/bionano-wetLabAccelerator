@@ -83,12 +83,6 @@ angular.module('transcripticApp')
           }
         }),
 
-        //todo
-        listCurrent: Communication.defaultResourceActions({
-          method: "GET",
-          isArray: true
-        }),
-
         /**
          * @name view
          * @description Monitor the status of a run
