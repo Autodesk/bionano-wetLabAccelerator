@@ -38,10 +38,11 @@ To get it running you'll need to install (might need to sudo):
 
 - tx-protocol
  - use ng-if for json-editor (require proto inheritance model to propagate properly?)
+ - use bind-to-controller for directive controller
 - tx-well
   - lots of checks (e.g. when click JSON for protocol)
 - tx-wellplate  
-  - move to map internally? skip indexOf?
+  - try binding tooltip manually outside angular / ui.bootstrap
 
 #### Pretty + Nice features
 

@@ -13,4 +13,8 @@
   fill: none;
   stroke: steelblue;
   stroke-width: 1.5px;
+
+  &.line-hover {
+    stroke: #ff1db5;
+  }
 }

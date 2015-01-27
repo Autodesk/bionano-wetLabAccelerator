@@ -16,7 +16,8 @@
     border: 1px solid $gray;
     text-align: center;
 
-    &:hover {
+    &:hover,
+    &.hovered {
       border: 2px solid $brand-info;
     }
 

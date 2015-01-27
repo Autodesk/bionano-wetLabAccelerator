@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('DataCtrl', function ($scope, $q, Auth, Project, Container, Run, Data) {
+  .controller('DataCtrl', function ($scope, $q, $http, Auth, Project, Container, Run, Data) {
 
     var self = this;
 
@@ -26,65 +26,84 @@ angular.module('transcripticApp')
     $scope.$watch('current.run', function (newval) {
       if (!newval) return;
 
+      downloadParseRundata($scope.current.project, newval);
+    });
+
+    function downloadParseRundata (project, run) {
+      if (!project || !run) return;
+
       $q.all([
         Run.view({
-          project: $scope.current.project,
-          run: newval
+          project: project,
+          run: run
         }).$promise,
         Data.run({
-          project: $scope.current.project,
-          run: $scope.current.run
+          project: project,
+          run: run
         }).$promise
       ])
       .then(function (results) {
-          console.log(results);
+        console.log(results);
         self.runinfo = results[0];
         self.rundata = results[1];
 
-        //wrangle out the data we want
-        //todo - optimize...
+        var wrangled = wrangleData.apply(self, results);
 
-        var datarefs = _.pick(self.rundata, function (d) { return d.id; }),
-            timepoints = _.keys(datarefs),
-            //note - assumes wells in one are same as in all
-            wells = _.keys(datarefs[timepoints[0]].data),
-            //set up object in form {<well> : [], ... }
-            parsedData = _.mapValues(_.zipObject(wells), function () { return []; });
-
-        self.runcontainers = {};
-
-        _.forEach(datarefs, function (dataref, key) {
-          //map for containers
-          var obj = dataref.instruction.operation.object;
-
-          if (_.isUndefined(self.runcontainers[obj])) {
-            var cont = _.find(self.runinfo.refs, function (ref) {
-              return ref.name == obj;
-            });
-            self.runcontainers[obj] = cont.container_type;
-          }
-
-          // reformat data so indexed by well
-          // {<well> : [{dataref : <dataref>, value: <value>}, ...], ... }
-          _.forEach(wells, function (well) {
-            parsedData[well].push({
-              dataref: key,
-              value: dataref.data[well][0]
-            });
-          });
-        });
-
-        self.parsedData = parsedData;
+        self.runcontainers = wrangled.runcontainers;
+        self.parsedData = wrangled.parsedData;
         self.currentContainer = _.sample(self.runcontainers);
       });
-    });
+    }
 
-    self.wellHover = function (well) {
+    function wrangleData (runinfo, rundata) {
+      var datarefs = _.pick(rundata, function (d) { return d.id; }),
+          timepoints = _.keys(datarefs),
+          //note - assumes wells in one are same as in all... which is often not accurate
+          wells = _.keys(datarefs[timepoints[0]].data),
+          //set up object in form {<well> : [], ... }
+          parsedData = _.mapValues(_.zipObject(wells), function () { return []; }),
+          runcontainers = {};
 
+      _.forEach(datarefs, function (dataref, key) {
+        //map for containers
+        var obj = dataref.instruction.operation.object;
+
+        if (_.isUndefined(runcontainers[obj])) {
+          var cont = _.find(runinfo.refs, function (ref) {
+            return ref.name == obj;
+          });
+          runcontainers[obj] = cont.container_type;
+        }
+
+        // reformat data so indexed by well
+        // {<well> : [{dataref : <dataref>, value: <value>}, ...], ... }
+        _.forEach(wells, function (well) {
+          parsedData[well].push({
+            x: key,                   //dataref
+            y: dataref.data[well][0]  //value
+          });
+        });
+      });
+
+      return {
+        runcontainers: runcontainers,
+        parsedData: parsedData
+      }
+    }
+
+    self.downloadDemo = function () {
+      $http.get('demo_data/uv_evolution.json').success(function (data) {
+        //delete the first one because messes up the wells (doesn't really have any data)
+        delete data.uv;
+
+        self.rundata = data;
+        self.runinfo = data.read_0.sources[0];
+
+        var wrangled = wrangleData(self.runinfo, self.rundata);
+
+        self.runcontainers = wrangled.runcontainers;
+        self.parsedData = wrangled.parsedData;
+        self.currentContainer = _.sample(self.runcontainers);
+      });
     };
-
-    self.wellSelect = function (wells) {
-
-    };
-
   });

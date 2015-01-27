@@ -3,10 +3,12 @@
        class="well-plate-col">
     <div ng-repeat="row in ((containerReference.well_count / containerReference.col_count) | arrayify)"
          ng-init="alphaNum = alphanumericWell(row, col + 1)"
-         ng-class="{'selected' : isSelected(alphaNum)}"
-         ng-mouseenter="onWellHover({$well : alphaNum})"
+         ng-class="{'selected' : isSelected(alphaNum),
+                    'hovered' : alphaNum == hovered}"
+         ng-mouseenter="handleHover(alphaNum);"
          tooltip="{{alphaNum}}"
          tooltip-append-to-body="true"
+         tooltip-animation="false"
          draggable="false"
          class="well-plate-well">
     </div>

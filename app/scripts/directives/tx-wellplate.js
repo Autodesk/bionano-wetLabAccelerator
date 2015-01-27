@@ -11,7 +11,7 @@
 angular.module('transcripticApp')
   .directive('txWellplate', function () {
 
-    var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    var letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
     function colRowToAlphanumeric (row, col) {
       return letters[row] + '' + col;
@@ -22,9 +22,10 @@ angular.module('transcripticApp')
       restrict: 'E',
       require: 'ngModel',
       scope: {
-        model: '=ngModel',
         multiple: '=',
         containerReference: '=',
+        hovered: '=',
+        selected: '=ngModel',
         onWellHover: '&',
         onWellSelect: '&'
       },
@@ -42,14 +43,19 @@ angular.module('transcripticApp')
           var actuallySelected = getSelectedWellsArray();
 
           scope.onWellSelect({$wells : actuallySelected});
-          scope.model = actuallySelected;
+          scope.selected = actuallySelected;
         };
 
         scope.isSelected = function (alphanum) {
           return !!selectedWells[alphanum];
         };
 
-        scope.$watchCollection('model', arrayToMap);
+        scope.$watchCollection('selected', arrayToMap);
+
+        scope.handleHover = function (alphanum) {
+          scope.hovered = alphanum;
+          scope.onWellHover({$well : alphanum})
+        };
 
         //utils
 
@@ -102,12 +108,20 @@ angular.module('transcripticApp')
           e.preventDefault();
         }
 
+        function onMouseleave (e) {
+          scope.$apply(function () {
+            scope.hovered = null;
+          });
+        }
+
         element.on('mousedown', onMousedown);
         element.on('mouseup', onMouseup);
+        element.on('mouseleave', onMouseleave);
 
         scope.$on('$destroy', function () {
           element.off('mousedown', onMousedown);
           element.off('mouseup', onMouseup);
+          element.off('mouseleave', onMouseup);
         })
       }
     };
