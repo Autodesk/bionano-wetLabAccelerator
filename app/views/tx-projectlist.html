@@ -28,7 +28,11 @@
     <a class="list-group-item"
        ng-repeat="p in projects"
        ng-click="selectProject(p)"
-       ng-class="{'active' : p.url == selectedProject.url}"
-       ng-bind="p.name"></a>
+       ng-class="{'active' : p.url == selectedProject.url}">
+      <btn-delete class="pull-right btn-middle"
+                  on-delete="deleteProject(p.url)"
+                  delete-text="Delete this Project"></btn-delete>
+      {{p.name}}
+    </a>
   </div>
 </div>

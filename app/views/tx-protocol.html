@@ -7,14 +7,8 @@
          ng-init="showJson = false">
       <div class="panel-heading">
         <div class="btn-group btn-middle pull-right">
-          <button class="btn btn-default btn-sm"
-                  ng-init="deleteClickedOnce = false;"
-                  ng-class="{'btn-danger' : deleteClickedOnce}"
-                  ng-click="handleDelete()"
-                  tooltip="{{deleteClickedOnce ? (allowDelete ? 'Click again to Delete' : 'Wait...') : 'Delete Protocol'}}"
-                  tooltip-append-to-body="true">
-            <span class="glyphicon glyphicon-minus"></span>
-          </button>
+          <btn-delete delete-text="Delete Protocol"
+                      on-delete="onDelete()"></btn-delete>
           <button class="btn btn-default btn-sm"
                   ng-class="{'btn-warning' : ProtocolForm.$invalid}"
                   tooltip="Download Protocol"

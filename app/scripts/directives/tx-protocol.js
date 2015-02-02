@@ -31,23 +31,6 @@ angular.module('transcripticApp')
 
         //sortable options
 
-        scope.handleDelete = function () {
-          if (scope.allowDelete) {
-            scope.onDelete();
-          }
-
-          else if (!scope.deleteClickedOnce) {
-            scope.deleteClickedOnce = true;
-            $timeout(function () {
-              scope.allowDelete = true;
-            }, 500);
-            $timeout(function () {
-              scope.deleteClickedOnce = false;
-              scope.allowDelete = false;
-            }, 3000);
-          }
-        };
-
         scope.instructionSortableOptions = {
           axis: 'y',
           scroll: true,
