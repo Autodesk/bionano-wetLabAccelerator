@@ -46,7 +46,10 @@ angular.module('transcripticApp')
        list: Communication.defaultResourceActions({
          method: "GET",
          url: Communication.root + ':organization/projects',
-         isArray: true
+         isArray: true,
+         transformResponse: function (data, headers) {
+           return data.results;
+         }
        })
      });
   });
