@@ -164,7 +164,7 @@ angular.module('transcripticApp')
           }
         }
 
-        function highlightSeriesArray (seriesNames) {
+        function highlightSeriesArray (seriesNames, oldval) {
           series.classed('line-hover', false);
           if (_.isArray(seriesNames) && seriesNames.length) {
             series.filter(function (d, i) {

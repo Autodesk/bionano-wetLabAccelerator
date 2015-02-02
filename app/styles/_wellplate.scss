@@ -18,7 +18,7 @@
 
     &:hover,
     &.hovered {
-      border: 2px solid $brand-info;
+      background: $brand-info;
     }
 
     &.selected {

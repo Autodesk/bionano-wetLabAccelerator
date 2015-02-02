@@ -33,10 +33,6 @@ angular.module('transcripticApp')
       if (!project || !run) return;
 
       $q.all([
-        Run.view({
-          project: project,
-          run: run
-        }).$promise,
         Data.run({
           project: project,
           run: run
@@ -44,10 +40,9 @@ angular.module('transcripticApp')
       ])
       .then(function (results) {
         console.log(results);
-        self.runinfo = results[0];
-        self.rundata = results[1];
+        self.rundata = results[0];
 
-        var wrangled = wrangleData.apply(self, results);
+        var wrangled = wrangleData(self.rundata);
 
         self.runcontainers = wrangled.runcontainers;
         self.parsedData = wrangled.parsedData;
@@ -55,7 +50,7 @@ angular.module('transcripticApp')
       });
     }
 
-    function wrangleData (runinfo, rundata) {
+    function wrangleData (rundata) {
       var datarefs = _.pick(rundata, function (d) { return d.id; }),
           timepoints = _.keys(datarefs),
           //note - assumes wells in one are same as in all... which is often not accurate
@@ -69,10 +64,7 @@ angular.module('transcripticApp')
         var obj = dataref.instruction.operation.object;
 
         if (_.isUndefined(runcontainers[obj])) {
-          var cont = _.find(runinfo.refs, function (ref) {
-            return ref.name == obj;
-          });
-          runcontainers[obj] = cont.container_type;
+          runcontainers[obj] = dataref.container_type;
         }
 
         // reformat data so indexed by well
@@ -91,15 +83,15 @@ angular.module('transcripticApp')
       }
     }
 
-    self.downloadDemo = function () {
-      $http.get('demo_data/uv_evolution.json').success(function (data) {
-        //delete the first one because messes up the wells (doesn't really have any data)
-        delete data.uv;
+    self.downloadDemo = function (filename) {
+      $q.all([
+        $http.get('demo_data/' + filename + '.json')
+      ])
+      .then(function (results) {
+        console.log(results);
+        self.rundata = results[0].data;
 
-        self.rundata = data;
-        self.runinfo = data.read_0.sources[0];
-
-        var wrangled = wrangleData(self.runinfo, self.rundata);
+        var wrangled = wrangleData(self.rundata);
 
         self.runcontainers = wrangled.runcontainers;
         self.parsedData = wrangled.parsedData;

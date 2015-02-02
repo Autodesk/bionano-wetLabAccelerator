@@ -1,6 +1,6 @@
 <form class="form-inline">
   <select class="form-control"
-          ng-options="proj.url as (proj.name + '  [' + proj.runs.length + ' runs]') for proj in dataCtrl.projects"
+          ng-options="proj.url as (proj.name + '  [' + proj.run_count + ' runs]') for proj in dataCtrl.projects"
           ng-model="current.project"></select>
 
   <select class="form-control"
@@ -9,21 +9,13 @@
           ng-model="current.run"></select>
 
   <button class="btn btn-default pull-right"
-          ng-click="dataCtrl.downloadDemo()">Demo Data</button>
+          ng-click="dataCtrl.downloadDemo('growth04')">Growth 0.4</button>
+  <button class="btn btn-default pull-right"
+          ng-click="dataCtrl.downloadDemo('uv_evolution')">UV Evolution</button>
 </form>
 
-<div class="row" ng-if="dataCtrl.rundata">
-  <div class="col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">Instructions</div>
-      <div ng-repeat="inst in dataCtrl.runinfo.instructions"
-           class="list-group-item">
-        <p>{{inst.operation.op}}</p>
-        <span ng-if="inst.data_name" ng-bind="inst.data_name + ' - ' + inst.operation.object"></span>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-8">
+<div ng-if="dataCtrl.rundata">
+
     <tx-wellplate container-reference="dataCtrl.currentContainer"
                   ng-model="dataCtrl.selectedWells"
                   hovered="dataCtrl.hoveredWell"
@@ -33,11 +25,10 @@
     <tx-plategraph data="dataCtrl.parsedData"
                    series-hover="dataCtrl.hoveredWell"
                    series-selected="dataCtrl.selectedWells"
-                   style="width: 600px; height: 400px; display: block;"></tx-plategraph>
+                   style="width: 900px; height: 600px; display: block;"></tx-plategraph>
 
     {{dataCtrl.hoveredWell}}
     {{dataCtrl.selectedWells}}
-  </div>
 </div>
 
 <pre ng-bind="dataCtrl.rundata | json"></pre>

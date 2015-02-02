@@ -5,10 +5,6 @@
   shape-rendering: crispEdges;
 }
 
-.x.axis path {
-  display: none;
-}
-
 .line {
   fill: none;
   stroke: steelblue;
@@ -16,5 +12,6 @@
 
   &.line-hover {
     stroke: #ff1db5;
+    stroke-width: 3px;
   }
 }
