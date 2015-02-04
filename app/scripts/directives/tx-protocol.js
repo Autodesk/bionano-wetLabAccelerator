@@ -41,28 +41,53 @@ angular.module('transcripticApp')
           scroll: true,
           connectWith: ".instructionDropTarget",
           update: function (e, ui) {
-            //reset the list
-            // note - previously, was cancelling and listening for receive event,
-            // but issues with setting model and ui-sortable in sync
-            scope.instructionOptions = Object.keys(InstructionOptions);
-
-            //firebase will reset values if children all empty
-            //note - this changes the reference...
-            scope.protocol = angular.extend({
-              refs : {},
-              instructions: []
-            }, scope.protocol);
-
-          },
-          stop: function (e, ui) {
             var type = ui.item.sortable.model,
               dropIndex = ui.item.sortable.dropindex;
 
-            //hack - probably a better way. ng-include trying to get empty template unless has ng-if
+            //if (1) dropped outside a defined list or (2) dropping into same list -> cancel it
+            if (_.isUndefined(dropIndex) ||
+                ui.item.sortable.source[0] == ui.item.sortable.droptarget[0]) {
+              ui.item.sortable.cancel();
+            } else {
+              scope.protocol = angular.extend({
+                refs : {},
+                instructions: []
+              }, scope.protocol);
+
+              scope.$apply(function () {
+                console.log('revising');
+                //needs to be in the update so that object with inheritance set up, not a string
+                scope.protocol.instructions[dropIndex] = InstructionOptions[type].scaffold;
+                console.log(scope.protocol.instructions[dropIndex]);
+                resetInstructionList();
+
+                //todo - need to prevent default model updating (i.e. splicing another in)
+                //alternatively, put this in the stop clause
+                //todo - need a better track by
+                ui.item.sortable.cancel();
+              });
+            }
+          },
+          stop: function (e, ui) {
+/*            var type = ui.item.sortable.model,
+              dropIndex = ui.item.sortable.dropindex;
+
+            //if didn't drop onto the other list, nope out
+            if (ui.item.sortable.isCanceled() || _.isUndefined(dropIndex)) return;
+
+            //firebase will reset values if children all empty
+            //note - this changes the reference...
             scope.$apply(function () {
-              //need to replace here so that ng-model + ui-sortable stay in sync
+              console.log('revising');
               scope.protocol.instructions[dropIndex] = InstructionOptions[type].scaffold;
+              console.log(scope.protocol.instructions[dropIndex]);
+              resetInstructionList();
             });
+
+            $timeout(function () {
+              console.log(scope.protocol.instructions[dropIndex]);
+            }, 100)
+*/
           }
         };
 
@@ -101,6 +126,10 @@ angular.module('transcripticApp')
             }
           }
         });
+
+        function resetInstructionList () {
+          scope.instructionOptions = Object.keys(InstructionOptions);
+        }
       }
     };
   });
