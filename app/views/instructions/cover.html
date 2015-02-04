@@ -1,4 +1,10 @@
 <div ng-form="coverForm">
   <tx-container ng-model="instruction.object"
                 refs="protocol.refs"></tx-container>
+
+  <tx-inputwrap label="lid">
+    <select class="form-control"
+            ng-options="opt as opt for opt in ['standard','universal','low_evaporation']"
+            ng-model="instruction.lid"></select>
+  </tx-inputwrap>
 </div>
