@@ -16,6 +16,8 @@ To get it running you'll need to install (might need to sudo):
   - well number -> alphanumeric conversion
     - how to handle container changes?
   
+- enable tx-mixwrap (need ability to hide)
+  
 - thermocycle
   - template clean up
   - ability to add steps

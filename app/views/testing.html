@@ -1,20 +1,5 @@
-<tx-well label="toWells"
-         ng-model="protocol.instructions[0].groups[0].distribute.to"
-         multiple="true"
-         specify-container="true"
-         multiple-zip="refsCtrl.wellParams"
-         refs="protocol.refs"></tx-well>
+<select ng-options="k as k for k in containerKeys"
+        ng-change="onContainerChange()"
+        ng-model="currentContainer"></select>
 
-<tx-measure ng-model="refsCtrl.wellParams.volume"
-            dimension-type="volume"></tx-measure>
-
-<tx-measure ng-model="refsCtrl.wellParams.speed"
-            dimension-type="flowrate"></tx-measure>
-
-<pre ng-bind="protocol.instructions[0].groups[0].distribute | json"></pre>
-
-<tx-refs refs="myRefs"></tx-refs>
-
-<hr>
-
-<tx-container ng-model="myContainer"></tx-container>
+<tx-plate container="currentContainer" plate-data="currentData"></tx-plate>

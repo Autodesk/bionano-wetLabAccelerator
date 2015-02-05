@@ -1,0 +1,32 @@
+tx-plate {
+  .axis {
+    path {
+      stroke: #bbb;
+    }
+    line {
+      stroke: none;
+    }
+  }
+
+  .well {
+    fill: transparent;
+    stroke-width: 0.5px;
+    stroke: #000;
+
+    &:hover,
+    &.hovered {
+      stroke: $brand-primary;
+      fill: $brand-info !important;
+    }
+
+    &.hidden {
+      fill: #ccc !important;
+    }
+  }
+
+  .extent {
+    fill: #000;
+    fill-opacity: .125;
+    stroke: #fff;
+  }
+}

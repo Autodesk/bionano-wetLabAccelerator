@@ -37,8 +37,8 @@ angular
     })
     .when('/testing', {
       templateUrl: 'views/testing.html',
-      controller: 'RefsCtrl',
-      controllerAs: 'refsCtrl'
+      controller: 'TestingCtrl',
+      controllerAs: 'testCtrl'
     })
     .when('/auth', {
       templateUrl: 'views/auth.html'
