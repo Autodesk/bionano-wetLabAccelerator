@@ -24,7 +24,7 @@ angular.module('transcripticApp')
       scope: {
         multiple: '=',
         containerReference: '=',
-        hovered: '=',
+        hovered: '=?',
         selected: '=ngModel',
         onWellHover: '&',
         onWellSelect: '&'
