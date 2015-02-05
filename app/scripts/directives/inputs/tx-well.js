@@ -22,6 +22,8 @@
 angular.module('transcripticApp')
   .directive('txWell', function (ContainerOptions, Container) {
 
+    //todo - DRY OUT using WellConv service
+
     var containerWellJoiner = '/';
 
     function joinContainerWell(container, well) {
