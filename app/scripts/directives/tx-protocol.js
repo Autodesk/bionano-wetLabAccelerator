@@ -127,6 +127,11 @@ angular.module('transcripticApp')
           }
         });
 
+        scope.handleSave = function () {
+          scope.onSave({$protocol : scope.protocol, $meta : scope.meta});
+          scope.ProtocolForm.$setPristine();
+        };
+
         function resetInstructionList () {
           scope.instructionOptions = Object.keys(InstructionOptions);
         }
