@@ -18,11 +18,11 @@ angular.module('transcripticApp')
           wellCount = container.well_count,
           colCount = container.col_count,
           rowCount = wellCount / colCount,
-          wellArray = WellConv.createArrayGivenBounds([0,1], [rowCount, colCount]);
+          wellArray = WellConv.createArrayGivenBounds([0,1], [rowCount - 1, colCount]);
 
       $scope.currentData = _.zipObject(wellArray, _.map( wellArray, Math.random ));
     };
 
     //init
-    $scope.onContainerChange();
+    //$scope.onContainerChange();
   });

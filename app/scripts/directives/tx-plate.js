@@ -23,7 +23,6 @@ angular.module('transcripticApp')
         /* WATCHERS */
 
         scope.$watch('container', _.partial(rerender, true));
-        //hack - make sure this runs after container change if both change
         scope.$watch('plateData', _.partial(rerender, false));
 
         /* CONSTRUCTING THE SVG */
@@ -67,6 +66,17 @@ angular.module('transcripticApp')
           .attr("class", "y axis")
           .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
+        //tooltip
+
+        var tooltipDimensions = {
+          height: 20,
+          width : 30
+        };
+        var tooltipEl = svg.append('svg:foreignObject')
+          .classed('wellTooltip hidden', true)
+          .attr(tooltipDimensions);
+        var tooltipInner = tooltipEl.append("xhtml:div");
+
         //data selection shared between multiple functions
         var wells = wellsSvg.selectAll("circle");
 
@@ -81,15 +91,15 @@ angular.module('transcripticApp')
                 rowCount = wellCount / colCount,
                 wellSpacing = 2,
                 wellRadius = ( width - (colCount * wellSpacing) ) / colCount / 2,
-                wellArray = WellConv.createArrayGivenBounds([0,1], [rowCount, colCount]),
-                transitionDuration = 1000;
+                wellArray = WellConv.createArrayGivenBounds([0,1], [rowCount - 1, colCount]),
+                transitionDuration = 200;
 
           if (shouldPlateUpdate) {
             xScale.domain(_.range(1, colCount + 1));
             yScale.domain(_.take(WellConv.letters, rowCount));
 
-            xAxisEl.transition().call(xAxis);
-            yAxisEl.transition().call(yAxis);
+            xAxisEl.transition().duration(transitionDuration).call(xAxis);
+            yAxisEl.transition().duration(transitionDuration).call(yAxis);
           }
 
           wells = wellsSvg.selectAll("circle")
@@ -97,19 +107,24 @@ angular.module('transcripticApp')
 
           wells.enter()
             .append('circle')
-            .classed('well', true)
-            .call(transitionData);
+              .classed('well', true)
+              .on('mouseenter', wellOnMouseover)
+              .on('mouseleave', wellOnMouseleave)
+              .style('fill', 'rgba(255,255,255,0)');
 
           //update
-          wells.transition()
+          wells
+            .transition()
             .duration(transitionDuration)
-              .attr("cx", function (d, i) {
-                return Math.floor(i % colCount) * ( (wellRadius * 2) + wellSpacing )
+              .attr({
+                "cx": function (d, i) {
+                  return Math.floor(i % colCount) * ( (wellRadius * 2) + wellSpacing ) + wellRadius
+                },
+                "cy": function (d, i) {
+                  return Math.floor(i / colCount) * ( (wellRadius * 2) + wellSpacing ) + wellRadius
+                },
+                "r" : wellRadius
               })
-              .attr("cy", function (d, i) {
-                return Math.floor(i / colCount) * ( (wellRadius * 2) + wellSpacing )
-              })
-              .attr("r", wellRadius)
               .call(transitionData); //externalize handling of data potentially being undefined
 
           wells.exit()
@@ -120,14 +135,37 @@ angular.module('transcripticApp')
         }
 
         function transitionData (selection) {
-          if (!scope.plateData) return selection;
-          return selection.style('fill', function (d) {
-            return 'rgba(150,150,200,' + (1 - scope.plateData[d]) + ')';
+          if (!scope.plateData) return;
+           selection.style('fill', function (d) {
+            return 'rgba(150,150,200,' + scope.plateData[d] + ')';
           });
         }
 
+        /* well hover behaviors */
 
-        /* BRUSHING
+        function wellOnMouseover (d) {
+          //Get this weel's values
+          var d3El = d3.select(this),
+              radius = parseFloat(d3El.attr("r"), 10),
+              xPosition = parseFloat(d3El.attr("cx"), 10) - ( tooltipDimensions.width / 2 ) + margin.left,
+              yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top;
+
+          //Update the tooltip position and value
+          tooltipEl.attr({
+              x : xPosition,
+              y : yPosition
+            });
+          tooltipInner.text(d);
+          tooltipEl.classed("hidden", false);
+        }
+
+        function wellOnMouseleave () {
+          //hide the tooltip
+          tooltipEl.classed("hidden", true);
+        }
+
+        /*
+        //BRUSHING
 
         var brush = d3.svg.brush()
           .x(x)

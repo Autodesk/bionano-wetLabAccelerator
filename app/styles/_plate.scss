@@ -1,7 +1,7 @@
 tx-plate {
   .axis {
     path {
-      stroke: #bbb;
+      stroke: none;
     }
     line {
       stroke: none;
@@ -15,8 +15,12 @@ tx-plate {
 
     &:hover,
     &.hovered {
-      stroke: $brand-primary;
       fill: $brand-info !important;
+    }
+
+    &.selected {
+      stroke: $brand-warning !important;
+      stroke-width: 4px;
     }
 
     &.hidden {
@@ -28,5 +32,16 @@ tx-plate {
     fill: #000;
     fill-opacity: .125;
     stroke: #fff;
+  }
+
+  .wellTooltip div {
+    background : rgba(25,25,25,0.75);
+    box-shadow: 0 0 2px rgba(25,25,25,0.25);
+    border-radius: 6px;
+    text-align: center;
+    font-size: 12px;
+    height: 100%;
+    width: 100%;
+    color: white;
   }
 }
