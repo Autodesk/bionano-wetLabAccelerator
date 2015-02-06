@@ -13,12 +13,10 @@ angular.module('transcripticApp')
       restrict: 'E',
       scope: {
         container: '=', //shortname (key of ContainerOptions),
-        plateData: '='
+        plateData: '=',
+        onSelect: '&'   //returns array of selected wells
       },
       link: function postLink(scope, element, attrs) {
-
-        //map of wells, where truthy means selected, falsy / null not
-        var selectedWells = {};
 
         /* WATCHERS */
 
@@ -70,7 +68,7 @@ angular.module('transcripticApp')
 
         var tooltipDimensions = {
           height: 20,
-          width : 30
+          width : 80
         };
         var tooltipEl = svg.append('svg:foreignObject')
           .classed('wellTooltip hidden', true)
@@ -105,12 +103,17 @@ angular.module('transcripticApp')
           wells = wellsSvg.selectAll("circle")
             .data(wellArray, function (well) { return well; } );
 
+          //deal with old items if you want
+
           wells.enter()
             .append('circle')
               .classed('well', true)
               .on('mouseenter', wellOnMouseover)
               .on('mouseleave', wellOnMouseleave)
-              .style('fill', 'rgba(255,255,255,0)');
+              .style('fill', 'rgba(255,255,255,0)')
+            .each(function (d, i) {
+              //todo - bind data beyond just well here
+            });
 
           //update
           wells
@@ -148,14 +151,18 @@ angular.module('transcripticApp')
           var d3El = d3.select(this),
               radius = parseFloat(d3El.attr("r"), 10),
               xPosition = parseFloat(d3El.attr("cx"), 10) - ( tooltipDimensions.width / 2 ) + margin.left,
-              yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top;
+              yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top,
+              wellValue = _.isEmpty(scope.plateData) || _.isUndefined(scope.plateData[d]) ?
+                null :
+                +scope.plateData[d].toFixed(2);
 
           //Update the tooltip position and value
           tooltipEl.attr({
               x : xPosition,
               y : yPosition
             });
-          tooltipInner.text(d);
+
+          tooltipInner.text(d + (wellValue ? ' : ' + wellValue : '') );
           tooltipEl.classed("hidden", false);
         }
 
@@ -164,44 +171,44 @@ angular.module('transcripticApp')
           tooltipEl.classed("hidden", true);
         }
 
-        /*
         //BRUSHING
+        // note that b/c pointer events, this competes with hovering etc.
 
         var brush = d3.svg.brush()
-          .x(x)
-          .y(y)
+          .x(xScale)
+          .y(yScale)
           .on("brushstart", brushstart)
           .on("brush", brushmove)
           .on("brushend", brushend);
 
-        var brushCell;
+        var brushg = svg.append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        // Clear the previously-active brush, if any.
-        function brushstart(p) {
-          if (brushCell !== this) {
-            d3.select(brushCell).call(brush.clear());
-            x.domain(domainByTrait[p.x]);
-            y.domain(domainByTrait[p.y]);
-            brushCell = this;
-          }
-        }
+        brushg.call(brush);
+
+        function brushstart(p) {}
 
         // Highlight the selected circles.
         function brushmove(p) {
-          var e = brush.extent();
-          console.log(e);
-          svg.selectAll("circle").classed("hidden", function(d) {
-            return e[0][0] > d[p.x] || d[p.x] > e[1][0]
-              || e[0][1] > d[p.y] || d[p.y] > e[1][1];
-          });
+          svg.selectAll("circle")
+            .classed("brushSelected", _.partial(elementInBounds, brush.extent()));
+        }
+
+        function elementInBounds (bounds, data) {
+          var d3el = d3.select(this);
+
+          return bounds[0][0] < parseInt(d3el.attr('cx'), 10) &&
+                 bounds[1][0] > parseInt(d3el.attr('cx'), 10) &&
+                 bounds[0][1] < parseInt(d3el.attr('cy'), 10) &&
+                 bounds[1][1] > parseInt(d3el.attr('cy'), 10);
         }
 
         // If the brush is empty, select all circles.
         function brushend() {
-          if (brush.empty()) svg.selectAll(".hidden").classed("hidden", false);
-        }
+          if (brush.empty()) svg.selectAll(".brushSelected").classed("brushSelected", false);
 
-        */
+          scope.onSelect({ $wells: svg.selectAll(".brushSelected").data() });
+        }
       }
     };
   });

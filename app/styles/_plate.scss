@@ -18,7 +18,8 @@ tx-plate {
       fill: $brand-info !important;
     }
 
-    &.selected {
+    &.selected,
+    &.brushSelected {
       stroke: $brand-warning !important;
       stroke-width: 4px;
     }
@@ -41,7 +42,7 @@ tx-plate {
     text-align: center;
     font-size: 12px;
     height: 100%;
-    width: 100%;
+    padding: 2px 4px;
     color: white;
   }
 }
