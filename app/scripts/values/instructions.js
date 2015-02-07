@@ -19,6 +19,13 @@ angular.module('transcripticApp').constant('InstructionOptions', {
     meta: {}
   },
 
+  "dispense" : {
+    scaffold: {
+      op: "dispense"
+    },
+    meta: {}
+  },
+
   "thermocycle": {
     scaffold: {
       op: "thermocycle",

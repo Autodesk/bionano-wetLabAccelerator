@@ -8,6 +8,8 @@
 .line {
   fill: none;
   stroke: steelblue;
+  stroke-linejoin: round;
+  stroke-linecap: round;
   stroke-width: 1.5px;
 
   &.line-hover {
@@ -19,4 +21,10 @@
 .overlay {
   fill: none;
   pointer-events: all;
+}
+
+.voronoi path {
+  fill: none;
+  pointer-events: all;
+  stroke: red; //debugging
 }

@@ -20,6 +20,7 @@
 //fixme-  for the love of god refactor this
 //todo - validation (and therefore passage of container)
 //todo - alphanumeric <--> numeric conversion - handle alpha insensitive
+//todo - refactor to better accomodate specification of columns rather than rows
 angular.module('transcripticApp')
   .directive('txWell', function (ContainerOptions, Container) {
 
