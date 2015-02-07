@@ -36,7 +36,7 @@ angular.module('transcripticApp')
       handle: '.drag-handle'
     };
 
-    this.pipetteInstructions = ["transfer", "distribute", "consolidate", "mix"];
+    this.pipetteInstructions = ["transfer", "distribute", "consolidate", "mix", "dispense"];
 
     this.addPipetteInstruction = function (type) {
       //this shouldn't happen when using scaffold, but can't hurt

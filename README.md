@@ -11,6 +11,8 @@ To get it running you'll need to install (might need to sudo):
 - run the server: `grunt serve`
 
 ### TODO
+- abstract multiple-zip into own directive
+
 - tx-well
   - allow passage of data (like tx website)
   - well number -> alphanumeric conversion

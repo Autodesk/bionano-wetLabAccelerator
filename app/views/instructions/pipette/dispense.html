@@ -1,0 +1,25 @@
+<div ng-form="dispenseForm"
+     ng-init="params = {volume: '50:microliter'}">
+
+  <tx-container ng-model="group.ref"
+                refs="protocol.refs"></tx-container>
+
+  <tx-inputwrap label="reagent">
+    <select class="form-control"
+            ng-options="opt as opt for opt in ['water', 'LB', 'LB-amp', 'LB-kan', 'SOC', 'PBS']"
+            ng-model="group.reagent"></select>
+  </tx-inputwrap>
+
+  <tx-well label="to"
+           ng-model="group.columns"
+           container="group.ref"
+           multiple="true"
+           multiple-zip="params"
+           multiple-parse-key="column"
+           refs="protocol.refs"></tx-well>
+
+  <tx-measure dimension-type="volume"
+              label="volume"
+              ng-model="params.volume"></tx-measure>
+
+</div>

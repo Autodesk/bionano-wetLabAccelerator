@@ -17,8 +17,9 @@
  * if need to specify container, must pass specifyContainer and refs
  *
  */
+//fixme-  for the love of god refactor this
 //todo - validation (and therefore passage of container)
-//todo - alphanumeric <--> numeric conversion
+//todo - alphanumeric <--> numeric conversion - handle alpha insensitive
 angular.module('transcripticApp')
   .directive('txWell', function (ContainerOptions, Container) {
 
@@ -78,7 +79,7 @@ angular.module('transcripticApp')
       }
     }
 
-    function parseContainerWellObjects (input, otherFields, forceKey) {
+    function parseContainerWellObjects (input, otherFields, forceKey, includeContainer) {
 
       if (_.isEmpty(input)) { return {}; }
 
@@ -89,18 +90,23 @@ angular.module('transcripticApp')
 
       //todo - better error handling - checks to make sure all same container + otherFields
       angular.forEach(input, function (wellObj, index) {
-        var split = splitContainerWell(wellObj[forceKey]);
+        var wellval = wellObj[forceKey];
 
-        if (index == 0) {
-          container = split[0];
-          otherKeys.forEach(function (key) {
-            if (wellObj[key]) {
-              otherValues[key] = wellObj[key]
-            }
-          });
+        if (includeContainer) {
+          var split = splitContainerWell(wellval);
+          if (index == 0) {
+            container = split[0];
+            otherKeys.forEach(function (key) {
+              if (wellObj[key]) {
+                otherValues[key] = wellObj[key]
+              }
+            });
+          }
+
+          wells.push(split[1]);
+        } else {
+          wells.push(wellval);
         }
-
-        wells.push(split[1]);
       });
 
       return {
@@ -112,10 +118,10 @@ angular.module('transcripticApp')
       }
     }
 
-    function multipleWellsToObjects (container, wells, alsoZip, forceKey) {
+    function multipleWellsToObjects (container, wells, alsoZip, forceKey, includeContainer) {
       return _.map(wells, function (well) {
-        var obj =  _.extend({}, alsoZip);
-        obj[forceKey] = joinContainerWell(container, well); //waiting for ES6...
+        var obj = _.extend({}, alsoZip);
+        obj[forceKey] = includeContainer ? joinContainerWell(container, well) : well;
         return obj;
       });
     }
@@ -131,7 +137,8 @@ angular.module('transcripticApp')
         multiple: '@', //allow multiple well selection
         specifyContainer: '@', // UI for specify container, include in model (e.g. container/well)
         container: '=', //if not specifying, pass in ref
-        multipleZip: '=' //if multiple and specifyContainer, other fields to include in array. MUST BE ASSIGNABLE (i.e. single object)
+        multipleZip: '=' //if multiple and specifyContainer, other fields to include in array. MUST BE ASSIGNABLE (i.e. single object),
+        //multipleParseKey - is defined, but not as scope
       },
       link: function postLink(scope, element, attrs, ngModel) {
 
@@ -162,9 +169,9 @@ angular.module('transcripticApp')
 
           //set as an array
           if (scope.multiple) {
-            if (scope.specifyContainer) {
-              if (angular.isUndefined(newval.container)) return;
-              ngModel.$setViewValue(multipleWellsToObjects(newval.container, newval.wells, scope.multipleZip, forceKey));
+            if (scope.specifyContainer || scope.multipleZip) {
+              if (scope.specifyContainer && angular.isUndefined(newval.container)) return;
+              ngModel.$setViewValue(multipleWellsToObjects(newval.container, newval.wells, scope.multipleZip, forceKey, scope.specifyContainer));
             } else {
               ngModel.$setViewValue(newval.wells);
             }
@@ -184,8 +191,8 @@ angular.module('transcripticApp')
         scope.$watch('externalModel', function (newval) {
           if (_.isEmpty(newval)) return;
 
-          if (!!scope.multiple && !!scope.specifyContainer) {
-            var parsed = parseContainerWellObjects(newval, scope.multipleZip, forceKey);
+          if (!!scope.multipleZip) {
+            var parsed = parseContainerWellObjects(newval, scope.multipleZip, forceKey, scope.specifyContainer);
 
             scope.internal = parsed.internal;
             angular.extend(scope.multipleZip, parsed.meta);
@@ -196,9 +203,9 @@ angular.module('transcripticApp')
 
         scope.$watch('multipleZip', function (newval) {
           if (!newval) return;
-          if (_.isEmpty(scope.internal) || !scope.internal.container || !scope.internal.wells) return;
+          if (_.isEmpty(scope.internal) || !scope.internal.wells) return;
 
-          ngModel.$setViewValue(multipleWellsToObjects(scope.internal.container, scope.internal.wells, newval, forceKey));
+          ngModel.$setViewValue(multipleWellsToObjects(scope.internal.container, scope.internal.wells, newval, forceKey, scope.specifyContainer));
         }, true);
 
         scope.$on('protocol:refKeyChange', function (event, oldkey, newkey) {
