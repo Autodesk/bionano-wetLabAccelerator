@@ -8,4 +8,8 @@
        max="5"
        type="range"/>
 
-<tx-plate container="currentContainer" plate-data="currentData"></tx-plate>
+<tx-plate container="currentContainer"
+          plate-data="currentData"
+          on-select="selectPlateWells($wells)"></tx-plate>
+
+<pre>{{currentWells | json}}</pre>

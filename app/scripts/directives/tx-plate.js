@@ -194,7 +194,7 @@ angular.module('transcripticApp')
           var map = getSelectedWells(brush.extent());
 
           svg.selectAll("circle")
-            .classed("brushSelected", _.has(map, d) );
+            .classed("brushSelected", _.partial(_.has, map) );
 
           // deprecated
           // svg.selectAll("circle").classed("brushSelected", _.partial(elementInBounds, brush.extent()));
@@ -204,7 +204,10 @@ angular.module('transcripticApp')
         function brushend() {
 
           var selected = svg.selectAll(".brushSelected").data();
-          scope.onSelect({ $wells: selected });
+
+          scope.$apply(function () {
+            scope.onSelect({ $wells: selected });
+          });
 
           //todo - toggle the active state of each well if in that mode
 

@@ -23,6 +23,10 @@ angular.module('transcripticApp')
       $scope.currentData = _.zipObject(wellArray, _.map( wellArray, Math.random ));
     };
 
+    $scope.selectPlateWells = function (wells) {
+      $scope.currentWells = wells;
+    };
+
     //init
     //$scope.onContainerChange();
   });
