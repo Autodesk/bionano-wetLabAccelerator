@@ -1,12 +1,15 @@
 <div ng-form="dispenseForm"
      ng-init="params = {volume: '50:microliter'}">
 
-  <tx-container ng-model="instruction.ref"
+  <tx-container ng-model="instruction.object"
                 refs="protocol.refs"></tx-container>
 
   <tx-inputwrap label="reagent">
     <select class="form-control"
-            ng-options="opt as opt for opt in ['water', 'LB', 'LB-amp', 'LB-kan', 'SOC', 'PBS']"
+            ng-options="opt as opt for opt in ['autoclaved-water', 'water', 'bleach-10p', 'ethanol-70p', 'lb-broth-100ug-ml-amp', 'lb-broth-50ug-ml-kan', 'lb-broth-30ug-ml-kan','lb-broth-25ug-ml-cm',
+            'lb-broth-100ug-ml-specto', 'b-broth-50ug-ml-kan-25ug-ml-cm', 'lb-broth-15ug-ml-tet', 'sob', 'soc', 'lb-broth-noAB', 'tb-broth-100ug-ml-amp', 'tb-broth-50ug-ml-kan', 'pbs', 'te-ph7.5']"
+    Jeremy Apthorp [8:53 AM]8:53
+    "
             ng-model="instruction.reagent"></select>
   </tx-inputwrap>
 
