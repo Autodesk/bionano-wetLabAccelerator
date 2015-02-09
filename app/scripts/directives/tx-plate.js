@@ -5,6 +5,13 @@
  * @name transcripticApp.directive:txPlate
  * @description
  * d3 plate graph
+ *
+ * Expects one timepoint, in form:
+ * { <well> : {
+ *    key : <well>,
+ *    value : <value>
+ *  }, ... }
+ *
  */
 angular.module('transcripticApp')
   .directive('txPlate', function (ContainerOptions, WellConv, $timeout) {
@@ -14,6 +21,7 @@ angular.module('transcripticApp')
       scope: {
         container: '=', //shortname (key of ContainerOptions),
         plateData: '=',
+        onHover: '&',   //returns array of selected wells
         onSelect: '&'   //returns array of selected wells
       },
       link: function postLink(scope, element, attrs) {
@@ -80,17 +88,18 @@ angular.module('transcripticApp')
 
         /* HANDLERS */
 
+        //need to use shouldPlateUpdate flag instead of another function to accomodate transitions properly
         function rerender (shouldPlateUpdate) {
           if (!scope.container) return;
 
-            var container = ContainerOptions[scope.container],
-                wellCount = container.well_count,
-                colCount = container.col_count,
-                rowCount = wellCount / colCount,
-                wellSpacing = 2,
-                wellRadius = ( width - (colCount * wellSpacing) ) / colCount / 2,
-                wellArray = WellConv.createArrayGivenBounds([0,1], [rowCount - 1, colCount]),
-                transitionDuration = 200;
+          var container = ContainerOptions[scope.container],
+              wellCount = container.well_count,
+              colCount = container.col_count,
+              rowCount = wellCount / colCount,
+              wellSpacing = 2,
+              wellRadius = ( width - (colCount * wellSpacing) ) / colCount / 2,
+              wellArray = WellConv.createArrayGivenBounds([0,1], [rowCount - 1, colCount]),
+              transitionDuration = 200;
 
           if (shouldPlateUpdate) {
             xScale.domain(_.range(1, colCount + 1));
@@ -103,17 +112,19 @@ angular.module('transcripticApp')
           wells = wellsSvg.selectAll("circle")
             .data(wellArray, function (well) { return well; } );
 
-          //deal with old items if you want
+          //deal here with all old items if you want, before the enter
 
-          wells.enter()
-            .append('circle')
+          if (shouldPlateUpdate) {
+            wells.enter()
+              .append('circle')
               .classed('well', true)
               .on('mouseenter', wellOnMouseover)
               .on('mouseleave', wellOnMouseleave)
               .style('fill', 'rgba(255,255,255,0)')
-            .each(function (d, i) {
-              //todo - bind data beyond just well here
-            });
+              .each(function (d, i) {
+                //todo - bind data beyond just well here
+              });
+          }
 
           //update
           wells
@@ -130,17 +141,19 @@ angular.module('transcripticApp')
               })
               .call(transitionData); //externalize handling of data potentially being undefined
 
-          wells.exit()
+          if (shouldPlateUpdate) {
+            wells.exit()
               .transition()
-                .duration(transitionDuration)
-                .style('opacity', 0)
+              .duration(transitionDuration)
+              .style('opacity', 0)
               .remove()
+          }
         }
 
         function transitionData (selection) {
-          if (!scope.plateData) return;
+          if (!scope.plateData || !selection || selection.empty()) return;
            selection.style('fill', function (d) {
-            return 'rgba(150,150,200,' + scope.plateData[d] + ')';
+            return 'rgba(150,150,200,' + scope.plateData[d].value + ')';
           });
         }
 
@@ -154,7 +167,7 @@ angular.module('transcripticApp')
               yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top,
               wellValue = _.isEmpty(scope.plateData) || _.isUndefined(scope.plateData[d]) ?
                 null :
-                +scope.plateData[d].toFixed(2);
+                +scope.plateData[d].value.toFixed(2);
 
           //Update the tooltip position and value
           tooltipEl.attr({
@@ -195,6 +208,10 @@ angular.module('transcripticApp')
 
           svg.selectAll("circle")
             .classed("brushSelected", _.partial(_.has, map) );
+
+          scope.$apply(function () {
+            scope.onHover({ $wells: _.keys(map) });
+          });
 
           // deprecated
           // svg.selectAll("circle").classed("brushSelected", _.partial(elementInBounds, brush.extent()));

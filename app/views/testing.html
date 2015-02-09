@@ -2,14 +2,17 @@
         ng-change="onContainerChange()"
         ng-model="currentContainer"></select>
 
-<input ng-model="currentTimepoint"
-       ng-change="onContainerChange()"
+<input ng-model="timepointSlider"
        min="0"
-       max="5"
+       max="{{numberTimepoints - 1}}"
+       ng-change="selectTimepoint(timepointSlider)"
        type="range"/>
 
 <tx-plate container="currentContainer"
-          plate-data="currentData"
+          plate-data="currentData[currentTimepoint]"
+          on-hover="hoverPlateWells($wells)"
           on-select="selectPlateWells($wells)"></tx-plate>
 
-<pre>{{currentWells | json}}</pre>
+<tx-timepointgraph data="currentData"
+                   series-selected="currentWells"
+                   style="width: 900px; height: 600px; display: block;"></tx-timepointgraph>
