@@ -2,4 +2,10 @@
         ng-change="onContainerChange()"
         ng-model="currentContainer"></select>
 
+<input ng-model="currentTimepoint"
+       ng-change="onContainerChange()"
+       min="0"
+       max="5"
+       type="range"/>
+
 <tx-plate container="currentContainer" plate-data="currentData"></tx-plate>

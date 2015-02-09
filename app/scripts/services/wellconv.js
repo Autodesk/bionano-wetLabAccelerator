@@ -36,16 +36,24 @@ angular.module('transcripticApp')
 
     //given two arrays (rows, cols), each with numeric indices for a start and end, generate all wells between
     //e.g. given [0,2], [4,5], generates alphanums from A2 - E5
-    function createArrayGivenBounds (topleft, bottomright) {
-      var grid = [];
+    //note that you basically are passing in (Y, X), as letter should come first
+    function createMapGivenBounds (topleft, bottomright) {
+      var grid = {};
 
       for (var r = topleft[0]; r <= bottomright[0]; r++) {
         for (var c = topleft[1]; c <= bottomright[1]; c++) {
-          grid.push(colRowToAlphanumeric(r, c));
+          grid[(colRowToAlphanumeric(r, c))] = true;
         }
       }
 
       return grid;
+    }
+
+    //given two arrays (rows, cols), each with numeric indices for a start and end, generate all wells between
+    //e.g. given [0,2], [4,5], generates alphanums from A2 - E5
+    //note that you basically are passing in (Y, X), as letter should come first
+    function createArrayGivenBounds (topleft, bottomright) {
+      return _.keys(createMapGivenBounds(topleft, bottomright));
     }
 
     //given start and end alphanums, returns an array of alphanums selected
@@ -81,6 +89,7 @@ angular.module('transcripticApp')
       colRowToAlphanumeric : colRowToAlphanumeric,
       alphanumericToColRow : alphanumericToColRow,
       getSelectedWellsArray : getSelectedWellsArray,
+      createMapGivenBounds : createMapGivenBounds,
       createArrayGivenBounds : createArrayGivenBounds,
       findSetSelected : findSetSelected,
       toggleWells : toggleWells

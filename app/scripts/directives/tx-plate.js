@@ -147,7 +147,7 @@ angular.module('transcripticApp')
         /* well hover behaviors */
 
         function wellOnMouseover (d) {
-          //Get this weel's values
+          //Get this well's values
           var d3El = d3.select(this),
               radius = parseFloat(d3El.attr("r"), 10),
               xPosition = parseFloat(d3El.attr("cx"), 10) - ( tooltipDimensions.width / 2 ) + margin.left,
@@ -172,7 +172,7 @@ angular.module('transcripticApp')
         }
 
         //BRUSHING
-        // note that b/c pointer events, this competes with hovering etc.
+        // note that b/c pointer events, this competes with hovering etc. so we put it on top
 
         var brush = d3.svg.brush()
           .x(xScale)
@@ -190,24 +190,45 @@ angular.module('transcripticApp')
 
         // Highlight the selected circles.
         function brushmove(p) {
+
+          var map = getSelectedWells(brush.extent());
+
           svg.selectAll("circle")
-            .classed("brushSelected", _.partial(elementInBounds, brush.extent()));
+            .classed("brushSelected", _.has(map, d) );
+
+          // deprecated
+          // svg.selectAll("circle").classed("brushSelected", _.partial(elementInBounds, brush.extent()));
         }
 
+        //get the selection, and propagate / save it
+        function brushend() {
+
+          var selected = svg.selectAll(".brushSelected").data();
+          scope.onSelect({ $wells: selected });
+
+          //todo - toggle the active state of each well if in that mode
+
+          //todo - special handling of click (i.e. brush.empty() == true)
+        }
+
+        function getSelectedWells (extent) {
+          var d = xScale.domain(),
+              r = xScale.range(),
+              //note - need to X correct for whatever reason
+              topLeft     = [ d[d3.bisect(r, extent[0][1]) - 1] - 1, d[d3.bisect(r, extent[0][0]) - 1] ],
+              bottomRight = [ d[d3.bisect(r, extent[1][1]) - 1] - 1, d[d3.bisect(r, extent[1][0]) - 1] ];
+
+          return WellConv.createMapGivenBounds(topLeft, bottomRight);
+        }
+
+        //DEPRECATED --- well center must be entirely in selection
         function elementInBounds (bounds, data) {
           var d3el = d3.select(this);
 
           return bounds[0][0] < parseInt(d3el.attr('cx'), 10) &&
-                 bounds[1][0] > parseInt(d3el.attr('cx'), 10) &&
-                 bounds[0][1] < parseInt(d3el.attr('cy'), 10) &&
-                 bounds[1][1] > parseInt(d3el.attr('cy'), 10);
-        }
-
-        // If the brush is empty, select all circles.
-        function brushend() {
-          if (brush.empty()) svg.selectAll(".brushSelected").classed("brushSelected", false);
-
-          scope.onSelect({ $wells: svg.selectAll(".brushSelected").data() });
+            bounds[1][0] > parseInt(d3el.attr('cx'), 10) &&
+            bounds[0][1] < parseInt(d3el.attr('cy'), 10) &&
+            bounds[1][1] > parseInt(d3el.attr('cy'), 10);
         }
       }
     };
