@@ -1,6 +1,8 @@
 'use strict';
 
 /**
+ * TO BE DEPRECATED IN FAVOR OF tx-timepointgraph -- need to update data page
+ *
  * @ngdoc directive
  * @name transcripticApp.directive:txPlategraph
  * @description

@@ -91,23 +91,35 @@ angular.module('transcripticApp')
 
       //todo - better error handling - checks to make sure all same container + otherFields
       angular.forEach(input, function (wellObj, index) {
-        var wellval = wellObj[forceKey];
+        var wellval = wellObj[forceKey],
+            wellnum,
+            container;
 
         if (includeContainer) {
           var split = splitContainerWell(wellval);
-          if (index == 0) {
+          wellnum = split[1];
+        } else {
+          wellnum = wellval;
+        }
+
+        // fold in values for first index
+        // (assumes same throughout, may want to check for them)
+        if (index == 0) {
+
+          if (includeContainer) {
+            // only set container once
+            // (assuming same throughout - may want to check)
             container = split[0];
-            otherKeys.forEach(function (key) {
-              if (wellObj[key]) {
-                otherValues[key] = wellObj[key]
-              }
-            });
           }
 
-          wells.push(split[1]);
-        } else {
-          wells.push(wellval);
+          otherKeys.forEach(function (key) {
+            if (wellObj[key]) {
+              otherValues[key] = wellObj[key]
+            }
+          });
         }
+
+        wells.push(wellnum);
       });
 
       return {
@@ -132,6 +144,7 @@ angular.module('transcripticApp')
       restrict: 'E',
       require: 'ngModel',
       scope: {
+        //todo-hndle columns not converting to alphanums
         externalModel: '=ngModel',
         refs: '=', //protocol references
         label: '@', //text label override
@@ -194,6 +207,8 @@ angular.module('transcripticApp')
 
           if (!!scope.multipleZip) {
             var parsed = parseContainerWellObjects(newval, scope.multipleZip, forceKey, scope.specifyContainer);
+
+            console.log(parsed.meta);
 
             scope.internal = parsed.internal;
             angular.extend(scope.multipleZip, parsed.meta);

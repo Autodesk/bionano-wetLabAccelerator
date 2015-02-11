@@ -6,16 +6,32 @@
 
   <tx-inputwrap label="reagent">
     <select class="form-control"
-            ng-options="opt as opt for opt in ['autoclaved-water', 'water', 'bleach-10p', 'ethanol-70p', 'lb-broth-100ug-ml-amp', 'lb-broth-50ug-ml-kan', 'lb-broth-30ug-ml-kan','lb-broth-25ug-ml-cm',
-            'lb-broth-100ug-ml-specto', 'b-broth-50ug-ml-kan-25ug-ml-cm', 'lb-broth-15ug-ml-tet', 'sob', 'soc', 'lb-broth-noAB', 'tb-broth-100ug-ml-amp', 'tb-broth-50ug-ml-kan', 'pbs', 'te-ph7.5']"
-    Jeremy Apthorp [8:53 AM]8:53
-    "
-            ng-model="instruction.reagent"></select>
+            required
+            ng-model="instruction.reagent"
+            ng-options="opt as opt for opt in [
+            'autoclaved-water',
+            'water',
+            'bleach-10p',
+            'ethanol-70p',
+            'lb-broth-100ug-ml-amp',
+            'lb-broth-50ug-ml-kan',
+            'lb-broth-30ug-ml-kan',
+            'lb-broth-25ug-ml-cm',
+            'lb-broth-100ug-ml-specto',
+            'lb-broth-50ug-ml-kan-25ug-ml-cm',
+            'lb-broth-15ug-ml-tet',
+            'lb-broth-noAB',
+            'pbs',
+            'sob',
+            'soc',
+            'tb-broth-100ug-ml-amp',
+            'tb-broth-50ug-ml-kan',
+            'te-ph7.5' ]"></select>
   </tx-inputwrap>
 
   <tx-well label="to"
            ng-model="instruction.columns"
-           container="group.ref"
+           container="instruction.object"
            multiple="true"
            multiple-zip="params"
            multiple-parse-key="column"
