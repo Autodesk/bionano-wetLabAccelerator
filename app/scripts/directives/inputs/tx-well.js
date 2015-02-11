@@ -92,12 +92,17 @@ angular.module('transcripticApp')
       //todo - better error handling - checks to make sure all same container + otherFields
       angular.forEach(input, function (wellObj, index) {
         var wellval = wellObj[forceKey],
-            wellnum,
-            container;
+            wellnum;
 
         if (includeContainer) {
           var split = splitContainerWell(wellval);
           wellnum = split[1];
+
+          if (index == 0) {
+            // only set container once
+            // (assuming same throughout - may want to check)
+            container = split[0];
+          }
         } else {
           wellnum = wellval;
         }
@@ -105,13 +110,6 @@ angular.module('transcripticApp')
         // fold in values for first index
         // (assumes same throughout, may want to check for them)
         if (index == 0) {
-
-          if (includeContainer) {
-            // only set container once
-            // (assuming same throughout - may want to check)
-            container = split[0];
-          }
-
           otherKeys.forEach(function (key) {
             if (wellObj[key]) {
               otherValues[key] = wellObj[key]
@@ -208,7 +206,7 @@ angular.module('transcripticApp')
           if (!!scope.multipleZip) {
             var parsed = parseContainerWellObjects(newval, scope.multipleZip, forceKey, scope.specifyContainer);
 
-            console.log(parsed.meta);
+            console.log(scope.specifyContainer, parsed.internal, parsed.meta);
 
             scope.internal = parsed.internal;
             angular.extend(scope.multipleZip, parsed.meta);

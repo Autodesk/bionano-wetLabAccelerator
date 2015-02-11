@@ -6,6 +6,7 @@
  * @description
  * Expects data in form
  *
+ * //todo - should we do this data folding (i.e. assign key, ordinal) internal to the directive? or outside?
  * { <timepoint> : {
  *     <well> : {
  *       key : <well>,
@@ -34,7 +35,9 @@ angular.module('transcripticApp')
 
         scope.$watch('seriesSelected', highlightSeries);
 
-        // graph setup
+        /****
+         Graph Construction
+         ****/
 
         var chart = d3.select(element[0])
           .append('svg')
@@ -93,7 +96,16 @@ angular.module('transcripticApp')
         //save for later....
         var series;
 
-        // updating the graph
+        //voronoi for highlighting lines
+
+        var voronoi = d3.geom.voronoi()
+          .x(function(d) { return x(d.x); })
+          .y(function(d) { return y(d.y); })
+          .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
+
+        /****
+         Graph Updates
+         ****/
 
         function drawGraph (data) {
 
@@ -133,7 +145,6 @@ angular.module('transcripticApp')
           if (!newval) return;
 
           var map = _.zipObject(newval, _.constant(true));
-
           series.classed('hidden', _.negate(_.partial(_.has, map)))
         }
       }
