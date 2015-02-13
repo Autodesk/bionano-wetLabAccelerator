@@ -1,0 +1,155 @@
+/* Parts borrowed from Twitter Bootstrap */
+
+// Reset the box-sizing
+
+* {
+  box-sizing: border-box;
+}
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+// Body reset
+
+html {
+  font-size: 10px;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+body {
+  min-width: 300px;
+  font-family: $font-family;
+  font-size: $font-size;
+  color: $color-font;
+  font-weight: $font-weight;
+  line-height: $font-line-height;
+  background-color: $bg-body;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: antialiased;
+}
+
+
+// Reset fonts for relevant elements
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+
+p {
+  line-height: $spacing-paragraph;
+  margin: 0 0 $spacing-paragraph 0;
+}
+
+h1, h2, h3, h4 {
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+// Links
+
+a {
+  color: $color-link-default;
+  text-decoration: none;
+  transition: color $transition-in-type $transition-in-time;
+
+  &:visited {
+    color: $color-link-default;
+  }
+
+  &:hover, &:focus {
+    color: $color-link-default-hover;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color $transition-out-type $transition-out-time;
+  }
+}
+
+// Blockquote
+
+blockquote {
+  display: block;
+  margin: 0 0 1em 0.5em;
+  padding: .25em 0 .25em 1em;
+  border-left: 5px solid $accent;
+  border-radius: 0;
+  border-top: 0;
+  border-bottom: 0;
+  max-width: 100%;
+  width: 100%;
+  float: none;
+  background: 0;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: $font-weight-medium;
+
+  p {
+    margin: 0 0 0.5em;
+  }
+}
+
+// Lists
+
+ul li {
+  line-height: $spacing-paragraph;
+  padding-left: 40px;
+}
+
+// Images
+
+img {
+  vertical-align: middle;
+}
+
+// Perfect circle
+.img-circle {
+  border-radius: 50%; // set radius in percents
+}
+
+
+// Only display content to screen readers
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+// Hide from browser and screen reader
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+// Selections!
+::selection {
+  background: transparentize($primary, 0.25);
+}
+::-moz-selection {
+  background: transparentize($primary, 0.25);
+}
+
+// Tables
+
+table {
+  border-collapse: separate;
+  border-spacing: 20px 0px;
+  margin: 0 0 $spacing-paragraph;
+}
+
+hr {
+  height: 0;
+  margin-top: $spacing-paragraph;
+  margin-bottom: $spacing-paragraph;
+  border: 0;
+  border-top: 1px solid #eee;
+}

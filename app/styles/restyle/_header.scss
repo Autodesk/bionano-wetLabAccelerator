@@ -1,0 +1,88 @@
+header.site-header {
+
+  $header-logo-dim: 64px;
+  $header-subtext-size: 10px;
+  $logo-spacing: 10px;
+
+  height: $header-logo-dim + (4 * $logo-spacing);
+  border-bottom: 1px solid #ddd;
+  margin-bottom: $logo-spacing;
+
+  .logo {
+    position: relative;
+    display: inline-block;
+    float: left;
+    padding-top: $logo-spacing;
+
+    a {
+      width: $header-logo-dim;
+      height: $header-logo-dim + $header-subtext-size;
+      display: inline-block;
+      position: relative;
+      opacity: 0.6;
+      transition: opacity $transition-in-time $transition-in-type;
+
+      &:hover {
+        opacity: 0.7;
+        transition: opacity $transition-out-time $transition-out-type;
+      }
+    }
+
+    &:after {
+      pointer-events: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-size: $header-subtext-size;
+      color: $dark-grey;
+      content: 'CX1';
+      text-align: center;
+      letter-spacing: 3px;
+    }
+
+    img {
+      width: $header-logo-dim;
+      height: $header-logo-dim;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-position: center center;
+      background-size: $header-logo-dim $header-logo-dim;
+    }
+  }
+
+  nav {
+    display: block;
+    float: right;
+    height: 80px;
+    line-height: 80px;
+
+    ul {
+      padding: 5px 0 0 0;
+      margin: 5px 0 0 0;
+    }
+
+    li {
+      display: inline-block;
+      position: relative;
+      margin-right: 15px;
+      padding: 0;
+      background: 0;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      a {
+        color: #666;
+        text-decoration: none;
+      }
+
+      &.active a,
+      & a:hover {
+        color: #222;
+      }
+    }
+  }
+}
