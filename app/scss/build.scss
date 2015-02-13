@@ -1,1 +1,14 @@
 @import 'variables';
+@import 'mixins';
+
+//layout
+
+@import 'header';
+@import 'footer';
+@import 'carousel';
+
+//components
+
+@import 'operation';
+@import 'group';
+@import 'welltip';
