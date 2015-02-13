@@ -48,6 +48,10 @@ angular
       controller: 'OrderingCtrl',
       controllerAs: 'orderCtrl'
     })
+    .when('/testing/dottest', {
+      templateUrl: 'views/testing/dottest.html',
+      controller: 'DottestCtrl'
+    })
     .otherwise({
       redirectTo: '/'
     });
