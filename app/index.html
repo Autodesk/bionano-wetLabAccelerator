@@ -27,26 +27,31 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <header class="site-header container">
-      <div class="logo">
-        <a href="#/">
-          <img src="images/logo.png">
-        </a>
-      </div>
+    <header class="site-header">
+      <div class="container">
+        <div class="logo">
+          <a href="#/">
+            <img src="images/logo.png">
+          </a>
+        </div>
 
-      <nav>
-        <ul>
-          <li><a ng-href="#/">Protocol</a></li>
-          <li><a ng-href="#/auth">Auth</a></li>
-          <li><a ng-href="#/ordering">Ordering</a></li>
-          <li><a ng-href="#/data">Data</a></li>
-        </ul>
-      </nav>
+        <nav>
+          <ul>
+            <li><a ng-href="#/protocol">Protocol</a></li>
+            <li><a ng-href="#/auth">Auth</a></li>
+            <li><a ng-href="#/ordering">Ordering</a></li>
+            <li><a ng-href="#/data">Data</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
-    <div class="container">
-      <div ng-view=""></div>
-    </div>
+    <main ng-view
+          class="container"></main>
+
+    <footer>
+      <3
+    </footer>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -93,7 +98,8 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/dashboard.js"></script>
+    <script src="scripts/controllers/protocol.js"></script>
     <script src="scripts/controllers/data.js"></script>
     <script src="scripts/controllers/firebaselogin.js"></script>
     <script src="scripts/controllers/auth.js"></script>
@@ -147,6 +153,12 @@
     <script src="scripts/controllers/testing/restyle.js"></script>
     <script src="scripts/controllers/testing/dottest.js"></script>
     <script src="scripts/directives/tx-welltip.js"></script>
+    <script src="scripts/directives/tx-gallery.js"></script>
+    <script src="scripts/directives/tx-protocolslider.js"></script>
+    <script src="scripts/directives/tx-protocolnew.js"></script>
+    <script src="scripts/directives/tx-operation.js"></script>
+    <script src="scripts/directives/tx-operationgroup.js"></script>
+    <script src="scripts/directives/tx-inspector.js"></script>
     <!-- endbuild -->
 </body>
 </html>

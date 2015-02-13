@@ -50,6 +50,8 @@
   </div>
 </div>
 
+<div class="alert alert-danger" ng-hide-auth>You're not logged in</div>
+
 <tx-protocol ng-if="mainCtrl.protocol"
              protocol="mainCtrl.protocol.protocol"
              on-save="mainCtrl.saveProtocolToFirebase($protocol, $meta)"

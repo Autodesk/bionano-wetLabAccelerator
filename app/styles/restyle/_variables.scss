@@ -4,11 +4,12 @@
 
 // colors
 
-$white: #fcfcfc;
+$white: #fafafa;
 $black: #111111;
 $dark: lighten($black, 10);
 $dark-grey: #666666;
-$light-grey: #a1a1a1;
+$grey: #a1a1a1;
+$light-grey: #dddddd;
 $primary: #6798d4;
 $accent: #e966da;
 $warning: #d2cc6a;
@@ -18,7 +19,8 @@ $error: #e7a9a9;
 
 $font-family: 'Roboto', 'Myriad Pro', Helvetica, Arial, sans-serif;
 $font-size: 16px;
-$font-weight: 300;
+$font-size-sm: 12px;
+$font-weight: 400;
 $font-weight-medium: 400;
 $font-weight-bold: 700;
 $font-line-height: 1.5;
@@ -30,12 +32,13 @@ $font-line-height: 1.5;
 
 $bg-body: $white;
 $bg-dark: $dark;
-$bg-masthead: $bg-dark;
-$bg-meta: $bg-dark;
+$bg-gallery: $light-grey;
 $bg-footer: $bg-dark;
-$bg-resume : #ffffff;
 $bg-medgrey : #3d3d3d; //grey with lines (but without lines)
 
+//borders
+
+$border-color-default: $light-grey;
 
 //fonts + links
 
@@ -70,8 +73,11 @@ $transition-out-type: ease-out;
 
 $layout-max-width: 1280px;
 $layout-container-width: 90%;
-$layout-side-width: 300px;
+$layout-side-width-default: 400px;
 $layout-main-space: 80px;
+
+
+$layout-padding-default: 15px;
 
 
 ////////////////////

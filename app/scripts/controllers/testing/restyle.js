@@ -8,10 +8,13 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('TestingRestyleCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('TestingRestyleCtrl', function ($scope, simpleLogin, FBProfile) {
+    var self = this;
+
+    simpleLogin.watch(function(user) {
+      if (!!user) {
+        self.firebaseProtocolSync = new FBProfile(user.uid, 'protocols');
+        self.firebaseProtocols = self.firebaseProtocolSync.$asArray();
+      }
+    });
   });

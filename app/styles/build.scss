@@ -7,12 +7,16 @@
 
 //layout
 
+@import 'restyle/pageLayout';
 @import 'restyle/header';
 @import 'restyle/footer';
-@import 'restyle/carousel';
 
 //components
 
+@import 'restyle/angularStyles';
+@import 'restyle/protocolslider';
+@import 'restyle/jsonEditor';
 @import 'restyle/operation';
-@import 'restyle/group';
+@import 'restyle/operationGroup';
 @import 'restyle/welltip';
+@import 'restyle/protocolResponse';

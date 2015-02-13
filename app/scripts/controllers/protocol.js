@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('MainCtrl', function ($scope, $http, Run, simpleLogin, FBProfile) {
+  .controller('ProtocolCtrl', function ($scope, $http, Run, simpleLogin, FBProfile) {
 
     var self = this;
 
@@ -51,12 +51,9 @@ angular.module('transcripticApp')
 
     //firebase protocols
 
-    var userid;
-
     simpleLogin.watch(function(user) {
       if (!!user) {
-        userid = user.uid;
-        self.firebaseProtocolSync = new FBProfile(userid, 'protocols');
+        self.firebaseProtocolSync = new FBProfile(user.uid, 'protocols');
         self.firebaseProtocols = self.firebaseProtocolSync.$asArray();
       }
     });

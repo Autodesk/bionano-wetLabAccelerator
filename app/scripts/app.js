@@ -26,8 +26,12 @@ angular
 
     $routeProvider
     .when('/', {
-      templateUrl: 'views/main.html',
-      controller: 'MainCtrl',
+      templateUrl: 'views/dashboard.html',
+      controller: 'DashboardCtrl'
+    })
+    .when('/protocol', {
+      templateUrl: 'views/protocol.html',
+      controller: 'ProtocolCtrl',
       controllerAs: 'mainCtrl'
     })
     .when('/data', {
@@ -43,6 +47,9 @@ angular
       controller: 'OrderingCtrl',
       controllerAs: 'orderCtrl'
     })
+    .when('/testing', {
+      redirectTo: '/testing/plate'
+    })
     .when('/testing/plate', {
       templateUrl: 'views/testing/plate.html',
       controller: 'TestingPlateCtrl',
@@ -50,7 +57,8 @@ angular
     })
     .when('/testing/restyle', {
       templateUrl: 'views/testing/restyle.html',
-      controller: 'TestingRestyleCtrl'
+      controller: 'TestingRestyleCtrl',
+      controllerAs: 'restyleCtrl'
     })
     .when('/testing/dottest', {
       templateUrl: 'views/testing/dottest.html',

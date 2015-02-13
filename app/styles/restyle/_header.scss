@@ -4,9 +4,9 @@ header.site-header {
   $header-subtext-size: 10px;
   $logo-spacing: 10px;
 
-  height: $header-logo-dim + (4 * $logo-spacing);
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid $border-color-default;
   margin-bottom: $logo-spacing;
+  padding-bottom: $logo-spacing;
 
   .logo {
     position: relative;
@@ -53,8 +53,9 @@ header.site-header {
   }
 
   nav {
-    display: block;
-    float: right;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
     height: 80px;
     line-height: 80px;
 
