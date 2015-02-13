@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('TestingCtrl', function ($scope, WellConv, ContainerOptions) {
+  .controller('TestingPlateCtrl', function ($scope, WellConv, ContainerOptions) {
 
     $scope.containerKeys = _.keys(ContainerOptions);
     $scope.currentContainer = $scope.containerKeys[0];

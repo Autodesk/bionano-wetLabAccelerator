@@ -35,11 +35,6 @@ angular
       controller: 'DataCtrl',
       controllerAs: 'dataCtrl'
     })
-    .when('/testing', {
-      templateUrl: 'views/testing.html',
-      controller: 'TestingCtrl',
-      controllerAs: 'testCtrl'
-    })
     .when('/auth', {
       templateUrl: 'views/auth.html'
     })
@@ -47,6 +42,15 @@ angular
       templateUrl: 'views/ordering.html',
       controller: 'OrderingCtrl',
       controllerAs: 'orderCtrl'
+    })
+    .when('/testing/plate', {
+      templateUrl: 'views/testing/plate.html',
+      controller: 'TestingPlateCtrl',
+      controllerAs: 'testCtrl'
+    })
+    .when('/testing/restyle', {
+      templateUrl: 'views/testing/restyle.html',
+      controller: 'TestingRestyleCtrl'
     })
     .otherwise({
       redirectTo: '/'
