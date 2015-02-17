@@ -8,19 +8,13 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('TestingPlateCtrl', function ($scope, WellConv, ContainerOptions) {
+  .controller('TestingPlateCtrl', function ($scope, $http, WellConv, DataConv, ContainerOptions) {
 
     $scope.containerKeys = _.keys(ContainerOptions);
     $scope.currentContainer = $scope.containerKeys[0];
 
-    //timepoints
-
-    $scope.numberTimepoints = 10;
-    $scope.timepointValues = _.map( _.range(0, $scope.numberTimepoints), function (ind) {
-      return 'tp_' + ind;
-    });
-
     $scope.selectTimepoint = function (index) {
+      $scope.timepointSlider = index;
       $scope.currentTimepoint = $scope.timepointValues[index];
     };
 
@@ -33,15 +27,23 @@ angular.module('transcripticApp')
           rowCount = wellCount / colCount,
           wellArray = WellConv.createArrayGivenBounds([0,1], [rowCount - 1, colCount]);
 
-      $scope.currentData = _.zipObject(
-        $scope.timepointValues,
+      //for testing
+      var numberTimepoints = 10,
+          timepointValues  = _.map( _.range(0, numberTimepoints), function (ind) {
+        return 'tp_' + ind;
+      });
+
+      var dataObj = _.zipObject(
+        timepointValues,
         _.map(
-          _.range(0, $scope.numberTimepoints),
+          _.range(0, numberTimepoints),
           function (index) {
-            return createTimepointRandom(wellArray , _.at($scope.timepointValues, index) );
+            return createTimepointRandom(wellArray , timepointValues[index] );
           }
         )
       );
+
+      setData(dataObj);
     };
 
     $scope.hoverPlateWells = function (wells) {
@@ -54,8 +56,8 @@ angular.module('transcripticApp')
 
     //init
 
-    $scope.selectTimepoint(0);
     $scope.onContainerChange();
+    $scope.selectTimepoint(0);
 
     //helpers
 
@@ -71,4 +73,24 @@ angular.module('transcripticApp')
         })
       );
     }
+
+    function setData (data) {
+      delete $scope.currentData;
+
+      $scope.currentData = data;
+
+      $scope.timepointValues = _.keys($scope.currentData);
+      $scope.numberTimepoints = $scope.timepointValues.length;
+
+      $scope.selectTimepoint(0);
+    }
+
+    //testing
+
+    $scope.openGrowthCurve = function () {
+      $http.get('demo_data/growth-0216.json').success(function (d) {
+        var parsed = DataConv.parseGrowthCurve(d);
+        setData(parsed);
+      });
+    };
   });

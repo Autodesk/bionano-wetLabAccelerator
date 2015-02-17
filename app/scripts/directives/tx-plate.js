@@ -152,8 +152,13 @@ angular.module('transcripticApp')
 
         function transitionData (selection) {
           if (!scope.plateData || !selection || selection.empty()) return;
-           selection.style('fill', function (d) {
-            return 'rgba(150,150,200,' + scope.plateData[d].value + ')';
+
+          selection.style('fill', function (d) {
+            if (scope.plateData[d]) {
+              return 'rgba(150,150,200,' + scope.plateData[d].value + ')';
+            } else {
+              return 'rgba(0,0,0,0.3)';
+            }
           });
         }
 

@@ -6,7 +6,6 @@
  * @description
  * Expects data in form
  *
- * //todo - should we do this data folding (i.e. assign key, ordinal) internal to the directive? or outside?
  * { <timepoint> : {
  *     <well> : {
  *       key : <well>,
@@ -78,14 +77,14 @@ angular.module('transcripticApp')
           .text("Absorbance");
 
         //line generator (time / value for each well)
+        //todo - need to handle key not being present for given ordinal - shouldn't display line
         var line = d3.svg.line()
           .interpolate('linear')
           .x(function(d, i) {
-            return x(d.ordinal);
+            return d ? x(d.ordinal) : null;
           })
           .y(function(d, i) {
-            //console.log(d.value, y(d.value));
-            return y(d.value);
+            return d ? y(d.value) : 0;
           });
 
         //series generator (each well)
@@ -123,7 +122,7 @@ angular.module('transcripticApp')
           yAxisEl.transition().call(yAxis);
 
           series = seriesContainer.selectAll(".line")
-            .data(wells, function (d, i) { return d; });
+            .data(wells, function (d, i) { return d.toUpperCase(); });
 
           //ENTER
           series.enter().append("svg:path")

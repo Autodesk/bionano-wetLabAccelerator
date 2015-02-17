@@ -1,12 +1,18 @@
-<select ng-options="k as k for k in containerKeys"
-        ng-change="onContainerChange()"
-        ng-model="currentContainer"></select>
+<button class="btn btn-default pull-right"
+        ng-click="openGrowthCurve()">Open Growth Curve</button>
 
-<input ng-model="timepointSlider"
-       min="0"
-       max="{{numberTimepoints - 1}}"
-       ng-change="selectTimepoint(timepointSlider)"
-       type="range"/>
+<form>
+  <select class="form-control"
+          ng-options="k as k for k in containerKeys"
+          ng-change="onContainerChange()"
+          ng-model="currentContainer"></select>
+
+  <input ng-model="timepointSlider"
+         min="0"
+         max="{{numberTimepoints - 1}}"
+         ng-change="selectTimepoint(timepointSlider)"
+         type="range"/>
+</form>
 
 <tx-plate container="currentContainer"
           plate-data="currentData[currentTimepoint]"
