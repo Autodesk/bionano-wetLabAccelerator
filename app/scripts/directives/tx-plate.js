@@ -110,7 +110,8 @@ angular.module('transcripticApp')
           }
 
           wells = wellsSvg.selectAll("circle")
-            .data(wellArray, function (well) { return well; } );
+            .data(wellArray, function (well) { return well; } )
+            .call(unselectWells);
 
           //deal here with all old items if you want, before the enter
 
@@ -233,7 +234,7 @@ angular.module('transcripticApp')
               brushLastSelected.length == 1 &&
               brushLastSelected[0] == selected[0]) {
 
-            svg.selectAll("circle").classed('brushSelected', false);
+            svg.selectAll("circle").call(unselectWells);
             selected = [];
           }
 
@@ -254,6 +255,11 @@ angular.module('transcripticApp')
               bottomRight = [ d[d3.bisect(r, extent[1][1]) - 1] - 1, d[d3.bisect(r, extent[1][0]) - 1] ];
 
           return WellConv.createMapGivenBounds(topLeft, bottomRight);
+        }
+
+        function unselectWells (selection) {
+          //todo - need to actually remove the brush
+          return selection.classed('brushSelected', false);
         }
       }
     };

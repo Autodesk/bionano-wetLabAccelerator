@@ -43,7 +43,7 @@ angular.module('transcripticApp')
     function parseGrowthCurve (rundata) {
       var timepoints   = _.keys(rundata),
           datarefs     = _.pick(rundata, function (d) { return d.id; }),
-          instructions = _.pick(rundata, function (d) { console.log(d); return d.instruction.id; }),
+          instructions = _.pick(rundata, function (d) { return d.instruction.id; }),
           containers   = _.uniq(_.map(rundata, function (d) { return d.instruction.operation.object })),
           map          = {};
 

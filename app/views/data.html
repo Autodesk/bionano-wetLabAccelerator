@@ -17,6 +17,8 @@
 
 <div ng-if="dataCtrl.currentData">
 
+  <hr>
+
   <div class="btn-group"
        ng-if="dataCtrl.containers.length > 1">
     <button class="btn btn-default"
@@ -24,6 +26,15 @@
             ng-repeat="c in dataCtrl.containers"
             ng-click="dataCtrl.setCurrentDataContainer(c)">{{c}}</button>
   </div>
+
+  <button class="btn btn-default btn-sm"
+          tooltip="Download Data"
+          tooltip-append-to-body="true"
+          tx-downloadjson
+          filename="{{(current.run ? current.run : 'data') + '.json'}}"
+          download-model="dataCtrl.inputData">
+    <span class="glyphicon glyphicon-save-file"></span>
+  </button>
 
   <input ng-model="timepointSlider"
          min="0"
