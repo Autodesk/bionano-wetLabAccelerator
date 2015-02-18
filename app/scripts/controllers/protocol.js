@@ -31,18 +31,26 @@ angular.module('transcripticApp')
     self.retrieveLocal(self.localProtocols[0]);
     */
 
-    self.newProtocol = function () {
-      self.firebaseProtocols.$add({
-        meta: {
-          name : "myProtocol"
+    var protocolScaffold = function () {
+      return {
+        meta    : {
+          name: "myProtocol"
         },
         protocol: {
-          refs: {},
+          refs        : {},
           instructions: []
         }
-      }).then(function (ref) {
-        self.protocol = self.firebaseProtocols.$getRecord(ref.key());
-      });
+      };
+    };
+
+    self.newProtocol = function () {
+      if ( self.firebaseProtocols ) {
+        self.firebaseProtocols.$add(protocolScaffold()).then(function (ref) {
+          self.protocol = self.firebaseProtocols.$getRecord(ref.key());
+        });
+      } else {
+        self.protocol = protocolScaffold();
+      }
     };
 
     self.canSubmitRun = function () {
