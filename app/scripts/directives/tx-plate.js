@@ -234,7 +234,7 @@ angular.module('transcripticApp')
               brushLastSelected[0] == selected[0]) {
 
             svg.selectAll("circle").classed('brushSelected', false);
-            selected = null;
+            selected = [];
           }
 
           scope.$apply(function () {
