@@ -9,35 +9,35 @@
           ng-model="current.run"></select>
 
   <button class="btn btn-default pull-right"
-          ng-click="dataCtrl.downloadDemo('growth04')">Growth 0.4</button>
+          ng-click="dataCtrl.downloadDemo('growth-0216')">Growth 02/16</button>
   <button class="btn btn-default pull-right"
           ng-click="dataCtrl.downloadDemo('uv_evolution')">UV Evolution</button>
 </form>
 
-<div ng-if="dataCtrl.rundata">
 
-  <button class="btn btn-default btn-sm"
-          tooltip="Download Data"
-          tooltip-append-to-body="true"
-          tx-downloadjson
-          filename="{{(current.run ? current.run : 'data') + '.json'}}"
-          download-model="dataCtrl.rundata">
-    <span class="glyphicon glyphicon-save-file"></span>
-  </button>
+<div ng-if="dataCtrl.currentData">
 
-  <tx-wellplate container-reference="dataCtrl.currentContainer"
-                ng-model="dataCtrl.selectedWells"
-                hovered="dataCtrl.hoveredWell"
-                multiple="true"
-                class="well-plate form-control"></tx-wellplate>
+  <div class="btn-group"
+       ng-if="dataCtrl.containers.length > 1">
+    <button class="btn btn-default"
+            ng-class="{'btn-info' : c == dataCtrl.currentContainerReference}"
+            ng-repeat="c in dataCtrl.containers"
+            ng-click="dataCtrl.setCurrentDataContainer(c)">{{c}}</button>
+  </div>
 
-  <tx-plategraph data="dataCtrl.parsedData"
-                 series-hover="dataCtrl.hoveredWell"
-                 series-selected="dataCtrl.selectedWells"
-                 style="width: 900px; height: 600px; display: block;"></tx-plategraph>
+  <input ng-model="timepointSlider"
+         min="0"
+         max="{{numberTimepoints - 1}}"
+         ng-change="dataCtrl.selectTimepoint(timepointSlider)"
+         type="range"/>
 
-  {{dataCtrl.hoveredWell}}
-  {{dataCtrl.selectedWells}}
+  <tx-plate container="dataCtrl.currentContainer"
+            plate-data="dataCtrl.currentData[currentTimepoint]"
+            on-hover="dataCtrl.hoverPlateWells($wells)"
+            on-select="dataCtrl.selectPlateWells($wells)"></tx-plate>
+
+  <tx-timepointgraph data="dataCtrl.currentData"
+                     series-selected="dataCtrl.currentWells"
+                     style="width: 900px; height: 600px; display: block;"></tx-timepointgraph>
+
 </div>
-
-<pre ng-bind="dataCtrl.rundata | json"></pre>

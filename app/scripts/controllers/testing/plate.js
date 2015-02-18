@@ -46,8 +46,10 @@ angular.module('transcripticApp')
 
     $scope.setCurrentDataContainer = function (containerKey) {
 
-      $scope.currentDataContainer = containerKey;
-      $scope.currentData = $scope.inputData[$scope.currentDataContainer];
+      //todo - get container
+
+      $scope.currentContainerReference = containerKey;
+      $scope.currentData = $scope.inputData[$scope.currentContainerReference];
 
       $scope.timepointValues = _.keys($scope.currentData);
       $scope.numberTimepoints = $scope.timepointValues.length;

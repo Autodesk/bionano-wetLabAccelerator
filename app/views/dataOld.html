@@ -1,0 +1,43 @@
+<form class="form-inline">
+  <select class="form-control"
+          ng-options="proj.url as (proj.name + '  [' + proj.run_count + ' runs]') for proj in dataCtrl.projects"
+          ng-model="current.project"></select>
+
+  <select class="form-control"
+          ng-options="run.id as run.title for run in dataCtrl.runs"
+          ng-disabled="!dataCtrl.runs.length"
+          ng-model="current.run"></select>
+
+  <button class="btn btn-default pull-right"
+          ng-click="dataCtrl.downloadDemo('growth-0216')">Growth 02/16</button>
+  <button class="btn btn-default pull-right"
+          ng-click="dataCtrl.downloadDemo('uv_evolution')">UV Evolution</button>
+</form>
+
+<div ng-if="dataCtrl.rundata">
+
+  <tx-wellplate container-reference="dataCtrl.currentContainer"
+                ng-model="dataCtrl.selectedWells"
+                hovered="dataCtrl.hoveredWell"
+                multiple="true"
+                class="well-plate form-control"></tx-wellplate>
+
+  <tx-plategraph data="dataCtrl.parsedData"
+                 series-hover="dataCtrl.hoveredWell"
+                 series-selected="dataCtrl.selectedWells"
+                 style="width: 900px; height: 600px; display: block;"></tx-plategraph>
+
+  {{dataCtrl.hoveredWell}}
+  {{dataCtrl.selectedWells}}
+
+  <button class="btn btn-default btn-sm"
+          tooltip="Download Data"
+          tooltip-append-to-body="true"
+          tx-downloadjson
+          filename="{{(current.run ? current.run : 'data') + '.json'}}"
+          download-model="dataCtrl.rundata">
+    <span class="glyphicon glyphicon-save-file"></span>
+  </button>
+</div>
+
+<pre ng-bind="dataCtrl.rundata | json"></pre>

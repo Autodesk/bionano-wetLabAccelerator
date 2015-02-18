@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('DataCtrl', function ($scope, $q, $http, Auth, Project, Container, Run, Data) {
+  .controller('DataCtrl', function ($scope, $q, $http, Auth, Project, Container, Run, Data, DataConv, ContainerOptions) {
 
     var self = this;
 
@@ -26,76 +26,60 @@ angular.module('transcripticApp')
     $scope.$watch('current.run', function (newval) {
       if (!newval) return;
 
-      downloadParseRundata($scope.current.project, newval);
+      //todo
+
+      Data.run({
+        project: $scope.current.project,
+        run: newval
+      }).$promise.then(function (result) {
+        var pruned = _.omit(result, function (val, key) {
+          return _.isFunction(val) || key.charAt(0) == '$';
+        });
+        setData(DataConv.parseGrowthCurve(pruned));
+      })
     });
 
-    function downloadParseRundata (project, run) {
-      if (!project || !run) return;
 
-      $q.all([
-        Data.run({
-          project: project,
-          run: run
-        }).$promise
-      ])
-      .then(function (results) {
-        console.log(results);
-        self.rundata = results[0];
+    self.selectTimepoint = function (index) {
+      $scope.timepointSlider = index;
+      $scope.currentTimepoint = $scope.timepointValues[index];
+    };
 
-        var wrangled = wrangleData(self.rundata);
+    self.hoverPlateWells = function (wells) {
+      self.currentWells = wells;
+    };
 
-        self.runcontainers = wrangled.runcontainers;
-        self.parsedData = wrangled.parsedData;
-        self.currentContainer = _.sample(self.runcontainers);
-      });
+    self.selectPlateWells = function (wells) {
+      self.currentWells = wells;
+    };
+
+    function setData (data) {
+      self.inputData = data;
+      self.containers = _.keys(data);
+      self.setCurrentDataContainer(self.containers[0]);
     }
 
-    function wrangleData (rundata) {
-      var datarefs = _.pick(rundata, function (d) { return d.id; }),
-          timepoints = _.keys(datarefs),
-          //note - assumes wells in one are same as in all... which is often not accurate
-          wells = _.keys(datarefs[timepoints[0]].data),
-          //set up object in form {<well> : [], ... }
-          parsedData = _.mapValues(_.zipObject(wells), function () { return []; }),
-          runcontainers = {};
+    self.setCurrentDataContainer = function (containerKey) {
 
-      _.forEach(datarefs, function (dataref, key) {
-        //map for containers
-        var obj = dataref.instruction.operation.object;
+      self.currentContainerReference = containerKey;
+      self.currentData = self.inputData[self.currentContainerReference];
 
-        if (_.isUndefined(runcontainers[obj])) {
-          runcontainers[obj] = dataref.container_type;
-        }
+      //hack - need to get from the data
+      self.currentContainer = '384-flat';
 
-        // reformat data so indexed by well
-        // {<well> : [{dataref : <dataref>, value: <value>}, ...], ... }
-        _.forEach(wells, function (well) {
-          parsedData[well].push({
-            x: key,                   //dataref
-            y: dataref.data[well][0]  //value
-          });
-        });
-      });
+      $scope.timepointValues = _.keys(self.currentData);
+      $scope.numberTimepoints = $scope.timepointValues.length;
 
-      return {
-        runcontainers: runcontainers,
-        parsedData: parsedData
-      }
-    }
+      self.selectTimepoint(0);
+    };
+
 
     self.downloadDemo = function (filename) {
-      $q.all([
-        $http.get('demo_data/' + filename + '.json')
-      ])
-      .then(function (results) {
+      $http.get('demo_data/' + filename + '.json')
+      .success(function (results) {
         console.log(results);
-        self.rundata = results[0].data;
-
-        var wrangled = wrangleData(self.rundata);
-
-        self.runcontainers = wrangled.runcontainers;
-        self.parsedData = wrangled.parsedData;
-        self.currentContainer = _.sample(self.runcontainers);
+        setData(DataConv.parseGrowthCurve(results));
       });
     };
+
   });

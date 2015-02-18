@@ -11,7 +11,7 @@
 <div class="btn-group"
      ng-if="containers.length > 1">
   <button class="btn btn-default"
-          ng-class="{'btn-info' : c == currentDataContainer}"
+          ng-class="{'btn-info' : c == currentContainerReference}"
           ng-repeat="c in containers"
           ng-click="setCurrentDataContainer(c)">{{c}}</button>
 </div>
