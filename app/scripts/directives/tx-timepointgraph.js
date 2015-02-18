@@ -19,7 +19,6 @@
  *
  * And will dynamically figure out all keys and values. timepoints are ordinal values.
  */
-//todo - support metadata pass-in for title, axes names, etc.
 angular.module('transcripticApp')
   .directive('txTimepointgraph', function () {
     return {
@@ -27,11 +26,13 @@ angular.module('transcripticApp')
       replace: false,
       scope: {
         data: '=',
+        graphMeta: '=', //accepts xlabel, ylabel, title
         seriesSelected: '='
       },
       link: function postLink(scope, element, attrs) {
 
         scope.$watch('data', drawGraph);
+        scope.$watch('graphMeta', updateMeta, true);
 
         scope.$watch('seriesSelected', highlightSeries);
 
@@ -39,15 +40,21 @@ angular.module('transcripticApp')
          Graph Construction
          ****/
 
+        var full = {
+          height : 380,
+          width: 600
+        };
+
         var chart = d3.select(element[0])
           .append('svg')
-          .attr('width', '100%')
-          .attr('height', '100%')
+          .attr('width', full.width)
+          .attr('height', full.height)
           .attr('id', 'chart');
 
-        var margin = {top: 20, right: 80, bottom: 30, left: 50},
-            width = 640 - margin.left - margin.right,
-            height = 380 - margin.top - margin.bottom;
+        var labelHeight = 15,
+            margin = {top: 15 + labelHeight, right: 15, bottom: 30 + labelHeight, left: 40 + labelHeight},
+            width = full.width - margin.left - margin.right,
+            height = full.height - margin.top - margin.bottom;
 
         // scaling functions
         var x = d3.scale.ordinal().rangePoints([0, width]);
@@ -70,12 +77,25 @@ angular.module('transcripticApp')
           .attr("class", "y axis")
           .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
-        yAxisEl.append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
+        var xAxisLabel = chart.append("text")
+          .attr("x", margin.left + (width / 2) )
+          .attr("y", margin.top + height + margin.bottom - labelHeight)
           .attr("dy", ".71em")
-          .style("text-anchor", "end")
+          .style("text-anchor", "middle")
+          .text("Timepoint");
+
+        var yAxisLabel = chart.append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", labelHeight)
+          .attr("x", -(margin.top + (height / 2)) )
+          .style("text-anchor", "middle")
           .text("Absorbance");
+
+        var titleLabel = chart.append("text")
+          .attr("x", margin.left + (width / 2) )
+          .attr("y", labelHeight)
+          .style("text-anchor", "middle")
+          .text("Growth Curve");
 
         //line generator (time / value for each well)
         //todo - need to handle key not being present for given ordinal - shouldn't display line
@@ -139,6 +159,30 @@ angular.module('transcripticApp')
 
           //EXIT
           series.exit().remove();
+        }
+
+        function updateMeta (newval) {
+          var metaToElement = {
+            xlabel : {
+              placeholder : 'Timepoint',
+              element : xAxisLabel
+            },
+            ylabel : {
+              placeholder : 'Absorbance',
+              element : xAxisLabel
+            },
+            title : {
+              placeholder : 'Growth Curve',
+              element : xAxisLabel
+            }
+          };
+
+          _.forEach(newval, function (val, key) {
+            var mapped = metaToElement[key];
+            if (mapped) {
+              mapped.element.text(val ? val : mapped.placeholder);
+            }
+          });
         }
 
         function highlightSeries (newval, oldval) {

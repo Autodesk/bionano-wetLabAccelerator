@@ -48,7 +48,29 @@
             on-select="dataCtrl.selectPlateWells($wells)"></tx-plate>
 
   <tx-timepointgraph data="dataCtrl.currentData"
+                     graph-meta="dataCtrl.graphMeta"
                      series-selected="dataCtrl.currentWells"
-                     style="width: 900px; height: 600px; display: block;"></tx-timepointgraph>
+                     style="display: block; padding: 20px 0 40px;"></tx-timepointgraph>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <input type="text"
+             class="form-control"
+             ng-model="dataCtrl.graphMeta.xlabel"
+             placeholder="x axis">
+    </div>
+    <div class="col-sm-4">
+      <input type="text"
+             class="form-control"
+             ng-model="dataCtrl.graphMeta.ylabel"
+             placeholder="y axis">
+    </div>
+    <div class="col-sm-4">
+      <input type="text"
+             class="form-control"
+             ng-model="dataCtrl.graphMeta.title"
+             placeholder="title">
+    </div>
+  </div>
 
 </div>
