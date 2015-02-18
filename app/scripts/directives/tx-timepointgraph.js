@@ -19,6 +19,7 @@
  *
  * And will dynamically figure out all keys and values. timepoints are ordinal values.
  */
+//todo - support metadata pass-in for title, axes names, etc.
 angular.module('transcripticApp')
   .directive('txTimepointgraph', function () {
     return {

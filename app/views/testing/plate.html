@@ -12,6 +12,14 @@
          max="{{numberTimepoints - 1}}"
          ng-change="selectTimepoint(timepointSlider)"
          type="range"/>
+
+  <div class="btn-group"
+       ng-if="containers.length > 1">
+    <button class="btn btn-default"
+            ng-class="{'btn-info' : c == currentDataContainer}"
+            ng-repeat="c in containers"
+            ng-click="setCurrentDataContainer(c)">{{c}}</button>
+  </div>
 </form>
 
 <tx-plate container="currentContainer"
