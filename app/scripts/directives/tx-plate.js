@@ -203,11 +203,12 @@ angular.module('transcripticApp')
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         brushg.call(brush);
+        var brushLastSelected = [];
 
-        function brushstart(p) {}
+        function brushstart() {}
 
         // Highlight the selected circles.
-        function brushmove(p) {
+        function brushmove() {
 
           var map = getSelectedWells(brush.extent());
 
@@ -227,13 +228,22 @@ angular.module('transcripticApp')
 
           var selected = svg.selectAll(".brushSelected").data();
 
+          if (brush.empty() &&
+              selected.length == 1 &&
+              brushLastSelected.length == 1 &&
+              brushLastSelected[0] == selected[0]) {
+
+            svg.selectAll("circle").classed('brushSelected', false);
+            selected = null;
+          }
+
           scope.$apply(function () {
             scope.onSelect({ $wells: selected });
           });
 
           //todo - toggle the active state of each well if in that mode
 
-          //todo - special handling of click (i.e. brush.empty() == true)
+          brushLastSelected = selected;
         }
 
         function getSelectedWells (extent) {
@@ -244,16 +254,6 @@ angular.module('transcripticApp')
               bottomRight = [ d[d3.bisect(r, extent[1][1]) - 1] - 1, d[d3.bisect(r, extent[1][0]) - 1] ];
 
           return WellConv.createMapGivenBounds(topLeft, bottomRight);
-        }
-
-        //DEPRECATED --- well center must be entirely in selection
-        function elementInBounds (bounds, data) {
-          var d3el = d3.select(this);
-
-          return bounds[0][0] < parseInt(d3el.attr('cx'), 10) &&
-            bounds[1][0] > parseInt(d3el.attr('cx'), 10) &&
-            bounds[0][1] < parseInt(d3el.attr('cy'), 10) &&
-            bounds[1][1] > parseInt(d3el.attr('cy'), 10);
         }
       }
     };

@@ -35,7 +35,7 @@ angular.module('transcripticApp')
     };
 
     $scope.selectPlateWells = function (wells) {
-      //console.log(wells);
+      $scope.currentWells = wells;
     };
 
     function setData (data) {
