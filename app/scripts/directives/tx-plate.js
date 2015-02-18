@@ -72,17 +72,6 @@ angular.module('transcripticApp')
           .attr("class", "y axis")
           .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
-        //tooltip
-
-        var tooltipDimensions = {
-          height: 20,
-          width : 80
-        };
-        var tooltipEl = svg.append('svg:foreignObject')
-          .classed('wellTooltip hidden', true)
-          .attr(tooltipDimensions);
-        var tooltipInner = tooltipEl.append("xhtml:div");
-
         //data selection shared between multiple functions
         var wells = wellsSvg.selectAll("circle");
 
@@ -149,6 +138,8 @@ angular.module('transcripticApp')
               .style('opacity', 0)
               .remove()
           }
+
+          clearBrush();
         }
 
         function transitionData (selection) {
@@ -163,7 +154,16 @@ angular.module('transcripticApp')
           });
         }
 
-        /* well hover behaviors */
+        /**** well hover + tooltip ****/
+
+        var tooltipDimensions = {
+          height: 20,
+          width : 80
+        };
+        var tooltipEl = svg.append('svg:foreignObject')
+          .classed('wellTooltip hidden', true)
+          .attr(tooltipDimensions);
+        var tooltipInner = tooltipEl.append("xhtml:div");
 
         function wellOnMouseover (d) {
           //Get this well's values
@@ -190,7 +190,7 @@ angular.module('transcripticApp')
           tooltipEl.classed("hidden", true);
         }
 
-        //BRUSHING
+        /***** BRUSHING *****/
         // note that b/c pointer events, this competes with hovering etc. so we put it on top
 
         var brush = d3.svg.brush()
@@ -216,7 +216,7 @@ angular.module('transcripticApp')
           svg.selectAll("circle")
             .classed("brushSelected", _.partial(_.has, map) );
 
-          scope.$apply(function () {
+          scope.$applyAsync(function () {
             scope.onHover({ $wells: _.keys(map) });
           });
 
@@ -238,7 +238,7 @@ angular.module('transcripticApp')
             selected = [];
           }
 
-          scope.$apply(function () {
+          scope.$applyAsync(function () {
             scope.onSelect({ $wells: selected });
           });
 
@@ -246,6 +246,8 @@ angular.module('transcripticApp')
 
           brushLastSelected = selected;
         }
+
+        /**** helpers ****/
 
         function getSelectedWells (extent) {
           var d = xScale.domain(),
@@ -258,8 +260,16 @@ angular.module('transcripticApp')
         }
 
         function unselectWells (selection) {
-          //todo - need to actually remove the brush
           return selection.classed('brushSelected', false);
+        }
+
+        function clearBrush () {
+          if ( _.isFunction(brush.clear) ) {
+            //clear the brush and update the DOM
+            brushg.call(brush.clear());
+            //trigger event to propagate data flow that it has been emptied
+            brushend();
+          }
         }
       }
     };

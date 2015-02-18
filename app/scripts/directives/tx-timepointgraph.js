@@ -142,7 +142,7 @@ angular.module('transcripticApp')
         }
 
         function highlightSeries (newval, oldval) {
-          if (!newval) {
+          if (!newval || !newval.length) {
             series.classed('hidden', false);
           } else {
             var map = _.zipObject(newval, _.constant(true));
