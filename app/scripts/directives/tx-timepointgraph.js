@@ -169,11 +169,11 @@ angular.module('transcripticApp')
             },
             ylabel : {
               placeholder : 'Absorbance',
-              element : xAxisLabel
+              element : yAxisLabel
             },
             title : {
               placeholder : 'Growth Curve',
-              element : xAxisLabel
+              element : titleLabel
             }
           };
 
