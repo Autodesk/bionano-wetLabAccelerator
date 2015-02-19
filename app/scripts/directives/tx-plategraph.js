@@ -67,7 +67,7 @@ angular.module('transcripticApp')
             .attr("y", 6)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
-            .text("Absorbance");
+            .text("Optical Density (OD)");
 
         //line generator (time / value for each well)
         var line = d3.svg.line()
