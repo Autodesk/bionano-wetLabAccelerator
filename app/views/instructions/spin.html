@@ -3,15 +3,12 @@
                 ng-required="true"
                 refs="protocol.refs"></tx-container>
 
-  <tx-inputwrap label="speed">
-    <input type="number"
-           class="form-control"
-           ng-model="instruction.speed"
-           required
-           name="spinSpeed"
-           min="0"
-           max="4000">
-  </tx-inputwrap>
+  <tx-measure dimension-type="acceleration"
+              ng-model="instruction.acceleration"
+              required
+              min="0"
+              max="4000"
+              label="acceleration"></tx-measure>
 
   <tx-measure dimension-type="duration"
               ng-model="instruction.duration"

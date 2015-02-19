@@ -14,5 +14,6 @@ angular.module('transcripticApp').constant('DimensionOptions', {
   "length": ["nanometer"],
   "temperature": ["celsius"],
   "matter": ["nanomole, micromole"],
-  "flowrate": ["microliter/second"]
+  "flowrate": ["microliter/second"],
+  "acceleration" : ["meter/second^2"]
 });
