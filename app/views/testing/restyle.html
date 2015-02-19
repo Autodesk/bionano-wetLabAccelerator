@@ -8,14 +8,17 @@
        resizeable
        resize-property="width"
        resize-position="right"
-       resize-direction="horizontal">
+       resize-direction="horizontal"
+       style="max-width: 70vw; min-width: 10px;">
     <tx-gallery class="flex-grower"></tx-gallery>
 
     <tx-inspector inspect="currentlySelected"
                   resizeable
                   resize-property="height"
                   resize-position="top"
-                  resize-direction="vertical"></tx-inspector>
+                  resize-direction="vertical"
+                  style="max-height: 70vh; min-height: 10px;">
+    </tx-inspector>
   </div>
   <div class="maincolumn maxout-height-scroll">
     <tx-protocolnew protocol="restyleCtrl.currentProtocol">

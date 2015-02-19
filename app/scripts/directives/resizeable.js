@@ -10,8 +10,8 @@
  * @attr resizeProperty
  * @attr resizePosition
  *
- * @attr resizeMinimum todo - or use min-height and min-width
- *
+ * Recommended you use a min/max-height/width for setting constraints
+ * todo - inspect min/max-height/width as constraints
  *
  */
 angular.module('transcripticApp')
@@ -64,6 +64,7 @@ angular.module('transcripticApp')
         }
 
         function handleMousemove (evt) {
+          evt.preventDefault();
           var curPos = isHorizontal ? evt.pageX : evt.pageY,
               delta  = startPos - curPos;
 
