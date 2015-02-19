@@ -1,0 +1,8 @@
+.resizeable-handle {
+
+  background: pink;
+
+  &.dragging {
+    background: red;
+  }
+}

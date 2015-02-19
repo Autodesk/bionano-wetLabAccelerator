@@ -1,14 +1,24 @@
 <tx-protocolslider class="topbar"
-                   protocols="restyleCtrl.firebaseProtocols">
+                   protocols="restyleCtrl.firebaseProtocols"
+                   protocol-selected="restyleCtrl.currentProtocol">
 </tx-protocolslider>
 
 <div class="twocolumn">
-  <div class="sidepanel sidepanel-flex">
-    <tx-gallery class="grower"></tx-gallery>
+  <div class="sidepanel sidepanel-flex"
+       resizeable
+       resize-property="width"
+       resize-position="right"
+       resize-direction="horizontal">
+    <tx-gallery class="flex-grower"></tx-gallery>
 
-    <tx-inspector inspect="currentlySelected"></tx-inspector>
+    <tx-inspector inspect="currentlySelected"
+                  resizeable
+                  resize-property="height"
+                  resize-position="top"
+                  resize-direction="vertical"></tx-inspector>
   </div>
-  <div class="maincolumn">
-    <tx-protocolnew></tx-protocolnew>
+  <div class="maincolumn maxout-height-scroll">
+    <tx-protocolnew protocol="restyleCtrl.currentProtocol">
+    </tx-protocolnew>
   </div>
 </div>

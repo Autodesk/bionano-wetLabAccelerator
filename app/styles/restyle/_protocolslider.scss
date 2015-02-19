@@ -25,10 +25,20 @@ tx-protocolslider {
     padding: 0 $spacing 0 0;
     border-right: $border;
     color: $grey;
+    outline: 0;
+
+    &:first-child {
+      padding-left: $spacing;
+    }
 
     &:last-child {
       border-right: 0;
       margin-right: 0;
+    }
+
+    &.active {
+      font-weight: $font-weight-bold;
+      color: $black;
     }
 
     &:hover {

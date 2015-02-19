@@ -12,14 +12,15 @@ angular.module('transcripticApp')
       templateUrl: 'views/tx-protocolslider.html',
       restrict: 'E',
       scope: {
-        protocols: '='
+        protocols: '=',
+        protocolSelected: '='
       },
       controllerAs: 'sliderCtrl',
       controller: function ($scope, $element, $attrs) {
         var self = this;
 
         self.selectProtocol = function (p) {
-          console.log(p);
+          $scope.protocolSelected = p;
         }
       },
       link: function postLink(scope, element, attrs) {
