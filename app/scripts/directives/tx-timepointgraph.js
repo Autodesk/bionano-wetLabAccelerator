@@ -89,7 +89,7 @@ angular.module('transcripticApp')
           .attr("y", labelHeight)
           .attr("x", -(margin.top + (height / 2)) )
           .style("text-anchor", "middle")
-          .text("Absorbance");
+          .text("Optical Density (OD)");
 
         var titleLabel = chart.append("text")
           .attr("x", margin.left + (width / 2) )
@@ -168,7 +168,7 @@ angular.module('transcripticApp')
               element : xAxisLabel
             },
             ylabel : {
-              placeholder : 'Absorbance',
+              placeholder : 'Optical Density (OD)',
               element : yAxisLabel
             },
             title : {
