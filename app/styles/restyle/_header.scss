@@ -1,22 +1,24 @@
 header.site-header {
 
-  $header-logo-dim: 64px;
-  $header-subtext-size: 10px;
+  $header-logo-dim: 32px;
+  $header-subtext-font-size: 14px;
+  $header-nav-font-size: 14px;
   $logo-spacing: 10px;
+  $nav-height : $header-logo-dim + ($logo-spacing * 1);
 
   border-bottom: 1px solid $border-color-default;
-  margin-bottom: $logo-spacing;
+  margin: $logo-spacing 0;
   padding-bottom: $logo-spacing;
+  line-height: 1;
 
   .logo {
     position: relative;
     display: inline-block;
     float: left;
-    padding-top: $logo-spacing;
 
     a {
       width: $header-logo-dim;
-      height: $header-logo-dim + $header-subtext-size;
+      height: $header-logo-dim;
       display: inline-block;
       position: relative;
       opacity: 0.6;
@@ -32,9 +34,10 @@ header.site-header {
       pointer-events: none;
       position: absolute;
       bottom: 0;
-      left: 0;
-      right: 0;
-      font-size: $header-subtext-size;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 120%;
+      font-size: $header-subtext-font-size;
       color: $dark-grey;
       content: 'CX1';
       text-align: center;
@@ -56,12 +59,13 @@ header.site-header {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
-    height: 80px;
-    line-height: 80px;
+    height: $header-logo-dim;
+    line-height: $header-logo-dim;
+    font-size: $header-nav-font-size;
 
     ul {
-      padding: 5px 0 0 0;
-      margin: 5px 0 0 0;
+      margin: 0;
+      padding: 0;
     }
 
     li {
