@@ -1,8 +1,17 @@
+<div class="protocol-header"
+     ng-show="restyleCtrl.currentProtocol">
+
+  <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
+                       protocol-form="ProtocolForm"></tx-protocol-actions>
+
+</div>
+
 <div class="flex-horizontal flex-grower">
   <div class="protocol-selector"
        ng-hide="restyleCtrl.currentProtocol">
     <h3 class="title">Protocols</h3>
-    <button class="btn btn-default" ng-click="loadDemo()">Demo</button>
+    <button class="btn btn-default"
+            ng-click="loadDemo()">Demo</button>
   </div>
 
   <div class="sidepanel flex-vertical"
@@ -11,7 +20,7 @@
        resize-property="width"
        resize-position="right"
        resize-direction="horizontal"
-       style="width: 400px; max-width: 70vw; min-width: 10px;">
+       style="width: 30%; max-width: 70vw; min-width: 10px;">
 
     <tx-gallery class="flex-grower"></tx-gallery>
 
@@ -25,7 +34,8 @@
   </div>
   <div class="maincolumn flex-grower maxout-scroll-vertical"
        ng-show="restyleCtrl.currentProtocol">
-    <tx-protocolnew protocol="restyleCtrl.currentProtocol">
-    </tx-protocolnew>
+    <tx-protocol-editor ng-form="ProtocolForm"
+                    protocol="restyleCtrl.currentProtocol">
+    </tx-protocol-editor>
   </div>
 </div>

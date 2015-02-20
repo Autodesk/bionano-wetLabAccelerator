@@ -2,19 +2,22 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txProtocolnew
+ * @name transcripticApp.directive:txProtocolEditor
  * @description
- * # txProtocolnew
+ * # txProtocolEditor
  */
+
 angular.module('transcripticApp')
-  .directive('txProtocolnew', function () {
+  .directive('txProtocolEditor', function () {
     return {
-      templateUrl: 'views/tx-protocolnew.html',
+      templateUrl: 'views/tx-protocol-editor.html',
       restrict: 'E',
+      require: 'form', //todo - register controllers of instruction with form
       scope: {
         protocol: '='
       },
-      controllerAs: 'protocolCtrl',
+      bindToController: true,
+      controllerAs: 'editorCtrl',
       controller: function ($scope, $element, $attrs) {
 
       },

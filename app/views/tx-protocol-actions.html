@@ -1,0 +1,44 @@
+<div class="protocol-title"
+     popover="todo! - ability to change name, description, tags, etc."
+     popover-trigger="click"
+     popover-append-to-body="true"
+     popover-placement="bottom">
+  <span class="protocol-name" ng-bind="actionCtrl.protocol.name"></span>
+  <div class="protocol-dropdown-trigger">
+    <span class="glyphicon glyphicon-option-horizontal"></span>
+  </div>
+</div>
+<div class="protocol-actions clearfix">
+  <div class="btn-group pull-left">
+    <button class="btn btn-default btn-sm"
+            tooltip="Verify Protocol"
+            tooltip-append-to-body="true">
+      <span class="glyphicon glyphicon-check"></span>
+    </button>
+    <button class="btn btn-default btn-sm"
+            tooltip="Run Protocol"
+            tooltip-append-to-body="true">
+      <span class="glyphicon glyphicon-share"></span>
+    </button>
+  </div>
+  <div class="btn-group pull-right">
+    <btn-delete delete-text="Delete Protocol"
+                on-delete="onDelete()"></btn-delete>
+    <button class="btn btn-default btn-sm"
+            tooltip="Download Protocol"
+            tooltip-append-to-body="true"
+            tx-downloadjson
+            filename="{{(actionCtrl.protocol.meta.name ? actionCtrl.protocol.meta.name : 'protocol') + '.json'}}"
+            download-model="actionCtrl.protocol">
+      <span class="glyphicon glyphicon-save-file"></span>
+    </button>
+    <button class="btn btn-default btn-sm"
+            ng-disabled="actionCtrl.protocolForm.$error.json"
+            ng-class="{'btn-info' : actionCtrl.protocolForm.$dirty}"
+            ng-click="handleSave()"
+            tooltip="Save Protocol"
+            tooltip-append-to-body="true">
+      <span class="glyphicon glyphicon-cloud-upload"></span>
+    </button>
+  </div>
+</div>

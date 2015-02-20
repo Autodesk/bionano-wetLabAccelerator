@@ -18,7 +18,8 @@
 //components
 
 @import 'restyle/angularStyles';
-@import 'restyle/protocolSelector';
+@import 'restyle/protocolSelector'; //deprecate?
+@import 'restyle/protocolHeader';
 @import 'restyle/protocolslider';
 @import 'restyle/jsonEditor';
 @import 'restyle/operation';

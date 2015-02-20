@@ -63,6 +63,10 @@ tx-boolean btn-checkbox {
   background: $panel-danger-heading-bg;
 }
 
+main .container {
+  margin-top: 20px;
+}
+
 //imports
 
 @import 'corner';

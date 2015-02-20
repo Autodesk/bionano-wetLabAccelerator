@@ -7,7 +7,7 @@ header.site-header {
   $nav-height : $header-logo-dim + ($logo-spacing * 1);
 
   border-bottom: 1px solid $border-color-default;
-  margin: $logo-spacing 0;
+  margin: $logo-spacing 0 0;
   padding-bottom: $logo-spacing;
   line-height: 1;
 
