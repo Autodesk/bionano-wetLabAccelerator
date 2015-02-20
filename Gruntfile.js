@@ -246,7 +246,10 @@ module.exports = function (grunt) {
           src: ['*.scss'],
           dest: '.tmp/styles',
           ext: '.css'
-        }]
+        }],
+        options: {
+          sourceMap: true
+        }
       }
     },
 
