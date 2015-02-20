@@ -1,0 +1,141 @@
+{
+  "name" : "Simple Transfer Protocol",
+  "variables": {},
+  "metadata": {},
+  "references": [
+    {
+      "name": "growth_plate",
+      "isNew": true,
+      "id": "",
+      "type": "96-deep",
+      "storage": "ambient"
+    },
+    {
+      "name": "ecoli_container",
+      "isNew": true,
+      "id": "",
+      "type": "96-flat",
+      "storage": "cold_20"
+    }
+  ],
+  "groups": [
+    {
+      "name": "",
+      "variables": {},
+      "metadata": {},
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "to_container",
+              "wells": "to_wells"
+            },
+            {
+              "container": "from_container",
+              "wells": "from_wells"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "value": "10.0:microliter"
+            },
+            {
+              "name": "to_container",
+              "type": "container",
+              "value": "growth_plate"
+            },
+            {
+              "name": "to_wells",
+              "type": "well",
+              "isArray": true,
+              "value": [
+                "A2"
+              ]
+            },
+            {
+              "name": "from_container",
+              "type": "container",
+              "value": "ecoli_container"
+            },
+            {
+              "name": "from_wells",
+              "type": "well",
+              "isArray": true,
+              "value": [
+                "A1"
+              ]
+            },
+            {
+              "name": "mix_after_volume",
+              "type": "volume",
+              "value": "10.0:microliter"
+            },
+            {
+              "name": "mix_after_repetitions",
+              "type": "integer",
+              "value": 5
+            },
+            {
+              "name": "mix_after_speed",
+              "type": "speed",
+              "value": "100:microliter/second"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "loop": 3,
+      "metadata" : {
+        "description" : "Handled by Tecan Infinite 200M instruments. Bandwidth for wavelength selection in all of these instructions is < 5 nm for λ ≤ 315 nm and < 9 nm for λ > 315 nm."
+      },
+      "steps": [
+        {
+          "operation": "abosrbance",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object",
+              "wells": "wells"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "growth_plate"
+            },
+            {
+              "name": "wells",
+              "type": "well",
+              "isArray": true,
+              "value": [
+                "A1"
+              ]
+            },
+            {
+              "name": "wavelength",
+              "type": "length",
+              "value": "600:nanometer"
+            },
+            {
+              "name": "num_flashes",
+              "type": "integer",
+              "value": 25
+            },
+            {
+              "name": "dataref",
+              "type": "string",
+              "value": "dataref_${index}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

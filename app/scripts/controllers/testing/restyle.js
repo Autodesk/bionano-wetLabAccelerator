@@ -18,7 +18,11 @@ angular.module('transcripticApp')
       }
     });
 
-    $http.get('abstraction/protocol_transfer.json').success(function (d) {
-      self.currentProtocol = d;
-    })
+    $scope.loadDemo = function () {
+      $http.get('abstraction/protocol_transfer.json').success(function (d) {
+        self.currentProtocol = d;
+      });
+    };
+
+    $scope.loadDemo();
   });

@@ -1,13 +1,8 @@
 tx-protocolslider {
 
-  $padding: 6px;
-  $spacing: 15px;
+  $padding: 3px;
+  $spacing: 2px;
   $border: 1px solid $border-color-default;
-
-  display: block;
-  flex: none;
-  flex-flow: row wrap;
-  justify-content: flex-start;
 
   .protocol-list {
     margin: 0 0 $spacing;
@@ -15,25 +10,18 @@ tx-protocolslider {
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-    border-bottom: $border;
   }
 
   a.protocol {
-    display: inline-block;
+    display: block;
     position: relative;
-    margin: $padding $spacing $padding 0;
-    padding: 0 $spacing 0 0;
-    border-right: $border;
+    margin: $spacing 0 0;
+    padding: $padding;
     color: $grey;
     outline: 0;
 
     &:first-child {
-      padding-left: $spacing;
-    }
-
-    &:last-child {
-      border-right: 0;
-      margin-right: 0;
+      margin-top: 0;
     }
 
     &.active {
