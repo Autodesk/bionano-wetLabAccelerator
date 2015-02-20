@@ -24,7 +24,7 @@ angular.module('transcripticApp')
       var container = ContainerOptions[$scope.currentContainer];
 
       var dataObj = {
-        containerOne : DataConv.generateRandomGrowthCurve(container, 10)
+        containerOne : DataConv.generateRandomGrowthCurve(container, 4, Date.now().valueOf())
       };
 
       setData(dataObj);
@@ -39,6 +39,7 @@ angular.module('transcripticApp')
     };
 
     function setData (data) {
+      $scope.loadedDemo = false;
       $scope.inputData = data;
       $scope.containers = _.keys(data);
       $scope.setCurrentDataContainer($scope.containers[0]);
@@ -61,7 +62,8 @@ angular.module('transcripticApp')
 
     $scope.openGrowthCurve = function () {
       $http.get('demo_data/growth-0216.json').success(function (d) {
-        setData(DataConv.parseGrowthCurve(d));
+        setData(DataConv.parseGrowthCurve(d, true));
+        $scope.loadedDemo = true;
       });
     };
 

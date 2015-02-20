@@ -27,7 +27,8 @@ angular.module('transcripticApp')
       scope: {
         data: '=',
         graphMeta: '=', //accepts xlabel, ylabel, title
-        seriesSelected: '='
+        seriesSelected: '=',
+        isLinear: '='
       },
       link: function postLink(scope, element, attrs) {
 
@@ -57,14 +58,19 @@ angular.module('transcripticApp')
             height = full.height - margin.top - margin.bottom;
 
         // scaling functions
-        var x = d3.scale.ordinal().rangePoints([0, width]);
+
+        var xOrdinal = d3.scale.ordinal().rangePoints([0, width]);
+
+        var xLinear = d3.time.scale()
+          .range([0, width]);
+
+        //will get set dynamically to one of above, used in line function
+        var xScale;
 
         var y = d3.scale.linear()
           .range([height, 0]);
 
-        // Define the axes
-        var xAxis = d3.svg.axis().scale(x)
-          .orient("bottom").ticks(5);
+        // Define the y axis - we'll define the x axis dynamically dep on whether linear
 
         var yAxis = d3.svg.axis().scale(y)
           .orient("left").ticks(5);
@@ -98,11 +104,11 @@ angular.module('transcripticApp')
           .text("Growth Curve");
 
         //line generator (time / value for each well)
-        //todo - need to handle key not being present for given ordinal - shouldn't display line
+        //todo - need to handle key not being present for given ordinal - shouldn't display line? or just interpolate?
         var line = d3.svg.line()
           .interpolate('linear')
           .x(function(d, i) {
-            return d ? x(d.ordinal) : null;
+            return d ? xScale(d.ordinal) : null;
           })
           .y(function(d, i) {
             return d ? y(d.value) : 0;
@@ -115,13 +121,6 @@ angular.module('transcripticApp')
 
         //save for later....
         var series;
-
-        //voronoi for highlighting lines
-
-        var voronoi = d3.geom.voronoi()
-          .x(function(d) { return x(d.x); })
-          .y(function(d) { return y(d.y); })
-          .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
 
         /****
          Graph Updates
@@ -136,8 +135,16 @@ angular.module('transcripticApp')
                 return _.keys(data[t]);
               }))).values();
 
-          x.domain(timepoints);
           y.domain([0, d3.max(_.values(data), _.flow(_.values, _.partialRight(_.pluck, 'value'), d3.max) ) ]).nice();
+
+          //handle the x axis linear / ordinal
+          if (scope.isLinear) {
+            xScale = xLinear.domain(d3.extent(timepoints));
+          } else {
+            xScale = xOrdinal.domain(timepoints);
+          }
+          var xAxis = d3.svg.axis().scale(xScale)
+            .orient("bottom").ticks(5);
 
           xAxisEl.transition().call(xAxis);
           yAxisEl.transition().call(yAxis);

@@ -22,11 +22,13 @@
        ng-change="selectTimepoint(timepointSlider)"
        type="range"/>
 
+<tx-timepointgraph data="currentData"
+                   series-selected="currentWells"
+                   is-linear="loadedDemo"
+                   style="width: 900px; height: 600px; display: block;">
+</tx-timepointgraph>
+
 <tx-plate container="currentContainer"
           plate-data="currentData[currentTimepoint]"
           on-hover="hoverPlateWells($wells)"
           on-select="selectPlateWells($wells)"></tx-plate>
-
-<tx-timepointgraph data="currentData"
-                   series-selected="currentWells"
-                   style="width: 900px; height: 600px; display: block;"></tx-timepointgraph>

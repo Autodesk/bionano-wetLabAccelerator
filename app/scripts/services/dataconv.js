@@ -24,6 +24,9 @@ angular.module('transcripticApp')
      *      instruction : { operation : { object : <container> } } }
      *    }
      *  }
+     * @param {Boolean} useTimes Whether should use times.
+     * true - use `instruction.completed_at` for a linear scale
+     * false|null - to use dataref for ordinal scale
      * @returns {Object} Data in form:
      *
      *  {
@@ -40,7 +43,7 @@ angular.module('transcripticApp')
      *    }
      *  }
      */
-    function parseGrowthCurve (rundata) {
+    function parseGrowthCurve (rundata, useTimes) {
       var timepoints   = _.keys(rundata),
           datarefs     = _.pick(rundata, function (d) { return d.id; }),
           instructions = _.pick(rundata, function (d) { return d.instruction.id; }),
@@ -53,10 +56,12 @@ angular.module('transcripticApp')
         var container = ref.instruction.operation.object,
             wells = _.map(_.keys(ref.data), _.capitalize);
 
-        map[container][refkey] = _.zipObject(wells, _.map(ref.data, function (well, wellkey) {
+        var ordinal = useTimes ? new Date(ref.instruction.completed_at).valueOf() : refkey;
+
+        map[container][ordinal] = _.zipObject(wells, _.map(ref.data, function (well, wellkey) {
           return {
             key: wellkey.toUpperCase(),
-            ordinal: refkey,
+            ordinal: ordinal,
             value: well[0]
           };
         }));
