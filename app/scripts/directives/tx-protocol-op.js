@@ -7,9 +7,9 @@
  * # txOperation
  */
 angular.module('transcripticApp')
-  .directive('txOperation', function () {
+  .directive('txProtocolOp', function () {
     return {
-      templateUrl: 'views/tx-operation.html',
+      templateUrl: 'views/tx-protocol-op.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
 
