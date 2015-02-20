@@ -3,13 +3,14 @@
                    protocol-selected="restyleCtrl.currentProtocol">
 </tx-protocolslider>
 
-<div class="twocolumn">
-  <div class="sidepanel sidepanel-flex"
+<div class="flex-horizontal flex-grower">
+  <div class="sidepanel flex-vertical"
        resizeable
        resize-property="width"
        resize-position="right"
        resize-direction="horizontal"
-       style="max-width: 70vw; min-width: 10px;">
+       style="width: 400px; max-width: 70vw; min-width: 10px;">
+
     <tx-gallery class="flex-grower"></tx-gallery>
 
     <tx-inspector inspect="currentlySelected"
@@ -20,7 +21,7 @@
                   style="max-height: 70vh; min-height: 10px;">
     </tx-inspector>
   </div>
-  <div class="maincolumn maxout-height-scroll">
+  <div class="maincolumn flex-grower maxout-scroll-vertical">
     <tx-protocolnew protocol="restyleCtrl.currentProtocol">
     </tx-protocolnew>
   </div>

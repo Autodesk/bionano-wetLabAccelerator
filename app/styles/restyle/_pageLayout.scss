@@ -1,5 +1,3 @@
-//todo - abstract to broader flex classes
-
 body {
   display: flex;
   min-height: 100vh;
@@ -8,23 +6,12 @@ body {
   justify-content:center;
 
   header {
-
+    width: 100%;
+    align-self: flex-start;
   }
 
   main {
     flex-grow: 1;
-
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-
-    .topbar {
-      flex: none;
-    }
-
-    .twocolumn {
-      flex-grow: 1;
-    }
   }
 
   footer {
@@ -33,31 +20,26 @@ body {
   }
 }
 
-.twocolumn {
+.flex-horizontal,
+.flex-vertical {
   display: flex;
-  flex-direction: row;
   align-items: stretch;
-
-  .sidepanel {
-    width: $layout-side-width-default;
-  }
-
-  .maincolumn {
-    flex-grow: 1;
-  }
 }
 
-.sidepanel-flex {
-  display: flex;
+.flex-horizontal {
+  flex-direction: row;
+}
+
+.flex-vertical {
   flex-direction: column;
-  align-items: stretch;
 }
 
 .flex-grower {
   flex-grow: 1;
+  flex-basis: 0;
 }
 
-.maxout-height-scroll {
+.maxout-scroll-vertical {
   max-height: 100vh;
   overflow-y: scroll;
 }
