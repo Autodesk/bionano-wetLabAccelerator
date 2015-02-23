@@ -2,7 +2,6 @@
 <div class="panel panel-info" ng-controller="FirebaseLoginCtrl">
   <div class="panel-heading">Firebase</div>
   <form name="loginForm"
-        ng-submit="login(email, pass)"
         class="panel-body form-horizontal">
 
     <div class="form-group">
@@ -48,7 +47,7 @@
          ng-show="err"
          ng-bind="err"></div>
 
-    <div class="col-md-offset-2">
+    <div class="col-sm-offset-2">
       <div ng-show-auth>
         <button class="btn btn-danger"
                 ng-click="logout()">Logout</button>
