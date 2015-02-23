@@ -1,6 +1,6 @@
 {
   "name" : "Simple Transfer Protocol",
-  "variables": {},
+  "parameters": {},
   "metadata": {},
   "references": [
     {
@@ -20,7 +20,7 @@
   ],
   "groups": [
     {
-      "name": "",
+      "name": "Transfer Group",
       "variables": {},
       "metadata": {},
       "loop": 1,
@@ -96,7 +96,7 @@
       },
       "steps": [
         {
-          "operation": "abosrbance",
+          "operation": "absorbance",
           "requirements": {},
           "transforms": [
             {

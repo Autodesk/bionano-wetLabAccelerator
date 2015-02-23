@@ -11,6 +11,9 @@ angular.module('transcripticApp')
     return {
       templateUrl: 'views/tx-protocol-op.html',
       restrict: 'E',
+      scope: {
+        op: '=protocolStep'
+      },
       link: function postLink(scope, element, attrs) {
 
       }

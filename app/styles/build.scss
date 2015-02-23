@@ -18,11 +18,14 @@
 //components
 
 @import 'restyle/angularStyles';
-@import 'restyle/protocolSelector'; //deprecate?
+@import 'restyle/jsonEditor';
+@import 'restyle/glyphiconCircle';
+
+//protocol
+
 @import 'restyle/protocolHeader';
 @import 'restyle/protocolslider';
-@import 'restyle/jsonEditor';
-@import 'restyle/operation';
-@import 'restyle/operationGroup';
-@import 'restyle/welltip';
+@import 'restyle/protocolGroup';
+@import 'restyle/protocolOp';
 @import 'restyle/protocolResponse';
+@import 'restyle/welltip';

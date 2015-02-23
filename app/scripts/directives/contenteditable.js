@@ -5,6 +5,7 @@
  * @name transcripticApp.directive:contenteditable
  * @description
  * # contenteditable
+ * //todo - support a placeholder value as lighter text
  */
 angular.module('transcripticApp').directive('contenteditable', function() {
   return {
@@ -31,7 +32,12 @@ angular.module('transcripticApp').directive('contenteditable', function() {
       // Write data to the model
       function read(forceVal) {
         var text = angular.isString(forceVal) ? forceVal : element.text();
-        (lastVal != text) && ngModel.$setViewValue(text);
+        //don't want to set to nothing just because model didn't propagate
+        if (angular.isUndefined(lastVal) && !text) {
+          lastVal = "&nbsp;";
+          return;
+        }
+        (lastVal !== text) && ngModel.$setViewValue(text);
         lastVal = text;
       }
     }

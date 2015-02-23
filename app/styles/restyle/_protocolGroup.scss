@@ -1,0 +1,56 @@
+tx-protocol-group {
+
+  $border-color-inactive: $light-grey;
+  $border-inner: 1px solid $border-color-inactive;
+
+  $padding-internal: 4px;
+
+  display: block;
+  padding: 0 $padding-internal;
+  border: 2px solid $border-color-inactive;
+  margin: 0 0 $layout-margin-default;
+  font-size: 14px;
+
+  &.selected {
+    border-color: $primary;
+  }
+
+  .protocol-group-header,
+  .protocol-group-footer {
+    position: relative;
+    padding: $padding-internal 0;
+  }
+
+  .protocol-group-header {
+    line-height: 1em;
+  }
+
+  .protocol-group-main {
+    border-top: $border-inner;
+  }
+
+  .protocol-group-footer {
+    border-top: $border-inner;
+  }
+
+  //internals
+
+  .group-name {
+    min-height: 1em;
+    width: 300px;
+    padding: 0 0.5em;
+    display: inline-block;
+    -webkit-appearance: none;
+    outline: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .dropdown-menu {
+    margin: 0;
+
+    li {
+      padding-left: 0;
+    }
+  }
+}

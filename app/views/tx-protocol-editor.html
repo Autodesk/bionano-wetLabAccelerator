@@ -3,7 +3,9 @@
 </div>
 
 <div class="protocol-instructions">
-
+  <tx-protocol-group ng-repeat="group in editorCtrl.protocol.groups"
+                     protocol-group="group">
+  </tx-protocol-group>
 </div>
 
 <pre class="pre-scrollable"

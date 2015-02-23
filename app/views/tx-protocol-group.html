@@ -1,1 +1,41 @@
-<p>This is the tx-operationgroup view.</p>
+<div class="protocol-group-header">
+
+  <div class="glyphicon pull-left"
+       ng-click="isCollapsed = !isCollapsed"
+       ng-class="{'glyphicon-menu-down'  : !isCollapsed,
+                  'glyphicon-menu-right' : isCollapsed}"></div>
+
+  <div class="glyphicon-circle with-background pull-right"
+       ng-class="{'open' : dropdownOpen}">
+    <span class="glyphicon glyphicon-option-horizontal"
+          ng-click="dropdownOpen = !dropdownOpen"></span>
+
+    <ul class="dropdown-menu">
+      <li><a>Duplicate Step</a></li>
+      <li><a>Save as Template</a></li>
+      <li><a>Delete Step</a></li>
+    </ul>
+  </div>
+
+  <input class="group-name"
+         placeholder="Group Name"
+         ng-model="group.name">
+</div>
+<div class="protocol-group-main"
+     ng-hide="isCollapsed">
+
+  <tx-protocol-op ng-repeat="step in group.steps"
+                  protocol-step="step">
+  </tx-protocol-op>
+
+</div>
+<div class="protocol-group-footer">
+
+  <div class="protocol-group-footer-actions clearfix">
+    <div class="glyphicon glyphicon-edit pull-left"></div>
+
+    <div class="glyphicon glyphicon-menu-hamburger pull-right"
+         ng-click="logCollapsed = !logCollapsed"></div>
+  </div>
+
+</div>

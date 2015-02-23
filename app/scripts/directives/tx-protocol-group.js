@@ -11,6 +11,9 @@ angular.module('transcripticApp')
     return {
       templateUrl: 'views/tx-protocol-group.html',
       restrict: 'E',
+      scope: {
+        group: '=protocolGroup'
+      },
       link: function postLink(scope, element, attrs) {
 
       }

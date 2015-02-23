@@ -3,8 +3,9 @@
      popover-trigger="click"
      popover-append-to-body="true"
      popover-placement="bottom">
-  <span class="protocol-name" ng-bind="actionCtrl.protocol.name"></span>
-  <div class="protocol-dropdown-trigger">
+  <span class="protocol-name"
+        ng-bind="actionCtrl.protocol.name"></span>
+  <div class="glyphicon-circle">
     <span class="glyphicon glyphicon-option-horizontal"></span>
   </div>
 </div>
@@ -28,7 +29,7 @@
             tooltip="Download Protocol"
             tooltip-append-to-body="true"
             tx-downloadjson
-            filename="{{(actionCtrl.protocol.meta.name ? actionCtrl.protocol.meta.name : 'protocol') + '.json'}}"
+            filename="{{(actionCtrl.protocol.name ? actionCtrl.protocol.name : 'protocol') + '.json'}}"
             download-model="actionCtrl.protocol">
       <span class="glyphicon glyphicon-save-file"></span>
     </button>

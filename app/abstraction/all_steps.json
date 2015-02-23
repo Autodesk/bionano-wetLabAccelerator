@@ -1,0 +1,33 @@
+{
+  "groups": [
+    {
+      "name": "Cover Example",
+      "metadata": {
+        "description": ""
+      },
+      "steps": [
+        {
+          "operation": "cover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "growth_plate_1"
+            },
+            {
+              "name": "lid",
+              "type": "string",
+              "value": "standard"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
