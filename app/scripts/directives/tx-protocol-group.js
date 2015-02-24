@@ -14,7 +14,9 @@ angular.module('transcripticApp')
       scope: {
         group: '=protocolGroup'
       },
-      link: function postLink(scope, element, attrs) {
+      bindToController: true,
+      controllerAs: 'groupCtrl',
+      controller: function ($scope, $element, $attrs) {
 
       }
     };

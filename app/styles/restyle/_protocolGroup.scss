@@ -3,7 +3,7 @@ tx-protocol-group {
   $border-color-inactive: $light-grey;
   $border-inner: 1px solid $border-color-inactive;
 
-  $padding-internal: 4px;
+  $padding-internal: $layout-padding-sm;
 
   display: block;
   padding: 0 $padding-internal;
@@ -31,6 +31,10 @@ tx-protocol-group {
 
   .protocol-group-footer {
     border-top: $border-inner;
+
+    &-actions {
+      padding-bottom: $padding-internal;
+    }
   }
 
   //internals
@@ -39,11 +43,6 @@ tx-protocol-group {
     min-height: 1em;
     width: 300px;
     padding: 0 0.5em;
-    display: inline-block;
-    -webkit-appearance: none;
-    outline: 0;
-    border: 0;
-    background: transparent;
   }
 
   .dropdown-menu {
@@ -52,5 +51,11 @@ tx-protocol-group {
     li {
       padding-left: 0;
     }
+  }
+
+  pre {
+    font-size: 13px;
+    background-color: $light-grey;
+    border-radius: 0;
   }
 }

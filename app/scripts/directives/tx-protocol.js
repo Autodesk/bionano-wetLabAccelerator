@@ -27,7 +27,7 @@ angular.module('transcripticApp')
           scope.$broadcast('instruction:toggleVisible', scope.allStepsVisibleState)
         };
 
-        scope.instructionOptions = Object.keys(InstructionOptions);
+        scope.instructionOptions = _.keys(InstructionOptions);
 
         //sortable options
 

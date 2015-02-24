@@ -1,16 +1,34 @@
-.protocol-header {
-
-  padding: 5px 0;
+tx-protocol-actions {
+  display: block;
+  position: relative;
+  padding: $layout-padding-md $layout-padding-sm;
 
   .protocol-title {
-
+    position: relative;
     display: block;
     text-align: center;
 
-    .protocol-name {}
+    .dropdown-menu {
+      left: 50%;
+      width: 500px;
+      max-width: 100%;
+      transform: translateX(-50%);
+      margin: -1px 0 0;
+    }
   }
 
   .protocol-actions {
+    &-container {
+      @extend .flex-horizontal;
+      justify-content: space-between;
+    }
 
+    &-left {
+      align-self: flex-start;
+    }
+
+    &-right {
+      align-self: flex-end;
+    }
   }
 }

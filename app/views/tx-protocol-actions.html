@@ -1,16 +1,19 @@
-<div class="protocol-title"
-     popover="todo! - ability to change name, description, tags, etc."
-     popover-trigger="click"
-     popover-append-to-body="true"
-     popover-placement="bottom">
-  <span class="protocol-name"
-        ng-bind="actionCtrl.protocol.name"></span>
-  <div class="glyphicon-circle">
-    <span class="glyphicon glyphicon-option-horizontal"></span>
+<div class="protocol-title" dropdown>
+  <div dropdown-toggle>
+    <span class="protocol-name"
+          ng-bind="actionCtrl.protocol.name"></span>
+
+    <div class="glyphicon-circle">
+      <span class="glyphicon glyphicon-option-horizontal"></span>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <p>Todo - name, metadata, tags, sharing</p>
   </div>
 </div>
-<div class="protocol-actions clearfix">
-  <div class="btn-group pull-left">
+
+<div class="protocol-actions-container">
+  <div class="btn-group protocol-actions-left">
     <button class="btn btn-default btn-sm"
             tooltip="Verify Protocol"
             tooltip-append-to-body="true">
@@ -22,7 +25,8 @@
       <span class="glyphicon glyphicon-share"></span>
     </button>
   </div>
-  <div class="btn-group pull-right">
+
+  <div class="btn-group protocol-actions-right">
     <btn-delete delete-text="Delete Protocol"
                 on-delete="onDelete()"></btn-delete>
     <button class="btn btn-default btn-sm"
@@ -42,4 +46,5 @@
       <span class="glyphicon glyphicon-cloud-upload"></span>
     </button>
   </div>
+
 </div>

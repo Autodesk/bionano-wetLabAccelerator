@@ -11,10 +11,16 @@ angular.module('transcripticApp')
     return {
       templateUrl: 'views/tx-protocol-op.html',
       restrict: 'E',
+      require: '^txProtocolGroup',
       scope: {
         op: '=protocolStep'
       },
-      link: function postLink(scope, element, attrs) {
+      bindToController: true,
+      controllerAs: 'opCtrl',
+      controller: function ($scope, $element, $attrs) {
+
+      },
+      link: function (scope, element, attrs, groupCtrl) {
 
       }
     };

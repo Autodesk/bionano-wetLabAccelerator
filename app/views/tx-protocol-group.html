@@ -6,9 +6,9 @@
                   'glyphicon-menu-right' : isCollapsed}"></div>
 
   <div class="glyphicon-circle with-background pull-right"
-       ng-class="{'open' : dropdownOpen}">
+       dropdown>
     <span class="glyphicon glyphicon-option-horizontal"
-          ng-click="dropdownOpen = !dropdownOpen"></span>
+          dropdown-toggle></span>
 
     <ul class="dropdown-menu">
       <li><a>Duplicate Step</a></li>
@@ -17,14 +17,15 @@
     </ul>
   </div>
 
-  <input class="group-name"
+  <input class="group-name input-unstyled"
          placeholder="Group Name"
-         ng-model="group.name">
+         ng-model="groupCtrl.group.name"
+         ng-model-options="{updateOn: 'blur'}">
 </div>
 <div class="protocol-group-main"
      ng-hide="isCollapsed">
 
-  <tx-protocol-op ng-repeat="step in group.steps"
+  <tx-protocol-op ng-repeat="step in groupCtrl.group.steps"
                   protocol-step="step">
   </tx-protocol-op>
 
@@ -32,10 +33,20 @@
 <div class="protocol-group-footer">
 
   <div class="protocol-group-footer-actions clearfix">
-    <div class="glyphicon glyphicon-edit pull-left"></div>
+
+    <div class="glyphicon glyphicon-edit pull-left"
+         ng-click="jsonEditing = !jsonEditing"></div>
 
     <div class="glyphicon glyphicon-menu-hamburger pull-right"
          ng-click="logCollapsed = !logCollapsed"></div>
   </div>
+
+  <pre json-editor
+       ng-if="jsonEditing"
+       contenteditable
+       json-editor-active="{{jsonEditing}}"
+       name="ProtocolGroupEditor"
+       ng-model="groupCtrl.group"
+       ng-model-options="{updateOn: 'blur'}"></pre>
 
 </div>

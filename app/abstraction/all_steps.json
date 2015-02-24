@@ -3,7 +3,10 @@
     {
       "name": "Cover Example",
       "metadata": {
-        "description": ""
+        "description": "Given a plate myPlate, covers with standard lid."
+      },
+      "inputs" : {
+        "myPlate" : "container"
       },
       "steps": [
         {
@@ -18,7 +21,7 @@
             {
               "name": "object",
               "type": "container",
-              "value": "growth_plate_1"
+              "value": "${myPlate}"
             },
             {
               "name": "lid",

@@ -39,6 +39,18 @@ body {
   flex-basis: 0;
 }
 
+.flex-align-end {
+  align-self: flex-end;
+}
+
+.flex-align-start {
+  align-self: flex-start;
+}
+
+.flex-align-center {
+  align-self: center;
+}
+
 .maxout-scroll-vertical {
   max-height: 100vh;
   overflow-y: scroll;
