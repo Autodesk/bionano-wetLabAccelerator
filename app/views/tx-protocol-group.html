@@ -18,9 +18,9 @@
   </div>
 
   <input class="group-name input-unstyled"
+         auto-grow
          placeholder="Group Name"
-         ng-model="groupCtrl.group.name"
-         ng-model-options="{updateOn: 'blur'}">
+         ng-model="groupCtrl.group.name">
 </div>
 <div class="protocol-group-main"
      ng-hide="isCollapsed">
@@ -30,7 +30,8 @@
   </tx-protocol-op>
 
 </div>
-<div class="protocol-group-footer">
+<div class="protocol-group-footer"
+     ng-hide="isCollapsed">
 
   <div class="protocol-group-footer-actions clearfix">
 
