@@ -173,7 +173,7 @@ angular.module('transcripticApp')
               yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top,
               wellValue = _.isEmpty(scope.plateData) || _.isUndefined(scope.plateData[d]) ?
                 null :
-                +scope.plateData[d].value.toFixed(2);
+                (+(scope.plateData[d].value)).toFixed(2);
 
           //Update the tooltip position and value
           tooltipEl.attr({

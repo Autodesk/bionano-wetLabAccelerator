@@ -29,14 +29,24 @@ tx-timepointgraph {
     }
   }
 
-  .overlay {
-    fill: none;
-    pointer-events: all;
-  }
+  .voronoi {
 
-  .voronoi path {
-    fill: none;
-    pointer-events: all;
-    stroke: red; //debugging
+    path {
+      stroke: none;
+      fill: transparent;
+
+      &.hidden {
+        stroke: none !important;
+        pointer-events: none;
+      }
+    }
+
+    &.visible {
+      path {
+        stroke: rgba(200,100,100,0.5);
+        fill: rgba(0,0,0,0.1);
+        stroke-width: 0.5px;
+      }
+    }
   }
 }

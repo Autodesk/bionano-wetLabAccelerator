@@ -102,7 +102,7 @@ angular.module('transcripticApp')
         _.map( wellArray, function (well) {
           return {
             key  : well,
-            value: Math.random(),
+            value: +(Math.random().toFixed(2)),
             ordinal : mapVal
           }
         })
