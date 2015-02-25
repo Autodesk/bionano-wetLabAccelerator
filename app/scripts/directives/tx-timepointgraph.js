@@ -21,6 +21,9 @@
  *
  * Timepoints may be ordinal or linear values (defaulting to ordinal), use attr isLinear to specify.
  * If the axis is linear, timevalue must be coercible to a Date
+ *
+ *
+ //todo - need to handle key not being present for given ordinal - shouldn't display line? or just interpolate?
  */
 angular.module('transcripticApp')
   .directive('txTimepointgraph', function () {
@@ -38,7 +41,7 @@ angular.module('transcripticApp')
         scope.$watch('data', drawGraph);
         scope.$watch('graphMeta', updateMeta, true);
 
-        scope.$watch('seriesSelected', highlightSeries);
+        scope.$watch('seriesSelected', handleSeriesSelection);
 
         /****
          Graph Construction
@@ -117,32 +120,25 @@ angular.module('transcripticApp')
         }
 
         //line generator (time / value for each well)
-        //todo - need to handle key not being present for given ordinal - shouldn't display line? or just interpolate?
         var line = d3.svg.line()
           .interpolate('linear')
-          .x(getXScaled)
-          .y(getYScaled);
+          .x(function (d) { return d.scaled.x; })
+          .y(function (d) { return d.scaled.y; });
 
         //series generator (each well)
         var seriesContainer = chart.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
           .attr("class", "series");
 
-        //save for later....
-        var series;
-
         //voronoi setup
 
         var voronoi = d3.geom.voronoi()
-          .x(function (d, i) {
-            //console.log(d, i);
-            return getXScaled(d);
-          })
-          .y(getYScaled)
+          .x(function (d) { return d.scaled.x; })
+          .y(function (d) { return d.scaled.y; })
           .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
 
         var voronoiFocus = chart.append("g")
-          //.attr("transform", "translate(-100,-100)")
+          .attr("transform", "translate(-100,-100)")
           .attr("class", "focus");
 
         voronoiFocus.append("circle")
@@ -154,21 +150,17 @@ angular.module('transcripticApp')
         var voronoiGroup = chart.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
           .attr("class", "voronoi");
+        //add class 'visible' for debugging
 
-        //todo - should bind element to data, and use directly
+        //todo - allow highlight of line by mouseover directly rather than just vonoroi
         function voronoiMouseover (d) {
-          //console.log(d);
-
           var point = d.point;
-          var pointkey = d.point.key;
 
           series.classed('selected', false);
-          var line = series.filter(function (sel) { return sel.key == pointkey })
-                .classed('selected', true),
-              lineEl = line[0][0];
-          lineEl.parentNode.appendChild(lineEl);
+          d3.select(point.line).classed('selected', true);
+          point.line.parentNode.appendChild(point.line);
 
-          voronoiFocus.attr("transform", "translate(" + ( margin.left + getXScaled(point) ) + "," + ( margin.top + getYScaled(point) ) + ")");
+          voronoiFocus.attr("transform", "translate(" + ( margin.left + point.scaled.x ) + "," + ( margin.top + point.scaled.y ) + ")");
           voronoiFocus.select("text").text(point.key + ' - ' + parseFloat(point.value, 10).toFixed(3));
         }
 
@@ -177,7 +169,10 @@ angular.module('transcripticApp')
           voronoiFocus.attr("transform", "translate(-100,-100)");
         }
 
+        //save for later....
+        var series;
         var voronoiSeries;
+        var seriesData;
 
         /****
          Graph Updates
@@ -187,15 +182,11 @@ angular.module('transcripticApp')
 
           if (!data) return;
 
-          //todo - use same objects for series + voronoi so that can share data between each
-          var timepoints = _.keys(data),
-              allDataFlattened = _.flatten(_.map(data, _.values)),
-              rolledByWell = d3.nest()
-                .key(function (d) { return d.key; })
-                .entries(allDataFlattened),
-              wells = _.pluck(rolledByWell, 'key');
+          var timepoints = _.keys(data);
 
-          y.domain([0, d3.max( _.pluck(allDataFlattened, 'value') ) ]).nice();
+          seriesData = _.flatten(_.map(data, _.values));
+
+          y.domain([0, d3.max( _.pluck(seriesData, 'value') ) ]).nice();
 
           //handle the x axis linear / ordinal
           if (scope.isLinear) {
@@ -209,27 +200,32 @@ angular.module('transcripticApp')
           xAxisEl.transition().call(xAxis);
           yAxisEl.transition().call(yAxis);
 
-
-          var allDataUnique = d3.nest()
-            .key(function(d) { return getXScaled(d) + "," + getYScaled(d); })
-            .rollup(_.first)
-            .entries(allDataFlattened)
-            .map(function(d) { return d.values });
-
-          //console.log(allDataUnique);
-
+          var rolledData = d3.nest()
+            .key(function (d) { return d.key; })
+            .rollup(function (vals) {
+              _.map(vals, function (val) {
+                val.scaled = {
+                  x : getXScaled(val),
+                  y : getYScaled(val)
+                };
+              });
+              return vals;
+            })
+            .entries(seriesData);
 
           //Series lines
 
           series = seriesContainer.selectAll(".line")
-            .data(rolledByWell, function (d) { return d.key });
+            .data(rolledData, function (d) { return d.key });
 
           //ENTER
           series.enter().append("svg:path")
             .attr('d', function (d, i) {
-              d.line = this;
-              d.path = line(d.values);
-              return d.path;
+              //assign the line reference to each data point (rather than array object) so easily exposed for the voronoi
+              _.map(d.values, function (val) {
+                val.line = this;
+              }, this);
+              return line(d.values);
             })
             .attr('class', 'line');
 
@@ -241,8 +237,7 @@ angular.module('transcripticApp')
           //EXIT
           series.exit().remove();
 
-          //VORONOI
-          drawVoronoi(allDataUnique);
+          drawVoronoi()
         }
 
         function updateMeta (newval) {
@@ -269,47 +264,61 @@ angular.module('transcripticApp')
           });
         }
 
-        function highlightSeries (selectedWells, oldval) {
-          if (!selectedWells || !selectedWells.length) {
-            series.classed('hidden', false);
-          } else {
-            var map = _.zipObject(selectedWells, true); //note - sets to undefined but doesn't matter
-            series.classed('hidden', function (d) { return ! _.has(map, d.key) });
-          }
-
-          drawVoronoi(null, selectedWells);
+        function handleSeriesSelection (selectedWells) {
+          var map = _.zipObject(selectedWells, true); //note - sets to undefined but doesn't matter
+          highlightSeries(map);
+          drawVoronoi(map);
         }
 
-        function drawVoronoi (data, selectedWells) {
+        function highlightSeries (wellMap, oldval) {
+          if (_.keys(wellMap).length < 1) {
+            series.classed('hidden', false);
+          } else {
+            series.classed('hidden', function (d) { return ! _.has(wellMap, d.key) });
+          }
+        }
 
-          if (data && data.length) {
+        function drawVoronoi (wellMap) {
+
+          if (seriesData) {
+
+            console.log(seriesData, wellMap);
+
+            var filteredSeriesData = !!_.keys(wellMap).length ?
+              _.filter(seriesData, function (datum) { return _.has(wellMap, datum.key) }) :
+              seriesData;
+
+            var allDataUnique = d3.nest()
+              .key(function(d) { return d.scaled.x + "," + d.scaled.y })
+              .rollup(_.first)
+              .entries(filteredSeriesData)
+              .map(function(d) { return d.values });
+
             voronoiSeries = voronoiGroup.selectAll("path")
-              .data(voronoi(data));
+              .data(voronoi(allDataUnique));
 
             //exit first for perf
             voronoiSeries.exit().remove();
 
             voronoiSeries.enter().append("svg:path")
               .attr('d', function (d) {
-                console.log(d);
-                console.log("M" + d.join("L") + "Z");
+                //console.log(d);
+                //console.log("M" + d.join("L") + "Z");
                 return "M" + d.join("L") + "Z";
               })
-              //.datum(function(d) { return d.point; })
               .on("mouseover", voronoiMouseover)
               .on("mouseout", voronoiMouseout);
 
+            //update
             voronoiSeries.attr('d', function (d) {
-              //console.log(d);
               return "M" + d.join("L") + "Z";
             });
           }
 
-          if (!selectedWells || !selectedWells.length) {
+          if (_.keys(wellMap).length < 1) {
             voronoiSeries.classed('hidden', false);
           } else {
-            var map = _.zipObject(selectedWells, true); //note - sets to undefined but doesn't matter
-            voronoiSeries.classed('hidden', function (d) { return ! _.has(map, d.point.key) });
+            voronoiSeries.classed('hidden', function (d) { return ! _.has(wellMap, d.point.key) });
           }
         }
       }
