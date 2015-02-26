@@ -16,8 +16,6 @@ angular.module('transcripticApp')
 
         var minWidth = parseInt(attr.autoGrow, 10) || parseInt(element.css('minWidth'), 10) || 100;
 
-        console.log(minWidth);
-
         var $shadow = angular.element('<span></span>').css({
           'position': 'absolute',
           'top': '-10000px',

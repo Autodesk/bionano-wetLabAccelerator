@@ -4,14 +4,32 @@
  * @ngdoc factory
  * @name transcripticApp.autoprotocol
  * @description
- * # autoprotocol
- * Factory in the transcripticApp.
+ * Service converting between abstraction and
  */
 angular.module('transcripticApp')
-  .factory('autoprotocol', function () {
+  .service('Autoprotocol', function () {
 
-    var refs = {};
-    var steps = [];
+    //convert abstraction to autoprotocol
+    function fromAbstraction (abst) {
+      //todo
+      return {
+        "autoprotocol" : "forthcoming!"
+      };
+    }
 
+    //convert autoprotocol to abstraction
+    function toAbstraction (auto) {
 
+    }
+
+    //basic check to see if json looks to be an abstraction
+    function isAbstraction (json) {
+
+    }
+
+    return {
+      fromAbstraction : fromAbstraction,
+      toAbstraction : toAbstraction,
+      isAbstraction : isAbstraction
+    }
   });

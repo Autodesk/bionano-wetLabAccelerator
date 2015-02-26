@@ -1,8 +1,18 @@
+<div class="protocol-inputs">
+
+</div>
+
+<div class="protocol-parameters">
+
+</div>
+
 <div class="protocol-references">
 
 </div>
 
-<div class="protocol-instructions">
+<div class="protocol-instructions"
+     ui-sortable="editorCtrl.groupSortableOptions"
+     ng-model="editorCtrl.protocol.groups">
   <tx-protocol-group ng-repeat="group in editorCtrl.protocol.groups"
                      protocol-group="group">
   </tx-protocol-group>

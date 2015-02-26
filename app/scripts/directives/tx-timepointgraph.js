@@ -296,8 +296,6 @@ angular.module('transcripticApp')
 
             voronoiSeries.enter().append("svg:path")
               .attr('d', function (d) {
-                console.log(d);
-                //console.log("M" + d.join("L") + "Z");
                 return "M" + d.join("L") + "Z";
               })
               .on("mouseover", voronoiMouseover)

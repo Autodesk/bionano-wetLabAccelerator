@@ -19,7 +19,13 @@ angular.module('transcripticApp')
       bindToController: true,
       controllerAs: 'editorCtrl',
       controller: function ($scope, $element, $attrs) {
+        var self = this;
 
+        self.groupSortableOptions = {
+          axis: 'y',
+          scroll: true,
+          handle: '.protocol-group-header'
+        };
       },
       link: function postLink(scope, element, attrs) {
 
