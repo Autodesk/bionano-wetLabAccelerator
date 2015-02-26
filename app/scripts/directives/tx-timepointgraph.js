@@ -220,17 +220,13 @@ angular.module('transcripticApp')
 
           //ENTER
           series.enter().append("svg:path")
-            .attr('d', function (d, i) {
-              //assign the line reference to each data point (rather than array object) so easily exposed for the voronoi
-              _.map(d.values, function (val) {
-                val.line = this;
-              }, this);
-              return line(d.values);
-            })
             .attr('class', 'line');
 
           //UPDATE - only updated values
           series.transition().attr('d', function (d) {
+            _.map(d.values, function (val) {
+              val.line = this;
+            }, this);
             return line(d.values);
           });
 
@@ -282,9 +278,7 @@ angular.module('transcripticApp')
 
           if (seriesData) {
 
-            console.log(seriesData, wellMap);
-
-            var filteredSeriesData = !!_.keys(wellMap).length ?
+            var filteredSeriesData = !! _.keys(wellMap).length ?
               _.filter(seriesData, function (datum) { return _.has(wellMap, datum.key) }) :
               seriesData;
 
@@ -302,7 +296,7 @@ angular.module('transcripticApp')
 
             voronoiSeries.enter().append("svg:path")
               .attr('d', function (d) {
-                //console.log(d);
+                console.log(d);
                 //console.log("M" + d.join("L") + "Z");
                 return "M" + d.join("L") + "Z";
               })
