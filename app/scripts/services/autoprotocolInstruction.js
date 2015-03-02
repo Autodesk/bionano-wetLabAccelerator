@@ -51,25 +51,17 @@ angular.module('transcripticApp')
       }
 
       var volume = pluckFieldValue(op.fields, 'volume'),
-          intVolume = interpolateValue(volume, params),
           toContainer = pluckFieldValue(op.fields, 'to_container'),
-          intToContainer = interpolateValue(toContainer, params),
           fromContainer = pluckFieldValue(op.fields, 'from_container'),
-          intFromContainer = interpolateValue(fromContainer, params),
           mix_after = AutoprotocolType.mixwrap(pluckFieldValue(op.fields, 'mix_after'));
-      //todo - handle interpolation of mixwrap. now assuming no variables
 
       //assuming that to_wells is always greater than from_wells
       _.forEach(toWells, function (toWell, index) {
 
-        //unnecessary so long as using UI, but for safety....
-        var intToWell = interpolateValue(toWell, params),
-            intFromWell = interpolateValue(fromWells[index], params);
-
         transfers.push({
-          volume: intVolume,
-          to: ConversionUtils.joinContainerWell(intToWell, intToContainer),
-          from: ConversionUtils.joinContainerWell(intFromWell, intFromContainer),
+          volume: volume,
+          to: ConversionUtils.joinContainerWell(toWell, toContainer),
+          from: ConversionUtils.joinContainerWell(fromWells[index], fromContainer),
           mix_after: mix_after
         });
       });

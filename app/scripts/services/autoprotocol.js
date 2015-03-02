@@ -7,7 +7,7 @@
  * Service converting between abstraction and
  */
 angular.module('transcripticApp')
-  .service('Autoprotocol', function (AutoprotocolInstruction) {
+  .service('Autoprotocol', function (AutoprotocolInstruction, ConversionUtils) {
 
     function convertInstruction (inst, params) {
       //todo - handle validation of each field too?
@@ -15,10 +15,11 @@ angular.module('transcripticApp')
       var converter = AutoprotocolInstruction[inst.operation];
 
       if (!_.isFunction(converter)) {
-        console.log('converter doesn\'t exist for ' + inst.operation);
+        console.warn('converter doesn\'t exist for ' + inst.operation);
         return null;
       }
 
+      console.log(params, converter);
       return converter(inst, params);
     }
 
@@ -29,21 +30,10 @@ angular.module('transcripticApp')
       _.times(group.loop || 1, function (loopIndex) {
         _.forEach(group.steps, function (step, stepIndex) {
           //var stepIndex = (loopIndex * group.steps.length) + stepIndex;
-          var extendedParams = _.assign({index : loopIndex}, params);
-          unwrapped.push(convertInstruction(step, extendedParams));
+          unwrapped.push(convertInstruction(step, {index : loopIndex}));
         });
       });
       return unwrapped;
-    }
-
-
-    //todo - would be great if this could recursively handle objects, and just post-process the protocol afterwars, that way we only need to interpolate ${index} and everything can be done afterwards. requires the template function will only interpolate ${index} and leave everything else intact. Then don;t need to pass params down through each function.
-    function interpolateValue (value, params) {
-      return _.template(value)(params);
-    }
-
-    function interpolateObject(obj, params) {
-      //todo
     }
 
     function makeReference (ref) {
@@ -78,11 +68,15 @@ angular.module('transcripticApp')
       //each group gives an array, need to concat later (_.flatten)
       var instructions = _.map(abst.groups, _.partialRight(unwrapGroup, abst.parameters) );
 
+      console.log('interpolating everything');
+
+      var interpolatedInstructions = ConversionUtils.interpolateObject(_.flatten(instructions));
+
       // todo - post-process - object wide interpolation
 
       return {
         refs : references,
-        instructions : _.flatten(instructions)
+        instructions : interpolatedInstructions
       };
     }
 
