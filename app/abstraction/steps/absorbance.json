@@ -1,0 +1,54 @@
+{
+  "name": "Example absorbance",
+  "metadata": {
+    "description": "Measure absorbance of a specified wavelength (between 300 nm - 1000 nm)"
+  },
+  "loop": 1,
+  "steps": [
+    {
+      "operation": "absorbance",
+      "requirements": {},
+      "transformations": [
+        {
+          "container": "object",
+          "wells": "wells"
+        }
+      ],
+      "fields": [
+        {
+          "name": "dataref",
+          "type": "string",
+          "value": "dataref_${index}"
+        },
+        {
+          "name": "object",
+          "type": "container",
+          "value": "growth_plate_1"
+        },
+        {
+          "name": "wells",
+          "type": "well",
+          "isArray": true,
+          "value": [
+            "A1",
+            "A2"
+          ]
+        },
+        {
+          "name": "num_flashes",
+          "type": "integer",
+          "value": 25
+        },
+        {
+          "name": "wavelength",
+          "type": "length",
+          "value": "600:nanometer",
+          "inputAttrs" : {
+            "min" : 300,
+            "max" : 1000
+          }
+        }
+      ]
+    }
+  ]
+}

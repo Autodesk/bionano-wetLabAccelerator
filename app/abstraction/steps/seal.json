@@ -1,0 +1,31 @@
+{
+  "groups": [
+    {
+      "name": "Seal Example",
+      "metadata": {
+        "description": "Seal a container"
+      },
+      "inputs" : {
+        "myPlate" : "container"
+      },
+      "steps": [
+        {
+          "operation": "seal",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "${myPlate}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

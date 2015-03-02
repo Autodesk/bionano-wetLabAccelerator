@@ -1,8 +1,5 @@
 {
   "name" : "Simple Transfer Protocol",
-  "inputs" : {},
-  "parameters": {},
-  "metadata": {},
   "references": [
     {
       "name": "growth_plate",
@@ -19,10 +16,19 @@
       "storage": "cold_20"
     }
   ],
+  "inputs": {
+    "myPlate" : "container",
+    "myAbsorbance" : "wavelength"
+  },
+  "parameters" : {
+    "myPlate" : "ecoli_container",
+    "myAbsorbance" : "600:nanometer"
+  },
+  "metadata": {},
   "groups": [
     {
       "name": "Transfer Group",
-      "inputs": {},
+      "inputs" : {},
       "metadata": {},
       "loop": 1,
       "steps": [
@@ -72,19 +78,13 @@
               ]
             },
             {
-              "name": "mix_after_volume",
-              "type": "volume",
-              "value": "10.0:microliter"
-            },
-            {
-              "name": "mix_after_repetitions",
-              "type": "integer",
-              "value": 5
-            },
-            {
-              "name": "mix_after_speed",
-              "type": "speed",
-              "value": "100:microliter/second"
+              "name": "mix_after",
+              "type": "mixwrap",
+              "value": {
+                "volume" : "10.0:microliter",
+                "repetitions" : 5,
+                "speed" : "100:microliter/second"
+              }
             }
           ]
         }
@@ -93,9 +93,40 @@
     {
       "loop": 3,
       "metadata" : {
-        "description" : "Handled by Tecan Infinite 200M instruments. Bandwidth for wavelength selection in all of these instructions is < 5 nm for λ ≤ 315 nm and < 9 nm for λ > 315 nm."
+        "description" : "Records incubates and take absorbance measurement"
       },
       "steps": [
+        {
+          "operation": "incubate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "growth_plate_1"
+            },
+            {
+              "name": "where",
+              "type": "temperature",
+              "value": "warm_37"
+            },
+            {
+              "name": "duration",
+              "type": "string",
+              "value": "60:minute"
+            },
+            {
+              "name": "shaking",
+              "type": "boolean",
+              "value": true
+            }
+          ]
+        },
         {
           "operation": "absorbance",
           "requirements": {},

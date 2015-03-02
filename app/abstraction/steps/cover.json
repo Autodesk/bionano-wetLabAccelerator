@@ -3,7 +3,7 @@
     {
       "name": "Cover Example",
       "metadata": {
-        "description": "Given a plate myPlate, covers with standard lid."
+        "description": "Cover a plate with a specified lid"
       },
       "inputs" : {
         "myPlate" : "container"
@@ -25,7 +25,12 @@
             },
             {
               "name": "lid",
-              "type": "string",
+              "type": "options",
+              "options" : [
+                "standard",
+                "universal",
+                "low_evaporation"
+              ],
               "value": "standard"
             }
           ]

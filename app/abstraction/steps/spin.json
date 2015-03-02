@@ -1,0 +1,41 @@
+{
+  "groups": [
+    {
+      "name": "Cover Example",
+      "inputs" : {
+        "myPlate" : "growth_plate"
+      },
+      "metadata": {
+        "description": "Centrifuge a plate"
+      },
+      "steps": [
+        {
+          "operation": "spin",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "${myPlate}"
+            },
+            {
+              "name": "acceleration",
+              "type": "volume",
+              "value": "10:meter/second^2"
+            },
+            {
+              "name": "duration",
+              "type": "duration",
+              "value": "5:minute"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "Luminescence example",
+  "metadata": {
+    "description": "Measure luminescence between 380nm - 600 nm"
+  },
+  "loop": 1,
+  "steps": [
+    {
+      "operation": "luminescence",
+      "requirements": {},
+      "transformations": [
+        {
+          "container": "object",
+          "wells": "wells"
+        }
+      ],
+      "fields": [
+        {
+          "name": "dataref",
+          "type": "string",
+          "value": "dataref_${index}"
+        },
+        {
+          "name": "object",
+          "type": "container",
+          "value": "growth_plate_1"
+        },
+        {
+          "name": "wells",
+          "type": "well",
+          "isArray": true,
+          "value": [
+            "A1",
+            "A2"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "Incubation Step",
+  "metadata": {
+    "description": "Incubate a container at a given temperature for a specified amount of time"
+  },
+  "loop": 12,
+  "steps": [
+    {
+      "operation": "incubate",
+      "requirements": {},
+      "transforms": [
+        {
+          "container": "object"
+        }
+      ],
+      "fields": [
+        {
+          "name": "object",
+          "type": "container",
+          "value": "growth_plate_1"
+        },
+        {
+          "name": "where",
+          "type": "temperature",
+          "value": "warm_37"
+        },
+        {
+          "name": "duration",
+          "type": "string",
+          "value": "60:minute"
+        },
+        {
+          "name": "shaking",
+          "type": "boolean",
+          "value": true
+        }
+      ]
+    }
+  ]
+}

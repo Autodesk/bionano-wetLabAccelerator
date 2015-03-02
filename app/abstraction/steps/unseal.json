@@ -1,0 +1,31 @@
+{
+  "groups": [
+    {
+      "name": "Unseal Example",
+      "metadata": {
+        "description": "Unseal a container"
+      },
+      "inputs" : {
+        "myPlate" : "container"
+      },
+      "steps": [
+        {
+          "operation": "unseal",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "${myPlate}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

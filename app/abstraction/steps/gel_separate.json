@@ -1,0 +1,70 @@
+{
+  "groups": [
+    {
+      "name": "Example Electrophoresis",
+      "metadata": {
+        "description": "Runs a single gel electrophoresis lane, using a dry gel"
+      },
+      "inputs" : {
+        "myPlate" : "container"
+      },
+      "steps": [
+        {
+          "operation": "cover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "dataref",
+              "type": "string",
+              "value": "myGelRun"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": "${myPlate}"
+            },
+            {
+              "name": "wells",
+              "type": "well",
+              "isArray": true,
+              "value": [
+                "A1"
+              ]
+            },
+            {
+              "name": "matrix",
+              "type": "options",
+              "options" : [
+                "agarose(96,2.0%)",
+                "agarose(48,4.0%)",
+                "agarose(48,2.0%)",
+                "agarose(12,1.2%)",
+                "agarose(8,0.8%)"
+              ],
+              "value": "agarose(8,0.8%)"
+            },
+            {
+              "name": "ladder",
+              "type": "options",
+              "options" : [
+                "ladder1",
+                "ladder2"
+              ],
+              "value": "ladder1"
+            },
+            {
+              "name": "duration",
+              "type": "string",
+              "value": "60:minute"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
