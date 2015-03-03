@@ -22,4 +22,17 @@ angular.module('transcripticApp')
         ]
       }
     };
+
+    self.wrapGroupsInProtocol = function (groupsInput) {
+      var groups = _.isArray(groupsInput) ? groupsInput : [groupsInput];
+
+      return {
+        "name"      : "",
+        "references": [],
+        "inputs"    : {},
+        "parameters": {},
+        "metadata"  : {},
+        "groups"    : groups
+      }
+    };
   });

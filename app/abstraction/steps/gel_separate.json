@@ -14,7 +14,7 @@
           "requirements": {},
           "transforms": [
             {
-              "container": "object"
+              "wells": "wells"
             }
           ],
           "fields": [
@@ -24,16 +24,25 @@
               "value": "myGelRun"
             },
             {
-              "name": "object",
-              "type": "container",
-              "value": "${myPlate}"
-            },
-            {
               "name": "wells",
-              "type": "well",
-              "isArray": true,
+              "type": "aliquot+",
+              "singleWell" : false,
+              "singleContainer" : false,
               "value": [
-                "A1"
+                {
+                  "container" : "growth_plate_1",
+                  "wells" : [
+                    "A1",
+                    "A2"
+                  ]
+                },
+                {
+                  "container" : "${myPlate}",
+                  "wells" : [
+                    "A3",
+                    "A4"
+                  ]
+                }
               ]
             },
             {

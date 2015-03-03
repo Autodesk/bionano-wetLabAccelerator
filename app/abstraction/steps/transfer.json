@@ -11,12 +11,10 @@
       "requirements": {},
       "transforms": [
         {
-          "container": "to_container",
-          "wells": "to_wells"
+          "wells": "to"
         },
         {
-          "container": "from_container",
-          "wells": "from_wells"
+          "wells": "from"
         }
       ],
       "fields": [
@@ -26,29 +24,31 @@
           "value": "10.0:microliter"
         },
         {
-          "name": "to_container",
-          "type": "container",
-          "value": "growth_plate"
-        },
-        {
-          "name": "to_wells",
-          "type": "well",
-          "isArray": true,
+          "name": "to",
+          "type": "aliquot+",
+          "singleWell" : false,
+          "singleContainer" : false,
           "value": [
-            "A2"
+            {
+              "container" : "growth_plate",
+              "wells" : [
+                "A2"
+              ]
+            }
           ]
         },
         {
-          "name": "from_container",
-          "type": "container",
-          "value": "ecoli_container"
-        },
-        {
-          "name": "from_wells",
-          "type": "well",
-          "isArray": true,
+          "name": "from",
+          "type": "aliquot+",
+          "singleWell" : false,
+          "singleContainer" : false,
           "value": [
-            "A1"
+            {
+              "container" : "ecoli_container",
+              "wells" : [
+                "A1"
+              ]
+            }
           ]
         },
         {
