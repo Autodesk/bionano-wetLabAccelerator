@@ -1,1 +1,11 @@
-<p>tx-gallery</p>
+<p>Gallery</p>
+
+  <div class="list-group"
+       ui-sortable="gallerySortableOptions"
+       ng-model="operationKeys">
+    <a class="list-group-item drag-handle"
+       style="padding: 3px;"
+       ng-repeat="op in operationKeys"
+       ng-bind="op | capfirst"></a>
+  </div>
+

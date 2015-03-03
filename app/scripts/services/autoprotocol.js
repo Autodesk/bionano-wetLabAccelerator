@@ -4,7 +4,8 @@
  * @ngdoc factory
  * @name transcripticApp.autoprotocol
  * @description
- * Service converting between abstraction and
+ * Service converting between abstraction and autoprotocol
+ * todo - rename this service
  */
 angular.module('transcripticApp')
   .service('Autoprotocol', function (AutoprotocolInstruction, ConversionUtils) {
@@ -23,7 +24,7 @@ angular.module('transcripticApp')
       return converter(inst, params);
     }
 
-    //returns an array of instructions for the group
+    //returns an array of auto_instructions for the abst_group
     function unwrapGroup (group, params) {
       var unwrapped = [];
 

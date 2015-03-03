@@ -24,7 +24,8 @@ angular.module('transcripticApp')
         self.groupSortableOptions = {
           axis: 'y',
           scroll: true,
-          handle: '.protocol-group-header'
+          handle: '.protocol-group-header',
+          containment: '.protocol-instructions'
         };
 
         self.duplicateGroup = function (group) {
