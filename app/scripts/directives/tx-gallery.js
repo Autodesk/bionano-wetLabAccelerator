@@ -5,9 +5,11 @@
  * @name transcripticApp.directive:txGallery
  * @description
  * # txGallery
+ * todo - better cloning behavior - see:
+ * http://jsfiddle.net/3Ck4R/
  */
 angular.module('transcripticApp')
-  .directive('txGallery', function (Operations, AbstractionUtils) {
+  .directive('txGallery', function ($document, Operations, AbstractionUtils) {
     return {
       templateUrl: 'views/tx-gallery.html',
       restrict: 'E',
@@ -18,19 +20,24 @@ angular.module('transcripticApp')
 
         scope.gallerySortableOptions = {
           scroll: true,
+          helper: function (e, el) {
+            console.log(el);
+            return el.clone().appendTo(document.body);
+          },
           connectWith: ".protocol-instructions",
           update: function (e, ui) {
 
-            //debugger;
-
-            if (ui.item.sortable.source[0] == ui.item.sortable.droptarget[0]) {
+            //same list
+            if (!ui.item.sortable.droptargetModel ||
+                 ui.item.sortable.sourceModel == ui.item.sortable.droptargetModel) {
               currentOpCancelled = true;
-              console.log('same list');
             }
 
+            //cancel always and we'll update the model ourselves
+            // (prevent double insertion via splice)
             ui.item.sortable.cancel();
 
-            //reset the list
+            //reset the operation list
             scope.operationKeys = _.keys(Operations);
           },
           stop: function (e, ui) {
@@ -45,7 +52,7 @@ angular.module('transcripticApp')
                 dropModel = ui.item.sortable.droptargetModel,
                 dropIndex = ui.item.sortable.dropindex;
 
-            dropModel.splice(dropIndex, 0, groupScaffold);
+            !!dropModel && dropModel.splice(dropIndex, 0, groupScaffold);
           }
         };
       }

@@ -70,96 +70,64 @@ angular.module('transcripticApp')
       ]
     },
     "distribute" : {
-      metadata: {
-        "description": ""
-      }
+      "operation": "distribute"
     },
     "consolidate": {
-      metadata: {
-        "description": ""
-      }
+      "operation": "consolidate"
     },
     "mix"        : {
-      metadata: {
-        "description": ""
-      }
+      "operation": "mix"
     },
     "dispense"   : {
-      metadata: {
-        "description": ""
-      }
+      "operation": "dispense"
     },
 
     //heating
 
     "thermocycle": {
-      metadata: {
-        "description": ""
-      }
+      "operation": "thermocycle"
     },
 
     "incubate": {
-      metadata: {
-        "description": ""
-      }
+      "operation": "incubate"
     },
 
     //cover / seal
     "seal"    : {
-      metadata: {
-        "description": ""
-      }
+      "operation": "seal"
     },
     "unseal"  : {
-      metadata: {
-        "description": ""
-      }
+      "operation": "unseal"
     },
     "cover"   : {
-      metadata: {
-        "description": ""
-      }
+      "operation": "cover"
     },
     "uncover" : {
-      metadata: {
-        "description": ""
-      }
+      "operation": "uncover"
     },
 
 
     "spin"        : {
-      metadata: {
-        "description": ""
-      }
+      "operation": "spin"
     },
 
     //spectrometry
     "absorbance"  : {
-      metadata: {
-        "description": ""
-      }
+      "operation": "absorbance"
     },
     "fluorescence": {
-      metadata: {
-        "description": ""
-      }
+      "operation": "fluorescence"
     },
     "luminescence": {
-      metadata: {
-        "description": ""
-      }
+      "operation": "luminescence"
     },
 
 
     //DNA stuff
     "sangerseq"   : {
-      metadata: {
-        "description": ""
-      }
+      "operation": "sangerseq"
     },
     "gel_separate": {
-      metadata: {
-        "description": ""
-      }
+      "operation": "gel_separate"
     }
   });
