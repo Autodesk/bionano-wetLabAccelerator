@@ -38,7 +38,7 @@
             },
             {
               "name": "matrix",
-              "type": "options",
+              "type": "option",
               "options" : [
                 "agarose(96,2.0%)",
                 "agarose(48,4.0%)",
@@ -50,7 +50,7 @@
             },
             {
               "name": "ladder",
-              "type": "options",
+              "type": "option",
               "options" : [
                 "ladder1",
                 "ladder2"

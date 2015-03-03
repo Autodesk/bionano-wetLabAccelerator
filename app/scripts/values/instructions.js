@@ -5,7 +5,7 @@
  * @name transcripticApp.instructions
  * @description
  * Enumeration of possible instructions, with minimal schema also provided.
- * todo - metadata
+ * todo - descriptiondata
  *    description, etc. for a popover?
  *    requirements (e.g. sealed)
  */
@@ -16,14 +16,14 @@ angular.module('transcripticApp').constant('InstructionOptions', {
       op: "pipette",
       groups: []
     },
-    meta: {}
+    description: {}
   },
 
   "dispense" : {
     scaffold: {
       op: "dispense"
     },
-    meta: {}
+    description: {}
   },
 
   "thermocycle": {
@@ -31,7 +31,7 @@ angular.module('transcripticApp').constant('InstructionOptions', {
       op: "thermocycle",
       groups: []
     },
-    meta: {}
+    description: {}
   },
 
   //cover / seal
@@ -39,25 +39,25 @@ angular.module('transcripticApp').constant('InstructionOptions', {
     scaffold: {
       op: "seal"
     },
-    meta: {}
+    description: {}
   },
   "unseal": {
     scaffold: {
       op: "unseal"
     },
-    meta: {}
+    description: {}
   },
   "cover": {
     scaffold: {
       op: "cover"
     },
-    meta: {}
+    description: {}
   },
   "uncover": {
     scaffold: {
       op: "uncover"
     },
-    meta: {}
+    description: {}
   },
 
   //spectrometry
@@ -65,47 +65,47 @@ angular.module('transcripticApp').constant('InstructionOptions', {
     scaffold: {
       op: "absorbance"
     },
-    meta: {}
+    description: {}
   },
   "fluorescence" : {
     scaffold: {
       op: "fluorescence"
     },
-    meta: {}
+    description: {}
   },
   "luminescence" : {
     scaffold: {
       op: "luminescence"
     },
-    meta: {}
+    description: {}
   },
 
   "sangerseq": {
     scaffold: {
       op: "sangerseq"
     },
-    meta: {}
+    description: {}
   },
 
   "spin": {
     scaffold: {
       op: "spin"
     },
-    meta: {}
+    description: {}
   },
 
   "incubate": {
     scaffold: {
       op: "incubate"
     },
-    meta: {}
+    description: {}
   },
 
   "gel_separate" : {
     scaffold: {
       op: "gel_separate"
     },
-    meta: {}
+    description: {}
   }
 
   /*

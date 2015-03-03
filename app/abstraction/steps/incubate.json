@@ -21,7 +21,14 @@
         },
         {
           "name": "where",
-          "type": "temperature",
+          "type": "option",
+          "options" : [
+            "ambient",
+            "warm_37",
+            "cold_4",
+            "cold_20",
+            "cold_80"
+          ],
           "value": "warm_37"
         },
         {

@@ -36,6 +36,10 @@ tx-protocol-group {
     &-actions {
       padding-bottom: $padding-internal;
     }
+
+    &-content {
+      background-color: $light-grey;
+    }
   }
 
   //internals
@@ -56,7 +60,7 @@ tx-protocol-group {
 
   pre {
     font-size: 13px;
-    background-color: $light-grey;
+    background-color: transparent;
     border-radius: 0;
   }
 }
