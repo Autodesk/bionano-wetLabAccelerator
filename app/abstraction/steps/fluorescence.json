@@ -10,7 +10,7 @@
       "requirements": {},
       "transformations": [
         {
-          "container": "object"
+          "wells": "wells"
         }
       ],
       "fields": [
@@ -26,11 +26,12 @@
           "singleContainer" : false,
           "value": [
             {
-              "container" : "growth_plate_1",
-              "wells" : [
-                "A1",
-                "A2"
-              ]
+              "container" : "growth_plate",
+              "well" : "A1"
+            },
+            {
+              "container" : "growth_plate",
+              "well" : "A2"
             }
           ]
         },

@@ -30,18 +30,20 @@
               "singleContainer" : false,
               "value": [
                 {
-                  "container" : "growth_plate_1",
-                  "wells" : [
-                    "A1",
-                    "A2"
-                  ]
+                "container" : "growth_plate",
+                "well" : "A1"
+                },
+                {
+                  "container" : "growth_plate",
+                  "well" : "A2"
                 },
                 {
                   "container" : "${myPlate}",
-                  "wells" : [
-                    "A3",
-                    "A4"
-                  ]
+                  "well" : "A1"
+                },
+                {
+                  "container" : "${myPlate}",
+                  "well" : "A2"
                 }
               ]
             },

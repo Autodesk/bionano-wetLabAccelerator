@@ -31,9 +31,7 @@
           "value": [
             {
               "container" : "growth_plate",
-              "wells" : [
-                "A2"
-              ]
+              "well" : "A2"
             }
           ]
         },
@@ -45,9 +43,7 @@
           "value": [
             {
               "container" : "ecoli_container",
-              "wells" : [
-                "A1"
-              ]
+              "well" : "A1"
             }
           ]
         },

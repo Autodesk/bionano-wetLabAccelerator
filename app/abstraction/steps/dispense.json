@@ -16,7 +16,7 @@
         {
           "name": "object",
           "type": "container",
-          "value": "growth_plate_1"
+          "value": "growth_plate"
         },
         {
           "name": "reagent",
@@ -49,11 +49,11 @@
           "isArray": true,
           "value": [
             {
-              "colnum": 0,
+              "column": 0,
               "volume": "240:microliter"
             },
             {
-              "colnum": 1,
+              "column": 1,
               "volume": "240:microliter"
             }
           ]

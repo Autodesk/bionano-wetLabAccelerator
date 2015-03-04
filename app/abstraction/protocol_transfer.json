@@ -57,9 +57,7 @@
               "value": [
                 {
                   "container" : "growth_plate",
-                  "wells" : [
-                    "A2"
-                  ]
+                  "well" : "A2"
                 }
               ]
             },
@@ -71,9 +69,7 @@
               "value": [
                 {
                   "container" : "ecoli_container",
-                  "wells" : [
-                    "A1"
-                  ]
+                  "well" : "A1"
                 }
               ]
             },
@@ -108,7 +104,7 @@
             {
               "name": "object",
               "type": "container",
-              "value": "growth_plate_1"
+              "value": "growth_plate"
             },
             {
               "name": "where",
@@ -155,11 +151,12 @@
               "singleContainer" : false,
               "value": [
                 {
-                  "container" : "growth_plate_1",
-                  "wells" : [
-                    "A1",
-                    "A2"
-                  ]
+                  "container" : "growth_plate",
+                  "well" : "A1"
+                },
+                {
+                  "container" : "growth_plate",
+                  "well" : "A2"
                 }
               ]
             },
