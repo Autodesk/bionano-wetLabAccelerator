@@ -8,7 +8,7 @@
  * Service in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .service('AutoprotocolInstruction', function (AutoprotocolType, ConversionUtils) {
+  .service('ConvAutoprotocolInstruction', function (ConvAutoprotocolType, AbstractionUtils, ConversionUtils) {
    var self = this;
 
     function pluckField (fields, fieldName) {
@@ -28,44 +28,43 @@ angular.module('transcripticApp')
     self.luminescence = ConversionUtils.simpleMapOperation;
     self.absorbance = ConversionUtils.simpleMapOperation;
 
-    //todo - decide on data structure for container/well selections
-    self.gel_separate = function (op, params) {
+    //todo - intelligently handle allow_carryover for pipette steps
 
-    };
-
-    self.transfer = function (op, params) {
+    self.transfer = function (op) {
 
       var transfers = [];
 
-      var fromWells = pluckFieldValue(op.fields, 'from_wells'),
-          toWells = pluckFieldValue(op.fields, 'to_wells');
+      var fromWells = AbstractionUtils.flattenAliquots(pluckFieldValue(op.fields, 'from')),
+          toWells = AbstractionUtils.flattenAliquots(pluckFieldValue(op.fields, 'to'));
 
       if ( fromWells.length != toWells.length) {
 
         if (fromWells.length == 1) {
           _.fill(fromWells, fromWells[0], 0, toWells.length);
         } else {
-          console.warn('transfer wells dont match up');
-          return null;
+          console.warn('transfer wells dont match up', toWells, fromWells);
+          throw new Error('transfer wells dont match up');
         }
       }
 
       var volume = pluckFieldValue(op.fields, 'volume'),
-          toContainer = pluckFieldValue(op.fields, 'to_container'),
-          fromContainer = pluckFieldValue(op.fields, 'from_container'),
-          mix_after = AutoprotocolType.mixwrap(pluckFieldValue(op.fields, 'mix_after'));
+          mix_after = ConvAutoprotocolType.mixwrap(pluckFieldValue(op.fields, 'mix_after'));
 
       //assuming that to_wells is always greater than from_wells
       _.forEach(toWells, function (toWell, index) {
 
         transfers.push({
           volume: volume,
-          to: ConversionUtils.joinContainerWell(toWell, toContainer),
-          from: ConversionUtils.joinContainerWell(fromWells[index], fromContainer),
+          to: toWell,
+          from: fromWells[index],
           mix_after: mix_after
         });
       });
 
       return ConversionUtils.wrapInPipette({transfer : transfers});
+    };
+
+    self.gel_separate = function (op) {
+
     };
   });

@@ -13,11 +13,16 @@ angular.module('transcripticApp')
 
     var self = this;
 
+    var containerWellDelimiter = "/";
+
+    /*******
+     Iteration
+     ******/
+
     //todo - handle field verification here esp. for dimensional values
     self.simpleMapFields = function (fields, params) {
       var obj = {};
       _.forEach(fields, function (field) {
-        console.log(field.name, field.value, params);
         obj[field.name] = self.interpolateValue(field.value, params);
       });
       return obj;
@@ -30,11 +35,9 @@ angular.module('transcripticApp')
       }, self.simpleMapFields(op.fields, params));
     };
 
-    self.containerWellDelimiter = "/";
-
-    self.joinContainerWell = function (well, container) {
-      return well + self.containerWellDelimiter + container
-    };
+    /*******
+     Wrapping
+     ******/
 
     //takes an autoprotocol instruction, wraps in pipette group
     self.wrapInPipette = function (instruction) {
@@ -43,6 +46,18 @@ angular.module('transcripticApp')
         groups: [instruction]
       };
     };
+
+    /*******
+     Wells
+     ******/
+
+    self.joinContainerWell = function (container, well, tempDelimiter) {
+      return container + (_.isString(tempDelimiter) ? tempDelimiter : containerWellDelimiter) + well;
+    };
+
+    /*******
+     Interpolation
+     ******/
 
     //interpolates a string using the params passed
     self.interpolateValue = function interpolateValue (value, params) {

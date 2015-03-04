@@ -34,6 +34,7 @@ angular.module('transcripticApp').constant('InputTypes', {
     description: "A decimal number",
     "autoprotocol-type" : "float",
     verification: function (input) {
+      //todo - do we want this to be a number, or handle string too?
       return _.isNumber(parseFloat(input));
     }
   },
@@ -124,8 +125,9 @@ angular.module('transcripticApp').constant('InputTypes', {
 
   "option" : {
     description: "A dropdown with options",
-    verification: function (input) {
-      //how to verify without the list of possibilities?
+    verification: function (input, options) {
+      //how to know need to pass in options, and do so dynamically?
+      return _.indexOf(options, input) > -1;
     }
   },
   "mixwrap" : {

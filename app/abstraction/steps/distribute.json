@@ -1,13 +1,13 @@
 {
-  "name": "Transfer Group",
+  "name": "Distribute Example",
   "inputs" : {},
   "metadata": {
-    "description" : "Transfer contents from one container to another, either 1-to-n or n-to-n"
+    "description" : "Distribute liquid from source well(s) to destination wells(s)"
   },
   "loop": 1,
   "steps": [
     {
-      "operation": "transfer",
+      "operation": "consolidate",
       "requirements": {},
       "transforms": [
         {
@@ -30,19 +30,26 @@
           "singleContainer" : false,
           "value": [
             {
-              "container" : "growth_plate",
-              "well" : "A2"
+              "container" : "ecoli_container",
+              "well" : "A1"
+            },
+            {
+              "container" : "ecoli_container",
+              "well" : "B1"
+            },
+            {
+              "container" : "ecoli_container",
+              "well" : "C1"
             }
           ]
         },
         {
           "name": "from",
           "type": "aliquot+",
-          "singleWell" : false,
-          "singleContainer" : false,
+          "singleWell" : true,
           "value": [
             {
-              "container" : "ecoli_container",
+              "container" : "growth_plate",
               "well" : "A1"
             }
           ]
@@ -63,15 +70,6 @@
           "name": "mix_before",
           "type": "mixwrap",
           "optional" : true,
-          "value": {
-            "volume" : "10.0:microliter",
-            "repetitions" : 5,
-            "speed" : "100:microliter/second"
-          }
-        },
-        {
-          "name": "mix_after",
-          "type": "mixwrap",
           "value": {
             "volume" : "10.0:microliter",
             "repetitions" : 5,

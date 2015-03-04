@@ -8,7 +8,7 @@
  * Service for conversion of field types
  */
 angular.module('transcripticApp')
-  .service('AutoprotocolType', function () {
+  .service('ConvAutoprotocolType', function () {
     var self = this;
 
     //dummy for now

@@ -8,19 +8,18 @@
  * todo - rename this service
  */
 angular.module('transcripticApp')
-  .service('Autoprotocol', function (AutoprotocolInstruction, ConversionUtils) {
+  .service('Autoprotocol', function (ConvAutoprotocolInstruction, ConversionUtils) {
 
     function convertInstruction (inst, params) {
       //todo - handle validation of each field too?
 
-      var converter = AutoprotocolInstruction[inst.operation];
+      var converter = ConvAutoprotocolInstruction[inst.operation];
 
       if (!_.isFunction(converter)) {
-        console.warn('converter doesn\'t exist for ' + inst.operation);
+        console.error('converter doesn\'t exist for ' + inst.operation);
         return null;
       }
 
-      console.log(params, converter);
       return converter(inst, params);
     }
 

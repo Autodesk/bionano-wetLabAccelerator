@@ -8,8 +8,22 @@
  * Service in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .service('AbstractionUtils', function () {
+  .service('AbstractionUtils', function (ConversionUtils) {
     var self = this;
+
+    /*******
+     Wells
+     ******/
+
+    self.flattenAliquots = function (abstAliquots) {
+      return _.map(abstAliquots, function (aliquot) {
+        return ConversionUtils.joinContainerWell(aliquot.container, aliquot.well);
+      });
+    };
+
+    /*******
+     Wrapping
+     ******/
 
     self.wrapOpInGroup = function (op) {
       return {

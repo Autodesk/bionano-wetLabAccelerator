@@ -1,0 +1,51 @@
+{
+  "name": "Mix Example",
+  "inputs" : {},
+  "metadata": {
+    "description" : "Mix specified well using a new pipette tip"
+  },
+  "loop": 1,
+  "steps": [
+    {
+      "operation": "consolidate",
+      "requirements": {},
+      "transforms": [
+        {
+          "wells": "wells"
+        }
+      ],
+      "fields": [
+        {
+          "name": "wells",
+          "type": "aliquot+",
+          "singleWell" : false,
+          "singleContainer" : false,
+          "value": [
+            {
+              "container" : "growth_plate",
+              "well" : "A2"
+            }
+          ]
+        },
+        {
+          "name": "volume",
+          "type": "volunme",
+          "optional" : true,
+          "value": "50:microliter"
+        },
+        {
+          "name": "speed",
+          "type": "flowrate",
+          "optional" : true,
+          "value": "100:microliter/second"
+        },
+        {
+          "name": "repetitions",
+          "type": "integer",
+          "optional" : true,
+          "value": 10
+        }
+      ]
+    }
+  ]
+}

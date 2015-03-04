@@ -1,13 +1,15 @@
+/* TODO */
+
 {
-  "name": "Transfer Group",
+  "name": "Consolidate Example",
   "inputs" : {},
   "metadata": {
-    "description" : "Transfer contents from one container to another, either 1-to-n or n-to-n"
+    "description" : "Consolidate multiple wells into one single well."
   },
   "loop": 1,
   "steps": [
     {
-      "operation": "transfer",
+      "operation": "consolidate",
       "requirements": {},
       "transforms": [
         {
@@ -26,8 +28,7 @@
         {
           "name": "to",
           "type": "aliquot+",
-          "singleWell" : false,
-          "singleContainer" : false,
+          "singleWell" : true,
           "value": [
             {
               "container" : "growth_plate",
@@ -48,30 +49,21 @@
           ]
         },
         {
-          "name": "dispense_speed",
-          "type": "flowrate",
-          "optional" : true,
-          "value": "100:microliter/second"
-        },
-        {
           "name": "aspirate_speed",
           "type": "flowrate",
           "optional" : true,
           "value": "100:microliter/second"
         },
         {
-          "name": "mix_before",
-          "type": "mixwrap",
+          "name": "dispense_speed",
+          "type": "flowrate",
           "optional" : true,
-          "value": {
-            "volume" : "10.0:microliter",
-            "repetitions" : 5,
-            "speed" : "100:microliter/second"
-          }
+          "value": "100:microliter/second"
         },
         {
           "name": "mix_after",
           "type": "mixwrap",
+          "optional" : true,
           "value": {
             "volume" : "10.0:microliter",
             "repetitions" : 5,
