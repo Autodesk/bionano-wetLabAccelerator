@@ -23,7 +23,7 @@
           "name": "wells",
           "type": "aliquot+",
           "singleWell" : false,
-          "singleContainer" : false,
+          "singleContainer" : true,
           "value": [
             {
               "container" : "growth_plate",

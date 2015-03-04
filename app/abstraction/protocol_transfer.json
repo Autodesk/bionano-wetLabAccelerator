@@ -29,7 +29,9 @@
     {
       "name": "Transfer Group",
       "inputs" : {},
-      "metadata": {},
+      "metadata": {
+        "description" : "Transfer contents from one container to another, either 1-to-n or n-to-n"
+      },
       "loop": 1,
       "steps": [
         {
@@ -74,8 +76,31 @@
               ]
             },
             {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional" : true,
+              "value": "100:microliter/second"
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional" : true,
+              "value": "100:microliter/second"
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional" : true,
+              "value": {
+                "volume" : "10.0:microliter",
+                "repetitions" : 5,
+                "speed" : "100:microliter/second"
+              }
+            },
+            {
               "name": "mix_after",
               "type": "mixwrap",
+              "optional" : true,
               "value": {
                 "volume" : "10.0:microliter",
                 "repetitions" : 5,
@@ -126,6 +151,7 @@
             {
               "name": "shaking",
               "type": "boolean",
+              "default": false,
               "value": true
             }
           ]
@@ -161,11 +187,6 @@
               ]
             },
             {
-              "name": "num_flashes",
-              "type": "integer",
-              "value": 25
-            },
-            {
               "name": "wavelength",
               "type": "length",
               "value": "600:nanometer",
@@ -173,6 +194,13 @@
                 "min" : 300,
                 "max" : 1000
               }
+            },
+            {
+              "name": "num_flashes",
+              "type": "integer",
+              "optional" : true,
+              "default": 25,
+              "value": 25
             }
           ]
         }

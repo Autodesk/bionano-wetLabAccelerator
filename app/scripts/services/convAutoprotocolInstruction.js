@@ -19,14 +19,20 @@ angular.module('transcripticApp')
       return _.result(pluckField(fields, fieldName), 'value');
     }
 
+    /* CONTAINER MANAGEMENT */
+
     self.cover = ConversionUtils.simpleMapOperation;
     self.uncover = ConversionUtils.simpleMapOperation;
     self.seal = ConversionUtils.simpleMapOperation;
     self.unseal = ConversionUtils.simpleMapOperation;
 
+    /* SPECTROMETRY */
+
     self.fluorescence = ConversionUtils.simpleMapOperation;
     self.luminescence = ConversionUtils.simpleMapOperation;
     self.absorbance = ConversionUtils.simpleMapOperation;
+
+    /* LIQUID HANDLING */
 
     //todo - intelligently handle allow_carryover for pipette steps
 
@@ -62,6 +68,37 @@ angular.module('transcripticApp')
       });
 
       return ConversionUtils.wrapInPipette({transfer : transfers});
+    };
+
+    self.consolidate = function (op) {
+
+    };
+
+    self.mix = function (op) {
+
+    };
+
+    self.distribute = function (op) {
+
+    };
+
+    self.dispense = function (op) {
+
+    };
+
+    /* TEMPERATURE */
+
+    self.incubate = function (op) {
+
+    };
+    self.thermocycle = function (op) {
+
+    };
+
+    /* DNA */
+
+    self.sanger_seq = function (op) {
+
     };
 
     self.gel_separate = function (op) {

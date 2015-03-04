@@ -17,6 +17,7 @@
         {
           "name": "dataref",
           "type": "string",
+          "optional" : true,
           "value": "myRef"
         },
         {
@@ -27,6 +28,7 @@
         {
           "name": "volume",
           "type": "volume",
+          "default": "10:microliter",
           "value": "50.0:microliter"
         },
         {
@@ -57,6 +59,7 @@
         {
           "name": "dyes",
           "type": "thermocycleDyes",
+          "optional" : true,
           "value": [
             {
               "dye": "FAM",
@@ -70,6 +73,7 @@
         {
           "name": "melting",
           "type": "thermocycleMelting",
+          "optional" : true,
           "value": {
             "melting_start": "",
             "melting_end": "",

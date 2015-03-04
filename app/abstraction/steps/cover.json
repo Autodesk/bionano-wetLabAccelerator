@@ -5,8 +5,8 @@
       "metadata": {
         "description": "Cover a plate with a specified lid"
       },
-      "inputs" : {
-        "myPlate" : "container"
+      "inputs": {
+        "myPlate": "container"
       },
       "steps": [
         {
@@ -26,11 +26,13 @@
             {
               "name": "lid",
               "type": "option",
-              "options" : [
+              "options": [
                 "standard",
                 "universal",
                 "low_evaporation"
               ],
+              "optional": true,
+              "default": "standard",
               "value": "standard"
             }
           ]

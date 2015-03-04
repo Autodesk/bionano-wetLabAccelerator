@@ -58,12 +58,14 @@
           "name": "dispense_speed",
           "type": "flowrate",
           "optional" : true,
+          "default": "100:microliter/second",
           "value": "100:microliter/second"
         },
         {
           "name": "aspirate_speed",
           "type": "flowrate",
           "optional" : true,
+          "default": "100:microliter/second",
           "value": "100:microliter/second"
         },
         {
@@ -72,7 +74,7 @@
           "optional" : true,
           "value": {
             "volume" : "10.0:microliter",
-            "repetitions" : 5,
+            "repetitions" : 10,
             "speed" : "100:microliter/second"
           }
         }

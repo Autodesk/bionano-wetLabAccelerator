@@ -75,9 +75,7 @@ angular.module('transcripticApp')
       if (_.isString(obj))
         return self.interpolateValue(obj, params);
       else {
-        _.forEach(obj, function (val, key) {
-          obj[key] = self.interpolateObject(val, params);
-        });
+        _.mapValues(obj, _.partial(self.interpolateObject, _, params));
       }
       return obj;
     };

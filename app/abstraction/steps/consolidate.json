@@ -23,6 +23,7 @@
         {
           "name": "volume",
           "type": "volume",
+          "default": "10.0:microliter",
           "value": "10.0:microliter"
         },
         {
@@ -52,12 +53,14 @@
           "name": "aspirate_speed",
           "type": "flowrate",
           "optional" : true,
+          "default": "100:microliter/second",
           "value": "100:microliter/second"
         },
         {
           "name": "dispense_speed",
           "type": "flowrate",
           "optional" : true,
+          "default": "100:microliter/second",
           "value": "100:microliter/second"
         },
         {

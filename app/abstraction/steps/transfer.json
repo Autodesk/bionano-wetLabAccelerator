@@ -72,6 +72,7 @@
         {
           "name": "mix_after",
           "type": "mixwrap",
+          "optional" : true,
           "value": {
             "volume" : "10.0:microliter",
             "repetitions" : 5,
