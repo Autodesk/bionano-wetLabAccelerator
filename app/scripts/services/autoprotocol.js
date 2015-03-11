@@ -8,7 +8,7 @@
  * todo - rename this service
  */
 angular.module('transcripticApp')
-  .service('Autoprotocol', function (ConvAutoprotocolInstruction, ConversionUtils) {
+  .service('Autoprotocol', function (ConvAutoprotocolInstruction, ConversionUtils, AbstractionUtils) {
 
     function convertInstruction (inst, params) {
       //todo - handle validation of each field too?
@@ -70,9 +70,7 @@ angular.module('transcripticApp')
 
       //console.log('interpolating everything');
 
-      var interpolatedInstructions = ConversionUtils.interpolateObject(_.flatten(instructions));
-
-      // todo - post-process - object wide interpolation
+      var interpolatedInstructions = AbstractionUtils.interpolateObject(_.flatten(instructions));
 
       return {
         refs : references,

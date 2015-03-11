@@ -19,20 +19,20 @@ angular.module('transcripticApp')
      Iteration
      ******/
 
-    //todo - handle field verification here esp. for dimensional values
-    self.simpleMapFields = function (fields, params) {
+    //given array of abstraction fields, convert to keyvals where field.name is key and field.value is value. Does not handle interpolation.
+    self.simpleKeyvalFields = function (fields) {
       var obj = {};
       _.forEach(fields, function (field) {
-        obj[field.name] = self.interpolateValue(field.value, params);
+        obj[field.name] = field.value;
       });
       return obj;
     };
 
     //simply maps an operation and fields directly to keys and values
-    self.simpleMapOperation = function (op, params) {
+    self.simpleMapOperation = function (op) {
       return _.assign({
         op : op.operation
-      }, self.simpleMapFields(op.fields, params));
+      }, self.simpleKeyvalFields(op.fields));
     };
 
     /*******
@@ -47,36 +47,4 @@ angular.module('transcripticApp')
       };
     };
 
-    /*******
-     Wells
-     ******/
-
-    self.joinContainerWell = function (container, well, tempDelimiter) {
-      return container + (_.isString(tempDelimiter) ? tempDelimiter : containerWellDelimiter) + well;
-    };
-
-    /*******
-     Interpolation
-     ******/
-
-    //interpolates a string using the params passed
-    self.interpolateValue = function interpolateValue (value, params) {
-      try {
-        return _.template(value)(params);
-      } catch (e) {
-        console.warn('error interpolating', value, params, e);
-        return value;
-      }
-    };
-
-    //example: interpolateObject({"myVal" : "hey ${you}", "myObj" : {"greet" : "hi ${me}"} }, {you: "bobby", me: "max"})
-    // -> { myObj: { greet: "hi max"} myVal: "hey bobby" }
-    self.interpolateObject = function interpolateObject(obj, params) {
-      if (_.isString(obj))
-        return self.interpolateValue(obj, params);
-      else {
-        _.mapValues(obj, _.partial(self.interpolateObject, _, params));
-      }
-      return obj;
-    };
   });
