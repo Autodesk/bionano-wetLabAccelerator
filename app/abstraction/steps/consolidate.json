@@ -28,8 +28,7 @@
         },
         {
           "name": "to",
-          "type": "aliquot+",
-          "singleWell" : true,
+          "type": "aliquot",
           "value": [
             {
               "container" : "growth_plate",
@@ -40,7 +39,6 @@
         {
           "name": "from",
           "type": "aliquot+",
-          "singleWell" : false,
           "singleContainer" : false,
           "value": [
             {

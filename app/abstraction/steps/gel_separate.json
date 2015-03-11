@@ -26,7 +26,6 @@
             {
               "name": "wells",
               "type": "aliquot+",
-              "singleWell" : false,
               "singleContainer" : false,
               "value": [
                 {
