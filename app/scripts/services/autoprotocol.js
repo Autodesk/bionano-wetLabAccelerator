@@ -10,7 +10,7 @@
 angular.module('transcripticApp')
   .service('Autoprotocol', function (ConvAutoprotocolInstruction, ConversionUtils, AbstractionUtils) {
 
-    function convertInstruction (inst, params) {
+    function convertInstruction (inst, localParams) {
       //todo - handle validation of each field too?
 
       var converter = ConvAutoprotocolInstruction[inst.operation];
@@ -20,11 +20,11 @@ angular.module('transcripticApp')
         return null;
       }
 
-      return converter(inst, params);
+      return converter(inst, localParams);
     }
 
     //returns an array of auto_instructions for the abst_group
-    function unwrapGroup (group, params) {
+    function unwrapGroup (group) {
       var unwrapped = [];
 
       _.times(group.loop || 1, function (loopIndex) {

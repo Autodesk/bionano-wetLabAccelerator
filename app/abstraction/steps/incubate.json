@@ -33,7 +33,7 @@
         },
         {
           "name": "duration",
-          "type": "string",
+          "type": "duration",
           "value": "60:minute"
         },
         {

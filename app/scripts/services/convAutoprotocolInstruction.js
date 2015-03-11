@@ -8,16 +8,8 @@
  * Service in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .service('ConvAutoprotocolInstruction', function (ConvAutoprotocolType, AbstractionUtils, ConversionUtils) {
+  .service('ConvAutoprotocolInstruction', function (InputTypes, AbstractionUtils, ConversionUtils) {
    var self = this;
-
-    function pluckField (fields, fieldName) {
-      return _.find(fields, {name : fieldName});
-    }
-
-    function pluckFieldValue (fields, fieldName) {
-      return _.result(pluckField(fields, fieldName), 'value');
-    }
 
     /* CONTAINER MANAGEMENT */
 
@@ -28,21 +20,21 @@ angular.module('transcripticApp')
 
     /* SPECTROMETRY */
 
+    //todo - update these to list container + wells - can't simple map
     self.fluorescence = ConversionUtils.simpleMapOperation;
     self.luminescence = ConversionUtils.simpleMapOperation;
     self.absorbance = ConversionUtils.simpleMapOperation;
 
     /* LIQUID HANDLING */
 
-    //todo - intelligently handle allow_carryover for pipette steps
-
     self.transfer = function (op) {
 
       var transfers = [];
 
-      var fromWells = AbstractionUtils.flattenAliquots(pluckFieldValue(op.fields, 'from')),
-          toWells = AbstractionUtils.flattenAliquots(pluckFieldValue(op.fields, 'to'));
+      var fromWells = AbstractionUtils.flattenAliquots(ConversionUtils.pluckFieldValueRaw(op.fields, 'from')),
+          toWells = AbstractionUtils.flattenAliquots(ConversionUtils.pluckFieldValueRaw(op.fields, 'to'));
 
+      //todo - eventually, we want to put some of this in 'requirements' for the operation (pending them all written to know what is consistent)
       if ( fromWells.length != toWells.length) {
 
         if (fromWells.length == 1) {
@@ -53,18 +45,17 @@ angular.module('transcripticApp')
         }
       }
 
-      var volume = pluckFieldValue(op.fields, 'volume'),
-          mix_after = ConvAutoprotocolType.mixwrap(pluckFieldValue(op.fields, 'mix_after'));
+      var volume = ConversionUtils.pluckFieldValueTransformed(op.fields, 'volume'),
+          optionalFields = ['dispense_speed', 'aspirate_speed', 'mix_before', 'mix_after'],
+          optionalObj = ConversionUtils.getFieldsIfSet(op.fields, optionalFields);
 
       //assuming that to_wells is always greater than from_wells
       _.forEach(toWells, function (toWell, index) {
-
-        transfers.push({
+        transfers.push(_.assign({
           volume: volume,
           to: toWell,
-          from: fromWells[index],
-          mix_after: mix_after
-        });
+          from: fromWells[index]
+        }, optionalObj));
       });
 
       return ConversionUtils.wrapInPipette({transfer : transfers});
@@ -88,9 +79,9 @@ angular.module('transcripticApp')
 
     /* TEMPERATURE */
 
-    self.incubate = function (op) {
+    self.incubate = ConversionUtils.simpleMapOperation;
 
-    };
+    //note - thermocycle has a lot of weird groups. But logic for those should be self-contained to the group.
     self.thermocycle = function (op) {
 
     };

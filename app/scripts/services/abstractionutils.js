@@ -8,7 +8,7 @@
  * Service in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .service('AbstractionUtils', function (ConversionUtils) {
+  .service('AbstractionUtils', function () {
     var self = this;
 
     /*******
@@ -25,6 +25,8 @@ angular.module('transcripticApp')
       }
     };
 
+    // todo - clarify handling undefined
+    // todo - clarify multiple variables in string
     //example: interpolateObject({"myVal" : "hey ${you}", "myObj" : {"greet" : "hi ${me}"} }, {you: "bobby", me: "max"})
     // -> { myObj: { greet: "hi max"} myVal: "hey bobby" }
     self.interpolateObject = function interpolateObject(obj, params) {
@@ -39,6 +41,8 @@ angular.module('transcripticApp')
     /*******
      Wells
      ******/
+
+    var containerWellDelimiter = "/";
 
     self.joinContainerWell = function (container, well, tempDelimiter) {
       return '' + container + (_.isString(tempDelimiter) ? tempDelimiter : containerWellDelimiter) + well;
