@@ -51,6 +51,14 @@ body {
   align-self: center;
 }
 
+.scroll-y {
+  overflow-y: scroll;
+}
+
+.scroll-x {
+  overflow-x: scroll;
+}
+
 .maxout-scroll-vertical {
   max-height: 100vh;
   overflow-y: scroll;

@@ -68,7 +68,7 @@ angular.module('transcripticApp')
       //each group gives an array, need to concat later (_.flatten)
       var instructions = _.map(abst.groups, _.partialRight(unwrapGroup, abst.parameters) );
 
-      console.log('interpolating everything');
+      //console.log('interpolating everything');
 
       var interpolatedInstructions = ConversionUtils.interpolateObject(_.flatten(instructions));
 

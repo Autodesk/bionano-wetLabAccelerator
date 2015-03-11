@@ -25,7 +25,8 @@ angular.module('transcripticApp')
           axis: 'y',
           scroll: true,
           handle: '.protocol-group-header',
-          containment: '.protocol-instructions'
+          containment: '.protocol-instructions',
+          tolerance: 'pointer'
         };
 
         self.duplicateGroup = function (group) {

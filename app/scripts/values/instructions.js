@@ -1,5 +1,7 @@
 'use strict';
 
+//note - deprecated. use operations service instead
+
 /**
  * @ngdoc service
  * @name transcripticApp.instructions

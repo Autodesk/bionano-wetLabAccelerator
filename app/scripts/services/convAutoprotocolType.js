@@ -1,5 +1,5 @@
 'use strict';
-
+//todo - migrate to service InputTypes
 /**
  * @ngdoc service
  * @name transcripticApp.AutoprotocolType
