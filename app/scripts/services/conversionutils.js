@@ -16,8 +16,17 @@ angular.module('transcripticApp')
      Field Selection + Conversion
      ******/
 
+    //DEPRECATED - use AbstractionUtils
     self.pluckField = function pluckField (fields, fieldName) {
+      console.debug('todo - deprecated this version');
       return _.find(fields, {name : fieldName});
+    };
+
+    //DEPRECATED - use AbstractionUtils
+    //get the raw field value. Only use if going to handle transformation later.
+    self.pluckFieldValueRaw = function pluckFieldValueRaw (fields, fieldName) {
+      console.debug('todo - deprecated this version');
+      return _.result(AbstractionUtils.pluckField(fields, fieldName), 'value');
     };
 
     //given a field object (with type and value), convert the value using the method 'converterKey' or default to 'toAutoprotocol'
@@ -36,14 +45,9 @@ angular.module('transcripticApp')
       return converter(fieldVal);
     };
 
-    //get the raw field value. Only use if going to handle transformation later.
-    self.pluckFieldValueRaw = function pluckFieldValueRaw (fields, fieldName) {
-      return _.result(self.pluckField(fields, fieldName), 'value');
-    };
-
     //get field value, and run through converterKey (default 'toAutoprotocol')
     self.pluckFieldValueTransformed = function pluckFieldValueTransformed (fields, fieldName, converterKey) {
-      var field = self.pluckField(fields, fieldName);
+      var field = AbstractionUtils.pluckField(fields, fieldName);
       return self.transformField(field, converterKey);
     };
 
@@ -52,7 +56,7 @@ angular.module('transcripticApp')
     self.getFieldsIfSet = function getOptionalFields (fields, desired, allowDefault, converterKey) {
       var obj = {};
       _.forEach(desired, function (desiredKey) {
-        var field = self.pluckField(fields, desiredKey),
+        var field = AbstractionUtils.pluckField(fields, desiredKey),
             fieldVal = self.transformField(field, converterKey),
             fieldDefault = _.result(field, 'default');
 

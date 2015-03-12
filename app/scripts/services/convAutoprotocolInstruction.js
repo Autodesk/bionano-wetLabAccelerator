@@ -31,8 +31,8 @@ angular.module('transcripticApp')
 
     self.transfer = function (op) {
 
-      var fromWells = AbstractionUtils.flattenAliquots(ConversionUtils.pluckFieldValueRaw(op.fields, 'from')),
-          toWells = AbstractionUtils.flattenAliquots(ConversionUtils.pluckFieldValueRaw(op.fields, 'to')),
+      var fromWells = AbstractionUtils.flattenAliquots(AbstractionUtils.pluckFieldValueRaw(op.fields, 'from')),
+          toWells = AbstractionUtils.flattenAliquots(AbstractionUtils.pluckFieldValueRaw(op.fields, 'to')),
           volume = ConversionUtils.pluckFieldValueTransformed(op.fields, 'volume'),
           optionalFields = [ 'dispense_speed' , 'aspirate_speed', 'mix_before' , 'mix_after' ],
           optionalObj = ConversionUtils.getFieldsIfSet(op.fields, optionalFields),
@@ -62,7 +62,7 @@ angular.module('transcripticApp')
     };
 
     self.consolidate = function (op) {
-      var fromWells = AbstractionUtils.flattenAliquots(ConversionUtils.pluckFieldValueRaw(op.fields, 'from')),
+      var fromWells = AbstractionUtils.flattenAliquots(AbstractionUtils.pluckFieldValueRaw(op.fields, 'from')),
           toWell = ConversionUtils.pluckFieldValueTransformed(op.fields, 'to'),
           volume = ConversionUtils.pluckFieldValueTransformed(op.fields, 'volume'),
           optionalFromFields = [ 'aspirate_speed' ],
@@ -86,7 +86,7 @@ angular.module('transcripticApp')
 
     self.distribute = function (op) {
       var fromWell = ConversionUtils.pluckFieldValueTransformed(op.fields, 'from'),
-          toWells = AbstractionUtils.flattenAliquots(ConversionUtils.pluckFieldValueRaw(op.fields, 'to')),
+          toWells = AbstractionUtils.flattenAliquots(AbstractionUtils.pluckFieldValueRaw(op.fields, 'to')),
           volume = ConversionUtils.pluckFieldValueTransformed(op.fields, 'volume'),
           optionalToFields = [ 'dispense_speed' ],
           optionalAllFields = [ 'aspirate_speed' , 'mix_before' ],
@@ -125,7 +125,7 @@ angular.module('transcripticApp')
 
     self.incubate = ConversionUtils.simpleMapOperation;
 
-    //todo - verify this one. Lots of weird groups but should be self-contained within the fields
+
     self.thermocycle = ConversionUtils.simpleMapOperation;
 
     /* DNA */

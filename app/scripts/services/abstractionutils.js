@@ -11,6 +11,15 @@ angular.module('transcripticApp')
   .service('AbstractionUtils', function () {
     var self = this;
 
+    self.pluckField = function pluckField (fields, fieldName) {
+      return _.find(fields, {name : fieldName});
+    };
+
+    //get the raw field value. Only use if going to handle transformation later.
+    self.pluckFieldValueRaw = function pluckFieldValueRaw (fields, fieldName) {
+      return _.result(self.pluckField(fields, fieldName), 'value');
+    };
+
     /*******
      Interpolation
      ******/
@@ -86,5 +95,92 @@ angular.module('transcripticApp')
         "metadata"  : {},
         "groups"    : groups
       }
+    };
+
+    /********
+     Transformations
+     ********/
+
+    //todo - DRY these out
+    self.getTransformsContainer = function getTransformsContainer (protocol, container) {
+
+      var result = [],
+          index = 0;
+
+      _.forEach(protocol.groups, function (group, groupIndex) {
+        _.forEach(group.steps, function (step, stepIndex) {
+          _.forEach(step.transforms, function (transform) {
+            if ( _.result(transform, 'container') ) {
+              var containerField = self.pluckField(step.fields, transform.container),
+                  containerName = _.result(containerField, 'value');
+              if (containerName == container) {
+                result.push({
+                  container : container,
+                  op: step.operation,
+                  field: containerField,
+                  index : {
+                    group: groupIndex,
+                    step: stepIndex,
+                    unwrapped: _.map(new Array(_.result(group, 'loop', 1)), function (undef, ind) {
+                      return index + (ind * group.steps.length);
+                    })
+                  },
+                  times: _.result(group, 'loop', 1),
+                  step: step
+                });
+              }
+            }
+          });
+          //increment for the step
+          index += 1;
+        });
+        //increment for loops, accounting for one run through step already
+        index += (group.steps.length) * (_.result(group, 'loop', 1) - 1)
+      });
+
+      return result;
+    };
+
+    self.getTransformsWell = function getTransformsContainer (protocol, well) {
+      var result = [],
+          index = 0;
+
+      _.forEach(protocol.groups, function (group, groupIndex) {
+        _.forEach(group.steps, function (step, stepIndex) {
+          _.forEach(step.transforms, function (transform) {
+            if ( _.result(transform, 'wells') ) {
+              var wellsField = self.pluckField(step.fields, transform.wells),
+                  wellsArray = _.result(wellsField, 'value');
+              _.forEach(wellsArray, function (wellObj) {
+                if (wellObj.well == well) {
+                  result.push({
+                    well : well,
+                    op: step.operation,
+                    field: wellsField,
+                    index : {
+                      group: groupIndex,
+                      step: stepIndex,
+                      unwrapped: _.map(new Array(_.result(group, 'loop', 1)), function (undef, ind) {
+                        return index + (ind * group.steps.length);
+                      })
+                    },
+                    times: _.result(group, 'loop', 1),
+                    step: step
+                  });
+
+                  //end the loop
+                  return false;
+                }
+              });
+            }
+          });
+          //increment for the step
+          index += 1;
+        });
+        //increment for loops, accounting for one run through step already
+        index += (group.steps.length) * (_.result(group, 'loop', 1) - 1)
+      });
+
+      return result;
     };
   });
