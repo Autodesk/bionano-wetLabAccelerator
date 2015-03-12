@@ -197,7 +197,7 @@ angular.module('transcripticApp').service('InputTypes', function (AbstractionUti
           });
       }
     },
-    "thermocycleGrop"   : {
+    "thermocycleGroup"   : {
       description   : "Set of steps in thermocycle",
       toAutoprotocol: function (input) {
         return input;
