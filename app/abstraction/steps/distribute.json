@@ -7,7 +7,7 @@
   "loop": 1,
   "steps": [
     {
-      "operation": "consolidate",
+      "operation": "distribute",
       "requirements": {},
       "transforms": [
         {

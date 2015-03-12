@@ -200,7 +200,28 @@ angular.module('transcripticApp').service('InputTypes', function (AbstractionUti
     "thermocycleGroup"   : {
       description   : "Set of steps in thermocycle",
       toAutoprotocol: function (input) {
-        return input;
+        return _.map(input, function (group) {
+          return {
+            cycles: group.cycles,
+            steps: _.map(group.steps, function (step) {
+              return _.assign({
+                duration: step.duration,
+                read: _.result(step, 'read', true)
+              }, (step.isGradient ?
+                  {
+                    gradient : {
+                      top: step.gradientStart,
+                      end: step.gradientEnd
+                    }
+                  } :
+                  {
+                    temperature : step.temperature
+                  }
+                )
+              );
+            })
+          };
+        });
       },
       verification  : function (input) {
         return _.isArray(input) && _.every(input, function (item) {
@@ -220,7 +241,10 @@ angular.module('transcripticApp').service('InputTypes', function (AbstractionUti
     "thermocycleDyes"   : {
       description   : "Dyes mapped to wells for thermocycle",
       toAutoprotocol: function (input) {
-        return input;
+        return _.zipObject(
+          _.pluck(input, 'dye'),
+          input.wells
+        );
       },
       verification  : function (input) {
 

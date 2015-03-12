@@ -75,10 +75,10 @@
           "type": "thermocycleMelting",
           "optional" : true,
           "value": {
-            "melting_start": "",
-            "melting_end": "",
-            "melting_increment": "",
-            "melting_rate": ""
+            "start": "",
+            "end": "",
+            "increment": "",
+            "rate": ""
           }
         }
       ]
