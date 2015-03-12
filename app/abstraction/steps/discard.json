@@ -1,0 +1,24 @@
+{
+  "name": "Example Discard",
+  "metadata": {
+    "description": "Discard a container. The container will be removed from your inventory and no longer accessible."
+  },
+  "steps": [
+    {
+      "operation": "discard",
+      "requirements": {},
+      "transforms": [
+        {
+          "container": "container"
+        }
+      ],
+      "fields": [
+        {
+          "name": "object",
+          "type": "container",
+          "value": "growth_plate"
+        }
+      ]
+    }
+  ]
+}
