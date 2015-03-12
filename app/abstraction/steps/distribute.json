@@ -45,10 +45,12 @@
         {
           "name": "from",
           "type": "aliquot",
-          "value": {
-            "container": "growth_plate",
-            "well": "A1"
-          }
+          "value": [
+            {
+              "container": "growth_plate",
+              "well": "A1"
+            }
+          ]
         },
         {
           "name": "dispense_speed",
