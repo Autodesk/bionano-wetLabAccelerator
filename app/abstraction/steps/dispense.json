@@ -1,5 +1,5 @@
 {
-  "name": "1st_LB_Dispense",
+  "name": "Example Dispense",
   "metadata": {
     "description": "Dispense a reagent into columns of a container"
   },

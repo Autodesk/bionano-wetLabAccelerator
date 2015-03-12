@@ -10,7 +10,7 @@
       },
       "steps": [
         {
-          "operation": "cover",
+          "operation": "gel_separate",
           "requirements": {},
           "transforms": [
             {
@@ -24,7 +24,7 @@
               "value": "myGelRun"
             },
             {
-              "name": "wells",
+              "name": "objects",
               "type": "aliquot+",
               "singleContainer" : false,
               "value": [

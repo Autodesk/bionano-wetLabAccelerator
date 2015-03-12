@@ -6,6 +6,8 @@
  * @description
  * # AutoprotocolInstruction
  * Service in the transcripticApp.
+ * todo - once written, this should be integrated into Operations service
+ * todo - should more consistently handle interpolation of index (esp in ops which are not simpleMapOperation
  */
 angular.module('transcripticApp')
   .service('ConvAutoprotocolInstruction', function (InputTypes, AbstractionUtils, ConversionUtils) {
@@ -20,7 +22,7 @@ angular.module('transcripticApp')
 
     /* SPECTROMETRY */
 
-    //todo - update these to list container + wells - can't simple map
+    //todo - update these to list container + wells - can't simple map using aliquot+ , or just need function to post-process the step
     self.fluorescence = ConversionUtils.simpleMapOperation;
     self.luminescence = ConversionUtils.simpleMapOperation;
     self.absorbance = ConversionUtils.simpleMapOperation;
@@ -29,10 +31,12 @@ angular.module('transcripticApp')
 
     self.transfer = function (op) {
 
-      var transfers = [];
-
       var fromWells = AbstractionUtils.flattenAliquots(ConversionUtils.pluckFieldValueRaw(op.fields, 'from')),
-          toWells = AbstractionUtils.flattenAliquots(ConversionUtils.pluckFieldValueRaw(op.fields, 'to'));
+          toWells = AbstractionUtils.flattenAliquots(ConversionUtils.pluckFieldValueRaw(op.fields, 'to')),
+          volume = ConversionUtils.pluckFieldValueTransformed(op.fields, 'volume'),
+          optionalFields = [ 'dispense_speed' , 'aspirate_speed', 'mix_before' , 'mix_after' ],
+          optionalObj = ConversionUtils.getFieldsIfSet(op.fields, optionalFields),
+          transfers = [];
 
       //todo - eventually, we want to put some of this in 'requirements' for the operation (pending them all written to know what is consistent)
       if ( fromWells.length != toWells.length) {
@@ -44,10 +48,6 @@ angular.module('transcripticApp')
           throw new Error('transfer wells dont match up');
         }
       }
-
-      var volume = ConversionUtils.pluckFieldValueTransformed(op.fields, 'volume'),
-          optionalFields = ['dispense_speed', 'aspirate_speed', 'mix_before', 'mix_after'],
-          optionalObj = ConversionUtils.getFieldsIfSet(op.fields, optionalFields);
 
       //assuming that to_wells is always greater than from_wells
       _.forEach(toWells, function (toWell, index) {
@@ -62,37 +62,83 @@ angular.module('transcripticApp')
     };
 
     self.consolidate = function (op) {
+      var fromWells = AbstractionUtils.flattenAliquots(ConversionUtils.pluckFieldValueRaw(op.fields, 'from')),
+          toWell = ConversionUtils.pluckFieldValueTransformed(op.fields, 'to'),
+          volume = ConversionUtils.pluckFieldValueTransformed(op.fields, 'volume'),
+          optionalFromFields = [ 'aspirate_speed' ],
+          optionalAllFields = [ 'dispense_speed' , 'mix_after' ],
+          optionalFromObj = ConversionUtils.getFieldsIfSet(op.fields, optionalFromFields),
+          optionalAllObj = ConversionUtils.getFieldsIfSet(op.fields, optionalAllFields),
+          fromArray = [];
 
-    };
+      _.forEach(fromWells, function (fromWell) {
+        fromArray.push(_.assign({
+          volume: volume,
+          from: fromWell
+        }, optionalFromObj))
+      });
 
-    self.mix = function (op) {
-
+      return _.assign({
+        to: toWell,
+        from: fromArray
+      }, optionalAllFields);
     };
 
     self.distribute = function (op) {
+      var fromWell = ConversionUtils.pluckFieldValueTransformed(op.fields, 'from'),
+          toWells = AbstractionUtils.flattenAliquots(ConversionUtils.pluckFieldValueRaw(op.fields, 'to')),
+          volume = ConversionUtils.pluckFieldValueTransformed(op.fields, 'volume'),
+          optionalToFields = [ 'dispense_speed' ],
+          optionalAllFields = [ 'aspirate_speed' , 'mix_before' ],
+          optionalToObj = ConversionUtils.getFieldsIfSet(op.fields, optionalToFields),
+          optionalAllObj = ConversionUtils.getFieldsIfSet(op.fields, optionalAllFields),
+          toArray = [];
 
+      _.forEach(toWells, function (fromWell) {
+        toArray.push(_.assign({
+          volume: volume,
+          to: fromWell
+        }, optionalToObj))
+      });
+
+      return _.assign({
+        from: fromWell,
+        to: toArray
+      }, optionalAllFields);
     };
 
-    self.dispense = function (op) {
+    self.mix = function (op) {
+      var wells = ConversionUtils.pluckFieldValueTransformed(op.fields, 'wells'),
+          optionalFields = [ 'repetitions' , 'volume' , 'speed' ],
+          optionalObj = ConversionUtils.getFieldsIfSet(op.fields, optionalFields, true);
 
+      return _.map(wells, function (well) {
+        return _.assign({
+          well: well
+        }, optionalObj);
+      });
     };
+
+    self.dispense = ConversionUtils.simpleMapOperation;
 
     /* TEMPERATURE */
 
     self.incubate = ConversionUtils.simpleMapOperation;
 
-    //note - thermocycle has a lot of weird groups. But logic for those should be self-contained to the group.
-    self.thermocycle = function (op) {
-
-    };
+    //todo - verify this one. Lots of weird groups but should be self-contained within the fields
+    self.thermocycle = ConversionUtils.simpleMapOperation;
 
     /* DNA */
 
-    self.sanger_seq = function (op) {
+    /*
+    self.sangerseq = function (op) {};
+     */
 
-    };
+    self.gel_separate = ConversionUtils.simpleMapOperation;
 
-    self.gel_separate = function (op) {
+    /* CONTAINER HANDLING */
 
-    };
+    self.store = ConversionUtils.simpleMapOperation;
+    self.discard = ConversionUtils.simpleMapOperation;
+
   });

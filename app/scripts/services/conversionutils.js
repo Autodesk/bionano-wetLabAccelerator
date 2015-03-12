@@ -47,13 +47,19 @@ angular.module('transcripticApp')
       return self.transformField(field, converterKey);
     };
 
-    //Given list of fields, and array of desired field keys, returns object where desired key is present only if value is defined
-    self.getFieldsIfSet = function getOptionalFields (fields, desired, converterKey) {
+    //todo - what is desired default behavior for using default value?
+    //Given list of fields, and array of desired field keys, returns object where desired key is present only if value is defined, or uses default value if allowDefault is defined
+    self.getFieldsIfSet = function getOptionalFields (fields, desired, allowDefault, converterKey) {
       var obj = {};
       _.forEach(desired, function (desiredKey) {
-        var fieldVal = self.pluckFieldValueTransformed(fields, desiredKey, converterKey);
+        var field = self.pluckField(fields, desiredKey),
+            fieldVal = self.transformField(field, converterKey),
+            fieldDefault = _.result(field, 'default');
+
         if (fieldVal) {
           obj[desiredKey] = fieldVal;
+        } else if ( !!allowDefault && !_.isEmpty(fieldDefault) ){
+          obj[desiredKey] = fieldDefault;
         }
       });
       return obj;

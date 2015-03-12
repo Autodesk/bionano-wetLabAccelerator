@@ -129,10 +129,24 @@ angular.module('transcripticApp')
 
 
     //DNA stuff
+
+    /*
     "sangerseq"   : {
       "operation": "sangerseq"
     },
+
+     */
     "gel_separate": {
       "operation": "gel_separate"
+    },
+
+    //containers
+
+    "store" : {
+      "scaffold" : {}
+    },
+    "discard" : {
+      "scaffold" : {}
     }
+
   });

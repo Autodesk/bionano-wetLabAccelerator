@@ -28,7 +28,7 @@
         },
         {
           "name": "volume",
-          "type": "volunme",
+          "type": "volume",
           "optional" : true,
           "default": "50:microliter",
           "value": "50:microliter"
