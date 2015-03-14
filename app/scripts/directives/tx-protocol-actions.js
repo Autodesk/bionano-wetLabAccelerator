@@ -7,7 +7,7 @@
  * # txProtocolActions
  */
 angular.module('transcripticApp')
-  .directive('txProtocolActions', function () {
+  .directive('txProtocolActions', function (Autoprotocol) {
     return {
       templateUrl: 'views/tx-protocol-actions.html',
       restrict: 'E',
@@ -19,6 +19,11 @@ angular.module('transcripticApp')
       controllerAs: 'actionCtrl',
       controller: function ($scope, $element, $attrs) {
         //todo - all actions needed from protocolCtrl
+        var self = this;
+
+        self.logAutoprotocol = function () {
+          console.log(angular.toJson(Autoprotocol.fromAbstraction(self.protocol), true));
+        }
       },
       link: function postLink(scope, element, attrs) {
 

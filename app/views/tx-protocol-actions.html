@@ -32,6 +32,13 @@
             tooltip-append-to-body="true">
       <span class="glyphicon glyphicon-cloud-upload"></span>
     </button>
+    <button class="btn btn-default btn-sm"
+            ng-disabled="actionCtrl.protocolForm.$error.json"
+            ng-click="actionCtrl.logAutoprotocol()"
+            tooltip="Log Autoprotocol"
+            tooltip-append-to-body="true">
+      <span class="glyphicon glyphicon-console"></span>
+    </button>
   </div>
 
   <div class="protocol-actions-right">
