@@ -1,0 +1,19 @@
+<input type="checkbox"
+       ng-model="showMixwrap"
+       ng-change="fieldCtrl.mixwrapToggle(showMixwrap)"> {{fieldCtrl.field.name}}
+
+<div ng-show="showMixwrap">
+
+  <!-- todo - this is a hack. maybe it makes sense to create a directive specifically for dimensional values -->
+  <tx-protocol-field ng-model="fieldCtrl.model.volume"
+                     field="{type: 'volume'}">
+  </tx-protocol-field>
+
+  <tx-protocol-field ng-model="fieldCtrl.model.speed"
+                     field="{type: 'flowrate'}">
+  </tx-protocol-field>
+
+  <input type="number"
+         ng-model="fieldCtrl.model.repetitions"
+         ng-required="true"> Reps
+</div>

@@ -1,6 +1,5 @@
 <span ng-bind="opCtrl.op.operation"></span>
 
 <tx-protocol-field ng-repeat="field in opCtrl.op.fields"
-                   type="{{field.type}}"
                    ng-model="field.value"
                    field="field"></tx-protocol-field>
