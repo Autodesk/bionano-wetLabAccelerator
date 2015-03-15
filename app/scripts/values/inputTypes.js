@@ -52,6 +52,26 @@ angular.module('transcripticApp').service('InputTypes', function (AbstractionUti
         return _.isNumber(parseFloat(input));
       }
     },
+    "group": {
+      description        : "an object",
+      "autoprotocol-type": "group",
+      toAutoprotocol     : function (input) {
+        return input;
+      },
+      verification       : function (input) {
+        return _.isObject(input) && !_.isEmpty(input);
+      }
+    },
+    "group+": {
+      description        : "An Array of objects (groups)",
+      "autoprotocol-type": "group+",
+      toAutoprotocol     : function (input) {
+        return input;
+      },
+      verification       : function (input) {
+        return _.isArray(input) && _.every(input, _.isObject);
+      }
+    },
 
     //container / well
 
