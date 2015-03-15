@@ -65,12 +65,17 @@ angular.module('transcripticApp')
         _.assign(references, makeReference(abstRef));
       });
 
-      //each group gives an array, need to concat later (_.flatten)
-      var instructions = _.map(abst.groups, _.partialRight(unwrapGroup, abst.parameters) );
+      //each group gives an array, need to concat (_.flatten)
+      var instructions = _.flatten(_.map(abst.groups, unwrapGroup));
 
       //console.log('interpolating everything');
 
-      var interpolatedInstructions = AbstractionUtils.interpolateObject(_.flatten(instructions));
+      var paramKeyvals = _.zipObject(
+        _.pluck(abst.parameters, 'name'),
+        _.pluck(abst.parameters, 'value')
+      );
+
+      var interpolatedInstructions = AbstractionUtils.interpolateObject(instructions, paramKeyvals);
 
       return {
         refs : references,

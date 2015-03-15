@@ -16,14 +16,20 @@
       "storage": "cold_20"
     }
   ],
-  "inputs": {
-    "myPlate" : "container",
-    "myAbsorbance" : "wavelength"
-  },
-  "parameters" : {
-    "myPlate" : "ecoli_container",
-    "myAbsorbance" : "600:nanometer"
-  },
+  "parameters" : [
+    {
+      "name": "myPlate",
+      "type" : "container",
+      "value": "ecoli_container",
+      "description" : "Container to be used in the protocol"
+    },
+    {
+      "name": "myAbsorbance",
+      "type" : "wavelength",
+      "value": "600:nanometer",
+      "default": "600:nanometer"
+    }
+  ],
   "metadata": {},
   "groups": [
     {
