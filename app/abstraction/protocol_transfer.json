@@ -25,7 +25,7 @@
     },
     {
       "name": "myAbsorbance",
-      "type" : "wavelength",
+      "type" : "length",
       "value": "600:nanometer",
       "default": "600:nanometer"
     }

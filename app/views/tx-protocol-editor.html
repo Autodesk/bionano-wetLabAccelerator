@@ -1,13 +1,34 @@
-<div class="protocol-inputs">
+<div>
+  <div>
+    <div class="btn-group"
+         style="margin-right: 15px;">
+      <button class="btn btn-default btn-sm btn-labeled"
+              ng-class="{'btn-info' : editorCtrl.paramsVisible}"
+              ng-click="editorCtrl.paramsVisible = !editorCtrl.paramsVisible">
+          <span class="btn-label">
+            <span class="glyphicon glyphicon-list-alt"></span>
+          </span>
+        Parameters
+      </button>
+      <button class="btn btn-default btn-sm btn-labeled"
+              ng-class="{'btn-info' : editorCtrl.refsVisible}"
+              ng-click="editorCtrl.refsVisible = !editorCtrl.refsVisible">
+          <span class="btn-label">
+            <span class="glyphicon glyphicon-link"></span>
+          </span>
+        References
+      </button>
+    </div>
+  </div>
 
-</div>
+  <tx-protocol-parameters class="protocol-parameters"
+                          ng-show="editorCtrl.paramsVisible"
+                          parameters="editorCtrl.protocol.parameters">
+  </tx-protocol-parameters>
 
-<div class="protocol-parameters">
-
-</div>
-
-<div class="protocol-references">
-
+  <tx-protocol-refs ng-show="editorCtrl.refsVisible"
+                    class="protocol-references">
+  </tx-protocol-refs>
 </div>
 
 <div class="protocol-instructions"
