@@ -1,1 +1,38 @@
-<p>This is the tx-protocol-refs view.</p>
+<table>
+  <thead><tr>
+    <td>Name</td>
+    <td>New?</td>
+    <td>Type</td>
+    <td>Store</td>
+  </tr></thead>
+  <tbody>
+  <tr ng-repeat="ref in refsCtrl.refs">
+    <td>
+      <input type="text"
+             ng-model="ref.name">
+    </td>
+    <td>
+      <input type="checkbox"
+             ng-model="ref.isNew">
+    </td>
+    <td ng-if="ref.isNew">
+      <select ng-model="ref.type"
+              ng-required="ref.isNew"
+              ng-options="t as t for (t, opts) in refsCtrl.typeOptions"></select>
+    </td>
+    <td ng-if="!ref.isNew">
+      <select ng-model="ref.id"
+              ng-required="!ref.isNew"
+              ng-options="c.id as (c.name || c.id) for c in refsCtrl.availableContainers"></select>
+    </td>
+    <td>
+      <select ng-model="ref.storage"
+              ng-options="o as o for o in refsCtrl.storageOptions"></select>
+    </td>
+  </tr>
+  <tr>
+    <button class="btn btn-default"
+            ng-click="refsCtrl.addReference()">Add Reference</button>
+  </tr>
+  </tbody>
+</table>

@@ -7,17 +7,30 @@
  * # txProtocolRefs
  */
 angular.module('transcripticApp')
-  .directive('txProtocolRefs', function () {
+  .directive('txProtocolRefs', function (ContainerOptions, StorageOptions, Container) {
     return {
       templateUrl: 'views/tx-protocol-refs.html',
       restrict : 'E',
       scope : {
-        refs: '='
+        refs: '=references'
       },
       bindToController: true,
       controllerAs : 'refsCtrl',
+      controller: function ($scope, $element, $attrs) {
+        var self = this;
+
+        self.typeOptions = ContainerOptions;
+
+        self.storageOptions = _.union([false], StorageOptions.storage);
+
+        //todo - write abstraction for inventory, and use instead of this
+        self.availableContainers = Container.list();
+
+        self.addReference = function () {
+          self.refs.push({});
+        };
+      },
       link: function postLink(scope, element, attrs) {
-        element.text('todo - protocol refs directive');
       }
     };
   });
