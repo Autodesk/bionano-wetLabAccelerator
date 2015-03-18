@@ -21,9 +21,12 @@ angular.module('transcripticApp')
 
     /* SPECTROMETRY */
 
-    self.fluorescence = _.flow(ConversionUtils.simpleMapOperation, ConversionUtils.pluckOperationContainerFromWells);
-    self.luminescence = _.flow(ConversionUtils.simpleMapOperation, ConversionUtils.pluckOperationContainerFromWells);
-    self.absorbance = _.flow(ConversionUtils.simpleMapOperation, ConversionUtils.pluckOperationContainerFromWells);
+    self.fluorescence = _.flow(ConversionUtils.simpleMapOperation,
+                               _.partial(ConversionUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
+    self.luminescence = _.flow(ConversionUtils.simpleMapOperation,
+                               _.partial(ConversionUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
+    self.absorbance = _.flow(ConversionUtils.simpleMapOperation,
+                             _.partial(ConversionUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
 
     /* LIQUID HANDLING */
 

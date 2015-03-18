@@ -55,8 +55,14 @@
         <span class="btn-label">
           <span class="glyphicon glyphicon-share"></span>
         </span>
-        Run
+        Execute
       </button>
     </div>
   </div>
 </div>
+
+<tx-requestresponse config="actionCtrl.analysisResponse.config"
+                    response="actionCtrl.analysisResponse.response"></tx-requestresponse>
+
+<tx-requestresponse config="actionCtrl.runResponse.config"
+                    response="actionCtrl.runResponse.response"></tx-requestresponse>

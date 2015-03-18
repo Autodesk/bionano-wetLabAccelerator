@@ -34,30 +34,68 @@ angular.module('transcripticApp')
           console.log(angular.toJson(Autoprotocol.fromAbstraction(self.protocol), true));
         };
 
-        self.verifyProtocol = function () {
-          var convAuto = Autoprotocol.fromAbstraction(self.protocol);
-          console.log(convAuto);
+        // SUBMIT / ANALYZE RUNS
 
-          firstProjIdPromise.then(function (firstProjId) {
-            Run.analyze({project: firstProjId}, {title : "Verification", protocol: convAuto}).$promise.then(function (response) {
+        function constructRunPayload () {
+          return {
+            title: "My Submission", // todo - make editable
+            protocol: Autoprotocol.fromAbstraction(self.protocol)
+          };
+        }
 
-              self.verifyResponse = response;
-              console.log(response);
-            });
+
+        function resourceWrap (funcToRun, toModify) {
+          angular.extend(toModify.config, {
+            initiated: true,
+            processing: true
           });
-        };
-
-        self.executeProtocol = function () {
-          var convAuto = Autoprotocol.fromAbstraction(self.protocol);
-          console.log(convAuto);
 
           firstProjIdPromise.then(function (firstProjId) {
-            Run.submit({project: firstProjId}, {title : "Submission", protocol: convAuto}).$promise.then(function (response) {
-              self.runResponse = response;
-              console.log(response);
-            });
+            funcToRun({project : firstProjId}, constructRunPayload()).$promise.
+              then(function runSuccess (d) {
+                console.log(d);
+                angular.extend(toModify.config, {
+                  processing: false,
+                  error: false
+                });
+                angular.extend(toModify.response, d);
+              }, function runFailure (e) {
+                console.log(e);
+                angular.extend(toModify.config, {
+                  processing: false,
+                  error: true
+                });
+                //use as simple check for something like a 404 error - i.e. not protocol error but $http error
+                if (angular.isUndefined(e.data.protocol)) {
+                  angular.extend(toModify.response, {"error" : "Request did not go through... check the console"})
+                } else {
+                  angular.extend(toModify.response, e.data.protocol);
+                }
+              });
           });
         }
+
+        self.analysisResponse = {
+          config: {
+            type: "Verification",
+            textProcessing: "Processing Verification...",
+            textSuccess: "Protocol valid",
+            textError: "Problems with Protocol listed below"
+          },
+          response: {}
+        };
+        self.runResponse = {
+          config: {
+            type: "Run",
+            textProcessing: "Processing Run...",
+            textSuccess: "Protocol initiated",
+            textError: "There was an error running your protocol"
+          },
+          response: {}
+        };
+
+        self.verifyProtocol = angular.bind(self, resourceWrap, Run.analyze, self.analysisResponse);
+        self.executeProtocol = angular.bind(self, resourceWrap, Run.submit, self.runResponse);
       },
       link: function postLink(scope, element, attrs) {
 
