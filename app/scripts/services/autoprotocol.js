@@ -41,7 +41,7 @@ angular.module('transcripticApp')
       var internal = {};
 
       if (!!ref.isNew || _.isUndefined(ref.id)) {
-        _.assign(internal, {type: ref.type});
+        _.assign(internal, {new: ref.type});
       } else {
         _.assign(internal, {id: ref.id});
       }

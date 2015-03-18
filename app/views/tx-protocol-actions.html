@@ -43,13 +43,15 @@
 
   <div class="protocol-actions-right">
     <div class="btn-group">
-      <button class="btn btn-default btn-sm btn-labeled">
+      <button class="btn btn-default btn-sm btn-labeled"
+              ng-click="actionCtrl.verifyProtocol()">
         <span class="btn-label">
           <span class="glyphicon glyphicon-check"></span>
         </span>
         Verify
       </button>
-      <button class="btn btn-default btn-sm btn-labeled">
+      <button class="btn btn-default btn-sm btn-labeled"
+              ng-click="actionCtrl.executeProtocol()">
         <span class="btn-label">
           <span class="glyphicon glyphicon-share"></span>
         </span>
