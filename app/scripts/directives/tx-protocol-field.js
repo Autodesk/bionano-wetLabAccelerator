@@ -66,7 +66,8 @@ angular.module('transcripticApp')
             /* get the partial */
 
             return $http.get('views/inputs/' + partial + '.html').then(function (data) {
-              iElement.html($compile(angular.element(data.data))(scope));
+              var $el = angular.element(data.data);
+              iElement.html($compile($el)(scope));
               //todo - add inputAttrs e.g. for dimensional
             });
           },

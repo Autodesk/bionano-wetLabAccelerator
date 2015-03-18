@@ -1,5 +1,11 @@
 <span ng-bind="opCtrl.op.operation"></span>
 
-<tx-protocol-field ng-repeat="field in opCtrl.op.fields"
-                   ng-model="field.value"
-                   field="field"></tx-protocol-field>
+<table>
+  <tr ng-repeat="field in opCtrl.op.fields">
+    <td>{{field.name}}</td>
+    <td>
+      <tx-protocol-field ng-model="field.value"
+                         field="field"></tx-protocol-field>
+    </td>
+  </tr>
+</table>

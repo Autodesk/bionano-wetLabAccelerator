@@ -7,7 +7,7 @@
  * # txProtocolRefs
  */
 angular.module('transcripticApp')
-  .directive('txProtocolRefs', function (ContainerOptions, StorageOptions, Container) {
+  .directive('txProtocolRefs', function (Auth, ContainerOptions, StorageOptions, Container) {
     return {
       templateUrl: 'views/tx-protocol-refs.html',
       restrict : 'E',
@@ -24,7 +24,10 @@ angular.module('transcripticApp')
         self.storageOptions = _.union([false], StorageOptions.storage);
 
         //todo - write abstraction for inventory, and use instead of this
-        self.availableContainers = Container.list();
+        Auth.watch(function () {
+          self.availableContainers = Container.list();
+        });
+
 
         self.addReference = function () {
           self.refs.push({});
