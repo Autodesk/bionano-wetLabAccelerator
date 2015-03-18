@@ -57,6 +57,15 @@ angular.module('transcripticApp')
       return '' + container + (_.isString(tempDelimiter) ? tempDelimiter : containerWellDelimiter) + well;
     };
 
+    //given a string in form "container/well", returns object in form { container : '<container>', well: '<well>' }
+    self.splitContainerWell = function (containerWell) {
+      var split = containerWell.split("/");
+      return {
+        container: split[0],
+        well: split[1]
+      };
+    };
+
     //given array of objects with keys container + well, create array of strings in format "container/well", or "well" if ignoreContainer is truthy
     self.flattenAliquots = function (abstAliquots, ignoreContainer) {
       if (!!ignoreContainer) {

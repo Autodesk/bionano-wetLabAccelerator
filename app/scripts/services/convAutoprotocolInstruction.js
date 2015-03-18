@@ -7,7 +7,6 @@
  * # AutoprotocolInstruction
  * Service in the transcripticApp.
  * todo - once written, this should be integrated into Operations service
- * todo - should more consistently handle interpolation of index (esp in ops which are not simpleMapOperation
  */
 angular.module('transcripticApp')
   .service('ConvAutoprotocolInstruction', function (InputTypes, AbstractionUtils, ConversionUtils) {
@@ -22,10 +21,9 @@ angular.module('transcripticApp')
 
     /* SPECTROMETRY */
 
-    //todo - update these to list container + wells - can't simple map using aliquot+ , or just need function to post-process the step
-    self.fluorescence = ConversionUtils.simpleMapOperation;
-    self.luminescence = ConversionUtils.simpleMapOperation;
-    self.absorbance = ConversionUtils.simpleMapOperation;
+    self.fluorescence = _.flow(ConversionUtils.simpleMapOperation, ConversionUtils.pluckOperationContainerFromWells);
+    self.luminescence = _.flow(ConversionUtils.simpleMapOperation, ConversionUtils.pluckOperationContainerFromWells);
+    self.absorbance = _.flow(ConversionUtils.simpleMapOperation, ConversionUtils.pluckOperationContainerFromWells);
 
     /* LIQUID HANDLING */
 

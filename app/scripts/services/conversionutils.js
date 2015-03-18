@@ -94,6 +94,31 @@ angular.module('transcripticApp')
     };
 
     /*******
+     Operation Manipulation
+     *******/
+
+    //given wells in op specified by wellsKey (default 'wells) in form "container/well", removes 'container' from each and adds key `containerKey` (default 'object') with value extracted
+    //does not handle containers being different currently
+    self.pluckOperationContainerFromWells = function (op, containerKey, wellsKey) {
+      wellsKey = _.isUndefined(wellsKey) ? 'wells' : wellsKey;
+      containerKey = _.isUndefined(containerKey) ? 'object' : containerKey;
+
+      var firstContainer = AbstractionUtils.splitContainerWell(op[wellsKey][0]).container;
+
+      //redo the wells
+      var strippedWells = _.map(op[wellsKey], function (well) {
+        return AbstractionUtils.splitContainerWell(well).well;
+      });
+
+      //need to set key dynamically
+      var obj = {};
+      obj[containerKey] = firstContainer;
+      obj[wellsKey] = strippedWells;
+
+      return _.assign({}, op, obj)
+    };
+
+    /*******
      Wrapping
      ******/
 
