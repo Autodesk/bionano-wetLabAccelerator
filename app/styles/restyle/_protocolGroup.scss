@@ -24,6 +24,11 @@ tx-protocol-group {
 
   .protocol-group-header {
     line-height: 1em;
+    cursor: all-scroll;
+
+    * {
+      cursor: pointer;
+    }
   }
 
   .protocol-group-main {

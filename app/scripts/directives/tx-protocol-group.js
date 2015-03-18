@@ -42,6 +42,11 @@ angular.module('transcripticApp')
             !( $scope.logVisible );
           $scope.jsonEditing = false;
         };
+
+        self.opSortOptions = {
+          handle: '.operation-name',
+          containment: 'parent'
+        };
       },
       //editorCtrl only exposed in link
       link: function (scope, element, attrs, editorCtrl) {

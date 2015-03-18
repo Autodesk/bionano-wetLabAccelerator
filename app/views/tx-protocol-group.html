@@ -51,12 +51,12 @@
 
 </div>
 <div class="protocol-group-main"
+     ui-sortable="groupCtrl.opSortOptions"
+     ng-model="groupCtrl.group.steps"
      ng-hide="isCollapsed">
-
   <tx-protocol-op ng-repeat="step in groupCtrl.group.steps"
                   protocol-step="step">
   </tx-protocol-op>
-
 </div>
 <div class="protocol-group-footer"
      ng-hide="isCollapsed">
