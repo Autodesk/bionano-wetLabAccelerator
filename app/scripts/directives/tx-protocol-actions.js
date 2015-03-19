@@ -23,15 +23,18 @@ angular.module('transcripticApp')
 
         Auth.watch(function () {
           firstProjIdPromise = Project.list().$promise.then(function (projects) {
-            console.log('first proj');
             return $q.when(projects[0].id);
           });
         });
 
-        firstProjIdPromise.then(console.log.bind(console));
-
         self.logAutoprotocol = function () {
           console.log(angular.toJson(Autoprotocol.fromAbstraction(self.protocol), true));
+        };
+
+        self.toggleMetadataVisible = function (event, forceState) {
+          event.preventDefault();
+          event.stopPropagation();
+          $scope.protocolMetadataVisible = _.isUndefined(forceState) ? !$scope.protocolMetadataVisible : forceState;
         };
 
         // SUBMIT / ANALYZE RUNS

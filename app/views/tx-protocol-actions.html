@@ -1,5 +1,5 @@
-<div class="protocol-title" dropdown>
-  <div dropdown-toggle>
+<div class="protocol-title" ng-class="{'open' : protocolMetadataVisible}">
+  <div ng-click="actionCtrl.toggleMetadataVisible($event)">
     <span class="protocol-name"
           ng-bind="actionCtrl.protocol.name"></span>
 
@@ -8,7 +8,20 @@
     </div>
   </div>
   <div class="dropdown-menu">
-    <p>Todo - name, metadata, tags, sharing</p>
+    <table>
+      <tr>
+        <td>Name</td>
+        <td><input type="text"  class="form-control" ng-model="actionCtrl.protocol.name"></td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td><textarea rows="2" class="form-control" ng-model="actionCtrl.protocol.metadata.description"></textarea></td>
+      </tr>
+      <tr>
+        <td>Tags</td>
+        <td><input type="text" class="form-control" ng-list ng-model="actionCtrl.protocol.metadata.tags"></td>
+      </tr>
+    </table>
   </div>
 </div>
 
