@@ -12,6 +12,9 @@
  *    value : <value>
  *  }, ... }
  *
+ *
+ * Through combination of attributes no-brush and select-persist, you can specify whether one/many wells can be selected,
+ * and whether multiple groups can be selected
  */
 angular.module('transcripticApp')
   .directive('txPlate', function (ContainerOptions, WellConv, $timeout) {
@@ -21,6 +24,8 @@ angular.module('transcripticApp')
       scope: {
         container: '=', //shortname (key of ContainerOptions),
         plateData: '=',
+        noBrush: '=', //boolean - prevent brush for selection, use clicks instead
+        selectPersist: '=', //boolean - allow selections to persist across one brush / click
         onHover: '&',   //returns array of selected wells
         onSelect: '&'   //returns array of selected wells
       },
@@ -110,6 +115,7 @@ angular.module('transcripticApp')
               .classed('well', true)
               .on('mouseenter', wellOnMouseover)
               .on('mouseleave', wellOnMouseleave)
+              .on('click', wellOnClick)
               .style('fill', 'rgba(255,255,255,0)')
               .each(function (d, i) {
                 //todo - bind data beyond just well here
@@ -190,20 +196,44 @@ angular.module('transcripticApp')
           tooltipEl.classed("hidden", true);
         }
 
+        /****** Well clicking ******/
+
+        //should be mutually exclusive to brush - events won't go down anyway
+        function wellOnClick () {
+
+          if (scope.noBrush) {
+
+            var $el = d3.select(this),
+                wasSelected = $el.classed('brushSelected');
+
+            if (!scope.selectPersist) {
+              svg.selectAll("circle").call(unselectWells);
+            }
+
+            $el.classed('brushSelected', !wasSelected);
+
+            scope.$applyAsync(function () {
+              scope.onSelect({ $wells: getSelectedWells() });
+            });
+          }
+        }
+
         /***** BRUSHING *****/
         // note that b/c pointer events, this competes with hovering etc. so we put it on top
 
-        var brush = d3.svg.brush()
-          .x(xScale)
-          .y(yScale)
-          .on("brushstart", brushstart)
-          .on("brush", brushmove)
-          .on("brushend", brushend);
+        if (!scope.noBrush) {
+          var brush = d3.svg.brush()
+            .x(xScale)
+            .y(yScale)
+            .on("brushstart", brushstart)
+            .on("brush", brushmove)
+            .on("brushend", brushend);
 
-        var brushg = svg.append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+          var brushg = svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        brushg.call(brush);
+          brushg.call(brush);
+        }
         var brushLastSelected = [];
 
         function brushstart() {}
@@ -211,10 +241,15 @@ angular.module('transcripticApp')
         // Highlight the selected circles.
         function brushmove() {
 
-          var map = getSelectedWells(brush.extent());
+          var map = getWellsInExtent(brush.extent());
+
+          //get the outersection of selected wells
+          if (scope.selectPersist) {
+            map = WellConv.toggleWells(map, brushLastSelected);
+          }
 
           svg.selectAll("circle")
-            .classed("brushSelected", _.partial(_.has, map) );
+            .classed("brushSelected", _.partial(_.result, map, _, false) );
 
           scope.$applyAsync(function () {
             scope.onHover({ $wells: _.keys(map) });
@@ -227,7 +262,7 @@ angular.module('transcripticApp')
         //get the selection, and propagate / save it
         function brushend() {
 
-          var selected = svg.selectAll(".brushSelected").data();
+          var selected = getSelectedWells();
 
           if (brush.empty() &&
               selected.length == 1 &&
@@ -249,7 +284,7 @@ angular.module('transcripticApp')
 
         /**** helpers ****/
 
-        function getSelectedWells (extent) {
+        function getWellsInExtent (extent) {
           var d = xScale.domain(),
               r = xScale.range(),
               //note - need to X correct for whatever reason
@@ -259,12 +294,16 @@ angular.module('transcripticApp')
           return WellConv.createMapGivenBounds(topLeft, bottomRight);
         }
 
+        function getSelectedWells () {
+          return svg.selectAll(".brushSelected").data();
+        }
+
         function unselectWells (selection) {
           return selection.classed('brushSelected', false);
         }
 
         function clearBrush () {
-          if ( _.isFunction(brush.clear) ) {
+          if (!_.isEmpty(brush) && _.isFunction(brush.clear) ) {
             //clear the brush and update the DOM
             brushg.call(brush.clear());
             //trigger event to propagate data flow that it has been emptied
