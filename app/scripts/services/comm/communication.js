@@ -7,7 +7,7 @@
  * # communication
  * Service in the transcripticApp.
  */
-angular.module('transcripticApp')
+angular.module('tx.communication')
   .service('Communication', function (Auth) {
 
     this.transcripticRoot = "https://secure.transcriptic.com/";

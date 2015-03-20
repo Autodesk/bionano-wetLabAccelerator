@@ -7,7 +7,7 @@
  * # Order
  * Factory in the transcripticApp.
  */
-angular.module('transcripticApp')
+angular.module('tx.communication')
   .factory('Order', function ($resource, Communication, Auth) {
     return $resource(Communication.root + ':organization/:project/runs',
       //defaults

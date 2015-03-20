@@ -6,7 +6,7 @@
  * @description
  * # txProtocolInput
  */
-angular.module('transcripticApp')
+angular.module('tx.protocolEditor')
   .directive('txProtocolField', function ($http, $compile, InputTypes) {
     return {
       restrict: 'E',

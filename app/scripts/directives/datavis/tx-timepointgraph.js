@@ -25,7 +25,7 @@
  *
  //todo - need to handle key not being present for given ordinal - shouldn't display line? or just interpolate?
  */
-angular.module('transcripticApp')
+angular.module('tx.datavis')
   .directive('txTimepointgraph', function () {
     return {
       restrict: 'E',

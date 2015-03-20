@@ -6,7 +6,7 @@
  * @description
  * # txWelltip
  */
-angular.module('transcripticApp')
+angular.module('tx.datavis')
   .directive('txWelltip', function () {
     return {
       restrict: 'E',

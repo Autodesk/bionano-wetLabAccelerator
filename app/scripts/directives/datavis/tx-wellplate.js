@@ -8,7 +8,7 @@
  */
 //todo - might make sense to move canvas or something
 // todo - handle clicking element outside well
-angular.module('transcripticApp')
+angular.module('tx.datavis')
   .directive('txWellplate', function () {
 
     var letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -18,7 +18,7 @@ angular.module('transcripticApp')
     }
 
     return {
-      templateUrl: 'views/tx-wellplate.html',
+      templateUrl: '../../../views/tx-wellplate.html',
       restrict: 'E',
       require: 'ngModel',
       scope: {

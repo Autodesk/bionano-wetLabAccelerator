@@ -7,7 +7,7 @@
  * Service converting between abstraction and autoprotocol
  * todo - rename this service
  */
-angular.module('transcripticApp')
+angular.module('tx.conversion')
   .service('Autoprotocol', function (ConvAutoprotocolInstruction, ConversionUtils, AbstractionUtils) {
 
     function convertInstruction (inst, localParams) {

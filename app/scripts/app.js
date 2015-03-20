@@ -20,7 +20,12 @@ angular
     'ui.bootstrap',
     'ui.sortable',
     'angularFileUpload',
-    'firebase'
+    'firebase',
+    'tx.communication',
+    'tx.abstraction',
+    'tx.conversion',
+    'tx.datavis',
+    'tx.protocolEditor'
   ])
   .config(function ($routeProvider) {
 

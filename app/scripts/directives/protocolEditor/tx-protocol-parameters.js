@@ -7,7 +7,7 @@
  * # txProtocolParameters
  * //todo - need to verify value is correct given the type... use tx-protocol-field?
  */
-angular.module('transcripticApp')
+angular.module('tx.protocolEditor')
   .directive('txProtocolParameters', function (InputTypes) {
     return {
       templateUrl: 'views/tx-protocol-parameters.html',

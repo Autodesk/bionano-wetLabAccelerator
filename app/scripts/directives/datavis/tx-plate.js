@@ -20,7 +20,7 @@
  * todo - circle to clear whole selection (top-left)
  * todo - store selection in indexed array, show indices
  */
-angular.module('transcripticApp')
+angular.module('tx.datavis')
   .directive('txPlate', function (ContainerOptions, WellConv) {
 
     return {
@@ -129,7 +129,7 @@ angular.module('transcripticApp')
               .on('click', wellOnClick)
               .style('fill', 'rgba(255,255,255,0)')
               .each(function (d, i) {
-                //todo - bind data beyond just well here
+                //could bind data beyond just well here... but what makes sense?
               });
           }
 
@@ -245,44 +245,88 @@ angular.module('transcripticApp')
 
           brushg.call(brush);
         }
-        var brushLastSelected = [];
 
-        function brushstart() {}
+        //fixme - not behaving as expected
+        // need to track both whole selection, and previous selection
+        // on start, clear previous selection if moving brush
+        // on move, if persisting, retain whole selection, minus previous, plus current brush
 
-        // Highlight the selected circles.
+        var brushIsDrawn = false,      //whether brush region is freshly drawn (not moved)
+            brushLastSelected = [];   //last selection of brush (click to kill brush excepted)
+
+        function brushstart() {
+
+          //if already have a brush
+          if (brushIsDrawn) {
+            //check for empty - clicked outside existing brush
+            if (brush.empty()) {
+              brushIsDrawn = false;
+            }
+            //otherwise, moving brush = remove last selection - new selection will be added in brushmove
+            else {
+              var map = createWellMap(brushLastSelected, false);
+              toggleWellsFromMap(map, false);
+            }
+          }
+
+          if (!scope.selectPersist) {
+            svg.selectAll("circle").call(unselectWells);
+          }
+        }
+
+        //Triggered on clicks, moving brush, or clicking outside
         function brushmove() {
 
           var map = getWellsInExtent(brush.extent());
 
-          //get the outersection of selected wells
-          if (scope.selectPersist) {
+          //get the outersection of selected wells, unless moving the brush
+          if (!brushIsDrawn && scope.selectPersist) {
             map = WellConv.toggleWells(map, brushLastSelected);
           }
 
-          svg.selectAll("circle")
-            .classed("brushSelected", _.partial(_.result, map, _, false) );
+          if (brushIsDrawn) {
+
+          } else {
+
+          }
+
+          //todo - fold already selected wells into map
+
+          toggleWellsFromMap(map);
 
           scope.$applyAsync(function () {
             scope.onHover({ $wells: _.keys(map) });
           });
-
-          // deprecated
-          // svg.selectAll("circle").classed("brushSelected", _.partial(elementInBounds, brush.extent()));
         }
 
         //get the selection, and propagate / save it
         function brushend() {
 
-          var selected = getSelectedWells();
+          var selected;
 
-          if (brush.empty() &&
-              selected.length == 1 &&
-              brushLastSelected.length == 1 &&
-              brushLastSelected[0] == selected[0]) {
+          //if have a brush and they clicked without dragging
+          if (brushIsDrawn && brush.empty()) {
+              brushIsDrawn = false;
+              selected = [];
 
-            svg.selectAll("circle").call(unselectWells);
-            selected = [];
+            if (!scope.selectPersist) {
+              svg.selectAll("circle").call(unselectWells);
+            }
           }
+          //moved the brush
+          else if (brushIsDrawn && !brush.empty()) {
+            selected = getSelectedWells();
+            brushIsDrawn = true;
+          }
+          //clicked a well
+          else if (brush.empty() && !brushIsDrawn) {
+            selected = getSelectedWells();
+            brushIsDrawn = false;
+          }
+          //not empty, and no brush drawn (impossible)
+          else {}
+
+          console.log(brushIsDrawn, brush.empty(), selected.length, selected, brushLastSelected);
 
           scope.$applyAsync(function () {
             scope.onSelect({ $wells: selected });
@@ -293,6 +337,10 @@ angular.module('transcripticApp')
 
         /**** helpers ****/
 
+        function createWellMap (wells, value) {
+          return _.zipObject( brushLastSelected, _.range(wells.length).map(_.constant(value)) )
+        }
+
         function getWellsInExtent (extent) {
           var d = xScale.domain(),
               r = xScale.range(),
@@ -301,6 +349,16 @@ angular.module('transcripticApp')
               bottomRight = [ d[d3.bisect(r, extent[1][1]) - 1] - 1, d[d3.bisect(r, extent[1][0]) - 1] ];
 
           return WellConv.createMapGivenBounds(topLeft, bottomRight);
+        }
+
+        function toggleWellsFromMap (map, toggleAll) {
+          var selection = svg.selectAll("circle");
+
+          if (!toggleAll) {
+            selection = selection.filter(_.partial(_.has, map));
+          }
+
+          selection.classed("brushSelected", _.partial(_.result, map, _, false) );
         }
 
         function getSelectedWells () {

@@ -6,7 +6,7 @@
  * @description
  * # txOperation
  */
-angular.module('transcripticApp')
+angular.module('tx.protocolEditor')
   .directive('txProtocolOp', function () {
     return {
       templateUrl: 'views/tx-protocol-op.html',

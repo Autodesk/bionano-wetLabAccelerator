@@ -7,7 +7,7 @@
  * # Auth
  * Service in the transcripticApp.
  */
-angular.module('transcripticApp')
+angular.module('tx.communication')
   .provider('Auth', function () {
 
   var self = this;

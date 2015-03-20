@@ -13,7 +13,7 @@
  * Assumes all x values represented are present in first entry list
  */
 //todo - d3 as module / dep?
-angular.module('transcripticApp')
+angular.module('tx.datavis')
   .directive('txPlategraph', function () {
     return {
       restrict: 'E',

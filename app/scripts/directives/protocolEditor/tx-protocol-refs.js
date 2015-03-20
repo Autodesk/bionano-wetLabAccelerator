@@ -5,8 +5,9 @@
  * @name transcripticApp.directive:txProtocolRefs
  * @description
  * # txProtocolRefs
+ * //todo - refactor to use internal container options, storage options? Should not be specific to transcriptic
  */
-angular.module('transcripticApp')
+angular.module('tx.protocolEditor')
   .directive('txProtocolRefs', function (Auth, ContainerOptions, StorageOptions, Container) {
     return {
       templateUrl: 'views/tx-protocol-refs.html',
@@ -27,7 +28,6 @@ angular.module('transcripticApp')
         Auth.watch(function () {
           self.availableContainers = Container.list();
         });
-
 
         self.addReference = function () {
           self.refs.push({});

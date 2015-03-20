@@ -8,8 +8,10 @@
  * Constant in the transcripticApp.
  * //todo - finish verifications
  * //todo - incorporate transformations here
+ * //todo - move transformations to ConvAutoprotocolField
  */
-angular.module('transcripticApp').service('InputTypes', function (AbstractionUtils) {
+angular.module('tx.abstraction')
+  .service('InputTypes', function (AbstractionUtils) {
   return {
 
     //primitives
