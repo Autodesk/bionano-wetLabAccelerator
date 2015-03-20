@@ -14,11 +14,6 @@
       ],
       "fields": [
         {
-          "name": "object",
-          "type": "container",
-          "value": "growth_plate"
-        },
-        {
           "name": "reagent",
           "type": "option",
           "options" : [
@@ -46,13 +41,15 @@
         {
           "name": "columns",
           "type": "columnVolumes",
-          "isArray": true,
+          "singleContainer": true,
           "value": [
             {
+              "container" : "growth_plate",
               "column": 0,
               "volume": "240:microliter"
             },
             {
+              "container" : "growth_plate",
               "column": 1,
               "volume": "240:microliter"
             }

@@ -78,8 +78,8 @@ angular.module('transcripticApp').service('InputTypes', function (AbstractionUti
     "aliquot"  : {
       description        : "A single aliquot",
       "autoprotocol-type": "Well",
-      toAutoprotocol     : function (input) {
-        return input;
+      toAutoprotocol     : function (input, ignoreContainer) {
+        return _.first(AbstractionUtils.flattenAliquots(input, ignoreContainer));
       },
       verification       : function (input) {
 
@@ -209,7 +209,12 @@ angular.module('transcripticApp').service('InputTypes', function (AbstractionUti
     "columnVolumes"     : {
       description   : "List of columns and volumes",
       toAutoprotocol: function (input) {
-        return input;
+        return _.map(input, function (colVol) {
+          return {
+            column : colVol.column,
+            volume: colVol.volume
+          };
+        });
       },
       verification  : function (input) {
         return _.isArray(input) && _.every(input, function (item) {

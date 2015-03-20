@@ -120,7 +120,13 @@ angular.module('transcripticApp')
       });
     };
 
-    self.dispense = ConversionUtils.simpleMapOperation;
+    self.dispense = function (op) {
+      var volumesValue = ConversionUtils.pluckFieldValueRaw(op.fields, 'columns'),
+          container = _.result(_.first(volumesValue), 'container'),
+          mapped = ConversionUtils.simpleMapOperation(op);
+
+      return _.assign(mapped, {object : container});
+    };
 
     /* TEMPERATURE */
 
