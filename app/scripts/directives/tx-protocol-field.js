@@ -5,8 +5,6 @@
  * @name transcripticApp.directive:txProtocolInput
  * @description
  * # txProtocolInput
- *
- * todo - need smarter logic for showing aliquot and aliquot+ -- how to inherit from protocol???
  */
 angular.module('transcripticApp')
   .directive('txProtocolField', function ($http, $compile, InputTypes) {
@@ -28,7 +26,7 @@ angular.module('transcripticApp')
         };
 
         self.handleAliquotSelection = function (wells) {
-          console.log(self.containerType, self.containerName, wells);
+          //view guarantees that containerName is set.. but should be able to handle when container already specified (todo - make sure can't specify well outside of an aliquot)
           self.model = _.map(wells, function (well) {
             return {
               container: self.containerName,

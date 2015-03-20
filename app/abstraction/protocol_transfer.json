@@ -12,7 +12,7 @@
       "name": "ecoli_container",
       "isNew": true,
       "id": "",
-      "type": "96-flat",
+      "type": "384-flat",
       "storage": "cold_20"
     }
   ],

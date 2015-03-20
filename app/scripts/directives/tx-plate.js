@@ -93,6 +93,7 @@ angular.module('transcripticApp')
           var container = ContainerOptions[scope.container];
 
           if (_.isEmpty(container)) {
+            //todo - better error handling
             console.warn('invalid container: ', scope.container);
             return;
           }
