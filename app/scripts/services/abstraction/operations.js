@@ -6,19 +6,16 @@
  * @metadata
  * # operations
  * Service in the transcripticApp.
- * //todo - add scaffolds of each here (once have decided on format for each) + converters
+ * //todo - add scaffolds of each here (once have decided on format for each)
  */
-angular.module('transcripticApp')
+angular.module('tx.abstraction')
   .constant('Operations', {
 
     //pipetting
     //todo - update this scaffold
     "transfer"   : {
       operation: "transfer",
-      scaffold: "",
-      toAutoprotocol : function (op) {
-
-      }
+      scaffold: ""
     },
     "distribute" : {
       "operation": "distribute"

@@ -7,7 +7,7 @@
  * # ConversionUtils
  * Service in the transcripticApp.
  */
-angular.module('transcripticApp')
+angular.module('tx.conversion')
   .service('ConversionUtils', function (InputTypes, AbstractionUtils) {
 
     var self = this;

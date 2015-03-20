@@ -6,7 +6,7 @@
  * @description
  * # txProtocolActions
  */
-angular.module('transcripticApp')
+angular.module('tx.protocolEditor')
   .directive('txProtocolActions', function ($q, Auth, Autoprotocol, Run, Project) {
     return {
       templateUrl: 'views/tx-protocol-actions.html',

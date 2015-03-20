@@ -8,7 +8,7 @@
  * Service in the transcripticApp.
  * todo - once written, this should be integrated into Operations service
  */
-angular.module('transcripticApp')
+angular.module('tx.conversion')
   .service('ConvAutoprotocolInstruction', function (InputTypes, AbstractionUtils, ConversionUtils) {
    var self = this;
 

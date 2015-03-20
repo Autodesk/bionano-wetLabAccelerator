@@ -22,7 +22,7 @@
  * textSuccess {String} text displayed when error == true
  * textError {String} text displayed when error != true
  */
-angular.module('transcripticApp')
+angular.module('tx.protocolEditor')
   .directive('txRequestresponse', function (Auth, Communication) {
     return {
       templateUrl: 'views/tx-requestresponse.html',

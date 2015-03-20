@@ -7,7 +7,7 @@
  * # Container
  * Factory in the transcripticApp.
  */
-angular.module('transcripticApp')
+angular.module('tx.communication')
   .factory('Container', function ($resource, Communication, Auth) {
 
     return $resource(Communication.root + ':organization/containers',

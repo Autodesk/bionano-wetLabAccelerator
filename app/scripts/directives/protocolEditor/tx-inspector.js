@@ -6,7 +6,7 @@
  * @description
  * # txInspector
  */
-angular.module('transcripticApp')
+angular.module('tx.protocolEditor')
   .directive('txInspector', function () {
     return {
       templateUrl: 'views/tx-inspector.html',

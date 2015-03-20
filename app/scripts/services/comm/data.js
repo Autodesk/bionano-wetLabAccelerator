@@ -7,7 +7,7 @@
  * # Data
  * Factory in the transcripticApp.
  */
-angular.module('transcripticApp')
+angular.module('tx.communication')
   .factory('Data', function ($resource, ContainerOptions, Communication, Auth) {
 
     return $resource(Communication.root + ':organization/:project/runs/:run/data',

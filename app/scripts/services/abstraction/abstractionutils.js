@@ -7,7 +7,7 @@
  * # AbstractionUtils
  * Service in the transcripticApp.
  */
-angular.module('transcripticApp')
+angular.module('tx.abstraction')
   .service('AbstractionUtils', function () {
     var self = this;
 

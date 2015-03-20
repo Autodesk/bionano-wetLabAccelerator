@@ -8,7 +8,7 @@
  * todo - better cloning behavior - see:
  * http://jsfiddle.net/3Ck4R/
  */
-angular.module('transcripticApp')
+angular.module('tx.protocolEditor')
   .directive('txGallery', function ($document, Operations, AbstractionUtils) {
     return {
       templateUrl: 'views/tx-gallery.html',

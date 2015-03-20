@@ -7,7 +7,7 @@
  * # txProtocolEditor
  */
 
-angular.module('transcripticApp')
+angular.module('tx.protocolEditor')
   .directive('txProtocolEditor', function () {
     return {
       templateUrl: 'views/tx-protocol-editor.html',

@@ -7,7 +7,7 @@
  * # run
  * Factory in the transcripticApp.
  */
-angular.module('transcripticApp')
+angular.module('tx.communication')
   .factory('Run', function ($resource, $q, Communication, Auth, Project) {
     var runResource = $resource(Communication.root + ':organization/:project/runs',
       //defaults

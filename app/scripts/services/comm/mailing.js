@@ -7,7 +7,7 @@
  * # mailing
  * Service in the transcripticApp.
  */
-angular.module('transcripticApp')
+angular.module('tx.communication')
   .service('mailing', function ($resource, Communication, Auth) {
     return $resource(Communication.root + ':organization/containers/:id/mail',
       //defaults
