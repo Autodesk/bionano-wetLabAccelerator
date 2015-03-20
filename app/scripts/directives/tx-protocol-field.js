@@ -5,6 +5,8 @@
  * @name transcripticApp.directive:txProtocolInput
  * @description
  * # txProtocolInput
+ *
+ * todo - need smarter logic for showing aliquot and aliquot+ -- how to inherit from protocol???
  */
 angular.module('transcripticApp')
   .directive('txProtocolField', function ($http, $compile, InputTypes) {
@@ -22,7 +24,18 @@ angular.module('transcripticApp')
 
         self.mixwrapToggle = function (newval) {
           //todo - handle mixwrap hidden / not hidden -- don't want to include in Autoprotocol if hidden
-        }
+          //perhaps introduce a key "omit" (kinda different than hidden) which then gets stripped in conversion
+        };
+
+        self.handleAliquotSelection = function (wells) {
+          console.log(self.containerType, self.containerName, wells);
+          self.model = _.map(wells, function (well) {
+            return {
+              container: self.containerName,
+              well : well
+            };
+          });
+        };
       },
       compile: function compile(tElement, tAttrs, transclude) {
         return {
@@ -31,7 +44,7 @@ angular.module('transcripticApp')
                 inputType = InputTypes[type],
                 partial = type;                 //default, maybe handled differently in if/else
 
-            //console.log(type);
+            //Special handling before we get the appropriate template
 
             //handle all dimensional values the same way
             if (inputType['autoprotocol-type'] == 'Unit') {
@@ -44,6 +57,13 @@ angular.module('transcripticApp')
             }
             else if (type == 'option') {
               scope.modelOptions = scope.fieldCtrl.field.options;
+            }
+            else if (type == 'aliquot') {
+              scope.aliquotMultiple = false;
+            }
+            else if (type == 'aliquot+') {
+              partial = 'aliquot';
+              scope.aliquotMultiple = true;
             }
 
             /* functions for specific types */

@@ -1,0 +1,9 @@
+<input type="checkbox" ng-model="showingPlates" ng-init="showingPlates=false;"> {{showingPlates ? 'Hide' : 'Show'}} Plates
+<div ng-if="showingPlates">
+  <tx-container-select container-type="fieldCtrl.containerType" ng-model="fieldCtrl.containerName" ></tx-container-select>
+  <tx-plate ng-show="fieldCtrl.containerType"
+            container="fieldCtrl.containerType"
+            no-brush="!aliquotMultiple"
+            select-persist="aliquotMultiple"
+            on-select="fieldCtrl.handleAliquotSelection($wells)"></tx-plate>
+</div>

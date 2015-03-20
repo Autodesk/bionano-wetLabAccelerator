@@ -30,7 +30,12 @@
 
 <tx-plate container="currentContainer"
           plate-data="currentData[currentTimepoint]"
-          no-brush="true"
+          select-persist="true"
+          on-hover="hoverPlateWells($wells)"
+          on-select="selectPlateWells($wells)"></tx-plate>
+
+<tx-plate container="currentContainer"
+          plate-data="currentData[currentTimepoint]"
           select-persist="true"
           on-hover="hoverPlateWells($wells)"
           on-select="selectPlateWells($wells)"></tx-plate>

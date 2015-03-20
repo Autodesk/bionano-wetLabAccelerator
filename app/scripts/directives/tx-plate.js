@@ -15,9 +15,13 @@
  *
  * Through combination of attributes no-brush and select-persist, you can specify whether one/many wells can be selected,
  * and whether multiple groups can be selected
+ *
+ * todo - allow syncing of selected wells
+ * todo - circle to clear whole selection (top-left)
+ * todo - store selection in indexed array, show indices
  */
 angular.module('transcripticApp')
-  .directive('txPlate', function (ContainerOptions, WellConv, $timeout) {
+  .directive('txPlate', function (ContainerOptions, WellConv) {
 
     return {
       restrict: 'E',
@@ -86,8 +90,14 @@ angular.module('transcripticApp')
         function rerender (shouldPlateUpdate) {
           if (!scope.container) return;
 
-          var container = ContainerOptions[scope.container],
-              wellCount = container.well_count,
+          var container = ContainerOptions[scope.container];
+
+          if (_.isEmpty(container)) {
+            console.warn('invalid container: ', scope.container);
+            return;
+          }
+
+          var wellCount = container.well_count,
               colCount = container.col_count,
               rowCount = wellCount / colCount,
               wellSpacing = 2,
@@ -276,8 +286,6 @@ angular.module('transcripticApp')
           scope.$applyAsync(function () {
             scope.onSelect({ $wells: selected });
           });
-
-          //todo - toggle the active state of each well if in that mode
 
           brushLastSelected = selected;
         }
