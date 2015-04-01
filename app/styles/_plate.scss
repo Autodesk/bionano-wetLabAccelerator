@@ -1,4 +1,9 @@
 tx-plate {
+
+  $color-active: #d7ab34;
+  $color-add: #146dff;
+  $color-remove: #dd263b;
+
   .axis {
     path {
       stroke: none;
@@ -18,19 +23,31 @@ tx-plate {
     stroke-width: 0.5px;
     stroke: #000;
 
-    &:hover,
-    &.hovered {
+    &:hover {
       fill: $brand-info !important;
     }
 
+    //todo - brushing class
+
     &.selected,
     &.brushSelected {
-      stroke: $brand-warning !important;
-      stroke-width: 4px;
+      stroke: $color-active !important;
+      stroke-width: 3px;
     }
 
     &.hidden {
       fill: #ccc !important;
+    }
+  }
+
+  &.brushing {
+    .well.brushActive {
+      stroke: $color-add !important;
+      stroke-width: 3px;
+    }
+
+    .well.brushActive.brushSelected {
+      stroke: $color-remove !important;
     }
   }
 

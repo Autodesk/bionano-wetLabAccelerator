@@ -23,6 +23,9 @@
 angular.module('tx.datavis')
   .directive('txPlate', function (ContainerOptions, WellConv) {
 
+    var classActive = 'brushActive',
+        classSelected = 'brushSelected';
+
     return {
       restrict: 'E',
       scope: {
@@ -80,6 +83,13 @@ angular.module('tx.datavis')
         var yAxisEl = svg.append("g")
           .attr("class", "y axis")
           .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+
+        var clearingEl = svg.append('text')
+          .classed('clearing', true)
+          .attr('x', margin.left - 10)
+          .attr('y', margin.top - 10)
+          .text('x')
+          .on('click', clearWellsAndSelection);
 
         //data selection shared between multiple functions
         var wells = wellsSvg.selectAll("circle");
@@ -215,18 +225,23 @@ angular.module('tx.datavis')
           if (scope.noBrush) {
 
             var $el = d3.select(this),
-                wasSelected = $el.classed('brushSelected');
+                wasSelected = $el.classed(classSelected);
 
             if (!scope.selectPersist) {
-              svg.selectAll("circle").call(unselectWells);
+              toggleWellsFromMap({}, classSelected, true);
             }
 
-            $el.classed('brushSelected', !wasSelected);
+            $el.classed(classSelected, !wasSelected);
 
             scope.$applyAsync(function () {
-              scope.onSelect({ $wells: getSelectedWells() });
+              scope.onSelect({ $wells: getActiveWells() });
             });
           }
+        }
+
+        function clearWellsAndSelection () {
+          clearBrush();
+          toggleWellsFromMap({}, classSelected, true);
         }
 
         /***** BRUSHING *****/
@@ -246,32 +261,23 @@ angular.module('tx.datavis')
           brushg.call(brush);
         }
 
-        //fixme - not behaving as expected
-        // need to track both whole selection, and previous selection
-        // on start, clear previous selection if moving brush
-        // on move, if persisting, retain whole selection, minus previous, plus current brush
+        var brushIsDrawn = false;       //todo - what should this actually track?
+            //brushLastSelected = [];   //last selection of brush (click to kill brush excepted)
 
-        var brushIsDrawn = false,      //whether brush region is freshly drawn (not moved)
-            brushLastSelected = [];   //last selection of brush (click to kill brush excepted)
+        //todo - make colors more intuitive (maybe need a dragging class on the element)
 
         function brushstart() {
 
-          //if already have a brush
-          if (brushIsDrawn) {
-            //check for empty - clicked outside existing brush
-            if (brush.empty()) {
-              brushIsDrawn = false;
-            }
-            //otherwise, moving brush = remove last selection - new selection will be added in brushmove
-            else {
-              var map = createWellMap(brushLastSelected, false);
-              toggleWellsFromMap(map, false);
-            }
+          //if had brush, but clicked outside it
+          if (brushIsDrawn && brush.empty()) {
+            brushIsDrawn = false;
           }
 
           if (!scope.selectPersist) {
-            svg.selectAll("circle").call(unselectWells);
+            toggleWellsFromMap({}, classSelected, true);
           }
+
+          element.addClass('brushing');
         }
 
         //Triggered on clicks, moving brush, or clicking outside
@@ -279,20 +285,10 @@ angular.module('tx.datavis')
 
           var map = getWellsInExtent(brush.extent());
 
-          //get the outersection of selected wells, unless moving the brush
-          if (!brushIsDrawn && scope.selectPersist) {
-            map = WellConv.toggleWells(map, brushLastSelected);
-          }
+          //todo - ideally this would only run on a real move, not every cycle
+          brushIsDrawn = !brush.empty() && (_.keys(map)).length > 0;
 
-          if (brushIsDrawn) {
-
-          } else {
-
-          }
-
-          //todo - fold already selected wells into map
-
-          toggleWellsFromMap(map);
+          toggleWellsFromMap(map, classActive, true);
 
           scope.$applyAsync(function () {
             scope.onHover({ $wells: _.keys(map) });
@@ -302,43 +298,40 @@ angular.module('tx.datavis')
         //get the selection, and propagate / save it
         function brushend() {
 
-          var selected;
+          var selected,
+              initiallySelected = getSelectedWells();
 
-          //if have a brush and they clicked without dragging
-          if (brushIsDrawn && brush.empty()) {
-              brushIsDrawn = false;
-              selected = [];
-
-            if (!scope.selectPersist) {
-              svg.selectAll("circle").call(unselectWells);
-            }
-          }
-          //moved the brush
-          else if (brushIsDrawn && !brush.empty()) {
-            selected = getSelectedWells();
-            brushIsDrawn = true;
-          }
-          //clicked a well
-          else if (brush.empty() && !brushIsDrawn) {
-            selected = getSelectedWells();
+          //note - may want to handle clicking outside active brush without selecting, current allow new brush
+          //if brush is empty, e.g. they clicked
+          if (brush.empty()) {
+            selected = getActiveWells();
             brushIsDrawn = false;
           }
-          //not empty, and no brush drawn (impossible)
-          else {}
+          //if we have a brush (i.e. wells are selected)
+          else if (brushIsDrawn) {
+            selected = getActiveWells();
+          }
+          else {
+            console.log('weirdness is happening');
+          }
 
-          console.log(brushIsDrawn, brush.empty(), selected.length, selected, brushLastSelected);
+          var map = createWellMap(selected, true),
+              toggled = WellConv.toggleWells(map, initiallySelected);
+
+          toggleWellsFromMap(toggled, classSelected);
 
           scope.$applyAsync(function () {
-            scope.onSelect({ $wells: selected });
+            scope.onSelect({ $wells: getSelectedWells() });
           });
 
-          brushLastSelected = selected;
+          element.removeClass('brushing');
         }
 
         /**** helpers ****/
 
+        //given array of wells, and a value, create hashmap with wells as keys
         function createWellMap (wells, value) {
-          return _.zipObject( brushLastSelected, _.range(wells.length).map(_.constant(value)) )
+          return _.zipObject( wells, _.range(wells.length).map(_.constant(value)) )
         }
 
         function getWellsInExtent (extent) {
@@ -351,22 +344,31 @@ angular.module('tx.datavis')
           return WellConv.createMapGivenBounds(topLeft, bottomRight);
         }
 
-        function toggleWellsFromMap (map, toggleAll) {
+        function toggleWellsFromMap (map, className, toggleAll) {
           var selection = svg.selectAll("circle");
+          className = _.isUndefined(className) ? classSelected : className;
 
           if (!toggleAll) {
             selection = selection.filter(_.partial(_.has, map));
           }
 
-          selection.classed("brushSelected", _.partial(_.result, map, _, false) );
+          selection.classed(className, _.partial(_.result, map, _, false) );
+        }
+
+        function getActiveWells () {
+          return svg.selectAll('.' + classActive).data();
         }
 
         function getSelectedWells () {
-          return svg.selectAll(".brushSelected").data();
+          return svg.selectAll('.' + classSelected).data();
+        }
+
+        function inactivateWells (selection) {
+          return selection.classed(classActive, false);
         }
 
         function unselectWells (selection) {
-          return selection.classed('brushSelected', false);
+          return selection.classed(classSelected, false);
         }
 
         function clearBrush () {
@@ -376,6 +378,7 @@ angular.module('tx.datavis')
             //trigger event to propagate data flow that it has been emptied
             brushend();
           }
+          toggleWellsFromMap({}, classActive, true);
         }
       }
     };
