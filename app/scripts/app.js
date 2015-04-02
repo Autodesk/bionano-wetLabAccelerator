@@ -22,8 +22,6 @@ angular
     'angularFileUpload',
     'firebase',
     'tx.communication',
-    'tx.abstraction',
-    'tx.conversion',
     'tx.datavis',
     'tx.protocolEditor'
   ])

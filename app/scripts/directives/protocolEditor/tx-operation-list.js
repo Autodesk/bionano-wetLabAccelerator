@@ -7,24 +7,26 @@
  * # txGallery
  * todo - better cloning behavior - see:
  * http://jsfiddle.net/3Ck4R/
+ *
+ // todo - need to differentiate between a group and an op
+ // should be able to drop into either a group or an operation
  */
 angular.module('tx.protocolEditor')
-  .directive('txGallery', function ($document, Operations, AbstractionUtils) {
+  .directive('txOperationList', function ($document, Omniprotocol) {
     return {
-      templateUrl: 'views/tx-gallery.html',
+      templateUrl: 'views/tx-operation-list.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        scope.operationKeys = _.keys(Operations);
+        scope.operationKeys = getOperationKeys();
 
         var currentOpCancelled = false;
 
         scope.gallerySortableOptions = {
           scroll: true,
+          connectWith: ".protocol-instructions",
           helper: function (e, el) {
-            console.log(el);
             return el.clone().appendTo(document.body);
           },
-          connectWith: ".protocol-instructions",
           update: function (e, ui) {
 
             //same list
@@ -38,7 +40,7 @@ angular.module('tx.protocolEditor')
             ui.item.sortable.cancel();
 
             //reset the operation list
-            scope.operationKeys = _.keys(Operations);
+            scope.operationKeys = getOperationKeys();
           },
           stop: function (e, ui) {
             if (currentOpCancelled == true) {
@@ -47,14 +49,20 @@ angular.module('tx.protocolEditor')
             }
 
             var opKey = ui.item.sortable.model,
-                opScaffold = Operations[opKey],
-                groupScaffold = AbstractionUtils.wrapOpInGroup(opScaffold),
+                opScaffold = Omniprotocol.operations[opKey].scaffold,
+                groupScaffold = opScaffold,
+                // todo - should abstract stuff out of scaffold, and then fold in here
+                // groupScaffold = Omniprotocol.utils.wrapOpInGroup(opScaffold),
                 dropModel = ui.item.sortable.droptargetModel,
                 dropIndex = ui.item.sortable.dropindex;
 
             !!dropModel && dropModel.splice(dropIndex, 0, groupScaffold);
           }
         };
+
+        function getOperationKeys () {
+          return _.keys(Omniprotocol.operations);
+        }
       }
     };
   });
