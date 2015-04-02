@@ -34,7 +34,6 @@
         {
           "name": "steps",
           "type": "thermocycleGroup",
-          "isArray": true,
           "value": [
             {
               "cycles": 1,

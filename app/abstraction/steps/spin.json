@@ -1,39 +1,35 @@
 {
-  "groups": [
+  "name": "Spin Example",
+  "inputs" : {
+    "myPlate" : "growth_plate"
+  },
+  "metadata": {
+    "description": "Centrifuge a plate"
+  },
+  "steps": [
     {
-      "name": "Cover Example",
-      "inputs" : {
-        "myPlate" : "growth_plate"
-      },
-      "metadata": {
-        "description": "Centrifuge a plate"
-      },
-      "steps": [
+      "operation": "spin",
+      "requirements": {},
+      "transforms": [
         {
-          "operation": "spin",
-          "requirements": {},
-          "transforms": [
-            {
-              "container": "object"
-            }
-          ],
-          "fields": [
-            {
-              "name": "object",
-              "type": "container",
-              "value": "${myPlate}"
-            },
-            {
-              "name": "acceleration",
-              "type": "acceleration",
-              "value": "100:meter/second^2"
-            },
-            {
-              "name": "duration",
-              "type": "duration",
-              "value": "5:minute"
-            }
-          ]
+          "container": "object"
+        }
+      ],
+      "fields": [
+        {
+          "name": "object",
+          "type": "container",
+          "value": "${myPlate}"
+        },
+        {
+          "name": "acceleration",
+          "type": "acceleration",
+          "value": "100:meter/second^2"
+        },
+        {
+          "name": "duration",
+          "type": "duration",
+          "value": "5:minute"
         }
       ]
     }

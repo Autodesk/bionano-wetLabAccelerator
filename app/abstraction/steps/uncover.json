@@ -1,29 +1,25 @@
 {
-  "groups": [
+  "name": "Uncover Example",
+  "metadata": {
+    "description": "Uncover a container"
+  },
+  "inputs" : {
+    "myPlate" : "container"
+  },
+  "steps": [
     {
-      "name": "Uncover Example",
-      "metadata": {
-        "description": "Uncover a container"
-      },
-      "inputs" : {
-        "myPlate" : "container"
-      },
-      "steps": [
+      "operation": "uncover",
+      "requirements": {},
+      "transforms": [
         {
-          "operation": "uncover",
-          "requirements": {},
-          "transforms": [
-            {
-              "container": "object"
-            }
-          ],
-          "fields": [
-            {
-              "name": "object",
-              "type": "container",
-              "value": "${myPlate}"
-            }
-          ]
+          "container": "object"
+        }
+      ],
+      "fields": [
+        {
+          "name": "object",
+          "type": "container",
+          "value": "${myPlate}"
         }
       ]
     }

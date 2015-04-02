@@ -1,5 +1,5 @@
 {
-  "name": "Example absorbance",
+  "name": "Absorbance Reading",
   "metadata": {
     "description": "Measure absorbance of a specified wavelength (between 300 nm - 1000 nm)"
   },
@@ -17,6 +17,7 @@
         {
           "name": "dataref",
           "type": "string",
+          "default": "absorbance_${index}",
           "value": "dataref_${index}"
         },
         {
