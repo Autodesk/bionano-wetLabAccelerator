@@ -12,12 +12,9 @@ angular.module('tx.protocolEditor')
       templateUrl: 'views/tx-inspector.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-
         $rootScope.$on('txInspector:update', function (event, info) {
-          console.log(info);
           scope.$applyAsync(_.extend(scope, info));
         });
-
       }
     };
   });

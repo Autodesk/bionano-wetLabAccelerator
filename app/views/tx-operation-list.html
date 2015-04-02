@@ -6,6 +6,11 @@
     <a class="list-group-item drag-handle"
        style="padding: 3px;"
        ng-repeat="op in operationKeys"
-       ng-bind="op | capfirst"></a>
+       ng-bind="op | capfirst"
+       tx-inspector-select
+       select-trigger="mouseenter"
+       select-title="op"
+       select-type="'operation'"
+       select-description="operations[op].description"></a>
   </div>
 

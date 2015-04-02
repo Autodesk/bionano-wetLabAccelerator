@@ -17,6 +17,7 @@ angular.module('tx.protocolEditor')
       templateUrl: 'views/tx-operation-list.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
+        scope.operations = Omniprotocol.operations;
         scope.operationKeys = getOperationKeys();
 
         var currentOpCancelled = false;
@@ -49,12 +50,21 @@ angular.module('tx.protocolEditor')
             }
 
             var opKey = ui.item.sortable.model,
-                opScaffold = Omniprotocol.operations[opKey].scaffold,
-                groupScaffold = opScaffold,
+                opInfo = Omniprotocol.operations[opKey],
+                opScaffold = opInfo.scaffold,
+                groupScaffold = Omniprotocol.utils.wrapOpInGroup(opScaffold),
+
                 // todo - should abstract stuff out of scaffold, and then fold in here
-                // groupScaffold = Omniprotocol.utils.wrapOpInGroup(opScaffold),
+
                 dropModel = ui.item.sortable.droptargetModel,
                 dropIndex = ui.item.sortable.dropindex;
+
+            _.extend(groupScaffold, {
+              name : opInfo.name,
+              metadata : {
+                description: opInfo.description
+              }
+            });
 
             !!dropModel && dropModel.splice(dropIndex, 0, groupScaffold);
           }
