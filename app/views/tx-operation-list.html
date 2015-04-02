@@ -1,4 +1,4 @@
-<p>Gallery</p>
+<p>Operations</p>
 
   <div class="list-group"
        ui-sortable="gallerySortableOptions"
@@ -6,7 +6,7 @@
     <a class="list-group-item drag-handle"
        style="padding: 3px;"
        ng-repeat="op in operationKeys"
-       ng-bind="op | capfirst"
+       ng-bind="$index + ' ' + op"
        tx-inspector-select
        select-trigger="mouseenter"
        select-title="op"
