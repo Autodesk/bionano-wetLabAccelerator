@@ -20,7 +20,6 @@ angular.module('transcripticApp')
       restrict: 'A',
       link: function postLink(scope, element, attrs) {
         function parseAttr (attr) {
-          console.log(attr, $parse(attrs[attr]), $parse(attrs[attr])(scope), scope);
           return $parse(attrs[attr])(scope);
         }
 
