@@ -25,9 +25,6 @@ angular.module('tx.protocolEditor')
         scope.gallerySortableOptions = {
           scroll: true,
           connectWith: ".protocol-instructions",
-          helper: function (e, el) {
-            return el.clone().appendTo(document.body);
-          },
           update: function (e, ui) {
 
             //same list
@@ -39,11 +36,19 @@ angular.module('tx.protocolEditor')
             //cancel always and we'll update the model ourselves
             // (prevent double insertion via splice)
             ui.item.sortable.cancel();
-
-            //reset the operation list
-            scope.operationKeys = getOperationKeys();
           },
           stop: function (e, ui) {
+            //reset the operation list
+            scope.operationKeys = getOperationKeys();
+
+            console.log(scope.operationKeys,  ui.item.sortable.sourceModel);
+            _.forEach(scope.operationKeys, function (key, ind) {
+              if (key != ui.item.sortable.sourceModel[ind]) {
+                console.log(ind, key, scope.operationKeys, ui.item.sortable.sourceModel);
+                return false;
+              }
+            });
+
             if (currentOpCancelled == true) {
               currentOpCancelled = false;
               return;
@@ -61,19 +66,14 @@ angular.module('tx.protocolEditor')
                 dropModel = ui.item.sortable.droptargetModel,
                 dropIndex = ui.item.sortable.dropindex;
 
-            _.extend(groupScaffold, {
-              name : opInfo.name,
-              metadata : {
-                description: opInfo.description
-              }
-            });
-
-            !!dropModel && dropModel.splice(dropIndex, 0, groupScaffold);
+            _.isArray(dropModel) && dropModel.splice(dropIndex, 0, groupScaffold);
           }
         };
 
+        var initalKeys;
         function getOperationKeys () {
-          return _.keys(Omniprotocol.operations);
+          _.isUndefined(initalKeys) && (initalKeys = _.keys(Omniprotocol.operations));
+          return initalKeys;
         }
       }
     };

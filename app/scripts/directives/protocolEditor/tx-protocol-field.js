@@ -49,7 +49,11 @@ angular.module('tx.protocolEditor')
               partial = 'dimension';
               scope.unitOptions = inputType.units;
 
-              handleNewDimensionalExternal(scope.fieldCtrl.model);
+              var initialModel = _.isEmpty(scope.fieldCtrl.model) ?
+                                   scope.fieldCtrl.model :
+                                   ( scope.fieldCtrl.field.optional ? scope.fieldCtrl.field.default : null );
+
+              handleNewDimensionalExternal(initialModel);
               scope.$watch('internal', handleNewDimensionInternal, true);
               scope.$watch('fieldCtrl.model', handleNewDimensionalExternal);
             }
