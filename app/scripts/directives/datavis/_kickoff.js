@@ -1,1 +1,1 @@
-angular.module('tx.datavis', ['tx.abstraction', 'tx.conversion']);
+angular.module('tx.datavis', []);

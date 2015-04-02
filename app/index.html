@@ -92,6 +92,15 @@
     <script src="bower_components/lodash/lodash.js"></script>
     <!-- endbuild -->
 
+    <!-- build:js({.tmp,app}) scripts/omniprotocol.js -->
+    <script src="scripts/omniprotocol/omniprotocolUtils.js"></script>
+    <script src="scripts/omniprotocol/inputTypes.js"></script>
+    <script src="scripts/omniprotocol/operations.js"></script>
+    <script src="scripts/omniprotocol/conversionUtils.js"></script>
+
+    <script src="scripts/conversion/autoprotocol.js"></script>
+    <!-- endbuild -->
+
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/dashboard.js"></script>
@@ -125,15 +134,8 @@
     <script src="scripts/services/comm/data.js"></script>
     <script src="scripts/services/comm/order.js"></script>
     <script src="scripts/services/comm/mailing.js"></script>
-    <script src="scripts/services/abstraction/_kickoff.js"></script>
-    <script src="scripts/services/abstraction/inputTypes.js"></script>
-    <script src="scripts/services/abstraction/operations.js"></script>
-    <script src="scripts/services/abstraction/abstractionutils.js"></script>
-    <script src="scripts/services/conversion/_kickoff.js"></script>
-    <script src="scripts/services/conversion/conversionutils.js"></script>
-    <script src="scripts/services/conversion/autoprotocol.js"></script>
-    <script src="scripts/services/conversion/convAutoprotocolInstruction.js"></script>
-    <script src="scripts/services/conversion/convAutoprotocolField.js"></script>
+    <script src="scripts/services/omniprotocolService.js"></script>
+    <script src="scripts/services/autoprotocolService.js"></script>
     <script src="scripts/services/wellconv.js"></script>
     <script src="scripts/services/dataconv.js"></script>
     <script src="scripts/filters/capfirst.js"></script>

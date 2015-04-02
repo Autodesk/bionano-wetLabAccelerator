@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('TestingConversionCtrl', function ($scope, $http, Autoprotocol, AbstractionUtils) {
+  .controller('TestingConversionCtrl', function ($scope, $http, Autoprotocol) {
     $http.get('abstraction/protocol_transfer.json').success(function (data) {
 
       //for working with steps

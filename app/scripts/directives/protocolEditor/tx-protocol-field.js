@@ -7,7 +7,7 @@
  * # txProtocolInput
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolField', function ($http, $compile, InputTypes) {
+  .directive('txProtocolField', function ($http, $compile, Omniprotocol) {
     return {
       restrict: 'E',
       require: 'ngModel',
@@ -39,7 +39,7 @@ angular.module('tx.protocolEditor')
         return {
           pre: function preLink(scope, iElement, iAttrs) {
             var type = scope.fieldCtrl.field.type,
-                inputType = InputTypes[type],
+                inputType = Omniprotocol.inputTypes[type],
                 partial = type;                 //default, maybe handled differently in if/else
 
             //Special handling before we get the appropriate template

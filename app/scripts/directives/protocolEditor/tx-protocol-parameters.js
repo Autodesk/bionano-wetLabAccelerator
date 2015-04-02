@@ -8,7 +8,7 @@
  * //todo - need to verify value is correct given the type... use tx-protocol-field?
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolParameters', function (InputTypes) {
+  .directive('txProtocolParameters', function (Omniprotocol) {
     return {
       templateUrl: 'views/tx-protocol-parameters.html',
       restrict : 'E',
@@ -20,7 +20,7 @@ angular.module('tx.protocolEditor')
       controller : function ($scope, $element, $attrs) {
         var self = this;
 
-        self.inputOptions = _.keys(InputTypes);
+        self.inputOptions = _.keys(Omniprotocol.inputTypes);
 
         self.addParameter = function () {
           //todo - ensure no duplicates

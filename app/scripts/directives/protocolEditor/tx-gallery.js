@@ -9,12 +9,12 @@
  * http://jsfiddle.net/3Ck4R/
  */
 angular.module('tx.protocolEditor')
-  .directive('txGallery', function ($document, Operations, AbstractionUtils) {
+  .directive('txGallery', function ($document, Omniprotocol) {
     return {
       templateUrl: 'views/tx-gallery.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        scope.operationKeys = _.keys(Operations);
+        scope.operationKeys = getOperationKeys();
 
         var currentOpCancelled = false;
 
@@ -38,7 +38,7 @@ angular.module('tx.protocolEditor')
             ui.item.sortable.cancel();
 
             //reset the operation list
-            scope.operationKeys = _.keys(Operations);
+            scope.operationKeys = getOperationKeys();
           },
           stop: function (e, ui) {
             if (currentOpCancelled == true) {
@@ -47,14 +47,18 @@ angular.module('tx.protocolEditor')
             }
 
             var opKey = ui.item.sortable.model,
-                opScaffold = Operations[opKey],
-                groupScaffold = AbstractionUtils.wrapOpInGroup(opScaffold),
+                opScaffold = Omniprotocol.operations[opKey].scaffold,
+                groupScaffold = Omniprotocol.utils.wrapOpInGroup(opScaffold),
                 dropModel = ui.item.sortable.droptargetModel,
                 dropIndex = ui.item.sortable.dropindex;
 
             !!dropModel && dropModel.splice(dropIndex, 0, groupScaffold);
           }
         };
+
+        function getOperationKeys () {
+          return _.keys(Omniprotocol.operations);
+        }
       }
     };
   });

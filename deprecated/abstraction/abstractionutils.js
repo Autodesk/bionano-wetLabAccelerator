@@ -150,7 +150,7 @@ angular.module('tx.abstraction')
       return result;
     };
 
-    self.getTransformsWell = function getTransformsContainer (protocol, well) {
+    self.getTransformsWell = function getTransformsWell (protocol, well) {
       var result = [],
           index = 0;
 
