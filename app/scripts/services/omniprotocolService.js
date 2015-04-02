@@ -1,0 +1,1 @@
+angular.module('transcripticApp').value('Omniprotocol', omniprotocol);

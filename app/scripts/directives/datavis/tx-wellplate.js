@@ -18,7 +18,7 @@ angular.module('tx.datavis')
     }
 
     return {
-      templateUrl: '../../../views/tx-wellplate.html',
+      templateUrl: 'views/tx-wellplate.html',
       restrict: 'E',
       require: 'ngModel',
       scope: {
