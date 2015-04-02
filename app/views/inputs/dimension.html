@@ -1,4 +1,7 @@
 <input ng-model="internal.value"
-       type="number">
+       type="number"
+       placeholder="{{placeholder.value}}">
 <select ng-model="internal.unit"
-        ng-options="o as o for o in unitOptions"></select>
+        ng-options="o as o for o in unitOptions">
+    <option value="" disabled selected>{{placeholder.unit}}</option>
+</select>

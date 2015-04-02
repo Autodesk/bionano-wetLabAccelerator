@@ -53,6 +53,8 @@ angular.module('tx.protocolEditor')
                                    scope.fieldCtrl.model :
                                    ( scope.fieldCtrl.field.optional ? scope.fieldCtrl.field.default : null );
 
+              scope.placeholder = convertDimensionalExternal(scope.fieldCtrl.field.default);
+
               handleNewDimensionalExternal(initialModel);
               scope.$watch('internal', handleNewDimensionInternal, true);
               scope.$watch('fieldCtrl.model', handleNewDimensionalExternal);
@@ -77,13 +79,18 @@ angular.module('tx.protocolEditor')
             }
 
             function handleNewDimensionalExternal (newval) {
-              if (!_.isString(newval)) { return; }
-              var split = newval.split(':');
-              scope.internal = {
+              scope.internal = convertDimensionalExternal(newval);
+            }
+
+            function convertDimensionalExternal (val) {
+              if (!_.isString(val)) { return null; }
+              var split = val.split(':');
+              return {
                 value: parseInt(split[0], 10),
                 unit: split[1]
               };
             }
+
 
             /* get the partial */
 
