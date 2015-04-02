@@ -4,4 +4,15 @@ tx-protocol-op {
   .operation-name {
     cursor: all-scroll;
   }
+
+  .operation-label {
+
+    &.optional {
+      opacity: 0.75;
+    }
+  }
+
+  .operation-field {
+
+  }
 }

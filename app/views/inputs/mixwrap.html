@@ -2,18 +2,33 @@
        ng-model="showMixwrap"
        ng-change="fieldCtrl.mixwrapToggle(showMixwrap)"> {{fieldCtrl.field.name}}
 
-<div ng-show="showMixwrap">
+<table ng-show="showMixwrap">
+    <tr>
+        <td class="operation-label">volume</td>
+        <td>
+            <!-- todo - this is a hack. maybe it makes sense to create a directive specifically for dimensional values -->
+            <tx-protocol-field ng-model="fieldCtrl.model.volume"
+                               field="{type: 'volume'}">
+            </tx-protocol-field>
+        </td>
+    </tr>
 
-  <!-- todo - this is a hack. maybe it makes sense to create a directive specifically for dimensional values -->
-  <tx-protocol-field ng-model="fieldCtrl.model.volume"
-                     field="{type: 'volume'}">
-  </tx-protocol-field>
+    <tr>
+        <td class="operation-label">speed</td>
+        <td>
+            <!-- todo - this is a hack. maybe it makes sense to create a directive specifically for dimensional values -->
+            <tx-protocol-field ng-model="fieldCtrl.model.speed"
+                               field="{type: 'flowrate'}">
+            </tx-protocol-field>
+        </td>
+    </tr>
 
-  <tx-protocol-field ng-model="fieldCtrl.model.speed"
-                     field="{type: 'flowrate'}">
-  </tx-protocol-field>
-
-  <input type="number"
-         ng-model="fieldCtrl.model.repetitions"
-         ng-required="true"> Reps
-</div>
+    <tr>
+        <td class="operation-label">repetitions</td>
+        <td>
+            <input type="number"
+                   ng-model="fieldCtrl.model.repetitions"
+                   ng-required="true">
+        </td>
+    </tr>
+</table>
