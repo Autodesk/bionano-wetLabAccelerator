@@ -5,7 +5,7 @@
 var _         = require('lodash'),
     autoUtils = require('./utils.js'),
     op        = global.omniprotocol,
-    utils     = op.utils;
+    omniUtils = op.utils;
 
 //convert abstraction to autoprotocol
 function fromAbstraction (abst) {
@@ -24,7 +24,7 @@ function fromAbstraction (abst) {
       _.pluck(abst.parameters, 'value')
   );
 
-  var interpolatedInstructions = utils.interpolateObject(instructions, paramKeyvals);
+  var interpolatedInstructions = omniUtils.interpolateObject(instructions, paramKeyvals);
 
   return {
     refs        : references,

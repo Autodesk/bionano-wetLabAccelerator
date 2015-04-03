@@ -2,7 +2,7 @@ var _                    = require('lodash'),
     converters           = require('./converters.js'),
     converterField       = converters.field,
     converterInstruction = converters.instruction,
-    conv                 = global.omniprotocol.conv;
+    omniConv             = global.omniprotocol.conv;
 
 //takes an autoprotocol instruction, wraps in pipette group
 function wrapInPipette (instruction) {

@@ -2,18 +2,18 @@ var _                    = require('lodash'),
     converterInstruction = {},
     converterField       = {},
     omniprotocol         = global.omniprotocol,
-    utils                = omniprotocol.utils,
-    conv                 = omniprotocol.conv;
+    omniUtils            = omniprotocol.utils,
+    omniConv             = omniprotocol.conv;
 
 /*******************
  Field Conversion
  *******************/
 
-//only include special conversions, otherwise just use value (_.identity)
+  //only include special conversions, otherwise just use value (_.identity)
 
-converterField.aliquot = _.flow(utils.flattenAliquots, _.first);
+converterField.aliquot = _.flow(omniUtils.flattenAliquots, _.first);
 
-converterField['aliquot+'] = utils.flattenAliquots;
+converterField['aliquot+'] = omniUtils.flattenAliquots;
 
 converterField.columnVolumes = function (input) {
   return _.map(input, function (colVol) {
@@ -63,7 +63,7 @@ converterField.thermocycleDyes = function (input) {
 function simpleMapOperation (op, localParams) {
   return _.assign({
     op: op.operation
-  }, conv.simpleKeyvalFields(op.fields, localParams, converterField));
+  }, omniConv.simpleKeyvalFields(op.fields, localParams, converterField));
 }
 
 converterInstruction.cover = simpleMapOperation;
@@ -74,21 +74,21 @@ converterInstruction.unseal = simpleMapOperation;
 /* SPECTROMETRY */
 
 converterInstruction.fluorescence = _.flow(simpleMapOperation,
-    _.partial(conv.pluckOperationContainerFromWells, _, 'object', 'wells'));
+    _.partial(omniConv.pluckOperationContainerFromWells, _, 'object', 'wells'));
 converterInstruction.luminescence = _.flow(simpleMapOperation,
-    _.partial(conv.pluckOperationContainerFromWells, _, 'object', 'wells'));
+    _.partial(omniConv.pluckOperationContainerFromWells, _, 'object', 'wells'));
 converterInstruction.absorbance = _.flow(simpleMapOperation,
-    _.partial(conv.pluckOperationContainerFromWells, _, 'object', 'wells'));
+    _.partial(omniConv.pluckOperationContainerFromWells, _, 'object', 'wells'));
 
 /* LIQUID HANDLING */
 
 converterInstruction.transfer = function (op) {
 
-  var fromWells      = utils.flattenAliquots(utils.pluckFieldValueRaw(op.fields, 'from')),
-      toWells        = utils.flattenAliquots(utils.pluckFieldValueRaw(op.fields, 'to')),
-      volume         = conv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
+  var fromWells      = omniUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'from')),
+      toWells        = omniUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'to')),
+      volume         = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
       optionalFields = ['dispense_speed', 'aspirate_speed', 'mix_before', 'mix_after'],
-      optionalObj    = conv.getFieldsIfSet(op.fields, optionalFields),
+      optionalObj    = omniConv.getFieldsIfSet(op.fields, optionalFields),
       transfers      = [];
 
   //todo - eventually, we want to put some of this in 'requirements' for the operation (pending them all written to
@@ -116,13 +116,13 @@ converterInstruction.transfer = function (op) {
 };
 
 converterInstruction.consolidate = function (op) {
-  var fromWells          = utils.flattenAliquots(utils.pluckFieldValueRaw(op.fields, 'from')),
-      toWell             = conv.pluckFieldValueTransformed(op.fields, 'to', converterField),
-      volume             = conv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
+  var fromWells          = omniUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'from')),
+      toWell             = omniConv.pluckFieldValueTransformed(op.fields, 'to', converterField),
+      volume             = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
       optionalFromFields = ['aspirate_speed'],
       optionalAllFields  = ['dispense_speed', 'mix_after'],
-      optionalFromObj    = conv.getFieldsIfSet(op.fields, optionalFromFields),
-      optionalAllObj     = conv.getFieldsIfSet(op.fields, optionalAllFields),
+      optionalFromObj    = omniConv.getFieldsIfSet(op.fields, optionalFromFields),
+      optionalAllObj     = omniConv.getFieldsIfSet(op.fields, optionalAllFields),
       fromArray          = [];
 
   _.forEach(fromWells, function (fromWell) {
@@ -140,13 +140,13 @@ converterInstruction.consolidate = function (op) {
 
 converterInstruction.distribute = function (op) {
   //todo - pass converters to transformer
-  var fromWell          = conv.pluckFieldValueTransformed(op.fields, 'from', converterField),
-      toWells           = utils.flattenAliquots(utils.pluckFieldValueRaw(op.fields, 'to')),
-      volume            = conv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
+  var fromWell          = omniConv.pluckFieldValueTransformed(op.fields, 'from', converterField),
+      toWells           = omniUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'to')),
+      volume            = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
       optionalToFields  = ['dispense_speed'],
       optionalAllFields = ['aspirate_speed', 'mix_before'],
-      optionalToObj     = conv.getFieldsIfSet(op.fields, optionalToFields),
-      optionalAllObj    = conv.getFieldsIfSet(op.fields, optionalAllFields),
+      optionalToObj     = omniConv.getFieldsIfSet(op.fields, optionalToFields),
+      optionalAllObj    = omniConv.getFieldsIfSet(op.fields, optionalAllFields),
       toArray           = [];
 
   _.forEach(toWells, function (fromWell) {
@@ -163,9 +163,9 @@ converterInstruction.distribute = function (op) {
 };
 
 converterInstruction.mix = function (op) {
-  var wells          = conv.pluckFieldValueTransformed(op.fields, 'wells', converterField),
+  var wells          = omniConv.pluckFieldValueTransformed(op.fields, 'wells', converterField),
       optionalFields = ['repetitions', 'volume', 'speed'],
-      optionalObj    = conv.getFieldsIfSet(op.fields, optionalFields, true);
+      optionalObj    = omniConv.getFieldsIfSet(op.fields, optionalFields, true);
 
   return _.map(wells, function (well) {
     return _.assign({
@@ -175,7 +175,7 @@ converterInstruction.mix = function (op) {
 };
 
 converterInstruction.dispense = function (op) {
-  var volumesValue = conv.pluckFieldValueRaw(op.fields, 'columns'),
+  var volumesValue = omniConv.pluckFieldValueRaw(op.fields, 'columns'),
       container    = _.result(_.first(volumesValue), 'container'),
       mapped       = simpleMapOperation(op);
 
