@@ -33,6 +33,12 @@ module.exports = function (grunt) {
         files: ['bower.json'],
         tasks: ['wiredep']
       },
+      //todo - get these automatically from the task itself
+      browserify: {
+        files: ['<%= yeoman.app %>/scripts/omniprotocol/**/*.js',
+                '<%= yeoman.app %>/scripts/conversion/**/*.js'],
+        tasks: ['browserify']
+      },
       js: {
         files: ['<%= yeoman.app %>/scripts/**/*.js'],
         tasks: ['newer:jshint:all'],
@@ -440,6 +446,24 @@ module.exports = function (grunt) {
       unit: {
         configFile: 'test/karma.conf.js',
         singleRun: true
+      }
+    },
+
+    //file concatenation + more
+    browserify: {
+      options: {
+        debug: true
+      },
+      omniprotocol: {
+        files : {
+          '<%= yeoman.app %>/scripts/omniprotocol/index.js': ['<%= yeoman.app %>/scripts/omniprotocol/_exports.js']
+        }
+      },
+      //todo - make these automatic to compile all converters based on directory name
+      autoprotocol: {
+        files : {
+          '<%= yeoman.app %>/scripts/conversion/autoprotocol/index.js': ['<%= yeoman.app %>/scripts/conversion/autoprotocol/_exports.js']
+        }
       }
     }
   });
