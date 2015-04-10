@@ -1,93 +1,93 @@
 header.site-header {
 
-  $header-logo-dim: 32px;
-  $header-subtext-font-size: 14px;
+  $header-logo-dim: 54px;
   $header-nav-font-size: 14px;
-  $logo-spacing: 10px;
-  $nav-height : $header-logo-dim + ($logo-spacing * 1);
+  $logo-spacing: 5px;
+  $nav-height : $header-logo-dim + ($logo-spacing * 2);
 
-  border-bottom: 1px solid $border-color-default;
-  margin: $logo-spacing 0 0;
-  padding-bottom: $logo-spacing;
   line-height: 1;
 
-  .logo {
-    position: relative;
-    display: inline-block;
-    float: left;
+  .container {
 
-    a {
-      width: $header-logo-dim;
-      height: $header-logo-dim;
-      display: inline-block;
-      position: relative;
-      opacity: 0.6;
-      transition: opacity $transition-in-time $transition-in-type;
-
-      &:hover {
-        opacity: 0.7;
-        transition: opacity $transition-out-time $transition-out-type;
-      }
-    }
-
-    &:after {
-      pointer-events: none;
-      position: absolute;
-      bottom: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 120%;
-      font-size: $header-subtext-font-size;
-      color: $dark-grey;
-      content: 'CX1';
-      text-align: center;
-      letter-spacing: 3px;
-    }
-
-    img {
-      width: $header-logo-dim;
-      height: $header-logo-dim;
-      position: absolute;
-      top: 0;
-      left: 0;
-      background-position: center center;
-      background-size: $header-logo-dim $header-logo-dim;
-    }
-  }
-
-  nav {
     display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-end;
-    height: $header-logo-dim;
-    line-height: $header-logo-dim;
-    font-size: $header-nav-font-size;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    border-bottom: 1px solid $border-color-default;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 
-    ul {
-      margin: 0;
-      padding: 0;
+    .logo {
+      display: flex;
+
+      img {
+        width: $header-logo-dim;
+        height: $header-logo-dim;
+        margin: $logo-spacing;
+        background-position: center center;
+        background-size: $header-logo-dim $header-logo-dim;
+      }
     }
 
-    li {
-      display: inline-block;
-      position: relative;
-      margin-right: 15px;
-      padding: 0;
-      background: 0;
+    nav {
+      display: flex;
+      flex-flow: row wrap;
+      flex-grow: 1;
+      justify-content: center;
+      align-items: center;
+      height: $nav-height;
+      line-height: $header-logo-dim;
+      font-size: $header-nav-font-size;
 
-      &:last-child {
-        margin-right: 0;
+      ul {
+        margin: 0;
+        padding: 0;
       }
+
+      li {
+        display: inline-block;
+        flex-grow: 1;
+        margin: 0 15px;
+        padding: 0;
+        background: 0;
+
+        a {
+          color: #666;
+          text-decoration: none;
+        }
+
+        &.active a,
+        & a:hover {
+          color: #222;
+        }
+      }
+    }
+
+    .user {
+      display: flex;
+      flex-flow: row wrap;
+      height: $nav-height;
+      align-items: center;
 
       a {
-        color: #666;
-        text-decoration: none;
+        display: inline-block;
+        font-size: $header-nav-font-size;
+        color: $dark-grey;
+        opacity: 0.6;
+        transition: opacity $transition-in-time $transition-in-type;
+
+        &:hover {
+          opacity: 0.7;
+          transition: opacity $transition-out-time $transition-out-type;
+        }
+
+        span {
+          margin: 0 5px;
+        }
+
       }
 
-      &.active a,
-      & a:hover {
-        color: #222;
-      }
     }
   }
+
 }

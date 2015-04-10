@@ -1,7 +1,33 @@
+@import "variables";
+
 footer {
-  padding: $layout-spacing-lg;
-  background: $dark-grey;
+  background: transparent;
   text-align: center;
-  color: $white;
-  font-size: $font-size-sm;
+  color: $grey;
+  font-size: $font-size;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  .status {
+    margin: 0 10px;
+    align-self: center;
+
+    span {
+      &:last-child {
+        color: $warning;
+      }
+    }
+  }
+
+  .company-logo {
+
+    img {
+      width: 191px;
+      height: 32px;
+      margin: $layout-spacing-sm;
+    }
+  }
+
 }

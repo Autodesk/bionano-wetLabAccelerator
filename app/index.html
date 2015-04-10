@@ -27,27 +27,39 @@
       <div class="container">
         <div class="logo">
           <a href="#/">
-            <img src="images/logo.png">
+            <img src="images/logo-cyborg.png">
+          </a>
+        </div>
+        <nav>
+          <ul>
+            <li><a ng-href="#/protocol">DESIGN</a></li>
+            <li><a ng-href="#/testing/restyle">BUILD</a></li>
+            <li><a ng-href="#/data">TEST</a></li>
+          </ul>
+        </nav>
+        <div class="user">
+          <a href="#/auth">
+            <span class="glyphicon glyphicon-user"></span>
+            <span ng-hide-auth>Sign In</span>
+            <span ng-show-auth>Sign Out</span>
           </a>
         </div>
 
-        <nav>
-          <ul>
-            <li><a ng-href="#/protocol">Protocol</a></li>
-            <li><a ng-href="#/auth">Auth</a></li>
-            <li><a ng-href="#/ordering">Ordering</a></li>
-            <li><a ng-href="#/data">Data</a></li>
-          </ul>
-        </nav>
       </div>
+
     </header>
 
     <main ng-view
           class="flex-vertical"></main>
 
     <footer>
-      <3
-      <span class="pull-right">&copy; Autodesk 2015</span>
+      <div class="status">
+        <span>Status:</span>
+        <span>Ready to Run</span>
+      </div>
+      <div class="company-logo">
+        <img src="images/logo-text.png">
+      </div>
     </footer>
 
 
