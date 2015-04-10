@@ -3,17 +3,23 @@
 'use strict';
 
 var utils           = require('./utils.js'),
-    converters      = require('./converters.js'),
+    fromUtils       = require('./fromUtils.js'),
+    fromConverters  = require('./fromConverters.js'),
     fromAbstraction = require('./fromAbstraction.js'),
+    toUtils         = require('./toUtils.js'),
+    toConverters    = require('./toConverters.js'),
     toAbstraction   = require('./toAbstraction.js'),
-    //fixme - should reference the node package to guarantee added globally first
+    //fixme - should reference the node package to guarantee added globally first (once exporting properly)
     omniprotocol    = global.omniprotocol,
     autoprotocol    = {};
 
-autoprotocol.utils = utils;
-autoprotocol.converters = converters;
+autoprotocol.utils           = utils;
+autoprotocol.fromUtils       = fromUtils;
+autoprotocol.fromConverters  = fromConverters;
 autoprotocol.fromAbstraction = fromAbstraction;
-autoprotocol.toAbstraction = toAbstraction;
+autoprotocol.toUtils         = toUtils;
+autoprotocol.toConverters    = toConverters;
+autoprotocol.toAbstraction   = toAbstraction;
 
 //browserify will convert global to the window
 global.omniprotocol.autoprotocol = autoprotocol;
@@ -21,24 +27,63 @@ global.omniprotocol.autoprotocol = autoprotocol;
 //fixme - for some reason the module is only global, and not exported properly..
 exports = autoprotocol;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./converters.js":2,"./fromAbstraction.js":3,"./toAbstraction.js":4,"./utils.js":5}],2:[function(require,module,exports){
+},{"./fromAbstraction.js":2,"./fromConverters.js":3,"./fromUtils.js":4,"./toAbstraction.js":5,"./toConverters.js":6,"./toUtils.js":7,"./utils.js":8}],2:[function(require,module,exports){
+(function (global){
+'use strict';
+
+//todo - in future, support conversion to packages, not just protocols
+
+var _         = require('lodash'),
+    fromUtils = require('./fromUtils.js'),
+    op        = global.omniprotocol,
+    omniUtils = op.utils;
+
+//convert abstraction to autoprotocol
+function fromAbstraction (abst) {
+  var references = {};
+  _.forEach(abst.references, function (abstRef) {
+    _.assign(references, fromUtils.makeReference(abstRef));
+  });
+
+  //each group gives an array, need to concat (_.flatten)
+  var instructions = _.flatten(_.map(abst.groups, fromUtils.unwrapGroup));
+
+  //console.log('interpolating everything');
+
+  var paramKeyvals = _.zipObject(
+      _.pluck(abst.parameters, 'name'),
+      _.pluck(abst.parameters, 'value')
+  );
+
+  var interpolatedInstructions = omniUtils.interpolateObject(instructions, paramKeyvals);
+
+  return {
+    refs        : references,
+    instructions: interpolatedInstructions
+  };
+}
+
+module.exports = fromAbstraction;
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./fromUtils.js":4,"lodash":9}],3:[function(require,module,exports){
 (function (global){
 var _                    = require('lodash'),
+    autoUtils            = require('./utils.js'),
     converterInstruction = {},
     converterField       = {},
     omniprotocol         = global.omniprotocol,
-    utils                = omniprotocol.utils,
-    conv                 = omniprotocol.conv;
+    omniUtils            = omniprotocol.utils,
+    omniConv             = omniprotocol.conv;
 
 /*******************
  Field Conversion
  *******************/
 
-//only include special conversions, otherwise just use value (_.identity)
+  //only include special conversions, otherwise just use value (_.identity)
 
-converterField.aliquot = _.flow(utils.flattenAliquots, _.first);
+converterField.aliquot = _.flow(omniUtils.flattenAliquots, _.first);
 
-converterField['aliquot+'] = utils.flattenAliquots;
+converterField['aliquot+'] = omniUtils.flattenAliquots;
 
 converterField.columnVolumes = function (input) {
   return _.map(input, function (colVol) {
@@ -88,7 +133,15 @@ converterField.thermocycleDyes = function (input) {
 function simpleMapOperation (op, localParams) {
   return _.assign({
     op: op.operation
-  }, conv.simpleKeyvalFields(op.fields, localParams, converterField));
+  }, omniConv.simpleKeyvalFields(op.fields, localParams, converterField));
+}
+
+//takes an autoprotocol instruction, wraps in pipette group
+function wrapInPipette (instruction) {
+  return {
+    op    : "pipette",
+    groups: [instruction]
+  };
 }
 
 converterInstruction.cover = simpleMapOperation;
@@ -99,21 +152,21 @@ converterInstruction.unseal = simpleMapOperation;
 /* SPECTROMETRY */
 
 converterInstruction.fluorescence = _.flow(simpleMapOperation,
-    _.partial(conv.pluckOperationContainerFromWells, _, 'object', 'wells'));
+    _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
 converterInstruction.luminescence = _.flow(simpleMapOperation,
-    _.partial(conv.pluckOperationContainerFromWells, _, 'object', 'wells'));
+    _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
 converterInstruction.absorbance = _.flow(simpleMapOperation,
-    _.partial(conv.pluckOperationContainerFromWells, _, 'object', 'wells'));
+    _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
 
 /* LIQUID HANDLING */
 
 converterInstruction.transfer = function (op) {
 
-  var fromWells      = utils.flattenAliquots(utils.pluckFieldValueRaw(op.fields, 'from')),
-      toWells        = utils.flattenAliquots(utils.pluckFieldValueRaw(op.fields, 'to')),
-      volume         = conv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
+  var fromWells      = omniUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'from')),
+      toWells        = omniUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'to')),
+      volume         = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
       optionalFields = ['dispense_speed', 'aspirate_speed', 'mix_before', 'mix_after'],
-      optionalObj    = conv.getFieldsIfSet(op.fields, optionalFields),
+      optionalObj    = omniConv.getFieldsIfSet(op.fields, optionalFields),
       transfers      = [];
 
   //todo - eventually, we want to put some of this in 'requirements' for the operation (pending them all written to
@@ -141,13 +194,13 @@ converterInstruction.transfer = function (op) {
 };
 
 converterInstruction.consolidate = function (op) {
-  var fromWells          = utils.flattenAliquots(utils.pluckFieldValueRaw(op.fields, 'from')),
-      toWell             = conv.pluckFieldValueTransformed(op.fields, 'to', converterField),
-      volume             = conv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
+  var fromWells          = omniUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'from')),
+      toWell             = omniConv.pluckFieldValueTransformed(op.fields, 'to', converterField),
+      volume             = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
       optionalFromFields = ['aspirate_speed'],
       optionalAllFields  = ['dispense_speed', 'mix_after'],
-      optionalFromObj    = conv.getFieldsIfSet(op.fields, optionalFromFields),
-      optionalAllObj     = conv.getFieldsIfSet(op.fields, optionalAllFields),
+      optionalFromObj    = omniConv.getFieldsIfSet(op.fields, optionalFromFields),
+      optionalAllObj     = omniConv.getFieldsIfSet(op.fields, optionalAllFields),
       fromArray          = [];
 
   _.forEach(fromWells, function (fromWell) {
@@ -157,21 +210,23 @@ converterInstruction.consolidate = function (op) {
     }, optionalFromObj))
   });
 
-  return _.assign({
+  var consolidates = _.assign({
     to  : toWell,
     from: fromArray
   }, optionalAllFields);
+
+  return wrapInPipette({consolidate: consolidates});
 };
 
 converterInstruction.distribute = function (op) {
   //todo - pass converters to transformer
-  var fromWell          = conv.pluckFieldValueTransformed(op.fields, 'from', converterField),
-      toWells           = utils.flattenAliquots(utils.pluckFieldValueRaw(op.fields, 'to')),
-      volume            = conv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
+  var fromWell          = omniConv.pluckFieldValueTransformed(op.fields, 'from', converterField),
+      toWells           = omniUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'to')),
+      volume            = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
       optionalToFields  = ['dispense_speed'],
       optionalAllFields = ['aspirate_speed', 'mix_before'],
-      optionalToObj     = conv.getFieldsIfSet(op.fields, optionalToFields),
-      optionalAllObj    = conv.getFieldsIfSet(op.fields, optionalAllFields),
+      optionalToObj     = omniConv.getFieldsIfSet(op.fields, optionalToFields),
+      optionalAllObj    = omniConv.getFieldsIfSet(op.fields, optionalAllFields),
       toArray           = [];
 
   _.forEach(toWells, function (fromWell) {
@@ -181,26 +236,30 @@ converterInstruction.distribute = function (op) {
     }, optionalToObj))
   });
 
-  return _.assign({
+  var distributes = _.assign({
     from: fromWell,
     to  : toArray
   }, optionalAllFields);
+
+  return wrapInPipette({distribute: distributes});
 };
 
 converterInstruction.mix = function (op) {
-  var wells          = conv.pluckFieldValueTransformed(op.fields, 'wells', converterField),
+  var wells          = omniConv.pluckFieldValueTransformed(op.fields, 'wells', converterField),
       optionalFields = ['repetitions', 'volume', 'speed'],
-      optionalObj    = conv.getFieldsIfSet(op.fields, optionalFields, true);
+      optionalObj    = omniConv.getFieldsIfSet(op.fields, optionalFields, true);
 
-  return _.map(wells, function (well) {
+  var mixes = _.map(wells, function (well) {
     return _.assign({
       well: well
     }, optionalObj);
   });
+
+  return wrapInPipette({mix: mixes});
 };
 
 converterInstruction.dispense = function (op) {
-  var volumesValue = conv.pluckFieldValueRaw(op.fields, 'columns'),
+  var volumesValue = omniConv.pluckFieldValueRaw(op.fields, 'columns'),
       container    = _.result(_.first(volumesValue), 'container'),
       mapped       = simpleMapOperation(op);
 
@@ -232,63 +291,13 @@ module.exports = {
   instruction: converterInstruction
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"lodash":6}],3:[function(require,module,exports){
-(function (global){
-'use strict';
-
-//todo - in future, support conversion to packages, not just protocols
-
-var _         = require('lodash'),
-    autoUtils = require('./utils.js'),
-    op        = global.omniprotocol,
-    utils     = op.utils;
-
-//convert abstraction to autoprotocol
-function fromAbstraction (abst) {
-  var references = {};
-  _.forEach(abst.references, function (abstRef) {
-    _.assign(references, autoUtils.makeReference(abstRef));
-  });
-
-  //each group gives an array, need to concat (_.flatten)
-  var instructions = _.flatten(_.map(abst.groups, autoUtils.unwrapGroup));
-
-  //console.log('interpolating everything');
-
-  var paramKeyvals = _.zipObject(
-      _.pluck(abst.parameters, 'name'),
-      _.pluck(abst.parameters, 'value')
-  );
-
-  var interpolatedInstructions = utils.interpolateObject(instructions, paramKeyvals);
-
-  return {
-    refs        : references,
-    instructions: interpolatedInstructions
-  };
-}
-
-module.exports = fromAbstraction;
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./utils.js":5,"lodash":6}],4:[function(require,module,exports){
-var _ = require('lodash');
-
-module.exports = _.noop;
-},{"lodash":6}],5:[function(require,module,exports){
+},{"./utils.js":8,"lodash":9}],4:[function(require,module,exports){
 (function (global){
 var _                    = require('lodash'),
-    converters           = require('./converters.js'),
-    converterField       = converters.field,
-    converterInstruction = converters.instruction,
-    conv                 = global.omniprotocol.conv;
-
-//takes an autoprotocol instruction, wraps in pipette group
-function wrapInPipette (instruction) {
-  return {
-    op    : "pipette",
-    groups: [instruction]
-  };
-}
+    fromConverters       = require('./fromConverters.js'),
+    converterField       = fromConverters.field,
+    converterInstruction = fromConverters.instruction,
+    omniConv             = global.omniprotocol.conv;
 
 function convertInstruction (inst, localParams) {
   //todo - handle validation of each field too?
@@ -299,6 +308,10 @@ function convertInstruction (inst, localParams) {
     console.error('converter doesn\'t exist for ' + inst.operation);
     return null;
   }
+
+  _.assign(localParams, {
+    operation: inst.operation
+  });
 
   return converter(inst, localParams);
 }
@@ -311,15 +324,18 @@ function unwrapGroup (group) {
 
   _.times(group.loop || 1, function (loopIndex) {
     _.forEach(group.steps, function (step, stepIndex) {
-      //var stepIndex = (loopIndex * group.steps.length) + stepIndex;
-      unwrapped.push(convertInstruction(step, {index: loopIndex}));
+      var stepCalc = (loopIndex * group.steps.length) + stepIndex;
+      unwrapped.push(convertInstruction(step, {
+        index: loopIndex,
+        step : stepCalc
+      }));
     });
   });
   return unwrapped;
 }
 
 function makeReference (ref) {
-  var obj = {};
+  var obj      = {};
   var internal = {};
 
   if (!!ref.isNew || _.isUndefined(ref.id)) {
@@ -341,13 +357,395 @@ function makeReference (ref) {
 }
 
 module.exports = {
-  wrapInPipette     : wrapInPipette,
-  makeReference     : makeReference,
   convertInstruction: convertInstruction,
-  unwrapGroup       : unwrapGroup
+  unwrapGroup       : unwrapGroup,
+  makeReference     : makeReference
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./converters.js":2,"lodash":6}],6:[function(require,module,exports){
+},{"./fromConverters.js":3,"lodash":9}],5:[function(require,module,exports){
+(function (global){
+var _            = require('lodash'),
+    omniprotocol = global.omniprotocol,
+    omniUtils    = omniprotocol.utils,
+    toConverters = require('./toConverters.js'),
+    toUtils      = require('./toUtils.js');
+
+function toAbstraction (auto) {
+
+  var references   = toUtils.convertReferences(auto.refs);
+  var instructions = toUtils.convertInstructions(auto.instructions);
+
+  var omni        = omniUtils.wrapGroupsInProtocol(instructions);
+  omni.references = references;
+
+  //todo - further post-processing
+  // well numbers to alphanumerics
+  // moving to variables --- but also accomodating packages, not just protocols
+  // look for looping
+
+  var postprocess = _.flow(toUtils.convertWellsToAlphanums);
+
+  return postprocess(omni);
+}
+
+module.exports = toAbstraction;
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./toConverters.js":6,"./toUtils.js":7,"lodash":9}],6:[function(require,module,exports){
+(function (global){
+var _                     = require('lodash'),
+    utils                 = require('./utils.js'),
+    omniprotocol          = global.omniprotocol,
+    fieldConverters       = {},
+    instructionConverters = {};
+
+/******************
+ Field Utils
+ ******************/
+
+var dimensionalSeparator = ':';
+
+function handleDimensional (dimObj) {
+  var split = dimObj.split(dimensionalSeparator);
+  return {
+    value: split[0],
+    unit : split[1]
+  }
+}
+
+var dimensionalTypes = _.keys(_.pick(omniprotocol.inputTypes, _.matches({'autoprotocol-type': "Unit"})));
+
+/*** dimensional fields ***/
+
+instructionConverters['dimensional'] = _.identity;
+_.forEach(dimensionalTypes, function (type) {
+  instructionConverters[type] = _.identity;
+});
+
+_.assign(instructionConverters, {
+  generic: _.identity,
+
+  /*** primitives ***/
+
+  integer: _.identity,
+  decimal: _.identity,
+  boolean: _.identity,
+  string : _.identity,
+  option : _.identity,
+
+  /*** containers ***/
+
+  //todo - handle distinguishing between specifying container or not
+  aliquot    : function (autoval) {
+    return [utils.splitContainerWell(autoval)];
+  },
+  'aliquot+' : _.partial(_.map, _, utils.splitContainerWell),
+  'aliquot++': _.flow(_.map, _.partial(_.map, _, utils.splitContainerWell)), //note - not used in omni
+  container  : _.identity,
+  group      : _.identity,
+  'group+'   : _.identity,
+
+  /*** custom field types ***/
+
+  thermocycleGroup  : function (autoval) {
+    return _.map(autoval, function (autogroup) {
+      return {
+        cycles: _.result(autogroup, 'cycles', 1),
+        steps : _.map(_.result(autogroup, 'steps', []), function (autostep) {
+          var omnistep = {
+            duration  : _.result(autostep, 'duration'),
+            read      : _.result(autostep, 'read', false),
+            isGradient: _.has(autostep, 'gradient')
+          };
+
+          if (omnistep.isGradient) {
+            _.assign(omnistep, {
+              gradientStart: _.result(autostep.gradient, 'top'),
+              gradientEnd  : _.result(autostep.gradient, 'bottom')
+            });
+          } else {
+            _.assign(omnistep, {
+              temperature: _.result(autostep, 'temperature')
+            });
+          }
+
+          return omnistep;
+        })
+      };
+    });
+  },
+  thermocycleMelting: _.identity,
+  thermocycleDyes   : function (autoval) {
+    return _.map(autoval, function (wells, dye) {
+      return {
+        dye  : dye,
+        wells: wells
+      }
+    });
+  },
+  columnVolumes     : _.identity,
+  mixwrap           : _.identity
+});
+
+/******************
+ Field Converters
+ ******************/
+
+function convertFieldValue (fieldType, autoVal, fieldName, op) {
+
+  var converter = _.has(fieldConverters, fieldType) ?
+      fieldConverters[fieldType] :
+      _.identity; //todo - error when undefined
+
+  return converter(autoVal, fieldName, op);
+}
+
+/******************
+ Instruction Utils
+ ******************/
+
+/* e.g. given fieldObj { duration : "duration" } for op { duration : "60:seconds" } generate
+ * { name : "duration", type: "duration" , value : "60:seconds" }
+ */
+function basicFieldConvert (op, fieldObj) {
+  return _.map(fieldObj, function (fieldType, fieldName) {
+
+    var fieldVal = _.result(op, fieldName, null);
+    _.isNull(fieldVal) && console.warn('field ' + fieldName + ' undefined:', op);
+
+    return {
+      name : fieldName,
+      type : fieldType,
+      value: fieldVal
+    };
+  });
+}
+
+//fieldMap can either can an object, which just maps fields directly by name, or an object whose keys are autoprotocol
+// field names, and values are omniprotocol field names
+function populateOperationScaffold (op, fieldMap) {
+  var opName            = _.result(op, 'op'),
+      fieldsToRetrieve  = _.isArray(fieldMap) ? fieldMap : _.keys(fieldMap),
+      //use _.map to ensure order matches
+      fieldsToSet       = _.isArray(fieldMap) ? fieldMap : _.map(fieldsToRetrieve, _.partial(_.result, fieldMap)),
+      initValues        = _.map(fieldsToRetrieve, _.partial(_.result, op)),
+      fieldTypes        = _.map(fieldsToSet, _.partial(omniprotocol.utils.getFieldTypeInOperation, opName)),
+      transformedValues = _.map(initValues, function (autoval, index) {
+        return convertFieldValue(fieldTypes[index], autoval, fieldsToRetrieve[index], op);
+      }),
+      fieldObj          = _.zipObject(fieldsToSet, transformedValues);
+
+  omniprotocol.utils.scaffoldOperationWithValues(opName, fieldObj);
+}
+
+function directMapFieldsToScaffold (op) {
+  var remaining  = _.omit(op, 'op'),
+      fieldNames = _.keys(remaining);
+
+  return populateOperationScaffold(op, fieldNames);
+}
+
+function getPipetteGroupOps (instruction, type) {
+  return _.result(instruction, type, []);
+}
+
+/******************
+ Instruction Converters
+ ******************/
+
+_.assign(instructionConverters, {
+  generic    : directMapFieldsToScaffold,
+
+  //todo - smarter liquid handling steps.. these are barebones
+  //for now, just getting first one in a bunch and assuming they will be same throughout
+
+  transfer   : function (instruction) {
+
+  },
+  distribute : function (instruction) {
+
+  },
+  consolidate: function (instruction) {
+
+  },
+  mix        : function (instruction) {
+
+  }
+});
+
+_.forEach([
+  'spin',
+  'seal',
+  'unseal',
+  'cover',
+  'uncover',
+  'store',
+  'discard',
+  'luminescence',
+  'fluorescence',
+  'absorbance',
+  'gel_separate',
+  'incubate',
+  'thermocycle',
+  'dispense '], function (instruction) {
+  instructionConverters[instruction] = directMapFieldsToScaffold;
+});
+
+module.exports = {
+  fields      : fieldConverters,
+  instructions: instructionConverters
+};
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./utils.js":8,"lodash":9}],7:[function(require,module,exports){
+(function (global){
+var _                     = require('lodash'),
+    omniprotocol          = global.omniprotocol,
+    toConverters          = require('./toConverters.js'),
+    instructionConverters = toConverters.instructions;
+
+var pipetteInstructions = ['transfer', 'mix', 'distribute', 'consolidate'];
+
+/******************
+ References
+ ******************/
+
+function convertReference (ref, name) {
+  return {
+    name   : name,
+    isNew  : ref.new,
+    id     : ref.id,
+    type   : ref.new,
+    storage: _.isUndefined(ref.store) ? false : ref.store.where
+  };
+}
+
+function convertReferences (refs) {
+  return _.map(refs, convertReference);
+}
+
+/******************
+ Fields
+ ******************/
+
+
+/******************
+ Instructions
+ ******************/
+
+//pipette return an array, so flatten later
+function convertInstruction (inst) {
+
+  var opName = _.result(inst, 'op');
+
+  if (!opName) {
+    throw new Error('instruction missing field op', inst);
+  }
+
+  //handle pipette instructions, which are nested as in pipette under field group
+  if (opName == 'pipette') {
+
+    //todo - check for sequential of same, fold into one tip if possible
+
+    return _.map(inst.groups, function (group, opName) {
+      return convertInstruction(_.assign({op: opName}, group));
+    });
+  }
+
+  var converter = instructionConverters[opName];
+
+  if (!_.isFunction(converter)) { throw new Error('converter invalid for ' + opName, inst)}
+
+  return converter(inst);
+}
+
+function convertInstructions (instructions) {
+  return _.flatten(_.map(instructions, convertInstruction));
+}
+
+// given a container ( only possible when new ?? ) reformat numbers to alphanumerics... may have to do this at runtime if using a variable?
+function convertWellsToAlphanums (omni) {
+  return omni;
+}
+
+//future - attempt to find loops in the instructions, and fold them up
+function foldInstructionLoops (omni) {
+  return omni;
+}
+
+module.exports = {
+  convertReference   : convertReference,
+  convertReferences  : convertReferences,
+  convertInstruction : convertInstruction,
+  convertInstructions: convertInstructions,
+  convertWellsToAlphanums : convertWellsToAlphanums
+};
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./toConverters.js":6,"lodash":9}],8:[function(require,module,exports){
+var _                    = require('lodash');
+
+/*******
+ Operation Manipulation
+ *******/
+
+var containerWellDelimiter = "/";
+
+function joinContainerWell (container, well, tempDelimiter) {
+  return '' + container + (_.isString(tempDelimiter) ? tempDelimiter : containerWellDelimiter) + well;
+}
+
+//given a string in form "container/well", returns object in form { container : '<container>', well: '<well>' }
+function splitContainerWell (containerWell) {
+  if (!_.isString(containerWell)) {
+    return null;
+  }
+  var split = containerWell.split(containerWellDelimiter);
+  return {
+    container: split[0],
+    well     : split[1]
+  };
+}
+
+//given wells in op specified by wellsKey (default 'wells) in form "container/well", removes 'container' from each
+// and adds key `containerKey` (default 'object') with value extracted does not handle containers being different
+// currently
+function pluckOperationContainerFromWells (op, containerKey, wellsKey) {
+  wellsKey     = _.isUndefined(wellsKey) ? 'wells' : wellsKey;
+  containerKey = _.isUndefined(containerKey) ? 'object' : containerKey;
+
+  var firstContainer = splitContainerWell(op[wellsKey][0]).container;
+
+  //redo the wells
+  var strippedWells = _.map(op[wellsKey], function (well) {
+    return splitContainerWell(well).well;
+  });
+
+  //need to set key dynamically
+  var obj           = {};
+  obj[containerKey] = firstContainer;
+  obj[wellsKey]     = strippedWells;
+
+  return _.assign({}, op, obj)
+}
+
+// deprecate-d
+// type is "wells" or "container", fieldName is field with value
+function createTransform (type, fieldName) {
+  var validTypes = ['wells', 'container'];
+
+  if (!_.includes(validTypes, type)) {
+    throw new Error("invalid transform type")
+  }
+
+  var obj   = {};
+  obj[type] = fieldName;
+  return obj;
+}
+
+module.exports = {
+  joinContainerWell : joinContainerWell,
+  splitContainerWell: splitContainerWell,
+  pluckOperationContainerFromWells : pluckOperationContainerFromWells
+};
+},{"lodash":9}],9:[function(require,module,exports){
 (function (global){
 /**
  * @license

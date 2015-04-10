@@ -1,3 +1,5 @@
+var optionEnums = require('./optionEnums.js');
+
 module.exports = {
   //pipetting
   "transfer"  : {
@@ -232,26 +234,7 @@ module.exports = {
         {
           "name"   : "reagent",
           "type"   : "option",
-          "options": [
-            "autoclaved-water",
-            "water",
-            "bleach-10p",
-            "ethanol-70p",
-            "lb-broth-100ug-ml-amp",
-            "lb-broth-50ug-ml-kan",
-            "lb-broth-30ug-ml-kan",
-            "lb-broth-25ug-ml-cm",
-            "lb-broth-100ug-ml-specto",
-            "lb-broth-50ug-ml-kan-25ug-ml-cm",
-            "lb-broth-15ug-ml-tet",
-            "lb-broth-noAB",
-            "pbs",
-            "sob",
-            "soc",
-            "tb-broth-100ug-ml-amp",
-            "tb-broth-50ug-ml-kan",
-            "te-ph7.5"
-          ],
+          "options": optionEnums.reagents.dispense,
           "value"  : "lb-broth-noAB"
         },
         {
@@ -333,13 +316,7 @@ module.exports = {
         {
           "name"   : "where",
           "type"   : "option",
-          "options": [
-            "ambient",
-            "warm_37",
-            "cold_4",
-            "cold_20",
-            "cold_80"
-          ],
+          "options": optionEnums.storage.storage,
           "default": "ambient"
         },
         {
@@ -423,11 +400,7 @@ module.exports = {
         {
           "name"    : "lid",
           "type"    : "option",
-          "options" : [
-            "standard",
-            "universal",
-            "low_evaporation"
-          ],
+          "options" : optionEnums.lid.cover,
           "optional": true,
           "default" : "standard"
         }
@@ -645,21 +618,12 @@ module.exports = {
         {
           "name"   : "matrix",
           "type"   : "option",
-          "options": [
-            "agarose(96,2.0%)",
-            "agarose(48,4.0%)",
-            "agarose(48,2.0%)",
-            "agarose(12,1.2%)",
-            "agarose(8,0.8%)"
-          ]
+          "options": optionEnums.gel.matrix
         },
         {
           "name"   : "ladder",
           "type"   : "option",
-          "options": [
-            "ladder1",
-            "ladder2"
-          ],
+          "options": optionEnums.gel.ladder,
           "default": "ladder1"
         },
         {
@@ -695,12 +659,7 @@ module.exports = {
         {
           "name"   : "where",
           "type"   : "option",
-          "options": [
-            "ambient",
-            "cold_4",
-            "cold_20",
-            "cold_80"
-          ],
+          "options": optionEnums.storage.storage,
           "default": "ambient"
         }
       ]
@@ -727,4 +686,4 @@ module.exports = {
       ]
     }
   }
-}
+};

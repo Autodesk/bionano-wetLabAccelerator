@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash'),
+var _      = require('lodash'),
     utils  = require('./utils.js'),
     inputs = require('./inputTypes.js');
 
@@ -64,36 +64,9 @@ function simpleKeyvalFields (fields, localParams, fieldConverters) {
   return obj;
 }
 
-/*******
- Operation Manipulation
- *******/
-
-//given wells in op specified by wellsKey (default 'wells) in form "container/well", removes 'container' from each
-// and adds key `containerKey` (default 'object') with value extracted does not handle containers being different
-// currently
-function pluckOperationContainerFromWells (op, containerKey, wellsKey) {
-  wellsKey = _.isUndefined(wellsKey) ? 'wells' : wellsKey;
-  containerKey = _.isUndefined(containerKey) ? 'object' : containerKey;
-
-  var firstContainer = utils.splitContainerWell(op[wellsKey][0]).container;
-
-  //redo the wells
-  var strippedWells = _.map(op[wellsKey], function (well) {
-    return utils.splitContainerWell(well).well;
-  });
-
-  //need to set key dynamically
-  var obj = {};
-  obj[containerKey] = firstContainer;
-  obj[wellsKey] = strippedWells;
-
-  return _.assign({}, op, obj)
-}
-
 module.exports = {
-  transformField                  : transformField,
-  pluckFieldValueTransformed      : pluckFieldValueTransformed,
-  getFieldsIfSet                  : getFieldsIfSet,
-  simpleKeyvalFields              : simpleKeyvalFields,
-  pluckOperationContainerFromWells: pluckOperationContainerFromWells
+  transformField            : transformField,
+  pluckFieldValueTransformed: pluckFieldValueTransformed,
+  getFieldsIfSet            : getFieldsIfSet,
+  simpleKeyvalFields        : simpleKeyvalFields
 };

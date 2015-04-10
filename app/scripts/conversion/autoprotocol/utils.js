@@ -1,70 +1,65 @@
-var _                    = require('lodash'),
-    converters           = require('./converters.js'),
-    converterField       = converters.field,
-    converterInstruction = converters.instruction,
-    omniConv             = global.omniprotocol.conv;
+var _                    = require('lodash');
 
-//takes an autoprotocol instruction, wraps in pipette group
-function wrapInPipette (instruction) {
+/*******
+ Operation Manipulation
+ *******/
+
+var containerWellDelimiter = "/";
+
+function joinContainerWell (container, well, tempDelimiter) {
+  return '' + container + (_.isString(tempDelimiter) ? tempDelimiter : containerWellDelimiter) + well;
+}
+
+//given a string in form "container/well", returns object in form { container : '<container>', well: '<well>' }
+function splitContainerWell (containerWell) {
+  if (!_.isString(containerWell)) {
+    return null;
+  }
+  var split = containerWell.split(containerWellDelimiter);
   return {
-    op    : "pipette",
-    groups: [instruction]
+    container: split[0],
+    well     : split[1]
   };
 }
 
-function convertInstruction (inst, localParams) {
-  //todo - handle validation of each field too?
+//given wells in op specified by wellsKey (default 'wells) in form "container/well", removes 'container' from each
+// and adds key `containerKey` (default 'object') with value extracted does not handle containers being different
+// currently
+function pluckOperationContainerFromWells (op, containerKey, wellsKey) {
+  wellsKey     = _.isUndefined(wellsKey) ? 'wells' : wellsKey;
+  containerKey = _.isUndefined(containerKey) ? 'object' : containerKey;
 
-  var converter = converterInstruction[inst.operation];
+  var firstContainer = splitContainerWell(op[wellsKey][0]).container;
 
-  if (!_.isFunction(converter)) {
-    console.error('converter doesn\'t exist for ' + inst.operation);
-    return null;
-  }
-
-  return converter(inst, localParams);
-}
-
-// todo - would be great to abstract this out of requiring conversion inline
-// need to handle way of defining dictionary per step, so that loop index doesn't need to be fed directly to function,
-// but can be part of data object instead
-function unwrapGroup (group) {
-  var unwrapped = [];
-
-  _.times(group.loop || 1, function (loopIndex) {
-    _.forEach(group.steps, function (step, stepIndex) {
-      //var stepIndex = (loopIndex * group.steps.length) + stepIndex;
-      unwrapped.push(convertInstruction(step, {index: loopIndex}));
-    });
+  //redo the wells
+  var strippedWells = _.map(op[wellsKey], function (well) {
+    return splitContainerWell(well).well;
   });
-  return unwrapped;
+
+  //need to set key dynamically
+  var obj           = {};
+  obj[containerKey] = firstContainer;
+  obj[wellsKey]     = strippedWells;
+
+  return _.assign({}, op, obj)
 }
 
-function makeReference (ref) {
-  var obj = {};
-  var internal = {};
+// deprecate-d
+// type is "wells" or "container", fieldName is field with value
+function createTransform (type, fieldName) {
+  var validTypes = ['wells', 'container'];
 
-  if (!!ref.isNew || _.isUndefined(ref.id)) {
-    _.assign(internal, {new: ref.type});
-  } else {
-    _.assign(internal, {id: ref.id});
+  if (!_.includes(validTypes, type)) {
+    throw new Error("invalid transform type")
   }
 
-  if (!!ref.storage) {
-    internal.store = {
-      where: ref.storage
-    };
-  } else {
-    internal.discard = true;
-  }
-
-  obj[ref.name] = internal;
+  var obj   = {};
+  obj[type] = fieldName;
   return obj;
 }
 
 module.exports = {
-  wrapInPipette     : wrapInPipette,
-  makeReference     : makeReference,
-  convertInstruction: convertInstruction,
-  unwrapGroup       : unwrapGroup
+  joinContainerWell : joinContainerWell,
+  splitContainerWell: splitContainerWell,
+  pluckOperationContainerFromWells : pluckOperationContainerFromWells
 };
