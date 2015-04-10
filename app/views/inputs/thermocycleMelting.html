@@ -1,0 +1,15 @@
+<!-- todo - enable toggling + cleanup -->
+<div ng-if="instruction.melting">
+  <tx-measure label="melt:start"
+              dimension-type="temperature"
+              ng-model="instruction.melting.start"></tx-measure>
+  <tx-measure label="melt:end"
+              dimension-type="temperature"
+              ng-model="instruction.melting.end"></tx-measure>
+  <tx-measure label="melt:increment"
+              dimension-type="temperature"
+              ng-model="instruction.melting.increment"></tx-measure>
+  <tx-measure label="melt:rate"
+              dimension-type="duration"
+              ng-model="instruction.melting.rate"></tx-measure>
+</div>
