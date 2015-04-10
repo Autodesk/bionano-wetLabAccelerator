@@ -109,7 +109,7 @@ module.exports = {
   "option"            : {
     description : "A dropdown with options",
     verification: function (input, options) {
-      //how to know need to pass in options, and do so dynamically?
+      //todo - how to know need to pass in options, and do so dynamically?
       return _.indexOf(options, input) > -1;
     }
   },
@@ -143,4 +143,4 @@ module.exports = {
     description : "Dyes mapped to wells for thermocycle",
     verification: _.constant(true)
   }
-}
+};

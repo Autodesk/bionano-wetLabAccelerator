@@ -38,14 +38,14 @@ angular.module('tx.protocolEditor')
       compile: function compile(tElement, tAttrs, transclude) {
         return {
           pre: function preLink(scope, iElement, iAttrs) {
-            var type = scope.fieldCtrl.field.type,
+            var type = _.result(scope.fieldCtrl.field, 'type'),
                 inputType = Omniprotocol.inputTypes[type],
                 partial = type;                 //default, maybe handled differently in if/else
 
             //Special handling before we get the appropriate template
 
             //handle all dimensional values the same way
-            if (inputType['autoprotocol-type'] == 'Unit') {
+            if (_.result(inputType, 'autoprotocol-type') == 'Unit') {
               partial = 'dimension';
               scope.unitOptions = inputType.units;
 
@@ -69,11 +69,13 @@ angular.module('tx.protocolEditor')
               partial = 'aliquot';
               scope.aliquotMultiple = true;
             }
+            else if (type == 'thermocycleDyes') {
+              scope.fieldCtrl.dyesContainer = {}; //todo - finish this
+            }
 
             /* functions for specific types */
 
             function handleNewDimensionInternal (newobj) {
-              //todo - assign using ngModelCtrl (need to do in postlink) - this works but not best way?
               if (_.isEmpty(newobj)) { return; }
               scope.fieldCtrl.model = '' + newobj.value + ':' + newobj.unit;
             }

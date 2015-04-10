@@ -1,4 +1,5 @@
 var _                    = require('lodash'),
+    autoUtils            = require('./utils.js'),
     converterInstruction = {},
     converterField       = {},
     omniprotocol         = global.omniprotocol,
@@ -66,6 +67,14 @@ function simpleMapOperation (op, localParams) {
   }, omniConv.simpleKeyvalFields(op.fields, localParams, converterField));
 }
 
+//takes an autoprotocol instruction, wraps in pipette group
+function wrapInPipette (instruction) {
+  return {
+    op    : "pipette",
+    groups: [instruction]
+  };
+}
+
 converterInstruction.cover = simpleMapOperation;
 converterInstruction.uncover = simpleMapOperation;
 converterInstruction.seal = simpleMapOperation;
@@ -74,11 +83,11 @@ converterInstruction.unseal = simpleMapOperation;
 /* SPECTROMETRY */
 
 converterInstruction.fluorescence = _.flow(simpleMapOperation,
-    _.partial(omniConv.pluckOperationContainerFromWells, _, 'object', 'wells'));
+    _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
 converterInstruction.luminescence = _.flow(simpleMapOperation,
-    _.partial(omniConv.pluckOperationContainerFromWells, _, 'object', 'wells'));
+    _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
 converterInstruction.absorbance = _.flow(simpleMapOperation,
-    _.partial(omniConv.pluckOperationContainerFromWells, _, 'object', 'wells'));
+    _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
 
 /* LIQUID HANDLING */
 
@@ -132,10 +141,12 @@ converterInstruction.consolidate = function (op) {
     }, optionalFromObj))
   });
 
-  return _.assign({
+  var consolidates = _.assign({
     to  : toWell,
     from: fromArray
   }, optionalAllFields);
+
+  return wrapInPipette({consolidate: consolidates});
 };
 
 converterInstruction.distribute = function (op) {
@@ -156,10 +167,12 @@ converterInstruction.distribute = function (op) {
     }, optionalToObj))
   });
 
-  return _.assign({
+  var distributes = _.assign({
     from: fromWell,
     to  : toArray
   }, optionalAllFields);
+
+  return wrapInPipette({distribute: distributes});
 };
 
 converterInstruction.mix = function (op) {
@@ -167,11 +180,13 @@ converterInstruction.mix = function (op) {
       optionalFields = ['repetitions', 'volume', 'speed'],
       optionalObj    = omniConv.getFieldsIfSet(op.fields, optionalFields, true);
 
-  return _.map(wells, function (well) {
+  var mixes = _.map(wells, function (well) {
     return _.assign({
       well: well
     }, optionalObj);
   });
+
+  return wrapInPipette({mix: mixes});
 };
 
 converterInstruction.dispense = function (op) {

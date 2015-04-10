@@ -1,4 +1,9 @@
-var _ = require('lodash');
+var _          = require('lodash'),
+    operations = require('./operations.js');
+
+/*******
+ Fields
+ ******/
 
 function pluckField (fields, fieldName) {
   return _.find(fields, {name: fieldName});
@@ -23,10 +28,11 @@ function interpolateValue (value, params) {
   }
 }
 
-// todo - clarify handling undefined
-// todo - clarify multiple variables in string
-//example: interpolateObject({"myVal" : "hey ${you}", "myObj" : {"greet" : "hi ${me}"} }, {you: "bobby", me: "max"})
-// -> { myObj: { greet: "hi max"} myVal: "hey bobby" }
+// note - if the string contains a variable which cannot be templated, it will just be returned (useful for doing
+// multiple passes) note - if there are multiple variables, if any variable is in the dictionary, they will all be
+// interpolated, and undefined templates will resolve to empty strings. example: interpolateObject({"myVal" : "hey
+// ${you}", "myObj" : {"greet" : "hi ${me}"} }, {you: "bobby", me: "max"}) -> { myObj: { greet: "hi max"} myVal: "hey
+// bobby" }
 function interpolateObject (obj, params) {
   if (_.isString(obj))
     return interpolateValue(obj, params);
@@ -36,27 +42,47 @@ function interpolateObject (obj, params) {
   return obj;
 }
 
+/*****
+ Operations
+ *****/
+
+function wrapFieldsAsStep (fieldsArray) {
+  return {
+    "operation"   : "",
+    "requirements": {},
+    "transforms"  : [],
+    "fields"      : fieldsArray
+  };
+}
+
+function scaffoldOperationWithValues (operationName, fieldVals) {
+  var clone    = _.clone(_.result(operations, operationName, null)),
+      scaffold = _.result(clone, 'scaffold', null);
+
+  if (_.isEmpty(scaffold)) {
+    throw new Error("operation " + operationName + " not present")
+  }
+
+  _.forEach(fieldVals, function (fieldVal, fieldName) {
+    _.assign(pluckField(scaffold.fields, fieldName), {value: fieldVal});
+  });
+
+  return scaffold;
+}
+
+function getFieldTypeInOperation (operationName, fieldName) {
+  var op        = _.result(operations, operationName, null),
+      scaffold  = _.result(op, 'scaffold', null),
+      fields    = _.result(scaffold, 'fields'),
+      field     = pluckField(fields, fieldName),
+      fieldType = _.result(field, 'type', null);
+
+  return fieldType;
+}
+
 /*******
  Wells
  ******/
-
-var containerWellDelimiter = "/";
-
-function joinContainerWell (container, well, tempDelimiter) {
-  return '' + container + (_.isString(tempDelimiter) ? tempDelimiter : containerWellDelimiter) + well;
-}
-
-//given a string in form "container/well", returns object in form { container : '<container>', well: '<well>' }
-function splitContainerWell (containerWell) {
-  if (!_.isString(containerWell)) {
-    return null;
-  }
-  var split = containerWell.split("/");
-  return {
-    container: split[0],
-    well     : split[1]
-  };
-}
 
 //given array of objects with keys container + well, create array of strings in format "container/well", or "well" if
 // ignoreContainer is truthy
@@ -103,9 +129,9 @@ function wrapGroupsInProtocol (groupsInput) {
  Transformations
  ********/
 
-//todo - DRY these out
-function getTransformsContainer (protocol, container) {
+// note - would be great to DRY, but lots of variables needed to pass in then
 
+function getTransformsContainer (protocol, container) {
   var result = [],
       index  = 0;
 
@@ -187,15 +213,16 @@ function getTransformsWell (protocol, well) {
 }
 
 module.exports = {
-  pluckField            : pluckField,
-  pluckFieldValueRaw    : pluckFieldValueRaw,
-  interpolateValue      : interpolateValue,
-  interpolateObject     : interpolateObject,
-  joinContainerWell     : joinContainerWell,
-  splitContainerWell    : splitContainerWell,
-  flattenAliquots       : flattenAliquots,
-  wrapOpInGroup         : wrapOpInGroup,
-  wrapGroupsInProtocol  : wrapGroupsInProtocol,
-  getTransformsContainer: getTransformsContainer,
-  getTransformsWell     : getTransformsWell
+  pluckField                 : pluckField,
+  pluckFieldValueRaw         : pluckFieldValueRaw,
+  interpolateValue           : interpolateValue,
+  interpolateObject          : interpolateObject,
+  wrapFieldsAsStep           : wrapFieldsAsStep,
+  scaffoldOperationWithValues: scaffoldOperationWithValues,
+  getFieldTypeInOperation    : getFieldTypeInOperation,
+  flattenAliquots            : flattenAliquots,
+  wrapOpInGroup              : wrapOpInGroup,
+  wrapGroupsInProtocol       : wrapGroupsInProtocol,
+  getTransformsContainer     : getTransformsContainer,
+  getTransformsWell          : getTransformsWell
 };

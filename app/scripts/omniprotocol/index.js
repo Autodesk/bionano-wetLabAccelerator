@@ -1,29 +1,29 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
-'use strict';
-
 var _ = require('lodash'),
-    utils = require('./utils'),
-    inputTypes = require('./inputTypes'),
-    conv = require('./conv'),
-    operations = require('./operations'),
+    optionEnums = require('./optionEnums.js'),
+    inputTypes = require('./inputTypes.js'),
+    utils = require('./utils.js'),
+    conv = require('./conv.js'),
+    operations = require('./operations.js'),
     op = {};
 
 op.utils = utils;
 op.inputTypes = inputTypes;
 op.conv = conv;
 op.operations = operations;
+op.optionEnums = optionEnums;
 
 //browserify will convert global to the window
 global.omniprotocol = op;
 
-//fixme - for some reason the module is only global, and not exported properly..
+//fixme - for some reason the module is only global, and not exported properly.. maybe it's browserify
 module.exports = op;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./conv":2,"./inputTypes":3,"./operations":4,"./utils":5,"lodash":6}],2:[function(require,module,exports){
+},{"./conv.js":2,"./inputTypes.js":3,"./operations.js":4,"./optionEnums.js":5,"./utils.js":13,"lodash":14}],2:[function(require,module,exports){
 'use strict';
 
-var _ = require('lodash'),
+var _      = require('lodash'),
     utils  = require('./utils.js'),
     inputs = require('./inputTypes.js');
 
@@ -87,41 +87,14 @@ function simpleKeyvalFields (fields, localParams, fieldConverters) {
   return obj;
 }
 
-/*******
- Operation Manipulation
- *******/
-
-//given wells in op specified by wellsKey (default 'wells) in form "container/well", removes 'container' from each
-// and adds key `containerKey` (default 'object') with value extracted does not handle containers being different
-// currently
-function pluckOperationContainerFromWells (op, containerKey, wellsKey) {
-  wellsKey = _.isUndefined(wellsKey) ? 'wells' : wellsKey;
-  containerKey = _.isUndefined(containerKey) ? 'object' : containerKey;
-
-  var firstContainer = utils.splitContainerWell(op[wellsKey][0]).container;
-
-  //redo the wells
-  var strippedWells = _.map(op[wellsKey], function (well) {
-    return utils.splitContainerWell(well).well;
-  });
-
-  //need to set key dynamically
-  var obj = {};
-  obj[containerKey] = firstContainer;
-  obj[wellsKey] = strippedWells;
-
-  return _.assign({}, op, obj)
-}
-
 module.exports = {
-  transformField                  : transformField,
-  pluckFieldValueTransformed      : pluckFieldValueTransformed,
-  getFieldsIfSet                  : getFieldsIfSet,
-  simpleKeyvalFields              : simpleKeyvalFields,
-  pluckOperationContainerFromWells: pluckOperationContainerFromWells
+  transformField            : transformField,
+  pluckFieldValueTransformed: pluckFieldValueTransformed,
+  getFieldsIfSet            : getFieldsIfSet,
+  simpleKeyvalFields        : simpleKeyvalFields
 };
 
-},{"./inputTypes.js":3,"./utils.js":5,"lodash":6}],3:[function(require,module,exports){
+},{"./inputTypes.js":3,"./utils.js":13,"lodash":14}],3:[function(require,module,exports){
 var _ = require('lodash');
 
 module.exports = {
@@ -233,7 +206,7 @@ module.exports = {
   "option"            : {
     description : "A dropdown with options",
     verification: function (input, options) {
-      //how to know need to pass in options, and do so dynamically?
+      //todo - how to know need to pass in options, and do so dynamically?
       return _.indexOf(options, input) > -1;
     }
   },
@@ -267,8 +240,10 @@ module.exports = {
     description : "Dyes mapped to wells for thermocycle",
     verification: _.constant(true)
   }
-}
-},{"lodash":6}],4:[function(require,module,exports){
+};
+},{"lodash":14}],4:[function(require,module,exports){
+var optionEnums = require('./optionEnums.js');
+
 module.exports = {
   //pipetting
   "transfer"  : {
@@ -503,26 +478,7 @@ module.exports = {
         {
           "name"   : "reagent",
           "type"   : "option",
-          "options": [
-            "autoclaved-water",
-            "water",
-            "bleach-10p",
-            "ethanol-70p",
-            "lb-broth-100ug-ml-amp",
-            "lb-broth-50ug-ml-kan",
-            "lb-broth-30ug-ml-kan",
-            "lb-broth-25ug-ml-cm",
-            "lb-broth-100ug-ml-specto",
-            "lb-broth-50ug-ml-kan-25ug-ml-cm",
-            "lb-broth-15ug-ml-tet",
-            "lb-broth-noAB",
-            "pbs",
-            "sob",
-            "soc",
-            "tb-broth-100ug-ml-amp",
-            "tb-broth-50ug-ml-kan",
-            "te-ph7.5"
-          ],
+          "options": optionEnums.reagents.dispense,
           "value"  : "lb-broth-noAB"
         },
         {
@@ -559,7 +515,7 @@ module.exports = {
         },
         {
           "name": "object",
-          "type": "conatiner"
+          "type": "container"
         },
         {
           "name"   : "volume",
@@ -604,13 +560,7 @@ module.exports = {
         {
           "name"   : "where",
           "type"   : "option",
-          "options": [
-            "ambient",
-            "warm_37",
-            "cold_4",
-            "cold_20",
-            "cold_80"
-          ],
+          "options": optionEnums.storage.storage,
           "default": "ambient"
         },
         {
@@ -694,11 +644,7 @@ module.exports = {
         {
           "name"    : "lid",
           "type"    : "option",
-          "options" : [
-            "standard",
-            "universal",
-            "low_evaporation"
-          ],
+          "options" : optionEnums.lid.cover,
           "optional": true,
           "default" : "standard"
         }
@@ -916,21 +862,12 @@ module.exports = {
         {
           "name"   : "matrix",
           "type"   : "option",
-          "options": [
-            "agarose(96,2.0%)",
-            "agarose(48,4.0%)",
-            "agarose(48,2.0%)",
-            "agarose(12,1.2%)",
-            "agarose(8,0.8%)"
-          ]
+          "options": optionEnums.gel.matrix
         },
         {
           "name"   : "ladder",
           "type"   : "option",
-          "options": [
-            "ladder1",
-            "ladder2"
-          ],
+          "options": optionEnums.gel.ladder,
           "default": "ladder1"
         },
         {
@@ -966,12 +903,7 @@ module.exports = {
         {
           "name"   : "where",
           "type"   : "option",
-          "options": [
-            "ambient",
-            "cold_4",
-            "cold_20",
-            "cold_80"
-          ],
+          "options": optionEnums.storage.storage,
           "default": "ambient"
         }
       ]
@@ -998,9 +930,194 @@ module.exports = {
       ]
     }
   }
+};
+},{"./optionEnums.js":5}],5:[function(require,module,exports){
+//browserify doesn't like when you use folder as variable
+
+var containers  = require('./optionEnums/containers.js'),
+    dimensional = require('./optionEnums/dimensional.js'),
+    dyes        = require('./optionEnums/dyes.js'),
+    gel         = require('./optionEnums/gel.js'),
+    lid         = require('./optionEnums/lid.js'),
+    reagents    = require('./optionEnums/reagents.js'),
+    storage     = require('./optionEnums/storage.js');
+
+module.exports = {
+  containers : containers,
+  dimensional: dimensional,
+  dyes       : dyes,
+  gel        : gel,
+  lid        : lid,
+  reagents   : reagents,
+  storage    : storage
+};
+},{"./optionEnums/containers.js":6,"./optionEnums/dimensional.js":7,"./optionEnums/dyes.js":8,"./optionEnums/gel.js":9,"./optionEnums/lid.js":10,"./optionEnums/reagents.js":11,"./optionEnums/storage.js":12}],6:[function(require,module,exports){
+module.exports = {
+  "384-flat" : {
+    name          : "384-well UV flat-bottom plate",
+    well_count    : 384,
+    well_type     : null,
+    well_depth_mm : null,
+    well_volume_ul: 112.0,
+    well_coating  : null,
+    sterile       : false,
+    is_tube       : false,
+    capabilities  : ["spin", "incubate", "absorbance", "fluorescence", "luminescence"],
+    shortname     : "384-flat",
+    col_count     : 24,
+    dead_volume   : 12
+  },
+  "384-pcr"  : {
+    name          : "384-well PCR plate",
+    well_count    : 384,
+    well_type     : null,
+    well_depth_mm : null,
+    well_volume_ul: 50.0,
+    well_coating  : null,
+    sterile       : null,
+    is_tube       : false,
+    capabilities  : ["thermocycle", "spin", "incubate"],
+    shortname     : "384-pcr",
+    col_count     : 24,
+    dead_volume   : 8
+  },
+  "96-flat"  : {
+    name          : "96-well flat-bottom plate",
+    well_count    : 96,
+    well_type     : null,
+    well_depth_mm : null,
+    well_volume_ul: 360.0,
+    well_coating  : null,
+    sterile       : false,
+    is_tube       : false,
+    capabilities  : ["spin", "incubate", "absorbance", "fluorescence", "luminescence"],
+    shortname     : "96-flat",
+    col_count     : 12,
+    dead_volume   : 20
+  },
+  "96-pcr"   : {
+    name          : "96-well PCR plate",
+    well_count    : 96,
+    well_type     : null,
+    well_depth_mm : null,
+    well_volume_ul: 160.0,
+    well_coating  : null,
+    sterile       : null,
+    is_tube       : false,
+    capabilities  : ["thermocycle", "spin", "incubate"],
+    shortname     : "96-pcr",
+    col_count     : 12,
+    dead_volume   : 15
+  },
+  "96-deep"  : {
+    name          : "96-well extended capacity plate",
+    well_count    : 96,
+    well_type     : null,
+    well_depth_mm : null,
+    well_volume_ul: 2000.0,
+    well_coating  : null,
+    sterile       : false,
+    capabilities  : ["incubate"],
+    shortname     : "96-deep",
+    is_tube       : false,
+    col_count     : 12,
+    dead_volume   : 15
+  },
+  "micro-2.0": {
+    name          : "2mL Microcentrifuge tube",
+    well_count    : 1,
+    well_type     : null,
+    well_depth_mm : null,
+    well_volume_ul: 2000.0,
+    well_coating  : null,
+    sterile       : false,
+    capabilities  : ["spin", "incubate"],
+    shortname     : "micro-2.0",
+    is_tube       : true,
+    col_count     : 1,
+    dead_volume   : 15
+  },
+  "micro-1.5": {
+    name          : "1.5mL Microcentrifuge tube",
+    well_count    : 1,
+    well_type     : null,
+    well_depth_mm : null,
+    well_volume_ul: 1500.0,
+    well_coating  : null,
+    sterile       : false,
+    capabilities  : ["spin", "incubate"],
+    shortname     : "micro-1.5",
+    is_tube       : true,
+    col_count     : 1,
+    dead_volume   : 15
+  }
+};
+},{}],7:[function(require,module,exports){
+module.exports = {
+  "duration"    : ["millisecond", "second", "minute", "hour"],
+  "volume"      : ["nanoliter", "microliter", "milliliter"],
+  "length"      : ["nanometer"],
+  "temperature" : ["celsius"],
+  "flowrate"    : ["microliter/second"],
+  "acceleration": ["g", "meter/second^2"]
+};
+},{}],8:[function(require,module,exports){
+module.exports = {
+  "channel1" : ["FAM","SYBR"],
+  "channel2" : ["VIC","HEX","TET","CALGOLD540"],
+  "channel3" : ["ROX","TXR","CALRED610"],
+  "channel4" : ["CY5","QUASAR670"],
+  "channel5" : ["QUASAR705"]
+};
+},{}],9:[function(require,module,exports){
+module.exports = {
+  matrix: ["agarose(96,2.0%)", "agarose(48,4.0%)", "agarose(48,2.0%)", "agarose(12,1.2%)", "agarose(8,0.8%)"],
+  ladder: ["ladder1", "ladder2"]
+};
+},{}],10:[function(require,module,exports){
+module.exports = {
+  cover : [
+    "standard",
+    "universal",
+    "low_evaporation"
+  ]
+};
+},{}],11:[function(require,module,exports){
+module.exports = {
+  dispense : [
+    "autoclaved-water",
+    "water",
+    "bleach-10p",
+    "ethanol-70p",
+    "lb-broth-100ug-ml-amp",
+    "lb-broth-50ug-ml-kan",
+    "lb-broth-30ug-ml-kan",
+    "lb-broth-25ug-ml-cm",
+    "lb-broth-100ug-ml-specto",
+    "lb-broth-50ug-ml-kan-25ug-ml-cm",
+    "lb-broth-15ug-ml-tet",
+    "lb-broth-noAB",
+    "pbs",
+    "sob",
+    "soc",
+    "tb-broth-100ug-ml-amp",
+    "tb-broth-50ug-ml-kan",
+    "te-ph7.5"
+  ]
 }
-},{}],5:[function(require,module,exports){
-var _ = require('lodash');
+},{}],12:[function(require,module,exports){
+module.exports = {
+  "storage" : ["ambient", "warm_37", "cold_4", "cold_20", "cold_80"],
+  "incubate" : ["ambient", "warm_37", "cold_4", "cold_20", "cold_80"],
+  "mail" : ["ambient", "dry_ice"]
+};
+},{}],13:[function(require,module,exports){
+var _          = require('lodash'),
+    operations = require('./operations.js');
+
+/*******
+ Fields
+ ******/
 
 function pluckField (fields, fieldName) {
   return _.find(fields, {name: fieldName});
@@ -1025,10 +1142,11 @@ function interpolateValue (value, params) {
   }
 }
 
-// todo - clarify handling undefined
-// todo - clarify multiple variables in string
-//example: interpolateObject({"myVal" : "hey ${you}", "myObj" : {"greet" : "hi ${me}"} }, {you: "bobby", me: "max"})
-// -> { myObj: { greet: "hi max"} myVal: "hey bobby" }
+// note - if the string contains a variable which cannot be templated, it will just be returned (useful for doing
+// multiple passes) note - if there are multiple variables, if any variable is in the dictionary, they will all be
+// interpolated, and undefined templates will resolve to empty strings. example: interpolateObject({"myVal" : "hey
+// ${you}", "myObj" : {"greet" : "hi ${me}"} }, {you: "bobby", me: "max"}) -> { myObj: { greet: "hi max"} myVal: "hey
+// bobby" }
 function interpolateObject (obj, params) {
   if (_.isString(obj))
     return interpolateValue(obj, params);
@@ -1038,27 +1156,47 @@ function interpolateObject (obj, params) {
   return obj;
 }
 
+/*****
+ Operations
+ *****/
+
+function wrapFieldsAsStep (fieldsArray) {
+  return {
+    "operation"   : "",
+    "requirements": {},
+    "transforms"  : [],
+    "fields"      : fieldsArray
+  };
+}
+
+function scaffoldOperationWithValues (operationName, fieldVals) {
+  var clone    = _.clone(_.result(operations, operationName, null)),
+      scaffold = _.result(clone, 'scaffold', null);
+
+  if (_.isEmpty(scaffold)) {
+    throw new Error("operation " + operationName + " not present")
+  }
+
+  _.forEach(fieldVals, function (fieldVal, fieldName) {
+    _.assign(pluckField(scaffold.fields, fieldName), {value: fieldVal});
+  });
+
+  return scaffold;
+}
+
+function getFieldTypeInOperation (operationName, fieldName) {
+  var op        = _.result(operations, operationName, null),
+      scaffold  = _.result(op, 'scaffold', null),
+      fields    = _.result(scaffold, 'fields'),
+      field     = pluckField(fields, fieldName),
+      fieldType = _.result(field, 'type', null);
+
+  return fieldType;
+}
+
 /*******
  Wells
  ******/
-
-var containerWellDelimiter = "/";
-
-function joinContainerWell (container, well, tempDelimiter) {
-  return '' + container + (_.isString(tempDelimiter) ? tempDelimiter : containerWellDelimiter) + well;
-}
-
-//given a string in form "container/well", returns object in form { container : '<container>', well: '<well>' }
-function splitContainerWell (containerWell) {
-  if (!_.isString(containerWell)) {
-    return null;
-  }
-  var split = containerWell.split("/");
-  return {
-    container: split[0],
-    well     : split[1]
-  };
-}
 
 //given array of objects with keys container + well, create array of strings in format "container/well", or "well" if
 // ignoreContainer is truthy
@@ -1105,9 +1243,9 @@ function wrapGroupsInProtocol (groupsInput) {
  Transformations
  ********/
 
-//todo - DRY these out
-function getTransformsContainer (protocol, container) {
+// note - would be great to DRY, but lots of variables needed to pass in then
 
+function getTransformsContainer (protocol, container) {
   var result = [],
       index  = 0;
 
@@ -1189,19 +1327,20 @@ function getTransformsWell (protocol, well) {
 }
 
 module.exports = {
-  pluckField            : pluckField,
-  pluckFieldValueRaw    : pluckFieldValueRaw,
-  interpolateValue      : interpolateValue,
-  interpolateObject     : interpolateObject,
-  joinContainerWell     : joinContainerWell,
-  splitContainerWell    : splitContainerWell,
-  flattenAliquots       : flattenAliquots,
-  wrapOpInGroup         : wrapOpInGroup,
-  wrapGroupsInProtocol  : wrapGroupsInProtocol,
-  getTransformsContainer: getTransformsContainer,
-  getTransformsWell     : getTransformsWell
+  pluckField                 : pluckField,
+  pluckFieldValueRaw         : pluckFieldValueRaw,
+  interpolateValue           : interpolateValue,
+  interpolateObject          : interpolateObject,
+  wrapFieldsAsStep           : wrapFieldsAsStep,
+  scaffoldOperationWithValues: scaffoldOperationWithValues,
+  getFieldTypeInOperation    : getFieldTypeInOperation,
+  flattenAliquots            : flattenAliquots,
+  wrapOpInGroup              : wrapOpInGroup,
+  wrapGroupsInProtocol       : wrapGroupsInProtocol,
+  getTransformsContainer     : getTransformsContainer,
+  getTransformsWell          : getTransformsWell
 };
-},{"lodash":6}],6:[function(require,module,exports){
+},{"./operations.js":4,"lodash":14}],14:[function(require,module,exports){
 (function (global){
 /**
  * @license

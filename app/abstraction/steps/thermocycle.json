@@ -32,7 +32,7 @@
           "value": "50.0:microliter"
         },
         {
-          "name": "steps",
+          "name": "groups",
           "type": "thermocycleGroup",
           "value": [
             {
