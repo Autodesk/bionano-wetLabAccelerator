@@ -6,6 +6,7 @@
  * @description
  * # txGallery
  * todo - better cloning behavior - see:
+ * need cloning so that step appears on top, or need to put operations after the editable steps in the html (z index wasn't doing it)
  * http://jsfiddle.net/3Ck4R/
  *
  // todo - need to differentiate between a group and an op
@@ -41,7 +42,6 @@ angular.module('tx.protocolEditor')
             //reset the operation list
             scope.operationKeys = getOperationKeys();
 
-            console.log(scope.operationKeys,  ui.item.sortable.sourceModel);
             _.forEach(scope.operationKeys, function (key, ind) {
               if (key != ui.item.sortable.sourceModel[ind]) {
                 console.log(ind, key, scope.operationKeys, ui.item.sortable.sourceModel);

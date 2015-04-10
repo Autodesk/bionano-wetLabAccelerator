@@ -515,7 +515,7 @@ module.exports = {
         },
         {
           "name": "object",
-          "type": "conatiner"
+          "type": "container"
         },
         {
           "name"   : "volume",
