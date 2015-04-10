@@ -16,9 +16,8 @@
  * Through combination of attributes no-brush and select-persist, you can specify whether one/many wells can be selected,
  * and whether multiple groups can be selected
  *
- * todo - allow syncing of selected wells
- * todo - circle to clear whole selection (top-left)
- * todo - store selection in indexed array, show indices
+ * todo - allow full syncing of selected wells (i.e. listen for changes in)
+ * todo - store selection in indexed array, show indices on plate
  */
 angular.module('tx.datavis')
   .directive('txPlate', function (ContainerOptions, WellConv) {
@@ -34,7 +33,8 @@ angular.module('tx.datavis')
         noBrush: '=', //boolean - prevent brush for selection, use clicks instead
         selectPersist: '=', //boolean - allow selections to persist across one brush / click
         onHover: '&',   //returns array of selected wells
-        onSelect: '&'   //returns array of selected wells
+        onSelect: '&',   //returns array of selected wells
+        selectedWells : '=?'
       },
       link: function postLink(scope, element, attrs) {
 
@@ -42,6 +42,17 @@ angular.module('tx.datavis')
 
         scope.$watch('container', _.partial(rerender, true));
         scope.$watch('plateData', _.partial(rerender, false));
+
+        scope.$watch('selectedWells', _.noop); //todo - only listens out, should render indices on well
+
+        function propagateWellSelection (wellsInput) {
+          var wells = _.isUndefined(wellsInput) ? getActiveWells() : wellsInput;
+
+          scope.$applyAsync(function () {
+            scope.selectedWells = wells;
+            scope.onSelect({ $wells: wells });
+          });
+        }
 
         /* CONSTRUCTING THE SVG */
 
@@ -233,9 +244,7 @@ angular.module('tx.datavis')
 
             $el.classed(classSelected, !wasSelected);
 
-            scope.$applyAsync(function () {
-              scope.onSelect({ $wells: getActiveWells() });
-            });
+            propagateWellSelection();
           }
         }
 
@@ -320,9 +329,7 @@ angular.module('tx.datavis')
 
           toggleWellsFromMap(toggled, classSelected);
 
-          scope.$applyAsync(function () {
-            scope.onSelect({ $wells: getSelectedWells() });
-          });
+          propagateWellSelection();
 
           element.removeClass('brushing');
         }

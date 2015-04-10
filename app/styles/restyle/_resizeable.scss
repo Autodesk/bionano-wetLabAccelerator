@@ -1,6 +1,10 @@
 .resizeable-handle {
 
-  background: pink;
+  background: $grey;
+
+  &:hover {
+    background: pink;
+  }
 
   &.dragging {
     background: red;

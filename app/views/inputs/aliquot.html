@@ -1,6 +1,8 @@
-<input type="checkbox" ng-model="showingPlates" ng-init="showingPlates=false;"> {{showingPlates ? 'Hide' : 'Show'}} Plates
+<tx-container-select container-type="fieldCtrl.containerType"
+                     ng-model="fieldCtrl.containerName" ></tx-container-select>
+
+<input type="checkbox" ng-model="showingPlates" ng-init="showingPlates=false;"> {{showingPlates ? 'Hide' : 'Show'}} Wells
 <div ng-show="showingPlates">
-  <tx-container-select container-type="fieldCtrl.containerType" ng-model="fieldCtrl.containerName" ></tx-container-select>
   <tx-plate ng-show="fieldCtrl.containerType"
             container="fieldCtrl.containerType"
             no-brush="!aliquotMultiple"

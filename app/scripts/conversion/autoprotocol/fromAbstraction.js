@@ -3,7 +3,7 @@
 //todo - in future, support conversion to packages, not just protocols
 
 var _         = require('lodash'),
-    autoUtils = require('./utils.js'),
+    fromUtils = require('./fromUtils.js'),
     op        = global.omniprotocol,
     omniUtils = op.utils;
 
@@ -11,11 +11,11 @@ var _         = require('lodash'),
 function fromAbstraction (abst) {
   var references = {};
   _.forEach(abst.references, function (abstRef) {
-    _.assign(references, autoUtils.makeReference(abstRef));
+    _.assign(references, fromUtils.makeReference(abstRef));
   });
 
   //each group gives an array, need to concat (_.flatten)
-  var instructions = _.flatten(_.map(abst.groups, autoUtils.unwrapGroup));
+  var instructions = _.flatten(_.map(abst.groups, fromUtils.unwrapGroup));
 
   //console.log('interpolating everything');
 

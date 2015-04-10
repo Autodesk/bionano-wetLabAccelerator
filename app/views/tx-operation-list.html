@@ -1,16 +1,14 @@
-<p>Operations</p>
-
-  <div class="list-group"
-       ui-sortable="gallerySortableOptions"
-       ng-model="operationKeys">
+<div class="list-group"
+     ui-sortable="gallerySortableOptions"
+     ng-model="operationKeys">
     <a class="list-group-item drag-handle"
-       style="padding: 3px;"
+       style="padding: 2px 10px; margin-bottom: 3px; border: 0;"
        ng-repeat="op in operationKeys"
-       ng-bind="$index + ' ' + op"
+       ng-bind="op"
        tx-inspector-select
        select-trigger="mouseenter"
        select-title="op"
        select-type="'operation'"
        select-description="operations[op].description"></a>
-  </div>
+</div>
 
