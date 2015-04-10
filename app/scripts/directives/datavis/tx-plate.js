@@ -34,7 +34,7 @@ angular.module('tx.datavis')
         selectPersist: '=', //boolean - allow selections to persist across one brush / click
         onHover: '&',   //returns array of selected wells
         onSelect: '&',   //returns array of selected wells
-        selectedWells : '='
+        selectedWells : '=?'
       },
       link: function postLink(scope, element, attrs) {
 
@@ -43,7 +43,7 @@ angular.module('tx.datavis')
         scope.$watch('container', _.partial(rerender, true));
         scope.$watch('plateData', _.partial(rerender, false));
 
-        scope.$watch('selectedWells', _.noop); //todo - only listens out
+        scope.$watch('selectedWells', _.noop); //todo - only listens out, should render indices on well
 
         function propagateWellSelection (wellsInput) {
           var wells = _.isUndefined(wellsInput) ? getActiveWells() : wellsInput;
