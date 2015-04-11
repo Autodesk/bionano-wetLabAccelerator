@@ -1,4 +1,7 @@
-<div ng-repeat="group in instruction.groups">
+<input type="checkbox"
+       ng-model="showGroup"> Thermocycle Group
+<div ng-repeat="group in fieldCtrl.model"
+     ng-show="showGroup">
 
   <div ng-repeat="step in group.steps">
 

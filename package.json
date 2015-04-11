@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     "lodash": "^3.6.0",
-    "omniprotocol" : "./app/scripts/omniprotocol/"
+    "omniprotocol": "./app/scripts/omniprotocol/"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

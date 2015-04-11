@@ -1,15 +1,36 @@
-<!-- todo - enable toggling + cleanup -->
-<div ng-if="instruction.melting">
-  <tx-measure label="melt:start"
-              dimension-type="temperature"
-              ng-model="instruction.melting.start"></tx-measure>
-  <tx-measure label="melt:end"
-              dimension-type="temperature"
-              ng-model="instruction.melting.end"></tx-measure>
-  <tx-measure label="melt:increment"
-              dimension-type="temperature"
-              ng-model="instruction.melting.increment"></tx-measure>
-  <tx-measure label="melt:rate"
-              dimension-type="duration"
-              ng-model="instruction.melting.rate"></tx-measure>
-</div>
+<input type="checkbox"
+       ng-model="showMelting"> Thermocycle Melting
+<table ng-show="showMelting">
+  <tr>
+    <td class="operation-label">start</td>
+    <td>
+      <tx-protocol-field ng-model="melting.start"
+                         field="{type: 'temperature'}">
+      </tx-protocol-field>
+    </td>
+  </tr>
+  <tr>
+    <td class="operation-label">end</td>
+    <td>
+      <tx-protocol-field ng-model="melting.end"
+                         field="{type: 'temperature'}">
+      </tx-protocol-field>
+    </td>
+  </tr>
+  <tr>
+    <td class="operation-label">increment</td>
+    <td>
+      <tx-protocol-field ng-model="melting.increment"
+                         field="{type: 'temperature'}">
+      </tx-protocol-field>
+    </td>
+  </tr>
+  <tr>
+    <td class="operation-label">rate</td>
+    <td>
+      <tx-protocol-field ng-model="melting.rate"
+                         field="{type: 'duration'}">
+      </tx-protocol-field>
+    </td>
+  </tr>
+</table>
