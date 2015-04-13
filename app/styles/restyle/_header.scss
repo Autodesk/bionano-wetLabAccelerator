@@ -1,6 +1,6 @@
 header.site-header {
 
-  $header-logo-dim: 54px;
+  $header-logo-dim: 45px;
   $header-nav-font-size: 14px;
   $logo-spacing: 5px;
   $nav-height : $header-logo-dim + ($logo-spacing * 2);
@@ -12,13 +12,14 @@ header.site-header {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    border-bottom: 1px solid $border-color-default;
     width: 100%;
     margin: 0;
     padding: 0;
+    background-color: $white;
 
     .logo {
       display: flex;
+      width: 93px;
 
       img {
         width: $header-logo-dim;
@@ -38,6 +39,7 @@ header.site-header {
       height: $nav-height;
       line-height: $header-logo-dim;
       font-size: $header-nav-font-size;
+      font-weight: $font-weight-bold;
 
       ul {
         margin: 0;
@@ -52,7 +54,7 @@ header.site-header {
         background: 0;
 
         a {
-          color: #666;
+          color: #c2c2c2;
           text-decoration: none;
         }
 
@@ -72,12 +74,13 @@ header.site-header {
       a {
         display: inline-block;
         font-size: $header-nav-font-size;
-        color: $dark-grey;
+        color: #c2c2c2;
         opacity: 0.6;
         transition: opacity $transition-in-time $transition-in-type;
 
         &:hover {
-          opacity: 0.7;
+          opacity: 0.5;
+          color: #222;
           transition: opacity $transition-out-time $transition-out-type;
         }
 
