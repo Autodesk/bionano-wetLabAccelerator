@@ -56,7 +56,7 @@ angular.module('tx.protocolEditor')
 
             var opKey = ui.item.sortable.model,
                 opInfo = Omniprotocol.operations[opKey],
-                opScaffold = opInfo.scaffold,
+                opScaffold = _.clone(opInfo.scaffold, true),
                 groupScaffold = _.extend(Omniprotocol.utils.wrapOpInGroup(opScaffold), {
                   name : opInfo.name,
                   metadata : {
