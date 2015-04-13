@@ -1,42 +1,51 @@
 {
-  "name" : "Simple Transfer Protocol",
-  "references": [
-    {
-      "name": "growth_plate",
-      "isNew": true,
-      "id": "",
-      "type": "96-deep",
-      "storage": "ambient"
-    },
-    {
-      "name": "ecoli_container",
-      "isNew": true,
-      "id": "",
-      "type": "384-flat",
-      "storage": "cold_20"
-    }
-  ],
-  "parameters" : [
+  "name": "Simple Transfer Protocol",
+  "parameters": [
     {
       "name": "myPlate",
-      "type" : "container",
+      "type": "container",
       "value": "ecoli_container",
-      "description" : "Container to be used in the protocol"
+      "example": "ecoli_container",
+      "description": "Container to be used in the protocol"
     },
     {
       "name": "myAbsorbance",
-      "type" : "length",
+      "type": "length",
       "value": "600:nanometer",
-      "default": "600:nanometer"
+      "example": "600:nanometer",
+      "default": "600:nanometer",
+      "description" : "Wavelength used for fluorescence readings"
+    },
+    {
+      "name": "growth_plate",
+      "type": "container",
+      "description": "Plate used for growth curve measurements",
+      "value": {
+        "isNew": true,
+        "id": "",
+        "type": "96-deep",
+        "storage": "ambient"
+      }
+    },
+    {
+      "name": "ecoli_container",
+      "type": "container",
+      "description": "Reservoir of competent E. coli",
+      "value": {
+        "isNew": true,
+        "id": "",
+        "type": "384-flat",
+        "storage": "cold_20"
+      }
     }
   ],
   "metadata": {},
   "groups": [
     {
       "name": "Transfer Group",
-      "inputs" : {},
+      "inputs": {},
       "metadata": {
-        "description" : "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        "description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
       },
       "loop": 1,
       "steps": [
@@ -60,57 +69,57 @@
             {
               "name": "to",
               "type": "aliquot+",
-              "singleWell" : false,
-              "singleContainer" : false,
+              "singleWell": false,
+              "singleContainer": false,
               "value": [
                 {
-                  "container" : "growth_plate",
-                  "well" : "A2"
+                  "container": "growth_plate",
+                  "well": "A2"
                 }
               ]
             },
             {
               "name": "from",
               "type": "aliquot+",
-              "singleWell" : false,
-              "singleContainer" : false,
+              "singleWell": false,
+              "singleContainer": false,
               "value": [
                 {
-                  "container" : "ecoli_container",
-                  "well" : "A1"
+                  "container": "ecoli_container",
+                  "well": "A1"
                 }
               ]
             },
             {
               "name": "dispense_speed",
               "type": "flowrate",
-              "optional" : true,
+              "optional": true,
               "value": "100:microliter/second"
             },
             {
               "name": "aspirate_speed",
               "type": "flowrate",
-              "optional" : true,
+              "optional": true,
               "value": "100:microliter/second"
             },
             {
               "name": "mix_before",
               "type": "mixwrap",
-              "optional" : true,
+              "optional": true,
               "value": {
-                "volume" : "10.0:microliter",
-                "repetitions" : 5,
-                "speed" : "100:microliter/second"
+                "volume": "10.0:microliter",
+                "repetitions": 5,
+                "speed": "100:microliter/second"
               }
             },
             {
               "name": "mix_after",
               "type": "mixwrap",
-              "optional" : true,
+              "optional": true,
               "value": {
-                "volume" : "10.0:microliter",
-                "repetitions" : 5,
-                "speed" : "100:microliter/second"
+                "volume": "10.0:microliter",
+                "repetitions": 5,
+                "speed": "100:microliter/second"
               }
             }
           ]
@@ -119,8 +128,8 @@
     },
     {
       "loop": 3,
-      "metadata" : {
-        "description" : "Records incubates and take absorbance measurement"
+      "metadata": {
+        "description": "Records incubates and take absorbance measurement"
       },
       "steps": [
         {
@@ -140,7 +149,7 @@
             {
               "name": "where",
               "type": "option",
-              "options" : [
+              "options": [
                 "ambient",
                 "warm_37",
                 "cold_4",
@@ -179,15 +188,15 @@
             {
               "name": "wells",
               "type": "aliquot+",
-              "singleContainer" : false,
+              "singleContainer": true,
               "value": [
                 {
-                  "container" : "growth_plate",
-                  "well" : "A1"
+                  "container": "growth_plate",
+                  "well": "A1"
                 },
                 {
-                  "container" : "growth_plate",
-                  "well" : "A2"
+                  "container": "growth_plate",
+                  "well": "A2"
                 }
               ]
             },
@@ -195,15 +204,15 @@
               "name": "wavelength",
               "type": "length",
               "value": "600:nanometer",
-              "inputAttrs" : {
-                "min" : 300,
-                "max" : 1000
+              "inputAttrs": {
+                "min": 300,
+                "max": 1000
               }
             },
             {
               "name": "num_flashes",
               "type": "integer",
-              "optional" : true,
+              "optional": true,
               "default": 25,
               "value": 25
             }
