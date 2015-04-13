@@ -1,5 +1,24 @@
-<tx-protocol-field ng-model="fieldCtrl.model.volume"
-                   field="{type: 'volume'}"
-                   min="0"
-                   max="16"> //todo - this is a hack
-</tx-protocol-field>
+<input type="checkbox" ng-model="showColumnVolumes"> Show Column Volumes
+<div ng-show="showColumnVolumes">
+
+  <div ng-repeat="colvol in fieldCtrl.model">
+    <table>
+      <tr>
+        <td class="operation-label">column (0-indexed)</td>
+        <td>
+          <input type="number" min="0" max="15" ng-model="colvol.column">
+        </td>
+      </tr>
+      <tr>
+        <td class="operation-label">volume</td>
+        <td>
+          <tx-protocol-field ng-model="colvol.volume"
+                             field="{type: 'volume'}">
+          </tx-protocol-field>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <button ng-click="fieldCtrl.model.length ? fieldCtrl.model.push({column: 0, volume: '100:microliter'}) : fieldCtrl.model = [{column: 0, volume: '100:microliter'}]">Add Column</button>
+</div>
