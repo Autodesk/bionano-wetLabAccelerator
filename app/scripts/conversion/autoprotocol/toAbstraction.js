@@ -10,7 +10,7 @@ function toAbstraction (auto) {
   var instructions = toUtils.convertInstructions(auto.instructions);
 
   var omni        = omniUtils.wrapGroupsInProtocol(instructions);
-  omni.references = references;
+  omni.parameters = references;
 
   //todo - further post-processing
   // well numbers to alphanumerics

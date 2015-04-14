@@ -1,4 +1,4 @@
-var _                    = require('lodash');
+var _ = require('lodash');
 
 /*******
  Operation Manipulation
@@ -20,6 +20,18 @@ function splitContainerWell (containerWell) {
     container: split[0],
     well     : split[1]
   };
+}
+
+//given array of objects with keys container + well, create array of strings in format "container/well", or "well" if
+// ignoreContainer is truthy
+function flattenAliquots (abstAliquots, ignoreContainer) {
+  if (!!ignoreContainer) {
+    return _.map(abstAliquots, _.partial(_.result, _, 'well'));
+  } else {
+    return _.map(abstAliquots, function (aliquot) {
+      return joinContainerWell(aliquot.container, aliquot.well);
+    });
+  }
 }
 
 //given wells in op specified by wellsKey (default 'wells) in form "container/well", removes 'container' from each
@@ -59,7 +71,8 @@ function createTransform (type, fieldName) {
 }
 
 module.exports = {
-  joinContainerWell : joinContainerWell,
-  splitContainerWell: splitContainerWell,
-  pluckOperationContainerFromWells : pluckOperationContainerFromWells
+  joinContainerWell               : joinContainerWell,
+  splitContainerWell              : splitContainerWell,
+  flattenAliquots                 : flattenAliquots,
+  pluckOperationContainerFromWells: pluckOperationContainerFromWells
 };
