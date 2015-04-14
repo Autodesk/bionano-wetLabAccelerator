@@ -6,14 +6,17 @@ tx-protocol-actions {
   .protocol-title {
     position: relative;
     display: block;
-    text-align: center;
+    text-align: left;
 
     .dropdown-menu {
-      left: 50%;
+      left: 16%;
       width: 315px;
       max-width: 100%;
       transform: translateX(-50%);
-      margin: -1px 0 0;
+      //margin: -1px 0 0;
+      table {
+        margin: 8px 0;
+      }
     }
   }
 
