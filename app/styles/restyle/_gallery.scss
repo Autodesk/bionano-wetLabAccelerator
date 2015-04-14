@@ -1,1 +1,94 @@
 //probably import smaller components
+
+/* Hamburger Menu*/
+.menu {
+  /* critical sizing and position styles */
+  width: 250px;
+  min-height: 100vh;
+  position: fixed;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  z-index: 1000;
+  background-color: #343434;
+  margin: 55px 0;
+  display: none;
+
+  input {
+    width: 175px;
+    padding: 0px 15px;
+    margin: 8px 15px;
+
+  }
+}
+
+/* Menu Trigger */
+.menu-trigger {
+  /* critical styles - hide the checkbox input */
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+}
+
+label[for="menu-trigger"] {
+  /* critical positioning styles */
+  position: fixed;
+  left: 10px; top: 65px;
+  z-index: 1001;
+
+  /* non-critical apperance styles */
+  height: 25px;
+  width: 30px;
+  cursor: pointer;
+  span, span:before, span:after {
+    cursor: pointer;
+    border-radius: 1px;
+    height: 5px;
+    width: 30px;
+    background: $grey;
+    position: absolute;
+    top: 10px;
+    display: block;
+    content: '';
+  }
+
+  span:before {
+    top: -10px;
+  }
+
+  span:after {
+    bottom: -10px;
+  }
+
+  span, span:before, span:after {
+    transition: all 500ms ease-in-out;
+  }
+}
+
+
+
+.menu-trigger:checked ~ label[for="menu-trigger"] span {
+  background-color: transparent;
+}
+.menu-trigger:checked ~ label[for="menu-trigger"] span:before, .menu-trigger:checked ~ label[for="menu-trigger"] span:after {
+  top: 0;
+}
+.menu-trigger:checked ~ label[for="menu-trigger"] span:before {
+  transform: rotate(45deg);
+  background-color: $white;
+}
+.menu-trigger:checked ~ label[for="menu-trigger"] span:after {
+  transform: rotate(-45deg);
+  background-color: $white;
+}
+
+/* Make the Magic Happen */
+.nav-trigger + label {
+  transition: left 1000ms;
+}
+
+.menu-trigger:checked ~ .menu {
+  display: block;
+}
+
+.menu-trigger:checked + label {
+  left: 210px;
+}
