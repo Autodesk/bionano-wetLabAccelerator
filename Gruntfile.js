@@ -452,7 +452,9 @@ module.exports = function (grunt) {
     //file concatenation + more
     browserify: {
       options: {
-        debug: true
+        browserifyOptions: {
+          debug: true
+        }
       },
       omniprotocol: {
         files : {

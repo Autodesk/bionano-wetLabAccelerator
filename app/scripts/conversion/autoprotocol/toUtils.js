@@ -11,22 +11,20 @@ var pipetteInstructions = ['transfer', 'mix', 'distribute', 'consolidate'];
 
 function convertReference (ref, name) {
   return {
-    name   : name,
-    isNew  : ref.new,
-    id     : ref.id,
-    type   : ref.new,
-    storage: _.isUndefined(ref.store) ? false : ref.store.where
+    name : name,
+    type : 'container',
+    value: {
+      isNew  : ref.new,
+      id     : ref.id,
+      type   : ref.new,
+      storage: _.isUndefined(ref.store) ? false : ref.store.where
+    }
   };
 }
 
 function convertReferences (refs) {
   return _.map(refs, convertReference);
 }
-
-/******************
- Fields
- ******************/
-
 
 /******************
  Instructions
@@ -53,7 +51,9 @@ function convertInstruction (inst) {
 
   var converter = instructionConverters[opName];
 
-  if (!_.isFunction(converter)) { throw new Error('converter invalid for ' + opName, inst)}
+  if (!_.isFunction(converter)) {
+    throw new Error('converter invalid for ' + opName, inst)
+  }
 
   return converter(inst);
 }
@@ -62,7 +62,8 @@ function convertInstructions (instructions) {
   return _.flatten(_.map(instructions, convertInstruction));
 }
 
-// given a container ( only possible when new ?? ) reformat numbers to alphanumerics... may have to do this at runtime if using a variable?
+// given a container ( only possible when new ?? ) reformat numbers to alphanumerics... may have to do this at runtime
+// if using a variable?
 function convertWellsToAlphanums (omni) {
   return omni;
 }
@@ -73,9 +74,9 @@ function foldInstructionLoops (omni) {
 }
 
 module.exports = {
-  convertReference   : convertReference,
-  convertReferences  : convertReferences,
-  convertInstruction : convertInstruction,
-  convertInstructions: convertInstructions,
-  convertWellsToAlphanums : convertWellsToAlphanums
+  convertReference       : convertReference,
+  convertReferences      : convertReferences,
+  convertInstruction     : convertInstruction,
+  convertInstructions    : convertInstructions,
+  convertWellsToAlphanums: convertWellsToAlphanums
 };

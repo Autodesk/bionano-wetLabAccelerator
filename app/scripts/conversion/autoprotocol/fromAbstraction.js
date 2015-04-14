@@ -9,16 +9,17 @@ var _         = require('lodash'),
 
 //convert abstraction to autoprotocol
 function fromAbstraction (abst) {
+
   var references = {};
-  _.forEach(abst.references, function (abstRef) {
+
+  _.forEach(_.filter(abst.parameters, _.matches({type: 'container'})), function (abstRef) {
     _.assign(references, fromUtils.makeReference(abstRef));
   });
 
   //each group gives an array, need to concat (_.flatten)
   var instructions = _.flatten(_.map(abst.groups, fromUtils.unwrapGroup));
 
-  //console.log('interpolating everything');
-
+  //todo - handle interpolation of containers properly
   var paramKeyvals = _.zipObject(
       _.pluck(abst.parameters, 'name'),
       _.pluck(abst.parameters, 'value')

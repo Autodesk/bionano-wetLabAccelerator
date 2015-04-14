@@ -36,7 +36,9 @@ angular.module('tx.protocolEditor')
 
         self.deleteGroup = function (group) {
           _.remove(self.protocol.groups, group);
-        }
+        };
+
+      //todo - listen for parameters changing, propagate variable name throughout
       },
       link: function postLink(scope, element, attrs) {
 
