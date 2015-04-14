@@ -2,13 +2,6 @@
   "name": "Simple Transfer Protocol",
   "parameters": [
     {
-      "name": "myPlate",
-      "type": "container",
-      "value": "ecoli_container",
-      "example": "ecoli_container",
-      "description": "Container to be used in the protocol"
-    },
-    {
       "name": "myAbsorbance",
       "type": "length",
       "value": "600:nanometer",
