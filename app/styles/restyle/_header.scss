@@ -1,7 +1,7 @@
 header.site-header {
 
-  $header-logo-dim: 45px;
-  $header-nav-font-size: 14px;
+  $header-logo-dim: 40px;
+  $header-nav-font-size: 11px;
   $logo-spacing: 5px;
   $nav-height : $header-logo-dim + ($logo-spacing * 2);
 
@@ -56,11 +56,10 @@ header.site-header {
         a {
           color: #c2c2c2;
           text-decoration: none;
-        }
 
-        &.active a,
-        & a:hover {
-          color: #222;
+          &:hover {
+            color: #222;
+          }
         }
       }
     }
@@ -73,6 +72,7 @@ header.site-header {
 
       a {
         display: inline-block;
+        margin: 0 15px;
         font-size: $header-nav-font-size;
         color: #c2c2c2;
         opacity: 0.6;
@@ -82,10 +82,6 @@ header.site-header {
           opacity: 0.5;
           color: #222;
           transition: opacity $transition-out-time $transition-out-type;
-        }
-
-        span {
-          margin: 0 5px;
         }
 
       }
