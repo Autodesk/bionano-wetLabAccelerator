@@ -1,94 +1,117 @@
-//probably import smaller components
+tx-gallery {
 
-/* Hamburger Menu*/
-.menu {
-  /* critical sizing and position styles */
-  width: 250px;
-  min-height: 100vh;
+  $gallery-width: 300px;
+  $close-width: 30px;
+
   position: fixed;
-  top: 0; bottom: 0;
-  left: 0; right: 0;
-  z-index: 1000;
-  background-color: #343434;
-  margin: 55px 0;
-  display: none;
-
-  input {
-    width: 175px;
-    padding: 0px 15px;
-    margin: 8px 15px;
-
-  }
-}
-
-/* Menu Trigger */
-.menu-trigger {
-  /* critical styles - hide the checkbox input */
-  position: absolute;
-  clip: rect(0, 0, 0, 0);
-}
-
-label[for="menu-trigger"] {
-  /* critical positioning styles */
-  position: fixed;
-  left: 10px; top: 65px;
-  z-index: 1001;
-
-  /* non-critical apperance styles */
-  height: 25px;
-  width: 30px;
-  cursor: pointer;
-  span, span:before, span:after {
-    cursor: pointer;
-    border-radius: 1px;
-    height: 5px;
-    width: 30px;
-    background: $grey;
-    position: absolute;
-    top: 10px;
-    display: block;
-    content: '';
-  }
-
-  span:before {
-    top: -10px;
-  }
-
-  span:after {
-    bottom: -10px;
-  }
-
-  span, span:before, span:after {
-    transition: all 500ms ease-in-out;
-  }
-}
-
-
-
-.menu-trigger:checked ~ label[for="menu-trigger"] span {
-  background-color: transparent;
-}
-.menu-trigger:checked ~ label[for="menu-trigger"] span:before, .menu-trigger:checked ~ label[for="menu-trigger"] span:after {
   top: 0;
-}
-.menu-trigger:checked ~ label[for="menu-trigger"] span:before {
-  transform: rotate(45deg);
-  background-color: $white;
-}
-.menu-trigger:checked ~ label[for="menu-trigger"] span:after {
-  transform: rotate(-45deg);
-  background-color: $white;
-}
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  width: $gallery-width;
 
-/* Make the Magic Happen */
-.nav-trigger + label {
-  transition: left 1000ms;
-}
+  /* Menu Trigger */
+  .menu-trigger {
+    /* critical styles - hide the checkbox input */
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+  }
 
-.menu-trigger:checked ~ .menu {
-  display: block;
-}
+  label[for="menu-trigger"] {
+    /* critical positioning styles */
+    position: fixed;
+    left: 10px;
+    top: 65px;
+    z-index: 1002;
 
-.menu-trigger:checked + label {
-  left: 210px;
+    /* non-critical apperance styles */
+    height: 15px;
+    width: 20px;
+    cursor: pointer;
+    span, span:before, span:after {
+      cursor: pointer;
+      border-radius: 1px;
+      height: 3px;
+      width: 20px;
+      background: $grey;
+      position: absolute;
+      top: 5px;
+      display: block;
+      content: '';
+    }
+
+    span:before {
+      top: -6px;
+    }
+
+    span:after {
+      top: 6px;
+    }
+
+    span, span:before, span:after {
+      transition: all 500ms ease-in-out;
+    }
+  }
+
+  .menu-trigger:checked ~ label[for="menu-trigger"] span {
+    background-color: transparent;
+  }
+  .menu-trigger:checked ~ label[for="menu-trigger"] span:before, .menu-trigger:checked ~ label[for="menu-trigger"] span:after {
+    top: 0;
+  }
+  .menu-trigger:checked ~ label[for="menu-trigger"] span:before {
+    transform: rotate(45deg);
+    background-color: $white;
+  }
+  .menu-trigger:checked ~ label[for="menu-trigger"] span:after {
+    transform: rotate(-45deg);
+    background-color: $white;
+  }
+
+  /* Make the Magic Happen */
+  .menu-trigger + label {
+    transition: left .3s;
+  }
+
+  .menu-trigger:checked ~ .menu {
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.3s ease-out;
+  }
+
+  .menu-trigger:checked + label {
+    left: 260px;
+  }
+
+
+  /* Hamburger Menu*/
+  .menu {
+    /* critical sizing and position styles */
+    width: $gallery-width;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+    background-color: #343434;
+    margin: 50px 0;
+    display: block;
+    transform: translate3d(-100%, 0, 0);
+    transition-property: all;
+    transition-duration: .3s;
+
+    .gallery-header {
+
+      .gallery-filter {
+        width: 225px;
+        padding: 0px 15px;
+        margin: 8px 15px;
+      }
+
+      .gallery-group {
+
+      }
+    }
+  }
 }

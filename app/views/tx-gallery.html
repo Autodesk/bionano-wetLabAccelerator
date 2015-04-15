@@ -1,0 +1,14 @@
+<input type="checkbox" id="menu-trigger" class="menu-trigger"  />
+<label for="menu-trigger"><span></span></label>
+
+<div class="menu">
+  <div class="gallery-header">
+    <input class="gallery-filter" type="text" ng-model="galleryCtrl.searchText" placeholder="Filter">
+  </div>
+  <div class="gallery-group" ng-repeat="(groupKey, groupItems) in galleryCtrl.rolled">
+    <h3>{{groupKey}}</h3>
+    <div ng-repeat="item in groupItems | orderBy:'name'">
+      {{item.name}}
+    </div>
+  </div>
+</div>
