@@ -31,24 +31,18 @@ angular.module('transcripticApp')
           currentParent = currentParent.$parent;
         }
 
-        //todo - refactor this mess
         // union of references and parameters, but with parameter referencing the reference (just with another name)
-        self.containers = _.union(
-          currentParent.editorCtrl.protocol.references,
-          _.map(_.filter(currentParent.editorCtrl.protocol.parameters, function (param) {
-            return param.type == 'container'
-          }), function (containerParam) {
-            return _.assign({}, _.find(currentParent.editorCtrl.protocol.references, function (ref) {
-              return ref.name == containerParam.value;
-            }), {name : containerParam.name});
-          })
-        );
+        self.containers = _.filter(currentParent.editorCtrl.protocol.parameters, _.matches( {type : 'container'} ));
 
+        //expose changes to container-type
+        //todo - need to handle containers which are not new
         self.handleChange = function () {
           var index = _.findIndex(self.containers, function (container) {
             return container.name == self.model;
-          });
-          self.type = _.result(self.containers[index], 'type');
+          }),
+          containerValue = _.result(self.containers[index], 'value');
+
+          self.type = _.result(containerValue, 'type');
         };
       },
       link: function postLink(scope, element, attrs) {}
