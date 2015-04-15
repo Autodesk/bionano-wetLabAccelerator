@@ -71,10 +71,11 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
 
     // Uncomment the following lines if you are using grunt's server to run the tests
-    // proxies: {
-    //   '/': 'http://localhost:9000/'
-    // },
-    // URL root prevent conflicts with the site root
-    // urlRoot: '_karma_'
+    proxies: {
+      '/': 'http://localhost:9000/'
+    },
+
+    //URL root prevent conflicts with the site root
+    urlRoot: '_karma_'
   });
 };
