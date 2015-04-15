@@ -43,7 +43,7 @@ angular.module('tx.datavis')
         scope.$watch('container', _.partial(rerender, true));
         scope.$watch('plateData', _.partial(rerender, false));
 
-        scope.$watch('selectedWells', _.noop); //todo - only listens out, should render indices on well
+        scope.$watch('selectedWells', _.noop); //todo - only listens out, should render indices on well (once know how to visualize)
 
         function propagateWellSelection (wellsInput) {
           var wells = _.isUndefined(wellsInput) ? getActiveWells() : wellsInput;
