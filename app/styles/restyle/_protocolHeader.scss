@@ -13,25 +13,24 @@ tx-protocol-actions {
       width: 315px;
       max-width: 100%;
       transform: translateX(-50%);
-      //margin: -1px 0 0;
       table {
         margin: 8px 0;
       }
     }
   }
+}
 
-  .protocol-actions {
-    &-container {
-      @extend .flex-horizontal;
-      justify-content: space-between;
-    }
+.protocol-header {
 
-    &-left {
-      align-self: flex-start;
-    }
-
-    &-right {
-      align-self: flex-end;
-    }
+  .title {
+    display: inline-block;
+    text-align: left; //its not working right now
   }
+
+  .actions {
+    display: inline-block;
+    text-align: right; //this isn't working either, need to investigate
+    margin: 0 5px;
+  }
+
 }

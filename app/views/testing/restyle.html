@@ -1,4 +1,4 @@
-<div class="protocol-header"
+<div class="protocol-name"
      ng-show="restyleCtrl.currentProtocol">
 
   <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
@@ -18,68 +18,25 @@
 
     <span class="title">Operations</span>
     <tx-operation-list class="flex-grower scroll-y"></tx-operation-list>
-
-    <!--<tx-inspector inspect="currentlySelected"
-                  resizeable
-                  resize-property="height"
-                  resize-position="top"
-                  resize-direction="vertical"
-                  style="max-height: 70vh; min-height: 10px;">
-    </tx-inspector>-->
   </div>
 
   <div class="maincolumn flex-grower maxout-scroll-vertical"
        ng-show="restyleCtrl.currentProtocol">
 
-    <div class="protocol-actions-container">
-      <div class="btn-group protocol-actions-left">
-        <btn-delete delete-text="Delete Protocol"
-                    on-delete="onDelete()"></btn-delete>
-        <button class="btn btn-default btn-sm"
-                tooltip="Download Protocol"
-                tooltip-append-to-body="true"
-                tx-downloadjson
-                filename="{{(actionCtrl.protocol.name ? actionCtrl.protocol.name : 'protocol') + '.json'}}"
-                download-model="actionCtrl.protocol">
-          <span class="glyphicon glyphicon-save-file"></span>
-        </button>
-        <button class="btn btn-default btn-sm"
-                ng-disabled="actionCtrl.protocolForm.$error.json"
-                ng-class="{'btn-info' : actionCtrl.protocolForm.$dirty}"
-                ng-click="handleSave()"
-                tooltip="Save Protocol"
-                tooltip-append-to-body="true">
-          <span class="glyphicon glyphicon-cloud-upload"></span>
-        </button>
-        <button class="btn btn-default btn-sm"
-                ng-disabled="actionCtrl.protocolForm.$error.json"
-                ng-click="actionCtrl.logAutoprotocol()"
-                tooltip="Log Autoprotocol"
-                tooltip-append-to-body="true">
-          <span class="glyphicon glyphicon-console"></span>
-        </button>
-      </div>
+    <div class="protocol-header">
+      <span class="title">Protocol</span>
+      <a class="actions"
+            tx-downloadjson
+            filename="{{(actionCtrl.protocol.name ? actionCtrl.protocol.name : 'protocol') + '.json'}}"
+            download-model="actionCtrl.protocol">
+        Download
+      </a>
+      <a class="actions"
+            ng-click="actionCtrl.executeProtocol()">
+        Run
+      </a>
 
-      <div class="protocol-actions-right">
-        <div class="btn-group">
-          <button class="btn btn-default btn-sm btn-labeled"
-                  ng-click="actionCtrl.verifyProtocol()">
-        <span class="btn-label">
-          <span class="glyphicon glyphicon-check"></span>
-        </span>
-            Verify
-          </button>
-          <button class="btn btn-default btn-sm btn-labeled"
-                  ng-click="actionCtrl.executeProtocol()">
-        <span class="btn-label">
-          <span class="glyphicon glyphicon-share"></span>
-        </span>
-            Execute
-          </button>
-        </div>
-      </div>
     </div>
-    <span class="title">Protocol</span>
 
     <button class="btn btn-default" ng-hide="restyleCtrl.currentProtocol"
             ng-click="loadDemo()">Demo</button>
