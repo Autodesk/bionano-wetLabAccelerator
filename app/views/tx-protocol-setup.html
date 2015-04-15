@@ -1,12 +1,10 @@
 <div class="protocol-group">
-  <button class="btn btn-default btn-sm btn-labeled"
-          ng-class="{'btn-info' : paramsVisible}"
+  <div class="glyphicon"
+          ng-class="{'glyphicon-resize-small'  : isCollapsed,
+                     'glyphicon-resize-full' : !isCollapsed}"
           ng-click="paramsVisible = !paramsVisible">
-          <span class="btn-label">
-            <span class="glyphicon glyphicon-list-alt"></span>
-          </span>
-    Parameters
-  </button>
+  </div>
+  <span class="group-name" ng-click="paramsVisible = !paramsVisible">Setup</span>
 
   <div ng-show="paramsVisible">
     <table>
