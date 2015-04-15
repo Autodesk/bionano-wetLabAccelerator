@@ -8,8 +8,8 @@ var _      = require('lodash'),
  Field Selection + Conversion
  ******/
 
-//given a field object (with type and value), and an map of converters with keys of fieldType, transform a field, or
-// just return the value
+//given a field object (with type and value), and an map of converters with keys of fieldType, transform a field, or just return the value
+//todo - maybe makes sense to error if fieldConverters is missing the field type
 function transformField (fieldObj, fieldConverters) {
   var fieldVal  = _.result(fieldObj, 'value'),
       fieldType = _.result(fieldObj, 'type'),

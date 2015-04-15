@@ -1,5 +1,6 @@
 var _                    = require('lodash'),
     fromConverters       = require('./fromConverters.js'),
+    utils                = require('./utils.js'),
     converterField       = fromConverters.field,
     converterInstruction = fromConverters.instruction,
     omniConv             = global.omniprotocol.conv;
@@ -40,18 +41,22 @@ function unwrapGroup (group) {
 }
 
 function makeReference (ref) {
-  var obj      = {};
-  var internal = {};
+  var obj      = {},
+      internal = {};
 
-  if (!!ref.isNew || _.isUndefined(ref.id)) {
-    _.assign(internal, {new: ref.type});
-  } else {
-    _.assign(internal, {id: ref.id});
+  if (_.isUndefined(ref.type) || ref.type != 'container' || _.isUndefined(ref.value)) {
+    throw Error('invalid reference', ref);
   }
 
-  if (!!ref.storage) {
+  if (!!ref.value.isNew || _.isUndefined(ref.value.id)) {
+    _.assign(internal, {new: ref.value.type});
+  } else {
+    _.assign(internal, {id: ref.value.id});
+  }
+
+  if (!!ref.value.storage) {
     internal.store = {
-      where: ref.storage
+      where: ref.value.storage
     };
   } else {
     internal.discard = true;

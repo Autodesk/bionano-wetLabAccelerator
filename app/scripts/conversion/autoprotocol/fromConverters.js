@@ -12,9 +12,9 @@ var _                    = require('lodash'),
 
   //only include special conversions, otherwise just use value (_.identity)
 
-converterField.aliquot = _.flow(omniUtils.flattenAliquots, _.first);
+converterField.aliquot = _.flow(autoUtils.flattenAliquots, _.first);
 
-converterField['aliquot+'] = omniUtils.flattenAliquots;
+converterField['aliquot+'] = autoUtils.flattenAliquots;
 
 converterField.columnVolumes = function (input) {
   return _.map(input, function (colVol) {
@@ -93,8 +93,8 @@ converterInstruction.absorbance = _.flow(simpleMapOperation,
 
 converterInstruction.transfer = function (op) {
 
-  var fromWells      = omniUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'from')),
-      toWells        = omniUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'to')),
+  var fromWells      = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'from')),
+      toWells        = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'to')),
       volume         = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
       optionalFields = ['dispense_speed', 'aspirate_speed', 'mix_before', 'mix_after'],
       optionalObj    = omniConv.getFieldsIfSet(op.fields, optionalFields),
@@ -125,7 +125,7 @@ converterInstruction.transfer = function (op) {
 };
 
 converterInstruction.consolidate = function (op) {
-  var fromWells          = omniUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'from')),
+  var fromWells          = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'from')),
       toWell             = omniConv.pluckFieldValueTransformed(op.fields, 'to', converterField),
       volume             = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
       optionalFromFields = ['aspirate_speed'],
@@ -152,7 +152,7 @@ converterInstruction.consolidate = function (op) {
 converterInstruction.distribute = function (op) {
   //todo - pass converters to transformer
   var fromWell          = omniConv.pluckFieldValueTransformed(op.fields, 'from', converterField),
-      toWells           = omniUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'to')),
+      toWells           = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'to')),
       volume            = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
       optionalToFields  = ['dispense_speed'],
       optionalAllFields = ['aspirate_speed', 'mix_before'],

@@ -484,7 +484,7 @@ module.exports = {
         {
           "name"           : "wells",
           "type"           : "aliquot+",
-          "singleContainer": false
+          "singleContainer": true
         },
         {
           "name"      : "wavelength",
@@ -526,7 +526,7 @@ module.exports = {
         {
           "name"           : "wells",
           "type"           : "aliquot+",
-          "singleContainer": false
+          "singleContainer": true
         },
         {
           "name"      : "excitation",

@@ -24,3 +24,65 @@
     </table>
   </div>
 </div>
+
+<div class="protocol-actions-container">
+  <div class="btn-group protocol-actions-left">
+    <btn-delete delete-text="Delete Protocol"
+                on-delete="onDelete()"></btn-delete>
+    <button class="btn btn-default btn-sm"
+            ng-disabled="actionCtrl.protocolForm.$error.json"
+            ng-class="{'btn-info' : actionCtrl.protocolForm.$dirty}"
+            ng-click="handleSave()"
+            tooltip="Save Protocol"
+            tooltip-append-to-body="true">
+      <span class="glyphicon glyphicon-cloud-upload"></span>
+    </button>
+    <div class="btn btn-default btn-sm"
+         tooltip="Download Protocol"
+         tooltip-append-to-body="true"
+         ng-class="{'open' : downloadOptionsVisible}"
+         ng-mouseenter="downloadOptionsVisible = true"
+         ng-mouseleave="downloadOptionsVisible = false">
+      <span class="glyphicon glyphicon-save-file"></span>
+      <span class="caret"></span>
+      <ul class="dropdown-menu">
+        <li><a tx-downloadjson
+               filename="{{(actionCtrl.protocol.name ? actionCtrl.protocol.name : 'protocol') + '_omniprotocol.json'}}"
+               download-model="actionCtrl.protocol">
+          Omniprotocol
+        </a></li>
+        <li><a tx-downloadjson
+               filename="{{(actionCtrl.protocol.name ? actionCtrl.protocol.name : 'protocol') + '_autoprotocol.json'}}"
+               download-model="actionCtrl.protocol"
+               download-formatter="actionCtrl.autoprotocolConvertFunction">
+          Autoprotocol
+        </a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="protocol-actions-right">
+    <div class="btn-group">
+      <button class="btn btn-default btn-sm btn-labeled"
+              ng-click="actionCtrl.verifyProtocol()">
+        <span class="btn-label">
+          <span class="glyphicon glyphicon-check"></span>
+        </span>
+        Verify
+      </button>
+      <button class="btn btn-default btn-sm btn-labeled"
+              ng-click="actionCtrl.executeProtocol()">
+        <span class="btn-label">
+          <span class="glyphicon glyphicon-share"></span>
+        </span>
+        Execute
+      </button>
+    </div>
+  </div>
+</div>
+
+<tx-requestresponse config="actionCtrl.analysisResponse.config"
+                    response="actionCtrl.analysisResponse.response"></tx-requestresponse>
+
+<tx-requestresponse config="actionCtrl.runResponse.config"
+                    response="actionCtrl.runResponse.response"></tx-requestresponse>

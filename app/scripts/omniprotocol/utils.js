@@ -84,18 +84,6 @@ function getFieldTypeInOperation (operationName, fieldName) {
  Wells
  ******/
 
-//given array of objects with keys container + well, create array of strings in format "container/well", or "well" if
-// ignoreContainer is truthy
-function flattenAliquots (abstAliquots, ignoreContainer) {
-  if (!!ignoreContainer) {
-    return _.map(abstAliquots, _.partial(_.result, _, 'well'));
-  } else {
-    return _.map(abstAliquots, function (aliquot) {
-      return joinContainerWell(aliquot.container, aliquot.well);
-    });
-  }
-}
-
 /*******
  Wrapping
  ******/
@@ -220,7 +208,6 @@ module.exports = {
   wrapFieldsAsStep           : wrapFieldsAsStep,
   scaffoldOperationWithValues: scaffoldOperationWithValues,
   getFieldTypeInOperation    : getFieldTypeInOperation,
-  flattenAliquots            : flattenAliquots,
   wrapOpInGroup              : wrapOpInGroup,
   wrapGroupsInProtocol       : wrapGroupsInProtocol,
   getTransformsContainer     : getTransformsContainer,
