@@ -15,11 +15,24 @@ function transformField (fieldObj, fieldConverters) {
       fieldType = _.result(fieldObj, 'type'),
       converter = _.has(fieldConverters, fieldType) ? fieldConverters[fieldType] : _.identity;
 
-  if (!_.isFunction(converter)) {
-    throw new Error('field type is invalid:', fieldObj.type, fieldObj);
+  if (_.isUndefined(fieldVal)) {
+    if (_.has(fieldObj, 'default')) {
+      console.log('using default for field ' + fieldObj.name, fieldObj);
+      fieldVal = _.result(fieldObj, 'default');
+    } else {
+      if (fieldObj.optional) {
+        return null;
+      } else {
+        throw new Error('missing value for non-optional field ' + fieldObj.name, fieldObj);
+      }
+    }
   }
 
-  return converter(fieldVal);
+  if (!_.isFunction(converter)) {
+    throw new Error('field type converter is invalid:', fieldObj.type, fieldObj);
+  }
+
+  return converter(fieldVal, fieldObj);
 }
 
 //get field value, and run through converterKey (default 'toAutoprotocol')
@@ -56,6 +69,12 @@ function simpleKeyvalFields (fields, localParams, fieldConverters) {
   var obj = {};
   _.forEach(fields, function (field) {
     var transformed = transformField(field, fieldConverters);
+
+    //if transformField returns null, field was undefined and optional, so skip it
+    if (_.isNull(transformed)) {
+      return;
+    }
+
     if (_.isObject(localParams) && !_.isEmpty(localParams)) {
       transformed = utils.interpolateObject(transformed, localParams);
     }

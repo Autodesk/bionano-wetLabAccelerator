@@ -7,17 +7,17 @@
  * # txProtocolInput
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolField', function ($http, $compile, Omniprotocol) {
+  .directive('txProtocolField', function ($http, $compile, Omniprotocol, Autoprotocol) {
     return {
-      restrict: 'E',
-      require: 'ngModel',
-      scope: {
+      restrict        : 'E',
+      require         : 'ngModel',
+      scope           : {
         model: '=ngModel',
         field: '='
       },
       bindToController: true,
-      controllerAs: 'fieldCtrl',
-      controller: function ($scope, $element, $attrs) {
+      controllerAs    : 'fieldCtrl',
+      controller      : function ($scope, $element, $attrs) {
         var self = this;
 
         self.mixwrapToggle = function (newval) {
@@ -30,34 +30,29 @@ angular.module('tx.protocolEditor')
           self.model = _.map(wells, function (well) {
             return {
               container: self.containerName,
-              well : well
+              well     : well
             };
           });
         };
       },
-      compile: function compile(tElement, tAttrs, transclude) {
+      compile         : function compile (tElement, tAttrs, transclude) {
         return {
-          pre: function preLink(scope, iElement, iAttrs) {
-            var type = _.result(scope.fieldCtrl.field, 'type'),
-                inputType = Omniprotocol.inputTypes[type],
+          pre : function preLink (scope, iElement, iAttrs) {
+            var type    = _.result(scope.fieldCtrl.field, 'type'),
                 partial = type;                 //default, maybe handled differently in if/else
 
             //Special handling before we get the appropriate template
 
             //handle all dimensional values the same way
-            if (_.result(inputType, 'autoprotocol-type') == 'Unit') {
-              partial = 'dimension';
+            // todo - should check this better... not bake in for autoprotocol
+            if (_.contains(Autoprotocol.utils.dimensionalFields, type)) {
+
+              var inputType     = Omniprotocol.inputTypes[type];
+              partial           = 'dimension';
               scope.unitOptions = inputType.units;
 
-              var initialModel = _.isEmpty(scope.fieldCtrl.model) ?
-                                   scope.fieldCtrl.model :
-                                   ( scope.fieldCtrl.field.optional ? scope.fieldCtrl.field.default : null );
+              //todo - handle restrictions
 
-              scope.placeholder = convertDimensionalExternal(scope.fieldCtrl.field.default);
-
-              handleNewDimensionalExternal(initialModel);
-              scope.$watch('internal', handleNewDimensionInternal, true);
-              scope.$watch('fieldCtrl.model', handleNewDimensionalExternal);
             }
             else if (type == 'option') {
               scope.modelOptions = scope.fieldCtrl.field.options;
@@ -66,44 +61,27 @@ angular.module('tx.protocolEditor')
               scope.aliquotMultiple = false;
             }
             else if (type == 'aliquot+') {
-              partial = 'aliquot';
+              partial               = 'aliquot';
               scope.aliquotMultiple = true;
-            }
-            else if (type == 'thermocycleDyes') {
-              scope.fieldCtrl.dyesContainer = {}; //todo - finish this
             }
 
             /* functions for specific types */
-
-            function handleNewDimensionInternal (newobj) {
-              if (_.isEmpty(newobj)) { return; }
-              scope.fieldCtrl.model = '' + newobj.value + ':' + newobj.unit;
-            }
-
-            function handleNewDimensionalExternal (newval) {
-              scope.internal = convertDimensionalExternal(newval);
-            }
-
-            function convertDimensionalExternal (val) {
-              if (!_.isString(val)) { return null; }
-              var split = val.split(':');
-              return {
-                value: parseInt(split[0], 10),
-                unit: split[1]
-              };
-            }
-
 
             /* get the partial */
 
             return $http.get('views/inputs/' + partial + '.html').then(function (data) {
               var $el = angular.element(data.data);
               iElement.html($compile($el)(scope));
-              //todo - add inputAttrs e.g. for dimensional
             });
           },
-          post: function postLink(scope, iElement, iAttrs, ngModel) {
-
+          post: function postLink (scope, iElement, iAttrs, ngModel) {
+            //if dimensional, ensure that unit is defined
+            //kinda a hack, but nice guarantee and easier than lots of object passing in conversion later
+            if (_.contains(Autoprotocol.utils.dimensionalFields, _.result(scope.fieldCtrl.field, 'type'))) {
+              if (_.isUndefined(_.result(scope.fieldCtrl.model, 'unit'))) {
+                ngModel.$setViewValue(_.assign({unit : scope.unitOptions[0]}, scope.fieldCtrl.model));
+              }
+            }
           }
         }
       }

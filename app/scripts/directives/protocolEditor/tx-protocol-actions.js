@@ -27,13 +27,15 @@ angular.module('tx.protocolEditor')
           });
         });
 
+        self.logAutoprotocol = function () {
+          console.log(angular.toJson(Autoprotocol.fromAbstraction(self.protocol), true));
+        };
+
         self.toggleMetadataVisible = function (event, forceState) {
           event.preventDefault();
           event.stopPropagation();
           $scope.protocolMetadataVisible = _.isUndefined(forceState) ? !$scope.protocolMetadataVisible : forceState;
         };
-
-        self.autoprotocolConvertFunction = Autoprotocol.fromAbstraction;
 
         // SUBMIT / ANALYZE RUNS
 
