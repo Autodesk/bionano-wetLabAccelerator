@@ -30,14 +30,6 @@
     <btn-delete delete-text="Delete Protocol"
                 on-delete="onDelete()"></btn-delete>
     <button class="btn btn-default btn-sm"
-            tooltip="Download Protocol"
-            tooltip-append-to-body="true"
-            tx-downloadjson
-            filename="{{(actionCtrl.protocol.name ? actionCtrl.protocol.name : 'protocol') + '.json'}}"
-            download-model="actionCtrl.protocol">
-      <span class="glyphicon glyphicon-save-file"></span>
-    </button>
-    <button class="btn btn-default btn-sm"
             ng-disabled="actionCtrl.protocolForm.$error.json"
             ng-class="{'btn-info' : actionCtrl.protocolForm.$dirty}"
             ng-click="handleSave()"
@@ -45,13 +37,28 @@
             tooltip-append-to-body="true">
       <span class="glyphicon glyphicon-cloud-upload"></span>
     </button>
-    <button class="btn btn-default btn-sm"
-            ng-disabled="actionCtrl.protocolForm.$error.json"
-            ng-click="actionCtrl.logAutoprotocol()"
-            tooltip="Log Autoprotocol"
-            tooltip-append-to-body="true">
-      <span class="glyphicon glyphicon-console"></span>
-    </button>
+    <div class="btn btn-default btn-sm"
+         tooltip="Download Protocol"
+         tooltip-append-to-body="true"
+         ng-class="{'open' : downloadOptionsVisible}"
+         ng-mouseenter="downloadOptionsVisible = true"
+         ng-mouseleave="downloadOptionsVisible = false">
+      <span class="glyphicon glyphicon-save-file"></span>
+      <span class="caret"></span>
+      <ul class="dropdown-menu">
+        <li><a tx-downloadjson
+               filename="{{(actionCtrl.protocol.name ? actionCtrl.protocol.name : 'protocol') + '_omniprotocol.json'}}"
+               download-model="actionCtrl.protocol">
+          Omniprotocol
+        </a></li>
+        <li><a tx-downloadjson
+               filename="{{(actionCtrl.protocol.name ? actionCtrl.protocol.name : 'protocol') + '_autoprotocol.json'}}"
+               download-model="actionCtrl.protocol"
+               download-formatter="actionCtrl.autoprotocolConvertFunction">
+          Autoprotocol
+        </a></li>
+      </ul>
+    </div>
   </div>
 
   <div class="protocol-actions-right">
