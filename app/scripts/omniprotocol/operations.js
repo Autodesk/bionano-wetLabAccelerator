@@ -325,6 +325,16 @@ module.exports = {
           "default": "60:minute"
         },
         {
+          "name"   : "co2",
+          "type"   : "integer",
+          "default": 0,
+          "optional" : true,
+          "inputAttrs": {
+            "min": 0,
+            "max": 100
+          }
+        },
+        {
           "name"   : "shaking",
           "type"   : "boolean",
           "default": false
