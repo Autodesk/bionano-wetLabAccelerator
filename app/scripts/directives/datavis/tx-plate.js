@@ -202,7 +202,7 @@ angular.module('tx.datavis')
           //check conditions for showing groups, otherwise show data
           if (!_.isEmpty(scope.groupData) && ( scope.preferGroups || _.isEmpty(scope.plateData))) {
             //reorder to map so lookup is fast
-            var groupMap = _.map(scope.groupData, );
+            var groupMap = _.map(scope.groupData, _.noop); //todo - handle groups
 
             selection.style('fill', function (d) {
               return groupMap[d];
