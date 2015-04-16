@@ -353,6 +353,16 @@ module.exports = {
         {
           "name": "object",
           "type": "container"
+        },
+        {
+          "name": "object",
+          "type": "option",
+          "default" : "ultra-clear",
+          "optional" : true,
+          "options" : [
+            "ultra-clear",
+            "foil"
+          ]
         }
       ]
     }
