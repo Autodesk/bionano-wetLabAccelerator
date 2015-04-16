@@ -15,6 +15,10 @@ function transformField (fieldObj, fieldConverters) {
       fieldType = _.result(fieldObj, 'type'),
       converter = _.has(fieldConverters, fieldType) ? fieldConverters[fieldType] : _.identity;
 
+  if (_.isUndefined(fieldVal) && fieldObj.optional && _.has(fieldObj, 'default')) {
+    fieldVal = _.result(fieldObj, 'default');
+  }
+
   if (!_.isFunction(converter)) {
     throw new Error('field type is invalid:', fieldObj.type, fieldObj);
   }
