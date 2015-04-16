@@ -109,8 +109,8 @@ function convertFieldValue (fieldType, autoVal, fieldName, op) {
  Instruction Utils
  ******************/
 
-/* e.g. given fieldObj { duration : "duration" } for op { duration : "60:seconds" } generate
- * { name : "duration", type: "duration" , value : "60:seconds" }
+/* e.g. given fieldObj { duration : "duration" } for op { duration : {"value" : 60, "unit" : "seconds" } } generate
+ * { name : "duration", type: "duration" , value : {"value" : 60, "unit" : "seconds" } }
  */
 function basicFieldConvert (op, fieldObj) {
   return _.map(fieldObj, function (fieldType, fieldName) {

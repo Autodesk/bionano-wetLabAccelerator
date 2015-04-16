@@ -1,7 +1,9 @@
-<input ng-model="internal.value"
+<input ng-model="fieldCtrl.model.value"
        type="number"
-       placeholder="{{placeholder.value}}">
-<select ng-model="internal.unit"
+       placeholder="{{fieldCtrl.field.default.value}}">
+<select ng-model="fieldCtrl.model.unit"
         ng-options="o as o for o in unitOptions">
-    <option value="" disabled selected>{{placeholder.unit}}</option>
+    <option ng-if="!fieldCtrl.model.unit && fieldCtrl.field.default.unit"
+            value=""
+            disabled selected>{{fieldCtrl.field.default.unit}}</option>
 </select>
