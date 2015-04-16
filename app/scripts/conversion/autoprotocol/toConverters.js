@@ -8,26 +8,12 @@ var _                     = require('lodash'),
  Field Utils
  ******************/
 
-var dimensionalSeparator = ':';
-
-function handleDimensional (dimObj) {
-  var split = dimObj.split(dimensionalSeparator);
-  return {
-    value: split[0],
-    unit : split[1]
-  }
-}
-
-var dimensionalTypes = _.keys(_.pick(omniprotocol.inputTypes, _.matches({'autoprotocol-type': "Unit"})));
-
-/*** dimensional fields ***/
-
-instructionConverters['dimensional'] = _.identity;
-_.forEach(dimensionalTypes, function (type) {
-  instructionConverters[type] = _.identity;
+//handle all dimensional converters at once
+_.forEach(utils.dimensionalFields, function (dimensional) {
+  fieldConverters[dimensional] = utils.convertDimensionalToOmni;
 });
 
-_.assign(instructionConverters, {
+_.assign(fieldConverters, {
   generic: _.identity,
 
   /*** primitives ***/

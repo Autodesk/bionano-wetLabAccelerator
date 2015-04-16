@@ -10,10 +10,29 @@ var _                    = require('lodash'),
  Field Conversion
  *******************/
 
+//todo - need to get dimensional value + unit defaults
+
+function convertDimensionalWithDefault (omnidim, omnidef) {
+  return autoUtils.convertDimensionalToAuto(_.assign({}, omnidef, omnidim));
+}
+
 //handle all dimensional converters at once
 _.forEach(autoUtils.dimensionalFields, function (dimensional) {
-  converterField[dimensional] = autoUtils.convertDimensionalToAuto;
+  converterField[dimensional] = function (input, fieldObj) {
+    return convertDimensionalWithDefault(input, _.result(fieldObj, 'default'));
+  };
 });
+
+function mapSomeDimensionalFields (input, defaults, dimensional, nondimensional) {
+  return _.assign({},
+    _.zipObject(dimensional, _.map(dimensional, function (dim) {
+      return convertDimensionalWithDefault(_.result(input, dim, _.result(defaults, dim)));
+    })),
+    _.zipObject(nondimensional, _.map(nondimensional, function (nondim) {
+      return _.result(input, nondim, _.result(defaults, nondim));
+    }))
+  );
+}
 
 //todo - might want to make each type explicit, rather than implicit use of _.identity
 //only include special conversions, otherwise just use value (_.identity)
@@ -31,23 +50,24 @@ converterField.columnVolumes = function (input) {
   });
 };
 
-converterField.thermocycleGroup = function (input) {
+converterField.thermocycleGroup = function (input, fieldObj) {
+  var inputDefault = _.result(fieldObj, 'default', {});
   return _.map(input, function (group) {
     return {
       cycles: group.cycles,
       steps : _.map(group.steps, function (step) {
         return _.assign({
-              duration: step.duration,
+              duration: convertDimensionalWithDefault(step.duration, inputDefault.duration),
               read    : _.result(step, 'read', true)
-            }, (step.isGradient ?
+            }, (!!step.isGradient ?
             {
               gradient: {
-                top: step.gradientStart,
-                end: step.gradientEnd
+                top: convertDimensionalWithDefault(step.gradientStart, inputDefault.gradientStart),
+                end: convertDimensionalWithDefault(step.gradientEnd, inputDefault.gradientEnd)
               }
             } :
             {
-              temperature: step.temperature
+              temperature: convertDimensionalWithDefault(step.temperature, inputDefault.temperature)
             }
             )
         );
@@ -56,19 +76,23 @@ converterField.thermocycleGroup = function (input) {
   });
 };
 
+
 converterField.thermocycleDyes = function (input) {
-  return _.zipObject(
-      _.pluck(input, 'dye'),
-      input.wells
-  );
+  var filtered = _.filter(input, function (item) {
+    return item.wells.length;
+  });
+  console.log(filtered);
+  //todo
 };
 
-converterField.mixwrap = function (input) {
-  return {
-    volume: autoUtils.convertDimensionalToAuto(input.volume),
-    speed: autoUtils.convertDimensionalToAuto(input.speed),
-    repetitions: input.repetitions
-  }
+converterField.thermocycleMelting = function (input, fieldObj) {
+  var fields = [ 'start', 'end', 'increment', 'rate'];
+  return mapSomeDimensionalFields(input, _.result(fieldObj, 'default'), fields);
+};
+
+
+converterField.mixwrap = function (input, fieldObj) {
+  return mapSomeDimensionalFields(input, _.result(fieldObj, 'default'), ['speed', 'volume'], ['repetitions']);
 };
 
 /*******************

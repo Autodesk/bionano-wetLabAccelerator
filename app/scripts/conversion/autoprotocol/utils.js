@@ -68,7 +68,7 @@ function pluckOperationContainerFromWells (op, containerKey, wellsKey) {
 
   //redo the wells
   var strippedWells = _.map(op[wellsKey], function (well) {
-    return splitContainerWell(well).well;
+    return _.result(splitContainerWell(well), 'well');
   });
 
   //need to set key dynamically

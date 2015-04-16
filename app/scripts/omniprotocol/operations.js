@@ -279,7 +279,7 @@ module.exports = {
           "default": {"value": 10, "unit": "microliter"}
         },
         {
-          "name": "steps",
+          "name": "groups",
           "type": "thermocycleGroup"
         },
         {
