@@ -8,6 +8,12 @@
  * Constant in the transcripticApp.
  */
 angular.module('transcripticApp').constant('OligoOptions', {
-  scale: ["25:nanomole", "50:nanomole", "200:nanomole", "1:micromole", "10:micromole" ],
+  scale : [
+    {"value": 25, "unit": "nanomole"},
+    {"value": 50, "unit": "nanomole"},
+    {"value": 200, "unit": "nanomole"},
+    {"value": 1, "unit": "micromole"},
+    {"value": 10, "unit": "micromole"}
+  ],
   purity: ["desalt", "hplc", "page"]
 });

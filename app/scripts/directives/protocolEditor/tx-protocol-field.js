@@ -9,15 +9,15 @@
 angular.module('tx.protocolEditor')
   .directive('txProtocolField', function ($http, $compile, Omniprotocol) {
     return {
-      restrict: 'E',
-      require: 'ngModel',
-      scope: {
+      restrict        : 'E',
+      require         : 'ngModel',
+      scope           : {
         model: '=ngModel',
         field: '='
       },
       bindToController: true,
-      controllerAs: 'fieldCtrl',
-      controller: function ($scope, $element, $attrs) {
+      controllerAs    : 'fieldCtrl',
+      controller      : function ($scope, $element, $attrs) {
         var self = this;
 
         self.mixwrapToggle = function (newval) {
@@ -30,34 +30,27 @@ angular.module('tx.protocolEditor')
           self.model = _.map(wells, function (well) {
             return {
               container: self.containerName,
-              well : well
+              well     : well
             };
           });
         };
       },
-      compile: function compile(tElement, tAttrs, transclude) {
+      compile         : function compile (tElement, tAttrs, transclude) {
         return {
-          pre: function preLink(scope, iElement, iAttrs) {
-            var type = _.result(scope.fieldCtrl.field, 'type'),
+          pre : function preLink (scope, iElement, iAttrs) {
+            var type      = _.result(scope.fieldCtrl.field, 'type'),
                 inputType = Omniprotocol.inputTypes[type],
-                partial = type;                 //default, maybe handled differently in if/else
+                partial   = type;                 //default, maybe handled differently in if/else
 
             //Special handling before we get the appropriate template
 
             //handle all dimensional values the same way
+            // todo - should check this better... not bake in for autoprotocol
             if (_.result(inputType, 'autoprotocol-type') == 'Unit') {
-              partial = 'dimension';
+              partial           = 'dimension';
               scope.unitOptions = inputType.units;
 
-              var initialModel = _.isEmpty(scope.fieldCtrl.model) ?
-                                   scope.fieldCtrl.model :
-                                   ( scope.fieldCtrl.field.optional ? scope.fieldCtrl.field.default : null );
-
-              scope.placeholder = convertDimensionalExternal(scope.fieldCtrl.field.default);
-
-              handleNewDimensionalExternal(initialModel);
-              scope.$watch('internal', handleNewDimensionInternal, true);
-              scope.$watch('fieldCtrl.model', handleNewDimensionalExternal);
+              //todo - handle restrictions
             }
             else if (type == 'option') {
               scope.modelOptions = scope.fieldCtrl.field.options;
@@ -66,7 +59,7 @@ angular.module('tx.protocolEditor')
               scope.aliquotMultiple = false;
             }
             else if (type == 'aliquot+') {
-              partial = 'aliquot';
+              partial               = 'aliquot';
               scope.aliquotMultiple = true;
             }
             else if (type == 'thermocycleDyes') {
@@ -75,23 +68,6 @@ angular.module('tx.protocolEditor')
 
             /* functions for specific types */
 
-            function handleNewDimensionInternal (newobj) {
-              if (_.isEmpty(newobj)) { return; }
-              scope.fieldCtrl.model = '' + newobj.value + ':' + newobj.unit;
-            }
-
-            function handleNewDimensionalExternal (newval) {
-              scope.internal = convertDimensionalExternal(newval);
-            }
-
-            function convertDimensionalExternal (val) {
-              if (!_.isString(val)) { return null; }
-              var split = val.split(':');
-              return {
-                value: parseInt(split[0], 10),
-                unit: split[1]
-              };
-            }
 
 
             /* get the partial */
@@ -102,7 +78,7 @@ angular.module('tx.protocolEditor')
               //todo - add inputAttrs e.g. for dimensional
             });
           },
-          post: function postLink(scope, iElement, iAttrs, ngModel) {
+          post: function postLink (scope, iElement, iAttrs, ngModel) {
 
           }
         }

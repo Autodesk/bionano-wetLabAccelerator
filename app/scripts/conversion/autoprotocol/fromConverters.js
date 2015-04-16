@@ -10,6 +10,10 @@ var _                    = require('lodash'),
  Field Conversion
  *******************/
 
+_.forEach(autoUtils.dimensionalFields, function (dimensional) {
+  converterField[dimensional] = autoUtils.convertDimensionalToAuto;
+});
+
   //only include special conversions, otherwise just use value (_.identity)
 
 converterField.aliquot = _.flow(autoUtils.flattenAliquots, _.first);
@@ -57,6 +61,14 @@ converterField.thermocycleDyes = function (input) {
   );
 };
 
+converterField.mixwrap = function (input) {
+  return {
+    volume: autoUtils.convertDimensionalToAuto(input.volume),
+    speed: autoUtils.convertDimensionalToAuto(input.speed),
+    repetitions: input.repetitions
+  }
+};
+
 /*******************
  Instruction Conversion
  *******************/
@@ -97,7 +109,7 @@ converterInstruction.transfer = function (op) {
       toWells        = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'to')),
       volume         = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
       optionalFields = ['dispense_speed', 'aspirate_speed', 'mix_before', 'mix_after'],
-      optionalObj    = omniConv.getFieldsIfSet(op.fields, optionalFields),
+      optionalObj    = omniConv.getFieldsIfSet(op.fields, optionalFields, true, converterField),
       transfers      = [];
 
   //todo - eventually, we want to put some of this in 'requirements' for the operation (pending them all written to
@@ -130,8 +142,8 @@ converterInstruction.consolidate = function (op) {
       volume             = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
       optionalFromFields = ['aspirate_speed'],
       optionalAllFields  = ['dispense_speed', 'mix_after'],
-      optionalFromObj    = omniConv.getFieldsIfSet(op.fields, optionalFromFields),
-      optionalAllObj     = omniConv.getFieldsIfSet(op.fields, optionalAllFields),
+      optionalFromObj    = omniConv.getFieldsIfSet(op.fields, optionalFromFields, true, converterField),
+      optionalAllObj     = omniConv.getFieldsIfSet(op.fields, optionalAllFields, true, converterField),
       fromArray          = [];
 
   _.forEach(fromWells, function (fromWell) {
@@ -156,8 +168,8 @@ converterInstruction.distribute = function (op) {
       volume            = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
       optionalToFields  = ['dispense_speed'],
       optionalAllFields = ['aspirate_speed', 'mix_before'],
-      optionalToObj     = omniConv.getFieldsIfSet(op.fields, optionalToFields),
-      optionalAllObj    = omniConv.getFieldsIfSet(op.fields, optionalAllFields),
+      optionalToObj     = omniConv.getFieldsIfSet(op.fields, optionalToFields, true, converterField),
+      optionalAllObj    = omniConv.getFieldsIfSet(op.fields, optionalAllFields, true, converterField),
       toArray           = [];
 
   _.forEach(toWells, function (fromWell) {
@@ -178,7 +190,7 @@ converterInstruction.distribute = function (op) {
 converterInstruction.mix = function (op) {
   var wells          = omniConv.pluckFieldValueTransformed(op.fields, 'wells', converterField),
       optionalFields = ['repetitions', 'volume', 'speed'],
-      optionalObj    = omniConv.getFieldsIfSet(op.fields, optionalFields, true);
+      optionalObj    = omniConv.getFieldsIfSet(op.fields, optionalFields, true, converterField);
 
   var mixes = _.map(wells, function (well) {
     return _.assign({

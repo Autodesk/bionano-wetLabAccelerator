@@ -13,51 +13,69 @@
  *  }, ... }
  *
  *
- * Through combination of attributes no-brush and select-persist, you can specify whether one/many wells can be selected,
- * and whether multiple groups can be selected
+ * Through combination of attributes no-brush and select-persist, you can specify whether one/many wells can be
+ *     selected, and whether multiple groups can be selected
  *
- * todo - allow full syncing of selected wells (i.e. listen for changes in)
- * todo - store selection in indexed array, show indices on plate
+ * todo - store selection in indexed array... show indices on plate??
  */
 angular.module('tx.datavis')
   .directive('txPlate', function (ContainerOptions, WellConv) {
 
-    var classActive = 'brushActive',
+    var classActive   = 'brushActive',
         classSelected = 'brushSelected';
+
+    var colors = {
+      empty   : {
+        r: 255, g: 255, b: 255, a: 1
+      },
+      disabled: {
+        r: 0, g: 0, b: 0, a: 0.3
+      },
+      data    : {
+        r: 150, g: 150, b: 200, a: 0
+      }
+    };
+
+    var rgbaify = function (color, opacity) {
+      return 'rgba(' + [color.r, color.g, color.b, (_.isUndefined(opacity) ? color.a : opacity)].join(',') + ')';
+    };
 
     return {
       restrict: 'E',
-      scope: {
-        container: '=', //shortname (key of ContainerOptions),
-        plateData: '=',
-        noBrush: '=', //boolean - prevent brush for selection, use clicks instead
-        selectPersist: '=', //boolean - allow selections to persist across one brush / click
-        onHover: '&',   //returns array of selected wells
-        onSelect: '&',   //returns array of selected wells
-        selectedWells : '=?'
+      scope   : {
+        container    : '=',  //shortname (key of ContainerOptions),
+        plateData    : '=',  //data as defined above
+        noBrush      : '=',  //boolean - prevent brush for selection, use clicks instead
+        selectPersist: '=',  //boolean - allow selections to persist across one brush / click
+        onHover      : '&',  //returns array of selected wells
+        onSelect     : '&',  //returns array of selected wells
+        selectedWells: '=?', //binding for selected wells. Currently only listens out. todo - handle both ways?
+        groupData    : '=?', //array of groups with fields name, wells, color. if omitted, consider all values as one group,
+        preferGroups : '=?'  //if both plateData and groups are defined, true gives group coloring priority
       },
-      link: function postLink(scope, element, attrs) {
+      link    : function postLink (scope, element, attrs) {
 
         /* WATCHERS */
 
         scope.$watch('container', _.partial(rerender, true));
         scope.$watch('plateData', _.partial(rerender, false));
+        scope.$watch('groupData', _.partial(rerender, false));
 
-        scope.$watch('selectedWells', _.noop); //todo - only listens out, should render indices on well (once know how to visualize)
+        scope.$watch('selectedWells', _.noop);
 
         function propagateWellSelection (wellsInput) {
           var wells = _.isUndefined(wellsInput) ? getActiveWells() : wellsInput;
 
           scope.$applyAsync(function () {
             scope.selectedWells = wells;
-            scope.onSelect({ $wells: wells });
+            scope.onSelect({$wells: wells});
           });
         }
 
         /* CONSTRUCTING THE SVG */
 
         var margin = {top: 40, right: 20, bottom: 20, left: 40},
-            width = 600 - margin.left - margin.right,
+            width  = 600 - margin.left - margin.right,
             height = 420 - margin.top - margin.bottom;
 
         //container SVG
@@ -119,12 +137,12 @@ angular.module('tx.datavis')
             return;
           }
 
-          var wellCount = container.well_count,
-              colCount = container.col_count,
-              rowCount = wellCount / colCount,
-              wellSpacing = 2,
-              wellRadius = ( width - (colCount * wellSpacing) ) / colCount / 2,
-              wellArray = WellConv.createArrayGivenBounds([0,1], [rowCount - 1, colCount]),
+          var wellCount          = container.well_count,
+              colCount           = container.col_count,
+              rowCount           = wellCount / colCount,
+              wellSpacing        = 2,
+              wellRadius         = ( width - (colCount * wellSpacing) ) / colCount / 2,
+              wellArray          = WellConv.createArrayGivenBounds([0, 1], [rowCount - 1, colCount]),
               transitionDuration = 200;
 
           if (shouldPlateUpdate) {
@@ -136,19 +154,17 @@ angular.module('tx.datavis')
           }
 
           wells = wellsSvg.selectAll("circle")
-            .data(wellArray, function (well) { return well; } )
+            .data(wellArray, function (well) { return well; })
             .call(unselectWells);
-
-          //deal here with all old items if you want, before the enter
 
           if (shouldPlateUpdate) {
             wells.enter()
               .append('circle')
               .classed('well', true)
-              .on('mouseenter', wellOnMouseover)
+              .on('mouseenter', wellOnMouseover) //note that nothing will happen if brush is present
               .on('mouseleave', wellOnMouseleave)
               .on('click', wellOnClick)
-              .style('fill', 'rgba(255,255,255,0)')
+              .style('fill', rgbaify(colors.empty))
               .each(function (d, i) {
                 //could bind data beyond just well here... but what makes sense?
               });
@@ -158,16 +174,16 @@ angular.module('tx.datavis')
           wells
             .transition()
             .duration(transitionDuration)
-              .attr({
-                "cx": function (d, i) {
-                  return Math.floor(i % colCount) * ( (wellRadius * 2) + wellSpacing ) + wellRadius
-                },
-                "cy": function (d, i) {
-                  return Math.floor(i / colCount) * ( (wellRadius * 2) + wellSpacing ) + wellRadius
-                },
-                "r" : wellRadius
-              })
-              .call(transitionData); //externalize handling of data potentially being undefined
+            .attr({
+              "cx": function (d, i) {
+                return Math.floor(i % colCount) * ( (wellRadius * 2) + wellSpacing ) + wellRadius
+              },
+              "cy": function (d, i) {
+                return Math.floor(i / colCount) * ( (wellRadius * 2) + wellSpacing ) + wellRadius
+              },
+              "r" : wellRadius
+            })
+            .call(transitionData); //externalize handling of data potentially being undefined
 
           if (shouldPlateUpdate) {
             wells.exit()
@@ -177,19 +193,29 @@ angular.module('tx.datavis')
               .remove()
           }
 
-          clearBrush();
+          safeClearBrush();
         }
 
         function transitionData (selection) {
-          if (!scope.plateData || !selection || selection.empty()) return;
+          if (!selection || selection.empty()) return;
 
-          selection.style('fill', function (d) {
-            if (scope.plateData[d]) {
-              return 'rgba(150,150,200,' + scope.plateData[d].value + ')';
-            } else {
-              return 'rgba(0,0,0,0.3)';
-            }
-          });
+          //check conditions for showing groups, otherwise show data
+          if (!_.isEmpty(scope.groupData) && ( scope.preferGroups || _.isEmpty(scope.plateData))) {
+            //reorder to map so lookup is fast
+            var groupMap = _.map(scope.groupData, );
+
+            selection.style('fill', function (d) {
+              return groupMap[d];
+            });
+          } else if (!_.isEmpty(scope.plateData)) {
+            selection.style('fill', function (d) {
+              if (scope.plateData[d]) {
+                return rgbaify(colors.data, scope.plateData[d].value);
+              } else {
+                return rgbaify(colors.disabled);
+              }
+            });
+          }
         }
 
         /**** well hover + tooltip ****/
@@ -197,16 +223,16 @@ angular.module('tx.datavis')
         var tooltipDimensions = {
           height: 20,
           width : 80
-        };
-        var tooltipEl = svg.append('svg:foreignObject')
-          .classed('wellTooltip hidden', true)
-          .attr(tooltipDimensions);
-        var tooltipInner = tooltipEl.append("xhtml:div");
+        },
+            tooltipEl         = svg.append('svg:foreignObject')
+              .classed('wellTooltip hidden', true)
+              .attr(tooltipDimensions),
+            tooltipInner      = tooltipEl.append("xhtml:div");
 
         function wellOnMouseover (d) {
           //Get this well's values
-          var d3El = d3.select(this),
-              radius = parseFloat(d3El.attr("r"), 10),
+          var d3El      = d3.select(this),
+              radius    = parseFloat(d3El.attr("r"), 10),
               xPosition = parseFloat(d3El.attr("cx"), 10) - ( tooltipDimensions.width / 2 ) + margin.left,
               yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top,
               wellValue = _.isEmpty(scope.plateData) || _.isUndefined(scope.plateData[d]) ?
@@ -215,11 +241,11 @@ angular.module('tx.datavis')
 
           //Update the tooltip position and value
           tooltipEl.attr({
-              x : xPosition,
-              y : yPosition
-            });
+            x: xPosition,
+            y: yPosition
+          });
 
-          tooltipInner.text(d + (wellValue ? ' : ' + wellValue : '') );
+          tooltipInner.text(d + (wellValue ? ' : ' + wellValue : ''));
           tooltipEl.classed("hidden", false);
         }
 
@@ -235,7 +261,7 @@ angular.module('tx.datavis')
 
           if (scope.noBrush) {
 
-            var $el = d3.select(this),
+            var $el         = d3.select(this),
                 wasSelected = $el.classed(classSelected);
 
             if (!scope.selectPersist) {
@@ -249,7 +275,7 @@ angular.module('tx.datavis')
         }
 
         function clearWellsAndSelection () {
-          clearBrush();
+          safeClearBrush();
           toggleWellsFromMap({}, classSelected, true);
         }
 
@@ -270,12 +296,9 @@ angular.module('tx.datavis')
           brushg.call(brush);
         }
 
-        var brushIsDrawn = false;       //todo - what should this actually track?
-            //brushLastSelected = [];   //last selection of brush (click to kill brush excepted)
+        var brushIsDrawn = false;       //helper for new brush / drag old brush todo - what should this actually track?
 
-        //todo - make colors more intuitive (maybe need a dragging class on the element)
-
-        function brushstart() {
+        function brushstart () {
 
           //if had brush, but clicked outside it
           if (brushIsDrawn && brush.empty()) {
@@ -290,7 +313,7 @@ angular.module('tx.datavis')
         }
 
         //Triggered on clicks, moving brush, or clicking outside
-        function brushmove() {
+        function brushmove () {
 
           var map = getWellsInExtent(brush.extent());
 
@@ -300,12 +323,12 @@ angular.module('tx.datavis')
           toggleWellsFromMap(map, classActive, true);
 
           scope.$applyAsync(function () {
-            scope.onHover({ $wells: _.keys(map) });
+            scope.onHover({$wells: _.keys(map)});
           });
         }
 
         //get the selection, and propagate / save it
-        function brushend() {
+        function brushend () {
 
           var selected,
               initiallySelected = getSelectedWells();
@@ -313,7 +336,7 @@ angular.module('tx.datavis')
           //note - may want to handle clicking outside active brush without selecting, current allow new brush
           //if brush is empty, e.g. they clicked
           if (brush.empty()) {
-            selected = getActiveWells();
+            selected     = getActiveWells();
             brushIsDrawn = false;
           }
           //if we have a brush (i.e. wells are selected)
@@ -324,7 +347,7 @@ angular.module('tx.datavis')
             console.log('weirdness is happening');
           }
 
-          var map = createWellMap(selected, true),
+          var map     = createWellMap(selected, true),
               toggled = WellConv.toggleWells(map, initiallySelected);
 
           toggleWellsFromMap(toggled, classSelected);
@@ -338,28 +361,28 @@ angular.module('tx.datavis')
 
         //given array of wells, and a value, create hashmap with wells as keys
         function createWellMap (wells, value) {
-          return _.zipObject( wells, _.range(wells.length).map(_.constant(value)) )
+          return _.zipObject(wells, _.range(wells.length).map(_.constant(value)))
         }
 
         function getWellsInExtent (extent) {
-          var d = xScale.domain(),
-              r = xScale.range(),
+          var d           = xScale.domain(),
+              r           = xScale.range(),
               //note - need to X correct for whatever reason
-              topLeft     = [ d[d3.bisect(r, extent[0][1]) - 1] - 1, d[d3.bisect(r, extent[0][0]) - 1] ],
-              bottomRight = [ d[d3.bisect(r, extent[1][1]) - 1] - 1, d[d3.bisect(r, extent[1][0]) - 1] ];
+              topLeft     = [d[d3.bisect(r, extent[0][1]) - 1] - 1, d[d3.bisect(r, extent[0][0]) - 1]],
+              bottomRight = [d[d3.bisect(r, extent[1][1]) - 1] - 1, d[d3.bisect(r, extent[1][0]) - 1]];
 
           return WellConv.createMapGivenBounds(topLeft, bottomRight);
         }
 
         function toggleWellsFromMap (map, className, toggleAll) {
           var selection = svg.selectAll("circle");
-          className = _.isUndefined(className) ? classSelected : className;
+          className     = _.isUndefined(className) ? classSelected : className;
 
           if (!toggleAll) {
             selection = selection.filter(_.partial(_.has, map));
           }
 
-          selection.classed(className, _.partial(_.result, map, _, false) );
+          selection.classed(className, _.partial(_.result, map, _, false));
         }
 
         function getActiveWells () {
@@ -378,8 +401,8 @@ angular.module('tx.datavis')
           return selection.classed(classSelected, false);
         }
 
-        function clearBrush () {
-          if (!_.isEmpty(brush) && _.isFunction(brush.clear) ) {
+        function safeClearBrush () {
+          if (!_.isEmpty(brush) && _.isFunction(brush.clear)) {
             //clear the brush and update the DOM
             brushg.call(brush.clear());
             //trigger event to propagate data flow that it has been emptied
