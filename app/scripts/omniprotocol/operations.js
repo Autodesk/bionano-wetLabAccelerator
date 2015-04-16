@@ -315,6 +315,7 @@ module.exports = {
         },
         {
           "name"   : "where",
+          "name"   : "where",
           "type"   : "option",
           "options": optionEnums.storage.storage,
           "default": "ambient"

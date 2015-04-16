@@ -10,11 +10,13 @@ var _                    = require('lodash'),
  Field Conversion
  *******************/
 
+//handle all dimensional converters at once
 _.forEach(autoUtils.dimensionalFields, function (dimensional) {
   converterField[dimensional] = autoUtils.convertDimensionalToAuto;
 });
 
-  //only include special conversions, otherwise just use value (_.identity)
+//todo - might want to make each type explicit, rather than implicit use of _.identity
+//only include special conversions, otherwise just use value (_.identity)
 
 converterField.aliquot = _.flow(autoUtils.flattenAliquots, _.first);
 

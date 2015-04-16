@@ -51,6 +51,7 @@ angular.module('tx.protocolEditor')
               scope.unitOptions = inputType.units;
 
               //todo - handle restrictions
+
             }
             else if (type == 'option') {
               scope.modelOptions = scope.fieldCtrl.field.options;
@@ -67,8 +68,6 @@ angular.module('tx.protocolEditor')
             }
 
             /* functions for specific types */
-
-
 
             /* get the partial */
 
