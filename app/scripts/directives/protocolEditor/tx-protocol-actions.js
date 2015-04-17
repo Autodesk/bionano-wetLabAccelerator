@@ -37,6 +37,8 @@ angular.module('tx.protocolEditor')
           $scope.protocolMetadataVisible = _.isUndefined(forceState) ? !$scope.protocolMetadataVisible : forceState;
         };
 
+        self.autoprotocolConvertFunction = Autoprotocol.fromAbstraction;
+
         // SUBMIT / ANALYZE RUNS
 
         function constructRunPayload () {
