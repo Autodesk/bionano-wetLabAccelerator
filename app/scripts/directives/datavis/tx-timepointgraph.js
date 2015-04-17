@@ -24,6 +24,8 @@
  *
  *
  //todo - need to handle key not being present for given ordinal - shouldn't display line? or just interpolate?
+
+ // if makes sense, may want to extrapolate filter out of this directive
  */
 angular.module('tx.datavis')
   .directive('txTimepointgraph', function () {
@@ -62,6 +64,52 @@ angular.module('tx.datavis')
             margin = {top: 15 + labelHeight, right: 15, bottom: 30 + labelHeight, left: 40 + labelHeight},
             width = full.width - margin.left - margin.right,
             height = full.height - margin.top - margin.bottom;
+
+        var filter = chart.append('defs').append('filter')
+          .attr('id', 'line-backdrop')
+          .attr('width', '150%') //avoid clipping
+          .attr('height', '150%'); //avoid clipping
+
+        // SourceAlpha refers to opacity of graphic that this filter will be applied to
+        // convolve that with a Gaussian with standard deviation 3 and store result
+        // in blur
+        filter.append("feGaussianBlur")
+          .attr("in", "SourceAlpha")
+          .attr("stdDeviation", 3)
+          .attr("result", "blur");
+
+        filter.append("feMorphology")
+          .attr("operator", 'dilate')
+          .attr("in", "SourceGraphic")
+          .attr("radius", 1)
+          .attr("result", "dilation");
+
+        filter.append('feColorMatrix')
+          .attr('type', 'matrix')
+          .attr('values', '1 1 1 1   0 \
+                           1 1 1 1   0 \
+                           1 1 1 1   0 \
+                           1 1 1 0.9 0 ')
+          .attr('result', 'color');
+
+        /*
+        // translate output of Gaussian blur to the right and downwards with 2px
+        // store result in offsetBlur
+        filter.append("feOffset")
+          .attr("in", "bluralpha")
+          .attr("dx", 0)
+          .attr("dy", 0)
+          .attr("result", "offsetBlur");
+         */
+
+        // overlay original SourceGraphic over translated blurred opacity by using
+        // feMerge filter. Order of specifying inputs is important!
+        var feMerge = filter.append("feMerge");
+
+        feMerge.append("feMergeNode")
+          .attr("in", "color");
+        feMerge.append("feMergeNode")
+          .attr("in", "SourceGraphic");
 
         // scaling functions
 
@@ -121,7 +169,7 @@ angular.module('tx.datavis')
 
         //line generator (time / value for each well)
         var line = d3.svg.line()
-          .interpolate('linear')
+          .interpolate('cardinal')
           .x(function (d) { return d.scaled.x; })
           .y(function (d) { return d.scaled.y; });
 
@@ -152,13 +200,13 @@ angular.module('tx.datavis')
           .attr("class", "voronoi");
         //add class 'visible' for debugging
 
-        //todo - allow highlight of line by mouseover directly rather than just vonoroi
+        //future - allow highlight of line by mouseover directly rather than just vonoroi??? hard to do voronoi on lines, especially if non-linear, because need to inteprolate based on surrounding values
         function voronoiMouseover (d) {
           var point = d.point;
 
           series.classed('selected', false);
-          d3.select(point.line).classed('selected', true);
-          point.line.parentNode.appendChild(point.line);
+
+          handleLineSelection(point.line);
 
           voronoiFocus.attr("transform", "translate(" + ( margin.left + point.scaled.x ) + "," + ( margin.top + point.scaled.y ) + ")");
           voronoiFocus.select("text").text(point.key + ' - ' + parseFloat(point.value, 10).toFixed(3));
@@ -167,6 +215,13 @@ angular.module('tx.datavis')
         function voronoiMouseout (d) {
           series.classed('selected', false);
           voronoiFocus.attr("transform", "translate(-100,-100)");
+        }
+
+        function handleLineSelection (nativeEl) {
+          d3.select(nativeEl).classed('selected', true);
+          nativeEl.parentNode.appendChild(nativeEl);
+
+          //todo - highlight the line - with a filter???
         }
 
         //save for later....

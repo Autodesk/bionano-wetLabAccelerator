@@ -13,13 +13,18 @@ tx-timepointgraph {
     stroke-linejoin: round;
     stroke-linecap: round;
     stroke-width: 1.5px;
-    transition: stroke 0.25s ease-out;
+    transition: stroke 0.5s ease-out;
 
     &.line-hover,
     &.selected {
-      stroke: #ff1db5;
       stroke-width: 3px;
-      transition: stroke 0.5s ease-in;
+      filter: url(#line-backdrop);
+      transition: stroke 0.25s ease-in;
+    }
+
+    &.background-line {
+      stroke-width: 6px;
+      stroke: salmon;
     }
 
     &.hidden {
