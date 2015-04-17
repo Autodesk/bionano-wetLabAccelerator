@@ -16,7 +16,7 @@
  * Through combination of attributes no-brush and select-persist, you can specify whether one/many wells can be
  *     selected, and whether multiple groups can be selected
  *
- * todo - store selection in indexed array... show indices on plate??
+ * todo - support wells being passed in
  */
 angular.module('tx.datavis')
   .directive('txPlate', function (ContainerOptions, WellConv) {

@@ -46,9 +46,9 @@ function splitContainerWell (containerWell) {
 }
 
 //given array of objects with keys container + well, create array of strings in format "container/well", or "well" if
-// ignoreContainer is truthy
+// ignoreContainer is true
 function flattenAliquots (abstAliquots, ignoreContainer) {
-  if (!!ignoreContainer) {
+  if (ignoreContainer === true) {
     return _.map(abstAliquots, _.partial(_.result, _, 'well'));
   } else {
     return _.map(abstAliquots, function (aliquot) {
