@@ -20,11 +20,6 @@ angular.module('tx.protocolEditor')
       controller      : function ($scope, $element, $attrs) {
         var self = this;
 
-        self.mixwrapToggle = function (newval) {
-          //todo - handle mixwrap hidden / not hidden -- don't want to include in Autoprotocol if hidden
-          //perhaps introduce a key "omit" (kinda different than hidden) which then gets stripped in conversion
-        };
-
         self.handleAliquotSelection = function (wells) {
           //view guarantees that containerName is set.. but should be able to handle when container already specified (todo - make sure can't specify well outside of an aliquot)
           self.model = _.map(wells, function (well) {
@@ -75,11 +70,18 @@ angular.module('tx.protocolEditor')
             });
           },
           post: function postLink (scope, iElement, iAttrs, ngModel) {
-            //if dimensional, ensure that unit is defined
+            //if dimensional, ensure that unit is defined when changed
             //kinda a hack, but nice guarantee and easier than lots of object passing in conversion later
             if (_.contains(Autoprotocol.utils.dimensionalFields, _.result(scope.fieldCtrl.field, 'type'))) {
               if (_.isUndefined(_.result(scope.fieldCtrl.model, 'unit'))) {
-                ngModel.$setViewValue(_.assign({unit : scope.unitOptions[0]}, scope.fieldCtrl.model));
+                var listener = scope.$watch('fieldCtrl.model', function (newval) {
+                  console.log(newval);
+                  if (_.isObject(newval) && (newval.value || newval.unit) ) {
+                    var defaultUnit = _.result(_.result(scope.fieldCtrl.field, 'default'), 'unit') || scope.unitOptions[0];
+                    ngModel.$setViewValue(_.assign({unit : defaultUnit}, scope.fieldCtrl.model));
+                    listener();
+                  }
+                }, true);
               }
             }
           }
