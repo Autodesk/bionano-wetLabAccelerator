@@ -31,14 +31,14 @@ angular.module('tx.datavis')
   .directive('txTimepointgraph', function () {
     return {
       restrict: 'E',
-      replace: false,
-      scope: {
-        data: '=',
-        graphMeta: '=', //accepts xlabel, ylabel, title
+      replace : false,
+      scope   : {
+        data          : '=',
+        graphMeta     : '=', //accepts xlabel, ylabel, title
         seriesSelected: '=',
-        isLinear: '='
+        isLinear      : '='
       },
-      link: function postLink(scope, element, attrs) {
+      link    : function postLink (scope, element, attrs) {
 
         scope.$watch('data', drawGraph);
         scope.$watch('graphMeta', updateMeta, true);
@@ -50,8 +50,8 @@ angular.module('tx.datavis')
          ****/
 
         var full = {
-          height : 380,
-          width: 600
+          height: 380,
+          width : 600
         };
 
         var chart = d3.select(element[0])
@@ -61,9 +61,9 @@ angular.module('tx.datavis')
           .attr('id', 'chart');
 
         var labelHeight = 15,
-            margin = {top: 15 + labelHeight, right: 15, bottom: 30 + labelHeight, left: 40 + labelHeight},
-            width = full.width - margin.left - margin.right,
-            height = full.height - margin.top - margin.bottom;
+            margin      = {top: 15 + labelHeight, right: 15, bottom: 30 + labelHeight, left: 40 + labelHeight},
+            width       = full.width - margin.left - margin.right,
+            height      = full.height - margin.top - margin.bottom;
 
         var filter = chart.append('defs').append('filter')
           .attr('id', 'line-backdrop')
@@ -138,7 +138,7 @@ angular.module('tx.datavis')
           .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
         var xAxisLabel = chart.append("text")
-          .attr("x", margin.left + (width / 2) )
+          .attr("x", margin.left + (width / 2))
           .attr("y", margin.top + height + margin.bottom - labelHeight)
           .attr("dy", ".71em")
           .style("text-anchor", "middle")
@@ -147,12 +147,12 @@ angular.module('tx.datavis')
         var yAxisLabel = chart.append("text")
           .attr("transform", "rotate(-90)")
           .attr("y", labelHeight)
-          .attr("x", -(margin.top + (height / 2)) )
+          .attr("x", -(margin.top + (height / 2)))
           .style("text-anchor", "middle")
           .text("Optical Density (OD)");
 
         var titleLabel = chart.append("text")
-          .attr("x", margin.left + (width / 2) )
+          .attr("x", margin.left + (width / 2))
           .attr("y", labelHeight)
           .style("text-anchor", "middle")
           .text("Growth Curve");
@@ -178,22 +178,50 @@ angular.module('tx.datavis')
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
           .attr("class", "series");
 
+        //loupe setup
+
+        var loupe = chart.append("g")
+          .attr("transform", "translate(-100,-100)")
+          .attr("class", "loupe");
+
+        var loupeDistance = 40;
+
+        //point on the line
+        loupe.append("circle")
+          .attr('class', 'loupe-point')
+          .attr("r", 5);
+        loupe.append('line')
+          .attr({
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: loupeDistance
+          })
+          .attr('class', 'loupe-line');
+        //foreign object wrap... hard to deal with
+        var loupeInnerFO = loupe.append("foreignObject")
+          .attr({
+            'y'     : loupeDistance,
+            'x'     : '-150px',
+            'class' : 'loupe-inner',
+            'width' : '300px',
+            'height': '50px'
+          });
+        //inner DOM
+        var loupeInner = loupeInnerFO.append('xhtml:div')
+          .attr('class', 'loupe-inner');
+        var loupePill  = loupeInner.append('div')
+          .attr('class', 'loupe-pill');
+        var loupeText  = loupePill.append('p')
+          .attr('class', 'loupe-text')
+          .text('something');
+
         //voronoi setup
 
         var voronoi = d3.geom.voronoi()
           .x(function (d) { return d.scaled.x; })
           .y(function (d) { return d.scaled.y; })
           .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
-
-        var voronoiFocus = chart.append("g")
-          .attr("transform", "translate(-100,-100)")
-          .attr("class", "focus");
-
-        voronoiFocus.append("circle")
-          .attr("r", 3.5);
-
-        voronoiFocus.append("text")
-          .attr("y", -10);
 
         var voronoiGroup = chart.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -208,13 +236,13 @@ angular.module('tx.datavis')
 
           handleLineSelection(point.line);
 
-          voronoiFocus.attr("transform", "translate(" + ( margin.left + point.scaled.x ) + "," + ( margin.top + point.scaled.y ) + ")");
-          voronoiFocus.select("text").text(point.key + ' - ' + parseFloat(point.value, 10).toFixed(3));
+          loupe.attr("transform", "translate(" + ( margin.left + point.scaled.x ) + "," + ( margin.top + point.scaled.y ) + ")");
+          loupeText.text(point.key + ' - ' + parseFloat(point.value, 10).toFixed(3));
         }
 
         function voronoiMouseout (d) {
           series.classed('selected', false);
-          voronoiFocus.attr("transform", "translate(-100,-100)");
+          loupe.attr("transform", "translate(-100,-100)");
         }
 
         function handleLineSelection (nativeEl) {
@@ -241,7 +269,7 @@ angular.module('tx.datavis')
 
           seriesData = _.flatten(_.map(data, _.values));
 
-          y.domain([0, d3.max( _.pluck(seriesData, 'value') ) ]).nice();
+          y.domain([0, d3.max(_.pluck(seriesData, 'value'))]).nice();
 
           //handle the x axis linear / ordinal
           if (scope.isLinear) {
@@ -260,8 +288,8 @@ angular.module('tx.datavis')
             .rollup(function (vals) {
               _.map(vals, function (val) {
                 val.scaled = {
-                  x : getXScaled(val),
-                  y : getYScaled(val)
+                  x: getXScaled(val),
+                  y: getYScaled(val)
                 };
               });
               return vals;
@@ -293,17 +321,17 @@ angular.module('tx.datavis')
 
         function updateMeta (newval) {
           var metaToElement = {
-            xlabel : {
-              placeholder : 'Timepoint',
-              element : xAxisLabel
+            xlabel: {
+              placeholder: 'Timepoint',
+              element    : xAxisLabel
             },
-            ylabel : {
-              placeholder : 'Optical Density (OD)',
-              element : yAxisLabel
+            ylabel: {
+              placeholder: 'Optical Density (OD)',
+              element    : yAxisLabel
             },
             title : {
-              placeholder : 'Growth Curve',
-              element : titleLabel
+              placeholder: 'Growth Curve',
+              element    : titleLabel
             }
           };
 
@@ -325,7 +353,7 @@ angular.module('tx.datavis')
           if (_.keys(wellMap).length < 1) {
             series.classed('hidden', false);
           } else {
-            series.classed('hidden', function (d) { return ! _.has(wellMap, d.key) });
+            series.classed('hidden', function (d) { return !_.has(wellMap, d.key) });
           }
         }
 
@@ -333,15 +361,15 @@ angular.module('tx.datavis')
 
           if (seriesData) {
 
-            var filteredSeriesData = !! _.keys(wellMap).length ?
+            var filteredSeriesData = !!_.keys(wellMap).length ?
               _.filter(seriesData, function (datum) { return _.has(wellMap, datum.key) }) :
               seriesData;
 
             var allDataUnique = d3.nest()
-              .key(function(d) { return d.scaled.x + "," + d.scaled.y })
+              .key(function (d) { return d.scaled.x + "," + d.scaled.y })
               .rollup(_.first)
               .entries(filteredSeriesData)
-              .map(function(d) { return d.values });
+              .map(function (d) { return d.values });
 
             voronoiSeries = voronoiGroup.selectAll("path")
               .data(voronoi(allDataUnique));
@@ -365,7 +393,7 @@ angular.module('tx.datavis')
           if (_.keys(wellMap).length < 1) {
             voronoiSeries.classed('hidden', false);
           } else {
-            voronoiSeries.classed('hidden', function (d) { return ! _.has(wellMap, d.point.key) });
+            voronoiSeries.classed('hidden', function (d) { return !_.has(wellMap, d.point.key) });
           }
         }
       }

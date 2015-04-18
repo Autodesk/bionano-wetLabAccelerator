@@ -64,7 +64,7 @@ angular.module('tx.datavis')
         scope.$watch('selectedWells', _.noop);
 
         function propagateWellSelection (wellsInput) {
-          var wells = _.isUndefined(wellsInput) ? getActiveWells() : wellsInput;
+          var wells = _.isUndefined(wellsInput) ? getSelectedWells() : wellsInput;
 
           scope.$applyAsync(function () {
             scope.selectedWells = wells;

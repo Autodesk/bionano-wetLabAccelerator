@@ -1,5 +1,9 @@
 tx-plategraph,
 tx-timepointgraph {
+
+  $line-default: steelblue;
+  $line-backdrop: $white;
+
   .axis path,
   .axis line {
     fill: none;
@@ -9,7 +13,7 @@ tx-timepointgraph {
 
   .line {
     fill: none;
-    stroke: steelblue;
+    stroke: $line-default;
     stroke-linejoin: round;
     stroke-linecap: round;
     stroke-width: 1.5px;
@@ -20,11 +24,6 @@ tx-timepointgraph {
       stroke-width: 3px;
       filter: url(#line-backdrop);
       transition: stroke 0.25s ease-in;
-    }
-
-    &.background-line {
-      stroke-width: 6px;
-      stroke: salmon;
     }
 
     &.hidden {
@@ -51,5 +50,38 @@ tx-timepointgraph {
         stroke-width: 0.5px;
       }
     }
+  }
+
+  .loupe {
+    pointer-events: none;
+
+    .loupe-point {
+      fill: $line-backdrop;
+    }
+
+    .loupe-line {
+      stroke : $white;
+      stroke-width: 2px;
+    }
+
+    .loupe-inner {
+      text-align: center;
+    }
+
+    .loupe-pill {
+      background: $line-default;
+      display: inline-block;
+      border-radius: 0.6em;
+      border: 2px solid $line-backdrop;
+      padding: 3px 6px;
+    }
+
+    .loupe-text {
+      color: $line-backdrop;
+      font-size: 0.75em;
+      margin: 0;
+      padding: 0;
+    }
+
   }
 }
