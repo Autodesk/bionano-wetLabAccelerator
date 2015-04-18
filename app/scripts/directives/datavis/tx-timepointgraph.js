@@ -58,6 +58,7 @@ angular.module('tx.datavis')
           .append('svg')
           .attr('width', full.width)
           .attr('height', full.height)
+          .style('overflow', 'visible')
           .attr('id', 'chart');
 
         var labelHeight = 15,
@@ -181,7 +182,7 @@ angular.module('tx.datavis')
         //loupe setup
 
         var loupe = chart.append("g")
-          .attr("transform", "translate(-100,-100)")
+          .attr("visibility", "hidden")
           .attr("class", "loupe");
 
         var loupeDistance = 40;
@@ -236,13 +237,14 @@ angular.module('tx.datavis')
 
           handleLineSelection(point.line);
 
-          loupe.attr("transform", "translate(" + ( margin.left + point.scaled.x ) + "," + ( margin.top + point.scaled.y ) + ")");
+          loupe.attr("transform", "translate(" + ( margin.left + point.scaled.x ) + "," + ( margin.top + point.scaled.y ) + ")")
+            .attr('visibility', 'visible');
           loupeText.text(point.key + ' - ' + parseFloat(point.value, 10).toFixed(3));
         }
 
         function voronoiMouseout (d) {
           series.classed('selected', false);
-          loupe.attr("transform", "translate(-100,-100)");
+          loupe.attr("visibility", "hidden");
         }
 
         function handleLineSelection (nativeEl) {
