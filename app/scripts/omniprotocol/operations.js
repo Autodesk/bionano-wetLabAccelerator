@@ -63,6 +63,12 @@ module.exports = {
             "repetitions": 5,
             "speed"      : {"value": 100, "unit": "microliter/second"}
           }
+        },
+        {
+          "name"   : "one_tip",
+          "type"   : "boolean",
+          "optional" : true,
+          "default": false
         }
       ]
     }

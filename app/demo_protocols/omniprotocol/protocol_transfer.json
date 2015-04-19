@@ -115,6 +115,12 @@
                 "repetitions": 5,
                 "speed": { "value" : 100, "unit" : "microliter/second" }
               }
+            },
+            {
+              "name"   : "one_tip",
+              "type"   : "boolean",
+              "optional" : true,
+              "default": false
             }
           ]
         }
@@ -156,6 +162,18 @@
               "name": "duration",
               "type": "duration",
               "value": { "value" : 60, "unit" : "minute" }
+            },
+            {
+              "name"        : "co2",
+              "type"        : "integer",
+              "default"     : 0,
+              "optional"    : true,
+              "restrictions": {
+                "value": {
+                  "min": 0,
+                  "max": 100
+                }
+              }
             },
             {
               "name": "shaking",
