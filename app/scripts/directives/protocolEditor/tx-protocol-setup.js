@@ -35,6 +35,10 @@ angular.module('transcripticApp')
         this.clearParamValue = function (param) {
           param.value = null;
         };
+
+        self.deleteParam = function (param) {
+          _.remove(self.parameters, param);
+        };
       },
       link: function postLink(scope, element, attrs) {
 
