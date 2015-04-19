@@ -1,11 +1,17 @@
 <tx-container-select container-type="fieldCtrl.containerType"
-                     ng-model="fieldCtrl.containerName" ></tx-container-select>
+                     ng-model="fieldCtrl.containerName">
+</tx-container-select>
 
-<input type="checkbox" ng-model="showingPlates" ng-init="showingPlates=false;"> {{showingPlates ? 'Hide' : 'Show'}} Wells
+<input type="checkbox"
+       ng-model="showingPlates"
+       ng-init="showingPlates=false;">
+{{showingPlates ? 'Hide' : 'Show'}} Wells
 <div ng-show="showingPlates">
   <tx-plate ng-show="fieldCtrl.containerType"
             container="fieldCtrl.containerType"
-            no-brush="!aliquotMultiple"
-            select-persist="aliquotMultiple"
-            on-select="fieldCtrl.handleAliquotSelection($wells)"></tx-plate>
+            no-brush="!fieldCtrl.aliquotMultiple"
+            select-persist="fieldCtrl.aliquotMultiple"
+            selected-wells="fieldCtrl.wellsOut"
+            wells-input="fieldCtrl.wellsIn">
+  </tx-plate>
 </div>

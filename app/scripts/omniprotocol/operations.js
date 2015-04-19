@@ -63,6 +63,12 @@ module.exports = {
             "repetitions": 5,
             "speed"      : {"value": 100, "unit": "microliter/second"}
           }
+        },
+        {
+          "name"   : "one_tip",
+          "type"   : "boolean",
+          "optional" : true,
+          "default": false
         }
       ]
     }
@@ -315,7 +321,6 @@ module.exports = {
         },
         {
           "name"   : "where",
-          "name"   : "where",
           "type"   : "option",
           "options": optionEnums.storage.storage,
           "default": "ambient"
@@ -368,7 +373,7 @@ module.exports = {
           "type": "container"
         },
         {
-          "name"    : "object",
+          "name"    : "type",
           "type"    : "option",
           "default" : "ultra-clear",
           "optional": true,

@@ -159,7 +159,18 @@ converterInstruction.transfer = function (op) {
     }, optionalObj));
   });
 
-  return wrapInPipette({transfer: transfers});
+  var xfers;
+  if (omniUtils.pluckFieldValueRaw(op.fields, 'one_tip') === true) {
+    xfers = {transfer: transfers};
+  } else {
+    xfers = _.map(transfers, function (xfer) {
+      return {
+        transfer : [xfer]
+      };
+    });
+  }
+
+  return wrapInPipette(xfers);
 };
 
 converterInstruction.consolidate = function (op) {
