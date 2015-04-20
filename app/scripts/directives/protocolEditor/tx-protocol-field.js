@@ -114,14 +114,14 @@ angular.module('tx.protocolEditor')
               if (_.isArray(model) && model.length) {
                 var firstContainer            = _.result(_.first(model), 'container');
                 scope.fieldCtrl.containerName = firstContainer;
-                setWellsInput(pruneWellsFromContainer(model, firstContainer));
+                setWellsInput(pruneWellsFromContainer(firstContainer));
               }
 
-              scope.$watch('fieldCtrl.wellsOut', scope.fieldCtrl.handleAliquotSelection);
+              //scope.$watch('fieldCtrl.wellsOut', scope.fieldCtrl.handleAliquotSelection);
 
               scope.$watch('fieldCtrl.containerName', function (newContainer) {
                 //don't need to worry about setting wells here - change listener for wellsOut will handle whether dealing with single container
-                setWellsInput(pruneWellsFromContainer(model, newContainer));
+                setWellsInput(pruneWellsFromContainer(newContainer));
               });
             }
 
@@ -136,8 +136,9 @@ angular.module('tx.protocolEditor')
               });
             }
 
-            function pruneWellsFromContainer (model, container) {
-              return _.pluck(_.filter(model, _.matches({container: container})), 'well');
+            function pruneWellsFromContainer (container) {
+              //use model directly to avoid object reference weirdness + ensure everything actually in sync
+              return _.pluck(_.filter(scope.fieldCtrl.model, _.matches({container: container})), 'well');
             }
           }
         }

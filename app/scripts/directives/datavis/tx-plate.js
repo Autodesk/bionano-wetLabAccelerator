@@ -65,9 +65,11 @@ angular.module('tx.datavis')
         scope.$watch('groupData', _.partial(rerender, false));
 
         scope.$watch('wellsInput', function (newWells, oldWells) {
-          safeClearBrush();
-          toggleWellsFromMap(createWellMap(newWells, true), classSelected, true);
-          propagateWellSelection(newWells);
+          if (_.isArray(newWells)) {
+            safeClearBrush();
+            toggleWellsFromMap(createWellMap(newWells, true), classSelected, true);
+            propagateWellSelection(newWells);
+          }
         });
 
         function propagateWellSelection (wellsInput) {
@@ -284,6 +286,7 @@ angular.module('tx.datavis')
         function clearWellsAndSelection () {
           safeClearBrush();
           toggleWellsFromMap({}, classSelected, true);
+          propagateWellSelection();
         }
 
         /***** BRUSHING *****/
@@ -417,7 +420,7 @@ angular.module('tx.datavis')
             //clear the brush and update the DOM
             brushg.call(brush.clear());
             //trigger event to propagate data flow that it has been emptied
-            brushend();
+            //brushend();
           }
           toggleWellsFromMap({}, classActive, true);
         }
