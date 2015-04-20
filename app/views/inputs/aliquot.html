@@ -11,7 +11,7 @@
             container="fieldCtrl.containerType"
             no-brush="!fieldCtrl.aliquotMultiple"
             select-persist="fieldCtrl.aliquotMultiple"
-            selected-wells="fieldCtrl.wellsOut"
+            on-select="fieldCtrl.handleAliquotSelection($wells)"
             wells-input="fieldCtrl.wellsIn">
   </tx-plate>
 </div>
