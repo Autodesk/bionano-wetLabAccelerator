@@ -1,7 +1,7 @@
 <div class="protocol-group">
   <div class="glyphicon"
-          ng-class="{'glyphicon-resize-small'  : isCollapsed,
-                     'glyphicon-resize-full' : !isCollapsed}"
+          ng-class="{'glyphicon-resize-small'  : paramsVisible,
+                     'glyphicon-resize-full' : !paramsVisible}"
           ng-click="paramsVisible = !paramsVisible">
   </div>
   <span class="group-name" ng-click="paramsVisible = !paramsVisible">Setup</span>
