@@ -48,7 +48,7 @@ angular.module('transcripticApp')
       link: function postLink(scope, element, attrs, ngModel) {
         // Set up our own watch to listen for both changes in and changes out. ng-change is view change listener.
         // Need to also handle changes from upstream e.g. the user changing the JSON
-        scope.$watch('model', scope.containerSelectCtrl.handleChange);
+        scope.$watch('containerSelectCtrl.model', scope.containerSelectCtrl.handleChange);
       }
     };
   });
