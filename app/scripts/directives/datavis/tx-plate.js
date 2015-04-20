@@ -13,10 +13,7 @@
  *  }, ... }
  *
  *
- * Through combination of attributes no-brush and select-persist, you can specify whether one/many wells can be
- *     selected, and whether multiple groups can be selected
- *
- * todo - support wells being passed in
+ * Through combination of attributes no-brush and select-persist, you can specify whether one/many wells can be selected, and whether multiple groups can be selected
  */
 angular.module('tx.datavis')
   .directive('txPlate', function (ContainerOptions, WellConv) {
@@ -51,7 +48,7 @@ angular.module('tx.datavis')
         onSelect     : '&',  //returns array of selected wells
         selectedWells: '=?', //out-binding for selected wells. use wellsInput for changes in.
         wellsInput   : '=?', //in-binding for selected wells. use selectedWells for changes out.
-        groupData    : '=?', //array of groups with fields name, wells, color. if omitted, consider all values as one group,
+        groupData    : '=?', //array of groups with fields name, wells (alphanums), color (as string). if omitted, default to plateData, and preferGroups is ignored.
         preferGroups : '=?'  //if both plateData and groups are defined, true gives group coloring priority
       },
       link    : function postLink (scope, element, attrs) {
@@ -211,7 +208,13 @@ angular.module('tx.datavis')
           //check conditions for showing groups, otherwise show data
           if (!_.isEmpty(scope.groupData) && ( scope.preferGroups || _.isEmpty(scope.plateData))) {
             //reorder to map so lookup is fast
-            var groupMap = _.map(scope.groupData, _.noop); //todo - handle groups
+            var groupMap = {};
+            _.forEach(scope.groupData, function (group) {
+              var color = group.color;
+              _.forEach(group.wells, function (well) {
+                groupMap[well] = color;
+              });
+            });
 
             selection.style('fill', function (d) {
               return groupMap[d];
@@ -357,7 +360,6 @@ angular.module('tx.datavis')
             console.log('weirdness is happening');
           }
 
-
           var map     = createWellMap(selected, true),
               toggled = WellConv.toggleWells(map, initiallySelected);
 
@@ -375,7 +377,7 @@ angular.module('tx.datavis')
           if (!_.isArray(wells)) {
             return {};
           }
-          return _.zipObject(wells, _.range(wells.length).map(_.constant(value)))
+          return _.zipObject(wells, _.range(wells.length).map(_.constant(value)));
         }
 
         function getWellsInExtent (extent) {
