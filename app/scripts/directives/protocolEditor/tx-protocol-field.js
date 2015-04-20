@@ -88,9 +88,10 @@ angular.module('tx.protocolEditor')
 
             //if dimensional, ensure that unit is defined when changed
             //kinda a hack, but nice guarantee and easier than lots of object passing in conversion later
-            if (partial == 'dimensional') {
+            if (partial == 'dimension') {
               if (_.isUndefined(_.result(scope.fieldCtrl.model, 'unit'))) {
                 var listener = scope.$watch('fieldCtrl.model', function (newval) {
+
                   if (_.isObject(newval) && (newval.value || newval.unit)) {
                     var defaultUnit = _.result(_.result(scope.fieldCtrl.field, 'default'), 'unit') || scope.unitOptions[0];
                     ngModel.$setViewValue(_.assign({unit: defaultUnit}, scope.fieldCtrl.model));
