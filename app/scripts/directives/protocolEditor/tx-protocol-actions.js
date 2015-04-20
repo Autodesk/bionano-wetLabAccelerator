@@ -27,6 +27,10 @@ angular.module('tx.protocolEditor')
           });
         });
 
+        self.logAutoprotocol = function () {
+          console.log(angular.toJson(Autoprotocol.fromAbstraction(self.protocol), true));
+        };
+
         self.toggleMetadataVisible = function (event, forceState) {
           event.preventDefault();
           event.stopPropagation();

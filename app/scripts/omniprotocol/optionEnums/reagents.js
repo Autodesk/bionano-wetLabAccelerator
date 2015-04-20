@@ -12,11 +12,14 @@ module.exports = {
     "lb-broth-50ug-ml-kan-25ug-ml-cm",
     "lb-broth-15ug-ml-tet",
     "lb-broth-noAB",
-    "pbs",
     "sob",
     "soc",
     "tb-broth-100ug-ml-amp",
     "tb-broth-50ug-ml-kan",
-    "te-ph7.5"
+    "te-ph7.5",
+    "pbs",
+    "te-ph7.5",
+    "orange145",
+    "orange60"
   ]
-}
+};

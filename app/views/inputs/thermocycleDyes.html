@@ -6,10 +6,11 @@
         <tr ng-repeat="(channel, dyes) in dyeCtrl.dyeOptions">
             <td>
                 {{channel}}: <select ng-model="fieldCtrl.model[$index].dye" ng-options="d as d for d in dyes"></select>
+                <span ng-show="fieldCtrl.model[$index].dye">show Plate: <input type="checkbox" ng-model="showPlate"></span>
             </td>
             <td ng-show="fieldCtrl.model[$index].dye">
                 <!-- hack - container does not change with selection of "object" -->
-                <tx-plate container="'96-flat'" selected-wells="fieldCtrl.model[$index].wells"></tx-plate>
+                <tx-plate ng-show="showPlate" container="'96-flat'" selected-wells="fieldCtrl.model[$index].wells"></tx-plate>
             </td>
         </tr>
     </table>

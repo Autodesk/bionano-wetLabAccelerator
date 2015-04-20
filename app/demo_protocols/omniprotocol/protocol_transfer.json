@@ -1,12 +1,13 @@
+
 {
   "name": "Simple Transfer Protocol",
   "parameters": [
     {
       "name": "myAbsorbance",
       "type": "length",
-      "value": "600:nanometer",
-      "example": "600:nanometer",
-      "default": "600:nanometer",
+      "value": { "value" : 600, "unit" : "nanometer" },
+      "example": { "value" : 600, "unit" : "nanometer" },
+      "default": { "value" : 600, "unit" : "nanometer" },
       "description" : "Wavelength used for fluorescence readings"
     },
     {
@@ -57,7 +58,7 @@
             {
               "name": "volume",
               "type": "volume",
-              "value": "10.0:microliter"
+              "value": { "value" : 10.0, "unit" : "microliter" }
             },
             {
               "name": "to",
@@ -87,22 +88,22 @@
               "name": "dispense_speed",
               "type": "flowrate",
               "optional": true,
-              "value": "100:microliter/second"
+              "value": { "value" : 100, "unit" : "microliter/second" }
             },
             {
               "name": "aspirate_speed",
               "type": "flowrate",
               "optional": true,
-              "value": "100:microliter/second"
+              "value": { "value" : 100, "unit" : "microliter/second" }
             },
             {
               "name": "mix_before",
               "type": "mixwrap",
               "optional": true,
               "value": {
-                "volume": "10.0:microliter",
+                "volume": { "value" : 10.0, "unit" : "microliter" },
                 "repetitions": 5,
-                "speed": "100:microliter/second"
+                "speed": { "value" : 100, "unit" : "microliter/second" }
               }
             },
             {
@@ -110,10 +111,16 @@
               "type": "mixwrap",
               "optional": true,
               "value": {
-                "volume": "10.0:microliter",
+                "volume": { "value" : 10.0, "unit" : "microliter" },
                 "repetitions": 5,
-                "speed": "100:microliter/second"
+                "speed": { "value" : 100, "unit" : "microliter/second" }
               }
+            },
+            {
+              "name"   : "one_tip",
+              "type"   : "boolean",
+              "optional" : true,
+              "default": false
             }
           ]
         }
@@ -154,7 +161,19 @@
             {
               "name": "duration",
               "type": "duration",
-              "value": "60:minute"
+              "value": { "value" : 60, "unit" : "minute" }
+            },
+            {
+              "name"        : "co2",
+              "type"        : "integer",
+              "default"     : 0,
+              "optional"    : true,
+              "restrictions": {
+                "value": {
+                  "min": 0,
+                  "max": 100
+                }
+              }
             },
             {
               "name": "shaking",
@@ -196,10 +215,12 @@
             {
               "name": "wavelength",
               "type": "length",
-              "value": "600:nanometer",
-              "inputAttrs": {
-                "min": 300,
-                "max": 1000
+              "value": { "value" : 600, "unit" : "nanometer" },
+              "restrictions": {
+                "value": {
+                  "min": 300,
+                  "max": 1000
+                }
               }
             },
             {

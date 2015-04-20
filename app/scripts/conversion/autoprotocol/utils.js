@@ -1,7 +1,30 @@
 var _ = require('lodash');
 
 /*******
- Operation Manipulation
+ Dimensionals
+ *******/
+
+var dimensionalSeparator = ":";
+
+var dimensionalFields = ['duration', 'length', 'temperature', 'volume', 'flowrate', 'acceleration'];
+
+function convertDimensionalToAuto (omniDim) {
+  return omniDim.value + dimensionalSeparator + omniDim.unit;
+}
+
+function convertDimensionalToOmni (val) {
+  if (!_.isString(val)) {
+    return null;
+  }
+  var split = val.split(dimensionalSeparator);
+  return {
+    value: parseInt(split[0], 10),
+    unit : split[1]
+  };
+}
+
+/*******
+ Containers + Wells
  *******/
 
 var containerWellDelimiter = "/";
@@ -23,9 +46,9 @@ function splitContainerWell (containerWell) {
 }
 
 //given array of objects with keys container + well, create array of strings in format "container/well", or "well" if
-// ignoreContainer is truthy
+// ignoreContainer is true
 function flattenAliquots (abstAliquots, ignoreContainer) {
-  if (!!ignoreContainer) {
+  if (ignoreContainer === true) {
     return _.map(abstAliquots, _.partial(_.result, _, 'well'));
   } else {
     return _.map(abstAliquots, function (aliquot) {
@@ -45,7 +68,7 @@ function pluckOperationContainerFromWells (op, containerKey, wellsKey) {
 
   //redo the wells
   var strippedWells = _.map(op[wellsKey], function (well) {
-    return splitContainerWell(well).well;
+    return _.result(splitContainerWell(well), 'well');
   });
 
   //need to set key dynamically
@@ -71,6 +94,9 @@ function createTransform (type, fieldName) {
 }
 
 module.exports = {
+  dimensionalFields               : dimensionalFields,
+  convertDimensionalToAuto        : convertDimensionalToAuto,
+  convertDimensionalToOmni        : convertDimensionalToOmni,
   joinContainerWell               : joinContainerWell,
   splitContainerWell              : splitContainerWell,
   flattenAliquots                 : flattenAliquots,
