@@ -56,8 +56,6 @@ angular.module('tx.datavis')
       },
       link    : function postLink (scope, element, attrs) {
 
-        console.log(scope);
-
         /* WATCHERS */
 
         scope.$watch('container', _.partial(rerender, true));
@@ -65,6 +63,7 @@ angular.module('tx.datavis')
         scope.$watch('groupData', _.partial(rerender, false));
 
         scope.$watch('wellsInput', function (newWells, oldWells) {
+          console.log(newWells);
           if (_.isArray(newWells)) {
             safeClearBrush();
             toggleWellsFromMap(createWellMap(newWells, true), classSelected, true);

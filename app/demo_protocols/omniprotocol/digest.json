@@ -1,1049 +1,1051 @@
 {
-    "name": "Simple Transfer Protocol",
-    "parameters": [
+  "name": "Simple Transfer Protocol",
+  "parameters": [
+    {
+      "name": "HindIII",
+      "type": "container",
+      "value": {
+        "isNew": true,
+        "type": "micro-1.5",
+        "storage": "cold_4"
+      },
+      "example": {
+        "value": 600,
+        "unit": "nanometer"
+      },
+      "default": {
+        "value": 600,
+        "unit": "nanometer"
+      },
+      "description": "Wavelength used for fluorescence readings"
+    },
+    {
+      "name": "NEB_Buffer2",
+      "type": "container",
+      "description": "Plate used for growth curve measurements",
+      "value": {
+        "isNew": true,
+        "id": "",
+        "type": "micro-1.5",
+        "storage": "cold_4"
+      }
+    },
+    {
+      "name": "water",
+      "type": "container",
+      "description": "Reservoir of competent E. coli",
+      "value": {
+        "isNew": true,
+        "id": "",
+        "type": "micro-1.5",
+        "storage": "cold_4"
+      }
+    },
+    {
+      "name": "EcoRI",
+      "type": "container",
+      "value": {
+        "isNew": true,
+        "type": "micro-1.5",
+        "storage": "cold_4"
+      }
+    },
+    {
+      "name": "digested_samples",
+      "type": "container",
+      "value": {
+        "isNew": true,
+        "type": "96-pcr",
+        "storage": "cold_20"
+      }
+    },
+    {
+      "name": "resources",
+      "type": "container",
+      "value": {
+        "isNew": true,
+        "type": "384-pcr",
+        "storage": "cold_20"
+      }
+    }
+  ],
+  "metadata": {},
+  "groups": [
+    {
+      "loop": 1,
+      "steps": [
         {
-            "name": "HindIII",
-            "type": "container",
-            "value": {
-                "isNew": true,
-                "type": "micro-1.5",
-                "storage": "cold_4"
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
             },
-            "example": {
-                "value": 600,
-                "unit": "nanometer"
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "nanoliter",
+                "value": 15
+              }
             },
-            "default": {
-                "value": 600,
-                "unit": "nanometer"
-            },
-            "description": "Wavelength used for fluorescence readings"
-        },
-        {
-            "name": "NEB_Buffer2",
-            "type": "container",
-            "description": "Plate used for growth curve measurements",
-            "value": {
-                "isNew": true,
-                "id": "",
-                "type": "micro-1.5",
-                "storage": "cold_4"
-            }
-        },
-        {
-            "name": "water",
-            "type": "container",
-            "description": "Reservoir of competent E. coli",
-            "value": {
-                "isNew": true,
-                "id": "",
-                "type": "micro-1.5",
-                "storage": "cold_4"
-            }
-        },
-        {
-            "name": "EcoRI",
-            "type": "container",
-            "value": {
-                "isNew": true,
-                "type": "micro-1.5",
-                "storage": "cold_4"
-            }
-        },
-        {
-            "name": "digested_samples",
-            "type": "container",
-            "value": {
-                "isNew": true,
-                "type": "96-pcr",
-                "storage": "cold_20"
-            }
-        },
-        {
-            "name": "resources",
-            "type": "container",
-            "value": {
-                "isNew": true,
-                "type": "384-pcr",
-                "storage": "cold_20"
-            }
-        }
-    ],
-    "metadata": {},
-    "groups": [
-        {
-            "loop": 1,
-            "steps": [
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
                 {
-                    "operation": "transfer",
-                    "requirements": {},
-                    "transforms": [
-                        {
-                            "wells": "to"
-                        },
-                        {
-                            "wells": "from"
-                        }
-                    ],
-                    "fields": [
-                        {
-                            "name": "volume",
-                            "type": "volume",
-                            "value": {
-                                "unit": "nanoliter",
-                                "value": 15
-                            }
-                        },
-                        {
-                            "name": "to",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "digested_samples",
-                                    "well": "A1"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "from",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "water",
-                                    "well": "A1"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "dispense_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "aspirate_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "mix_before",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        },
-                        {
-                            "name": "mix_after",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "operation": "transfer",
-                    "requirements": {},
-                    "transforms": [
-                        {
-                            "wells": "to"
-                        },
-                        {
-                            "wells": "from"
-                        }
-                    ],
-                    "fields": [
-                        {
-                            "name": "volume",
-                            "type": "volume",
-                            "value": {
-                                "unit": "nanoliter",
-                                "value": 2
-                            }
-                        },
-                        {
-                            "name": "to",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "digested_samples",
-                                    "well": "A1"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "from",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "NEB_Buffer2",
-                                    "well": "A1"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "dispense_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "aspirate_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "mix_before",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        },
-                        {
-                            "name": "mix_after",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "operation": "transfer",
-                    "requirements": {},
-                    "transforms": [
-                        {
-                            "wells": "to"
-                        },
-                        {
-                            "wells": "from"
-                        }
-                    ],
-                    "fields": [
-                        {
-                            "name": "volume",
-                            "type": "volume",
-                            "value": {
-                                "unit": "microliter",
-                                "value": 1
-                            }
-                        },
-                        {
-                            "name": "to",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "digested_samples",
-                                    "well": "A1"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "from",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "EcoRI",
-                                    "well": "A1"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "dispense_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "aspirate_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "mix_before",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        },
-                        {
-                            "name": "mix_after",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "operation": "transfer",
-                    "requirements": {},
-                    "transforms": [
-                        {
-                            "wells": "to"
-                        },
-                        {
-                            "wells": "from"
-                        }
-                    ],
-                    "fields": [
-                        {
-                            "name": "volume",
-                            "type": "volume",
-                            "value": {
-                                "unit": "microliter",
-                                "value": 2
-                            }
-                        },
-                        {
-                            "name": "to",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "digested_samples",
-                                    "well": "A1"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "from",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "resources",
-                                    "well": "A1"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "dispense_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "aspirate_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "mix_before",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        },
-                        {
-                            "name": "mix_after",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "microliter",
-                                    "value": 2
-                                },
-                                "speed": {
-                                    "unit": "microliter/second",
-                                    "value": 100
-                                },
-                                "repetitions": 10
-                            }
-                        }
-                    ]
-                },
-                {
-                    "operation": "transfer",
-                    "requirements": {},
-                    "transforms": [
-                        {
-                            "wells": "to"
-                        },
-                        {
-                            "wells": "from"
-                        }
-                    ],
-                    "fields": [
-                        {
-                            "name": "volume",
-                            "type": "volume",
-                            "value": {
-                                "unit": "microliter",
-                                "value": 15
-                            }
-                        },
-                        {
-                            "name": "to",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "digested_samples",
-                                    "well": "A2"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "from",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "water",
-                                    "well": "A1"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "dispense_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "aspirate_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "mix_before",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        },
-                        {
-                            "name": "mix_after",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "operation": "transfer",
-                    "requirements": {},
-                    "transforms": [
-                        {
-                            "wells": "to"
-                        },
-                        {
-                            "wells": "from"
-                        }
-                    ],
-                    "fields": [
-                        {
-                            "name": "volume",
-                            "type": "volume",
-                            "value": {
-                                "unit": "microliter",
-                                "value": 2
-                            }
-                        },
-                        {
-                            "name": "to",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "digested_samples",
-                                    "well": "A2"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "from",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "NEB_Buffer2",
-                                    "well": "A1"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "dispense_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "aspirate_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "mix_before",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        },
-                        {
-                            "name": "mix_after",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "operation": "transfer",
-                    "requirements": {},
-                    "transforms": [
-                        {
-                            "wells": "to"
-                        },
-                        {
-                            "wells": "from"
-                        }
-                    ],
-                    "fields": [
-                        {
-                            "name": "volume",
-                            "type": "volume",
-                            "value": {
-                                "unit": "microliter",
-                                "value": 1
-                            }
-                        },
-                        {
-                            "name": "to",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "digested_samples",
-                                    "well": "A2"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "from",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "EcoRI",
-                                    "well": "A1"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "dispense_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "aspirate_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "mix_before",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        },
-                        {
-                            "name": "mix_after",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "operation": "transfer",
-                    "requirements": {},
-                    "transforms": [
-                        {
-                            "wells": "to"
-                        },
-                        {
-                            "wells": "from"
-                        }
-                    ],
-                    "fields": [
-                        {
-                            "name": "volume",
-                            "type": "volume",
-                            "value": {
-                                "unit": "microliter",
-                                "value": 2
-                            }
-                        },
-                        {
-                            "name": "to",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "digested_samples",
-                                    "well": "A2"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "from",
-                            "type": "aliquot+",
-                            "singleContainer": false,
-                            "value": [
-                                {
-                                    "container": "resources",
-                                    "well": "A2"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "dispense_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "aspirate_speed",
-                            "type": "flowrate",
-                            "optional": true,
-                            "default": {
-                                "value": 100,
-                                "unit": "microliter/second"
-                            },
-                            "value": {
-                                "unit": "microliter/second"
-                            }
-                        },
-                        {
-                            "name": "mix_before",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "nanoliter"
-                                },
-                                "speed": {
-                                    "unit": "microliter/second"
-                                }
-                            }
-                        },
-                        {
-                            "name": "mix_after",
-                            "type": "mixwrap",
-                            "optional": true,
-                            "default": {
-                                "volume": {
-                                    "value": 10,
-                                    "unit": "microliter"
-                                },
-                                "repetitions": 5,
-                                "speed": {
-                                    "value": 100,
-                                    "unit": "microliter/second"
-                                }
-                            },
-                            "value": {
-                                "volume": {
-                                    "unit": "microliter",
-                                    "value": 2
-                                },
-                                "speed": {
-                                    "unit": "microliter/second",
-                                    "value": 100
-                                },
-                                "repetitions": 10
-                            }
-                        }
-                    ]
+                  "container": "digested_samples",
+                  "well": "A1"
                 }
-            ]
+              ]
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "water",
+                  "well": "A1"
+                }
+              ]
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            }
+          ]
         },
         {
-            "name": "Seal",
-            "inputs": {},
-            "metadata": {
-                "description": "Seal a container"
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
             },
-            "loop": 1,
-            "steps": [
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "nanoliter",
+                "value": 2
+              }
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
                 {
-                    "operation": "seal",
-                    "requirements": {},
-                    "transforms": [
-                        {
-                            "container": "object"
-                        }
-                    ],
-                    "fields": [
-                        {
-                            "name": "object",
-                            "type": "container"
-                        },
-                        {
-                            "name": "object",
-                            "type": "option",
-                            "default": "ultra-clear",
-                            "optional": true,
-                            "options": [
-                                "ultra-clear",
-                                "foil"
-                            ]
-                        }
-                    ]
+                  "container": "digested_samples",
+                  "well": "A1"
                 }
-            ]
+              ]
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "NEB_Buffer2",
+                  "well": "A1"
+                }
+              ]
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 1
+              }
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "digested_samples",
+                  "well": "A1"
+                }
+              ]
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "EcoRI",
+                  "well": "A1"
+                }
+              ]
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 2
+              }
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "digested_samples",
+                  "well": "A1"
+                }
+              ]
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "resources",
+                  "well": "A1"
+                }
+              ]
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "microliter",
+                  "value": 2
+                },
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 100
+                },
+                "repetitions": 10
+              }
+            }
+          ]
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 15
+              }
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "digested_samples",
+                  "well": "A2"
+                }
+              ]
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "water",
+                  "well": "A1"
+                }
+              ]
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 2
+              }
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "digested_samples",
+                  "well": "A2"
+                }
+              ]
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "NEB_Buffer2",
+                  "well": "A1"
+                }
+              ]
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 1
+              }
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "digested_samples",
+                  "well": "A2"
+                }
+              ]
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "EcoRI",
+                  "well": "A1"
+                }
+              ]
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 2
+              }
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "digested_samples",
+                  "well": "A2"
+                }
+              ]
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "resources",
+                  "well": "A2"
+                }
+              ]
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              },
+              "value": {
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter"
+                },
+                "speed": {
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "microliter",
+                  "value": 2
+                },
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 100
+                },
+                "repetitions": 10
+              }
+            }
+          ]
         }
-    ]
+      ]
+    },
+    {
+      "name": "Seal",
+      "inputs": {},
+      "metadata": {
+        "description": "Seal a container"
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "seal",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value" : "digested_samples"
+            },
+            {
+              "name": "type",
+              "type": "option",
+              "value" : "ultra-clear",
+              "default": "ultra-clear",
+              "optional": true,
+              "options": [
+                "ultra-clear",
+                "foil"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
