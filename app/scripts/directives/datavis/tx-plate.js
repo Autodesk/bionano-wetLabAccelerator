@@ -56,8 +56,6 @@ angular.module('tx.datavis')
       },
       link    : function postLink (scope, element, attrs) {
 
-        console.log(scope);
-
         /* WATCHERS */
 
         scope.$watch('container', _.partial(rerender, true));
