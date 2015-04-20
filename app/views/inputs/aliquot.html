@@ -6,7 +6,7 @@
        ng-model="showingPlates"
        ng-init="showingPlates=false;">
 {{showingPlates ? 'Hide' : 'Show'}} Wells
-<div ng-show="showingPlates">
+<div ng-if="showingPlates">
   <tx-plate ng-show="fieldCtrl.containerType"
             container="fieldCtrl.containerType"
             no-brush="!fieldCtrl.aliquotMultiple"

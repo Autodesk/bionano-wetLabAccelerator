@@ -21,7 +21,6 @@ angular.module('tx.protocolEditor')
         var self = this;
 
         self.handleAliquotSelection = function (wells) {
-          wells = _.isUndefined(wells) ? self.wellsOut : wells;
           //view guarantees that containerName is set given a change in wells (tx-plate)
 
           var mapped = _.map(wells, function (well) {
@@ -39,6 +38,9 @@ angular.module('tx.protocolEditor')
           } else {
             self.model = mapped;
           }
+
+          // todo - check if triggers new digest
+          self.wellsIn = wells;
         };
       },
       compile         : function compile (tElement, tAttrs, transclude) {
@@ -77,7 +79,7 @@ angular.module('tx.protocolEditor')
 
             /* get the partial */
 
-            return $http.get('views/inputs/' + partial + '.html').then(function (data) {
+            return $http.get('views/inputs/' + partial + '.html', {cache: true}).then(function (data) {
               var $el = angular.element(data.data);
               iElement.html($compile($el)(scope));
             });
