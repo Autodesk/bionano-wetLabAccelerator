@@ -1,4 +1,4 @@
-<div class="protocol-group">
+<div class="protocol-group protocol-setup">
   <button class="btn btn-default btn-sm btn-labeled"
           ng-class="{'btn-info' : paramsVisible}"
           ng-click="paramsVisible = !paramsVisible">
@@ -50,6 +50,9 @@
           <div ng-switch-default>
             <tx-protocol-field field="param" ng-model="param.value"></tx-protocol-field>
           </div>
+        </td>
+        <td>
+          <a class="close" ng-click="setupCtrl.deleteParam(param)">&times;</a>
         </td>
       </tr>
     </table>

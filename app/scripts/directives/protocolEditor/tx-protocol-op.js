@@ -5,6 +5,8 @@
  * @name transcripticApp.directive:txOperation
  * @description
  * # txOperation
+ *
+ * todo - may want to get the scaffold and populate that way to handle unspecified fields?
  */
 angular.module('tx.protocolEditor')
   .directive('txProtocolOp', function () {

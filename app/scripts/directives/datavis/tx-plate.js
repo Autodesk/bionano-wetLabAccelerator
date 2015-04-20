@@ -49,11 +49,14 @@ angular.module('tx.datavis')
         selectPersist: '=',  //boolean - allow selections to persist across one brush / click
         onHover      : '&',  //returns array of selected wells
         onSelect     : '&',  //returns array of selected wells
-        selectedWells: '=?', //binding for selected wells. Currently only listens out. todo - handle both ways?
+        selectedWells: '=?', //out-binding for selected wells. use wellsInput for changes in.
+        wellsInput   : '=?', //in-binding for selected wells. use selectedWells for changes out.
         groupData    : '=?', //array of groups with fields name, wells, color. if omitted, consider all values as one group,
         preferGroups : '=?'  //if both plateData and groups are defined, true gives group coloring priority
       },
       link    : function postLink (scope, element, attrs) {
+
+        console.log(scope);
 
         /* WATCHERS */
 
@@ -61,7 +64,13 @@ angular.module('tx.datavis')
         scope.$watch('plateData', _.partial(rerender, false));
         scope.$watch('groupData', _.partial(rerender, false));
 
-        scope.$watch('selectedWells', _.noop);
+        scope.$watch('wellsInput', function (newWells, oldWells) {
+          if (_.isArray(newWells)) {
+            safeClearBrush();
+            toggleWellsFromMap(createWellMap(newWells, true), classSelected, true);
+            propagateWellSelection(newWells);
+          }
+        });
 
         function propagateWellSelection (wellsInput) {
           var wells = _.isUndefined(wellsInput) ? getSelectedWells() : wellsInput;
@@ -277,6 +286,7 @@ angular.module('tx.datavis')
         function clearWellsAndSelection () {
           safeClearBrush();
           toggleWellsFromMap({}, classSelected, true);
+          propagateWellSelection();
         }
 
         /***** BRUSHING *****/
@@ -347,6 +357,7 @@ angular.module('tx.datavis')
             console.log('weirdness is happening');
           }
 
+
           var map     = createWellMap(selected, true),
               toggled = WellConv.toggleWells(map, initiallySelected);
 
@@ -361,6 +372,9 @@ angular.module('tx.datavis')
 
         //given array of wells, and a value, create hashmap with wells as keys
         function createWellMap (wells, value) {
+          if (!_.isArray(wells)) {
+            return {};
+          }
           return _.zipObject(wells, _.range(wells.length).map(_.constant(value)))
         }
 
@@ -406,7 +420,7 @@ angular.module('tx.datavis')
             //clear the brush and update the DOM
             brushg.call(brush.clear());
             //trigger event to propagate data flow that it has been emptied
-            brushend();
+            //brushend();
           }
           toggleWellsFromMap({}, classActive, true);
         }
