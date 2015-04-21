@@ -1,3 +1,20 @@
+.protocol-editor-header {
+
+  .protocol-name {
+    display: inline-block;
+    margin: 5px 3px;
+  }
+
+  .glyphicon-circle {
+
+    .show-metadata {
+      position: absolute;
+      clip: rect(0, 0, 0, 0);
+    }
+  }
+
+}
+
 tx-protocol-actions {
   display: block;
   position: relative;

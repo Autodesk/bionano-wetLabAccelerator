@@ -2,25 +2,28 @@
      ng-show="restyleCtrl.currentProtocol">
   <span class="protocol-name"
         ng-bind="restyleCtrl.currentProtocol.name"></span>
-  <div class="glyphicon-circle">
+  <div class="glyphicon-circle" ng-click='toggleModal()'>
     <span class="glyphicon glyphicon-option-horizontal"></span>
   </div>
-  <div class="metadata">
+  <tx-modal ng-show='modalShown'>
+    <div>
+      <span>Edit protocol metadata</span>
+    </div>
     <table>
       <tr>
         <td>Name</td>
-        <td><input type="text"  class="form-control" ng-model="restyleCtrl.currentProtocol.name"></td>
+        <td><input type="text" ng-model="restyleCtrl.currentProtocol.name"></td>
       </tr>
       <tr>
         <td>Description</td>
-        <td><textarea rows="2" class="form-control" ng-model="restyleCtrl.currentProtocol.metadata.description"></textarea></td>
+        <td><input type="text" ng-model="restyleCtrl.currentProtocol.metadata.description"/></td>
       </tr>
       <tr>
         <td>Tags</td>
-        <td><input type="text" class="form-control" ng-list ng-model="restyleCtrl.currentProtocol.metadata.tags"></td>
+        <td><input type="text" ng-list ng-model="restyleCtrl.currentProtocol.metadata.tags"></td>
       </tr>
     </table>
-  </div>
+  </tx-modal>
 </div>
 
 <div class="flex-horizontal flex-grower">
