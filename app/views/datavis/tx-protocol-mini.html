@@ -1,0 +1,32 @@
+<div class="protocol-mini">
+  <div class="mini-protocol-wrap">
+    <div class="protocol-group"
+         ng-repeat="group in miniCtrl.protocol.groups"
+         ng-init="multichild = group.steps.length > 1;
+                  looping = group.loop > 1"
+         ng-class="{'looping' : looping,
+                    'multichild' : multichild,
+                    'has-arrow' : !$last}">
+
+      <div class="loop-number" ng-show="looping">{{group.steps.length}}x</div>
+
+      <div ng-if="multichild">
+        <div class="mini-group-name">{{group.name || 'group'}}</div>
+        <div class="protocol-instruction"
+             ng-repeat="step in group.steps"
+             ng-class="{'has-arrow' : !$last}">
+          {{step.operation}}
+        </div>
+      </div>
+      <div ng-if="!multichild" class="protocol-instruction">
+        {{group.name}}
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mini-timelines"
+       ng-if="miniCtrl.showTimelines != false"></div>
+
+  <div class="mini-arrow"></div>
+</div> 

@@ -1,0 +1,106 @@
+.protocol-mini {
+
+  $internal-padding-vert: 4px;
+  $internal-padding-hori: 6px;
+  $font-size: 12px;
+  $font-size-loop-number: 10px;
+  $arrow-height: 10px;
+  $margin-bottom: $arrow-height;
+
+  .mini-protocol-wrap {
+    width: 200px;
+  }
+
+  .protocol-group {
+    border: 0;
+    background: $white;
+    position: relative;
+    font-size: $font-size;
+    border-radius: 10px;
+
+    .loop-number {
+      float: right;
+      margin-right: $internal-padding-hori;
+      font-size: $font-size-loop-number
+    }
+
+    .protocol-instruction {
+      border-radius: 10px;
+      background: $white;
+      text-align: center;
+      padding: $internal-padding-vert $internal-padding-hori;
+      margin-bottom: $margin-bottom;
+
+      //ahmad should deal with arrows
+      &:first-child {
+
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+
+        &:after {
+          display: none;
+        }
+      }
+    }
+
+    &.multichild {
+
+      border: 2px solid $white;
+      background: transparent;
+      padding: $internal-padding-vert $internal-padding-hori;
+
+      .mini-group-name {
+        padding-bottom: $internal-padding-vert;
+      }
+
+      .protocol-instruction {
+
+      }
+
+      &.active {
+
+      }
+    }
+
+    &.looping {
+
+      .protocol-instruction {
+
+      }
+    }
+  }
+
+  .has-arrow {
+    position: relative;
+
+    &:after {
+      top: 100%;
+      left: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(255, 255, 255, 0);
+      border-top-color: $white;
+      border-width: 10px;
+      margin-left: -10px;
+    }
+  }
+
+  .mini-timelines {
+    height: 100%;
+    width: 50px;
+    background-image: url('');
+    background-position: center top;
+    background-repeat: repeat-y;
+  }
+
+  .mini-arrow {
+    background: $primary;
+    clip-path: polygon(90% 0%, 100% 50%, 90% 100%, 0% 100%, 0 50%, 0% 0%);
+  }
+}
