@@ -23,6 +23,7 @@ _.forEach(autoUtils.dimensionalFields, function (dimensional) {
   };
 });
 
+//todo - handle undefined!!!!!
 function mapSomeDimensionalFields (input, defaults, dimensional, nondimensional) {
   return _.assign({},
     _.zipObject(dimensional, _.map(dimensional, function (dim) {
@@ -57,19 +58,19 @@ converterField.thermocycleGroup = function (input, fieldObj) {
       cycles: group.cycles,
       steps : _.map(group.steps, function (step) {
         return _.assign({
-              duration: convertDimensionalWithDefault(step.duration, inputDefault.duration),
-              read    : _.result(step, 'read', true)
-            }, (!!step.isGradient ?
-            {
-              gradient: {
-                top: convertDimensionalWithDefault(step.gradientStart, inputDefault.gradientStart),
-                end: convertDimensionalWithDefault(step.gradientEnd, inputDefault.gradientEnd)
-              }
-            } :
-            {
-              temperature: convertDimensionalWithDefault(step.temperature, inputDefault.temperature)
+            duration: convertDimensionalWithDefault(step.duration, inputDefault.duration),
+            read    : _.result(step, 'read', true)
+          }, (!!step.isGradient ?
+          {
+            gradient: {
+              top: convertDimensionalWithDefault(step.gradientStart, inputDefault.gradientStart),
+              end: convertDimensionalWithDefault(step.gradientEnd, inputDefault.gradientEnd)
             }
-            )
+          } :
+          {
+            temperature: convertDimensionalWithDefault(step.temperature, inputDefault.temperature)
+          }
+          )
         );
       })
     };
@@ -121,11 +122,11 @@ converterInstruction.unseal = simpleMapOperation;
 /* SPECTROMETRY */
 
 converterInstruction.fluorescence = _.flow(simpleMapOperation,
-    _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
+  _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
 converterInstruction.luminescence = _.flow(simpleMapOperation,
-    _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
+  _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
 converterInstruction.absorbance = _.flow(simpleMapOperation,
-    _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
+  _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
 
 /* LIQUID HANDLING */
 
@@ -186,14 +187,16 @@ converterInstruction.consolidate = function (op) {
   _.forEach(fromWells, function (fromWell) {
     fromArray.push(_.assign({
       volume: volume,
-      from  : fromWell
+      well  : fromWell
     }, optionalFromObj))
   });
+
+  debugger;
 
   var consolidates = _.assign({
     to  : toWell,
     from: fromArray
-  }, optionalAllFields);
+  }, optionalAllObj);
 
   return wrapInPipette({consolidate: consolidates});
 };
@@ -212,14 +215,16 @@ converterInstruction.distribute = function (op) {
   _.forEach(toWells, function (fromWell) {
     toArray.push(_.assign({
       volume: volume,
-      to    : fromWell
+      well    : fromWell
     }, optionalToObj))
   });
+
+  debugger;
 
   var distributes = _.assign({
     from: fromWell,
     to  : toArray
-  }, optionalAllFields);
+  }, optionalAllObj);
 
   return wrapInPipette({distribute: distributes});
 };
@@ -262,6 +267,8 @@ converterInstruction.thermocycle = simpleMapOperation;
 converterInstruction.gel_separate = simpleMapOperation;
 
 /* CONTAINER HANDLING */
+
+converterInstruction.spin = simpleMapOperation;
 
 converterInstruction.store = simpleMapOperation;
 converterInstruction.discard = simpleMapOperation;
