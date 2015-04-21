@@ -1,40 +1,4 @@
 tx-protocol-actions {
   display: block;
   position: relative;
-  padding: $layout-spacing-md $layout-spacing-sm;
-
-  .protocol-title {
-    position: relative;
-    display: block;
-    text-align: left;
-
-    .dropdown-menu {
-      left: 16%;
-      width: 315px;
-      max-width: 100%;
-      transform: translateX(-50%);
-      table {
-        margin: 8px 0;
-      }
-    }
-  }
-}
-
-.protocol-header {
-
-  .title {
-    display: inline-block;
-    text-align: left; //its not working right now
-  }
-
-  .actions {
-    display: inline-block;
-    text-align: right; //this isn't working either, need to investigate
-    margin: 0 5px;
-  }
-
-
-  ul li {
-    padding: 0;
-  }
 }

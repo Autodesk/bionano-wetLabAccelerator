@@ -1,9 +1,26 @@
-<div class="protocol-name"
+<div class="protocol-editor-header"
      ng-show="restyleCtrl.currentProtocol">
-
-  <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
-                       protocol-form="ProtocolForm"></tx-protocol-actions>
-
+  <span class="protocol-name"
+        ng-bind="restyleCtrl.currentProtocol.name"></span>
+  <div class="glyphicon-circle">
+    <span class="glyphicon glyphicon-option-horizontal"></span>
+  </div>
+  <div class="metadata">
+    <table>
+      <tr>
+        <td>Name</td>
+        <td><input type="text"  class="form-control" ng-model="restyleCtrl.currentProtocol.name"></td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td><textarea rows="2" class="form-control" ng-model="restyleCtrl.currentProtocol.metadata.description"></textarea></td>
+      </tr>
+      <tr>
+        <td>Tags</td>
+        <td><input type="text" class="form-control" ng-list ng-model="restyleCtrl.currentProtocol.metadata.tags"></td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 <div class="flex-horizontal flex-grower">
@@ -23,24 +40,8 @@
   <div class="maincolumn flex-grower maxout-scroll-vertical"
        ng-show="restyleCtrl.currentProtocol">
 
-    <div class="protocol-header">
-      <span class="title">Protocol</span>
-      <a class="actions"
-            tx-downloadjson
-            filename="{{(actionCtrl.protocol.name ? actionCtrl.protocol.name : 'protocol') + '.json'}}"
-            download-model="actionCtrl.protocol">
-        Download
-      </a>
-      <a class="actions"
-            ng-click="actionCtrl.executeProtocol()">
-        Run
-      </a>
-
-    </div>
-
-    <button class="btn btn-default" ng-hide="restyleCtrl.currentProtocol"
-            ng-click="loadDemo()">Demo</button>
-
+    <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
+                         protocol-form="ProtocolForm"></tx-protocol-actions>
     <tx-protocol-editor ng-form="ProtocolForm"
                     protocol="restyleCtrl.currentProtocol">
     </tx-protocol-editor>
