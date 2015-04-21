@@ -268,6 +268,8 @@ converterInstruction.gel_separate = simpleMapOperation;
 
 /* CONTAINER HANDLING */
 
+converterInstruction.spin = simpleMapOperation;
+
 converterInstruction.store = simpleMapOperation;
 converterInstruction.discard = simpleMapOperation;
 
