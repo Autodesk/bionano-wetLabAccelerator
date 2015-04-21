@@ -238,6 +238,10 @@ module.exports = {
       ],
       "fields"      : [
         {
+          "name": "object",
+          "type": "container"
+        },
+        {
           "name"   : "reagent",
           "type"   : "option",
           "options": optionEnums.reagents.dispense,

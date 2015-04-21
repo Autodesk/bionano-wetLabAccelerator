@@ -243,13 +243,7 @@ converterInstruction.mix = function (op) {
   return wrapInPipette({mix: mixes});
 };
 
-converterInstruction.dispense = function (op) {
-  var volumesValue = omniConv.pluckFieldValueRaw(op.fields, 'columns'),
-      container    = _.result(_.first(volumesValue), 'container'),
-      mapped       = simpleMapOperation(op);
-
-  return _.assign(mapped, {object: container});
-};
+converterInstruction.dispense = simpleMapOperation;
 
 /* TEMPERATURE */
 
