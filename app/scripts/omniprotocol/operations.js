@@ -23,12 +23,12 @@ module.exports = {
           "type": "volume"
         },
         {
-          "name"           : "to",
+          "name"           : "from",
           "type"           : "aliquot+",
           "singleContainer": false
         },
         {
-          "name"           : "from",
+          "name"           : "to",
           "type"           : "aliquot+",
           "singleContainer": false
         },
@@ -95,13 +95,13 @@ module.exports = {
           "type": "volume"
         },
         {
+          "name": "from",
+          "type": "aliquot"
+        },
+        {
           "name"           : "to",
           "type"           : "aliquot+",
           "singleContainer": false
-        },
-        {
-          "name": "from",
-          "type": "aliquot"
         },
         {
           "name"    : "dispense_speed",
@@ -151,13 +151,13 @@ module.exports = {
           "default": {"value": 10.0, "unit": "microliter"}
         },
         {
-          "name": "to",
-          "type": "aliquot"
-        },
-        {
           "name"           : "from",
           "type"           : "aliquot+",
           "singleContainer": false
+        },
+        {
+          "name": "to",
+          "type": "aliquot"
         },
         {
           "name"    : "aspirate_speed",
