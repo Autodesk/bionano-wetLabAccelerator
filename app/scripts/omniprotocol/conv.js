@@ -47,8 +47,12 @@ function pluckFieldValueTransformed (fields, fieldName, fieldConverters) {
 function getFieldsIfSet (fields, desired, allowDefault, fieldConverters) {
   var obj = {};
   _.forEach(desired, function (desiredKey) {
-    var field        = utils.pluckField(fields, desiredKey);
-    obj[desiredKey] = transformField(field, fieldConverters, allowDefault);
+    var field        = utils.pluckField(fields, desiredKey),
+        transformed = transformField(field, fieldConverters, allowDefault);
+
+    if (!_.isNull(transformed)) {
+      obj[desiredKey] = transformed;
+    }
   });
   return obj;
 }
