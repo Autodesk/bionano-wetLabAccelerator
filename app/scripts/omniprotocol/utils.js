@@ -117,18 +117,18 @@ function wrapGroupsInProtocol (groupsInput) {
  Transformations
  ********/
 
-//given operation index in protocol (ignoring loops)
+//given operation index in protocol (# operation in linear protocol, ignoring loops)
 //returns array of possible numbers when unfolded, or empty array if none
-function getUnfoldedStepNumbers (protocol, foldNum) {
-  var result = [],
-      foldIndex = 0,
+function getUnfoldedStepNumbersFromLinear (protocol, foldNum) {
+  var result        = [],
+      foldIndex     = 0,
       unfoldedIndex = 0;
 
   _.forEach(protocol.groups, function (group, groupIndex) {
     _.forEach(group.steps, function (step, stepIndex) {
       if (foldNum == foldIndex) {
         var groupLoop = _.result(group, 'loop', 1),
-            stepNum = group.steps.length;
+            stepNum   = group.steps.length;
 
         result = _.map(_.range(groupLoop), function (ind) {
           return unfoldedIndex + (ind * stepNum);
@@ -139,17 +139,68 @@ function getUnfoldedStepNumbers (protocol, foldNum) {
       unfoldedIndex += 1;
     });
     //increment for loops, accounting for one run through step already
-    unfoldedIndex += (group.steps.length) * (_.result(group, 'loop', 1) - 1)
+    unfoldedIndex += (group.steps.length) * (_.result(group, 'loop', 1) - 1);
   });
 
   return result;
 }
 
+//given group and step index,
+// returns array of steps when unfolded, or empty if none
+function getUnfoldedStepNumbers (protocol, groupIndex, stepIndex) {
+  var stepsSoFar = 0;
+
+  /*return _.filter(_.flatten(_.map(protocol.groups, function (group, groupLoopIndex) {
+    var groupLoop = _.result(group, 'loop', 1),
+        stepNum = group.steps.length;
+
+    if (groupIndex == groupLoopIndex) {
+      return _.flatten(_.map(group.steps, function (step, stepLoopIndex) {
+        if (stepIndex == stepLoopIndex) {
+          return _.map(_.range(groupLoop), function (ind) {
+            return stepsSoFar + (ind * stepNum);
+          });
+        }
+        stepsSoFar += 1;
+      }));
+    }
+    //-1 to account for already incrementing once
+    stepsSoFar += stepNum * (groupLoop - 1);
+  })), _.isNumber);
+*/
+  var result = [];
+  _.reduce(protocol.groups, function (cumulativeStep, group, groupLoop) {
+    var loopNum = _.result(group, 'loop', 1);
+    return cumulativeStep + (loopNum * _.reduce(group.steps, function (innerAccumulator, step, stepLoop) {
+        if (groupLoop == groupIndex && stepLoop == stepIndex) {
+          result = _.map(_.range(loopNum), function (loop) {
+            return cumulativeStep + stepLoop + (loop * group.steps.length);
+          });
+        }
+        return group.steps.length;
+      }, 0));
+  }, 0);
+  return result;
+}
+
+function getFoldedStepNumber (protocol, groupIndex, stepIndex) {
+  var result = -1;
+  _.reduce(protocol.groups, function (priorSteps, group, groupLoop) {
+    _.forEach(group.steps, function (step, stepLoop) {
+      if (stepIndex == stepLoop && groupIndex == groupLoop) {
+        result = priorSteps + stepLoop;
+      }
+    });
+    return group.steps.length;
+  }, 0);
+  return result;
+}
+
 //given index in unfolded protocol,
 //returns single number
-function getFoldedStepNumber (protocol, unfoldNum) {
-  var result = -1,
-      foldIndex = 0,
+function getFoldedStepNumberFromLinear (protocol, unfoldNum) {
+  var result        = -1,
+      foldIndex     = 0,
       unfoldedIndex = 0;
 
   _.forEach(protocol.groups, function (group, groupIndex) {
@@ -253,17 +304,19 @@ function getTransformsWell (protocol, well) {
 }
 
 module.exports = {
-  pluckField                 : pluckField,
-  pluckFieldValueRaw         : pluckFieldValueRaw,
-  interpolateValue           : interpolateValue,
-  interpolateObject          : interpolateObject,
-  wrapFieldsAsStep           : wrapFieldsAsStep,
-  scaffoldOperationWithValues: scaffoldOperationWithValues,
-  getFieldTypeInOperation    : getFieldTypeInOperation,
-  wrapOpInGroup              : wrapOpInGroup,
-  wrapGroupsInProtocol       : wrapGroupsInProtocol,
-  getUnfoldedStepNumbers      : getUnfoldedStepNumbers,
-  getFoldedStepNumber        : getFoldedStepNumber,
-  getTransformsContainer     : getTransformsContainer,
-  getTransformsWell          : getTransformsWell
+  pluckField                      : pluckField,
+  pluckFieldValueRaw              : pluckFieldValueRaw,
+  interpolateValue                : interpolateValue,
+  interpolateObject               : interpolateObject,
+  wrapFieldsAsStep                : wrapFieldsAsStep,
+  scaffoldOperationWithValues     : scaffoldOperationWithValues,
+  getFieldTypeInOperation         : getFieldTypeInOperation,
+  wrapOpInGroup                   : wrapOpInGroup,
+  wrapGroupsInProtocol            : wrapGroupsInProtocol,
+  getUnfoldedStepNumbers          : getUnfoldedStepNumbers,
+  getUnfoldedStepNumbersFromLinear: getUnfoldedStepNumbersFromLinear,
+  getFoldedStepNumber             : getFoldedStepNumber,
+  getFoldedStepNumberFromLinear   : getFoldedStepNumberFromLinear,
+  getTransformsContainer          : getTransformsContainer,
+  getTransformsWell               : getTransformsWell
 };

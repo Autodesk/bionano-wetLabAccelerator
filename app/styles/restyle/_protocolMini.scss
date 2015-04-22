@@ -119,6 +119,8 @@
     }
   }
 
+  // could refactor this to :after element on instruction, then easily scale background to 100% height so dynamic
+
   .has-timelines {
     position: relative;
     padding-right: (2 * $timelines-spacing) + $timelines-width;

@@ -46,6 +46,12 @@ angular.module('transcripticApp')
               diff = topFromPage - miniFromPage;
 
           arrowEl.css({'top': diff});
+        };
+
+        //todo
+        function activateStep (groupIndex, stepIndex) {
+          var flat = Omniprotocol.utils.getFoldedStepNumber(groupIndex, stepIndex);
+          console.log(flat);
         }
       }
     };
