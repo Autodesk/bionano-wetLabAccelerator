@@ -117,6 +117,12 @@ function wrapGroupsInProtocol (groupsInput) {
  Transformations
  ********/
 
+function getNumberUnfoldedSteps (protocol) {
+  return _.reduce(protocol.groups, function (result, group, groupLoop) {
+    return result + _.result(group, 'loop', 1) * group.steps.length;
+  }, 0);
+}
+
 //given operation index in protocol (# operation in linear protocol, ignoring loops)
 //returns array of possible numbers when unfolded, or empty array if none
 function getUnfoldedStepNumbersFromLinear (protocol, foldNum) {
@@ -148,26 +154,6 @@ function getUnfoldedStepNumbersFromLinear (protocol, foldNum) {
 //given group and step index,
 // returns array of steps when unfolded, or empty if none
 function getUnfoldedStepNumbers (protocol, groupIndex, stepIndex) {
-  var stepsSoFar = 0;
-
-  /*return _.filter(_.flatten(_.map(protocol.groups, function (group, groupLoopIndex) {
-    var groupLoop = _.result(group, 'loop', 1),
-        stepNum = group.steps.length;
-
-    if (groupIndex == groupLoopIndex) {
-      return _.flatten(_.map(group.steps, function (step, stepLoopIndex) {
-        if (stepIndex == stepLoopIndex) {
-          return _.map(_.range(groupLoop), function (ind) {
-            return stepsSoFar + (ind * stepNum);
-          });
-        }
-        stepsSoFar += 1;
-      }));
-    }
-    //-1 to account for already incrementing once
-    stepsSoFar += stepNum * (groupLoop - 1);
-  })), _.isNumber);
-*/
   var result = [];
   _.reduce(protocol.groups, function (cumulativeStep, group, groupLoop) {
     var loopNum = _.result(group, 'loop', 1);
@@ -183,6 +169,13 @@ function getUnfoldedStepNumbers (protocol, groupIndex, stepIndex) {
   return result;
 }
 
+function getUnfoldedStepNumber (protocol, groupIndex, stepIndex, loopIndex) {
+  return getUnfoldedStepNumbers(protocol, groupIndex, stepIndex)[loopIndex];
+}
+
+//todo - what is the point of this function? deprecate
+//given index of group, index of step in group,
+// todo - optionally index in loop (of group.loop) as loopIndex
 function getFoldedStepNumber (protocol, groupIndex, stepIndex) {
   var result = -1;
   _.reduce(protocol.groups, function (priorSteps, group, groupLoop) {
@@ -198,9 +191,8 @@ function getFoldedStepNumber (protocol, groupIndex, stepIndex) {
 
 //given index in unfolded protocol,
 //returns single number
-function getFoldedStepNumberFromLinear (protocol, unfoldNum) {
-  var result        = -1,
-      foldIndex     = 0,
+function getFoldedStepInfo (protocol, unfoldNum) {
+  var result        = {},
       unfoldedIndex = 0;
 
   _.forEach(protocol.groups, function (group, groupIndex) {
@@ -208,10 +200,14 @@ function getFoldedStepNumberFromLinear (protocol, unfoldNum) {
     _.forEach(_.range(loopNum), function (groupLoopIndex) {
       _.forEach(group.steps, function (step, stepIndex) {
         if (unfoldNum == unfoldedIndex) {
-          result = foldIndex;
+          _.assign(result, {
+            group   : groupIndex,
+            step    : stepIndex,
+            loop    : groupLoopIndex,
+            unfolded: unfoldNum
+          });
         }
 
-        foldIndex += (groupLoopIndex == loopNum - 1) ? 1 : 0;
         unfoldedIndex += 1;
       });
     });
@@ -313,10 +309,12 @@ module.exports = {
   getFieldTypeInOperation         : getFieldTypeInOperation,
   wrapOpInGroup                   : wrapOpInGroup,
   wrapGroupsInProtocol            : wrapGroupsInProtocol,
+  getNumberUnfoldedSteps          : getNumberUnfoldedSteps,
+  getUnfoldedStepNumber           : getUnfoldedStepNumber,
   getUnfoldedStepNumbers          : getUnfoldedStepNumbers,
   getUnfoldedStepNumbersFromLinear: getUnfoldedStepNumbersFromLinear,
   getFoldedStepNumber             : getFoldedStepNumber,
-  getFoldedStepNumberFromLinear   : getFoldedStepNumberFromLinear,
+  getFoldedStepInfo               : getFoldedStepInfo,
   getTransformsContainer          : getTransformsContainer,
   getTransformsWell               : getTransformsWell
 };

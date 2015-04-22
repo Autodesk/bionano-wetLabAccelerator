@@ -5,7 +5,10 @@
   $font-size: 12px;
   $mini-font-line-height: 1;
   $font-size-loop-number: 10px;
+
   $arrow-height: 10px;
+  $clip-arrow-width: 15px; //must change in clippath directly
+
   $margin-bottom: $arrow-height + 1px;
 
   $wrap-padding-hori: 15px;
@@ -18,7 +21,7 @@
   $z-timelines: 15;
 
   $instruction-height: (2 * $internal-padding-vert) + ($font-size * $mini-font-line-height);
-  $clip-arrow-width: 15px; //must change in clippath directly
+
 
   display: inline-block;
   font-size: $font-size;
@@ -115,7 +118,7 @@
       border-color: rgba(255, 255, 255, 0);
       border-top-color: $white;
       border-width: 10px;
-      margin-left: -10px;
+      margin-left: -$clip-arrow-width;
     }
   }
 
@@ -148,5 +151,7 @@
     -webkit-clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
     clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
     margin-top: -$internal-padding-vert;
+
+    transition: transform 0.25s ease-out;
   }
 }
