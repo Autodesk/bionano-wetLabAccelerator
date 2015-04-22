@@ -7,36 +7,36 @@
 
   display: block;
   padding: 0 $padding-internal;
-  border: 2px solid $border-color-inactive;
   margin: $layout-spacing-md 0;
   font-size: 14px;
-  background: transparentize($white, 0.75);
+  background: transparentize($white, 0.5);
 
   &.selected {
-    border-color: $primary;
+    background: $white;
   }
 
-  .protocol-group-header,
-  .protocol-group-footer {
+  .protocol-group-header {
     position: relative;
     padding: $padding-internal 0;
   }
 
   .protocol-group-header {
     line-height: 1em;
-    cursor: all-scroll;
+    cursor: row-resize;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-    * {
-      cursor: pointer;
-    }
   }
 
   .protocol-group-main {
-    border-top: $border-inner;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .protocol-group-footer {
-    border-top: $border-inner;
+
 
     &-actions {
       padding-bottom: $padding-internal;
@@ -53,6 +53,23 @@
     min-height: 1em;
     min-width: 50px;
     padding: 0 0.5em;
+    cursor: text;
+  }
+
+  .group-repeat {
+    text-align: right;
+
+    &:after {
+      position: relative;
+      left: -6px;
+      content: 'x';
+    }
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 
   .dropdown-menu {

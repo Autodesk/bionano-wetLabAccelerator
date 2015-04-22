@@ -1,16 +1,19 @@
-<div>
-  <tx-protocol-setup parameters="editorCtrl.protocol.parameters"></tx-protocol-setup>
-</div>
-
 <div class="protocol-instructions"
      ui-sortable="editorCtrl.groupSortableOptions"
      ng-model="editorCtrl.protocol.groups">
+  <tx-protocol-setup parameters="editorCtrl.protocol.parameters"
+                     class="protocol-group"
+                     tx-inspector-select
+                     select-trigger="mouseenter"
+                     select-title="'Setup'"
+                     select-type="'group:'"
+                     select-description="'Sets global parameters'"></tx-protocol-setup>
   <tx-protocol-group ng-repeat="group in editorCtrl.protocol.groups"
                      class="protocol-group"
                      tx-inspector-select
                      select-trigger="mouseenter"
-                     select-title="group.name || 'Unnamed Group'"
-                     select-type="'group'"
+                     select-title="group.name || 'Unnamed'"
+                     select-type="'group:'"
                      select-description="group.metadata.description"
                      protocol-group="group">
   </tx-protocol-group>

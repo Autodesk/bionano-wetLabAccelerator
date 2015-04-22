@@ -2,7 +2,7 @@
      ng-show="restyleCtrl.currentProtocol">
   <span class="protocol-name"
         ng-bind="restyleCtrl.currentProtocol.name"></span>
-  <div class="glyphicon-circle" ng-click='toggleModal()'>
+  <div class="glyphicon-ellipse" ng-click='toggleModal()'>
     <span class="glyphicon glyphicon-option-horizontal"></span>
   </div>
   <tx-modal ng-show='modalShown'>
@@ -23,6 +23,7 @@
         <td><input type="text" ng-list ng-model="restyleCtrl.currentProtocol.metadata.tags"></td>
       </tr>
     </table>
+    <tx-run></tx-run>
   </tx-modal>
 </div>
 

@@ -1,74 +1,59 @@
-<div class="protocol-group-header">
-
-  <div class="glyphicon pull-left"
-       ng-click="isCollapsed = !isCollapsed"
-       ng-class="{'glyphicon-resize-small'  : !isCollapsed,
-                  'glyphicon-resize-full' : isCollapsed}"></div>
-
-  <div class="glyphicon-circle with-background pull-right"
-       dropdown is-open="groupActionsVisible">
-    <span class="glyphicon glyphicon-option-horizontal"
-          ng-click="groupCtrl.toggleGroupActionsVisible($event)"></span>
-
-    <ul class="dropdown-menu">
-      <li><a ng-click="duplicateGroup()">
-        <span class="glyphicon glyphicon-duplicate"></span>
-        Duplicate Step
-      </a></li>
-      <li>
-        <a ng-click="groupCtrl.toggleGroupActionsVisible($event, true);
-                     deleteButtonVisible = !deleteButtonVisible;">
-          <span class="glyphicon glyphicon-trash"></span>
-          {{deleteButtonVisible ? 'Cancel' : 'Delete Step'}}
-        </a>
-      </li>
-      <li ng-show="deleteButtonVisible">
-        <a class="btn btn-danger"
-             ng-click="deleteGroup()">
-          Delete it!
-        </a>
-      </li>
-      <!--<li><a>Save as Template</a></li>-->
-    </ul>
-  </div>
+<div class="protocol-group-header"
+     ng-click="isCollapsed = !isCollapsed">
 
   <input class="group-name input-unstyled"
          type="text"
          auto-grow
          placeholder="Group Name"
-         ng-model="groupCtrl.group.name">
+         ng-model="groupCtrl.group.name"
+         ng-click="$event.stopPropagation()">
 
-  <div class="pull-right">
-    <span class="glyphicon glyphicon-repeat"></span>
+  <div dropdown is-open="showActions"
+       ng-click="$event.stopPropagation()">
     <input class="group-repeat input-unstyled"
            type="number"
-           auto-grow="30"
            placeholder="Repeat"
            min="1"
            max="100"
            ng-model="groupCtrl.group.loop">
+    <span class="group-repeat"></span>
+    <span class="glyphicon glyphicon-cog"
+          ng-show="isCollapsed"
+          ng-click="groupCtrl.toggleActionsMenu($event)"></span>
+
+    <ul class="dropdown-menu"
+        ng-show="isCollapsed">
+      <li>
+        <a ng-click="groupCtrl.toggleActionsMenu($event, true);
+                     deleteButtonVisible = !deleteButtonVisible;">
+          {{deleteButtonVisible ? 'Cancel Delete' : 'Delete operation'}}
+        </a>
+      </li>
+      <li ng-show="deleteButtonVisible">
+        <a class="btn btn-danger"
+             ng-click="deleteGroup()">
+          OK Delete!
+        </a>
+      </li>
+      <li><a ng-click="groupCtrl.toggleJsonEditing($event)">
+        Show JSON
+      </a></li>
+    </ul>
   </div>
 
 </div>
+
 <div class="protocol-group-main"
      ui-sortable="groupCtrl.opSortOptions"
      ng-model="groupCtrl.group.steps"
-     ng-hide="isCollapsed">
+     ng-show="isCollapsed">
+  {{groupCtrl.group.metadata.description}}
   <tx-protocol-op ng-repeat="step in groupCtrl.group.steps"
                   protocol-step="step">
   </tx-protocol-op>
 </div>
-<div class="protocol-group-footer"
-     ng-hide="isCollapsed">
 
-  <div class="protocol-group-footer-actions clearfix">
-
-    <div class="glyphicon glyphicon-edit pull-left"
-         ng-click="groupCtrl.toggleJsonEditing()"></div>
-
-    <div class="glyphicon glyphicon-menu-hamburger pull-right"
-         ng-click="groupCtrl.toggleLogCollapsed()"></div>
-  </div>
+<div class="protocol-group-footer">
 
   <div class="protocol-group-footer-content">
      <pre json-editor
@@ -78,12 +63,6 @@
           name="ProtocolGroupEditor"
           ng-model="groupCtrl.group"
           ng-model-options="{updateOn: 'blur'}"></pre>
-
-    <div ng-if="logVisible">
-      {{groupCtrl.group.metadata.description}}
-    </div>
   </div>
-
-
 
 </div>
