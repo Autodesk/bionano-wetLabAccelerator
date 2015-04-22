@@ -15,4 +15,12 @@ angular.module('transcripticApp')
     .success(function (d) {
       self.protocol = d;
     });
+
+    $scope.$watch('resultsCtrl.currentInfo', function (newval) {
+      if (_.isObject(newval)) {
+        self.currentGroup = self.protocol.groups[newval.group];
+        self.currentOperation = self.currentGroup.steps[newval.step];
+      }
+    });
+
   });

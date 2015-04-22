@@ -1,3 +1,16 @@
-<tx-protocol-mini protocol="resultsCtrl.protocol"
-                  show-timelines="true"
-                  auto-scroll></tx-protocol-mini>
+<div class="flex-horizontal flex-grower">
+  <div class="sidepanel flex-vertical"
+       style="width: 400px">
+    <tx-protocol-mini protocol="resultsCtrl.protocol"
+                      current-operation="resultsCtrl.currentInfo"
+                      show-timelines="true"
+                      auto-scroll></tx-protocol-mini>
+  </div>
+
+  <div class="maincolumn flex-grower maxout-scroll-vertical">
+    <div>
+      <p><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></p>
+      <p>Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</p>
+    </div>
+  </div>
+</div>

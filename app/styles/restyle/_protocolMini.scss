@@ -143,14 +143,14 @@
 
   .mini-arrow {
     position: absolute;
-    top: 0;
-    z-index: $z-arrow;
     width: 100%;
     height: $instruction-height + (2 * $internal-padding-vert);
+    top: 0;
+    margin-top: -$internal-padding-vert;
+    z-index: $z-arrow;
     background: $primary;
     -webkit-clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
     clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
-    margin-top: -$internal-padding-vert;
 
     transition: transform 0.25s ease-out;
   }

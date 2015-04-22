@@ -15,7 +15,7 @@ angular.module('transcripticApp')
       scope           : {
         protocol        : '=',
         currentOperation: '=',
-        showTimelines   : '=',
+        showTimelines   : '='
         //attr auto-scroll
       },
       bindToController: true,
@@ -46,7 +46,10 @@ angular.module('transcripticApp')
               instructionElements = element.find('.protocol-instruction'),
               el                  = instructionElements[unfolded];
 
-          scope.activeStep = {
+
+          //todo - inform results, or just use data binding (set up watch)
+
+          scope.miniCtrl.currentOperation = {
             group   : groupIndex,
             step    : stepIndex,
             loop    : loopIndex,
@@ -74,6 +77,7 @@ angular.module('transcripticApp')
 
         //init
         if (angular.isDefined(attrs['autoScroll'])) {
+          //initial timeout to ensure protocol is propagated
           $timeout(function () {
             _.reduce(_.range(Omniprotocol.utils.getNumberUnfoldedSteps(scope.miniCtrl.protocol)), function (chain, unfoldedNum) {
               return chain.then(function () {
