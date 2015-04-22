@@ -1,0 +1,81 @@
+tx-plate {
+
+  $color-disabled: #aaaaaa;
+  $color-default: #dddddd;
+  $color-active: #d7ab34;
+  $color-add: #146dff;
+  $color-remove: #dd263b;
+  $color-hover: #80a0ff;
+
+  svg {
+    display: block;
+    background: $white;
+    box-shadow: $box-shadow-popover;
+    overflow: visible;
+  }
+
+  .axis {
+    path {
+      stroke: none;
+      fill: none;
+    }
+    line {
+      stroke: none;
+      fill: none;
+    }
+    text {
+      fill: #ccc;
+    }
+  }
+
+  .well {
+    fill: transparent;
+    stroke-width: 0.5px;
+    stroke: transparentize($color-default, 1);
+    transition: stroke 0.25s ease-out;
+
+    &:hover {
+      fill: $color-hover;
+    }
+
+    //todo - brushing class
+
+    &.selected,
+    &.brushSelected {
+      stroke: $color-active;
+      stroke-width: 3px;
+    }
+
+    &.hidden {
+      fill: #ccc !important;
+    }
+  }
+
+  &.brushing {
+    .well.brushActive {
+      stroke: $color-add;
+      stroke-width: 3px;
+    }
+
+    .well.brushActive.brushSelected {
+      stroke: $color-remove !important;
+    }
+  }
+
+  .extent {
+    fill: #000;
+    fill-opacity: .125;
+    stroke: #fff;
+  }
+
+  .wellTooltip div {
+    background : rgba(25,25,25,0.75);
+    box-shadow: 0 0 2px rgba(25,25,25,0.25);
+    border-radius: 6px;
+    text-align: center;
+    font-size: 12px;
+    height: 100%;
+    padding: 2px 4px;
+    color: white;
+  }
+}
