@@ -1,0 +1,161 @@
+.protocol-mini {
+
+  $internal-padding-vert: 5px;
+  $internal-padding-hori: 6px;
+  $font-size: 12px;
+  $mini-font-line-height: 1;
+  $font-size-loop-number: 10px;
+
+  $arrow-height: 10px;
+  $clip-arrow-width: 15px; //must change in clippath directly
+
+  $margin-bottom: $arrow-height + 1px;
+
+  $wrap-padding-hori: 15px;
+
+  $timelines-width: 40px;
+  $timelines-spacing: 30px;
+
+  $z-arrow: 10;
+  $z-instruction: 20;
+  $z-timelines: 15;
+
+  $instruction-height: (2 * $internal-padding-vert) + ($font-size * $mini-font-line-height);
+
+
+  display: inline-block;
+  font-size: $font-size;
+  line-height: $mini-font-line-height;
+  position: relative;
+
+  .mini-protocol-wrap {
+    width: 280px;
+    margin: 0 $clip-arrow-width 0 $internal-padding-hori;
+  }
+
+  .protocol-group {
+    border: 0;
+    font-size: $font-size; //override parent
+    background: $white;
+    position: relative;
+    border-radius: 10px;
+    z-index: $z-instruction;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    .loop-number {
+      float: right;
+      margin-right: $internal-padding-hori;
+      font-size: $font-size-loop-number
+    }
+
+    .protocol-instruction {
+      border-radius: 10px;
+      background: $white;
+      text-align: center;
+      padding: $internal-padding-vert $internal-padding-hori;
+      margin-bottom: $margin-bottom;
+
+      //ahmad should deal with arrows
+      &:first-child {
+
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+
+        &:after {
+          display: none;
+        }
+      }
+    }
+
+    &.multichild {
+
+      .protocol-instruction {
+
+      }
+
+      &.expanded {
+
+      }
+    }
+
+    &.looping {
+
+      border: 2px solid $white;
+      background: transparent;
+      padding: $internal-padding-vert $internal-padding-hori;
+
+      .mini-group-name {
+        padding-bottom: $internal-padding-vert;
+      }
+
+      .protocol-instruction {
+
+      }
+    }
+
+    .mini-group-repeater {
+      margin-bottom: $margin-bottom;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .has-arrow {
+    position: relative;
+
+    &:after {
+      top: 100%;
+      left: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(255, 255, 255, 0);
+      border-top-color: $white;
+      border-width: 10px;
+      margin-left: -$clip-arrow-width;
+    }
+  }
+
+  // could refactor this to :after element on instruction, then easily scale background to 100% height so dynamic
+
+  .has-timelines {
+    position: relative;
+    padding-right: (2 * $timelines-spacing) + $timelines-width;
+
+    .mini-timelines {
+      position: absolute;
+      right: $timelines-spacing;
+      top: 0;
+      bottom: 0;
+      width: $timelines-width;
+      background-image: url('/images/timelines.png');
+      background-position: center top;
+      background-repeat: repeat-y;
+      z-index: $z-timelines;
+    }
+  }
+
+  .mini-arrow {
+    position: absolute;
+    width: 100%;
+    height: $instruction-height + (2 * $internal-padding-vert);
+    top: 0;
+    margin-top: -$internal-padding-vert;
+    z-index: $z-arrow;
+    background: $primary;
+    -webkit-clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
+    clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
+
+    transition: transform 0.25s ease-out;
+  }
+}
