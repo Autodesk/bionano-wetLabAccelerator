@@ -117,6 +117,58 @@ function wrapGroupsInProtocol (groupsInput) {
  Transformations
  ********/
 
+//given operation index in protocol (ignoring loops)
+//returns array of possible numbers when unfolded, or empty array if none
+function getUnfoldedStepNumbers (protocol, foldNum) {
+  var result = [],
+      foldIndex = 0,
+      unfoldedIndex = 0;
+
+  _.forEach(protocol.groups, function (group, groupIndex) {
+    _.forEach(group.steps, function (step, stepIndex) {
+      if (foldNum == foldIndex) {
+        var groupLoop = _.result(group, 'loop', 1),
+            stepNum = group.steps.length;
+
+        result = _.map(_.range(groupLoop), function (ind) {
+          return unfoldedIndex + (ind * stepNum);
+        });
+      }
+
+      foldIndex += 1;
+      unfoldedIndex += 1;
+    });
+    //increment for loops, accounting for one run through step already
+    unfoldedIndex += (group.steps.length) * (_.result(group, 'loop', 1) - 1)
+  });
+
+  return result;
+}
+
+//given index in unfolded protocol,
+//returns single number
+function getFoldedStepNumber (protocol, unfoldNum) {
+  var result = -1,
+      foldIndex = 0,
+      unfoldedIndex = 0;
+
+  _.forEach(protocol.groups, function (group, groupIndex) {
+    var loopNum = _.result(group, 'loop', 1);
+    _.forEach(_.range(loopNum), function (groupLoopIndex) {
+      _.forEach(group.steps, function (step, stepIndex) {
+        if (unfoldNum == unfoldedIndex) {
+          result = foldIndex;
+        }
+
+        foldIndex += (groupLoopIndex == loopNum - 1) ? 1 : 0;
+        unfoldedIndex += 1;
+      });
+    });
+  });
+
+  return result;
+}
+
 // note - would be great to DRY, but lots of variables needed to pass in then
 
 function getTransformsContainer (protocol, container) {
@@ -210,6 +262,8 @@ module.exports = {
   getFieldTypeInOperation    : getFieldTypeInOperation,
   wrapOpInGroup              : wrapOpInGroup,
   wrapGroupsInProtocol       : wrapGroupsInProtocol,
+  getUnfoldedStepNumbers      : getUnfoldedStepNumbers,
+  getFoldedStepNumber        : getFoldedStepNumber,
   getTransformsContainer     : getTransformsContainer,
   getTransformsWell          : getTransformsWell
 };
