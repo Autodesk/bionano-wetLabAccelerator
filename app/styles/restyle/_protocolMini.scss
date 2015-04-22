@@ -1,22 +1,42 @@
 .protocol-mini {
 
-  $internal-padding-vert: 4px;
+  $internal-padding-vert: 5px;
   $internal-padding-hori: 6px;
   $font-size: 12px;
+  $mini-font-line-height: 1;
   $font-size-loop-number: 10px;
   $arrow-height: 10px;
-  $margin-bottom: $arrow-height;
+  $margin-bottom: $arrow-height + 1px;
+
+  $wrap-padding-hori: 15px;
+
+  $timelines-width: 40px;
+  $timelines-spacing: 30px;
+
+  $z-arrow: 10;
+  $z-instruction: 20;
+  $z-timelines: 15;
+
+  $instruction-height: (2 * $internal-padding-vert) + ($font-size * $mini-font-line-height);
+  $clip-arrow-width: 15px; //must change in clippath directly
+
+  display: inline-block;
+  font-size: $font-size;
+  line-height: $mini-font-line-height;
+  position: relative;
 
   .mini-protocol-wrap {
-    width: 200px;
+    width: 280px;
+    margin: 0 $clip-arrow-width 0 $internal-padding-hori;
   }
 
   .protocol-group {
     border: 0;
+    font-size: $font-size; //override parent
     background: $white;
     position: relative;
-    font-size: $font-size;
     border-radius: 10px;
+    z-index: $z-instruction;
 
     .loop-number {
       float: right;
@@ -47,6 +67,17 @@
 
     &.multichild {
 
+      .protocol-instruction {
+
+      }
+
+      &.expanded {
+
+      }
+    }
+
+    &.looping {
+
       border: 2px solid $white;
       background: transparent;
       padding: $internal-padding-vert $internal-padding-hori;
@@ -58,16 +89,13 @@
       .protocol-instruction {
 
       }
-
-      &.active {
-
-      }
     }
 
-    &.looping {
+    .mini-group-repeater {
+      margin-bottom: $margin-bottom;
 
-      .protocol-instruction {
-
+      &:last-child {
+        margin-bottom: 0;
       }
     }
   }
@@ -91,16 +119,32 @@
     }
   }
 
-  .mini-timelines {
-    height: 100%;
-    width: 50px;
-    background-image: url('');
-    background-position: center top;
-    background-repeat: repeat-y;
+  .has-timelines {
+    position: relative;
+    padding-right: (2 * $timelines-spacing) + $timelines-width;
+
+    .mini-timelines {
+      position: absolute;
+      right: $timelines-spacing;
+      top: 0;
+      bottom: 0;
+      width: $timelines-width;
+      background-image: url('/images/timelines.png');
+      background-position: center top;
+      background-repeat: repeat-y;
+      z-index: $z-timelines;
+    }
   }
 
   .mini-arrow {
+    position: absolute;
+    top: 0;
+    z-index: $z-arrow;
+    width: 100%;
+    height: $instruction-height + (2 * $internal-padding-vert);
     background: $primary;
-    clip-path: polygon(90% 0%, 100% 50%, 90% 100%, 0% 100%, 0 50%, 0% 0%);
+    -webkit-clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
+    clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
+    margin-top: -$internal-padding-vert;
   }
 }

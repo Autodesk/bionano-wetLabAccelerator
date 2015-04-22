@@ -41,7 +41,7 @@
       "metadata": {
         "description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
       },
-      "loop": 1,
+      "loop": 4,
       "steps": [
         {
           "operation": "transfer",

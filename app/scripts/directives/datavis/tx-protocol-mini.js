@@ -7,7 +7,7 @@
  * # txProtocolMini
  */
 angular.module('transcripticApp')
-  .directive('txProtocolMini', function () {
+  .directive('txProtocolMini', function (Omniprotocol) {
     return {
       templateUrl: 'views/datavis/tx-protocol-mini.html',
       restrict: 'E',
@@ -18,7 +18,35 @@ angular.module('transcripticApp')
       },
       bindToController: true,
       controllerAs : 'miniCtrl',
-      controller: function protocolMiniController($scope, $element, $attrs) {},
-      link: function postLink(scope, element, attrs) {}
+      controller: function protocolMiniController($scope, $element, $attrs) {
+        var self = this;
+
+        this.createGroupRepeater = function (groupLoopNum) {
+          //todo - check for group is active, 1 if not
+          return _.range(groupLoopNum);
+        };
+
+        //step tracking
+        this.stepUnfolded = 0;
+
+        $scope.$watch(function () {
+          return self.stepUnfolded;
+        }, function (unfolded) {
+          self.stepFolded = Omniprotocol.utils.getFoldedStepNumber(unfolded);
+        });
+
+      },
+      link: function postLink(scope, element, attrs) {
+        var arrowEl = element.find('.mini-arrow'); //note - jquery
+
+        scope.attractArrow = function ($event) {
+          var target = $event.target,
+              topFromPage = target.getBoundingClientRect().top,
+              miniFromPage = element[0].getBoundingClientRect().top,
+              diff = topFromPage - miniFromPage;
+
+          arrowEl.css({'top': diff});
+        }
+      }
     };
   });
