@@ -23,4 +23,8 @@ angular.module('transcripticApp')
       }
     });
 
+    self.downloadResults = function () {
+      alert('todo');
+    };
+
   });

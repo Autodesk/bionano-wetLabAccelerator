@@ -41,6 +41,10 @@
     border-radius: 10px;
     z-index: $z-instruction;
 
+    &:first-child {
+      margin-top: 0;
+    }
+
     .loop-number {
       float: right;
       margin-right: $internal-padding-hori;

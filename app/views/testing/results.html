@@ -1,16 +1,36 @@
-<div class="flex-horizontal flex-grower">
-  <div class="sidepanel flex-vertical"
-       style="width: 400px">
-    <tx-protocol-mini protocol="resultsCtrl.protocol"
-                      current-operation="resultsCtrl.currentInfo"
-                      show-timelines="true"
-                      auto-scroll></tx-protocol-mini>
+<div class="results">
+  <div class="results-header flex-horizontal">
+    <div class="sidepanel flex-child">
+      <p>Protocol Overview</p>
+    </div>
+    <div class="maincolumn flex-grower">
+      <p class="pull-right">
+        <a ng-click="resultsCtrl.downloadResults()">Download</a>
+      </p>
+      <p>Run Results</p>
+    </div>
   </div>
 
-  <div class="maincolumn flex-grower maxout-scroll-vertical">
-    <div>
-      <p><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></p>
-      <p>Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</p>
+  <div class="flex-horizontal flex-grower">
+    <div class="sidepanel flex-vertical">
+      <tx-protocol-mini protocol="resultsCtrl.protocol"
+                        current-operation="resultsCtrl.currentInfo"
+                        show-timelines="true"
+                        auto-scroll></tx-protocol-mini>
+    </div>
+
+    <div class="maincolumn flex-grower maxout-scroll-vertical">
+      <div ng-hide="resultsCtrl.currentInfo">
+        Select a step in the protocol
+      </div>
+
+      <div ng-show="resultsCtrl.currentInfo">
+        <span class="pull-right">Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</span>
+        <p>
+          <span><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></span>
+        </p>
+      </div>
+      <p ng-bind="resultsCtrl.currentGroup.description"></p>
     </div>
   </div>
 </div>
