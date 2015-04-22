@@ -1,4 +1,5 @@
 <div class="results">
+
   <div class="results-header flex-horizontal">
     <div class="sidepanel flex-child">
       <p>Protocol Overview</p>
@@ -12,6 +13,7 @@
   </div>
 
   <div class="flex-horizontal flex-grower">
+
     <div class="sidepanel flex-vertical">
       <tx-protocol-mini protocol="resultsCtrl.protocol"
                         current-operation="resultsCtrl.currentInfo"
@@ -25,12 +27,21 @@
       </div>
 
       <div ng-show="resultsCtrl.currentInfo">
-        <span class="pull-right">Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</span>
-        <p>
-          <span><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></span>
-        </p>
+        <div>
+          <span class="pull-right">Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</span>
+          <p>
+            <span><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></span>
+          </p>
+        </div>
+        <p ng-bind="resultsCtrl.currentGroup.description"></p>
       </div>
-      <p ng-bind="resultsCtrl.currentGroup.description"></p>
+
+      <tx-operation-summary protocol="resultsCtrl.protocol"
+                            indices="resultsCtrl.currentInfo">
+      </tx-operation-summary>
+
     </div>
+
   </div>
+
 </div>

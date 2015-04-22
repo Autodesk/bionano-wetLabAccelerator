@@ -10,7 +10,7 @@
 angular.module('transcripticApp')
   .directive('txProtocolMini', function ($timeout, $q, Omniprotocol) {
     return {
-      templateUrl     : 'views/datavis/tx-protocol-mini.html',
+      templateUrl     : 'views/tx-protocol-mini.html',
       restrict        : 'E',
       scope           : {
         protocol        : '=',
