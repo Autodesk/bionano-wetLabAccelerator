@@ -1,7 +1,11 @@
-.protocol-setup {
+.protocol-group-main {
+  padding-bottom: 5px;
   table {
-    display: block;
-    max-width: 100%;
     overflow-x: scroll;
+    border-spacing: 5px 0;
+    color: $black;
+  }
+  button {
+    align-self: flex-start;
   }
 }

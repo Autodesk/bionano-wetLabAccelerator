@@ -1,6 +1,6 @@
 <table>
   <tr ng-repeat="field in opCtrl.op.fields">
-    <td class="operation-label" ng-class="{optional: field.optional == true}">{{field.name}}</td>
+    <td class="operation-label" ng-class="{optional: field.optional == true}">{{field.name}}:</td>
     <td>
       <tx-protocol-field class="operation-field"
                          ng-model="field.value"

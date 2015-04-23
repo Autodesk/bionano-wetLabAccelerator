@@ -33,17 +33,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: $light-grey;
   }
 
   .protocol-group-footer {
 
-
-    &-actions {
-      padding-bottom: $padding-internal;
-    }
-
     &-content {
-      background-color: $light-grey;
+      padding-bottom: $padding-internal;
     }
   }
 
@@ -82,7 +78,8 @@
 
   pre {
     font-size: 13px;
-    background-color: transparent;
+    background-color: $black;
+    color: $white;
     border-radius: 0;
   }
 }

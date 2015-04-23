@@ -15,4 +15,20 @@ tx-protocol-op {
   .operation-field {
 
   }
+
+  table {
+    border-spacing: 5px 10px;
+    tr {
+      td {
+      &:first-child {
+        text-align: right;
+        color: $black;
+      }
+      &:last-child {
+        text-align: left;
+      }
+      }
+    }
+
+  }
 }
