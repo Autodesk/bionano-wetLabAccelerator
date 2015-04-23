@@ -268,23 +268,25 @@ angular.module('tx.datavis')
             tooltipInner      = tooltipEl.append("xhtml:div");
 
         function wellOnMouseover (d) {
-          //Get this well's values
-          var d3El      = d3.select(this),
-              radius    = parseFloat(d3El.attr("r"), 10),
-              xPosition = parseFloat(d3El.attr("cx"), 10) - ( tooltipDimensions.width / 2 ) + margin.left,
-              yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top,
-              wellValue = _.isEmpty(scope.plateData) || _.isUndefined(scope.plateData[d]) ?
-                null :
-                (+(scope.plateData[d].value)).toFixed(2);
+          if (scope.noBrush) {
+            //Get this well's values
+            var d3El      = d3.select(this),
+                radius    = parseFloat(d3El.attr("r"), 10),
+                xPosition = parseFloat(d3El.attr("cx"), 10) - ( tooltipDimensions.width / 2 ) + margin.left,
+                yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top,
+                wellValue = _.isEmpty(scope.plateData) || _.isUndefined(scope.plateData[d]) ?
+                  null :
+                  (+(scope.plateData[d].value)).toFixed(2);
 
-          //Update the tooltip position and value
-          tooltipEl.attr({
-            x: xPosition,
-            y: yPosition
-          });
+            //Update the tooltip position and value
+            tooltipEl.attr({
+              x: xPosition,
+              y: yPosition
+            });
 
-          tooltipInner.text(d + (wellValue ? ' : ' + wellValue : ''));
-          tooltipEl.classed("hidden", false);
+            tooltipInner.text(d + (wellValue ? ' : ' + wellValue : ''));
+            tooltipEl.classed("hidden", false);
+          }
         }
 
         function wellOnMouseleave () {
