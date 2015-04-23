@@ -1,15 +1,14 @@
-<div class="protocol-editor-header"
-     ng-show="restyleCtrl.currentProtocol">
-  <span class="protocol-name"
-        ng-bind="restyleCtrl.currentProtocol.name"></span>
+<div ng-show="restyleCtrl.currentProtocol">
+  <span ng-bind="restyleCtrl.currentProtocol.name"></span>
   <div class="glyphicon-ellipse" ng-click='toggleModal()'>
     <span class="glyphicon glyphicon-option-horizontal"></span>
   </div>
   <tx-modal ng-show='modalShown'>
-    <div>
-      <span>Edit protocol metadata</span>
-    </div>
     <table>
+      <thead>
+        <tr>
+          <td colspan="2">Edit protocol metadata</td></tr>
+      </thead>
       <tr>
         <td>Name</td>
         <td><input type="text" ng-model="restyleCtrl.currentProtocol.name"></td>
@@ -30,14 +29,11 @@
 <div class="flex-horizontal flex-grower">
 
   <div class="sidepanel flex-vertical"
-       ng-show="restyleCtrl.currentProtocol"
        resizeable
        resize-property="width"
        resize-position="right"
        resize-direction="horizontal"
-       style="width: 30%; max-width: 70vw; min-width: 10px;">
-
-    <span class="title">Operations</span>
+       ng-show="restyleCtrl.currentProtocol">
     <tx-operation-list class="flex-grower scroll-y"></tx-operation-list>
   </div>
 
