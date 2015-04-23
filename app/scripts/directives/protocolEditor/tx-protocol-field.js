@@ -21,7 +21,6 @@ angular.module('tx.protocolEditor')
         var self = this;
 
         self.handleAliquotSelection = function (wells) {
-          wells = _.isUndefined(wells) ? self.wellsOut : wells;
           //view guarantees that containerName is set given a change in wells (tx-plate)
 
           var mapped = _.map(wells, function (well) {
@@ -39,6 +38,9 @@ angular.module('tx.protocolEditor')
           } else {
             self.model = mapped;
           }
+
+          // todo - check if triggers new digest
+          self.wellsIn = wells;
         };
       },
       compile         : function compile (tElement, tAttrs, transclude) {
@@ -77,7 +79,7 @@ angular.module('tx.protocolEditor')
 
             /* get the partial */
 
-            return $http.get('views/inputs/' + partial + '.html').then(function (data) {
+            return $http.get('views/inputs/' + partial + '.html', {cache: true}).then(function (data) {
               var $el = angular.element(data.data);
               iElement.html($compile($el)(scope));
             });
@@ -88,9 +90,10 @@ angular.module('tx.protocolEditor')
 
             //if dimensional, ensure that unit is defined when changed
             //kinda a hack, but nice guarantee and easier than lots of object passing in conversion later
-            if (partial == 'dimensional') {
+            if (partial == 'dimension') {
               if (_.isUndefined(_.result(scope.fieldCtrl.model, 'unit'))) {
                 var listener = scope.$watch('fieldCtrl.model', function (newval) {
+
                   if (_.isObject(newval) && (newval.value || newval.unit)) {
                     var defaultUnit = _.result(_.result(scope.fieldCtrl.field, 'default'), 'unit') || scope.unitOptions[0];
                     ngModel.$setViewValue(_.assign({unit: defaultUnit}, scope.fieldCtrl.model));

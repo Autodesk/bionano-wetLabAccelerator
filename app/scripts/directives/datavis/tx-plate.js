@@ -62,6 +62,7 @@ angular.module('tx.datavis')
         scope.$watch('groupData', _.partial(rerender, false));
 
         scope.$watch('wellsInput', function (newWells, oldWells) {
+          console.log(newWells);
           if (_.isArray(newWells)) {
             safeClearBrush();
             toggleWellsFromMap(createWellMap(newWells, true), classSelected, true);
