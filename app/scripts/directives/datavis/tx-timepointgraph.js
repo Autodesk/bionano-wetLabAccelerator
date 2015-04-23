@@ -36,6 +36,7 @@ angular.module('tx.datavis')
         data          : '=',
         graphMeta     : '=', //accepts xlabel, ylabel, title
         seriesSelected: '=',
+        onHover       : '&',
         isLinear      : '='
       },
       link    : function postLink (scope, element, attrs) {
@@ -240,11 +241,18 @@ angular.module('tx.datavis')
           loupe.attr("transform", "translate(" + ( margin.left + point.scaled.x ) + "," + ( margin.top + point.scaled.y ) + ")")
             .attr('visibility', 'visible');
           loupeText.text(point.key + ' - ' + parseFloat(point.value, 10).toFixed(3));
+
+          scope.$applyAsync(function () {
+            scope.onHover({$well: point.key});
+          });
         }
 
         function voronoiMouseout (d) {
           series.classed('selected', false);
           loupe.attr("visibility", "hidden");
+          scope.$applyAsync(function () {
+            scope.onHover();
+          });
         }
 
         function handleLineSelection (nativeEl) {

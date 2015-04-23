@@ -38,6 +38,10 @@ angular.module('transcripticApp')
       $scope.currentWells = wells;
     };
 
+    $scope.onGraphHover = function (well) {
+      $scope.focusedWells = _.isUndefined(well) ? [] : [well];
+    };
+
     function setData (data) {
       $scope.loadedDemo = false;
       $scope.inputData = data;

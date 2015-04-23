@@ -1,8 +1,10 @@
 tx-plategraph,
 tx-timepointgraph {
 
-  $line-default: steelblue;
+  $line-default: $primary;
   $line-backdrop: $white;
+
+  display: block;
 
   .axis path,
   .axis line {
@@ -22,8 +24,8 @@ tx-timepointgraph {
     &.line-hover,
     &.selected {
       stroke-width: 3px;
-      filter: url(#line-backdrop);
-      transition: stroke 0.25s ease-in;
+      filter: url(#line-backdrop); //this is created in the directive
+      transition: stroke-width 0.25s ease-in;
     }
 
     &.hidden {
