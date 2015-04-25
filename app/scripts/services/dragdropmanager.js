@@ -9,16 +9,13 @@
  */
 angular.module('transcripticApp')
   .service('DragDropManager', function (Omniprotocol) {
-    this.type = {};
-    this.model = {};
-
     this.groupFromOp = function (op) {
-      var opKey = op.operation,
+      var opKey  = op.operation,
           opInfo = Omniprotocol.operations[opKey];
 
-      return  _.extend(Omniprotocol.utils.wrapOpInGroup(op), {
-        name : opInfo.name,
-        metadata : {
+      return _.extend(Omniprotocol.utils.wrapOpInGroup(op), {
+        name    : opInfo.name,
+        metadata: {
           description: opInfo.description
         }
       });
@@ -30,6 +27,15 @@ angular.module('transcripticApp')
         return $(neighbor).offset().top;
       });
     };
+
+    this.clear = function () {
+      this.type   = {};
+      this.model  = {};
+      this.onDrop = _.noop;
+    }.bind(this);
+
+    //init
+    this.clear();
 
     return this;
   });

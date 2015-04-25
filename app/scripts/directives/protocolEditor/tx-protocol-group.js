@@ -9,15 +9,15 @@
 angular.module('tx.protocolEditor')
   .directive('txProtocolGroup', function (DragDropManager) {
     return {
-      templateUrl: 'views/tx-protocol-group.html',
-      restrict: 'E',
-      require: '^txProtocolEditor',
-      scope: {
+      templateUrl     : 'views/tx-protocol-group.html',
+      restrict        : 'E',
+      require         : '^txProtocolEditor',
+      scope           : {
         group: '=protocolGroup'
       },
       bindToController: true,
-      controllerAs: 'groupCtrl',
-      controller: function ($scope, $element, $attrs) {
+      controllerAs    : 'groupCtrl',
+      controller      : function ($scope, $element, $attrs) {
         var self = this;
 
         self.toggleGroupActionsVisible = function ($event, force) {
@@ -33,14 +33,23 @@ angular.module('tx.protocolEditor')
           $scope.jsonEditing = angular.isDefined(force) ?
             force :
             !( $scope.jsonEditing );
-          $scope.logVisible = false;
+          $scope.logVisible  = false;
         };
 
         self.toggleLogCollapsed = function (force) {
-          $scope.logVisible = angular.isDefined(force) ?
+          $scope.logVisible  = angular.isDefined(force) ?
             force :
             !( $scope.logVisible );
           $scope.jsonEditing = false;
+        };
+
+        self.duplicateStep = function (step) {
+          var index = _.indexOf(self.group, step);
+          self.group.steps.splice(index, 0, angular.copy(step));
+        };
+
+        self.deleteStep = function (step) {
+          _.remove(self.group.steps, step);
         };
 
         //drag and drop interaction
@@ -48,13 +57,17 @@ angular.module('tx.protocolEditor')
         self.optsDraggableInstruction = {
           handle: '.operation-name',
           revert: true,
-          start: function (e, ui) {
+          start : function (e, ui) {
             var opScope = angular.element(e.target).scope(),
-                opModel = opScope.step;
+                opModel = opScope.step,
+                opClone = _.cloneDeep(opModel);
 
             _.assign(DragDropManager, {
               type : 'operation',
-              model : opModel
+              model: opClone,
+              onDrop: function () {
+                self.deleteStep(opModel);
+              }
             });
           }
         };
@@ -62,40 +75,50 @@ angular.module('tx.protocolEditor')
         //these are internal so that position is calculated relative to group, not editor
 
         self.optsDraggableGroup = {
-          handle: '.protocol-group-header',
-          axis: 'y',
-          revert: true,
+          handle        : '.protocol-group-header',
+          axis          : 'y',
+          revert        : true,
           revertDuration: 0,
-          start: function (e, ui) {
-            var opScope = angular.element(e.target).scope(),
-                opModel = opScope.step;
+          start         : function (e, ui) {
+            var groupModel = self.group,
+                groupClone = _.cloneDeep(groupModel);
+
+            //todo - smarter differentiation of sorting and cloning
+            //fixme - step is getting deleted...
 
             _.assign(DragDropManager, {
               type : 'group',
-              model : opModel
+              model: groupClone,
+              onDrop: function () {
+                $scope.deleteGroup();
+              }
             });
           }
         };
 
         self.optsDroppableGroup = {
           tolerance: 'pointer',
-          greedy: true,
-          drop: function (e, ui) {
+          greedy   : true,
+          drop     : function (e, ui) {
             var draggableTop = ui.draggable.offset().top,
                 neighborTops = DragDropManager.getNeighborTops('tx-protocol-op', $element),
-                dropIndex = (_.takeWhile(neighborTops, function (neighborTop) {
+                dropIndex    = (_.takeWhile(neighborTops, function (neighborTop) {
                   return neighborTop < draggableTop;
                 })).length;
 
             console.log('group', draggableTop, neighborTops, dropIndex, DragDropManager.type, DragDropManager.model);
 
-             if (DragDropManager.type == 'operation') {
-               $scope.$applyAsync(function () {
-                 self.group.steps.splice(dropIndex, 0, DragDropManager.model);
-               });
-             } else {
-               //todo - handle merging groups
-             }
+            $scope.$applyAsync(function () {
+              DragDropManager.onDrop();
+
+              if (DragDropManager.type == 'operation') {
+                self.group.steps.splice(dropIndex, 0, DragDropManager.model);
+              } else {
+                //todo - handle merging groups
+              }
+
+              DragDropManager.clear();
+            });
 
             //todo - handle deletion / splice of original model / DOM
           }
@@ -103,12 +126,12 @@ angular.module('tx.protocolEditor')
 
         self.optsDroppableInstruction = {
           greedy: true, //just a dummy to prevent propagation upward
-          drop: _.noop
+          drop  : DragDropManager.clear //todo - better revert - or allow dropping afterward
         };
 
       },
       //editorCtrl only exposed in link
-      link: function (scope, element, attrs, editorCtrl) {
+      link            : function (scope, element, attrs, editorCtrl) {
         scope.duplicateGroup = function () {
           editorCtrl.duplicateGroup(scope.groupCtrl.group);
         };

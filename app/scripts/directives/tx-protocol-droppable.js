@@ -14,6 +14,7 @@ angular.module('transcripticApp')
 
         var dropDefaults = {
               greedy    : true,
+              tolerance : 'pointer',
               hoverClass: 'drop-hover'
             },
             parsedRaw    = $parse(attrs['txProtocolDroppable'])(scope),
