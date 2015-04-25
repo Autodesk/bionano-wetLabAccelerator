@@ -13,7 +13,7 @@
  // should be able to drop into either a group or an operation
  */
 angular.module('tx.protocolEditor')
-  .directive('txOperationList', function ($document, Omniprotocol) {
+  .directive('txOperationList', function ($document, $window, DragDropManager, Omniprotocol) {
     return {
       templateUrl: 'views/tx-operation-list.html',
       restrict: 'E',
@@ -23,10 +23,15 @@ angular.module('tx.protocolEditor')
 
         var currentOpCancelled = false;
 
-        scope.gallerySortableOptions = {
+        scope.sortableOptions = {
           scroll: true,
-          connectWith: ".protocol-instructions",
+          helper: 'clone',
+          appendTo: document.body, // this crashes chrome with ui-sortable???
+          items: ".drag-handle",
+          //connectWith: ".protocol-instructions",
           update: function (e, ui) {
+
+            debugger;
 
             //same list
             if (!ui.item.sortable.droptargetModel ||
@@ -70,10 +75,26 @@ angular.module('tx.protocolEditor')
           }
         };
 
+        scope.draggableOptions = {
+          helper: 'clone',
+          appendTo: document.body,
+          scroll: true,
+          start: function (e, ui) {
+            var opKey = angular.element(e.target).scope().op,
+                opInfo = Omniprotocol.operations[opKey],
+                opScaffold = _.clone(opInfo.scaffold, true);
+
+            _.assign(DragDropManager, {
+              type : 'operation',
+              model : opScaffold
+            });
+          }
+        };
+
         var initalKeys;
         function getOperationKeys () {
           _.isUndefined(initalKeys) && (initalKeys = _.keys(Omniprotocol.operations));
-          return initalKeys;
+          return _.clone(initalKeys);
         }
       }
     };
