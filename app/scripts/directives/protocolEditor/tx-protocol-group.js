@@ -67,7 +67,10 @@ angular.module('tx.protocolEditor')
               model: opClone,
               onDrop: function () {
                 self.deleteStep(opModel);
-                //todo - if group is empty, delete it?
+
+                if (self.group.steps.length == 0) {
+                  $scope.deleteGroup();
+                }
               }
             });
           }

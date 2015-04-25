@@ -21,6 +21,8 @@ angular.module('tx.protocolEditor')
       controller      : function ($scope, $element, $attrs) {
         var self = this;
 
+        /*
+        //ui-sortable options
         self.groupSortableOptions = {
           axis       : 'y',
           scroll     : true,
@@ -28,6 +30,7 @@ angular.module('tx.protocolEditor')
           containment: '.protocol-instructions',
           tolerance  : 'pointer'
         };
+        */
 
         self.duplicateGroup = function (group) {
           var index = _.indexOf(self.protocol.groups, group);
