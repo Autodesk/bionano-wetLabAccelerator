@@ -7,7 +7,7 @@
  * # txOperationgroup
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolGroup', function () {
+  .directive('txProtocolGroup', function (DragDropManager) {
     return {
       templateUrl: 'views/tx-protocol-group.html',
       restrict: 'E',
@@ -43,10 +43,69 @@ angular.module('tx.protocolEditor')
           $scope.jsonEditing = false;
         };
 
-        self.opSortOptions = {
+        //drag and drop interaction
+
+        self.optsDraggableInstruction = {
           handle: '.operation-name',
-          containment: 'parent'
+          revert: true,
+          start: function (e, ui) {
+            var opScope = angular.element(e.target).scope(),
+                opModel = opScope.step;
+
+            _.assign(DragDropManager, {
+              type : 'operation',
+              model : opModel
+            });
+          }
         };
+
+        //these are internal so that position is calculated relative to group, not editor
+
+        self.optsDraggableGroup = {
+          handle: '.protocol-group-header',
+          axis: 'y',
+          revert: true,
+          revertDuration: 0,
+          start: function (e, ui) {
+            var opScope = angular.element(e.target).scope(),
+                opModel = opScope.step;
+
+            _.assign(DragDropManager, {
+              type : 'group',
+              model : opModel
+            });
+          }
+        };
+
+        self.optsDroppableGroup = {
+          tolerance: 'pointer',
+          greedy: true,
+          drop: function (e, ui) {
+            var draggableTop = ui.draggable.offset().top,
+                neighborTops = DragDropManager.getNeighborTops('tx-protocol-op', $element),
+                dropIndex = (_.takeWhile(neighborTops, function (neighborTop) {
+                  return neighborTop < draggableTop;
+                })).length;
+
+            console.log('group', draggableTop, neighborTops, dropIndex, DragDropManager.type, DragDropManager.model);
+
+             if (DragDropManager.type == 'operation') {
+               $scope.$applyAsync(function () {
+                 self.group.steps.splice(dropIndex, 0, DragDropManager.model);
+               });
+             } else {
+               //todo - handle merging groups
+             }
+
+            //todo - handle deletion / splice of original model / DOM
+          }
+        };
+
+        self.optsDroppableInstruction = {
+          greedy: true, //just a dummy to prevent propagation upward
+          drop: _.noop
+        };
+
       },
       //editorCtrl only exposed in link
       link: function (scope, element, attrs, editorCtrl) {

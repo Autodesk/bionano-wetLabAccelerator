@@ -6,9 +6,9 @@
  * @description
  * # txProtocolEditor
  */
-
+//todo - listen for parameters changing, propagate variable name throughout
 angular.module('tx.protocolEditor')
-  .directive('txProtocolEditor', function () {
+  .directive('txProtocolEditor', function (DragDropManager) {
     return {
       templateUrl: 'views/tx-protocol-editor.html',
       restrict: 'E',
@@ -38,7 +38,32 @@ angular.module('tx.protocolEditor')
           _.remove(self.protocol.groups, group);
         };
 
-      //todo - listen for parameters changing, propagate variable name throughout
+        self.optsDroppableEditor = {
+          greedy: true,
+          tolerance: 'pointer',
+          drop: function (e, ui) {
+            console.log(e);
+            var draggableTop = e.pageY,
+                neighborTops = DragDropManager.getNeighborTops('tx-protocol-group', $element),
+                dropIndex = (_.takeWhile(neighborTops, function (neighborTop) {
+                  return neighborTop < draggableTop;
+                })).length;
+
+            //assuming we only have groups and operations
+            var group = (DragDropManager.type == 'operation') ?
+              DragDropManager.groupFromOp(DragDropManager.model) :
+              DragDropManager.model;
+
+            console.log(draggableTop, neighborTops, group);
+
+            $scope.$applyAsync(function () {
+              self.protocol.groups.splice(dropIndex, 0, group);
+            });
+
+            //todo - deletion / splice of original model / DOM if not from operation list
+          }
+        };
+
       },
       link: function postLink(scope, element, attrs) {
 

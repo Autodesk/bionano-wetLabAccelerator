@@ -3,8 +3,7 @@
 </div>
 
 <div class="protocol-instructions"
-     ui-sortable="editorCtrl.groupSortableOptions"
-     ng-model="editorCtrl.protocol.groups">
+     tx-protocol-droppable="editorCtrl.optsDroppableEditor">
   <tx-protocol-group ng-repeat="group in editorCtrl.protocol.groups"
                      class="protocol-group"
                      tx-inspector-select

@@ -1,5 +1,6 @@
 tx-protocol-op {
   display: block;
+  margin: 0.75em;
 
   .operation-name {
     cursor: all-scroll;
@@ -14,5 +15,9 @@ tx-protocol-op {
 
   .operation-field {
 
+  }
+
+  table {
+    margin: 0;
   }
 }
