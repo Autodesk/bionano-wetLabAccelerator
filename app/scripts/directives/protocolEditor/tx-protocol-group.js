@@ -67,12 +67,13 @@ angular.module('tx.protocolEditor')
               model: opClone,
               onDrop: function () {
                 self.deleteStep(opModel);
+                //todo - if group is empty, delete it?
               }
             });
           }
         };
 
-        //these are internal so that position is calculated relative to group, not editor
+        //these are internal so that position is calculated relative to group, not editor, better model binding
 
         self.optsDraggableGroup = {
           handle        : '.protocol-group-header',
@@ -82,9 +83,6 @@ angular.module('tx.protocolEditor')
           start         : function (e, ui) {
             var groupModel = self.group,
                 groupClone = _.cloneDeep(groupModel);
-
-            //todo - smarter differentiation of sorting and cloning
-            //fixme - step is getting deleted...
 
             _.assign(DragDropManager, {
               type : 'group',
@@ -100,7 +98,7 @@ angular.module('tx.protocolEditor')
           tolerance: 'pointer',
           greedy   : true,
           drop     : function (e, ui) {
-            var draggableTop = ui.draggable.offset().top,
+            var draggableTop = e.pageY,
                 neighborTops = DragDropManager.getNeighborTops('tx-protocol-op', $element),
                 dropIndex    = (_.takeWhile(neighborTops, function (neighborTop) {
                   return neighborTop < draggableTop;
@@ -108,19 +106,19 @@ angular.module('tx.protocolEditor')
 
             console.log('group', draggableTop, neighborTops, dropIndex, DragDropManager.type, DragDropManager.model);
 
-            $scope.$applyAsync(function () {
+            $scope.$apply(function () {
               DragDropManager.onDrop();
 
               if (DragDropManager.type == 'operation') {
                 self.group.steps.splice(dropIndex, 0, DragDropManager.model);
               } else {
-                //todo - handle merging groups
+                _.forEach(DragDropManager.model.steps, function (step) {
+                  self.group.steps.push(step);
+                });
               }
 
               DragDropManager.clear();
             });
-
-            //todo - handle deletion / splice of original model / DOM
           }
         };
 

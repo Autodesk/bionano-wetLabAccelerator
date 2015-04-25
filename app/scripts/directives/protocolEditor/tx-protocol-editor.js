@@ -54,10 +54,11 @@ angular.module('tx.protocolEditor')
               DragDropManager.groupFromOp(DragDropManager.model) :
               DragDropManager.model;
 
-            console.log(draggableTop, neighborTops, group);
+            console.log(draggableTop, neighborTops, group, self.protocol);
 
-            $scope.$applyAsync(function () {
+            $scope.$apply(function () {
               DragDropManager.onDrop();
+              //todo - ensure splicing proper location / _.compact groups + steps
               self.protocol.groups.splice(dropIndex, 0, group);
               DragDropManager.clear();
             });
