@@ -1,6 +1,14 @@
-
 {
-  "name": "Simple Transfer Protocol",
+  "metadata": {
+    "name": "Simple Transfer Protocol",
+    "id" : "209bcdaf9e09f8ab02395",
+    "type" : "protocol",
+    "author" : {
+      "name" : "Aaron Berliner",
+      "id" : "2490248092452353253235235"
+    },
+    "description" : "Example protocol demonstrating a few steps and loops and use of variables"
+  },
   "parameters": [
     {
       "name": "myAbsorbance",
@@ -33,7 +41,6 @@
       }
     }
   ],
-  "metadata": {},
   "groups": [
     {
       "name": "Transfer Group",

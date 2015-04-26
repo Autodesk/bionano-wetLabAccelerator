@@ -1,7 +1,7 @@
 <div class="protocol-title" ng-class="{'open' : protocolMetadataVisible}">
   <div ng-click="actionCtrl.toggleMetadataVisible($event)">
     <span class="protocol-name"
-          ng-bind="actionCtrl.protocol.name"></span>
+          ng-bind="actionCtrl.protocol.metadata.name"></span>
 
     <div class="glyphicon-circle">
       <span class="glyphicon glyphicon-option-horizontal"></span>
@@ -11,7 +11,7 @@
     <table>
       <tr>
         <td>Name</td>
-        <td><input type="text"  class="form-control" ng-model="actionCtrl.protocol.name"></td>
+        <td><input type="text"  class="form-control" ng-model="actionCtrl.protocol.metadata.name"></td>
       </tr>
       <tr>
         <td>Description</td>
@@ -47,12 +47,12 @@
       <span class="caret"></span>
       <ul class="dropdown-menu">
         <li><a tx-downloadjson
-               filename="{{(actionCtrl.protocol.name ? actionCtrl.protocol.name : 'protocol') + '_omniprotocol.json'}}"
+               filename="{{(actionCtrl.protocol.metadata.name ? actionCtrl.protocol.metadata.name : 'protocol') + '_omniprotocol.json'}}"
                download-model="actionCtrl.protocol">
           Omniprotocol
         </a></li>
         <li><a tx-downloadjson
-               filename="{{(actionCtrl.protocol.name ? actionCtrl.protocol.name : 'protocol') + '_autoprotocol.json'}}"
+               filename="{{(actionCtrl.protocol.metadata.name ? actionCtrl.protocol.metadata.name : 'protocol') + '_autoprotocol.json'}}"
                download-model="actionCtrl.protocol"
                download-formatter="actionCtrl.autoprotocolConvertFunction">
           Autoprotocol

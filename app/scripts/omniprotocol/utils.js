@@ -104,11 +104,15 @@ function wrapGroupsInProtocol (groupsInput) {
   var groups = _.isArray(groupsInput) ? groupsInput : [groupsInput];
 
   return {
-    "name"      : "",
+    "metadata"  : {
+      "name"  : "",
+      "id"    : "",
+      "type"  : "protocol",
+      "author": {}
+    },
     "references": [],
     "inputs"    : {},
     "parameters": {},
-    "metadata"  : {},
     "groups"    : groups
   }
 }
