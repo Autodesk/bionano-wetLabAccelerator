@@ -1,9 +1,9 @@
 {
   "metadata": {
     "name": "Run Dummy Data",
-    "id": "292983bac9e8dfa0913091309",
+    "id": "292983bac9e8dfa0913091311",
     "type" : "run",
-    "date" : "1430006919149",
+    "date" : "1430986919149",
     "author": {
       "name": "Maxwell Bates",
       "id": "20b2c28d023708ac0923"
@@ -13,7 +13,7 @@
       "author" : "20b2c28d023708ac0923",
       "id" : "24289898aced8af81c0b303"
     },
-    "success" : true,
+    "success" : false,
     "description": "Run of protocol Digesting protocol"
   },
   "parameters": [],
