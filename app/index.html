@@ -78,7 +78,9 @@
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
     <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
@@ -168,6 +170,7 @@
     <script src="scripts/directives/datavis/tx-plate.js"></script>
     <script src="scripts/directives/datavis/tx-timepointgraph.js"></script>
     <script src="scripts/directives/datavis/tx-welltip.js"></script>
+    <script src="scripts/directives/datavis/tx-protocol-mini.js"></script>
     <script src="scripts/directives/protocolEditor/_kickoff.js"></script>
     <script src="scripts/directives/protocolEditor/tx-requestresponse.js"></script>
     <script src="scripts/directives/protocolEditor/tx-operation-list.js"></script>
@@ -181,6 +184,11 @@
     <script src="scripts/directives/protocolEditor/tx-protocol-setup.js"></script>
     <script src="scripts/directives/tx-inspector-select.js"></script>
     <script src="scripts/controllers/thermocycledyes.js"></script>
+    <script src="scripts/controllers/testing/results.js"></script>
+    <script src="scripts/directives/tx-operation-summary.js"></script>
+    <script src="scripts/directives/tx-protocol-draggable.js"></script>
+    <script src="scripts/directives/tx-protocol-droppable.js"></script>
+    <script src="scripts/services/dragdropmanager.js"></script>
     <!-- endbuild -->
 </body>
 </html>

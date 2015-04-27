@@ -6,10 +6,10 @@
        style="padding: 2px 10px; margin-bottom: 3px; border: 0;"
        ng-repeat="op in operationKeys"
        ng-bind="op"
+       tx-protocol-draggable="draggableOptions"
        tx-inspector-select
        select-trigger="mouseenter"
        select-title="op"
        select-type="'operation'"
        select-description="operations[op].description"></a>
 </div>
-

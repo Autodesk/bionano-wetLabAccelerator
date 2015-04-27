@@ -88,34 +88,139 @@ function getFieldTypeInOperation (operationName, fieldName) {
  Wrapping
  ******/
 
-function wrapOpInGroup (op) {
+function getScaffoldGroup () {
   return {
     name    : "",
     inputs  : {},
     metadata: {},
     loop    : 1,
-    steps   : [
-      op
-    ]
+    steps   : []
+  }
+}
+
+function wrapOpInGroup (op) {
+  var ops = _.isArray(op) ? op : [op];
+  return _.assign(getScaffoldGroup(), {steps: ops});
+}
+
+function getScaffoldProtocol () {
+  return {
+    "name"      : "",
+    "inputs"    : {},
+    "parameters": [],
+    "metadata"  : {},
+    "groups"    : []
   }
 }
 
 function wrapGroupsInProtocol (groupsInput) {
   var groups = _.isArray(groupsInput) ? groupsInput : [groupsInput];
 
-  return {
-    "name"      : "",
-    "references": [],
-    "inputs"    : {},
-    "parameters": {},
-    "metadata"  : {},
-    "groups"    : groups
-  }
+  _.assign(getScaffoldProtocol(), {groups: groups});
 }
 
 /********
  Transformations
  ********/
+
+function getNumberUnfoldedSteps (protocol) {
+  return _.reduce(protocol.groups, function (result, group, groupLoop) {
+    return result + _.result(group, 'loop', 1) * group.steps.length;
+  }, 0);
+}
+
+//given operation index in protocol (# operation in linear protocol, ignoring loops)
+//returns array of possible numbers when unfolded, or empty array if none
+function getUnfoldedStepNumbersFromLinear (protocol, foldNum) {
+  var result        = [],
+      foldIndex     = 0,
+      unfoldedIndex = 0;
+
+  _.forEach(protocol.groups, function (group, groupIndex) {
+    _.forEach(group.steps, function (step, stepIndex) {
+      if (foldNum == foldIndex) {
+        var groupLoop = _.result(group, 'loop', 1),
+            stepNum   = group.steps.length;
+
+        result = _.map(_.range(groupLoop), function (ind) {
+          return unfoldedIndex + (ind * stepNum);
+        });
+      }
+
+      foldIndex += 1;
+      unfoldedIndex += 1;
+    });
+    //increment for loops, accounting for one run through step already
+    unfoldedIndex += (group.steps.length) * (_.result(group, 'loop', 1) - 1);
+  });
+
+  return result;
+}
+
+//given group and step index,
+// returns array of steps when unfolded, or empty if none
+function getUnfoldedStepNumbers (protocol, groupIndex, stepIndex) {
+  var result = [];
+  _.reduce(protocol.groups, function (cumulativeStep, group, groupLoop) {
+    var loopNum = _.result(group, 'loop', 1);
+    return cumulativeStep + (loopNum * _.reduce(group.steps, function (innerAccumulator, step, stepLoop) {
+        if (groupLoop == groupIndex && stepLoop == stepIndex) {
+          result = _.map(_.range(loopNum), function (loop) {
+            return cumulativeStep + stepLoop + (loop * group.steps.length);
+          });
+        }
+        return group.steps.length;
+      }, 0));
+  }, 0);
+  return result;
+}
+
+function getUnfoldedStepNumber (protocol, groupIndex, stepIndex, loopIndex) {
+  return getUnfoldedStepNumbers(protocol, groupIndex, stepIndex)[loopIndex];
+}
+
+//todo - what is the point of this function? deprecate
+//given index of group, index of step in group,
+// todo - optionally index in loop (of group.loop) as loopIndex
+function getFoldedStepNumber (protocol, groupIndex, stepIndex) {
+  var result = -1;
+  _.reduce(protocol.groups, function (priorSteps, group, groupLoop) {
+    _.forEach(group.steps, function (step, stepLoop) {
+      if (stepIndex == stepLoop && groupIndex == groupLoop) {
+        result = priorSteps + stepLoop;
+      }
+    });
+    return group.steps.length;
+  }, 0);
+  return result;
+}
+
+//given index in unfolded protocol,
+//returns single number
+function getFoldedStepInfo (protocol, unfoldNum) {
+  var result        = {},
+      unfoldedIndex = 0;
+
+  _.forEach(protocol.groups, function (group, groupIndex) {
+    var loopNum = _.result(group, 'loop', 1);
+    _.forEach(_.range(loopNum), function (groupLoopIndex) {
+      _.forEach(group.steps, function (step, stepIndex) {
+        if (unfoldNum == unfoldedIndex) {
+          _.assign(result, {
+            group   : groupIndex,
+            step    : stepIndex,
+            loop    : groupLoopIndex,
+            unfolded: unfoldNum
+          });
+        }
+
+        unfoldedIndex += 1;
+      });
+    });
+  });
+
+  return result;
+}
 
 // note - would be great to DRY, but lots of variables needed to pass in then
 
@@ -201,15 +306,23 @@ function getTransformsWell (protocol, well) {
 }
 
 module.exports = {
-  pluckField                 : pluckField,
-  pluckFieldValueRaw         : pluckFieldValueRaw,
-  interpolateValue           : interpolateValue,
-  interpolateObject          : interpolateObject,
-  wrapFieldsAsStep           : wrapFieldsAsStep,
-  scaffoldOperationWithValues: scaffoldOperationWithValues,
-  getFieldTypeInOperation    : getFieldTypeInOperation,
-  wrapOpInGroup              : wrapOpInGroup,
-  wrapGroupsInProtocol       : wrapGroupsInProtocol,
-  getTransformsContainer     : getTransformsContainer,
-  getTransformsWell          : getTransformsWell
+  pluckField                      : pluckField,
+  pluckFieldValueRaw              : pluckFieldValueRaw,
+  interpolateValue                : interpolateValue,
+  interpolateObject               : interpolateObject,
+  wrapFieldsAsStep                : wrapFieldsAsStep,
+  scaffoldOperationWithValues     : scaffoldOperationWithValues,
+  getFieldTypeInOperation         : getFieldTypeInOperation,
+  getScaffoldGroup                : getScaffoldGroup,
+  wrapOpInGroup                   : wrapOpInGroup,
+  getScaffoldProtocol             : getScaffoldProtocol,
+  wrapGroupsInProtocol            : wrapGroupsInProtocol,
+  getNumberUnfoldedSteps          : getNumberUnfoldedSteps,
+  getUnfoldedStepNumber           : getUnfoldedStepNumber,
+  getUnfoldedStepNumbers          : getUnfoldedStepNumbers,
+  getUnfoldedStepNumbersFromLinear: getUnfoldedStepNumbersFromLinear,
+  getFoldedStepNumber             : getFoldedStepNumber,
+  getFoldedStepInfo               : getFoldedStepInfo,
+  getTransformsContainer          : getTransformsContainer,
+  getTransformsWell               : getTransformsWell
 };

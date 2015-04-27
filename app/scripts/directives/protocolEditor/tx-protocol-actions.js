@@ -7,7 +7,7 @@
  * # txProtocolActions
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolActions', function ($q, Auth, Autoprotocol, Run, Project) {
+  .directive('txProtocolActions', function ($q, Auth, Autoprotocol, Omniprotocol, Run, Project) {
     return {
       templateUrl: 'views/tx-protocol-actions.html',
       restrict: 'E',
@@ -26,6 +26,10 @@ angular.module('tx.protocolEditor')
             return $q.when(projects[0].id);
           });
         });
+
+        self.clearProtocol = function () {
+          _.assign(self.protocol, Omniprotocol.utils.getScaffoldProtocol());
+        };
 
         self.logAutoprotocol = function () {
           console.log(angular.toJson(Autoprotocol.fromAbstraction(self.protocol), true));

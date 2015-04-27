@@ -19,7 +19,7 @@ angular.module('transcripticApp')
     });
 
     $scope.loadDemo = function () {
-      $http.get('demo_protocols/omniprotocol/digest.json').success(function (d) {
+      $http.get('demo_protocols/omniprotocol/protocol_transfer.json').success(function (d) {
         self.currentProtocol = d;
       });
     };

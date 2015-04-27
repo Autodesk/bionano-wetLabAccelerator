@@ -1,5 +1,6 @@
 tx-protocol-op {
   display: block;
+  margin: 0.75em;
 
   .operation-name {
     cursor: all-scroll;
@@ -18,6 +19,7 @@ tx-protocol-op {
 
   table {
     border-spacing: 5px 10px;
+    margin: 0;
     tr {
       td {
       &:first-child {
