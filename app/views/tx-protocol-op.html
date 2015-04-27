@@ -1,4 +1,7 @@
 <table>
+  <tr>
+    <th class="operation-name" ng-bind="opCtrl.op.operation"></th>
+  </tr>
   <tr ng-repeat="field in opCtrl.op.fields">
     <td class="operation-label" ng-class="{optional: field.optional == true}">{{field.name}}:</td>
     <td>

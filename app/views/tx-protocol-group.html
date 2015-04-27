@@ -47,8 +47,6 @@
   </div>
 
   <div class="protocol-group-main"
-       ui-sortable="groupCtrl.opSortOptions"
-       ng-model="groupCtrl.group.steps"
        ng-show="isCollapsed">
     {{groupCtrl.group.metadata.description}}
     <tx-protocol-op ng-repeat="step in groupCtrl.group.steps"
