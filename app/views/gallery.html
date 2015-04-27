@@ -63,8 +63,8 @@
 
     </form>
 
-    <div class="maincolumn flex-grower maxout-scroll-vertical flex-horizontal">
-      <div class="gallery-items flex-grower">
+    <div class="maincolumn flex-grower flex-horizontal">
+      <div class="gallery-items flex-grower maxout-scroll-vertical">
         <div ng-repeat="item in galleryCtrl.allTheStuff | filter:galleryCtrl.filters | limitTo: 20"
              class="gallery-item"
              ng-class="{'active': galleryCtrl.currentItem == item}"
@@ -85,15 +85,40 @@
           <div class="gallery-generic">
             <p ng-bind="galleryCtrl.currentItem.metadata.description"></p>
           </div>
+          <hr>
           <div class="gallery-specific">
             <div ng-if="galleryCtrl.currentItem.metadata.type =='virus'">
+              <p>Group {{galleryCtrl.currentItem.baltimore_group}}</p>
 
+              <p>{{galleryCtrl.currentItem.taxonomy.family + ' > ' +
+                galleryCtrl.currentItem.taxonomy.subfamily + ' > ' +
+                galleryCtrl.currentItem.taxonomy.genus + ' > ' +
+                galleryCtrl.currentItem.taxonomy.species }}</p>
+
+              <p>{{galleryCtrl.currentItem.virion.shape.shape + ' ' + galleryCtrl.currentItem.virion.envelope + ' of ' + galleryCtrl.currentItem.shape.size + ' proteins'}}</p>
+
+              <p>{{galleryCtrl.currentItem.genome.shape + ' ' + galleryCtrl.currentItem.genome.nucleic_acid + ' of ' + galleryCtrl.currentItem.genome.size + ' bases'}}</p>
             </div>
             <div ng-if="galleryCtrl.currentItem.metadata.type =='protocol'">
-
+              <h4>Steps</h4>
+              <div style="position:relative">
+                <tx-protocol-mini protocol="galleryCtrl.currentItem"></tx-protocol-mini>
+              </div>
+              <h4>Parameters</h4>
+              <table>
+                <tr ng-repeat="param in galleryCtrl.currentItem.parameters">
+                  <td ng-bind="param.name"></td>
+                  <td><pre ng-bind="param.value | json"></pre></td>
+                </tr>
+              </table>
             </div>
             <div ng-if="galleryCtrl.currentItem.metadata.type =='run'">
+              <p>Time: {{galleryCtrl.currentItem.metadata.date | date:'medium'}}</p>
 
+              <span class="label"
+                    ng-class="{'label-success' : galleryCtrl.currentItem.metadata.success, 'label-danger' : !galleryCtrl.currentItem.metadata.success}">
+                Run {{galleryCtrl.currentItem.metadata.success ? 'Success' : 'Failed'}}
+              </span>
             </div>
           </div>
         </div>

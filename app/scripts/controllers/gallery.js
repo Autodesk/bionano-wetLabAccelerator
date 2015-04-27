@@ -26,7 +26,7 @@ angular.module('transcripticApp')
       },
       run     : {
         directory: "demo_runs",
-        items    : ['run_dummy']
+        items    : _.map(['', '2', '3'], function (suffix) { return 'run_dummy' + suffix })
       }
     };
 
