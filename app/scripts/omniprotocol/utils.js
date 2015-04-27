@@ -106,9 +106,8 @@ function wrapOpInGroup (op) {
 function getScaffoldProtocol () {
   return {
     "name"      : "",
-    "references": [],
     "inputs"    : {},
-    "parameters": {},
+    "parameters": [],
     "metadata"  : {},
     "groups"    : []
   }
