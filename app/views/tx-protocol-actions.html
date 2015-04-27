@@ -30,6 +30,11 @@
     <btn-delete delete-text="Delete Protocol"
                 on-delete="onDelete()"></btn-delete>
     <button class="btn btn-default btn-sm"
+            fake-note="!!!!!this is temporary. you can delete this"
+            ng-click="actionCtrl.clearProtocol()">
+      <span class="glyphicon glyphicon-fire"></span>
+    </button>
+    <button class="btn btn-default btn-sm"
             ng-disabled="actionCtrl.protocolForm.$error.json"
             ng-class="{'btn-info' : actionCtrl.protocolForm.$dirty}"
             ng-click="handleSave()"

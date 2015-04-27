@@ -88,29 +88,36 @@ function getFieldTypeInOperation (operationName, fieldName) {
  Wrapping
  ******/
 
-function wrapOpInGroup (op) {
+function getScaffoldGroup () {
   return {
     name    : "",
     inputs  : {},
     metadata: {},
     loop    : 1,
-    steps   : [
-      op
-    ]
+    steps   : []
   }
 }
 
-function wrapGroupsInProtocol (groupsInput) {
-  var groups = _.isArray(groupsInput) ? groupsInput : [groupsInput];
+function wrapOpInGroup (op) {
+  var ops = _.isArray(op) ? op : [op];
+  return _.assign(getScaffoldGroup(), {steps: ops});
+}
 
+function getScaffoldProtocol () {
   return {
     "name"      : "",
     "references": [],
     "inputs"    : {},
     "parameters": {},
     "metadata"  : {},
-    "groups"    : groups
+    "groups"    : []
   }
+}
+
+function wrapGroupsInProtocol (groupsInput) {
+  var groups = _.isArray(groupsInput) ? groupsInput : [groupsInput];
+
+  _.assign(getScaffoldProtocol(), {groups: groups});
 }
 
 /********
@@ -307,7 +314,9 @@ module.exports = {
   wrapFieldsAsStep                : wrapFieldsAsStep,
   scaffoldOperationWithValues     : scaffoldOperationWithValues,
   getFieldTypeInOperation         : getFieldTypeInOperation,
+  getScaffoldGroup                : getScaffoldGroup,
   wrapOpInGroup                   : wrapOpInGroup,
+  getScaffoldProtocol             : getScaffoldProtocol,
   wrapGroupsInProtocol            : wrapGroupsInProtocol,
   getNumberUnfoldedSteps          : getNumberUnfoldedSteps,
   getUnfoldedStepNumber           : getUnfoldedStepNumber,
