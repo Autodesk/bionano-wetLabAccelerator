@@ -134,7 +134,7 @@ module.exports = function (grunt) {
         options: {
           //port: 80,
           open: true,
-          hostname: '0.0.0.0',
+          //hostname: '0.0.0.0', //comment out to use localhost, e.g. for ngrok
           base: '<%= yeoman.dist %>',
           middleware: function (connect) {
             //todo - get this integrated --- seems to be undefined in grunt serve:dist
