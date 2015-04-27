@@ -8,7 +8,7 @@
  */
   //todo - listen for parameters changing, propagate variable name throughout
 angular.module('tx.protocolEditor')
-  .directive('txProtocolEditor', function (DragDropManager) {
+  .directive('txProtocolEditor', function ($window, DragDropManager) {
     return {
       templateUrl     : 'views/tx-protocol-editor.html',
       restrict        : 'E',
@@ -39,6 +39,25 @@ angular.module('tx.protocolEditor')
 
         self.deleteGroup = function (group) {
           _.remove(self.protocol.groups, group);
+        };
+
+        self.onFileDrop = function (files, event, rejected) {
+          if ($window.FileReader) {
+
+            var fileReader = new FileReader();
+
+            fileReader.onload = function(e) {
+              $scope.$apply(function() {
+                try {
+                  self.protocol = angular.fromJson(e.target.result);
+                } catch (e) {
+                  console.log('couldnt parse dropped JSON', e);
+                }
+              });
+            };
+
+            fileReader.readAsText(files[0]);
+          }
         };
 
         self.optsDroppableEditor = {
