@@ -16,6 +16,9 @@
 }
 
 tx-protocol-actions {
-  display: block;
+  display: flex;
   position: relative;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 $layout-spacing-sm;
 }
