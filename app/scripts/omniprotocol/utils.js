@@ -108,7 +108,7 @@ function getScaffoldProtocol () {
     "name"      : "",
     "references": [],
     "inputs"    : {},
-    "parameters": {},
+    "parameters": [],
     "metadata"  : {},
     "groups"    : []
   }
