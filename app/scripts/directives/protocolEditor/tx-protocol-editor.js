@@ -8,7 +8,7 @@
  */
   //todo - listen for parameters changing, propagate variable name throughout
 angular.module('tx.protocolEditor')
-  .directive('txProtocolEditor', function ($window, DragDropManager) {
+  .directive('txProtocolEditor', function ($window, DragDropManager, ProtocolHelper) {
     return {
       templateUrl     : 'views/tx-protocol-editor.html',
       restrict        : 'E',

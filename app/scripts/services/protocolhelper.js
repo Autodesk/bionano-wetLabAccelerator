@@ -89,4 +89,6 @@ angular.module('transcripticApp')
       return self.protocols;
     }
 
+    return self;
+
   });
