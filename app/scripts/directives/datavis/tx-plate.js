@@ -62,7 +62,6 @@ angular.module('tx.datavis')
         scope.$watch('groupData', _.partial(rerender, false));
 
         scope.$watch('wellsInput', function (newWells, oldWells) {
-          console.log(newWells);
           if (_.isArray(newWells)) {
             safeClearBrush();
             toggleWellsFromMap(createWellMap(newWells, true), classSelected, true);
@@ -182,6 +181,8 @@ angular.module('tx.datavis')
 
             xAxisEl.transition().duration(transitionDuration).call(xAxis);
             yAxisEl.transition().duration(transitionDuration).call(yAxis);
+
+            //make axes clickable after data has been updated
           }
 
           wells = getAllCircles()
@@ -218,6 +219,9 @@ angular.module('tx.datavis')
             .call(transitionData); //externalize handling of data potentially being undefined
 
           if (shouldPlateUpdate) {
+            xAxisEl.selectAll('.tick').on('click', selectColumn);
+            yAxisEl.selectAll('.tick').on('click', selectRow);
+
             wells.exit()
               .transition()
               .duration(transitionDuration)
@@ -399,6 +403,24 @@ angular.module('tx.datavis')
         }
 
         /**** helpers ****/
+
+        function selectColumn (col) {
+          var rows = yScale.domain().length - 1,
+              parsedCol = parseInt(col, 10),
+              wellMap = WellConv.createMapGivenBounds([0, parsedCol], [rows, parsedCol]);
+          
+          toggleWellsFromMap(wellMap, classSelected, true);
+          propagateWellSelection(_.keys(wellMap));
+        }
+
+        function selectRow (row) {
+          var cols = _.last(xScale.domain()),
+              parsedRow = _.indexOf(WellConv.letters, row),
+              wellMap = WellConv.createMapGivenBounds([parsedRow, 0], [parsedRow, cols]);
+
+          toggleWellsFromMap(wellMap, classSelected, true);
+          propagateWellSelection(_.keys(wellMap));
+        }
 
         //given array of wells, and a value, create hashmap with wells as keys
         function createWellMap (wells, value) {
