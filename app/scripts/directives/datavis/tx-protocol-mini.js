@@ -15,7 +15,8 @@ angular.module('transcripticApp')
       scope           : {
         protocol        : '=',
         currentOperation: '=',
-        showTimelines   : '='
+        showTimelines   : '=',
+        showArrow       : '='
         //attr auto-scroll
       },
       bindToController: true,
@@ -30,9 +31,11 @@ angular.module('transcripticApp')
 
       },
       link            : function postLink (scope, element, attrs) {
-        //var arrowEl = element.find('.mini-arrow'); //note - jquery
+
+        var hasInteracted = false;
 
         scope.handleMouseover = function ($event, groupIndex, stepIndex, loopIndex) {
+          hasInteracted = true;
           activateStep(groupIndex, stepIndex, loopIndex);
         };
 
@@ -60,13 +63,11 @@ angular.module('transcripticApp')
         }
 
         function attractArrow (targetEl) {
-          var topFromPage  = targetEl.getBoundingClientRect().top,
-              miniFromPage = element[0].getBoundingClientRect().top,
-              diff         = topFromPage - miniFromPage;
+          var topFromPage  = $(targetEl).offset().top,
+              miniFromPage = element.offset().top,
+              paddingTop = parseInt(element.css('padding-top'), 10),
+              diff         = topFromPage - miniFromPage - paddingTop;
 
-          //arrowEl.css({'top': diff + 'px'});
-          //arrowEl.css({'transform': 'translateY(' + diff + 'px)'});
-          // note won't animate because inline
           scope.arrowTranslate = diff;
         }
 
@@ -81,7 +82,9 @@ angular.module('transcripticApp')
           $timeout(function () {
             _.reduce(_.range(Omniprotocol.utils.getNumberUnfoldedSteps(scope.miniCtrl.protocol)), function (chain, unfoldedNum) {
               return chain.then(function () {
-                return $timeout(_.partial(activateStepFromUnfolded, unfoldedNum), 500);
+                return $timeout(function () {
+                  !hasInteracted && activateStepFromUnfolded(unfoldedNum);
+                }, 500);
               });
             }, $q.when());
           }, 200);
