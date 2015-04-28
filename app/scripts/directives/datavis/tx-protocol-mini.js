@@ -51,7 +51,7 @@ angular.module('transcripticApp')
 
 
           //todo - inform results, or just use data binding (set up watch)
-
+a
           scope.miniCtrl.currentOperation = {
             group   : groupIndex,
             step    : stepIndex,
@@ -63,9 +63,10 @@ angular.module('transcripticApp')
         }
 
         function attractArrow (targetEl) {
-          var topFromPage  = targetEl.getBoundingClientRect().top,
-              miniFromPage = element[0].getBoundingClientRect().top,
-              diff         = topFromPage - miniFromPage;
+          var topFromPage  = $(targetEl).offset().top,
+              miniFromPage = element.offset().top,
+              paddingTop = parseInt(element.css('padding-top'), 10),
+              diff         = topFromPage - miniFromPage - paddingTop;
 
           scope.arrowTranslate = diff;
         }
