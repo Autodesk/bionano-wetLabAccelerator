@@ -1,12 +1,12 @@
+<tx-protocol-setup parameters="editorCtrl.protocol.parameters"
+                   class="protocol-setup"
+                   tx-inspector-select
+                   select-trigger="mouseenter"
+                   select-title="'Setup'"
+                   select-type="'group:'"
+                   select-description="'Sets global parameters'"></tx-protocol-setup>
 <div class="protocol-instructions"
      tx-protocol-droppable="editorCtrl.optsDroppableEditor">
-  <tx-protocol-setup parameters="editorCtrl.protocol.parameters"
-                     class="protocol-group"
-                     tx-inspector-select
-                     select-trigger="mouseenter"
-                     select-title="'Setup'"
-                     select-type="'group:'"
-                     select-description="'Sets global parameters'"></tx-protocol-setup>
   <tx-protocol-group ng-repeat="group in editorCtrl.protocol.groups"
                      class="protocol-group"
                      tx-inspector-select

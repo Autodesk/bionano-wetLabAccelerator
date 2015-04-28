@@ -1,13 +1,15 @@
-<div class="protocol-group-header"
+<div class="protocol-setup-header"
      ng-click="isCollapsed = !isCollapsed">
-
-  <span class="group-name">setup</span>
+  setup
 </div>
 
-<div class="protocol-group-main"
+<div class="protocol-setup-main"
      ng-show="isCollapsed">
   <table>
     <thead>
+    <tr>
+      <th colspan="4"><button class="btn btn-default" ng-click="setupCtrl.addParam()">Add Parameter</button></th>
+    </tr>
     <tr>
       <td>name</td>
       <td>type</td>
@@ -53,6 +55,4 @@
       </td>
     </tr>
   </table>
-
-  <button class="btn btn-default" ng-click="setupCtrl.addParam()">Add Parameter</button>
 </div>
