@@ -6,3 +6,4 @@ bower_components/
 .idea/
 .DS_Store
 app/scripts/**/index.js
+.vagrant
