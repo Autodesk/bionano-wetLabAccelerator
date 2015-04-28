@@ -51,7 +51,7 @@ angular.module('transcripticApp')
 
 
           //todo - inform results, or just use data binding (set up watch)
-a
+
           scope.miniCtrl.currentOperation = {
             group   : groupIndex,
             step    : stepIndex,
