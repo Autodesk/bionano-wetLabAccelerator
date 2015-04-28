@@ -4,7 +4,8 @@
                    select-trigger="mouseenter"
                    select-title="'Setup'"
                    select-type="'group:'"
-                   select-description="'Sets global parameters'"></tx-protocol-setup>
+                   select-description="'Sets global parameters'">
+</tx-protocol-setup>
 <div class="protocol-instructions"
      tx-protocol-droppable="editorCtrl.optsDroppableEditor">
   <tx-protocol-group ng-repeat="group in editorCtrl.protocol.groups"
@@ -18,12 +19,6 @@
   </tx-protocol-group>
 </div>
 
-<div ng-file-drop
-     ng-multiple="false"
-     accept="application/json"
-     drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
-     ng-file-change="editorCtrl.onFileDrop($files, $event, $rejectedFiles)">
-  <pre class="pre-scrollable"
-       ng-bind="editorCtrl.protocol | json">
-  </pre>
-</div>
+<pre class="pre-scrollable"
+     ng-bind="editorCtrl.protocol | json">
+</pre>
