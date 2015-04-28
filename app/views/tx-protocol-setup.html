@@ -10,11 +10,6 @@
     <tr>
       <th colspan="4"><button class="btn btn-default" ng-click="setupCtrl.addParam()">Add Parameter</button></th>
     </tr>
-    <tr>
-      <td>name</td>
-      <td>type</td>
-      <td>value</td>
-    </tr>
     </thead>
     <tr ng-repeat="param in setupCtrl.parameters">
       <td><input type="text" ng-model="param.name"></td>

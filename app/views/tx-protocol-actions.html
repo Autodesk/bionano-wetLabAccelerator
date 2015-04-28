@@ -1,5 +1,12 @@
 <span>Protocol</span>
 <div>
+  <tx-requestresponse config="actionCtrl.analysisResponse.config"
+                      response="actionCtrl.analysisResponse.response"></tx-requestresponse>
+
+  <tx-requestresponse config="actionCtrl.runResponse.config"
+                      response="actionCtrl.runResponse.response"></tx-requestresponse>
+</div>
+  <div>
   <btn-delete delete-text="Delete Protocol"
               on-delete="onDelete()"></btn-delete>
   <button class="btn btn-default btn-sm"
