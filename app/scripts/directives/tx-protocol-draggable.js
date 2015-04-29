@@ -13,7 +13,7 @@ angular.module('transcripticApp')
       link    : function postLink (scope, element, attrs) {
 
         var dragDefaults = {
-              scroll  : true,
+              scroll  : true
             },
             parsedRaw    = $parse(attrs['txProtocolDraggable'])(scope),
             parsed       = _.isObject(parsedRaw) ? parsedRaw : {},

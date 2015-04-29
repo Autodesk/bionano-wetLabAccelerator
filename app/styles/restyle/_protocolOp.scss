@@ -18,6 +18,19 @@ tx-protocol-op {
   }
 
   table {
+    border-spacing: 5px 10px;
     margin: 0;
+    tr {
+      td {
+      &:first-child {
+        text-align: right;
+        color: $black;
+      }
+      &:last-child {
+        text-align: left;
+      }
+      }
+    }
+
   }
 }
