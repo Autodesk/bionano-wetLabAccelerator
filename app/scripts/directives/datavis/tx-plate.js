@@ -13,16 +13,14 @@
  *  }, ... }
  *
  *
- * Through combination of attributes no-brush and select-persist, you can specify whether one/many wells can be
- *     selected, and whether multiple groups can be selected
- *
- * todo - support wells being passed in
+ * Through combination of attributes no-brush and select-persist, you can specify whether one/many wells can be selected, and whether multiple groups can be selected
  */
 angular.module('tx.datavis')
   .directive('txPlate', function (ContainerOptions, WellConv) {
 
-    var classActive   = 'brushActive',
-        classSelected = 'brushSelected';
+    var classActive      = 'brushActive',
+        classSelected    = 'brushSelected',
+        classEmphasizing = 'wellEmphasized';
 
     var colors = {
       empty   : {
@@ -49,10 +47,11 @@ angular.module('tx.datavis')
         selectPersist: '=',  //boolean - allow selections to persist across one brush / click
         onHover      : '&',  //returns array of selected wells
         onSelect     : '&',  //returns array of selected wells
-        selectedWells: '=?', //out-binding for selected wells. use wellsInput for changes in.
+        selectedWells: '=?', //out-binding for selected wells. use wellsInput for changes in. todo - deprecate
         wellsInput   : '=?', //in-binding for selected wells. use selectedWells for changes out.
-        groupData    : '=?', //array of groups with fields name, wells, color. if omitted, consider all values as one group,
-        preferGroups : '=?'  //if both plateData and groups are defined, true gives group coloring priority
+        groupData    : '=?', //array of groups with fields name, wells (alphanums), color (as string). if omitted, default to plateData, and preferGroups is ignored.
+        preferGroups : '=?', //if both plateData and groups are defined, true gives group coloring priority
+        focusWells   : '=?' //focus wells by shrinking others
       },
       link    : function postLink (scope, element, attrs) {
 
@@ -70,6 +69,20 @@ angular.module('tx.datavis')
           }
         });
 
+        //todo - performance boost this
+        scope.$watch('focusWells', function (newval) {
+          if (!_.isUndefined(newval) && _.isArray(newval) && newval.length) {
+            var map = createWellMap(newval, true);
+            getAllCircles().attr('r', function (d, i) {
+              return ( (d3.select(this).property('r_init') ) / (_.has(map, d) ? 1 : 2));
+            });
+          } else {
+            getAllCircles().attr('r', function () {
+              return d3.select(this).property('r_init');
+            })
+          }
+        });
+
         function propagateWellSelection (wellsInput) {
           var wells = _.isUndefined(wellsInput) ? getSelectedWells() : wellsInput;
 
@@ -81,9 +94,10 @@ angular.module('tx.datavis')
 
         /* CONSTRUCTING THE SVG */
 
-        var margin = {top: 40, right: 20, bottom: 20, left: 40},
-            width  = 600 - margin.left - margin.right,
-            height = 420 - margin.top - margin.bottom;
+        var full   = {height: 425, width: 600},
+            margin = {top: 30, right: 20, bottom: 30, left: 30},
+            width  = full.width - margin.left - margin.right,
+            height = full.height - margin.top - margin.bottom;
 
         //container SVG
         var svg = d3.select(element[0]).append("svg")
@@ -120,15 +134,24 @@ angular.module('tx.datavis')
           .attr("class", "y axis")
           .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
-        var clearingEl = svg.append('text')
-          .classed('clearing', true)
-          .attr('x', margin.left - 10)
-          .attr('y', margin.top - 10)
-          .text('x')
-          .on('click', clearWellsAndSelection);
+        var footerWrap = svg.append('svg:foreignObject')
+              .attr({
+                transform: 'translate(0,' + (full.height - margin.bottom) + ')',
+                height   : margin.bottom,
+                width    : full.width
+              }),
+            footerEl   = footerWrap.append("xhtml:div")
+              .classed('plate-footer', true)
+              .style({
+                'width' : full.width + 'px',
+                'height': margin.bottom + 'px'
+              });
+
+        footerEl.append('span').text('reset').on('click', clearWellsAndSelection);
+
 
         //data selection shared between multiple functions
-        var wells = wellsSvg.selectAll("circle");
+        var wells = getAllCircles();
 
         /* HANDLERS */
 
@@ -158,9 +181,11 @@ angular.module('tx.datavis')
 
             xAxisEl.transition().duration(transitionDuration).call(xAxis);
             yAxisEl.transition().duration(transitionDuration).call(yAxis);
+
+            //make axes clickable after data has been updated
           }
 
-          wells = wellsSvg.selectAll("circle")
+          wells = getAllCircles()
             .data(wellArray, function (well) { return well; })
             .call(unselectWells);
 
@@ -173,6 +198,7 @@ angular.module('tx.datavis')
               .on('click', wellOnClick)
               .style('fill', rgbaify(colors.empty))
               .each(function (d, i) {
+                d3.select(this).property('r_init', wellRadius);
                 //could bind data beyond just well here... but what makes sense?
               });
           }
@@ -193,6 +219,9 @@ angular.module('tx.datavis')
             .call(transitionData); //externalize handling of data potentially being undefined
 
           if (shouldPlateUpdate) {
+            xAxisEl.selectAll('.tick').on('click', selectColumn);
+            yAxisEl.selectAll('.tick').on('click', selectRow);
+
             wells.exit()
               .transition()
               .duration(transitionDuration)
@@ -209,7 +238,13 @@ angular.module('tx.datavis')
           //check conditions for showing groups, otherwise show data
           if (!_.isEmpty(scope.groupData) && ( scope.preferGroups || _.isEmpty(scope.plateData))) {
             //reorder to map so lookup is fast
-            var groupMap = _.map(scope.groupData, _.noop); //todo - handle groups
+            var groupMap = {};
+            _.forEach(scope.groupData, function (group) {
+              var color = group.color;
+              _.forEach(group.wells, function (well) {
+                groupMap[well] = color;
+              });
+            });
 
             selection.style('fill', function (d) {
               return groupMap[d];
@@ -237,23 +272,25 @@ angular.module('tx.datavis')
             tooltipInner      = tooltipEl.append("xhtml:div");
 
         function wellOnMouseover (d) {
-          //Get this well's values
-          var d3El      = d3.select(this),
-              radius    = parseFloat(d3El.attr("r"), 10),
-              xPosition = parseFloat(d3El.attr("cx"), 10) - ( tooltipDimensions.width / 2 ) + margin.left,
-              yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top,
-              wellValue = _.isEmpty(scope.plateData) || _.isUndefined(scope.plateData[d]) ?
-                null :
-                (+(scope.plateData[d].value)).toFixed(2);
+          if (scope.noBrush) {
+            //Get this well's values
+            var d3El      = d3.select(this),
+                radius    = parseFloat(d3El.attr("r"), 10),
+                xPosition = parseFloat(d3El.attr("cx"), 10) - ( tooltipDimensions.width / 2 ) + margin.left,
+                yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top,
+                wellValue = _.isEmpty(scope.plateData) || _.isUndefined(scope.plateData[d]) ?
+                  null :
+                  (+(scope.plateData[d].value)).toFixed(2);
 
-          //Update the tooltip position and value
-          tooltipEl.attr({
-            x: xPosition,
-            y: yPosition
-          });
+            //Update the tooltip position and value
+            tooltipEl.attr({
+              x: xPosition,
+              y: yPosition
+            });
 
-          tooltipInner.text(d + (wellValue ? ' : ' + wellValue : ''));
-          tooltipEl.classed("hidden", false);
+            tooltipInner.text(d + (wellValue ? ' : ' + wellValue : ''));
+            tooltipEl.classed("hidden", false);
+          }
         }
 
         function wellOnMouseleave () {
@@ -355,7 +392,6 @@ angular.module('tx.datavis')
             console.log('weirdness is happening');
           }
 
-
           var map     = createWellMap(selected, true),
               toggled = WellConv.toggleWells(map, initiallySelected);
 
@@ -368,12 +404,30 @@ angular.module('tx.datavis')
 
         /**** helpers ****/
 
+        function selectColumn (col) {
+          var rows = yScale.domain().length - 1,
+              parsedCol = parseInt(col, 10),
+              wellMap = WellConv.createMapGivenBounds([0, parsedCol], [rows, parsedCol]);
+          
+          toggleWellsFromMap(wellMap, classSelected, true);
+          propagateWellSelection(_.keys(wellMap));
+        }
+
+        function selectRow (row) {
+          var cols = _.last(xScale.domain()),
+              parsedRow = _.indexOf(WellConv.letters, row),
+              wellMap = WellConv.createMapGivenBounds([parsedRow, 0], [parsedRow, cols]);
+
+          toggleWellsFromMap(wellMap, classSelected, true);
+          propagateWellSelection(_.keys(wellMap));
+        }
+
         //given array of wells, and a value, create hashmap with wells as keys
         function createWellMap (wells, value) {
           if (!_.isArray(wells)) {
             return {};
           }
-          return _.zipObject(wells, _.range(wells.length).map(_.constant(value)))
+          return _.zipObject(wells, _.range(wells.length).map(_.constant(value)));
         }
 
         function getWellsInExtent (extent) {
@@ -395,6 +449,10 @@ angular.module('tx.datavis')
           }
 
           selection.classed(className, _.partial(_.result, map, _, false));
+        }
+
+        function getAllCircles () {
+          return wellsSvg.selectAll('circle');
         }
 
         function getActiveWells () {
