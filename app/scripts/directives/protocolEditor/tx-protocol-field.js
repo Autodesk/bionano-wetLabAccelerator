@@ -7,14 +7,15 @@
  * # txProtocolInput
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolField', function ($http, $compile, $timeout, Omniprotocol, Autoprotocol) {
+  .directive('txProtocolField', function ($http, $compile, $timeout, Omniprotocol, Autoprotocol, ProtocolHelper) {
     return {
       templateUrl     : 'views/tx-protocol-field.html',
       restrict        : 'E',
       require         : 'ngModel',
       scope           : {
-        model: '=ngModel',
-        field: '='
+        model          : '=ngModel',
+        field          : '=',
+        preventVariable: '='
       },
       bindToController: true,
       controllerAs    : 'fieldCtrl',
@@ -44,12 +45,40 @@ angular.module('tx.protocolEditor')
           self.wellsIn = wells;
         };
 
+
         //todo - limit toggling to fields which support it
 
-        self.showingVariable = false;
-        self.toggleVariableSelect = function () {
-          self.showingVariable = !self.showingVariable;
-          self.field.preferVariable = self.showingVariable;
+        self.parameters = ProtocolHelper.currentProtocol.parameters;
+
+        var parameterListener = _.noop;
+
+        self.selectParameter = function (param, event) {
+          console.log(param);
+          self.field.parameter = param.name;
+          self.model           = _.cloneDeep(param.value);
+
+          //todo - listen for changes to parameter and update as well
+          parameterListener = $scope.$on('editor:parameterChange', function (params) {
+            console.log(params);
+          });
+
+          //todo - need to handle updating of parameter name
+        };
+
+        self.createNewParameter = function () {
+          var paramName = 'my_' + self.field.type,
+              param     = {
+                name : paramName,
+                type : self.field.type,
+                value: _.cloneDeep(self.model)
+              };
+          ProtocolHelper.currentProtocol.parameters.push(param);
+          self.selectParameter(param);
+        };
+
+        self.clearParameter = function () {
+          delete self.field.parameter;
+          parameterListener()
         };
 
       },

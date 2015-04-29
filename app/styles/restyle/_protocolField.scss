@@ -12,10 +12,45 @@ tx-protocol-field {
 
   .field-value {
     display: inline-block;
+    width: 55%;
     text-align: left;
   }
 
-  .field-variable {
+  .field-value-inner {
+    display: inline-block;
+  }
 
+  .field-variable {
+    color: $primary;
+  }
+
+  .field-parameter-toggler {
+    padding: 4px;
+    position: relative;
+    cursor: pointer;
+    font-size: 10px;
+    color: $white;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    transition: opacity 0.15s ease-out;
+
+    &.active {
+      opacity: 1;
+      background-color: $primary;
+    }
+  }
+
+  .field-parameter-dropdown {
+    color: $grey;
+
+  }
+
+  &:hover {
+    .field-parameter-toggler {
+      opacity: 1;
+      background-color: transparentize($grey, 0.5);
+    }
   }
 }

@@ -9,7 +9,7 @@
 angular.module('transcripticApp')
   .directive('txProtocolFieldVariable', function (ProtocolHelper) {
     return {
-      template: '<select ng-model="model" ng-options="(\'${\' + p.name + \'}\') as p.name for p in params">',
+      template: '<select ng-model="model" ng-options="p.name as p.name for p in params">',
       restrict: 'E',
       scope: {
         model : '=ngModel',

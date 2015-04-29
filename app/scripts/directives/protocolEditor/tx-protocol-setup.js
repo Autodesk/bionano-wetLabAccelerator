@@ -55,8 +55,11 @@ angular.module('transcripticApp')
         var oldContainerLength;
 
         scope.$watch('setupCtrl.protocol.parameters', function (newval) {
+          console.log(newval);
           $rootScope.$broadcast('editor:parameterChange', newval);
         }, true);
+
+        //todo - need to broadcast changes for name
 
         scope.checkContainerChange = function () {
           var containerList = _.filter(scope.setupCtrl.parameters, {type : 'container'});
@@ -67,6 +70,7 @@ angular.module('transcripticApp')
           }
         };
 
+        //mostly for tx-container-select
         scope.notifyContainerChange = function () {
           $rootScope.$broadcast('editor:containerChange');
         };

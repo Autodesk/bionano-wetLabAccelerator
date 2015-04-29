@@ -1,13 +1,30 @@
 <div class="field-label"
-    ng-click="fieldCtrl.toggleVariableSelect()"
     ng-class="{optional: fieldCtrl.field.optional == true}"
     ng-bind="fieldCtrl.field.name">
 </div>
-<div ng-show="fieldCtrl.showingVariable" class="field-value field-variable">
-  <tx-protocol-field-variable field="fieldCtrl.field"
-                              ng-model="fieldCtrl.field.variable">
-  </tx-protocol-field-variable>
+<div class="field-value">
+  <div class="pull-right field-parameter-toggler"
+       ng-if="!fieldCtrl.preventVariable"
+       ng-click="fieldCtrl.paramListVisible = !fieldCtrl.paramListVisible"
+       ng-class="{'active' : fieldCtrl.field.parameter,
+                   'open' : fieldCtrl.paramListVisible}">
+    $
+    <ul class="field-parameter-dropdown dropdown-menu">
+      <li ng-repeat="p in fieldCtrl.parameters | filter:{type: fieldCtrl.field.type}"
+          ng-click="fieldCtrl.selectParameter(p, $event)"
+          ng-bind="p.name">
+      </li>
+      <li class="divider"></li>
+      <li ng-click="fieldCtrl.createNewParameter()">Create New...</li>
+      <li ng-click="fieldCtrl.clearParameter()">Unbind Parameter</li>
+    </ul>
+  </div>
+  <div ng-show="fieldCtrl.field.parameter" class="field-value-inner field-variable">
+    {{fieldCtrl.field.parameter}}
+  </div>
+  <div ng-hide="fieldCtrl.field.parameter" class="field-value-inner">
+    <tx-protocol-field-inner></tx-protocol-field-inner>
+  </div>
 </div>
-<div ng-hide="fieldCtrl.showingVariable" class="field-value">
-  <tx-protocol-field-inner></tx-protocol-field-inner>
-</div>
+
+
