@@ -676,7 +676,7 @@ module.exports = {
 
   //containers
 
-
+/*
   "store": {
     "operation"  : "store",
     "description": "Deliver a plate to a storage location specified by the where parameter.",
@@ -724,4 +724,5 @@ module.exports = {
       ]
     }
   }
+  */
 };
