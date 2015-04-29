@@ -6,29 +6,35 @@
   <tx-requestresponse config="actionCtrl.runResponse.config"
                       response="actionCtrl.runResponse.response"></tx-requestresponse>
 </div>
-  <div>
-  <btn-delete delete-text="Delete Protocol"
-              on-delete="onDelete()"></btn-delete>
-  <button class="btn btn-default btn-sm"
-          ng-disabled="actionCtrl.protocolForm.$error.json"
-          ng-class="{'btn-info' : actionCtrl.protocolForm.$dirty}"
-          ng-click="handleSave()"
-          tooltip="Save Protocol"
-          tooltip-append-to-body="true">
-    <span class="glyphicon glyphicon-cloud-upload"></span>
-  </button>
-  <button class="btn btn-default btn-sm"
-          fake-note="!!!!!this is temporary. you can delete this"
-          ng-click="actionCtrl.clearProtocol()">
-    <span class="glyphicon glyphicon-fire"></span>
-  </button>
+<div>
   <div class="btn-group">
     <button class="btn btn-default btn-sm"
-            ng-click="showJSON()"
+            fake-note="!!!!!this is temporary. you can delete this"
+            tooltip="Clear Protocol"
+            tooltip-append-to-body="true"
+            ng-click="actionCtrl.clearProtocol()">
+      <span class="glyphicon glyphicon-fire"></span>
+    </button>
+    <button class="btn btn-default btn-sm"
+            ng-disabled="actionCtrl.protocolForm.$error.json"
+            ng-class="{'btn-info' : actionCtrl.protocolForm.$dirty}"
+            ng-click="handleSave()"
+            tooltip="Save Protocol"
+            tooltip-append-to-body="true">
+      <span class="glyphicon glyphicon-cloud-upload"></span>
+    </button>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-default btn-sm"
+            ng-click="showJSON = true"
             tooltip="View JSON"
             tooltip-append-to-body="true">
       <span class="glyphicon glyphicon-console"></span>
     </button>
+    <pre class="pre-scrollable"
+         ng-class="{'open' : showJSON}"
+         ng-mouseleave="showJSON = false"
+         ng-bind="actionCtrl.protocol | json"></pre>
     <div class="btn btn-default btn-sm"
          tooltip="Download Protocol"
          tooltip-append-to-body="true"
