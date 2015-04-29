@@ -1,12 +1,5 @@
 <span>Protocol</span>
 <div>
-  <tx-requestresponse config="actionCtrl.analysisResponse.config"
-                      response="actionCtrl.analysisResponse.response"></tx-requestresponse>
-
-  <tx-requestresponse config="actionCtrl.runResponse.config"
-                      response="actionCtrl.runResponse.response"></tx-requestresponse>
-</div>
-<div>
   <div class="btn-group">
     <button class="btn btn-default btn-sm"
             fake-note="!!!!!this is temporary. you can delete this"
@@ -58,18 +51,13 @@
       </ul>
     </div>
   </div>
-  <div class="btn-group">
-    <button class="btn btn-default btn-sm"
-            ng-click="actionCtrl.verifyProtocol()"
-            tooltip="Verify Protocol"
-            tooltip-append-to-body="true">
-        <span class="glyphicon glyphicon-check"></span>
-    </button>
-    <button class="btn btn-default btn-sm"
-            ng-click="actionCtrl.executeProtocol()"
-            tooltip="Execute Protocol"
-            tooltip-append-to-body="true">
-        <span class="glyphicon glyphicon-share"></span>
-    </button>
-  </div>
+  <button class="btn btn-default btn-sm"
+          ng-click="toggleModal()"
+          tooltip="Run Protocol"
+          tooltip-append-to-body="true">
+      <span class="glyphicon glyphicon-check"></span>
+  </button>
+  <tx-modal ng-show='modalShown'>
+    <tx-run protocol="actionCtrl.protocol"></tx-run>
+  </tx-modal>
 </div>

@@ -1,5 +1,5 @@
 .modal-overlay {
-  position:absolute;
+  position:fixed;
   z-index:9999;
   top:0;
   left:0;
@@ -10,7 +10,7 @@
 }
 .modal-dialog {
   z-index:10000;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -31,7 +31,7 @@
   text-align: left;
 }
 .modal-close {
-  position: absolute;
+  position: fixed;
   right: 5px;
   cursor: pointer;
   font-size: 150%;

@@ -23,7 +23,7 @@ angular.module('transcripticApp')
         self.currentProtocol = d;
       });
     };
-    console.log($scope);
+
     $scope.modalShown = false;
     $scope.toggleModal = function() {
       $scope.modalShown = !$scope.modalShown;
