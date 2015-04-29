@@ -42,27 +42,36 @@ angular.module('transcripticApp')
 
         self.handleChangeParamType = function (param) {
           self.clearParamValue(param);
-          self.checkContainerChange();
+          $scope.checkContainerChange();
         };
-
-        var oldContainerLength;
-        self.checkContainerChange = function () {
-          var containerParams = _.filter(self.parameters, {type: 'container'});
-          if (oldContainerLength != containerParams.length) {
-            ContainerHelper.setLocal(containerParams);
-            self.notifyContainerChange();
-          }
-        };
-
-        self.notifyContainerChange = function () {
-          console.log('notify');
-          $rootScope.$broadcast('editor:containerChange');
+        
+        self.handleSelectRemoteContainer = function (param, remote) {
+          console.log(param, remote);
+          _.assign(param.value, remote);
         };
 
       },
       link            : function postLink (scope, element, attrs) {
-        //init
-        scope.setupCtrl.checkContainerChange();
+        var oldContainerLength;
+
+        scope.checkContainerChange = function () {
+          var containerList = _.filter(scope.setupCtrl.parameters, {type : 'container'});
+          if (containerList.length != oldContainerLength) {
+            console.log('new container list!!!');
+            ContainerHelper.setLocal(containerList);
+            scope.notifyContainerChange();
+            oldContainerLength = containerList.length;
+          }
+        };
+
+        scope.notifyContainerChange = function () {
+          console.log('notify');
+          $rootScope.$broadcast('editor:containerChange');
+        };
+
+        scope.checkContainerChange();
+
+        scope.$on('editor:newprotocol', scope.checkContainerChange)
       }
     };
   });

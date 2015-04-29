@@ -8,7 +8,7 @@
  */
   //todo - listen for parameters changing, propagate variable name throughout
 angular.module('tx.protocolEditor')
-  .directive('txProtocolEditor', function ($window, DragDropManager, ProtocolHelper) {
+  .directive('txProtocolEditor', function ($window, $rootScope, $timeout, DragDropManager, ProtocolHelper) {
     return {
       templateUrl     : 'views/tx-protocol-editor.html',
       restrict        : 'E',
@@ -50,6 +50,9 @@ angular.module('tx.protocolEditor')
               $scope.$apply(function() {
                 try {
                   self.protocol = angular.fromJson(e.target.result);
+                  $timeout(function () {
+                    $rootScope.$broadcast('editor:newprotocol');
+                  })
                 } catch (e) {
                   console.log('couldnt parse dropped JSON', e);
                 }

@@ -8,7 +8,7 @@
  * Service in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .service('ContainerHelper', function (Auth, Container) {
+  .service('ContainerHelper', function ($rootScope, Auth, Container) {
     var self = this;
 
     self.local  = [];
@@ -25,11 +25,12 @@ angular.module('transcripticApp')
     self.setRemote = function (remote) {
       self.remote.length = 0;
       _.forEach(remote, function (cont) {
+        cont = _.isObject(cont.container) ? cont.container : cont; //test mode is different
         self.remote.push({
-          id   : cont.id,
+          id   : _.result(cont, 'id'),
           isNew: false,
-          type : cont.container_type.shortname,
-          name : cont.label
+          type : _.result(_.result(cont, 'container_type'), 'shortname'),
+          name : _.result(cont, 'label')
         });
       });
       console.log(remote, self.remote);

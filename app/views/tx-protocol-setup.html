@@ -33,13 +33,13 @@
                 <td ng-if="param.value.isNew">
                   <select ng-model="param.value.type"
                           ng-required="param.value.isNew"
-                          ng-change="setupCtrl.notifyContainerChange()"
+                          ng-change="notifyContainerChange()"
                           ng-options="t as t for (t, opts) in setupCtrl.containerOptions"></select>
                 </td>
                 <td ng-if="!param.value.isNew">
-                  <select ng-model="param.value"
+                  <select ng-model="dummyRemote"
                           ng-required="!param.value.isNew"
-                          ng-change="setupCtrl.notifyContainerChange()"
+                          ng-change="setupCtrl.handleSelectRemoteContainer(param, dummyRemote)"
                           ng-options="c as (c.name || c.id) for c in setupCtrl.remoteContainers"></select>
                 </td>
                 <td>
