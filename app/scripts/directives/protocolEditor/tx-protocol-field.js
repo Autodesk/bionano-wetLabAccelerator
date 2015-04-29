@@ -9,6 +9,7 @@
 angular.module('tx.protocolEditor')
   .directive('txProtocolField', function ($http, $compile, $timeout, Omniprotocol, Autoprotocol) {
     return {
+      templateUrl     : 'views/tx-protocol-field.html',
       restrict        : 'E',
       require         : 'ngModel',
       scope           : {
@@ -32,7 +33,7 @@ angular.module('tx.protocolEditor')
 
           if (self.singleContainer === false) {
             self.model = _.union(
-              _.reject(self.model, _.matches({container : self.containerName})),
+              _.reject(self.model, _.matches({container: self.containerName})),
               mapped
             );
           } else {
@@ -42,6 +43,13 @@ angular.module('tx.protocolEditor')
           // todo - check if triggers new digest
           self.wellsIn = wells;
         };
+
+        self.showingVariable = false;
+        self.toggleVariableSelect = function () {
+          self.showingVariable = !self.showingVariable;
+        };
+
+
       },
       compile         : function compile (tElement, tAttrs, transclude) {
         var type,
@@ -50,6 +58,8 @@ angular.module('tx.protocolEditor')
           pre : function preLink (scope, iElement, iAttrs) {
             type    = _.result(scope.fieldCtrl.field, 'type');
             partial = type;                 //default, maybe handled differently in if/else
+
+            console.log(partial);
 
             //Special handling before we get the appropriate template
 
@@ -81,7 +91,7 @@ angular.module('tx.protocolEditor')
 
             return $http.get('views/inputs/' + partial + '.html', {cache: true}).then(function (data) {
               var $el = angular.element(data.data);
-              iElement.html($compile($el)(scope));
+              iElement.find('tx-protocol-field-inner').html($compile($el)(scope));
             });
           },
           post: function postLink (scope, iElement, iAttrs, ngModel) {

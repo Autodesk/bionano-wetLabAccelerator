@@ -54,6 +54,10 @@ angular.module('transcripticApp')
       link            : function postLink (scope, element, attrs) {
         var oldContainerLength;
 
+        scope.$watch('setupCtrl.protocol.parameters', function (newval) {
+          $rootScope.$broadcast('editor:parameterChange', newval);
+        }, true);
+
         scope.checkContainerChange = function () {
           var containerList = _.filter(scope.setupCtrl.parameters, {type : 'container'});
           if (containerList.length != oldContainerLength) {
