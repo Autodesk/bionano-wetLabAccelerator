@@ -181,6 +181,15 @@ angular.module('tx.protocolEditor')
 
               //scope.$watch('fieldCtrl.wellsOut', scope.fieldCtrl.handleAliquotSelection);
 
+              scope.$on('editor:parameterNameChange', function (event, oldName, newName) {
+                //todo - may need to more explicitly make sure this runs after the $watch...
+                _.forEach(scope.fieldCtrl.model, function (wellObj) {
+                  if (wellObj.container == oldName) {
+                    wellObj.container = newName;
+                  }
+                });
+              });
+
               scope.$watch('fieldCtrl.containerName', function (newContainer) {
                 //don't need to worry about setting wells here - change listener for wellsOut will handle whether dealing with single container
                 setWellsInput(pruneWellsFromContainer(newContainer));

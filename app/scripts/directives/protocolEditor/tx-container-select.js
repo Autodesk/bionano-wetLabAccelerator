@@ -37,6 +37,12 @@ angular.module('transcripticApp')
             self.type = _.result(contVal, 'type');
           }
         };
+
+        self.handleNameChange = function (e, oldName, newName) {
+          if (self.model == oldName) {
+            self.model = newName;
+          }
+        };
       },
       link            : function postLink (scope, element, attrs, ngModel) {
         // Set up our own watch to listen for both changes in and changes out. ng-change is view change listener so doesn't work here.
@@ -45,6 +51,8 @@ angular.module('transcripticApp')
 
         //listen to changes to parameters
         scope.$on('editor:containerChange', scope.containerSelectCtrl.handleChange);
+
+        scope.$on('editor:parameterNameChange', scope.containerSelectCtrl.handleNameChange);
 
       }
     };
