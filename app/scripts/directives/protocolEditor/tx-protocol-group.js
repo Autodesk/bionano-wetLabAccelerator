@@ -20,16 +20,17 @@ angular.module('tx.protocolEditor')
       controller      : function ($scope, $element, $attrs) {
         var self = this;
 
-        self.toggleGroupActionsVisible = function ($event, force) {
+        self.toggleActionsMenu = function ($event, force) {
           $event.preventDefault();
           $event.stopPropagation();
-          $scope.groupActionsVisible = angular.isDefined(force) ?
+          $scope.showActions = angular.isDefined(force) ?
             force :
-            !( $scope.groupActionsVisible );
+            !( $scope.showActions );
         };
 
-        //footer actions
-        self.toggleJsonEditing = function (force) {
+        self.toggleJsonEditing = function ($event,force) {
+          $event.preventDefault();
+          //$event.stopPropagation();
           $scope.jsonEditing = angular.isDefined(force) ?
             force :
             !( $scope.jsonEditing );

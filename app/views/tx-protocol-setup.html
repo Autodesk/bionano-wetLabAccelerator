@@ -1,12 +1,7 @@
-<div class="protocol-group protocol-setup">
-  <button class="btn btn-default btn-sm btn-labeled"
-          ng-class="{'btn-info' : paramsVisible}"
-          ng-click="paramsVisible = !paramsVisible">
-          <span class="btn-label">
-            <span class="glyphicon glyphicon-list-alt"></span>
-          </span>
-    Parameters
-  </button>
+<div class="protocol-setup-header"
+     ng-click="isCollapsed = !isCollapsed">
+  setup
+</div>
 
   <div ng-show="paramsVisible">
     <table>
@@ -20,7 +15,7 @@
       <tr ng-repeat="param in setupCtrl.parameters">
         <td><input type="text" ng-model="param.name"></td>
         <td><select ng-model="param.type"
-                    ng-change="setupCtrl.handleChangeParamType(param)"
+                    ng-change="setupCtrl.clearParamValue(param)"
                     ng-options="o as o for (o, meta) in setupCtrl.paramTypes"></select></td>
         <td ng-switch="param.type">
           <div ng-switch-when="container">
@@ -33,14 +28,12 @@
                 <td ng-if="param.value.isNew">
                   <select ng-model="param.value.type"
                           ng-required="param.value.isNew"
-                          ng-change="notifyContainerChange()"
                           ng-options="t as t for (t, opts) in setupCtrl.containerOptions"></select>
                 </td>
                 <td ng-if="!param.value.isNew">
-                  <select ng-model="dummyRemote"
+                  <select ng-model="param.value.id"
                           ng-required="!param.value.isNew"
-                          ng-change="setupCtrl.handleSelectRemoteContainer(param, dummyRemote)"
-                          ng-options="c as (c.name || c.id) for c in setupCtrl.remoteContainers"></select>
+                          ng-options="c.id as (c.name || c.id) for c in setupCtrl.availableContainers"></select>
                 </td>
                 <td>
                   <select ng-model="param.value.storage"
