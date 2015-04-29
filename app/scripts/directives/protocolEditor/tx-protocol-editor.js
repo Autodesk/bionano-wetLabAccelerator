@@ -49,7 +49,7 @@ angular.module('tx.protocolEditor')
             fileReader.onload = function(e) {
               $scope.$apply(function() {
                 try {
-                  self.protocol = angular.fromJson(e.target.result);
+                  ProtocolHelper.assignCurrentProtocol(angular.fromJson(e.target.result));
                   $timeout(function () {
                     $rootScope.$broadcast('editor:newprotocol');
                   })
@@ -79,17 +79,15 @@ angular.module('tx.protocolEditor')
               DragDropManager.groupFromOp(DragDropManager.model) :
               DragDropManager.model;
 
-            console.log(draggableTop, neighborTops, group, self.protocol);
+            //console.log(draggableTop, neighborTops, group, self.protocol);
 
             $scope.$apply(function () {
               DragDropManager.onDrop();
-              //todo - ensure splicing proper location / _.compact groups + steps
               self.protocol.groups.splice(dropIndex, 0, group);
               DragDropManager.clear();
             });
           }
         };
-
       },
       link            : function postLink (scope, element, attrs) {
 

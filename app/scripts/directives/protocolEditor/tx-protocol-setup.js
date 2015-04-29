@@ -54,6 +54,10 @@ angular.module('transcripticApp')
       link            : function postLink (scope, element, attrs) {
         var oldContainerLength;
 
+        scope.$watch('setupCtrl.parameters', function (newval, oldval) {
+          $rootScope.$broadcast('editor:parameterChange', newval);
+        }, true);
+
         scope.checkContainerChange = function () {
           var containerList = _.filter(scope.setupCtrl.parameters, {type : 'container'});
           if (containerList.length != oldContainerLength) {
@@ -63,10 +67,12 @@ angular.module('transcripticApp')
           }
         };
 
+        //mostly for tx-container-select
         scope.notifyContainerChange = function () {
           $rootScope.$broadcast('editor:containerChange');
         };
 
+        //init
         scope.checkContainerChange();
 
         scope.$on('editor:newprotocol', scope.checkContainerChange)

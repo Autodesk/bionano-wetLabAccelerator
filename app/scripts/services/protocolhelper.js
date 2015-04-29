@@ -17,6 +17,12 @@ angular.module('transcripticApp')
     //is updated from firebase currently
     self.protocols = [];
 
+    self.currentProtocol = {};
+
+    self.assignCurrentProtocol = function (newProtocol) {
+      _.assign(self.currentProtocol, Omniprotocol.utils.getScaffoldProtocol(), newProtocol);
+    };
+
     self.addProtocol = function (inputProtocol) {
       var protocol = _.assign(Omniprotocol.utils.getScaffoldProtocol(), inputProtocol);
 

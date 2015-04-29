@@ -48,7 +48,7 @@
 
   <div class="protocol-group-main"
        ng-show="groupCtrl.isCollapsed">
-    {{groupCtrl.group.metadata.description}}
+    <p class="protocol-group-description" ng-bind="groupCtrl.group.metadata.description"></p>
     <tx-protocol-op ng-repeat="step in groupCtrl.group.steps"
                     tx-protocol-draggable="groupCtrl.optsDraggableInstruction"
                     tx-protocol-droppable="groupCtrl.optsDroppableInstruction"

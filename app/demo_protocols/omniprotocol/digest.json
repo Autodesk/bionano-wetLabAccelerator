@@ -1,5 +1,14 @@
 {
-  "name": "Simple Transfer Protocol",
+  "metadata": {
+    "name": "Digesting protocol",
+    "id" : "24289898aced8af81c0b303",
+    "type" : "protocol",
+    "author" : {
+      "name" : "Maxwell Bates",
+      "id" : "20b2c28d023708ac0923"
+    },
+    "description" : "Digestion protocol with a whole bunch of transfers n stuff in it."
+  },
   "parameters": [
     {
       "name": "HindIII",
@@ -69,7 +78,6 @@
       }
     }
   ],
-  "metadata": {},
   "groups": [
     {
       "loop": 1,

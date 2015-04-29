@@ -1,0 +1,129 @@
+<div class="gallery-page">
+  <div class="flex-horizontal">
+    <form class="sidepanel flex-vertical gallery-filters">
+
+      <div class="filter-category">
+        <div class="filter-type">Text</div>
+        <input type="text"
+               ng-model="galleryCtrl.filters.metadata.$"
+               placeholder="Text to Filter">
+      </div>
+
+      <div class="filter-category">
+        <div class="filter-type">Type</div>
+        <div class="filter-options">
+          <div class="filter-option"
+               ng-repeat="type in galleryCtrl.appTypes">
+            <label>
+              <input type="radio"
+                     ng-value="type"
+                     name="filter-type"
+                     ng-model="galleryCtrl.filters.metadata.type">
+              {{type}}
+            </label>
+          </div>
+          <div class="filter-option">
+            <label>
+              <input type="radio"
+                     value=""
+                     name="filter-type"
+                     ng-model="galleryCtrl.filters.metadata.type">
+              Any Type
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-category">
+        <div class="filter-type">Virus Group</div>
+        <div class="filter-options">
+          <div class="filter-option"
+               ng-repeat="group in galleryCtrl.baltimore_groups">
+            <label>
+              <input type="radio"
+                     name="filter-baltimore_group"
+                     ng-value="group"
+                     ng-model="galleryCtrl.filters.baltimore_group">
+              Group {{group}}
+            </label>
+          </div>
+          <div class="filter-option">
+            <label>
+              <input type="radio"
+                     name="filter-baltimore_group"
+                     value=""
+                     ng-model="galleryCtrl.filters.baltimore_group">
+              Any Group
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <pre ng-bind="galleryCtrl.filters | json"></pre>
+
+    </form>
+
+    <div class="maincolumn flex-grower flex-horizontal">
+      <div class="gallery-items flex-grower maxout-scroll-vertical">
+        <div ng-repeat="item in galleryCtrl.allTheStuff | filter:galleryCtrl.filters | limitTo: 20"
+             class="gallery-item"
+             ng-class="{'active': galleryCtrl.currentItem == item}"
+             ng-mouseenter="galleryCtrl.currentItem = item">
+          <div class="item-generic">
+            <div class="item-image" ng-if="item.metadata.image"></div>
+            <h3 class="item-name" ng-bind="item.metadata.name"></h3>
+            <h5 class="item-author" ng-bind="item.metadata.author.name"></h5>
+          </div>
+          <div class="item-specific">
+
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-flyout-wrap flex-child">
+        <div class="gallery-flyout" ng-show="galleryCtrl.currentItem">
+          <div class="gallery-generic">
+            <p ng-bind="galleryCtrl.currentItem.metadata.description"></p>
+          </div>
+          <hr>
+          <div class="gallery-specific">
+            <div ng-if="galleryCtrl.currentItem.metadata.type =='virus'">
+              <p>Group {{galleryCtrl.currentItem.baltimore_group}}</p>
+
+              <p>{{galleryCtrl.currentItem.taxonomy.family + ' > ' +
+                galleryCtrl.currentItem.taxonomy.subfamily + ' > ' +
+                galleryCtrl.currentItem.taxonomy.genus + ' > ' +
+                galleryCtrl.currentItem.taxonomy.species }}</p>
+
+              <p>{{galleryCtrl.currentItem.virion.shape.shape + ' ' + galleryCtrl.currentItem.virion.envelope + ' of ' + galleryCtrl.currentItem.shape.size + ' proteins'}}</p>
+
+              <p>{{galleryCtrl.currentItem.genome.shape + ' ' + galleryCtrl.currentItem.genome.nucleic_acid + ' of ' + galleryCtrl.currentItem.genome.size + ' bases'}}</p>
+            </div>
+            <div ng-if="galleryCtrl.currentItem.metadata.type =='protocol'">
+              <h4>Steps</h4>
+              <div style="position:relative">
+                <tx-protocol-mini protocol="galleryCtrl.currentItem"></tx-protocol-mini>
+              </div>
+              <h4>Parameters</h4>
+              <table>
+                <tr ng-repeat="param in galleryCtrl.currentItem.parameters">
+                  <td ng-bind="param.name"></td>
+                  <td><pre ng-bind="param.value | json"></pre></td>
+                </tr>
+              </table>
+            </div>
+            <div ng-if="galleryCtrl.currentItem.metadata.type =='run'">
+              <p>Time: {{galleryCtrl.currentItem.metadata.date | date:'medium'}}</p>
+
+              <span class="label"
+                    ng-class="{'label-success' : galleryCtrl.currentItem.metadata.success, 'label-danger' : !galleryCtrl.currentItem.metadata.success}">
+                Run {{galleryCtrl.currentItem.metadata.success ? 'Success' : 'Failed'}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
