@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "name": "Dummy Protocol",
+    "id": "2982cbb2ebedfa98220223",
+    "type" : "protocol",
+    "author": {
+      "name": "Mojimbo Tenke",
+      "id": "8a99cb0er9023b22c2def2"
+    },
+    "description": "This is a stupid protocol"
+  },
+  "parameters": [
+    {
+      "name": "myAbsorbance",
+      "type": "length",
+      "value": {
+        "value": 600,
+        "unit": "nanometer"
+      },
+      "example": {
+        "value": 600,
+        "unit": "nanometer"
+      },
+      "default": {
+        "value": 600,
+        "unit": "nanometer"
+      },
+      "description": "Wavelength used for fluorescence readings"
+    },
+    {
+      "type": "container",
+      "value": {
+        "isNew": true,
+        "type": "96-flat",
+        "storage": "cold_4"
+      },
+      "name": "container_uno"
+    }
+  ],
+  "groups": [
+    {
+      "name": "Unseal",
+      "inputs": {},
+      "metadata": {
+        "description": "Unseal a container"
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "unseal",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mix",
+      "inputs": {},
+      "metadata": {
+        "description": "Mix specified well using a new pipette tip"
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "mix",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "wells"
+            }
+          ],
+          "fields": [
+            {
+              "name": "wells",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "ecoli_container",
+                  "well": "A1"
+                }
+              ]
+            },
+            {
+              "name": "volume",
+              "type": "volume",
+              "optional": true,
+              "default": {
+                "value": 50,
+                "unit": "microliter"
+              }
+            },
+            {
+              "name": "speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "repetitions",
+              "type": "integer",
+              "optional": true,
+              "default": 10
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

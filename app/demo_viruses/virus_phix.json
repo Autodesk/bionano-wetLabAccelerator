@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "name": "PhiX174",
+    "id" : "98a78998ade89af98afbbcdfa",
+    "type" : "virus",
+    "author" : {
+      "name" : "Aaron Berliner",
+      "id" : "2490248092452353253235235"
+    },
+    "description" : "PhiX174 is a phage which infects E. coli, with a very small and easily synthesizeable genome."
+  },
+  "taxonomy": {
+    "family": "Microviridae",
+    "subfamily": "Microvirinae",
+    "genus": "Microvirus",
+    "species": "Enterobacteria phage PhiX174"
+  },
+  "accesion_number": "NC_001422",
+  "host": {
+    "host_species": "Escherichia coli",
+    "host_strain": "C"
+  },
+  "baltimore_group": "II",
+  "genome": {
+    "nucleaic_acid": "ssDNA",
+    "shape": "Circular",
+    "size": "5400"
+  },
+  "virion": {
+    "envelope": "Non-enveloped",
+    "shape": {
+      "shape": "spherical",
+      "symmetry": "Icosaderal",
+      "t": "3",
+      "size": "30"
+    }
+  }
+}
