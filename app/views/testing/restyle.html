@@ -1,5 +1,5 @@
 <div ng-show="restyleCtrl.currentProtocol">
-  <span ng-bind="restyleCtrl.currentProtocol.name"></span>
+  <span ng-bind="restyleCtrl.currentProtocol.metadata.name"></span>
   <div class="glyphicon-ellipse" ng-click='toggleModal()'>
     <span class="glyphicon glyphicon-option-horizontal"></span>
   </div>
@@ -11,7 +11,7 @@
       </thead>
       <tr>
         <td>Name</td>
-        <td><span contenteditable="true" ng-model="restyleCtrl.currentProtocol.name"></span></td>
+        <td><span contenteditable="true" ng-model="restyleCtrl.currentProtocol.metadata.name"></span></td>
       </tr>
       <tr>
         <td>Description</td>
