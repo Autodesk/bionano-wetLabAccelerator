@@ -1,13 +1,13 @@
-<td class="operation-label"
+<div class="field-label"
     ng-click="fieldCtrl.toggleVariableSelect()"
     ng-class="{optional: fieldCtrl.field.optional == true}"
     ng-bind="fieldCtrl.field.name">
-</td>
-<td ng-show="fieldCtrl.showingVariable">
+</div>
+<div ng-show="fieldCtrl.showingVariable" class="field-value field-variable">
   <tx-protocol-field-variable field="fieldCtrl.field"
-                              ng-model="fieldCtrl.model">
+                              ng-model="fieldCtrl.variable">
   </tx-protocol-field-variable>
-</td>
-<td ng-hide="fieldCtrl.showingVariable">
+</div>
+<div ng-hide="fieldCtrl.showingVariable" class="field-value">
   <tx-protocol-field-inner></tx-protocol-field-inner>
-</td>
+</div>

@@ -1,7 +1,21 @@
 tx-protocol-field {
-  display: table-row;
-}
+  display: block;
+  margin: 3px 0;
 
-.protocol-field {
+  .field-label {
+    display: inline-block;
+    width: 40%;
+    color: $grey;
+    text-align: right;
+    padding-right: $layout-spacing-md;
+  }
 
+  .field-value {
+    display: inline-block;
+    text-align: left;
+  }
+
+  .field-variable {
+
+  }
 }

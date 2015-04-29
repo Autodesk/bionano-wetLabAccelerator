@@ -1,9 +1,5 @@
-<table>
-  <tr>
-    <th class="operation-name" ng-bind="opCtrl.op.operation" colspan="2"></th>
-  </tr>
-  <tx-protocol-field ng-repeat="field in opCtrl.op.fields"
-                     field="field"
-                     ng-model="field.value">
-  </tx-protocol-field>
-</table>
+<div class="operation-name" ng-bind="opCtrl.op.operation"></div>
+<tx-protocol-field ng-repeat="field in opCtrl.op.fields"
+                   field="field"
+                   ng-model="field.value">
+</tx-protocol-field>

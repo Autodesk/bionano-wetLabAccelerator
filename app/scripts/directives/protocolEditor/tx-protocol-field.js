@@ -44,11 +44,13 @@ angular.module('tx.protocolEditor')
           self.wellsIn = wells;
         };
 
+        //todo - limit toggling to fields which support it
+
         self.showingVariable = false;
         self.toggleVariableSelect = function () {
+          self.field.preferVariable = true;
           self.showingVariable = !self.showingVariable;
         };
-
 
       },
       compile         : function compile (tElement, tAttrs, transclude) {
