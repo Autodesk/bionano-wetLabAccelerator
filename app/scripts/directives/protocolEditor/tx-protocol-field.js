@@ -15,7 +15,8 @@ angular.module('tx.protocolEditor')
       scope           : {
         model          : '=ngModel',
         field          : '=',
-        preventVariable: '='
+        preventVariable: '=',
+        hideTitle      : '='
       },
       bindToController: true,
       controllerAs    : 'fieldCtrl',
@@ -48,9 +49,10 @@ angular.module('tx.protocolEditor')
 
         //todo - limit toggling to fields which support it
 
+        //todo - filter
         self.parameters = ProtocolHelper.currentProtocol.parameters;
 
-        var parameterListener = _.noop;
+        var parameterListeners = [];
 
         self.selectParameter = function (param, event) {
           console.log(param);
@@ -58,11 +60,29 @@ angular.module('tx.protocolEditor')
           self.model           = _.cloneDeep(param.value);
 
           //todo - listen for changes to parameter and update as well
-          parameterListener = $scope.$on('editor:parameterChange', function (params) {
-            console.log(params);
+          var parameterChangeListener = $scope.$on('editor:parameterChange', function (e, params) {
+
+            var relevantParam = _.find(params, {name: self.field.parameter}),
+                paramVal      = _.result(relevantParam, 'value');
+
+            //check undefined in case name changed, then let other listener handle
+            if (!_.isUndefined(paramVal)) {
+              self.model = _.cloneDeep(paramVal);
+            }
+
+            //todo - filter relevant params here
           });
 
-          //todo - need to handle updating of parameter name
+          parameterListeners.push(parameterChangeListener);
+
+          var parameterNameChangeListener = $scope.$on('editor:parameterNameChange', function (e, oldName, newName) {
+            console.log(oldName, newName, self.field.parameter);
+            if (oldName == self.field.parameter) {
+              self.field.parameter = newName;
+            }
+          });
+
+          parameterListeners.push(parameterNameChangeListener);
         };
 
         self.createNewParameter = function () {
@@ -78,8 +98,12 @@ angular.module('tx.protocolEditor')
 
         self.clearParameter = function () {
           delete self.field.parameter;
-          parameterListener()
+          _.forEach(parameterListeners, function (listener) {
+            _.isFunction(listener) && listener();
+          });
         };
+
+        //todo - set to parameter on input / init
 
       },
       compile         : function compile (tElement, tAttrs, transclude) {

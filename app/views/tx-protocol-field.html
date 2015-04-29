@@ -1,6 +1,7 @@
 <div class="field-label"
-    ng-class="{optional: fieldCtrl.field.optional == true}"
-    ng-bind="fieldCtrl.field.name">
+     ng-hide="fieldCtrl.hideTitle"
+     ng-class="{optional: fieldCtrl.field.optional == true}"
+     ng-bind="fieldCtrl.field.name">
 </div>
 <div class="field-value">
   <div class="pull-right field-parameter-toggler"
