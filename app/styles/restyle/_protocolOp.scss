@@ -1,8 +1,10 @@
 tx-protocol-op {
   display: block;
-  margin: 0.75em;
+  width: 100%;
+  margin: 0.5em 0 0.5em 2em;
 
   .operation-name {
+    color:$black;
     cursor: all-scroll;
   }
 
@@ -11,26 +13,5 @@ tx-protocol-op {
     &.optional {
       opacity: 0.75;
     }
-  }
-
-  .operation-field {
-
-  }
-
-  table {
-    border-spacing: 5px 10px;
-    margin: 0;
-    tr {
-      td {
-      &:first-child {
-        text-align: right;
-        color: $black;
-      }
-      &:last-child {
-        text-align: left;
-      }
-      }
-    }
-
   }
 }

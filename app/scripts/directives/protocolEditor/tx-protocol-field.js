@@ -7,13 +7,16 @@
  * # txProtocolInput
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolField', function ($http, $compile, $timeout, Omniprotocol, Autoprotocol) {
+  .directive('txProtocolField', function ($http, $compile, $timeout, Omniprotocol, Autoprotocol, ProtocolHelper) {
     return {
+      templateUrl     : 'views/tx-protocol-field.html',
       restrict        : 'E',
       require         : 'ngModel',
       scope           : {
-        model: '=ngModel',
-        field: '='
+        model          : '=ngModel',
+        field          : '=',
+        preventVariable: '=',
+        hideTitle      : '='
       },
       bindToController: true,
       controllerAs    : 'fieldCtrl',
@@ -32,16 +35,70 @@ angular.module('tx.protocolEditor')
 
           if (self.singleContainer === false) {
             self.model = _.union(
-              _.reject(self.model, _.matches({container : self.containerName})),
+              _.reject(self.model, _.matches({container: self.containerName})),
               mapped
             );
           } else {
             self.model = mapped;
           }
 
-          // todo - check if triggers new digest
+          // todo - perf - check if triggers new digest
           self.wellsIn = wells;
         };
+
+
+        //todo - limit toggling to fields which support it
+
+        //todo - perf - filter here, not DOM
+        self.parameters = ProtocolHelper.currentProtocol.parameters;
+
+        var parameterListeners = [];
+
+        self.selectParameter = function (param, event) {
+          self.field.parameter = param.name;
+          self.model           = _.cloneDeep(param.value);
+
+          var parameterChangeListener = $scope.$on('editor:parameterChange', function (e, params) {
+            var relevantParam = _.find(params, {name: self.field.parameter}),
+                paramVal      = _.result(relevantParam, 'value');
+
+            //check undefined in case name changed, then let other listener handle
+            if (!_.isUndefined(paramVal)) {
+              self.model = _.cloneDeep(paramVal);
+            }
+          });
+
+          parameterListeners.push(parameterChangeListener);
+
+          var parameterNameChangeListener = $scope.$on('editor:parameterNameChange', function (e, oldName, newName) {
+            if (oldName == self.field.parameter) {
+              self.field.parameter = newName;
+            }
+          });
+
+          parameterListeners.push(parameterNameChangeListener);
+        };
+
+        self.createNewParameter = function () {
+          var paramName = 'my_' + self.field.type,
+              param     = {
+                name : paramName,
+                type : self.field.type,
+                value: _.cloneDeep(self.model)
+              };
+          ProtocolHelper.currentProtocol.parameters.push(param);
+          self.selectParameter(param);
+        };
+
+        self.clearParameter = function () {
+          delete self.field.parameter;
+          _.forEach(parameterListeners, function (listener) {
+            _.isFunction(listener) && listener();
+          });
+        };
+
+        //todo - set to parameter on input / init
+
       },
       compile         : function compile (tElement, tAttrs, transclude) {
         var type,
@@ -50,6 +107,8 @@ angular.module('tx.protocolEditor')
           pre : function preLink (scope, iElement, iAttrs) {
             type    = _.result(scope.fieldCtrl.field, 'type');
             partial = type;                 //default, maybe handled differently in if/else
+
+            console.log(partial);
 
             //Special handling before we get the appropriate template
 
@@ -81,7 +140,7 @@ angular.module('tx.protocolEditor')
 
             return $http.get('views/inputs/' + partial + '.html', {cache: true}).then(function (data) {
               var $el = angular.element(data.data);
-              iElement.html($compile($el)(scope));
+              iElement.find('tx-protocol-field-inner').html($compile($el)(scope));
             });
           },
           post: function postLink (scope, iElement, iAttrs, ngModel) {
@@ -126,6 +185,12 @@ angular.module('tx.protocolEditor')
                 //don't need to worry about setting wells here - change listener for wellsOut will handle whether dealing with single container
                 setWellsInput(pruneWellsFromContainer(newContainer));
               });
+            }
+
+            //handle parameter as input
+            if (scope.fieldCtrl.field.parameter) {
+              var relevantParam = _.find(ProtocolHelper.currentProtocol.parameters, {name: scope.fieldCtrl.field.parameter});
+              scope.fieldCtrl.selectParameter(relevantParam);
             }
 
             //so hack!

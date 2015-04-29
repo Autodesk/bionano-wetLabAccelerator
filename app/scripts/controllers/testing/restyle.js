@@ -8,19 +8,16 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('TestingRestyleCtrl', function ($scope, $http, simpleLogin, FBProfile) {
+  .controller('TestingRestyleCtrl', function ($scope, $http, simpleLogin, FBProfile, ProtocolHelper) {
     var self = this;
 
-    simpleLogin.watch(function(user) {
-      if (!!user) {
-        self.firebaseProtocolSync = new FBProfile(user.uid, 'protocols');
-        self.firebaseProtocols = self.firebaseProtocolSync.$asArray();
-      }
-    });
+    self.allProtocols = ProtocolHelper.protocols;
+
+    self.currentProtocol = ProtocolHelper.currentProtocol;
 
     $scope.loadDemo = function () {
       $http.get('demo_protocols/omniprotocol/protocol_transfer.json').success(function (d) {
-        self.currentProtocol = d;
+        ProtocolHelper.assignCurrentProtocol(d);
       });
     };
 

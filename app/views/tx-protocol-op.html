@@ -1,13 +1,5 @@
-<table>
-  <tr>
-    <th class="operation-name" ng-bind="opCtrl.op.operation" colspan="2"></th>
-  </tr>
-  <tr ng-repeat="field in opCtrl.op.fields">
-    <td class="operation-label" ng-class="{optional: field.optional == true}">{{field.name}}:</td>
-    <td>
-      <tx-protocol-field class="operation-field"
-                         ng-model="field.value"
-                         field="field"></tx-protocol-field>
-    </td>
-  </tr>
-</table>
+<div class="operation-name" ng-bind="opCtrl.op.operation"></div>
+<tx-protocol-field ng-repeat="field in opCtrl.op.fields"
+                   field="field"
+                   ng-model="field.value">
+</tx-protocol-field>
