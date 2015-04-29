@@ -106,11 +106,11 @@ function simpleMapOperation (op, localParams) {
   }, omniConv.simpleKeyvalFields(op.fields, localParams, converterField));
 }
 
-//takes an autoprotocol instruction, wraps in pipette group
+//takes an autoprotocol instruction(s), wraps in pipette group
 function wrapInPipette (instruction) {
   return {
     op    : "pipette",
-    groups: [instruction]
+    groups: _.isArray(instruction) ? instruction : [instruction]
   };
 }
 

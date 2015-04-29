@@ -97,7 +97,6 @@ blockquote {
 
 ul li {
   line-height: $spacing-paragraph;
-  padding-left: 2em;
 }
 
 // Images
@@ -143,7 +142,7 @@ img {
 table {
   border-collapse: separate;
   border-spacing: 20px 0px;
-  margin: 0 0 $spacing-paragraph;
+  margin: $spacing-paragraph 0;
 }
 
 hr {

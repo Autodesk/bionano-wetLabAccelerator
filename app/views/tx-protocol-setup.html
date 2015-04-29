@@ -1,62 +1,54 @@
-<div class="protocol-group protocol-setup">
-  <button class="btn btn-default btn-sm btn-labeled"
-          ng-class="{'btn-info' : paramsVisible}"
-          ng-click="paramsVisible = !paramsVisible">
-          <span class="btn-label">
-            <span class="glyphicon glyphicon-list-alt"></span>
-          </span>
-    Parameters
-  </button>
+<div class="protocol-setup-header"
+     ng-click="isCollapsed = !isCollapsed">
+  setup
+</div>
 
-  <div ng-show="paramsVisible">
-    <table>
-      <thead>
-      <tr>
-        <td>name</td>
-        <td>type</td>
-        <td>value</td>
-      </tr>
-      </thead>
-      <tr ng-repeat="param in setupCtrl.parameters">
-        <td><input type="text" ng-model="param.name"></td>
-        <td><select ng-model="param.type"
-                    ng-change="setupCtrl.clearParamValue(param)"
-                    ng-options="o as o for (o, meta) in setupCtrl.paramTypes"></select></td>
-        <td ng-switch="param.type">
-          <div ng-switch-when="container">
-            <table>
-              <tr>
-                <td>
-                  <input type="checkbox"
-                           ng-model="param.value.isNew"> new?
-                </td>
-                <td ng-if="param.value.isNew">
-                  <select ng-model="param.value.type"
-                          ng-required="param.value.isNew"
-                          ng-options="t as t for (t, opts) in setupCtrl.containerOptions"></select>
-                </td>
-                <td ng-if="!param.value.isNew">
-                  <select ng-model="param.value.id"
-                          ng-required="!param.value.isNew"
-                          ng-options="c.id as (c.name || c.id) for c in setupCtrl.availableContainers"></select>
-                </td>
-                <td>
-                  <select ng-model="param.value.storage"
-                          ng-options="o as o for o in setupCtrl.storageOptions"></select>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div ng-switch-default>
-            <tx-protocol-field field="param" ng-model="param.value"></tx-protocol-field>
-          </div>
-        </td>
-        <td>
-          <a class="close" ng-click="setupCtrl.deleteParam(param)">&times;</a>
-        </td>
-      </tr>
-    </table>
-
-    <button class="btn btn-default" ng-click="setupCtrl.addParam()">Add Parameter</button>
-  </div>
+<div ng-show="paramsVisible">
+  <table>
+    <thead>
+    <tr>
+      <th colspan="4"><button class="btn btn-default" ng-click="setupCtrl.addParam()">Add Parameter</button></th>
+    </tr>
+    </thead>
+    <tr ng-repeat="param in setupCtrl.parameters">
+      <td><input type="text" ng-model="param.name"></td>
+      <td><select ng-model="param.type"
+                  ng-change="setupCtrl.handleChangeParamType(param)"
+                  ng-options="o as o for (o, meta) in setupCtrl.paramTypes"></select></td>
+      <td ng-switch="param.type">
+        <div ng-switch-when="container">
+          <table>
+            <tr>
+              <td>
+                <input type="checkbox"
+                       ng-model="param.value.isNew"> new?
+              </td>
+              <td ng-if="param.value.isNew">
+                <select ng-model="param.value.type"
+                        ng-required="param.value.isNew"
+                        ng-change="notifyContainerChange()"
+                        ng-options="t as t for (t, opts) in setupCtrl.containerOptions"></select>
+              </td>
+              <td ng-if="!param.value.isNew">
+                <select ng-model="dummyRemote"
+                        ng-required="!param.value.isNew"
+                        ng-change="setupCtrl.handleSelectRemoteContainer(param, dummyRemote)"
+                        ng-options="c as (c.name || c.id) for c in setupCtrl.remoteContainers"></select>
+              </td>
+              <td>
+                <select ng-model="param.value.storage"
+                        ng-options="o as o for o in setupCtrl.storageOptions"></select>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div ng-switch-default>
+          <tx-protocol-field field="param" ng-model="param.value"></tx-protocol-field>
+        </div>
+      </td>
+      <td>
+        <a class="close" ng-click="setupCtrl.deleteParam(param)">&times;</a>
+      </td>
+    </tr>
+  </table>
 </div>

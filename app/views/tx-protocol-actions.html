@@ -1,41 +1,33 @@
-<div class="protocol-title" ng-class="{'open' : protocolMetadataVisible}">
-  <div ng-click="actionCtrl.toggleMetadataVisible($event)">
-    <span class="protocol-name"
-          ng-bind="actionCtrl.protocol.name"></span>
+<span>Protocol</span>
+<div>
+  <tx-requestresponse config="actionCtrl.analysisResponse.config"
+                      response="actionCtrl.analysisResponse.response"></tx-requestresponse>
 
-    <div class="glyphicon-circle">
-      <span class="glyphicon glyphicon-option-horizontal"></span>
-    </div>
-  </div>
-  <div class="dropdown-menu">
-    <table>
-      <tr>
-        <td>Name</td>
-        <td><input type="text"  class="form-control" ng-model="actionCtrl.protocol.name"></td>
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td><textarea rows="2" class="form-control" ng-model="actionCtrl.protocol.metadata.description"></textarea></td>
-      </tr>
-      <tr>
-        <td>Tags</td>
-        <td><input type="text" class="form-control" ng-list ng-model="actionCtrl.protocol.metadata.tags"></td>
-      </tr>
-    </table>
-  </div>
+  <tx-requestresponse config="actionCtrl.runResponse.config"
+                      response="actionCtrl.runResponse.response"></tx-requestresponse>
 </div>
-
-<div class="protocol-actions-container">
-  <div class="btn-group protocol-actions-left">
-    <btn-delete delete-text="Delete Protocol"
-                on-delete="onDelete()"></btn-delete>
+  <div>
+  <btn-delete delete-text="Delete Protocol"
+              on-delete="onDelete()"></btn-delete>
+  <button class="btn btn-default btn-sm"
+          ng-disabled="actionCtrl.protocolForm.$error.json"
+          ng-class="{'btn-info' : actionCtrl.protocolForm.$dirty}"
+          ng-click="handleSave()"
+          tooltip="Save Protocol"
+          tooltip-append-to-body="true">
+    <span class="glyphicon glyphicon-cloud-upload"></span>
+  </button>
+  <button class="btn btn-default btn-sm"
+          fake-note="!!!!!this is temporary. you can delete this"
+          ng-click="actionCtrl.clearProtocol()">
+    <span class="glyphicon glyphicon-fire"></span>
+  </button>
+  <div class="btn-group">
     <button class="btn btn-default btn-sm"
-            ng-disabled="actionCtrl.protocolForm.$error.json"
-            ng-class="{'btn-info' : actionCtrl.protocolForm.$dirty}"
-            ng-click="handleSave()"
-            tooltip="Save Protocol"
+            ng-click="showJSON()"
+            tooltip="View JSON"
             tooltip-append-to-body="true">
-      <span class="glyphicon glyphicon-cloud-upload"></span>
+      <span class="glyphicon glyphicon-console"></span>
     </button>
     <div class="btn btn-default btn-sm"
          tooltip="Download Protocol"
@@ -60,29 +52,18 @@
       </ul>
     </div>
   </div>
-
-  <div class="protocol-actions-right">
-    <div class="btn-group">
-      <button class="btn btn-default btn-sm btn-labeled"
-              ng-click="actionCtrl.verifyProtocol()">
-        <span class="btn-label">
-          <span class="glyphicon glyphicon-check"></span>
-        </span>
-        Verify
-      </button>
-      <button class="btn btn-default btn-sm btn-labeled"
-              ng-click="actionCtrl.executeProtocol()">
-        <span class="btn-label">
-          <span class="glyphicon glyphicon-share"></span>
-        </span>
-        Execute
-      </button>
-    </div>
+  <div class="btn-group">
+    <button class="btn btn-default btn-sm"
+            ng-click="actionCtrl.verifyProtocol()"
+            tooltip="Verify Protocol"
+            tooltip-append-to-body="true">
+        <span class="glyphicon glyphicon-check"></span>
+    </button>
+    <button class="btn btn-default btn-sm"
+            ng-click="actionCtrl.executeProtocol()"
+            tooltip="Execute Protocol"
+            tooltip-append-to-body="true">
+        <span class="glyphicon glyphicon-share"></span>
+    </button>
   </div>
 </div>
-
-<tx-requestresponse config="actionCtrl.analysisResponse.config"
-                    response="actionCtrl.analysisResponse.response"></tx-requestresponse>
-
-<tx-requestresponse config="actionCtrl.runResponse.config"
-                    response="actionCtrl.runResponse.response"></tx-requestresponse>

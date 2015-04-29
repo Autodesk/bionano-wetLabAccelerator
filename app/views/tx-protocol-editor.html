@@ -1,16 +1,24 @@
-<div>
-  <tx-protocol-setup parameters="editorCtrl.protocol.parameters"></tx-protocol-setup>
-</div>
-
+<tx-protocol-setup parameters="editorCtrl.protocol.parameters"
+                   class="protocol-setup"
+                   tx-inspector-select
+                   select-trigger="mouseenter"
+                   select-title="'Setup'"
+                   select-type="'group:'"
+                   select-description="'Sets global parameters'"
+                   ng-file-drop
+                   ng-multiple="false"
+                   accept="application/json"
+                   drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+                   ng-file-change="editorCtrl.onFileDrop($files, $event, $rejectedFiles)">
+</tx-protocol-setup>
 <div class="protocol-instructions"
-     ui-sortable="editorCtrl.groupSortableOptions"
-     ng-model="editorCtrl.protocol.groups">
+     tx-protocol-droppable="editorCtrl.optsDroppableEditor">
   <tx-protocol-group ng-repeat="group in editorCtrl.protocol.groups"
                      class="protocol-group"
                      tx-inspector-select
                      select-trigger="mouseenter"
-                     select-title="group.name || 'Unnamed Group'"
-                     select-type="'group'"
+                     select-title="group.name || 'Unnamed'"
+                     select-type="'group:'"
                      select-description="group.metadata.description"
                      protocol-group="group">
   </tx-protocol-group>
