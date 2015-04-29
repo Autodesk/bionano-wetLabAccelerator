@@ -46,8 +46,8 @@ angular.module('transcripticApp')
         };
         
         self.handleSelectRemoteContainer = function (param, remote) {
-          console.log(param, remote);
           _.assign(param.value, remote);
+          $scope.notifyContainerChange();
         };
 
       },
@@ -57,7 +57,6 @@ angular.module('transcripticApp')
         scope.checkContainerChange = function () {
           var containerList = _.filter(scope.setupCtrl.parameters, {type : 'container'});
           if (containerList.length != oldContainerLength) {
-            console.log('new container list!!!');
             ContainerHelper.setLocal(containerList);
             scope.notifyContainerChange();
             oldContainerLength = containerList.length;
@@ -65,7 +64,6 @@ angular.module('transcripticApp')
         };
 
         scope.notifyContainerChange = function () {
-          console.log('notify');
           $rootScope.$broadcast('editor:containerChange');
         };
 
