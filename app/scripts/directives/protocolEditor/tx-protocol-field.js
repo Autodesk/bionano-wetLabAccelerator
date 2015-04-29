@@ -40,7 +40,7 @@ angular.module('tx.protocolEditor')
             self.model = mapped;
           }
 
-          // todo - check if triggers new digest
+          // todo - perf - check if triggers new digest
           self.wellsIn = wells;
         };
 
@@ -48,8 +48,8 @@ angular.module('tx.protocolEditor')
 
         self.showingVariable = false;
         self.toggleVariableSelect = function () {
-          self.field.preferVariable = true;
           self.showingVariable = !self.showingVariable;
+          self.field.preferVariable = self.showingVariable;
         };
 
       },
