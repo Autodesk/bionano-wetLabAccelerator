@@ -11,18 +11,17 @@
       </thead>
       <tr>
         <td>Name</td>
-        <td><input type="text" ng-model="restyleCtrl.currentProtocol.name"></td>
+        <td><span contenteditable="true" ng-model="restyleCtrl.currentProtocol.name"></span></td>
       </tr>
       <tr>
         <td>Description</td>
-        <td><input type="text" ng-model="restyleCtrl.currentProtocol.metadata.description"/></td>
+        <td><span contenteditable="true" ng-model="restyleCtrl.currentProtocol.metadata.description"></span></td>
       </tr>
       <tr>
         <td>Tags</td>
-        <td><input type="text" ng-list ng-model="restyleCtrl.currentProtocol.metadata.tags"></td>
+        <td><span contenteditable="true" ng-list ng-model="restyleCtrl.currentProtocol.metadata.tags"></span></td>
       </tr>
     </table>
-    <tx-run></tx-run>
   </tx-modal>
 </div>
 
