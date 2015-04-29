@@ -27,15 +27,9 @@
       <ul class="dropdown-menu"
           ng-show="groupCtrl.isCollapsed">
         <li>
-          <a ng-click="groupCtrl.toggleActionsMenu($event, true);
-                       deleteButtonVisible = !deleteButtonVisible;">
-            {{deleteButtonVisible ? 'Cancel Delete' : 'Delete operation'}}
-          </a>
-        </li>
-        <li ng-show="deleteButtonVisible">
           <a class="btn btn-danger"
-               ng-click="deleteGroup()">
-            OK Delete!
+             ng-click="deleteGroup()">
+            Delete Group
           </a>
         </li>
         <li><a ng-click="groupCtrl.toggleJsonEditing($event)">
