@@ -49,19 +49,16 @@ angular.module('tx.protocolEditor')
 
         //todo - limit toggling to fields which support it
 
-        //todo - filter
+        //todo - perf - filter here, not DOM
         self.parameters = ProtocolHelper.currentProtocol.parameters;
 
         var parameterListeners = [];
 
         self.selectParameter = function (param, event) {
-          console.log(param);
           self.field.parameter = param.name;
           self.model           = _.cloneDeep(param.value);
 
-          //todo - listen for changes to parameter and update as well
           var parameterChangeListener = $scope.$on('editor:parameterChange', function (e, params) {
-
             var relevantParam = _.find(params, {name: self.field.parameter}),
                 paramVal      = _.result(relevantParam, 'value');
 
@@ -69,14 +66,11 @@ angular.module('tx.protocolEditor')
             if (!_.isUndefined(paramVal)) {
               self.model = _.cloneDeep(paramVal);
             }
-
-            //todo - filter relevant params here
           });
 
           parameterListeners.push(parameterChangeListener);
 
           var parameterNameChangeListener = $scope.$on('editor:parameterNameChange', function (e, oldName, newName) {
-            console.log(oldName, newName, self.field.parameter);
             if (oldName == self.field.parameter) {
               self.field.parameter = newName;
             }
@@ -191,6 +185,12 @@ angular.module('tx.protocolEditor')
                 //don't need to worry about setting wells here - change listener for wellsOut will handle whether dealing with single container
                 setWellsInput(pruneWellsFromContainer(newContainer));
               });
+            }
+
+            //handle parameter as input
+            if (scope.fieldCtrl.field.parameter) {
+              var relevantParam = _.find(ProtocolHelper.currentProtocol.parameters, {name: scope.fieldCtrl.field.parameter});
+              scope.fieldCtrl.selectParameter(relevantParam);
             }
 
             //so hack!
