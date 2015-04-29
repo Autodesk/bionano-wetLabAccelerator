@@ -7,7 +7,7 @@
  * # txProtocolActions
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolActions', function ($q, Auth, Autoprotocol, Omniprotocol, Run, Project) {
+  .directive('txProtocolActions', function ($q, $rootScope, Auth, Autoprotocol, Omniprotocol, Run, Project) {
     return {
       templateUrl: 'views/tx-protocol-actions.html',
       restrict: 'E',
@@ -39,6 +39,12 @@ angular.module('tx.protocolEditor')
           event.preventDefault();
           event.stopPropagation();
           $scope.protocolMetadataVisible = _.isUndefined(forceState) ? !$scope.protocolMetadataVisible : forceState;
+        };
+
+        self.allStepsOpen = false;
+        self.toggleAllSteps = function () {
+          self.allStepsOpen = !self.allStepsOpen;
+          $rootScope.$broadcast('editor:toggleGroupVisibility', self.allStepsOpen);
         };
 
         self.autoprotocolConvertFunction = Autoprotocol.fromAbstraction;

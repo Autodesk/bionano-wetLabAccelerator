@@ -16,6 +16,12 @@
       <span class="glyphicon glyphicon-fire"></span>
     </button>
     <button class="btn btn-default btn-sm"
+            ng-click="actionCtrl.toggleAllSteps()">
+            <span class="glyphicon"
+                  ng-class="{'glyphicon-eye-open' : !actionCtrl.allStepsOpen,
+                             'glyphicon-eye-close' : actionCtrl.allStepsOpen}"></span>
+    </button>
+    <button class="btn btn-default btn-sm"
             ng-disabled="actionCtrl.protocolForm.$error.json"
             ng-class="{'btn-info' : actionCtrl.protocolForm.$dirty}"
             ng-click="handleSave()"

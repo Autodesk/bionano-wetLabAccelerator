@@ -2,7 +2,7 @@
      tx-protocol-draggable="groupCtrl.optsDraggableGroup"
      tx-protocol-droppable="groupCtrl.optsDroppableGroup">
   <div class="protocol-group-header"
-       ng-click="isCollapsed = !isCollapsed">
+       ng-click="groupCtrl.isCollapsed = !groupCtrl.isCollapsed">
 
     <input class="group-name input-unstyled"
            type="text"
@@ -21,11 +21,11 @@
              ng-model="groupCtrl.group.loop">
       <span class="group-repeat"></span>
       <span class="glyphicon glyphicon-cog"
-            ng-show="isCollapsed"
+            ng-show="groupCtrl.isCollapsed"
             ng-click="groupCtrl.toggleActionsMenu($event)"></span>
 
       <ul class="dropdown-menu"
-          ng-show="isCollapsed">
+          ng-show="groupCtrl.isCollapsed">
         <li>
           <a ng-click="groupCtrl.toggleActionsMenu($event, true);
                        deleteButtonVisible = !deleteButtonVisible;">
@@ -47,7 +47,7 @@
   </div>
 
   <div class="protocol-group-main"
-       ng-show="isCollapsed">
+       ng-show="groupCtrl.isCollapsed">
     {{groupCtrl.group.metadata.description}}
     <tx-protocol-op ng-repeat="step in groupCtrl.group.steps"
                     tx-protocol-draggable="groupCtrl.optsDraggableInstruction"
