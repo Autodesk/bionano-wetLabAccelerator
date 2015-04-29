@@ -8,7 +8,7 @@
  */
   //todo - listen for parameters changing, propagate variable name throughout
 angular.module('tx.protocolEditor')
-  .directive('txProtocolEditor', function (DragDropManager) {
+  .directive('txProtocolEditor', function ($window, $rootScope, $timeout, DragDropManager, ProtocolHelper) {
     return {
       templateUrl     : 'views/tx-protocol-editor.html',
       restrict        : 'E',
@@ -41,6 +41,28 @@ angular.module('tx.protocolEditor')
           _.remove(self.protocol.groups, group);
         };
 
+        self.onFileDrop = function (files, event, rejected) {
+          if ($window.FileReader) {
+
+            var fileReader = new FileReader();
+
+            fileReader.onload = function(e) {
+              $scope.$apply(function() {
+                try {
+                  ProtocolHelper.assignCurrentProtocol(angular.fromJson(e.target.result));
+                  $timeout(function () {
+                    $rootScope.$broadcast('editor:newprotocol');
+                  })
+                } catch (e) {
+                  console.log('couldnt parse dropped JSON', e);
+                }
+              });
+            };
+
+            fileReader.readAsText(files[0]);
+          }
+        };
+
         self.optsDroppableEditor = {
           greedy   : true,
           tolerance: 'pointer',
@@ -57,17 +79,15 @@ angular.module('tx.protocolEditor')
               DragDropManager.groupFromOp(DragDropManager.model) :
               DragDropManager.model;
 
-            console.log(draggableTop, neighborTops, group, self.protocol);
+            //console.log(draggableTop, neighborTops, group, self.protocol);
 
             $scope.$apply(function () {
               DragDropManager.onDrop();
-              //todo - ensure splicing proper location / _.compact groups + steps
               self.protocol.groups.splice(dropIndex, 0, group);
               DragDropManager.clear();
             });
           }
         };
-
       },
       link            : function postLink (scope, element, attrs) {
 

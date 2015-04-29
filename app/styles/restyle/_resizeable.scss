@@ -3,10 +3,10 @@
   background: transparent;
 
   &:hover {
-    background: pink;
+    background: $accent;
   }
 
   &.dragging {
-    background: red;
+    background: $primary;
   }
 }

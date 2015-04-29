@@ -49,23 +49,16 @@
 
     </header>
 
-    <div class="sidebar">
-      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
-      <label for="menu-trigger"><span></span></label>
-      <div class="menu">
-        <input type="text" placeholder="Filter">
-      </div>
-    </div>
+    <tx-gallery></tx-gallery>
 
     <main ng-view
           class="container flex-vertical"></main>
 
     <footer>
       <div class="status">
-        <span>Status:</span>
-        <span>Ready to Run</span>
+        <tx-inspector inspect="currentlySelected"></tx-inspector>
       </div>
-      <div class="company-logo">
+      <div class="logo-company">
         <img src="images/logo-text.png">
       </div>
     </footer>
@@ -165,12 +158,14 @@
     <script src="scripts/directives/tx-refs.js"></script>
     <script src="scripts/directives/tx-instruction.js"></script>
     <script src="scripts/directives/tx-protocol.js"></script>
+    <script src="scripts/directives/tx-gallery.js"></script>
+    <script src="scripts/directives/tx-modal.js"></script>
+    <script src="scripts/directives/tx-run.js"></script>
     <script src="scripts/directives/tx-order.js"></script>
     <script src="scripts/directives/tx-projectlist.js"></script>
     <script src="scripts/directives/tx-downloadjson.js"></script>
     <script src="scripts/directives/datavis/_kickoff.js"></script>
     <script src="scripts/directives/datavis/tx-wellplate.js"></script>
-    <script src="scripts/directives/datavis/tx-plategraph.js"></script>
     <script src="scripts/directives/datavis/tx-plate.js"></script>
     <script src="scripts/directives/datavis/tx-timepointgraph.js"></script>
     <script src="scripts/directives/datavis/tx-welltip.js"></script>
@@ -193,7 +188,10 @@
     <script src="scripts/directives/tx-protocol-draggable.js"></script>
     <script src="scripts/directives/tx-protocol-droppable.js"></script>
     <script src="scripts/services/dragdropmanager.js"></script>
-    <script src="scripts/controllers/gallery.js"></script>
+    <script src="scripts/services/containerhelper.js"></script>
+    <script src="scripts/services/protocolhelper.js"></script>
+    <script src="scripts/directives/tx-protocol-field-variable.js"></script>
+    <script src="scripts/directives/tx-change-broadcaster.js"></script>
     <!-- endbuild -->
 </body>
 </html>

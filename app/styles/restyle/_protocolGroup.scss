@@ -1,3 +1,25 @@
+.protocol-setup {
+  display: block;
+  margin-top: $layout-spacing-md;
+  margin-bottom: 0;
+  font-size: 14px;
+  background: transparentize($white, 0.5);
+
+  &.selected {
+    background: $white;
+  }
+
+  .protocol-setup-header {
+    padding: 3px 10px;
+  }
+
+  .protocol-setup-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $light-grey;
+  }
+}
 .protocol-group {
 
   $border-color-inactive: $light-grey;
@@ -7,47 +29,48 @@
 
   display: block;
   padding: 0 $padding-internal;
-  border: 2px solid $border-color-inactive;
-  margin: 0 0 $layout-spacing-lg;
+  margin: $layout-spacing-md 0;
   font-size: 14px;
-  background: transparentize($white, 0.75);
+  background: transparentize($white, 0.5);
+
+  &:first-child {
+    margin-top: 0;
+  }
 
   &:last-child {
     margin-bottom: 0;
   }
 
   &.selected {
-    border-color: $primary;
-  }
-
-  .protocol-group-header,
-  .protocol-group-footer {
-    position: relative;
-    padding: $padding-internal 0;
+    background: $white;
   }
 
   .protocol-group-header {
+    position: relative;
+    padding: $padding-internal 0;
     line-height: 1em;
-    cursor: all-scroll;
+    cursor: row-resize;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-    * {
-      cursor: pointer;
-    }
   }
 
   .protocol-group-main {
-    border-top: $border-inner;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $light-grey;
+  }
+
+  .protocol-group-description {
+
   }
 
   .protocol-group-footer {
-    border-top: $border-inner;
-
-    &-actions {
-      padding-bottom: $padding-internal;
-    }
 
     &-content {
-      background-color: $light-grey;
+      padding-bottom: $padding-internal;
     }
   }
 
@@ -57,10 +80,29 @@
     min-height: 1em;
     min-width: 50px;
     padding: 0 0.5em;
+    cursor: text;
+  }
+
+  .group-repeat {
+    text-align: right;
+
+    &:after {
+      position: relative;
+      left: -6px;
+      content: 'x';
+    }
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 
   .dropdown-menu {
     margin: 0;
+    right: 0;
+    left: auto;
 
     li {
       padding-left: 0;
@@ -69,7 +111,8 @@
 
   pre {
     font-size: 13px;
-    background-color: transparent;
+    background-color: $black;
+    color: $white;
     border-radius: 0;
   }
 }

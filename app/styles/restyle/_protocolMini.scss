@@ -22,7 +22,6 @@
 
   $instruction-height: (2 * $internal-padding-vert) + ($font-size * $mini-font-line-height);
 
-
   display: inline-block;
   font-size: $font-size;
   line-height: $mini-font-line-height;
@@ -155,7 +154,12 @@
     background: $primary;
     -webkit-clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
     clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
+    opacity: 0; //default hidden
 
-    transition: transform 0.25s ease-out;
+    transition: transform 0.25s ease-out, opacity 0.25s linear;
+  }
+
+  &.arrow-visible .mini-arrow {
+    opacity: 1;
   }
 }

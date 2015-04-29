@@ -24,8 +24,15 @@
 
 @import 'restyle/angularStyles';
 @import 'restyle/jsonEditor';
-@import 'restyle/glyphiconCircle';
+@import 'restyle/glyphiconShapes';
 @import 'restyle/btnLabeled';
+@import 'restyle/modal';
+
+//datavis
+
+@import 'restyle/plate';
+@import 'restyle/welltip';
+@import 'restyle/plategraph';
 
 //protocol
 

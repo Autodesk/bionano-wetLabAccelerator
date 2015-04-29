@@ -20,16 +20,17 @@ angular.module('tx.protocolEditor')
       controller      : function ($scope, $element, $attrs) {
         var self = this;
 
-        self.toggleGroupActionsVisible = function ($event, force) {
+        self.toggleActionsMenu = function ($event, force) {
           $event.preventDefault();
           $event.stopPropagation();
-          $scope.groupActionsVisible = angular.isDefined(force) ?
+          $scope.showActions = angular.isDefined(force) ?
             force :
-            !( $scope.groupActionsVisible );
+            !( $scope.showActions );
         };
 
-        //footer actions
-        self.toggleJsonEditing = function (force) {
+        self.toggleJsonEditing = function ($event, force) {
+          $event.preventDefault();
+          //$event.stopPropagation();
           $scope.jsonEditing = angular.isDefined(force) ?
             force :
             !( $scope.jsonEditing );
@@ -63,8 +64,8 @@ angular.module('tx.protocolEditor')
                 opClone = _.cloneDeep(opModel);
 
             _.assign(DragDropManager, {
-              type : 'operation',
-              model: opClone,
+              type  : 'operation',
+              model : opClone,
               onDrop: function () {
                 self.deleteStep(opModel);
 
@@ -88,8 +89,8 @@ angular.module('tx.protocolEditor')
                 groupClone = _.cloneDeep(groupModel);
 
             _.assign(DragDropManager, {
-              type : 'group',
-              model: groupClone,
+              type  : 'group',
+              model : groupClone,
               onDrop: function () {
                 $scope.deleteGroup();
               }
@@ -100,15 +101,44 @@ angular.module('tx.protocolEditor')
         self.optsDroppableGroup = {
           tolerance: 'pointer',
           greedy   : true,
-          drop     : function (e, ui) {
-            var draggableTop = e.pageY,
-                neighborTops = DragDropManager.getNeighborTops('tx-protocol-op', $element),
-                dropIndex    = (_.takeWhile(neighborTops, function (neighborTop) {
-                  return neighborTop < draggableTop;
-                })).length;
+          drop     : handleDrop
+        };
 
-            console.log('group', draggableTop, neighborTops, dropIndex, DragDropManager.type, DragDropManager.model);
+        self.optsDroppableInstruction = self.optsDroppableGroup;
 
+        function getOperationDropIndex (dropY) {
+          var draggableTop = dropY,
+              neighborTops = DragDropManager.getNeighborTops('tx-protocol-op', $element);
+
+          return (_.takeWhile(neighborTops, function (neighborTop) {
+            return neighborTop < draggableTop;
+          })).length;
+        }
+
+        function handleDrop (e, ui) {
+          var dropIndex    = getOperationDropIndex(e.pageY),
+              indexInGroup = _.findIndex(self.group.steps, function (step) {
+                //note - could speed if wasn't using clones...
+                return _.isEqual(step, DragDropManager.model);
+              });
+
+          if (indexInGroup > -1) {
+            $scope.$apply(function () {
+              if (DragDropManager.type == 'operation') {
+                if (indexInGroup < dropIndex) {
+                  dropIndex--;
+                }
+                self.group.steps.splice(indexInGroup, 1);
+                self.group.steps.splice(dropIndex, 0, DragDropManager.model);
+              } else {
+                _.forEach(DragDropManager.model.steps, function (step) {
+                  self.group.steps.push(step);
+                });
+              }
+            });
+          }
+          //otherwise allow dropping onto instruction as if group
+          else {
             $scope.$apply(function () {
               DragDropManager.onDrop();
 
@@ -119,16 +149,11 @@ angular.module('tx.protocolEditor')
                   self.group.steps.push(step);
                 });
               }
-
-              DragDropManager.clear();
             });
           }
-        };
 
-        self.optsDroppableInstruction = {
-          greedy: true, //just a dummy to prevent propagation upward
-          drop  : DragDropManager.clear //todo - better revert - or allow dropping afterward
-        };
+          DragDropManager.clear();
+        }
 
       },
       //editorCtrl only exposed in link
@@ -140,6 +165,10 @@ angular.module('tx.protocolEditor')
         scope.deleteGroup = function () {
           editorCtrl.deleteGroup(scope.groupCtrl.group);
         };
+
+        scope.$on('editor:toggleGroupVisibility', function (e, val) {
+          scope.groupCtrl.isCollapsed = !!val;
+        });
       }
     };
   });

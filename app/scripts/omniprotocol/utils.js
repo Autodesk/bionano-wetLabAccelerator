@@ -18,6 +18,11 @@ function pluckFieldValueRaw (fields, fieldName) {
  Interpolation
  ******/
 
+//given parameter name, and list of parameters, gives parameter's value
+function interpolateParameter (name, parameters) {
+  return _.result(_.result(parameters, name), 'value');
+}
+
 //interpolates a string using the params passed
 function interpolateValue (value, params) {
   try {
@@ -28,6 +33,7 @@ function interpolateValue (value, params) {
   }
 }
 
+//note - this is for interpolating objects with strings. It will not interpolate strings whose values are objects
 // note - if the string contains a variable which cannot be templated, it will just be returned (useful for doing
 // multiple passes) note - if there are multiple variables, if any variable is in the dictionary, they will all be
 // interpolated, and undefined templates will resolve to empty strings. example: interpolateObject({"myVal" : "hey
@@ -88,33 +94,39 @@ function getFieldTypeInOperation (operationName, fieldName) {
  Wrapping
  ******/
 
-function wrapOpInGroup (op) {
+function getScaffoldGroup () {
   return {
     name    : "",
     inputs  : {},
     metadata: {},
     loop    : 1,
-    steps   : [
-      op
-    ]
+    steps   : []
   }
 }
 
-function wrapGroupsInProtocol (groupsInput) {
-  var groups = _.isArray(groupsInput) ? groupsInput : [groupsInput];
+function wrapOpInGroup (op) {
+  var ops = _.isArray(op) ? op : [op];
+  return _.assign(getScaffoldGroup(), {steps: ops});
+}
 
+function getScaffoldProtocol () {
   return {
+    "name"      : "",
     "metadata"  : {
       "name"  : "",
       "id"    : "",
       "type"  : "protocol",
       "author": {}
     },
-    "references": [],
-    "inputs"    : {},
-    "parameters": {},
-    "groups"    : groups
+    "parameters": [],
+    "groups"    : []
   }
+}
+
+function wrapGroupsInProtocol (groupsInput) {
+  var groups = _.isArray(groupsInput) ? groupsInput : [groupsInput];
+
+  _.assign(getScaffoldProtocol(), {groups: groups});
 }
 
 /********
@@ -311,7 +323,9 @@ module.exports = {
   wrapFieldsAsStep                : wrapFieldsAsStep,
   scaffoldOperationWithValues     : scaffoldOperationWithValues,
   getFieldTypeInOperation         : getFieldTypeInOperation,
+  getScaffoldGroup                : getScaffoldGroup,
   wrapOpInGroup                   : wrapOpInGroup,
+  getScaffoldProtocol             : getScaffoldProtocol,
   wrapGroupsInProtocol            : wrapGroupsInProtocol,
   getNumberUnfoldedSteps          : getNumberUnfoldedSteps,
   getUnfoldedStepNumber           : getUnfoldedStepNumber,

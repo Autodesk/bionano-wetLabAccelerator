@@ -1,8 +1,18 @@
 tx-plate {
 
+  $color-disabled: #aaaaaa;
+  $color-default: #dddddd;
   $color-active: #d7ab34;
-  $color-add: #146dff;
+  $color-add: $primary;
   $color-remove: #dd263b;
+  $color-hover: lighten($color-add, 15);
+
+  svg {
+    display: inline-block;
+    background: $white;
+    box-shadow: $box-shadow-popover;
+    overflow: visible;
+  }
 
   .axis {
     path {
@@ -15,23 +25,25 @@ tx-plate {
     }
     text {
       fill: #ccc;
+      font-size: $font-size-sm;
     }
   }
 
   .well {
     fill: transparent;
     stroke-width: 0.5px;
-    stroke: #000;
+    stroke: transparentize($color-default, 1);
+    transition: stroke 0.15s ease-out, stroke-width 0.15s ease-out;
 
     &:hover {
-      fill: $brand-info !important;
+      fill: $color-hover !important; //important to override inline-style use of color
     }
 
     //todo - brushing class
 
     &.selected,
     &.brushSelected {
-      stroke: $color-active !important;
+      stroke: $color-active;
       stroke-width: 3px;
     }
 
@@ -42,7 +54,7 @@ tx-plate {
 
   &.brushing {
     .well.brushActive {
-      stroke: $color-add !important;
+      stroke: $color-add;
       stroke-width: 3px;
     }
 
@@ -66,5 +78,22 @@ tx-plate {
     height: 100%;
     padding: 2px 4px;
     color: white;
+  }
+
+  .plate-footer {
+    padding: 6px;
+    text-align: center;
+    font-size: $font-size-sm;
+    color: $grey;
+
+    span {
+      padding: 0 15px;
+      cursor: pointer;
+
+      &.disabled {
+        color: $light-grey;
+        cursor: default;
+      }
+    }
   }
 }
