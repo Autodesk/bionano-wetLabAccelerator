@@ -3,8 +3,7 @@
   setup
 </div>
 
-<div class="protocol-setup-main"
-     ng-show="isCollapsed">
+<div ng-show="paramsVisible">
   <table>
     <thead>
     <tr>
@@ -14,7 +13,7 @@
     <tr ng-repeat="param in setupCtrl.parameters">
       <td><input type="text" ng-model="param.name"></td>
       <td><select ng-model="param.type"
-                  ng-change="setupCtrl.clearParamValue(param)"
+                  ng-change="setupCtrl.handleChangeParamType(param)"
                   ng-options="o as o for (o, meta) in setupCtrl.paramTypes"></select></td>
       <td ng-switch="param.type">
         <div ng-switch-when="container">
@@ -22,17 +21,19 @@
             <tr>
               <td>
                 <input type="checkbox"
-                         ng-model="param.value.isNew"> new?
+                       ng-model="param.value.isNew"> new?
               </td>
               <td ng-if="param.value.isNew">
                 <select ng-model="param.value.type"
                         ng-required="param.value.isNew"
+                        ng-change="notifyContainerChange()"
                         ng-options="t as t for (t, opts) in setupCtrl.containerOptions"></select>
               </td>
               <td ng-if="!param.value.isNew">
-                <select ng-model="param.value.id"
+                <select ng-model="dummyRemote"
                         ng-required="!param.value.isNew"
-                        ng-options="c.id as (c.name || c.id) for c in setupCtrl.availableContainers"></select>
+                        ng-change="setupCtrl.handleSelectRemoteContainer(param, dummyRemote)"
+                        ng-options="c as (c.name || c.id) for c in setupCtrl.remoteContainers"></select>
               </td>
               <td>
                 <select ng-model="param.value.storage"
