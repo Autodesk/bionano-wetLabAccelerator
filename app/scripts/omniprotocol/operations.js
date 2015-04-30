@@ -666,12 +666,12 @@ module.exports = {
         },
         {
           "name"   : "duration",
-          "type"   : "string",
+          "type"   : "duration",
           "default": {"value": 60, "unit": "minute"}
         }
       ]
     }
-  },
+  }
 
 
   //containers
