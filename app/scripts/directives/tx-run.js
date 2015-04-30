@@ -88,8 +88,8 @@ angular.module('transcripticApp')
           response: {}
         };
 
-        self.analyze = angular.bind(self, resourceWrap, Run.analyze, $scope.analysisResponse);
-        self.submit = angular.bind(self, resourceWrap, Run.submit, $scope.runResponse);
+        self.analyze = angular.bind(self, resourceWrap, Run.analyze, self.analysisResponse);
+        self.submit = angular.bind(self, resourceWrap, Run.submit, self.runResponse);
 
 
       },
