@@ -1,14 +1,22 @@
-<input type="checkbox" id="menu-trigger" class="menu-trigger"  />
+<input type="checkbox" ng-model="galleryCtrl.isVisible" id="menu-trigger" class="menu-trigger"  />
 <label for="menu-trigger"><span></span></label>
 
 <div class="menu">
   <div class="gallery-header">
     <input class="gallery-filter" type="text" ng-model="galleryCtrl.searchText" placeholder="Filter">
   </div>
-  <div class="gallery-group" ng-repeat="(groupKey, groupItems) in galleryCtrl.rolled">
-    <h3>{{groupKey}}</h3>
-    <div ng-repeat="item in groupItems | orderBy:'name'">
-      {{item.name}}
+
+  <div class="gallery-group">
+    <h3>Protocols</h3>
+    <div ng-repeat="protocol in galleryCtrl.protocols | orderBy:'metadata.name'">
+      {{protocol.metadata.name}}
+    </div>
+  </div>
+
+  <div class="gallery-group">
+    <h3>Runs</h3>
+    <div ng-repeat="run in galleryCtrl.runs | orderBy:'metadata.date'">
+      {{run.metadata.name}}
     </div>
   </div>
 </div>

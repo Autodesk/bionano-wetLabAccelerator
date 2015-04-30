@@ -2,6 +2,8 @@ tx-gallery {
 
   $gallery-width: 300px;
   $close-width: 30px;
+  $transition-time: 0.3s;
+  $transition-ease: ease-out;
 
   position: absolute;
   top: 50px;
@@ -64,12 +66,12 @@ tx-gallery {
   }
 
   .menu-trigger + label {
-    transition: left .3s;
+    transition: left $transition-time;
   }
 
   .menu-trigger:checked ~ .menu {
     transform: translate3d(0, 0, 0);
-    transition: transform 0.3s ease-out;
+    transition: transform $transition-time $transition-ease;
     z-index: 1001;
   }
 
@@ -91,8 +93,7 @@ tx-gallery {
     margin: 50px 0;
     display: block;
     transform: translate3d(-100%, 0, 0);
-    transition-property: all;
-    transition-duration: .3s;
+    transition: transform $transition-time $transition-ease;
 
     .gallery-header {
 
