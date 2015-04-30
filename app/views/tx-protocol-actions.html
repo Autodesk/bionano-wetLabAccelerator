@@ -19,7 +19,7 @@
     <button class="btn btn-default btn-sm"
             ng-disabled="actionCtrl.protocolForm.$error.json"
             ng-class="{'btn-info' : actionCtrl.protocolForm.$dirty}"
-            ng-click="handleSave()"
+            ng-click="actionCtrl.saveProtocol()"
             tooltip="Save Protocol"
             tooltip-append-to-body="true">
       <span class="glyphicon glyphicon-cloud-upload"></span>

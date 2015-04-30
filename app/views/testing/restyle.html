@@ -1,13 +1,15 @@
 <div ng-show="restyleCtrl.currentProtocol">
   <span ng-bind="restyleCtrl.currentProtocol.metadata.name"></span>
+
   <div class="glyphicon-ellipse" ng-click='toggleModal()'>
     <span class="glyphicon glyphicon-option-horizontal"></span>
   </div>
   <tx-modal ng-show='modalShown'>
     <table>
       <thead>
-        <tr>
-          <td colspan="2">Edit protocol metadata</td></tr>
+      <tr>
+        <td colspan="2">Edit protocol metadata</td>
+      </tr>
       </thead>
       <tr>
         <td>Name</td>
@@ -42,7 +44,7 @@
     <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
                          protocol-form="ProtocolForm"></tx-protocol-actions>
     <tx-protocol-editor ng-form="ProtocolForm"
-                    protocol="restyleCtrl.currentProtocol">
+                        protocol="restyleCtrl.currentProtocol">
     </tx-protocol-editor>
   </div>
 </div>

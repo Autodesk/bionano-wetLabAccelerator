@@ -9,7 +9,7 @@
  * todo - move away from firebase
  */
 angular.module('transcripticApp')
-  .service('ProtocolHelper', function ($q, simpleLogin, FBProfile, Omniprotocol, Autoprotocol) {
+  .service('ProtocolHelper', function ($q, UUIDGen, simpleLogin, FBProfile, Omniprotocol, Autoprotocol, Authentication) {
 
     var self = this;
 
@@ -39,10 +39,7 @@ angular.module('transcripticApp')
 
       //todo - smarter creation / update of metadata
 
-      _.assign(dup.metadata, {
-        id  : Math.floor(Math.random() * Math.pow(10, 12)),
-        date: '' + (new Date()).valueOf()
-      });
+      _.assign(dup.metadata, generateNewProtocolMetadata());
 
       //note - firebase
       return self.firebaseProtocols.$add(dup)
@@ -60,12 +57,33 @@ angular.module('transcripticApp')
 
     self.saveProtocol = function (protocol) {
       //note - firebase
-      return self.firebaseProtocols.$save(protocol).
-        then(updateProtocolsExposed);
+      //console.log('saving', protocol, protocol.$id, protocol === self.currentProtocol, self.firebaseProtocols);
+
+      if (!hasNecessaryMetadataToSave(protocol)) {
+        assignNecessaryMetadataToProtocol(protocol);
+      }
+
+      //hack for firebase
+      var firebaseRecord = self.firebaseProtocols.$getRecord(protocol.$id);
+      if (protocol.$id && firebaseRecord) {
+        //console.log(firebaseRecord);
+        _.assign(firebaseRecord, protocol);
+        return self.firebaseProtocols.$save(firebaseRecord)
+          .then(updateProtocolsExposed);
+      } else {
+        return self.firebaseProtocols.$add(protocol).
+          then(function (ref) {
+            var firebaseProto = self.firebaseProtocols.$getRecord(ref.key());
+            //console.log(ref.key(), firebaseProto);
+            !_.isEmpty(firebaseProto) && self.assignCurrentProtocol(firebaseProto);
+          })
+          .then(updateProtocolsExposed);
+      }
+
     };
 
     self.clearProtocol = function (protocol) {
-      return _.assign(protocol, Omniprotocol.utils.getScaffoldProtocol());
+      return $q.when(_.assign(protocol, Omniprotocol.utils.getScaffoldProtocol()));
     };
 
     self.convertToAutoprotocol = Autoprotocol.fromAbstraction;
@@ -82,6 +100,29 @@ angular.module('transcripticApp')
     });
 
     // helpers //
+
+    //todo - handle tags (substitute for parent child relationships)
+    function generateNewProtocolMetadata () {
+      return {
+        id    : UUIDGen(),
+        date  : '' + (new Date()).valueOf(),
+        type  : 'protocol',
+        author: {
+          name: Authentication.getUsername(),
+          id  : Authentication.getUserId()
+        }
+      }
+    }
+
+    function assignNecessaryMetadataToProtocol (protocol) {
+      return _.assign(protocol.metadata, generateNewProtocolMetadata(), protocol.metadata);
+    }
+
+    function hasNecessaryMetadataToSave (protocol) {
+      return _.every(['id', 'name', 'type', 'author'], function (field) {
+        return !_.isUndefined(_.result(protocol.metadata, field));
+      });
+    }
 
     function updateProtocolsExposed () {
       return $q.when(self.protocols = setProtocolList(self.firebaseProtocols));

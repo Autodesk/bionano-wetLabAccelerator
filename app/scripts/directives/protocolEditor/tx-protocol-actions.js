@@ -20,8 +20,10 @@ angular.module('tx.protocolEditor')
       controller: function ($scope, $element, $attrs) {
         var self = this;
 
-        self.clearProtocol = function () {
-          _.assign(self.protocol, Omniprotocol.utils.getScaffoldProtocol());
+        self.clearProtocol = _.partial(ProtocolHelper.clearProtocol, self.protocol);
+        self.saveProtocol = function () {
+          ProtocolHelper.saveProtocol(self.protocol)
+            .then(self.protocolForm.$setPristine);
         };
 
         $scope.modalShown = false;

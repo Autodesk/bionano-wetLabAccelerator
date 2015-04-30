@@ -111,7 +111,6 @@ function wrapOpInGroup (op) {
 
 function getScaffoldProtocol () {
   return {
-    "name"      : "",
     "metadata"  : {
       "name"  : "",
       "id"    : "",
