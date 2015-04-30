@@ -46,7 +46,7 @@ converterField.columnVolumes = function (input) {
   return _.map(input, function (colVol) {
     return {
       column: colVol.column,
-      volume: colVol.volume
+      volume: convertDimensionalWithDefault(colVol.volume, {unit : 'microliter', value: '100'})
     };
   });
 };
