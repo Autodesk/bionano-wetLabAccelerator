@@ -15,7 +15,7 @@ angular.module('transcripticApp')
 
     self.currentProtocol = ProtocolHelper.currentProtocol;
 
-    $scope.loadDemo = function () {
+    self.loadDemo = function () {
       $http.get('demo_protocols/omniprotocol/protocol_transfer.json').success(function (d) {
         ProtocolHelper.assignCurrentProtocol(d);
       });
@@ -25,6 +25,4 @@ angular.module('transcripticApp')
     $scope.toggleModal = function() {
       $scope.modalShown = !$scope.modalShown;
     };
-
-    $scope.loadDemo();
   });
