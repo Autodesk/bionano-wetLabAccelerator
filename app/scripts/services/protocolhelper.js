@@ -95,7 +95,9 @@ angular.module('transcripticApp')
         //note - firebase
         self.firebaseProtocolSync = new FBProfile(user.uid, 'omniprotocols');
         self.firebaseProtocols    = self.firebaseProtocolSync.$asArray();
-        updateProtocolsExposed();
+
+        self.firebaseProtocols.$loaded()
+          .then(updateProtocolsExposed);
       }
     });
 

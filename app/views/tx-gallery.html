@@ -8,7 +8,8 @@
 
   <div class="gallery-group">
     <h3>Protocols</h3>
-    <div ng-repeat="protocol in galleryCtrl.protocols | orderBy:'metadata.name'">
+    <div ng-repeat="protocol in galleryCtrl.protocols | orderBy:'metadata.name'"
+            ng-click="galleryCtrl.openProtocol(protocol)">
       {{protocol.metadata.name}}
     </div>
   </div>
