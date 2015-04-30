@@ -19,10 +19,10 @@ angular.module('tx.protocolEditor')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         scope.operations = Omniprotocol.operations;
-        scope.operationKeys = getOperationKeys();
+        scope.operationKeys = _.keys(Omniprotocol.operations);
 
+        /*
         var currentOpCancelled = false;
-
         scope.sortableOptions = {
           scroll: true,
           helper: 'clone',
@@ -30,9 +30,6 @@ angular.module('tx.protocolEditor')
           items: ".drag-handle",
           //connectWith: ".protocol-instructions",
           update: function (e, ui) {
-
-            debugger;
-
             //same list
             if (!ui.item.sortable.droptargetModel ||
                  ui.item.sortable.sourceModel == ui.item.sortable.droptargetModel) {
@@ -75,6 +72,14 @@ angular.module('tx.protocolEditor')
           }
         };
 
+
+        var initalKeys;
+        function getOperationKeys () {
+          _.isUndefined(initalKeys) && (initalKeys = _.keys(Omniprotocol.operations));
+          return _.clone(initalKeys);
+        }
+        */
+
         scope.draggableOptions = {
           helper: 'clone',
           appendTo: document.body,
@@ -90,12 +95,6 @@ angular.module('tx.protocolEditor')
             });
           }
         };
-
-        var initalKeys;
-        function getOperationKeys () {
-          _.isUndefined(initalKeys) && (initalKeys = _.keys(Omniprotocol.operations));
-          return _.clone(initalKeys);
-        }
       }
     };
   });
