@@ -7,7 +7,7 @@
  * # txProtocolActions
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolActions', function ($rootScope, Omniprotocol) {
+  .directive('txProtocolActions', function ($rootScope, Omniprotocol, Autoprotocol) {
     return {
       templateUrl: 'views/tx-protocol-actions.html',
       restrict: 'E',
@@ -28,6 +28,8 @@ angular.module('tx.protocolEditor')
         $scope.toggleModal = function() {
           $scope.modalShown = !$scope.modalShown;
         };
+
+        self.autoprotocolConvertFunction = Autoprotocol.fromAbstraction;
 
         self.allStepsOpen = false;
         self.toggleAllSteps = function () {

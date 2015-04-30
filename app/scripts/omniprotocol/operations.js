@@ -666,17 +666,17 @@ module.exports = {
         },
         {
           "name"   : "duration",
-          "type"   : "string",
+          "type"   : "duration",
           "default": {"value": 60, "unit": "minute"}
         }
       ]
     }
-  },
+  }
 
 
   //containers
 
-
+/*
   "store": {
     "operation"  : "store",
     "description": "Deliver a plate to a storage location specified by the where parameter.",
@@ -724,4 +724,5 @@ module.exports = {
       ]
     }
   }
+  */
 };

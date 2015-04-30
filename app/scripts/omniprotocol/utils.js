@@ -129,6 +129,22 @@ function wrapGroupsInProtocol (groupsInput) {
   _.assign(getScaffoldProtocol(), {groups: groups});
 }
 
+function getScaffoldRun () {
+  return {
+    "metadata": {
+      "name": "",
+      "id": "",
+      "type" : "run",
+      "date" : "",
+      "author": {},
+      "protocol" : {},
+      "description": ""
+    },
+    "parameters": [],
+    "data" : {}
+  };
+}
+
 /********
  Transformations
  ********/
@@ -327,6 +343,7 @@ module.exports = {
   wrapOpInGroup                   : wrapOpInGroup,
   getScaffoldProtocol             : getScaffoldProtocol,
   wrapGroupsInProtocol            : wrapGroupsInProtocol,
+  getScaffoldRun                  : getScaffoldRun,
   getNumberUnfoldedSteps          : getNumberUnfoldedSteps,
   getUnfoldedStepNumber           : getUnfoldedStepNumber,
   getUnfoldedStepNumbers          : getUnfoldedStepNumbers,

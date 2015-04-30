@@ -37,7 +37,7 @@ module.exports = function (grunt) {
       browserify: {
         files: ['<%= yeoman.app %>/scripts/omniprotocol/**/*.js',
                 '<%= yeoman.app %>/scripts/conversion/**/*.js',
-                '!index.js'],
+                '!<%= yeoman.app %>/scripts/**/index.js'],
         tasks: ['browserify']
       },
       js: {
