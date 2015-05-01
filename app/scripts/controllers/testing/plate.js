@@ -65,7 +65,7 @@ angular.module('transcripticApp')
     //testing
 
     $scope.openGrowthCurve = function () {
-      $http.get('demo_data/growth-0216.json').success(function (d) {
+      $http.get('demo_data/transformation_data.json').success(function (d) {
         setData(DataConv.parseGrowthCurve(d, true));
         $scope.loadedDemo = true;
       });
