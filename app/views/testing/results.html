@@ -6,7 +6,9 @@
     </div>
     <div class="maincolumn flex-grower">
       <p class="pull-right">
-        <a ng-click="resultsCtrl.downloadResults()">Download</a>
+        <a tx-downloadjson
+           filename="{{(resultsCtrl.run.metadata.name ? resultsCtrl.run.metadata.name : 'run_data') + '.json'}}"
+           download-model="resultsCtrl.run">Download</a>
       </p>
       <p>Run Results</p>
     </div>
@@ -15,7 +17,7 @@
   <div class="flex-horizontal flex-grower">
 
     <div class="sidepanel flex-vertical">
-      <tx-protocol-mini protocol="resultsCtrl.protocol"
+      <tx-protocol-mini protocol="resultsCtrl.run.protocol"
                         current-operation="resultsCtrl.currentInfo"
                         show-timelines="true"
                         show-arrow="true"
@@ -37,8 +39,10 @@
         <p ng-bind="resultsCtrl.currentGroup.description"></p>
       </div>
 
-      <tx-operation-summary protocol="resultsCtrl.protocol"
-                            indices="resultsCtrl.currentInfo">
+      <tx-operation-summary protocol="resultsCtrl.run.protocol"
+                            indices="resultsCtrl.currentInfo"
+                            operation="resultsCtrl.currentOperation"
+                            operation-data="resultsCtrl.currentData">
       </tx-operation-summary>
 
     </div>

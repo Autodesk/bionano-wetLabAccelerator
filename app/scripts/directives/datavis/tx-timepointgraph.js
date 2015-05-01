@@ -316,6 +316,7 @@ angular.module('tx.datavis')
             .attr('class', 'line');
 
           //UPDATE - only updated values
+          //note - we are actually changing the values when do this (i.e. this variable is exposed outside the scope of this directive)
           series.transition().attr('d', function (d) {
             _.map(d.values, function (val) {
               val.line = this;

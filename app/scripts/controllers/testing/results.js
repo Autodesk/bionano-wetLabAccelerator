@@ -8,26 +8,23 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('TestingResultsCtrl', function ($scope, $http) {
+  .controller('TestingResultsCtrl', function ($scope, $http, RunHelper) {
     var self = this;
 
-    //todo - use run helper and protocol helper
-    //todo - when get the run, if not completed, ping transcriptic for data
+    self.run = RunHelper.currentRun;
 
-    $http.get('demo_protocols/omniprotocol/protocol_transfer.json')
-    .success(function (d) {
-      self.protocol = d;
-    });
+    //todo - when get the run, if not completed, ping transcriptic for data (add function to RunHelper)
+    $http.get('demo_runs/transformation_4-30.json')
+    .success(RunHelper.assignCurrentRun);
 
     $scope.$watch('resultsCtrl.currentInfo', function (newval) {
-      if (_.isObject(newval)) {
-        self.currentGroup = self.protocol.groups[newval.group];
+      if (!_.isEmpty(newval)) {
+        self.currentGroup = self.run.protocol.groups[newval.group];
         self.currentOperation = self.currentGroup.steps[newval.step];
+
+        //todo
+        self.currentData = {};
       }
     });
-
-    self.downloadResults = function () {
-      alert('todo');
-    };
 
   });

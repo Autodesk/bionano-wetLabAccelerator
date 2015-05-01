@@ -111,7 +111,8 @@ angular.module('transcripticApp')
 
     return {
       parseGrowthCurve : parseGrowthCurve,
-      generateRandomGrowthCurve : generateRandomGrowthCurve
+      generateRandomGrowthCurve : generateRandomGrowthCurve,
+      createTimepointRandom : createTimepointRandom
     }
 
   });
