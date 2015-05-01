@@ -9,7 +9,7 @@
  * todo - move away from firebase
  */
 angular.module('transcripticApp')
-  .service('ProtocolHelper', function ($q, UUIDGen, simpleLogin, FBProfile, Omniprotocol, Autoprotocol, Authentication) {
+  .service('ProtocolHelper', function ($q, $rootScope, $timeout, UUIDGen, simpleLogin, FBProfile, Omniprotocol, Autoprotocol, Authentication) {
 
     var self = this;
 
@@ -21,6 +21,9 @@ angular.module('transcripticApp')
 
     self.assignCurrentProtocol = function (newProtocol) {
       _.assign(self.currentProtocol, Omniprotocol.utils.getScaffoldProtocol(), newProtocol);
+      $timeout(function () {
+        $rootScope.$broadcast('editor:newprotocol');
+      })
     };
 
     self.addProtocol = function (inputProtocol) {

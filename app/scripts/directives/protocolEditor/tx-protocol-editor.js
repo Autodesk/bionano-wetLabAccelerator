@@ -50,9 +50,6 @@ angular.module('tx.protocolEditor')
               $scope.$apply(function() {
                 try {
                   ProtocolHelper.assignCurrentProtocol(angular.fromJson(e.target.result));
-                  $timeout(function () {
-                    $rootScope.$broadcast('editor:newprotocol');
-                  })
                 } catch (e) {
                   console.log('couldnt parse dropped JSON', e);
                 }

@@ -28,7 +28,7 @@ angular.module('transcripticApp')
         };
 
         self.clearParamValue = function (param) {
-          param.value = null;
+          _.assign(param, {value : null});
         };
 
         self.deleteParam = function (param) {
