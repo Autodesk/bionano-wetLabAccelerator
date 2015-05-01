@@ -34,6 +34,12 @@ angular.module('transcripticApp')
           $location.path('/testing/restyle');
           ProtocolHelper.assignCurrentProtocol(protocol);
         };
+
+        self.openRun = function (run) {
+          self.toggleGalleryVisible(false);
+          $location.path('/testing/results');
+          RunHelper.assignCurrentRun(run.protocol);
+        }
       },
       link            : function postLink (scope, element, attrs) {
 
