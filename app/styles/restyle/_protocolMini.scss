@@ -71,6 +71,22 @@
       }
     }
 
+    &.multichild,
+    &.looping {
+
+      border: 2px solid $white;
+      background: transparent;
+      padding: $internal-padding-vert $internal-padding-hori;
+
+      .mini-group-name {
+        padding-bottom: $internal-padding-vert;
+      }
+
+      .protocol-instruction {
+
+      }
+    }
+
     &.multichild {
 
       .protocol-instruction {
@@ -84,15 +100,11 @@
 
     &.looping {
 
-      border: 2px solid $white;
-      background: transparent;
-      padding: $internal-padding-vert $internal-padding-hori;
+      .protocol-instruction {
 
-      .mini-group-name {
-        padding-bottom: $internal-padding-vert;
       }
 
-      .protocol-instruction {
+      &.expanded {
 
       }
     }
