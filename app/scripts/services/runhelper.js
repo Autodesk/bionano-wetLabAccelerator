@@ -15,8 +15,6 @@ angular.module('transcripticApp')
     self.runs = [];
     self.currentRun = {};
 
-    //todo - on data page, when get the run, if not completed, ping transcriptic for data
-
     self.verifyRun = function (protocol, transcripticProject, testMode) {
       var run = createNewRunObject(protocol);
 
@@ -30,7 +28,6 @@ angular.module('transcripticApp')
     self.createRun = function (protocol, transcripticProject, testMode) {
       var run = createNewRunObject(protocol);
 
-      //todo - verify this works - including promises
       return Run.submit({project: transcripticProject}, {
         title: 'Run of ' + protocol.metadata.name,
         protocol: run.autoprotocol,

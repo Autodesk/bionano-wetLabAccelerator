@@ -30,6 +30,7 @@ angular.module('transcripticApp')
 
         // SUBMIT / ANALYZE RUNS
 
+        //todo - pending GH#175 - redesign of run dialog
         //todo - this should be passed in from the list...
         //todo - alternatively, we can just create a project behind the scenes and automatically name
 
