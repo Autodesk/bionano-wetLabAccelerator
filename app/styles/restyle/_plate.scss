@@ -5,6 +5,7 @@ tx-plate {
   $color-active: #d7ab34;
   $color-add: $primary;
   $color-remove: #dd263b;
+  $color-focused: #dd8888;
   $color-hover: lighten($color-add, 15);
 
   //defaults, can also define inline
@@ -54,6 +55,10 @@ tx-plate {
 
     &.hidden {
       fill: #ccc !important;
+    }
+
+    &.wellFocused {
+      fill: $color-focused !important;
     }
   }
 
