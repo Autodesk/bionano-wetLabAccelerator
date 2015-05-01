@@ -1,4 +1,4 @@
-<input type="checkbox" ng-model="galleryCtrl.isVisible" id="menu-trigger" class="menu-trigger"  />
+<input type="checkbox" ng-model="galleryCtrl.isVisible" id="menu-trigger" class="menu-trigger"/>
 <label for="menu-trigger"><span></span></label>
 
 <div class="menu">
@@ -8,15 +8,19 @@
 
   <div class="gallery-group">
     <h3>Protocols</h3>
+
     <div ng-repeat="protocol in galleryCtrl.protocols | orderBy:'metadata.name'">
-      {{protocol.metadata.name}}
+      <a ng-click="galleryCtrl.openProtocol(protocol)"
+         ng-bind="protocol.metadata.name"></a>
     </div>
   </div>
 
   <div class="gallery-group">
     <h3>Runs</h3>
+
     <div ng-repeat="run in galleryCtrl.runs | orderBy:'metadata.date'">
-      {{run.metadata.name}}
+      <a ng-click="galleryCtrl.openRun(run)"
+         ng-bind="run.metadata.name"></a>
     </div>
   </div>
 </div>

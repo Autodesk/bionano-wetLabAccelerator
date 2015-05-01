@@ -7,7 +7,7 @@
  * # txProtocolActions
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolActions', function ($rootScope, Omniprotocol, Autoprotocol) {
+  .directive('txProtocolActions', function ($rootScope, ProtocolHelper, Omniprotocol) {
     return {
       templateUrl: 'views/tx-protocol-actions.html',
       restrict: 'E',
@@ -20,8 +20,10 @@ angular.module('tx.protocolEditor')
       controller: function ($scope, $element, $attrs) {
         var self = this;
 
-        self.clearProtocol = function () {
-          _.assign(self.protocol, Omniprotocol.utils.getScaffoldProtocol());
+        self.clearProtocol = _.partial(ProtocolHelper.clearProtocol, self.protocol);
+        self.saveProtocol = function () {
+          ProtocolHelper.saveProtocol(self.protocol)
+            .then(self.protocolForm.$setPristine);
         };
 
         $scope.modalShown = false;
@@ -29,7 +31,7 @@ angular.module('tx.protocolEditor')
           $scope.modalShown = !$scope.modalShown;
         };
 
-        self.autoprotocolConvertFunction = Autoprotocol.fromAbstraction;
+        self.autoprotocolConvertFunction = ProtocolHelper.convertToAutoprotocol;
 
         self.allStepsOpen = false;
         self.toggleAllSteps = function () {

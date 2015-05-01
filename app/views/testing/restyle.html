@@ -1,48 +1,58 @@
-<div ng-show="restyleCtrl.currentProtocol">
-  <span ng-bind="restyleCtrl.currentProtocol.metadata.name"></span>
-  <div class="glyphicon-ellipse" ng-click='toggleModal()'>
-    <span class="glyphicon glyphicon-option-horizontal"></span>
-  </div>
-  <tx-modal ng-show='modalShown'>
-    <table>
-      <thead>
+<div ng-show="restyleCtrl.currentProtocol.metadata"
+     class="flex-grower flex-vertical">
+
+  <div>
+    <span ng-bind="restyleCtrl.currentProtocol.metadata.name"></span>
+
+    <div class="glyphicon-ellipse" ng-click='toggleModal()'>
+      <span class="glyphicon glyphicon-option-horizontal"></span>
+    </div>
+    <tx-modal ng-show='modalShown'>
+      <table>
+        <thead>
         <tr>
-          <td colspan="2">Edit protocol metadata</td></tr>
-      </thead>
-      <tr>
-        <td>Name</td>
-        <td><span contenteditable="true" ng-model="restyleCtrl.currentProtocol.metadata.name"></span></td>
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td><span contenteditable="true" ng-model="restyleCtrl.currentProtocol.metadata.description"></span></td>
-      </tr>
-      <tr>
-        <td>Tags</td>
-        <td><span contenteditable="true" ng-list ng-model="restyleCtrl.currentProtocol.metadata.tags"></span></td>
-      </tr>
-    </table>
-  </tx-modal>
+          <td colspan="2">Edit protocol metadata</td>
+        </tr>
+        </thead>
+        <tr>
+          <td>Name</td>
+          <td><span contenteditable="true" ng-model="restyleCtrl.currentProtocol.metadata.name"></span></td>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td><span contenteditable="true" ng-model="restyleCtrl.currentProtocol.metadata.description"></span></td>
+        </tr>
+        <tr>
+          <td>Tags</td>
+          <td><span contenteditable="true" ng-list ng-model="restyleCtrl.currentProtocol.metadata.tags"></span></td>
+        </tr>
+      </table>
+    </tx-modal>
+  </div>
+
+  <div class="flex-horizontal flex-grower">
+
+    <div class="sidepanel flex-vertical"
+         resizeable
+         resize-property="width"
+         resize-position="right"
+         resize-direction="horizontal">
+      <tx-operation-list class="flex-grower scroll-y"></tx-operation-list>
+    </div>
+
+    <div class="maincolumn flex-grower maxout-scroll-vertical">
+
+      <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
+                           protocol-form="ProtocolForm"></tx-protocol-actions>
+      <tx-protocol-editor ng-form="ProtocolForm"
+                          protocol="restyleCtrl.currentProtocol">
+      </tx-protocol-editor>
+    </div>
+  </div>
+
 </div>
 
-<div class="flex-horizontal flex-grower">
-
-  <div class="sidepanel flex-vertical"
-       resizeable
-       resize-property="width"
-       resize-position="right"
-       resize-direction="horizontal"
-       ng-show="restyleCtrl.currentProtocol">
-    <tx-operation-list class="flex-grower scroll-y"></tx-operation-list>
-  </div>
-
-  <div class="maincolumn flex-grower maxout-scroll-vertical"
-       ng-show="restyleCtrl.currentProtocol">
-
-    <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
-                         protocol-form="ProtocolForm"></tx-protocol-actions>
-    <tx-protocol-editor ng-form="ProtocolForm"
-                    protocol="restyleCtrl.currentProtocol">
-    </tx-protocol-editor>
-  </div>
+<div ng-if="!restyleCtrl.currentProtocol.metadata">
+  Choose a protocol from the gallery, or drag-n-drop one onto the setup. Or <a ng-click="restyleCtrl.loadDemo()">load a
+  demo</a>
 </div>

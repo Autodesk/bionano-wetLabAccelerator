@@ -8,36 +8,50 @@
  * Service in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .service('RunHelper', function ($q, simpleLogin, FBProfile, Omniprotocol) {
+  .service('RunHelper', function ($q, Authentication, Run, ProtocolHelper, simpleLogin, FBProfile, Omniprotocol, UUIDGen) {
 
     var self = this;
 
     self.runs = [];
     self.currentRun = {};
 
-    self.createRun = function (protocol) {
-      var run = _.assign(Omniprotocol.utils.getScaffoldRun(), {
-        parameters : _.cloneDeep(protocol.parameters)
-      });
+    self.verifyRun = function (protocol, transcripticProject, testMode) {
+      var run = createNewRunObject(protocol);
 
-      //assign metadata
-      _.assign(run.metadata, {
-        date : (new Date()).valueOf(),
-        protocol : {
-          name : protocol.metadata.name,
-          id : protocol.metadata.id,
-          author: "todo"
-        },
-        author : {
-          'todo' : 'todo'
-        }
-      });
+      return Run.analyze({project: transcripticProject}, {
+        title: 'Verification of ' + protocol.metadata.name + ' - ' + Date.now(),
+        protocol: run.autoprotocol,
+        test_mode: !!testMode
+      }).$promise
+    };
 
-      //todo - run it and get an id from transcriptic
+    self.createRun = function (protocol, transcripticProject, testMode) {
+      var run = createNewRunObject(protocol);
+
+      return Run.submit({project: transcripticProject}, {
+        title: 'Run of ' + protocol.metadata.name,
+        protocol: run.autoprotocol,
+        test_mode: !!testMode
+      }).$promise.then(function (submissionResult) {
+          console.log(submissionResult);
+
+          _.assign(run, {
+            transcripticRunId : submissionResult.id,
+            transcripticRunInfo : _.cloneDeep(submissionResult)
+          });
+
+          return self.firebaseRuns.$add(run)
+            .then(updateRunsExposed)
+            .then(_.partial($q.when, submissionResult));
+
+      }, function (submissionFailure) {
+          console.warn('run failure', submissionFailure);
+          return $q.reject(submissionFailure);
+      });
     };
 
     self.assignCurrentRun = function (inputRun) {
-      _.assign(self.currentRun, Omniprotocol.utils.getScaffoldRun(), inputRun)
+      _.assign(self.currentRun, Omniprotocol.utils.getScaffoldRun(), inputRun);
     };
 
     // watchers //
@@ -47,15 +61,45 @@ angular.module('transcripticApp')
         //note - firebase
         self.firebaseRunSync = new FBProfile(user.uid, 'runs');
         self.firebaseRuns    = self.firebaseRunSync.$asArray();
+
+        self.firebaseRuns.$loaded()
+          .then(updateRunsExposed);
       }
     });
 
     // helpers //
 
+    function createNewRunObject (protocol) {
+      var run = _.assign(Omniprotocol.utils.getScaffoldRun(), {
+        protocol : _.cloneDeep(protocol),
+        autoprotocol : ProtocolHelper.convertToAutoprotocol(protocol)
+      });
+
+      //assign metadata
+      _.assign(run.metadata, generateNewRunMetadata(protocol));
+
+      return run;
+    }
+
+    //todo - handle tags
+    //note - does not handle protocol
+    function generateNewRunMetadata (protocol) {
+      return {
+        id  : UUIDGen(),
+        name: 'Run of ' + _.result(protocol.metadata, 'name', 'CX1 Protocol'),
+        date: (new Date()).toString(),
+        type: 'run',
+        author : {
+          name : Authentication.getUsername(),
+          id : Authentication.getUserId()
+        }
+      }
+    }
+
     function setRunList (runs) {
       self.runs.length = 0;
       _.forEach(runs, function (run) {
-        self.protocols.push(run);
+        self.runs.push(run);
       });
       return self.runs;
     }
@@ -63,7 +107,6 @@ angular.module('transcripticApp')
     function updateRunsExposed () {
       return $q.when(self.runs = setRunList(self.firebaseRuns));
     }
-
 
     return self;
   });
