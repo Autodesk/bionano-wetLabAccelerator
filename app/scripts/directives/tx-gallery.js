@@ -10,7 +10,7 @@
  * todo - maybe makes sense to get these items internally? how to link to the rest of the app, handle nav, etc.
  */
 angular.module('transcripticApp')
-  .directive('txGallery', function (ProtocolHelper, RunHelper) {
+  .directive('txGallery', function (ProtocolHelper, RunHelper, $location) {
     return {
       templateUrl     : 'views/tx-gallery.html',
       restrict        : 'E',
@@ -28,6 +28,18 @@ angular.module('transcripticApp')
         self.protocols = ProtocolHelper.protocols;
 
         self.runs = RunHelper.runs;
+
+        self.openProtocol = function (protocol) {
+          self.toggleGalleryVisible(false);
+          $location.path('/testing/restyle');
+          ProtocolHelper.assignCurrentProtocol(protocol);
+        };
+
+        self.openRun = function (run) {
+          self.toggleGalleryVisible(false);
+          $location.path('/testing/results');
+          RunHelper.assignCurrentRun(run.protocol);
+        }
       },
       link            : function postLink (scope, element, attrs) {
 

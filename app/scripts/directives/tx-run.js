@@ -7,19 +7,19 @@
  * # txRun
  */
 angular.module('transcripticApp')
-  .directive('txRun', function ($q, Auth, Autoprotocol, Omniprotocol, Run, Project) {
+  .directive('txRun', function ($q, Auth, Autoprotocol, Omniprotocol, Run, Project, RunHelper) {
     return {
-      templateUrl: 'views/tx-run.html',
-      restrict: 'E',
-      scope: {
-        protocol: '=',
+      templateUrl     : 'views/tx-run.html',
+      restrict        : 'E',
+      scope           : {
+        protocol    : '=',
         protocolForm: '='
       },
       bindToController: true,
-      controllerAs: 'runCtrl',
-      controller: function ($scope, $element, $attrs) {
+      controllerAs    : 'runCtrl',
+      controller      : function ($scope, $element, $attrs) {
 
-        var self = this,
+        var self               = this,
             firstProjIdPromise = $q.when();
 
         Auth.watch(function () {
@@ -30,38 +30,33 @@ angular.module('transcripticApp')
 
         // SUBMIT / ANALYZE RUNS
 
-        function constructRunPayload () {
-          return {
-            title: self.runTitle,
-            protocol: Autoprotocol.fromAbstraction(self.protocol)
-          };
-        }
-
+        //todo - this should be passed in from the list...
+        //todo - alternatively, we can just create a project behind the scenes and automatically name
 
         function resourceWrap (funcToRun, toModify) {
           angular.extend(toModify.config, {
-            initiated: true,
+            initiated : true,
             processing: true
           });
 
           firstProjIdPromise.then(function (firstProjId) {
-            funcToRun({project : firstProjId}, constructRunPayload()).$promise.
+            funcToRun(self.protocol, firstProjId).
               then(function runSuccess (d) {
                 console.log(d);
                 angular.extend(toModify.config, {
                   processing: false,
-                  error: false
+                  error     : false
                 });
                 angular.extend(toModify.response, d);
               }, function runFailure (e) {
                 console.log(e);
                 angular.extend(toModify.config, {
                   processing: false,
-                  error: true
+                  error     : true
                 });
                 //use as simple check for something like a 404 error - i.e. not protocol error but $http error
                 if (angular.isUndefined(e.data.protocol)) {
-                  angular.extend(toModify.response, {"error" : "Request did not go through... check the console"})
+                  angular.extend(toModify.response, {"error": "Request did not go through... check the console"})
                 } else {
                   angular.extend(toModify.response, e.data.protocol);
                 }
@@ -70,30 +65,30 @@ angular.module('transcripticApp')
         }
 
         self.analysisResponse = {
-          config: {
-            type: "Verification",
+          config  : {
+            type          : "Verification",
             textProcessing: "Processing Verification...",
-            textSuccess: "Protocol valid",
-            textError: "Problems with Protocol listed below"
+            textSuccess   : "Protocol valid",
+            textError     : "Problems with Protocol listed below"
           },
           response: {}
         };
-        self.runResponse = {
-          config: {
-            type: "Run",
+        self.runResponse      = {
+          config  : {
+            type          : "Run",
             textProcessing: "Processing Run...",
-            textSuccess: "Protocol initiated",
-            textError: "There was an error running your protocol"
+            textSuccess   : "Protocol initiated",
+            textError     : "There was an error running your protocol"
           },
           response: {}
         };
 
-        self.analyze = angular.bind(self, resourceWrap, Run.analyze, self.analysisResponse);
-        self.submit = angular.bind(self, resourceWrap, Run.submit, self.runResponse);
+        self.analyze = angular.bind(self, resourceWrap, RunHelper.verifyRun, self.analysisResponse);
+        self.submit  = angular.bind(self, resourceWrap, RunHelper.createRun, self.runResponse);
 
 
       },
-      link: function(scope, element, attrs) {
+      link            : function (scope, element, attrs) {
 
 
       }

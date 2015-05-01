@@ -111,12 +111,12 @@ function wrapOpInGroup (op) {
 
 function getScaffoldProtocol () {
   return {
-    "name"      : "",
     "metadata"  : {
       "name"  : "",
       "id"    : "",
       "type"  : "protocol",
-      "author": {}
+      "author": {},
+      "description" : ""
     },
     "parameters": [],
     "groups"    : []
@@ -137,10 +137,9 @@ function getScaffoldRun () {
       "type" : "run",
       "date" : "",
       "author": {},
-      "protocol" : {},
       "description": ""
     },
-    "parameters": [],
+    "protocol": {},
     "data" : {}
   };
 }
