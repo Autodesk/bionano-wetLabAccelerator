@@ -4,6 +4,6 @@ tx-protocol-editor {
 
   .protocol-instructions {
     min-height: 200px; //necessary to ensure drag and drop zone always available
-    padding: $layout-spacing-lg 0; //for drop zone
+    padding: $layout-spacing-lg 0 50px 0; //for drop zone
   }
 }

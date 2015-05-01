@@ -20,30 +20,6 @@ angular.module('tx.protocolEditor')
       controller      : function ($scope, $element, $attrs) {
         var self = this;
 
-        self.toggleActionsMenu = function ($event, force) {
-          $event.preventDefault();
-          $event.stopPropagation();
-          $scope.showActions = angular.isDefined(force) ?
-            force :
-            !( $scope.showActions );
-        };
-
-        self.toggleJsonEditing = function ($event, force) {
-          $event.preventDefault();
-          //$event.stopPropagation();
-          $scope.jsonEditing = angular.isDefined(force) ?
-            force :
-            !( $scope.jsonEditing );
-          $scope.logVisible  = false;
-        };
-
-        self.toggleLogCollapsed = function (force) {
-          $scope.logVisible  = angular.isDefined(force) ?
-            force :
-            !( $scope.logVisible );
-          $scope.jsonEditing = false;
-        };
-
         self.duplicateStep = function (step) {
           var index = _.indexOf(self.group, step);
           self.group.steps.splice(index, 0, angular.copy(step));
