@@ -71,6 +71,14 @@ angular.module('transcripticApp')
       });
     };
 
+    $scope.groupData = [
+      {
+        name : 'Some Group',
+        wells : ['A1', 'A2', 'A3', 'B1', 'B2', 'B3'],
+        color: '#dd8855'
+      }
+    ];
+
     //init
 
     $scope.onContainerChange();
