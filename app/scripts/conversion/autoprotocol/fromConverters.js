@@ -191,8 +191,6 @@ converterInstruction.consolidate = function (op) {
     }, optionalFromObj))
   });
 
-  debugger;
-
   var consolidates = _.assign({
     to  : toWell,
     from: fromArray
@@ -218,8 +216,6 @@ converterInstruction.distribute = function (op) {
       well    : fromWell
     }, optionalToObj))
   });
-
-  debugger;
 
   var distributes = _.assign({
     from: fromWell,

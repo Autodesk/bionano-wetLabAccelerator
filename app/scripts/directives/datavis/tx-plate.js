@@ -12,6 +12,8 @@
  *    value : <value>
  *  }, ... }
  *
+ * todo - add viewbox
+ * todo - remove selection of disabled wells (add class if no data)
  *
  * Through combination of attributes no-brush and select-persist, you can specify whether one/many wells can be selected, and whether multiple groups can be selected
  */
@@ -20,6 +22,7 @@ angular.module('tx.datavis')
 
     var classActive      = 'brushActive',
         classSelected    = 'brushSelected',
+        classFocused     = 'wellFocused',
         classEmphasizing = 'wellEmphasized';
 
     var colors = {
@@ -27,10 +30,10 @@ angular.module('tx.datavis')
         r: 255, g: 255, b: 255, a: 1
       },
       disabled: {
-        r: 0, g: 0, b: 0, a: 0.3
+        r: 0, g: 0, b: 0, a: 0.1
       },
       data    : {
-        r: 150, g: 150, b: 200, a: 0
+        r: 150, g: 150, b: 200, a: 1
       }
     };
 
@@ -51,11 +54,16 @@ angular.module('tx.datavis')
         wellsInput   : '=?', //in-binding for selected wells. use selectedWells for changes out.
         groupData    : '=?', //array of groups with fields name, wells (alphanums), color (as string). if omitted, default to plateData, and preferGroups is ignored.
         preferGroups : '=?', //if both plateData and groups are defined, true gives group coloring priority
-        focusWells   : '=?' //focus wells by shrinking others
+        focusWells   : '=?', //focus wells by shrinking others,
+        noLabels     : '=?'
       },
       link    : function postLink (scope, element, attrs) {
 
         /* WATCHERS */
+
+        scope.$watch('noLabels', function (hiding) {
+          element.toggleClass('no-labels', !!hiding);
+        });
 
         scope.$watch('container', _.partial(rerender, true));
         scope.$watch('plateData', _.partial(rerender, false));
@@ -73,13 +81,14 @@ angular.module('tx.datavis')
         scope.$watch('focusWells', function (newval) {
           if (!_.isUndefined(newval) && _.isArray(newval) && newval.length) {
             var map = createWellMap(newval, true);
+            /*
             getAllCircles().attr('r', function (d, i) {
               return ( (d3.select(this).property('r_init') ) / (_.has(map, d) ? 1 : 2));
             });
+            */
+            getAllCircles().classed(classFocused, _.partial(_.has, map));
           } else {
-            getAllCircles().attr('r', function () {
-              return d3.select(this).property('r_init');
-            })
+            transitionData(getAllCircles());
           }
         });
 
@@ -95,14 +104,16 @@ angular.module('tx.datavis')
         /* CONSTRUCTING THE SVG */
 
         var full   = {height: 425, width: 600},
-            margin = {top: 30, right: 20, bottom: 30, left: 30},
+            margin = {top: 30, right: 30, bottom: 30, left: 30},
             width  = full.width - margin.left - margin.right,
             height = full.height - margin.top - margin.bottom;
 
         //container SVG
         var svg = d3.select(element[0]).append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom);
+          .attr("width", "100%")
+          .attr("height", "100%")
+          .attr("viewBox", "0 0 " + full.width + " " + full.height)
+          .attr("preserveAspectRatio", "xMinYMin meet");
 
         var wellsSvg = svg.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -196,7 +207,7 @@ angular.module('tx.datavis')
               .on('mouseenter', wellOnMouseover) //note that nothing will happen if brush is present
               .on('mouseleave', wellOnMouseleave)
               .on('click', wellOnClick)
-              .style('fill', rgbaify(colors.empty))
+              .style('fill', rgbaify(colors.data))
               .each(function (d, i) {
                 d3.select(this).property('r_init', wellRadius);
                 //could bind data beyond just well here... but what makes sense?
@@ -226,7 +237,7 @@ angular.module('tx.datavis')
               .transition()
               .duration(transitionDuration)
               .style('opacity', 0)
-              .remove()
+              .remove();
           }
 
           safeClearBrush();
@@ -246,17 +257,21 @@ angular.module('tx.datavis')
               });
             });
 
-            selection.style('fill', function (d) {
-              return groupMap[d];
-            });
+            changeWellColor(selection, groupMap, rgbaify(colors.disabled));
+            scaleWellRadius(selection, {}, 1);
           } else if (!_.isEmpty(scope.plateData)) {
+            //for changing radius of well
+            console.log(scope.plateData);
+            scaleWellRadius(selection, _.mapValues(scope.plateData, 'value'), 0);
+
+            /*//for changing fill of well
             selection.style('fill', function (d) {
               if (scope.plateData[d]) {
                 return rgbaify(colors.data, scope.plateData[d].value);
               } else {
                 return rgbaify(colors.disabled);
               }
-            });
+            });*/
           }
         }
 
@@ -404,19 +419,37 @@ angular.module('tx.datavis')
 
         /**** helpers ****/
 
+        function scaleWellRadius (selection, valueMap, defaultRadius) {
+          //todo - need to bound not to 0-1
+          defaultRadius = _.isNumber(defaultRadius) ? defaultRadius : 1;
+          var initRadius;
+          return selection.attr('r', function (d) {
+            if (_.isUndefined(initRadius)) {
+              initRadius = d3.select(this).property('r_init');
+            }
+            return _.result(valueMap, d, defaultRadius) * initRadius;
+          })
+        }
+
+        function changeWellColor (selection, valueMap, defaultColor) {
+          selection.style('fill', function (d) {
+            return _.result(valueMap, d, defaultColor);
+          });
+        }
+
         function selectColumn (col) {
-          var rows = yScale.domain().length - 1,
+          var rows      = yScale.domain().length - 1,
               parsedCol = parseInt(col, 10),
-              wellMap = WellConv.createMapGivenBounds([0, parsedCol], [rows, parsedCol]);
-          
+              wellMap   = WellConv.createMapGivenBounds([0, parsedCol], [rows, parsedCol]);
+
           toggleWellsFromMap(wellMap, classSelected, true);
           propagateWellSelection(_.keys(wellMap));
         }
 
         function selectRow (row) {
-          var cols = _.last(xScale.domain()),
+          var cols      = _.last(xScale.domain()),
               parsedRow = _.indexOf(WellConv.letters, row),
-              wellMap = WellConv.createMapGivenBounds([parsedRow, 0], [parsedRow, cols]);
+              wellMap   = WellConv.createMapGivenBounds([parsedRow, 0], [parsedRow, cols]);
 
           toggleWellsFromMap(wellMap, classSelected, true);
           propagateWellSelection(_.keys(wellMap));

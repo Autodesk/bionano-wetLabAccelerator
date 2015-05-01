@@ -5,7 +5,13 @@ tx-plate {
   $color-active: #d7ab34;
   $color-add: $primary;
   $color-remove: #dd263b;
+  $color-focused: #dd8888;
   $color-hover: lighten($color-add, 15);
+
+  //defaults, can also define inline
+  display: block;
+  width: 600px;
+  height: 425px;
 
   svg {
     display: inline-block;
@@ -49,6 +55,10 @@ tx-plate {
 
     &.hidden {
       fill: #ccc !important;
+    }
+
+    &.wellFocused {
+      fill: $color-focused !important;
     }
   }
 
@@ -94,6 +104,15 @@ tx-plate {
         color: $light-grey;
         cursor: default;
       }
+    }
+  }
+
+  &.no-labels {
+    text {
+      opacity: 0;
+    }
+    .plate-footer {
+      display: none;
     }
   }
 }
