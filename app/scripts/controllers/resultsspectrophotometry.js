@@ -17,7 +17,7 @@ angular.module('transcripticApp')
       self.opName = $scope.summaryCtrl.operation.operation;
 
       self.rundataFiltered = _.pick($scope.summaryCtrl.runData, function (dataref) {
-        return dataref.instruction.operation.op == self.opName;
+        return _.result(dataref, 'instruction.operation.op') == self.opName;
       });
 
       self.opData = DataConv.parseGrowthCurve(self.rundataFiltered, true);
@@ -41,7 +41,7 @@ angular.module('transcripticApp')
       self.graphData           = self.opData[containerKey];
 
       // todo - dynamic based on the actual data, accounting for not all being same container
-      self.currentContainer = _.sample(self.rundataFiltered).container_type.shortname;
+      self.currentContainer = _.result(_.sample(self.rundataFiltered), 'container_type.shortname');
 
       self.timepointValues = _.keys(self.graphData);
       self.selectTimepoint(0);
