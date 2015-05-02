@@ -20,6 +20,23 @@ angular.module('tx.protocolEditor')
       bindToController: true,
       controllerAs: 'opCtrl',
       controller: function ($scope, $element, $attrs) {
+        var self = this;
+
+        self.toggleActionsMenu = function ($event, force) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          $scope.showActions = angular.isDefined(force) ?
+            force :
+            !( $scope.showActions );
+        };
+
+        self.toggleJsonEditing = function ($event, force) {
+          $event.preventDefault();
+          $scope.jsonEditing = angular.isDefined(force) ?
+            force :
+            !( $scope.jsonEditing );
+          $scope.logVisible  = false;
+        };
 
       },
       link: function (scope, element, attrs, groupCtrl) {

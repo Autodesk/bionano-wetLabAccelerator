@@ -25,15 +25,17 @@
   align-items: center;
   color: white;
   background-color: #343434;
-}
-.modal-dialog-content {
-  padding:1px;
-  text-align: left;
-}
-.modal-close {
-  position: fixed;
-  right: 5px;
-  cursor: pointer;
-  font-size: 150%;
-  font-weight: bold;
+
+  .modal-dialog-content {
+    padding:1px;
+    text-align: left;
+  }
+  .modal-close {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    cursor: pointer;
+    font-size: 150%;
+    font-weight: bold;
+  }
 }
