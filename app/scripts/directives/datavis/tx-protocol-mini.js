@@ -87,7 +87,7 @@ angular.module('transcripticApp')
               return chain.then(function () {
                 return $timeout(function () {
                   !hasInteracted && activateStepFromUnfolded(unfoldedNum);
-                }, 500);
+                }, 1500);
               });
             }, $q.when());
           }, 200);

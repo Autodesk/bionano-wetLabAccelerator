@@ -26,7 +26,7 @@ angular.module('transcripticApp')
           return Omniprotocol.utils.pluckFieldValueRaw(self.operation.fields, fieldName);
         };
 
-        self.getContainerType = function (fieldName) {
+        self.getContainerTypeFromFieldName = function (fieldName) {
           var containerName = self.getFieldValueByName(fieldName);
           return Omniprotocol.utils.getContainerTypeFromName(self.protocol.parameters, containerName);
         };
