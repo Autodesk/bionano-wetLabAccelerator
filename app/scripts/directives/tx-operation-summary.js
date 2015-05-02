@@ -7,7 +7,7 @@
  * # txOperationSummary
  */
 angular.module('transcripticApp')
-  .directive('txOperationSummary', function ($http, $compile) {
+  .directive('txOperationSummary', function ($http, $compile, Omniprotocol) {
     return {
       restrict        : 'E',
       scope           : {
@@ -21,10 +21,22 @@ angular.module('transcripticApp')
       controllerAs    : 'summaryCtrl',
       controller      : function protocolMiniController ($scope, $element, $attrs) {
         var self = this;
+
+        self.getFieldValueByName = function (fieldName) {
+          return Omniprotocol.utils.pluckFieldValueRaw(self.operation.fields, fieldName);
+        };
+
+        self.getContainerType = function (fieldName) {
+          var containerName = self.getFieldValueByName(fieldName);
+          return Omniprotocol.utils.getContainerTypeFromName(self.protocol.parameters, containerName);
+        };
+
       },
       link            : function (scope, element, attrs) {
 
         scope.$watch('summaryCtrl.operation', getOperationTemplate);
+
+        //todo - need to destroy previous template + scope when get new one
 
         function getOperationTemplate (operation) {
           _.has(operation, 'operation') &&

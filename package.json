@@ -2,7 +2,7 @@
   "name": "transcriptic",
   "version": "0.0.0",
   "dependencies": {
-    "lodash": "^3.6.0",
+    "lodash": "~3.7.0",
     "omniprotocol": "./app/scripts/omniprotocol/"
   },
   "devDependencies": {
