@@ -1,1 +1,29 @@
-<p>absorbance summary!!</p>
+<div ng-controller="ResultsSpectrophotometryCtrl as resultsCtrl">
+
+  <div class="btn-group"
+       ng-if="resultsCtrl.containers.length > 1">
+    <button class="btn btn-default"
+            ng-class="{'btn-info' : c == resultsCtrl.currentContainerIndex}"
+            ng-repeat="c in resultsCtrl.containers"
+            ng-click="resultsCtrl.setCurrentDataContainer(c)">{{c}}</button>
+  </div>
+
+  <tx-timepointgraph data="resultsCtrl.graphData"
+                     series-selected="resultsCtrl.currentWells"
+                     is-linear="true"
+                     on-hover="resultsCtrl.onGraphHover($well)">
+  </tx-timepointgraph>
+
+  <input ng-model="resultsCtrl.timepointSlider"
+         min="0"
+         max="{{resultsCtrl.timepointValues.length - 1}}"
+         ng-change="resultsCtrl.selectTimepoint(resultsCtrl.timepointSlider)"
+         type="range"/>
+
+  <tx-plate container="resultsCtrl.currentContainer"
+            plate-data="resultsCtrl.graphData[resultsCtrl.currentTimepoint]"
+            on-hover="resultsCtrl.hoverPlateWells($wells)"
+            focus-wells="resultsCtrl.focusedWells"
+            on-select="resultsCtrl.selectPlateWells($wells)"></tx-plate>
+
+</div>

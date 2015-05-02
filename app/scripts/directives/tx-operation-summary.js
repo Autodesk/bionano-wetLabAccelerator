@@ -11,10 +11,10 @@ angular.module('transcripticApp')
     return {
       restrict        : 'E',
       scope           : {
-        //protocol     : '=',
-        //indices      : '=', //object with keys group, step, loop, unfolded
+        protocol     : '=',
+        indices      : '=', //object with keys group, step, loop, unfolded
         operation    : '=',
-        operationData: '='
+        runData      : '='
         //attr auto-scroll
       },
       bindToController: true,
@@ -27,7 +27,6 @@ angular.module('transcripticApp')
         scope.$watch('summaryCtrl.operation', getOperationTemplate);
 
         function getOperationTemplate (operation) {
-
           _.has(operation, 'operation') &&
           $http.get('views/datavis/' + operation.operation + '.html', {cache: true}).
             success(function (data) {

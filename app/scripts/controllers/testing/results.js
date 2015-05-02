@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('TestingResultsCtrl', function ($scope, $http, RunHelper) {
+  .controller('TestingResultsCtrl', function ($scope, $http, RunHelper, DataConv) {
     var self = this;
 
     self.run = RunHelper.currentRun;
@@ -21,9 +21,6 @@ angular.module('transcripticApp')
       if (!_.isEmpty(newval)) {
         self.currentGroup = self.run.protocol.groups[newval.group];
         self.currentOperation = self.currentGroup.steps[newval.step];
-
-        //todo
-        self.currentData = {};
       }
     });
 

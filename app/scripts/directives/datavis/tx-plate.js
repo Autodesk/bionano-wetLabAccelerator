@@ -261,7 +261,6 @@ angular.module('tx.datavis')
             scaleWellRadius(selection, {}, 1);
           } else if (!_.isEmpty(scope.plateData)) {
             //for changing radius of well
-            console.log(scope.plateData);
             scaleWellRadius(selection, _.mapValues(scope.plateData, 'value'), 0);
 
             /*//for changing fill of well
