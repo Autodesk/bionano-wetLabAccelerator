@@ -27,7 +27,7 @@ angular.module('tx.datavis')
 
     var colors = {
       empty   : {
-        r: 255, g: 255, b: 255, a: 1
+        r: 240, g: 240, b: 240, a: 1
       },
       disabled: {
         r: 0, g: 0, b: 0, a: 0.1
@@ -52,7 +52,7 @@ angular.module('tx.datavis')
         onSelect     : '&',  //returns array of selected wells
         selectedWells: '=?', //out-binding for selected wells. use wellsInput for changes in. todo - deprecate
         wellsInput   : '=?', //in-binding for selected wells. use selectedWells for changes out.
-        groupData    : '=?', //array of groups with fields name, wells (alphanums) array or 'all', color (as string). if omitted, default to plateData, and preferGroups is ignored.
+        groupData    : '=?', //array of groups with fields name, wells (alphanums) array or 'all', color (as string). if omitted, default to plateData, and preferGroups is ignored. Can be single object
         preferGroups : '=?', //if both plateData and groups are defined, true gives group coloring priority
         focusWells   : '=?', //focus wells by shrinking others,
         noLabels     : '=?'
@@ -249,17 +249,20 @@ angular.module('tx.datavis')
           //check conditions for showing groups, otherwise show data
           if (!_.isEmpty(scope.groupData) && ( scope.preferGroups || _.isEmpty(scope.plateData))) {
             //reorder to map so lookup is fast
-            var groupMap = {};
-            _.forEach(scope.groupData, function (group) {
+            var groupMap = {},
+                groupData = _.isArray(scope.groupData) ? scope.groupData : [scope.groupData];
+
+            _.forEach(groupData, function (group) {
               var color = group.color;
               if (group.wells == 'all') {
-                groupMap = _.constant(true);
-              }else {
+                groupMap = _.constant(color);
+              } else {
                 _.forEach(group.wells, function (well) {
                   groupMap[well] = color;
                 });
               }
             });
+            console.log(groupData, groupMap);
 
             changeWellColor(selection, groupMap, rgbaify(colors.disabled));
             scaleWellRadius(selection, {}, 1);
