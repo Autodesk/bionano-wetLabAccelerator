@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('TestingResultsCtrl', function ($scope, $http, RunHelper, DataConv) {
+  .controller('ResultsCtrl', function ($scope, $http, RunHelper) {
     var self = this;
 
     self.run = RunHelper.currentRun;

@@ -14,7 +14,7 @@ angular.module('transcripticApp')
       restrict        : 'E',
       scope           : {
         protocol        : '=',
-        currentOperation: '=',
+        currentOperation: '=?',
         showTimelines   : '=',
         showArrow       : '='
         //attr auto-scroll
