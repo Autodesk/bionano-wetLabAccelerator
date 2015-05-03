@@ -14,6 +14,10 @@ function pluckFieldValueRaw (fields, fieldName) {
   return _.result(pluckField(fields, fieldName), 'value');
 }
 
+function getContainerTypeFromName (parameters, containerName) {
+  return _.result(_.find(parameters, {name : containerName}), 'value.type');
+}
+
 /*******
  Interpolation
  ******/
@@ -112,11 +116,11 @@ function wrapOpInGroup (op) {
 function getScaffoldProtocol () {
   return {
     "metadata"  : {
-      "name"  : "",
-      "id"    : "",
-      "type"  : "protocol",
-      "author": {},
-      "description" : ""
+      "name"       : "",
+      "id"         : "",
+      "type"       : "protocol",
+      "author"     : {},
+      "description": ""
     },
     "parameters": [],
     "groups"    : []
@@ -132,21 +136,47 @@ function wrapGroupsInProtocol (groupsInput) {
 function getScaffoldRun () {
   return {
     "metadata": {
-      "name": "",
-      "id": "",
-      "type" : "run",
-      "date" : "",
-      "author": {},
+      "name"       : "",
+      "id"         : "",
+      "type"       : "run",
+      "date"       : "",
+      "author"     : {},
       "description": ""
     },
     "protocol": {},
-    "data" : {}
+    "data"    : {}
   };
 }
 
 /********
  Transformations
  ********/
+
+function unfoldGroup (group, groupIndex) {
+  var unwrapped = [];
+  _.times(group.loop || 1, function (loopIndex) {
+    _.forEach(group.steps, function (step, stepIndex) {
+      var indices = {
+        index: loopIndex,
+        step : (loopIndex * group.steps.length) + stepIndex
+      };
+      _.isNumber(groupIndex) && _.assign(indices, {group: groupIndex});
+
+      unwrapped.push(_.assign(step, {$index: indices}));
+    });
+  });
+  return unwrapped;
+}
+
+function unfoldProtocol (protocol) {
+  return _(protocol.groups)
+    .map(unfoldGroup)
+    .flatten()
+    .forEach(function (step, stepIndex) {
+      step.$index.unfolded = stepIndex;
+    })
+    .value()
+}
 
 function getNumberUnfoldedSteps (protocol) {
   return _.reduce(protocol.groups, function (result, group, groupLoop) {
@@ -331,24 +361,34 @@ function getTransformsWell (protocol, well) {
 }
 
 module.exports = {
-  pluckField                      : pluckField,
-  pluckFieldValueRaw              : pluckFieldValueRaw,
-  interpolateValue                : interpolateValue,
-  interpolateObject               : interpolateObject,
-  wrapFieldsAsStep                : wrapFieldsAsStep,
-  scaffoldOperationWithValues     : scaffoldOperationWithValues,
-  getFieldTypeInOperation         : getFieldTypeInOperation,
-  getScaffoldGroup                : getScaffoldGroup,
-  wrapOpInGroup                   : wrapOpInGroup,
-  getScaffoldProtocol             : getScaffoldProtocol,
-  wrapGroupsInProtocol            : wrapGroupsInProtocol,
-  getScaffoldRun                  : getScaffoldRun,
+  pluckField        : pluckField,
+  pluckFieldValueRaw: pluckFieldValueRaw,
+
+  getContainerTypeFromName : getContainerTypeFromName,
+
+  interpolateValue : interpolateValue,
+  interpolateObject: interpolateObject,
+
+  wrapFieldsAsStep           : wrapFieldsAsStep,
+  scaffoldOperationWithValues: scaffoldOperationWithValues,
+  getFieldTypeInOperation    : getFieldTypeInOperation,
+
+  getScaffoldGroup    : getScaffoldGroup,
+  wrapOpInGroup       : wrapOpInGroup,
+  getScaffoldProtocol : getScaffoldProtocol,
+  wrapGroupsInProtocol: wrapGroupsInProtocol,
+  getScaffoldRun      : getScaffoldRun,
+
+  unfoldGroup   : unfoldGroup,
+  unfoldProtocol: unfoldProtocol,
+
   getNumberUnfoldedSteps          : getNumberUnfoldedSteps,
   getUnfoldedStepNumber           : getUnfoldedStepNumber,
   getUnfoldedStepNumbers          : getUnfoldedStepNumbers,
   getUnfoldedStepNumbersFromLinear: getUnfoldedStepNumbersFromLinear,
   getFoldedStepNumber             : getFoldedStepNumber,
   getFoldedStepInfo               : getFoldedStepInfo,
-  getTransformsContainer          : getTransformsContainer,
-  getTransformsWell               : getTransformsWell
+
+  getTransformsContainer: getTransformsContainer,
+  getTransformsWell     : getTransformsWell
 };

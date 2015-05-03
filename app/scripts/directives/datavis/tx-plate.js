@@ -52,7 +52,7 @@ angular.module('tx.datavis')
         onSelect     : '&',  //returns array of selected wells
         selectedWells: '=?', //out-binding for selected wells. use wellsInput for changes in. todo - deprecate
         wellsInput   : '=?', //in-binding for selected wells. use selectedWells for changes out.
-        groupData    : '=?', //array of groups with fields name, wells (alphanums), color (as string). if omitted, default to plateData, and preferGroups is ignored.
+        groupData    : '=?', //array of groups with fields name, wells (alphanums) array or 'all', color (as string). if omitted, default to plateData, and preferGroups is ignored.
         preferGroups : '=?', //if both plateData and groups are defined, true gives group coloring priority
         focusWells   : '=?', //focus wells by shrinking others,
         noLabels     : '=?'
@@ -252,16 +252,19 @@ angular.module('tx.datavis')
             var groupMap = {};
             _.forEach(scope.groupData, function (group) {
               var color = group.color;
-              _.forEach(group.wells, function (well) {
-                groupMap[well] = color;
-              });
+              if (group.wells == 'all') {
+                groupMap = _.constant(true);
+              }else {
+                _.forEach(group.wells, function (well) {
+                  groupMap[well] = color;
+                });
+              }
             });
 
             changeWellColor(selection, groupMap, rgbaify(colors.disabled));
             scaleWellRadius(selection, {}, 1);
           } else if (!_.isEmpty(scope.plateData)) {
             //for changing radius of well
-            console.log(scope.plateData);
             scaleWellRadius(selection, _.mapValues(scope.plateData, 'value'), 0);
 
             /*//for changing fill of well
