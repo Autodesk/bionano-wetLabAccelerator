@@ -35,6 +35,8 @@ angular.module('transcripticApp')
         var hasInteracted = false;
 
         scope.handleMouseover = function ($event, groupIndex, stepIndex, loopIndex) {
+          $event.preventDefault();
+          $event.stopPropagation();
           hasInteracted = true;
           activateStep(groupIndex, stepIndex, loopIndex);
         };
@@ -77,6 +79,7 @@ angular.module('transcripticApp')
         }
 
         //init
+        //fixme - is updating indices even when cancel $timeout.. increases once with each mouseenter
         if (angular.isDefined(attrs['autoScroll'])) {
           //initial timeout to ensure protocol is propagated
           $timeout(function () {
@@ -84,7 +87,7 @@ angular.module('transcripticApp')
               return chain.then(function () {
                 return $timeout(function () {
                   !hasInteracted && activateStepFromUnfolded(unfoldedNum);
-                }, 500);
+                }, 1500);
               });
             }, $q.when());
           }, 200);
