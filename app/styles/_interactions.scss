@@ -1,3 +1,15 @@
+[ng-click] {
+  cursor: pointer;
+}
+
+[contenteditable] {
+  cursor: pointer;
+}
+
+.drag-handle {
+  cursor: all-scroll;
+}
+
 .drop-hover {
   background: red;
 }
