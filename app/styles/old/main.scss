@@ -3,8 +3,6 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
-@import 'mixins';
-
 // all the misc stuff
 
 #logo {
@@ -69,7 +67,6 @@ main .container {
 
 //imports
 
-@import 'corner';
 @import 'instruction';
 @import 'wellplate';
 @import 'instructionPanel';

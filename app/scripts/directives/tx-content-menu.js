@@ -4,17 +4,14 @@
  * @ngdoc directive
  * @name transcripticApp.directive:txGallery
  * @description
- * Expects gallery items in the form of key-val objects, with (minimally) fields 'name'
- * galleryRollup takes a key to use for the headers, and will group items by that key
  *
- * todo - maybe makes sense to get these items internally? how to link to the rest of the app, handle nav, etc.
  */
 angular.module('transcripticApp')
-  .directive('txGallery', function (ProtocolHelper, RunHelper, $location) {
+  .directive('txContentMenu', function (ProtocolHelper, RunHelper, $location) {
     return {
-      templateUrl     : 'views/tx-gallery.html',
+      templateUrl     : 'views/tx-content-menu.html',
       restrict        : 'E',
-      controllerAs    : 'galleryCtrl',
+      controllerAs    : 'contentCtrl',
       controller      : function postLink ($scope, $element, $attrs) {
         var self = this;
 

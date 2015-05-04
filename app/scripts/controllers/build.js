@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('TestingRestyleCtrl', function ($scope, $http, simpleLogin, FBProfile, ProtocolHelper) {
+  .controller('BuildCtrl', function ($scope, $http, ProtocolHelper) {
     var self = this;
 
     self.allProtocols = ProtocolHelper.protocols;

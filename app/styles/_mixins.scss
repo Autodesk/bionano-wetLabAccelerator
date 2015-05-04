@@ -1,0 +1,10 @@
+@mixin clearfix () {
+  &:before,
+  &:after {
+    content: " "; //Opera Bug
+    display: table; //when using :before to contain top-margin of children
+  }
+  &:after {
+    clear: both; //duh
+  }
+}

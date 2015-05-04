@@ -11,9 +11,10 @@ angular.module('transcripticApp')
   .controller('resultsPipetteCtrl', function ($scope, Omniprotocol) {
     var self = this;
 
-    self.pruneWellsFromContainer = function (fieldName, container) {
-      var fieldVal = Omniprotocol.utils.pluckFieldValueRaw($scope.summaryCtrl.operation.fields, fieldName);
-      return _.pluck(_.filter(fieldVal, _.matches({container: container})), 'well');
+    self.pluckWellsFromContainer = function (fieldName, container) {
+      var fieldVal = Omniprotocol.utils.pluckFieldValueRaw($scope.summaryCtrl.operation.fields, fieldName),
+          filterFunction = _.isUndefined(container) ? _.constant(true) : _.matches({container: container});
+      return _.pluck(_.filter(fieldVal, filterFunction), 'well');
     };
 
     self.getContainerFromWellField = function (fieldName) {
