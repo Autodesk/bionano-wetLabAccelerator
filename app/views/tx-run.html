@@ -16,7 +16,18 @@
                class="form-control"
                ng-model="runCtrl.runTitle">
       </div>
-      <tx-projectlist ng-model="runCtrl.project"></tx-projectlist>
+
+      <span ng-hide="!runCtrl.project || runCtrl.project.id || runCtrl.findProjectByname(runCtrl.project).id">Create a new project {{runCtrl.project}}</span>
+
+      <div class="input-group">
+        <span class="input-group-addon">Project</span>
+        <input type="text"
+               class="form-control"
+               typeahead="proj as proj.name for proj in runCtrl.projects"
+               typeahead-editable="true"
+               ng-model="runCtrl.project">
+      </div>
+
       <div class="btn-group">
         <button class="btn btn-info"
                 ng-disabled="!(runCtrl.runTitle && runCtrl.project && runCtrl.protocol && transcripticCred.$valid)"

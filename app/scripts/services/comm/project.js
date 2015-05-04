@@ -20,7 +20,7 @@ angular.module('tx.communication')
        /**
         * @name create
         * @description Create a new project
-        * @param parameters {null} ignore
+        * @param parameters {null} empty object
         * @param postData {Object} consisting of:
         * name {String} name of new project
         */

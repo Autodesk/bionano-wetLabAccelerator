@@ -7,7 +7,7 @@
  * # txRun
  */
 angular.module('transcripticApp')
-  .directive('txRun', function ($q, Auth, Autoprotocol, Omniprotocol, Run, Project, RunHelper) {
+  .directive('txRun', function ($q, $timeout, Auth, Autoprotocol, Omniprotocol, Run, Project, RunHelper) {
     return {
       templateUrl     : 'views/tx-run.html',
       restrict        : 'E',
@@ -19,14 +19,17 @@ angular.module('transcripticApp')
       controllerAs    : 'runCtrl',
       controller      : function ($scope, $element, $attrs) {
 
-        var self               = this,
-            firstProjIdPromise = $q.when();
+        var self               = this;
+
+        self.projects = [];
 
         Auth.watch(function () {
-          firstProjIdPromise = Project.list().$promise.then(function (projects) {
-            return $q.when(projects[0].id);
-          });
+          self.projects = Project.list();
         });
+
+        self.findProjectByname = function (projectName) {
+          return _.find(self.projects, _.matches({name : projectName}));
+        };
 
         // SUBMIT / ANALYZE RUNS
 
@@ -40,8 +43,34 @@ angular.module('transcripticApp')
             processing: true
           });
 
-          firstProjIdPromise.then(function (firstProjId) {
-            funcToRun(self.protocol, firstProjId).
+          var projectIdPromise;
+
+          if (_.isObject(self.project) && _.has(self.project, 'id')) {
+            projectIdPromise = $q.when(self.project.id);
+          }
+          //if edited project from dropdown, and not an object
+          else {
+            var found = self.findProjectByname(self.project);
+            //first check and make sure not in projects
+            if (_.isObject(found) && _.has(found, 'id')) {
+              projectIdPromise = $q.when(found.id);
+            }
+            //create it and then use for posting later
+            else {
+              projectIdPromise = Project.create({name: self.project}).$promise.then(function (project) {
+
+                //hack - force an update (maybe move to service? use this so rarely...)
+                $timeout(function () {
+                  self.projects = Project.list();
+                }, 250);
+
+                return project.id;
+              });
+            }
+          }
+
+          projectIdPromise.then(function (projectId) {
+            funcToRun(self.protocol, projectId).
               then(function runSuccess (d) {
                 console.log(d);
                 angular.extend(toModify.config, {

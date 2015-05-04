@@ -11,7 +11,9 @@
 
       <div class="loop-number" ng-show="looping">{{group.loop}}x</div>
 
-      <div ng-if="!multichild && !looping" class="protocol-instruction">
+      <div ng-if="!multichild && !looping"
+           class="protocol-instruction"
+           ng-mouseenter="handleMouseover($event, groupIndex)">
         {{group.name}}
       </div>
 

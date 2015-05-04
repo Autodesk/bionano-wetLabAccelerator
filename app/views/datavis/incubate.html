@@ -1,1 +1,5 @@
-<p>cooking dem cells</p>
+<p>Incubate {{summaryCtrl.getFieldValueByName('object')}}</p>
+
+<tx-plate container="summaryCtrl.getContainerTypeFromFieldName('object')"
+          no-brush="true"
+          group-data="{name : 'testing', wells : 'all', color: '#dd9955'}"></tx-plate>
