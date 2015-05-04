@@ -18,7 +18,6 @@ angular
     'ngRoute',
     'ngSanitize',
     'ui.bootstrap',
-    'ui.sortable',
     'angularFileUpload',
     'firebase',
     'tx.communication',
@@ -29,9 +28,33 @@ angular
 
     $routeProvider
       .when('/', {
-        templateUrl: 'views/dashboard.html',
-        controller : 'DashboardCtrl'
+        templateUrl: 'views/routes/home.html'
       })
+
+      //main routes
+
+      .when('/gallery', {
+        templateUrl : 'views/routes/gallery.html',
+        controller  : 'GalleryCtrl',
+        controllerAs: 'galleryCtrl'
+      })
+      .when('/build', {
+        templateUrl : 'views/routes/build.html',
+        controller  : 'BuildCtrl',
+        controllerAs: 'restyleCtrl' //todo - rename to buildCtrl, make sure not passed down and breaking
+      })
+      .when('/results', {
+        templateUrl : 'views/routes/results.html',
+        controller  : 'ResultsCtrl',
+        controllerAs: 'resultsCtrl'
+      })
+      .when('/auth', {
+        templateUrl: 'views/routes/auth.html'
+      })
+
+      /*
+      //old routes
+
       .when('/protocol', {
         templateUrl : 'views/protocol.html',
         controller  : 'ProtocolCtrl',
@@ -42,19 +65,16 @@ angular
         controller  : 'DataCtrl',
         controllerAs: 'dataCtrl'
       })
-      .when('/auth', {
-        templateUrl: 'views/auth.html'
-      })
       .when('/ordering', {
         templateUrl : 'views/ordering.html',
         controller  : 'OrderingCtrl',
         controllerAs: 'orderCtrl'
       })
-      .when('/gallery', {
-        templateUrl : 'views/gallery.html',
-        controller  : 'GalleryCtrl',
-        controllerAs: 'galleryCtrl'
-      })
+
+      */
+
+      //testing routes
+
       .when('/testing', {
         redirectTo: '/testing/plate'
       })
@@ -62,24 +82,6 @@ angular
         templateUrl : 'views/testing/plate.html',
         controller  : 'TestingPlateCtrl',
         controllerAs: 'testCtrl'
-      })
-      .when('/testing/restyle', {
-        templateUrl : 'views/testing/restyle.html',
-        controller  : 'TestingRestyleCtrl',
-        controllerAs: 'restyleCtrl'
-      })
-      .when('/testing/dottest', {
-        templateUrl: 'views/testing/dottest.html',
-        controller : 'DottestCtrl'
-      })
-      .when('/testing/conversion', {
-        templateUrl: 'views/testing/conversion.html',
-        controller : 'TestingConversionCtrl'
-      })
-      .when('/testing/results', {
-        templateUrl : 'views/testing/results.html',
-        controller  : 'TestingResultsCtrl',
-        controllerAs: 'resultsCtrl'
       })
       .otherwise({
         redirectTo: '/'

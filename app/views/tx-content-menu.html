@@ -1,0 +1,26 @@
+<input type="checkbox" ng-model="contentCtrl.isVisible" id="menu-trigger" class="menu-trigger"/>
+<label for="menu-trigger"><span></span></label>
+
+<div class="menu">
+  <div class="gallery-header">
+    <input class="gallery-filter" type="text" ng-model="contentCtrl.searchText" placeholder="Filter">
+  </div>
+
+  <div class="gallery-group">
+    <h3>Protocols</h3>
+
+    <div ng-repeat="protocol in contentCtrl.protocols | orderBy:'metadata.name'">
+      <a ng-click="contentCtrl.openProtocol(protocol)"
+         ng-bind="protocol.metadata.name"></a>
+    </div>
+  </div>
+
+  <div class="gallery-group">
+    <h3>Runs</h3>
+
+    <div ng-repeat="run in contentCtrl.runs | orderBy:'metadata.date'">
+      <a ng-click="contentCtrl.openRun(run)"
+         ng-bind="run.metadata.name"></a>
+    </div>
+  </div>
+</div>
