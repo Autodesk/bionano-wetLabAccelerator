@@ -2,7 +2,7 @@ var _                    = require('lodash'),
     autoUtils            = require('./utils.js'),
     converterInstruction = {},
     converterField       = {},
-    omniprotocol         = global.omniprotocol,
+    omniprotocol         = require('omniprotocol'),
     omniUtils            = omniprotocol.utils,
     omniConv             = omniprotocol.conv;
 

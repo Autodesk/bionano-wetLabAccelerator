@@ -4,7 +4,7 @@
 
 var _         = require('lodash'),
     fromUtils = require('./fromUtils.js'),
-    op        = global.omniprotocol,
+    op        = require('omniprotocol'),
     omniUtils = op.utils;
 
 //convert abstraction to autoprotocol

@@ -7,8 +7,7 @@ var utils           = require('./utils.js'),
     toUtils         = require('./toUtils.js'),
     toConverters    = require('./toConverters.js'),
     toAbstraction   = require('./toAbstraction.js'),
-    //fixme - should reference the node package to guarantee added globally first (once exporting properly)
-    omniprotocol    = global.omniprotocol,
+    omniprotocol    = require('omniprotocol'),
     autoprotocol    = {};
 
 autoprotocol.utils           = utils;
