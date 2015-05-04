@@ -485,6 +485,7 @@ module.exports = function (grunt) {
       'configureProxies:livereload',
       'concurrent:server',
       'autoprefixer',
+      'browserify',
       'connect:livereload',
       'watch'
     ]);
@@ -497,6 +498,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'browserify',
     'concurrent:test',
     'autoprefixer',
     'connect:test',
@@ -505,6 +507,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'browserify',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
