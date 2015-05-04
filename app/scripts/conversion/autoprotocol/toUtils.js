@@ -1,5 +1,5 @@
 var _                     = require('lodash'),
-    omniprotocol          = require('omniprotocol'),
+    omniprotocol          = global.omniprotocol,
     toConverters          = require('./toConverters.js'),
     instructionConverters = toConverters.instructions;
 

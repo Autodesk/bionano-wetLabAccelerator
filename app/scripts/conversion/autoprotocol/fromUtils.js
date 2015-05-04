@@ -3,8 +3,7 @@ var _                    = require('lodash'),
     utils                = require('./utils.js'),
     converterField       = fromConverters.field,
     converterInstruction = fromConverters.instruction,
-    op                   = require('omniprotocol'),
-    omniConv             = op.conv;
+    omniConv             = global.omniprotocol.conv;
 
 function convertInstruction (inst, localParams) {
   //todo - handle validation of each field too?

@@ -18,8 +18,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/lodash/lodash.js',
-      'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-animate/angular-animate.js',
@@ -29,22 +27,17 @@ module.exports = function(config) {
       'bower_components/angular-resource/angular-resource.js',
       'bower_components/angular-route/angular-route.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
-      'bower_components/firebase/firebase.js',
       'bower_components/angularfire/dist/angularfire.js',
       'bower_components/angular-bootstrap/ui-bootstrap.js',
       'bower_components/angular-ui-sortable/sortable.js',
       'bower_components/ng-file-upload/angular-file-upload.js',
-      'bower_components/d3/d3.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],
 
     // list of files / patterns to exclude
-    exclude: [
-      'app/scripts/conversion/**/*',
-      'app/scripts/omniprotocol/**/*'
-    ],
+    exclude: [],
 
     // web server port
     port: 8080,
@@ -78,11 +71,10 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
 
     // Uncomment the following lines if you are using grunt's server to run the tests
-    proxies: {
-      '/': 'http://localhost:9000/'
-    },
-
-    //URL root prevent conflicts with the site root
-    urlRoot: '_karma_'
+    // proxies: {
+    //   '/': 'http://localhost:9000/'
+    // },
+    // URL root prevent conflicts with the site root
+    // urlRoot: '_karma_'
   });
 };
