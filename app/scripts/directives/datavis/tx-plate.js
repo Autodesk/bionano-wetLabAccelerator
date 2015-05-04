@@ -44,17 +44,30 @@ angular.module('tx.datavis')
     return {
       restrict: 'E',
       scope   : {
-        container    : '=',  //shortname (key of ContainerOptions),
-        plateData    : '=',  //data as defined above
-        noBrush      : '=',  //boolean - prevent brush for selection, use clicks instead
-        selectPersist: '=',  //boolean - allow selections to persist across one brush / click
-        onHover      : '&',  //returns array of selected wells
-        onSelect     : '&',  //returns array of selected wells
-        selectedWells: '=?', //out-binding for selected wells. use wellsInput for changes in. todo - deprecate
-        wellsInput   : '=?', //in-binding for selected wells. use selectedWells for changes out.
+        container    : '=',  //shortname (key of ContainerOptions)
+
+        //data
+
+        plateData    : '=?',  //data as defined above
         groupData    : '=?', //array of groups with fields name, wells (alphanums) array or 'all', color (as string). if omitted, default to plateData, and preferGroups is ignored. Can be single object
         preferGroups : '=?', //if both plateData and groups are defined, true gives group coloring priority
+
+        //interation
+
+        noSelect     : '=?', //prevent selection of wells
+        noBrush      : '=',  //boolean - prevent brush for selection, use clicks instead
+        selectPersist: '=?',  //boolean - allow selections to persist across one brush / click
+
+        //bindings
+
+        onHover      : '&?',  //returns array of selected wells
+        onSelect     : '&?',  //returns array of selected wells
+        selectedWells: '=?', //out-binding for selected wells. use wellsInput for changes in. todo - deprecate
+        wellsInput   : '=?', //in-binding for selected wells. use selectedWells for changes out.
         focusWells   : '=?', //focus wells by shrinking others,
+
+        // UI
+
         noLabels     : '=?'
       },
       link    : function postLink (scope, element, attrs) {
@@ -63,6 +76,10 @@ angular.module('tx.datavis')
 
         scope.$watch('noLabels', function (hiding) {
           element.toggleClass('no-labels', !!hiding);
+        });
+
+        scope.$watch('noSelect', function (hiding) {
+          element.toggleClass('no-select', !!hiding);
         });
 
         scope.$watch('container', _.partial(rerender, true));
@@ -262,7 +279,6 @@ angular.module('tx.datavis')
                 });
               }
             });
-            console.log(groupData, groupMap);
 
             changeWellColor(selection, groupMap, rgbaify(colors.disabled));
             scaleWellRadius(selection, {}, 1);
@@ -324,7 +340,7 @@ angular.module('tx.datavis')
         //should be mutually exclusive to brush - events won't go down anyway
         function wellOnClick () {
 
-          if (scope.noBrush) {
+          if (scope.noBrush && !scope.noSelect) {
 
             var $el         = d3.select(this),
                 wasSelected = $el.classed(classSelected);
@@ -348,7 +364,8 @@ angular.module('tx.datavis')
         /***** BRUSHING *****/
         // note that b/c pointer events, this competes with hovering etc. so we put it on top
 
-        if (!scope.noBrush) {
+        //todo - make this binding dynamic
+        if (!scope.noBrush && !scope.noSelect) {
           var brush = d3.svg.brush()
             .x(xScale)
             .y(yScale)
@@ -444,6 +461,7 @@ angular.module('tx.datavis')
         }
 
         function selectColumn (col) {
+          if (scope.noSelect) return;
           var rows      = yScale.domain().length - 1,
               parsedCol = parseInt(col, 10),
               wellMap   = WellConv.createMapGivenBounds([0, parsedCol], [rows, parsedCol]);
@@ -453,6 +471,7 @@ angular.module('tx.datavis')
         }
 
         function selectRow (row) {
+          if (scope.noSelect) return;
           var cols      = _.last(xScale.domain()),
               parsedRow = _.indexOf(WellConv.letters, row),
               wellMap   = WellConv.createMapGivenBounds([parsedRow, 0], [parsedRow, cols]);

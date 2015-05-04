@@ -80,8 +80,8 @@ tx-plate {
   }
 
   .wellTooltip div {
-    background : rgba(25,25,25,0.75);
-    box-shadow: 0 0 2px rgba(25,25,25,0.25);
+    background: rgba(25, 25, 25, 0.75);
+    box-shadow: 0 0 2px rgba(25, 25, 25, 0.25);
     border-radius: 6px;
     text-align: center;
     font-size: 12px;
@@ -111,6 +111,12 @@ tx-plate {
     text {
       opacity: 0;
     }
+    .plate-footer {
+      display: none;
+    }
+  }
+
+  &.no-select {
     .plate-footer {
       display: none;
     }
