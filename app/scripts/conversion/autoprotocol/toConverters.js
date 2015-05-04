@@ -1,6 +1,6 @@
 var _                     = require('lodash'),
     utils                 = require('./utils.js'),
-    omniprotocol          = global.omniprotocol,
+    omniprotocol          = require('omniprotocol'),
     fieldConverters       = {},
     instructionConverters = {};
 

@@ -453,18 +453,21 @@ module.exports = function (grunt) {
     browserify: {
       options: {
         browserifyOptions: {
-          debug: true
+          debug: true,
+          alias: {
+            'omniprotocol' : '<%= yeoman.app %>/scripts/compiled/omniprotocol.js'
+          }
         }
       },
       omniprotocol: {
         files : {
-          '<%= yeoman.app %>/scripts/omniprotocol/index.js': ['<%= yeoman.app %>/scripts/omniprotocol/_exports.js']
+          '<%= yeoman.app %>/scripts/compiled/omniprotocol.js': ['<%= yeoman.app %>/scripts/omniprotocol/_exports.js']
         }
       },
       //todo - make these automatic to compile all converters based on directory name
       autoprotocol: {
         files : {
-          '<%= yeoman.app %>/scripts/conversion/autoprotocol/index.js': ['<%= yeoman.app %>/scripts/conversion/autoprotocol/_exports.js']
+          '<%= yeoman.app %>/scripts/compiled/autoprotocol.js': ['<%= yeoman.app %>/scripts/conversion/autoprotocol/_exports.js']
         }
       }
     }
