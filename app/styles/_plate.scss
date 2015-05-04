@@ -108,9 +108,7 @@ tx-plate {
   }
 
   &.no-labels {
-    text {
-      opacity: 0;
-    }
+    text,
     .plate-footer {
       display: none;
     }

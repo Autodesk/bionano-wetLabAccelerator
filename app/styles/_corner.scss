@@ -1,8 +1,8 @@
 .btn-corner,
 .text-corner {
   position: absolute;
-  top: -1px;
-  right: -1px;
+  top: 0;
+  right: 0;
   display: block;
   padding: 5px 8px;
   font-size: 12px;
@@ -26,8 +26,8 @@
   @extend .btn-group;
 
   position: absolute;
-  top: -1px;
-  right: -1px;
+  top: 0;
+  right: 0;
   display: block;
   font-size: 12px;
   color: #777;
