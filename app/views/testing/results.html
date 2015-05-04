@@ -1,0 +1,52 @@
+<div class="results">
+
+  <div class="page-labels flex-horizontal">
+    <div class="sidepanel flex-child">
+      <p>Protocol Overview</p>
+    </div>
+    <div class="maincolumn flex-grower">
+      <p class="pull-right">
+        <a tx-downloadjson
+           filename="{{(resultsCtrl.run.metadata.name ? resultsCtrl.run.metadata.name : 'run_data') + '.json'}}"
+           download-model="resultsCtrl.run">Download</a>
+      </p>
+      <p>Run Results</p>
+    </div>
+  </div>
+
+  <div class="flex-horizontal flex-grower">
+
+    <div class="sidepanel flex-vertical">
+      <tx-protocol-mini protocol="resultsCtrl.run.protocol"
+                        current-operation="resultsCtrl.currentInfo"
+                        show-timelines="true"
+                        show-arrow="true"
+                        auto-scroll></tx-protocol-mini>
+    </div>
+
+    <div class="maincolumn flex-grower maxout-scroll-vertical">
+      <div ng-hide="resultsCtrl.currentInfo">
+        Select a step in the protocol
+      </div>
+
+      <div ng-show="resultsCtrl.currentInfo">
+        <div>
+          <span class="pull-right">Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</span>
+          <p>
+            <span><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></span>
+          </p>
+        </div>
+        <p ng-bind="resultsCtrl.currentGroup.description"></p>
+      </div>
+
+      <tx-operation-summary protocol="resultsCtrl.run.protocol"
+                            indices="resultsCtrl.currentInfo"
+                            run-data="resultsCtrl.run.data"
+                            operation="resultsCtrl.currentOperation">
+      </tx-operation-summary>
+
+    </div>
+
+  </div>
+
+</div>

@@ -23,12 +23,12 @@ module.exports = {
           "type": "volume"
         },
         {
-          "name"           : "to",
+          "name"           : "from",
           "type"           : "aliquot+",
           "singleContainer": false
         },
         {
-          "name"           : "from",
+          "name"           : "to",
           "type"           : "aliquot+",
           "singleContainer": false
         },
@@ -36,22 +36,22 @@ module.exports = {
           "name"    : "dispense_speed",
           "type"    : "flowrate",
           "optional": true,
-          "default" : "100:microliter/second"
+          "default" : {"value": 100, "unit": "microliter/second"}
         },
         {
           "name"    : "aspirate_speed",
           "type"    : "flowrate",
           "optional": true,
-          "default" : "100:microliter/second"
+          "default" : {"value": 100, "unit": "microliter/second"}
         },
         {
           "name"    : "mix_before",
           "type"    : "mixwrap",
           "optional": true,
           "default" : {
-            "volume"     : "10.0:microliter",
+            "volume"     : {"value": 10.0, "unit": "microliter"},
             "repetitions": 5,
-            "speed"      : "100:microliter/second"
+            "speed"      : {"value": 100, "unit": "microliter/second"}
           }
         },
         {
@@ -59,10 +59,16 @@ module.exports = {
           "type"    : "mixwrap",
           "optional": true,
           "default" : {
-            "volume"     : "10.0:microliter",
+            "volume"     : {"value": 10.0, "unit": "microliter"},
             "repetitions": 5,
-            "speed"      : "100:microliter/second"
+            "speed"      : {"value": 100, "unit": "microliter/second"}
           }
+        },
+        {
+          "name"   : "one_tip",
+          "type"   : "boolean",
+          "optional" : true,
+          "default": false
         }
       ]
     }
@@ -89,34 +95,34 @@ module.exports = {
           "type": "volume"
         },
         {
+          "name": "from",
+          "type": "aliquot"
+        },
+        {
           "name"           : "to",
           "type"           : "aliquot+",
           "singleContainer": false
         },
         {
-          "name": "from",
-          "type": "aliquot"
-        },
-        {
           "name"    : "dispense_speed",
           "type"    : "flowrate",
           "optional": true,
-          "default" : "100:microliter/second"
+          "default" : {"value": 100, "unit": "microliter/second"}
         },
         {
           "name"    : "aspirate_speed",
           "type"    : "flowrate",
           "optional": true,
-          "default" : "100:microliter/second"
+          "default" : {"value": 100, "unit": "microliter/second"}
         },
         {
           "name"    : "mix_before",
           "type"    : "mixwrap",
           "optional": true,
           "default" : {
-            "volume"     : "10.0:microliter",
+            "volume"     : {"value": 10.0, "unit": "microliter"},
             "repetitions": 5,
-            "speed"      : "100:microliter/second"
+            "speed"      : {"value": 100, "unit": "microliter/second"}
           }
         }
       ]
@@ -142,11 +148,7 @@ module.exports = {
         {
           "name"   : "volume",
           "type"   : "volume",
-          "default": "10.0:microliter"
-        },
-        {
-          "name": "to",
-          "type": "aliquot"
+          "default": {"value": 10.0, "unit": "microliter"}
         },
         {
           "name"           : "from",
@@ -154,25 +156,29 @@ module.exports = {
           "singleContainer": false
         },
         {
+          "name": "to",
+          "type": "aliquot"
+        },
+        {
           "name"    : "aspirate_speed",
           "type"    : "flowrate",
           "optional": true,
-          "default" : "100:microliter/second"
+          "default" : {"value": 100, "unit": "microliter/second"}
         },
         {
           "name"    : "dispense_speed",
           "type"    : "flowrate",
           "optional": true,
-          "default" : "100:microliter/second"
+          "default" : {"value": 100, "unit": "microliter/second"}
         },
         {
           "name"    : "mix_after",
           "type"    : "mixwrap",
           "optional": true,
           "default" : {
-            "volume"     : "10.0:microliter",
+            "volume"     : {"value": 10.0, "unit": "microliter"},
             "repetitions": 5,
-            "speed"      : "100:microliter/second"
+            "speed"      : {"value": 100, "unit": "microliter/second"}
           }
         }
       ]
@@ -201,13 +207,13 @@ module.exports = {
           "name"    : "volume",
           "type"    : "volume",
           "optional": true,
-          "default" : "50:microliter"
+          "default" : {"value": 50, "unit": "microliter"}
         },
         {
           "name"    : "speed",
           "type"    : "flowrate",
           "optional": true,
-          "default" : "100:microliter/second"
+          "default" : {"value": 100, "unit": "microliter/second"}
         },
         {
           "name"    : "repetitions",
@@ -231,6 +237,10 @@ module.exports = {
         }
       ],
       "fields"      : [
+        {
+          "name": "object",
+          "type": "container"
+        },
         {
           "name"   : "reagent",
           "type"   : "option",
@@ -276,10 +286,10 @@ module.exports = {
         {
           "name"   : "volume",
           "type"   : "volume",
-          "default": "10:microliter"
+          "default": {"value": 10, "unit": "microliter"}
         },
         {
-          "name": "steps",
+          "name": "groups",
           "type": "thermocycleGroup"
         },
         {
@@ -322,7 +332,19 @@ module.exports = {
         {
           "name"   : "duration",
           "type"   : "duration",
-          "default": "60:minute"
+          "default": {"value": 60, "unit": "minute"}
+        },
+        {
+          "name"        : "co2",
+          "type"        : "integer",
+          "default"     : 0,
+          "optional"    : true,
+          "restrictions": {
+            "value": {
+              "min": 0,
+              "max": 100
+            }
+          }
         },
         {
           "name"   : "shaking",
@@ -353,6 +375,16 @@ module.exports = {
         {
           "name": "object",
           "type": "container"
+        },
+        {
+          "name"    : "type",
+          "type"    : "option",
+          "default" : "ultra-clear",
+          "optional": true,
+          "options" : [
+            "ultra-clear",
+            "foil"
+          ]
         }
       ]
     }
@@ -487,12 +519,14 @@ module.exports = {
           "singleContainer": true
         },
         {
-          "name"      : "wavelength",
-          "type"      : "length",
-          "default"   : "600:nanometer",
-          "inputAttrs": {
-            "min": 300,
-            "max": 1000
+          "name"        : "wavelength",
+          "type"        : "length",
+          "default"     : {"value": 600, "unit": "nanometer"},
+          "restrictions": {
+            "value": {
+              "min": 300,
+              "max": 1000
+            }
           }
         },
         {
@@ -529,21 +563,25 @@ module.exports = {
           "singleContainer": true
         },
         {
-          "name"      : "excitation",
-          "type"      : "length",
-          "default"   : "600:nanometer",
-          "inputAttrs": {
-            "min": 300,
-            "max": 1000
+          "name"        : "excitation",
+          "type"        : "length",
+          "default"     : {"value": 600, "unit": "nanometer"},
+          "restrictions": {
+            "value": {
+              "min": 300,
+              "max": 1000
+            }
           }
         },
         {
-          "name"      : "emission",
-          "type"      : "length",
-          "default"   : "500:nanometer",
-          "inputAttrs": {
-            "min": 250,
-            "max": 900
+          "name"        : "emission",
+          "type"        : "length",
+          "default"     : {"value": 500, "unit": "nanometer"},
+          "restrictions": {
+            "value": {
+              "min": 250,
+              "max": 900
+            }
           }
         },
         {
@@ -628,17 +666,17 @@ module.exports = {
         },
         {
           "name"   : "duration",
-          "type"   : "string",
-          "default": "60:minute"
+          "type"   : "duration",
+          "default": {"value": 60, "unit": "minute"}
         }
       ]
     }
-  },
+  }
 
 
   //containers
 
-
+/*
   "store": {
     "operation"  : "store",
     "description": "Deliver a plate to a storage location specified by the where parameter.",
@@ -686,4 +724,5 @@ module.exports = {
       ]
     }
   }
+  */
 };

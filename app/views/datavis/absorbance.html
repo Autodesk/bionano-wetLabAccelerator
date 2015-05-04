@@ -1,0 +1,29 @@
+<div ng-controller="ResultsSpectrophotometryCtrl as spectroCtrl">
+
+  <div class="btn-group"
+       ng-if="spectroCtrl.containers.length > 1">
+    <button class="btn btn-default"
+            ng-class="{'btn-info' : c == spectroCtrl.currentContainerIndex}"
+            ng-repeat="c in spectroCtrl.containers"
+            ng-click="spectroCtrl.setCurrentDataContainer(c)">{{c}}</button>
+  </div>
+
+  <tx-timepointgraph data="spectroCtrl.graphData"
+                     series-selected="spectroCtrl.currentWells"
+                     is-linear="true"
+                     on-hover="spectroCtrl.onGraphHover($well)">
+  </tx-timepointgraph>
+
+  <input ng-model="spectroCtrl.timepointSlider"
+         min="0"
+         max="{{spectroCtrl.timepointValues.length - 1}}"
+         ng-change="spectroCtrl.selectTimepoint(spectroCtrl.timepointSlider)"
+         type="range"/>
+
+  <tx-plate container="spectroCtrl.currentContainer"
+            plate-data="spectroCtrl.graphData[spectroCtrl.currentTimepoint]"
+            on-hover="spectroCtrl.hoverPlateWells($wells)"
+            focus-wells="spectroCtrl.focusedWells"
+            on-select="spectroCtrl.selectPlateWells($wells)"></tx-plate>
+
+</div>

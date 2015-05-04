@@ -1,0 +1,11 @@
+.protocol-group-main {
+  padding-bottom: 5px;
+  table {
+    overflow-x: scroll;
+    border-spacing: 5px 0;
+    color: $black;
+  }
+  button {
+    align-self: flex-start;
+  }
+}

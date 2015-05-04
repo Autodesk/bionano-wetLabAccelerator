@@ -9,17 +9,31 @@ var _      = require('lodash'),
  ******/
 
 //given a field object (with type and value), and an map of converters with keys of fieldType, transform a field, or just return the value
+//if allowDefault is false, do not allow using default if value is undefined
 //todo - maybe makes sense to error if fieldConverters is missing the field type
-function transformField (fieldObj, fieldConverters) {
+function transformField (fieldObj, fieldConverters, allowDefault) {
   var fieldVal  = _.result(fieldObj, 'value'),
       fieldType = _.result(fieldObj, 'type'),
       converter = _.has(fieldConverters, fieldType) ? fieldConverters[fieldType] : _.identity;
 
-  if (!_.isFunction(converter)) {
-    throw new Error('field type is invalid:', fieldObj.type, fieldObj);
+  if (_.isUndefined(fieldVal)) {
+    if (fieldObj.optional) {
+      return null;
+    } else {
+      if (_.has(fieldObj, 'default') && allowDefault !== false) {
+        console.log('using default for field ' + fieldObj.name, fieldObj);
+        fieldVal = _.result(fieldObj, 'default');
+      } else {
+        throw new Error('missing value for non-optional field ' + fieldObj.name, fieldObj);
+      }
+    }
   }
 
-  return converter(fieldVal);
+  if (!_.isFunction(converter)) {
+    throw new Error('field type converter is invalid:', fieldObj.type, fieldObj);
+  }
+
+  return converter(fieldVal, fieldObj);
 }
 
 //get field value, and run through converterKey (default 'toAutoprotocol')
@@ -34,13 +48,10 @@ function getFieldsIfSet (fields, desired, allowDefault, fieldConverters) {
   var obj = {};
   _.forEach(desired, function (desiredKey) {
     var field        = utils.pluckField(fields, desiredKey),
-        fieldVal     = transformField(field, fieldConverters),
-        fieldDefault = _.result(field, 'default');
+        transformed = transformField(field, fieldConverters, allowDefault);
 
-    if (fieldVal) {
-      obj[desiredKey] = fieldVal;
-    } else if (!!allowDefault && !_.isEmpty(fieldDefault)) {
-      obj[desiredKey] = fieldDefault;
+    if (!_.isNull(transformed)) {
+      obj[desiredKey] = transformed;
     }
   });
   return obj;
@@ -56,6 +67,12 @@ function simpleKeyvalFields (fields, localParams, fieldConverters) {
   var obj = {};
   _.forEach(fields, function (field) {
     var transformed = transformField(field, fieldConverters);
+
+    //if transformField returns null, field was undefined and optional, so skip it
+    if (_.isNull(transformed)) {
+      return;
+    }
+
     if (_.isObject(localParams) && !_.isEmpty(localParams)) {
       transformed = utils.interpolateObject(transformed, localParams);
     }

@@ -16,12 +16,19 @@ body {
     align-self: center;
   }
 
+  .container {
+    width: 960px; // for now, keep at 960 (not responsive)
+    margin: auto auto;
+    padding: 0 10px;
+  }
+
   footer {
     width: 100%;
     align-self: flex-end;
   }
 }
 
+.flex-child,
 .flex-horizontal,
 .flex-vertical {
   display: flex;
@@ -34,7 +41,6 @@ body {
 
 .flex-vertical {
   flex-direction: column;
-  max-width: 960px;
 }
 
 .flex-grower {
@@ -65,4 +71,18 @@ body {
 .maxout-scroll-vertical {
   max-height: 100vh;
   overflow-y: scroll;
+}
+
+.sidepanel {
+  max-width: 30vw;
+  min-width: 15%;
+  width: 20%;
+  margin: 25px 15px 0 15px;
+}
+
+.maincolumn {
+  max-width: 70vw;
+  min-width: 65%;
+  width: 70%;
+  margin: 25px 15px 0 15px;
 }

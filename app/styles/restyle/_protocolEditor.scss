@@ -1,8 +1,9 @@
 tx-protocol-editor {
   display: block;
-  padding: 0 $layout-spacing-sm 0 0;
+  padding: 0 $layout-spacing-sm;
 
   .protocol-instructions {
     min-height: 200px; //necessary to ensure drag and drop zone always available
+    padding: $layout-spacing-lg 0; //for drop zone
   }
 }

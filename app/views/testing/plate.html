@@ -25,17 +25,21 @@
 <tx-timepointgraph data="currentData"
                    series-selected="currentWells"
                    is-linear="loadedDemo"
-                   style="width: 900px; height: 600px; display: block;">
+                   on-hover="onGraphHover($well)"
+                   style="display: block;">
 </tx-timepointgraph>
 
 <tx-plate container="currentContainer"
           plate-data="currentData[currentTimepoint]"
-          select-persist="true"
           on-hover="hoverPlateWells($wells)"
+          focus-wells="focusedWells"
           on-select="selectPlateWells($wells)"></tx-plate>
 
 <tx-plate container="currentContainer"
           plate-data="currentData[currentTimepoint]"
           select-persist="true"
+          group-data="groupData"
+          prefer-groups="true"
+          no-brush="true"
           on-hover="hoverPlateWells($wells)"
           on-select="selectPlateWells($wells)"></tx-plate>

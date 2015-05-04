@@ -38,6 +38,10 @@ angular.module('transcripticApp')
       $scope.currentWells = wells;
     };
 
+    $scope.onGraphHover = function (well) {
+      $scope.focusedWells = _.isUndefined(well) ? [] : [well];
+    };
+
     function setData (data) {
       $scope.loadedDemo = false;
       $scope.inputData = data;
@@ -61,11 +65,19 @@ angular.module('transcripticApp')
     //testing
 
     $scope.openGrowthCurve = function () {
-      $http.get('demo_data/growth-0216.json').success(function (d) {
+      $http.get('demo_data/transformation_4-30.json').success(function (d) {
         setData(DataConv.parseGrowthCurve(d, true));
         $scope.loadedDemo = true;
       });
     };
+
+    $scope.groupData = [
+      {
+        name : 'Some Group',
+        wells : ['A1', 'A2', 'A3', 'B1', 'B2', 'B3'],
+        color: '#dd8855'
+      }
+    ];
 
     //init
 

@@ -1,0 +1,44 @@
+<tx-requestresponse config="runCtrl.analysisResponse.config"
+                    response="runCtrl.analysisResponse.response"></tx-requestresponse>
+
+<tx-requestresponse config="runCtrl.runResponse.config"
+                    response="runCtrl.runResponse.response"></tx-requestresponse>
+<table>
+  <tr>
+    <td>Run Setup</td>
+    <td>Transcriptic Credential</td>
+  </tr>
+  <tr>
+    <td>
+      <div class="input-group">
+        <span class="input-group-addon">Title</span>
+        <input type="text"
+               class="form-control"
+               ng-model="runCtrl.runTitle">
+      </div>
+
+      <span ng-hide="!runCtrl.project || runCtrl.project.id || runCtrl.findProjectByname(runCtrl.project).id">Create a new project {{runCtrl.project}}</span>
+
+      <div class="input-group">
+        <span class="input-group-addon">Project</span>
+        <input type="text"
+               class="form-control"
+               typeahead="proj as proj.name for proj in runCtrl.projects"
+               typeahead-editable="true"
+               ng-model="runCtrl.project">
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-info"
+                ng-disabled="!(runCtrl.runTitle && runCtrl.project && runCtrl.protocol && transcripticCred.$valid)"
+                ng-click="runCtrl.analyze()">Verify</button>
+        <button class="btn btn-info"
+                ng-disabled="!(runCtrl.runTitle && runCtrl.project && runCtrl.protocol && transcripticCred.$valid)"
+                ng-click="runCtrl.submit()">Submit</button>
+      </div>
+    </td>
+    <td>
+      <tx-cred-transcriptic ng-form="transcripticCred"></tx-cred-transcriptic>
+    </td>
+  </tr>
+</table>

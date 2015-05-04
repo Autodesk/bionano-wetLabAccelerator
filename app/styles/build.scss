@@ -12,16 +12,27 @@
 @import 'restyle/footer';
 @import 'restyle/gallery';
 
+@import 'restyle/results';
+@import 'restyle/galleryPage';
+
 //decorators
 
 @import 'restyle/resizeable';
+@import 'restyle/interactions';
 
 //components
 
 @import 'restyle/angularStyles';
 @import 'restyle/jsonEditor';
-@import 'restyle/glyphiconCircle';
+@import 'restyle/glyphiconShapes';
 @import 'restyle/btnLabeled';
+@import 'restyle/modal';
+
+//datavis
+
+@import 'restyle/plate';
+@import 'restyle/welltip';
+@import 'restyle/plategraph';
 
 //protocol
 
@@ -32,4 +43,6 @@
 @import 'restyle/protocolOp';
 @import 'restyle/protocolField';
 @import 'restyle/protocolResponse';
+@import 'restyle/protocolSetup';
+@import 'restyle/protocolMini';
 @import 'restyle/welltip';

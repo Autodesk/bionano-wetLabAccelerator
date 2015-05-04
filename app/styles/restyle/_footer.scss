@@ -14,14 +14,22 @@ footer {
     margin: 0 10px;
     align-self: center;
 
+    tx-inspector {
+      max-height: 45px;
+    }
+
     span {
+
+      &:first-child{
+        content: ":";
+      }
       &:last-child {
         color: $warning;
       }
     }
   }
 
-  .company-logo {
+  .logo-company {
 
     img {
       width: 91px;

@@ -13,21 +13,23 @@
  // should be able to drop into either a group or an operation
  */
 angular.module('tx.protocolEditor')
-  .directive('txOperationList', function ($document, Omniprotocol) {
+  .directive('txOperationList', function ($document, $window, DragDropManager, Omniprotocol) {
     return {
       templateUrl: 'views/tx-operation-list.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         scope.operations = Omniprotocol.operations;
-        scope.operationKeys = getOperationKeys();
+        scope.operationKeys = _.keys(Omniprotocol.operations);
 
+        /*
         var currentOpCancelled = false;
-
-        scope.gallerySortableOptions = {
+        scope.sortableOptions = {
           scroll: true,
-          connectWith: ".protocol-instructions",
+          helper: 'clone',
+          appendTo: document.body, // this crashes chrome with ui-sortable???
+          items: ".drag-handle",
+          //connectWith: ".protocol-instructions",
           update: function (e, ui) {
-
             //same list
             if (!ui.item.sortable.droptargetModel ||
                  ui.item.sortable.sourceModel == ui.item.sortable.droptargetModel) {
@@ -70,11 +72,29 @@ angular.module('tx.protocolEditor')
           }
         };
 
+
         var initalKeys;
         function getOperationKeys () {
           _.isUndefined(initalKeys) && (initalKeys = _.keys(Omniprotocol.operations));
-          return initalKeys;
+          return _.clone(initalKeys);
         }
+        */
+
+        scope.draggableOptions = {
+          helper: 'clone',
+          appendTo: document.body,
+          scroll: true,
+          start: function (e, ui) {
+            var opKey = angular.element(e.target).scope().op,
+                opInfo = Omniprotocol.operations[opKey],
+                opScaffold = _.clone(opInfo.scaffold, true);
+
+            _.assign(DragDropManager, {
+              type : 'operation',
+              model : opScaffold
+            });
+          }
+        };
       }
     };
   });

@@ -1,0 +1,9 @@
+<div ng-controller="resultsPipetteCtrl as pipeCtrl">
+<tx-plate container="pipeCtrl.getContainerFromWellField('from')"
+          no-brush="true"
+          group-data="{name : 'testing', wells : 'all', color: '#dd9955'}"></tx-plate>
+
+<tx-plate container="pipeCtrl.getContainerFromWellField('to')"
+          no-brush="true"
+          group-data="{name : 'another', wells : 'all', color: '#55dd99'}"></tx-plate>
+</div>

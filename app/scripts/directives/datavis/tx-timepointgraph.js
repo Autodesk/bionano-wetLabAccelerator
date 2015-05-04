@@ -24,19 +24,22 @@
  *
  *
  //todo - need to handle key not being present for given ordinal - shouldn't display line? or just interpolate?
+
+ // if makes sense, may want to extrapolate filter out of this directive
  */
 angular.module('tx.datavis')
   .directive('txTimepointgraph', function () {
     return {
       restrict: 'E',
-      replace: false,
-      scope: {
-        data: '=',
-        graphMeta: '=', //accepts xlabel, ylabel, title
+      replace : false,
+      scope   : {
+        data          : '=',
+        graphMeta     : '=', //accepts xlabel, ylabel, title
         seriesSelected: '=',
-        isLinear: '='
+        onHover       : '&',
+        isLinear      : '='
       },
-      link: function postLink(scope, element, attrs) {
+      link    : function postLink (scope, element, attrs) {
 
         scope.$watch('data', drawGraph);
         scope.$watch('graphMeta', updateMeta, true);
@@ -48,20 +51,67 @@ angular.module('tx.datavis')
          ****/
 
         var full = {
-          height : 380,
-          width: 600
+          height: 380,
+          width : 600
         };
 
         var chart = d3.select(element[0])
           .append('svg')
           .attr('width', full.width)
           .attr('height', full.height)
+          .style('overflow', 'visible')
           .attr('id', 'chart');
 
         var labelHeight = 15,
-            margin = {top: 15 + labelHeight, right: 15, bottom: 30 + labelHeight, left: 40 + labelHeight},
-            width = full.width - margin.left - margin.right,
-            height = full.height - margin.top - margin.bottom;
+            margin      = {top: 15 + labelHeight, right: 15, bottom: 30 + labelHeight, left: 40 + labelHeight},
+            width       = full.width - margin.left - margin.right,
+            height      = full.height - margin.top - margin.bottom;
+
+        var filter = chart.append('defs').append('filter')
+          .attr('id', 'line-backdrop')
+          .attr('width', '150%') //avoid clipping
+          .attr('height', '150%'); //avoid clipping
+
+        // SourceAlpha refers to opacity of graphic that this filter will be applied to
+        // convolve that with a Gaussian with standard deviation 3 and store result
+        // in blur
+        filter.append("feGaussianBlur")
+          .attr("in", "SourceAlpha")
+          .attr("stdDeviation", 3)
+          .attr("result", "blur");
+
+        filter.append("feMorphology")
+          .attr("operator", 'dilate')
+          .attr("in", "SourceGraphic")
+          .attr("radius", 1)
+          .attr("result", "dilation");
+
+        filter.append('feColorMatrix')
+          .attr('type', 'matrix')
+          .attr('values', '1 1 1 1   0 \
+                           1 1 1 1   0 \
+                           1 1 1 1   0 \
+                           1 1 1 0.9 0 ')
+          .attr('result', 'color');
+
+        /*
+        // translate output of Gaussian blur to the right and downwards with 2px
+        // store result in offsetBlur
+        filter.append("feOffset")
+          .attr("in", "bluralpha")
+          .attr("dx", 0)
+          .attr("dy", 0)
+          .attr("result", "offsetBlur");
+         */
+
+        // overlay original SourceGraphic over translated blurred opacity by using
+        // feMerge filter. Order of specifying inputs is important!
+        var feMerge = filter.append("feMerge");
+
+        feMerge.append("feMergeNode")
+          .attr("in", "color");
+        feMerge.append("feMergeNode")
+          .attr("in", "SourceGraphic");
 
         // scaling functions
 
@@ -90,7 +140,7 @@ angular.module('tx.datavis')
           .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
         var xAxisLabel = chart.append("text")
-          .attr("x", margin.left + (width / 2) )
+          .attr("x", margin.left + (width / 2))
           .attr("y", margin.top + height + margin.bottom - labelHeight)
           .attr("dy", ".71em")
           .style("text-anchor", "middle")
@@ -99,12 +149,12 @@ angular.module('tx.datavis')
         var yAxisLabel = chart.append("text")
           .attr("transform", "rotate(-90)")
           .attr("y", labelHeight)
-          .attr("x", -(margin.top + (height / 2)) )
+          .attr("x", -(margin.top + (height / 2)))
           .style("text-anchor", "middle")
           .text("Optical Density (OD)");
 
         var titleLabel = chart.append("text")
-          .attr("x", margin.left + (width / 2) )
+          .attr("x", margin.left + (width / 2))
           .attr("y", labelHeight)
           .style("text-anchor", "middle")
           .text("Growth Curve");
@@ -121,7 +171,7 @@ angular.module('tx.datavis')
 
         //line generator (time / value for each well)
         var line = d3.svg.line()
-          .interpolate('linear')
+          .interpolate('cardinal')
           .x(function (d) { return d.scaled.x; })
           .y(function (d) { return d.scaled.y; });
 
@@ -130,6 +180,44 @@ angular.module('tx.datavis')
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
           .attr("class", "series");
 
+        //loupe setup
+
+        var loupe = chart.append("g")
+          .attr("visibility", "hidden")
+          .attr("class", "loupe");
+
+        var loupeDistance = 40;
+
+        //point on the line
+        loupe.append("circle")
+          .attr('class', 'loupe-point')
+          .attr("r", 5);
+        loupe.append('line')
+          .attr({
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: loupeDistance
+          })
+          .attr('class', 'loupe-line');
+        //foreign object wrap... hard to deal with
+        var loupeInnerFO = loupe.append("foreignObject")
+          .attr({
+            'y'     : loupeDistance,
+            'x'     : '-150px',
+            'class' : 'loupe-inner',
+            'width' : '300px',
+            'height': '50px'
+          });
+        //inner DOM
+        var loupeInner = loupeInnerFO.append('xhtml:div')
+          .attr('class', 'loupe-inner');
+        var loupePill  = loupeInner.append('div')
+          .attr('class', 'loupe-pill');
+        var loupeText  = loupePill.append('p')
+          .attr('class', 'loupe-text')
+          .text('something');
+
         //voronoi setup
 
         var voronoi = d3.geom.voronoi()
@@ -137,36 +225,41 @@ angular.module('tx.datavis')
           .y(function (d) { return d.scaled.y; })
           .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
 
-        var voronoiFocus = chart.append("g")
-          .attr("transform", "translate(-100,-100)")
-          .attr("class", "focus");
-
-        voronoiFocus.append("circle")
-          .attr("r", 3.5);
-
-        voronoiFocus.append("text")
-          .attr("y", -10);
-
         var voronoiGroup = chart.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
           .attr("class", "voronoi");
         //add class 'visible' for debugging
 
-        //todo - allow highlight of line by mouseover directly rather than just vonoroi
+        //future - allow highlight of line by mouseover directly rather than just vonoroi??? hard to do voronoi on lines, especially if non-linear, because need to inteprolate based on surrounding values
         function voronoiMouseover (d) {
           var point = d.point;
 
           series.classed('selected', false);
-          d3.select(point.line).classed('selected', true);
-          point.line.parentNode.appendChild(point.line);
 
-          voronoiFocus.attr("transform", "translate(" + ( margin.left + point.scaled.x ) + "," + ( margin.top + point.scaled.y ) + ")");
-          voronoiFocus.select("text").text(point.key + ' - ' + parseFloat(point.value, 10).toFixed(3));
+          handleLineSelection(point.line);
+
+          loupe.attr("transform", "translate(" + ( margin.left + point.scaled.x ) + "," + ( margin.top + point.scaled.y ) + ")")
+            .attr('visibility', 'visible');
+          loupeText.text(point.key + ' - ' + parseFloat(point.value, 10).toFixed(3));
+
+          scope.$applyAsync(function () {
+            scope.onHover({$well: point.key});
+          });
         }
 
         function voronoiMouseout (d) {
           series.classed('selected', false);
-          voronoiFocus.attr("transform", "translate(-100,-100)");
+          loupe.attr("visibility", "hidden");
+          scope.$applyAsync(function () {
+            scope.onHover();
+          });
+        }
+
+        function handleLineSelection (nativeEl) {
+          d3.select(nativeEl).classed('selected', true);
+          nativeEl.parentNode.appendChild(nativeEl);
+
+          //todo - highlight the line - with a filter???
         }
 
         //save for later....
@@ -186,7 +279,7 @@ angular.module('tx.datavis')
 
           seriesData = _.flatten(_.map(data, _.values));
 
-          y.domain([0, d3.max( _.pluck(seriesData, 'value') ) ]).nice();
+          y.domain([0, d3.max(_.pluck(seriesData, 'value'))]).nice();
 
           //handle the x axis linear / ordinal
           if (scope.isLinear) {
@@ -205,8 +298,8 @@ angular.module('tx.datavis')
             .rollup(function (vals) {
               _.map(vals, function (val) {
                 val.scaled = {
-                  x : getXScaled(val),
-                  y : getYScaled(val)
+                  x: getXScaled(val),
+                  y: getYScaled(val)
                 };
               });
               return vals;
@@ -223,6 +316,7 @@ angular.module('tx.datavis')
             .attr('class', 'line');
 
           //UPDATE - only updated values
+          //note - we are actually changing the values when do this (i.e. this variable is exposed outside the scope of this directive)
           series.transition().attr('d', function (d) {
             _.map(d.values, function (val) {
               val.line = this;
@@ -238,17 +332,17 @@ angular.module('tx.datavis')
 
         function updateMeta (newval) {
           var metaToElement = {
-            xlabel : {
-              placeholder : 'Timepoint',
-              element : xAxisLabel
+            xlabel: {
+              placeholder: 'Timepoint',
+              element    : xAxisLabel
             },
-            ylabel : {
-              placeholder : 'Optical Density (OD)',
-              element : yAxisLabel
+            ylabel: {
+              placeholder: 'Optical Density (OD)',
+              element    : yAxisLabel
             },
             title : {
-              placeholder : 'Growth Curve',
-              element : titleLabel
+              placeholder: 'Growth Curve',
+              element    : titleLabel
             }
           };
 
@@ -270,7 +364,7 @@ angular.module('tx.datavis')
           if (_.keys(wellMap).length < 1) {
             series.classed('hidden', false);
           } else {
-            series.classed('hidden', function (d) { return ! _.has(wellMap, d.key) });
+            series.classed('hidden', function (d) { return !_.has(wellMap, d.key) });
           }
         }
 
@@ -278,15 +372,15 @@ angular.module('tx.datavis')
 
           if (seriesData) {
 
-            var filteredSeriesData = !! _.keys(wellMap).length ?
+            var filteredSeriesData = !!_.keys(wellMap).length ?
               _.filter(seriesData, function (datum) { return _.has(wellMap, datum.key) }) :
               seriesData;
 
             var allDataUnique = d3.nest()
-              .key(function(d) { return d.scaled.x + "," + d.scaled.y })
+              .key(function (d) { return d.scaled.x + "," + d.scaled.y })
               .rollup(_.first)
               .entries(filteredSeriesData)
-              .map(function(d) { return d.values });
+              .map(function (d) { return d.values });
 
             voronoiSeries = voronoiGroup.selectAll("path")
               .data(voronoi(allDataUnique));
@@ -310,7 +404,7 @@ angular.module('tx.datavis')
           if (_.keys(wellMap).length < 1) {
             voronoiSeries.classed('hidden', false);
           } else {
-            voronoiSeries.classed('hidden', function (d) { return ! _.has(wellMap, d.point.key) });
+            voronoiSeries.classed('hidden', function (d) { return !_.has(wellMap, d.point.key) });
           }
         }
       }

@@ -1,0 +1,89 @@
+tx-plategraph,
+tx-timepointgraph {
+
+  $line-default: $primary;
+  $line-backdrop: $white;
+
+  display: block;
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .line {
+    fill: none;
+    stroke: $line-default;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-width: 1.5px;
+    transition: stroke 0.5s ease-out;
+
+    &.line-hover,
+    &.selected {
+      stroke-width: 3px;
+      filter: url(#line-backdrop); //this is created in the directive
+      transition: stroke-width 0.25s ease-in;
+    }
+
+    &.hidden {
+      stroke: none !important;
+    }
+  }
+
+  .voronoi {
+
+    path {
+      stroke: none;
+      fill: transparent;
+
+      &.hidden {
+        stroke: none !important;
+        pointer-events: none;
+      }
+    }
+
+    &.visible {
+      path {
+        stroke: rgba(200,100,100,0.5);
+        fill: rgba(0,0,0,0.1);
+        stroke-width: 0.5px;
+      }
+    }
+  }
+
+  .loupe {
+    pointer-events: none;
+
+    .loupe-point {
+      fill: $line-backdrop;
+    }
+
+    .loupe-line {
+      stroke : $white;
+      stroke-width: 2px;
+    }
+
+    .loupe-inner {
+      text-align: center;
+    }
+
+    .loupe-pill {
+      background: $line-default;
+      display: inline-block;
+      border-radius: 1em;
+      border: 2px solid $line-backdrop;
+      padding: 3px 9px;
+    }
+
+    .loupe-text {
+      color: $line-backdrop;
+      font-size: 0.75em;
+      margin: 0;
+      padding: 0;
+    }
+
+  }
+}

@@ -79,7 +79,7 @@ angular.module('transcripticApp')
                     name : files[0].name
                   }
                 } catch (e) {
-                  console.log('couldnt parse dropped JSON', e);
+                  console.log('could not parse dropped JSON', e);
                 }
               });
             };
@@ -105,6 +105,10 @@ angular.module('transcripticApp')
         scope.handleSave = function () {
           scope.onSave({$protocol : scope.protocol, $meta : scope.meta});
           scope.ProtocolForm.$setPristine();
+        };
+
+        scope.showJSON = function () {
+          console.log(scope);
         };
 
         function resetInstructionList () {

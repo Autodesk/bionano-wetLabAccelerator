@@ -1,38 +1,23 @@
+.protocol-editor-header {
+
+  .protocol-name {
+    display: inline-block;
+    margin: 5px 3px;
+  }
+
+  .glyphicon-circle {
+
+    .show-metadata {
+      position: absolute;
+      clip: rect(0, 0, 0, 0);
+    }
+  }
+}
+
 tx-protocol-actions {
-  display: block;
+  display: flex;
   position: relative;
-  padding: $layout-spacing-md $layout-spacing-sm;
-
-  .protocol-title {
-    position: relative;
-    display: block;
-    text-align: center;
-
-    .dropdown-menu {
-      left: 50%;
-      width: 315px;
-      max-width: 100%;
-      transform: translateX(-50%);
-      margin: -1px 0 0;
-    }
-  }
-
-  .protocol-actions {
-    &-container {
-      @extend .flex-horizontal;
-      justify-content: space-between;
-    }
-
-    &-left {
-      align-self: flex-start;
-    }
-
-    &-right {
-      align-self: flex-end;
-    }
-  }
-
-  ul li {
-    padding: 0;
-  }
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 $layout-spacing-sm;
 }
