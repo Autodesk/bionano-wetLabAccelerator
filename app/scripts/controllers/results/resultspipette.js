@@ -17,10 +17,15 @@ angular.module('transcripticApp')
       return _.pluck(_.filter(fieldVal, filterFunction), 'well');
     };
 
-    self.getContainerFromWellField = function (fieldName) {
+    self.getContainerTypeFromWellField = function (fieldName) {
       var fieldVal = Omniprotocol.utils.pluckFieldValueRaw($scope.summaryCtrl.operation.fields, fieldName),
       containerName = _.result(fieldVal, '[0].container');
       return Omniprotocol.utils.getContainerTypeFromName($scope.summaryCtrl.protocol.parameters, containerName);
+    };
+
+    self.getContainerFromWellField = function (fieldName) {
+      var fieldVal = Omniprotocol.utils.pluckFieldValueRaw($scope.summaryCtrl.operation.fields, fieldName);
+      return _.result(fieldVal, '[0].container');
     };
 
   });
