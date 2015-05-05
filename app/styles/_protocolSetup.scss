@@ -1,11 +1,44 @@
-.protocol-group-main {
-  padding-bottom: 5px;
+.protocol-setup {
+  display: block;
+  position: relative;
+  margin-top: $layout-spacing-md;
+  margin-bottom: 0;
+  font-size: 14px;
+
+  .protocol-setup-header {
+    padding: 3px 10px;
+    background: transparentize($white, .5);
+    outline: none;
+  }
+
+  .protocol-setup-main {
+    background: transparentize($white, .5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   table {
-    overflow-x: scroll;
-    border-spacing: 5px 0;
-    color: $black;
+    border-collapse: separate;
+    border-spacing: 20px 0px;
+    margin: 0
   }
-  button {
-    align-self: flex-start;
+
+  &:after {
+    height: 0;
+    width: 0;
+    position: absolute;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    pointer-events: none;
+    border-top-color: rgba(255,255,255,0.5);
+    border-width: 10px;
+    margin-left: -15px;
   }
+
+  .open {
+    background: $white;
+  }
+
 }

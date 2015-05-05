@@ -28,7 +28,7 @@
   <div class="btn-group">
     <button class="btn btn-default btn-sm"
             ng-click="showJSON = true"
-            tooltip="View JSON"
+            tooltip="View Protocol JSON"
             tooltip-append-to-body="true">
       <span class="glyphicon glyphicon-console"></span>
     </button>
@@ -58,13 +58,13 @@
         </a></li>
       </ul>
     </div>
-  </div>
-  <button class="btn btn-default btn-sm"
-          ng-click="toggleModal()"
-          tooltip="Run Protocol"
-          tooltip-append-to-body="true">
+    <button class="btn btn-default btn-sm"
+            ng-click="toggleModal()"
+            tooltip="Run Protocol"
+            tooltip-append-to-body="true">
       <span class="glyphicon glyphicon-check"></span>
-  </button>
+    </button>
+  </div>
   <tx-modal ng-show='modalShown'>
     <tx-run protocol="actionCtrl.protocol"></tx-run>
   </tx-modal>

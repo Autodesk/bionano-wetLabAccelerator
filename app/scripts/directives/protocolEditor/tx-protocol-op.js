@@ -20,10 +20,36 @@ angular.module('tx.protocolEditor')
       bindToController: true,
       controllerAs: 'opCtrl',
       controller: function ($scope, $element, $attrs) {
+        var self = this;
+
+        self.toggleActionsMenu = function ($event, force) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          $scope.showActions = angular.isDefined(force) ?
+            force :
+            !( $scope.showActions );
+        };
+
+        self.toggleJsonEditing = function ($event, force) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          $scope.jsonEditing = angular.isDefined(force) ?
+            force :
+            !( $scope.jsonEditing );
+        };
+
+        $scope.modalShown = false;
+        self.toggleModal = function($event) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          $scope.modalShown = !$scope.modalShown;
+        };
 
       },
       link: function (scope, element, attrs, groupCtrl) {
-
+        scope.deleteStep = function () {
+          groupCtrl.deleteStep(scope.opCtrl.op);
+        };
       }
     };
   });
