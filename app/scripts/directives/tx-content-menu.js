@@ -28,14 +28,14 @@ angular.module('transcripticApp')
 
         self.openProtocol = function (protocol) {
           self.toggleGalleryVisible(false);
-          $location.path('/testing/restyle');
+          $location.path('/build');
           ProtocolHelper.assignCurrentProtocol(protocol);
         };
 
         self.openRun = function (run) {
           self.toggleGalleryVisible(false);
-          $location.path('/testing/results');
-          RunHelper.assignCurrentRun(run.protocol);
+          $location.path('/results');
+          RunHelper.assignCurrentRun(run);
         }
       },
       link            : function postLink (scope, element, attrs) {
