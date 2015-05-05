@@ -411,6 +411,8 @@ module.exports = function (grunt) {
             'views/**/*.html',
             'images/**/*.{webp}',
             'fonts/**/*.*',
+            'demo_runs/**/*.*',
+            'demo_viruses/**/*.*',
             'demo_protocols/**/*.*',
             'scripts/**/index.js' //copy browserified scripts
           ]

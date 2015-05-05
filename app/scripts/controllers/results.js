@@ -14,9 +14,10 @@ angular.module('transcripticApp')
     self.run = RunHelper.currentRun;
 
     //todo - when get the run, if not completed, ping transcriptic for data (add function to RunHelper)
-    /*$http.get('demo_runs/transformation_4-30.json')
-    .success(RunHelper.assignCurrentRun);*/
+    $http.get('demo_runs/transformation_4-30.json')
+    .success(RunHelper.assignCurrentRun);
 
+    /*
     //for testing
     $q.all([
       $http.get('demo_runs/run_dummy2.json'),
@@ -29,7 +30,7 @@ angular.module('transcripticApp')
       _.assign(run.protocol, protocol);
       RunHelper.assignCurrentRun(run)
     });
-
+*/
     $scope.$watch('resultsCtrl.currentInfo', function (newval) {
       if (!_.isEmpty(newval)) {
         self.currentGroup = self.run.protocol.groups[newval.group];
