@@ -220,14 +220,15 @@ angular.module('tx.datavis')
 
         //voronoi setup
 
+        var voronoiBuffer = 10;
         var voronoi = d3.geom.voronoi()
           .x(function (d) { return d.scaled.x; })
           .y(function (d) { return d.scaled.y; })
-          .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
+          .clipExtent([[-voronoiBuffer, -voronoiBuffer], [width + voronoiBuffer, height + voronoiBuffer]]);
 
         var voronoiGroup = chart.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-          .attr("class", "voronoi");
+          .attr("class", "voronoi visible");
         //add class 'visible' for debugging
 
         //future - allow highlight of line by mouseover directly rather than just vonoroi??? hard to do voronoi on lines, especially if non-linear, because need to inteprolate based on surrounding values
