@@ -82,6 +82,7 @@ angular.module('tx.datavis')
           element.toggleClass('no-select', !!hiding);
         });
 
+        //todo - perf - move to a watchGroup
         scope.$watch('container', _.partial(rerender, true));
         scope.$watch('plateData', _.partial(rerender, false));
         scope.$watch('groupData', _.partial(rerender, false));
