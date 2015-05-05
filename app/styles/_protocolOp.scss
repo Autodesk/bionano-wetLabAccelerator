@@ -23,11 +23,7 @@ tx-protocol-op {
   }
 
   .operation-field {
-
-  }
-
-  .open {
-    background: $white;
+    width: 100%;
   }
 
   table {
@@ -56,9 +52,12 @@ tx-protocol-op {
     width: 0;
     position: absolute;
     pointer-events: none;
-    border-color: rgba(255, 255, 255, .15);
-    border-top-color: #fafafa;
+    border-top-color: rgba(255,255,255,0.5);
     border-width: 10px;
     margin-left: -15px;
+  }
+
+  .open {
+    background: $white;
   }
 }

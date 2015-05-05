@@ -11,8 +11,8 @@ body {
     background-image: url('/images/app-bg-big.png');
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    opacity: 0.85;
-    position: fixed;
+    opacity: 0.9;
+    position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
@@ -88,15 +88,13 @@ body {
 }
 
 .sidepanel {
-  max-width: 30vw;
   min-width: 15%;
-  width: 20%;
+  max-width: 30%;
   margin: 25px 15px 0 15px;
 }
 
 .maincolumn {
-  max-width: 70vw;
-  min-width: 65%;
-  width: 70%;
+  min-width: 60%;
+  max-width: 70%;
   margin: 25px 15px 0 15px;
 }

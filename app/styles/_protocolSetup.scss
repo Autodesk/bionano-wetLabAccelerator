@@ -1,5 +1,6 @@
 .protocol-setup {
   display: block;
+  position: relative;
   margin-top: $layout-spacing-md;
   margin-bottom: 0;
   font-size: 14px;
@@ -7,6 +8,7 @@
   .protocol-setup-header {
     padding: 3px 10px;
     background: transparentize($white, .5);
+    outline: none;
   }
 
   .protocol-setup-main {
@@ -25,16 +27,18 @@
   &:after {
     height: 0;
     width: 0;
-    position: relative;
-    bottom: -8px;
+    position: absolute;
     left: 50%;
     border: solid transparent;
     content: " ";
     pointer-events: none;
-    border-color: rgba(255, 255, 255, .15);
-    border-top-color: #fafafa;
+    border-top-color: rgba(255,255,255,0.5);
     border-width: 10px;
     margin-left: -15px;
+  }
+
+  .open {
+    background: $white;
   }
 
 }

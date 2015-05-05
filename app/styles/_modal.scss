@@ -5,8 +5,7 @@
   left:0;
   width:100%;
   height:100%;
-  background-color:$white;
-  opacity: 0.5;
+  background:transparentize($white,.5);
 }
 .modal-dialog {
   z-index:10000;
@@ -23,8 +22,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white;
-  background-color: #343434;
+  color: $white;
+  background-color: $bg-modal;
 
   .modal-dialog-content {
     padding:1px;

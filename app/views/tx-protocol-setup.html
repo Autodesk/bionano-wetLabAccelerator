@@ -1,9 +1,11 @@
 <div class="protocol-setup-header"
-     ng-click="isCollapsed = !isCollapsed">
+     ng-click="isCollapsed = !isCollapsed"
+     ng-class="{'open':isCollapsed}">
   setup
 </div>
 <table class="protocol-setup-main"
-       ng-show="isCollapsed">
+       ng-show="isCollapsed"
+       ng-class="{'open':isCollapsed}">
   <thead>
   <tr>
     <th colspan="4"><button class="btn btn-default" ng-click="setupCtrl.addParam()">Add Parameter</button></th>

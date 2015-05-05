@@ -27,6 +27,9 @@ angular.module('tx.protocolEditor')
 
         self.deleteStep = function (step) {
           _.remove(self.group.steps, step);
+          if (self.group.steps.length == 0) {
+            $scope.deleteGroup();
+          }
         };
 
         //drag and drop interaction
@@ -44,10 +47,6 @@ angular.module('tx.protocolEditor')
               model : opClone,
               onDrop: function () {
                 self.deleteStep(opModel);
-
-                if (self.group.steps.length == 0) {
-                  $scope.deleteGroup();
-                }
               }
             });
           }

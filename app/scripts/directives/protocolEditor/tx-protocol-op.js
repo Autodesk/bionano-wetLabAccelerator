@@ -32,15 +32,24 @@ angular.module('tx.protocolEditor')
 
         self.toggleJsonEditing = function ($event, force) {
           $event.preventDefault();
+          $event.stopPropagation();
           $scope.jsonEditing = angular.isDefined(force) ?
             force :
             !( $scope.jsonEditing );
-          $scope.logVisible  = false;
+        };
+
+        $scope.modalShown = false;
+        self.toggleModal = function($event) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          $scope.modalShown = !$scope.modalShown;
         };
 
       },
       link: function (scope, element, attrs, groupCtrl) {
-
+        scope.deleteStep = function () {
+          groupCtrl.deleteStep(scope.opCtrl.op);
+        };
       }
     };
   });

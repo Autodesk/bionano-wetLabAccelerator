@@ -100,7 +100,7 @@
     }
 
     &:after {
-      top: 100%;
+      top: 103%;
       left: 50%;
       border: solid transparent;
       content: " ";
@@ -108,8 +108,7 @@
       width: 0;
       position: absolute;
       pointer-events: none;
-      border-color: rgba(255, 255, 255, 0);
-      border-top-color: #fafafa;
+      border-top-color: rgba(255,255,255,0.5);
       border-width: 10px;
       margin-left: -15px;
     }
@@ -119,7 +118,7 @@
 
   .group-name {
     min-height: 1em;
-    min-width: 50px;
+    min-width: 85px;
     cursor: text;
   }
 
@@ -133,16 +132,6 @@
     margin: 0;
     right: 0;
     left: auto;
-
-    li {
-      padding-left: 0;
-    }
-  }
-
-  pre {
-    font-size: 13px;
-    background-color: $black;
-    color: $white;
-    border-radius: 0;
+    top:20px;
   }
 }

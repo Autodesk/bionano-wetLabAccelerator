@@ -1,21 +1,40 @@
 <div class="operation-name"
      ng-click="opCtrl.isCollapsed = !opCtrl.isCollapsed"
-     ng-class="{'open': isCollapsed}">
+     ng-class="{'open': opCtrl.isCollapsed}">
   <span ng-bind="opCtrl.op.operation"></span>
-  <span class="glyphicon glyphicon-cog"
-        ng-show="opCtrl.isCollapsed"
-        ng-click="opCtrl.toggleActionsMenu($event)"></span>
+  <div class="dropdown"
+       ng-class="{'open' :showActions}" >
+    <span class="glyphicon glyphicon-cog"
+          ng-show="opCtrl.isCollapsed"
+          ng-click="opCtrl.toggleActionsMenu($event)"></span>
+    <ul class="dropdown-menu"
+        ng-mouseleave="opCtrl.toggleActionsMenu($event)">
+      <li><a ng-click="opCtrl.toggleModal($event)">
+          Verify Protocol
+      </a></li>
+      <li><a ng-click="opCtrl.toggleJsonEditing($event)">
+          Show JSON
+      </a></li>
+      <li><a ng-click="deleteStep()">
+          Delete Step
+        </a></li>
+    </ul>
+  </div>
 </div>
-<tx-protocol-field class="operation-field"
-                   ng-show="opCtrl.isCollapsed"
-                   ng-class="{'open': isCollapsed}"
-                   ng-repeat="field in opCtrl.op.fields"
-                   ng-model="field.value"
-                   field="field">
-</tx-protocol-field>
+<tx-modal ng-show='modalShown'>
+  <tx-run protocol="see-note"></tx-run> <!--Need to pass in protocol-->
+</tx-modal>
+<div class="operation-field"
+     ng-show="opCtrl.isCollapsed"
+     ng-class="{'open': opCtrl.isCollapsed}">
+  <tx-protocol-field ng-repeat="field in opCtrl.op.fields"
+                     ng-model="field.value"
+                     field="field">
+  </tx-protocol-field>
+</div>
 <div class="pre-scrollable"
      ng-class="{'open' : jsonEditing}"
-     ng-mouseleave="jsonEditing = !jsonEditing">
+     ng-mouseleave="jsonEditing = !jsonEditing"> <!--Temporary, until close button is incorporated -->
      <pre json-editor
           ng-if="jsonEditing"
           contenteditable
