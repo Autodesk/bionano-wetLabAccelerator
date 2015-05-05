@@ -130,7 +130,13 @@ angular.module('tx.datavis')
           .attr("width", "100%")
           .attr("height", "100%")
           .attr("viewBox", "0 0 " + full.width + " " + full.height)
-          .attr("preserveAspectRatio", "xMinYMin meet");
+          .attr("preserveAspectRatio", "xMidYMid meet");
+
+        scope.$watch(function () {
+          return element[0].offsetWidth;
+        }, function (newWidth) {
+          svg.attr('height', (newWidth / full.width) * full.height);
+        });
 
         var wellsSvg = svg.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");

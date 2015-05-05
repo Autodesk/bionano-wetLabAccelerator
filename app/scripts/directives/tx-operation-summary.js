@@ -8,6 +8,25 @@
  */
 angular.module('transcripticApp')
   .directive('txOperationSummary', function ($http, $compile, Omniprotocol) {
+
+    var templateMap = {
+      'transfer' : 'pipette',
+      'consolidate' : 'pipette',
+      'distribute' : 'pipette',
+
+      'mix' : 'mix',
+
+      'absorbance' : 'spectrophotometry',
+      'fluorescence' : 'spectrophotometry',
+      'luminescence' : 'spectrophotometry',
+
+      'incubate' : 'container',
+      'seal' : 'container',
+      'unseal' : 'container',
+      'cover' : 'container',
+      'uncover' : 'container'
+    };
+
     return {
       restrict        : 'E',
       scope           : {
@@ -39,8 +58,10 @@ angular.module('transcripticApp')
         //todo - need to destroy previous template + scope when get new one
 
         function getOperationTemplate (operation) {
-          _.has(operation, 'operation') &&
-          $http.get('views/datavis/' + operation.operation + '.html', {cache: true}).
+          var opName = _.result(operation, 'operation'),
+              templateName = _.result(templateMap, opName, opName);
+
+          $http.get('views/datavis/' + templateName + '.html', {cache: true}).
             success(function (data) {
               var $el = angular.element(data);
               element.html($compile($el)(scope));
