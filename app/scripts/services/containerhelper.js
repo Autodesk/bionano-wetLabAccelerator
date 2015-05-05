@@ -6,6 +6,8 @@
  * @description
  * # ContainerHelper
  * Service in the transcripticApp.
+ *
+ * //todo - merge in containerOptions, and expose functionality here
  */
 angular.module('transcripticApp')
   .service('ContainerHelper', function ($rootScope, Auth, Container) {
