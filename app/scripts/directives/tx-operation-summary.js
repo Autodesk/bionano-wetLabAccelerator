@@ -14,6 +14,8 @@ angular.module('transcripticApp')
       'consolidate' : 'pipette',
       'distribute' : 'pipette',
 
+      'mix' : 'mix',
+
       'absorbance' : 'spectrophotometry',
       'fluorescence' : 'spectrophotometry',
       'luminescence' : 'spectrophotometry',
