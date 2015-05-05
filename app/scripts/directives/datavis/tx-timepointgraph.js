@@ -228,7 +228,7 @@ angular.module('tx.datavis')
 
         var voronoiGroup = chart.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-          .attr("class", "voronoi visible");
+          .attr("class", "voronoi");
         //add class 'visible' for debugging
 
         //future - allow highlight of line by mouseover directly rather than just vonoroi??? hard to do voronoi on lines, especially if non-linear, because need to inteprolate based on surrounding values
