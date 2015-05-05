@@ -21,3 +21,8 @@ tx-protocol-actions {
   align-items: center;
   padding: 0 $layout-spacing-sm;
 }
+
+.protocol-metadata-field {
+  min-width: 300px;
+  border-bottom: 1px solid $grey;
+}
