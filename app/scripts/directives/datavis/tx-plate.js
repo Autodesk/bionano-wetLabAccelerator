@@ -44,13 +44,13 @@ angular.module('tx.datavis')
     return {
       restrict: 'E',
       scope   : {
-        container    : '=',  //shortname (key of ContainerOptions)
+        container: '=',  //shortname (key of ContainerOptions)
 
         //data
 
-        plateData    : '=?',  //data as defined above
-        groupData    : '=?', //array of groups with fields name, wells (alphanums) array or 'all', color (as string). if omitted, default to plateData, and preferGroups is ignored. Can be single object
-        preferGroups : '=?', //if both plateData and groups are defined, true gives group coloring priority
+        plateData   : '=?',  //data as defined above
+        groupData   : '=?', //array of groups with fields name, wells (alphanums) array or 'all', color (as string). if omitted, default to plateData, and preferGroups is ignored. Can be single object
+        preferGroups: '=?', //if both plateData and groups are defined, true gives group coloring priority
 
         //interation
 
@@ -68,7 +68,7 @@ angular.module('tx.datavis')
 
         // UI
 
-        noLabels     : '=?'
+        noLabels: '=?'
       },
       link    : function postLink (scope, element, attrs) {
 
@@ -199,7 +199,8 @@ angular.module('tx.datavis')
               colCount           = container.col_count,
               rowCount           = wellCount / colCount,
               wellSpacing        = 2,
-              wellRadius         = ( width - (colCount * wellSpacing) ) / colCount / 2,
+              wellRadiusCalc     = ( width - (colCount * wellSpacing) ) / colCount / 2,
+              wellRadius         = (wellRadiusCalc > height / 2) ? (height/2) : wellRadiusCalc,
               wellArray          = WellConv.createArrayGivenBounds([0, 1], [rowCount - 1, colCount]),
               transitionDuration = 200;
 
@@ -237,7 +238,7 @@ angular.module('tx.datavis')
             .duration(transitionDuration)
             .attr({
               "cx": function (d, i) {
-                return Math.floor(i % colCount) * ( (wellRadius * 2) + wellSpacing ) + wellRadius
+                return (wellCount == 1) ? (width / 2) : (Math.floor(i % colCount) * ( (wellRadius * 2) + wellSpacing ) + wellRadius);
               },
               "cy": function (d, i) {
                 return Math.floor(i / colCount) * ( (wellRadius * 2) + wellSpacing ) + wellRadius
@@ -266,7 +267,7 @@ angular.module('tx.datavis')
           //check conditions for showing groups, otherwise show data
           if (!_.isEmpty(scope.groupData) && ( scope.preferGroups || _.isEmpty(scope.plateData))) {
             //reorder to map so lookup is fast
-            var groupMap = {},
+            var groupMap  = {},
                 groupData = _.isArray(scope.groupData) ? scope.groupData : [scope.groupData];
 
             _.forEach(groupData, function (group) {
