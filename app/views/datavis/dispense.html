@@ -1,0 +1,20 @@
+<div ng-controller="resultsDispenseCtrl as dispCtrl"
+        ng-init="containerType = dispCtrl.getContainerTypeFromContainerField('object');
+                 colvols = dispCtrl.getFieldValFromName('columns');
+                 groupData = dispCtrl.getWellsFromColVols('columns', 'object');">
+
+  Dispense {{dispCtrl.getFieldValFromName('reagent')}} to {{dispCtrl.getFieldValFromName('object')}}
+  <tx-plate container="containerType"
+            no-brush="true"
+            no-select="true"
+            group-data="groupData">
+  </tx-plate>
+
+  <p ng-init=""
+     ng-repeat="colvol in colvols">
+    Columns
+    <span ng-repeat="col in colvol.columns" ng-bind="col + ($last ? '' : ', ')"></span>
+    -
+    <span ng-bind="dispCtrl.readableVolume(colvol.volume)"></span>
+  </p>
+</div>

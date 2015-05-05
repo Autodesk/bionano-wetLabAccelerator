@@ -16,6 +16,8 @@ angular.module('transcripticApp')
 
       'mix' : 'mix',
 
+      'dispense' : 'dispense',
+
       'absorbance' : 'spectrophotometry',
       'fluorescence' : 'spectrophotometry',
       'luminescence' : 'spectrophotometry',
