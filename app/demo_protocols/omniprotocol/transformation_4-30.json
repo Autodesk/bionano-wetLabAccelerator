@@ -529,22 +529,8 @@
               "type": "columnVolumes",
               "singleContainer": true,
               "value": [
-                {
-                  "column": 0,
-                  "volume": {
-                    "unit": "microliter",
-                    "value": 200
-                  }
-                },
-                {
-                  "column": 1,
-                  "volume": {
-                    "unit": "microliter",
-                    "value": 200
-                  }
-                },
-                {
-                  "column": 2,
+                {u
+                  "columns": [0, 1, 2],
                   "volume": {
                     "unit": "microliter",
                     "value": 200
@@ -602,21 +588,7 @@
               "singleContainer": true,
               "value": [
                 {
-                  "column": 3,
-                  "volume": {
-                    "unit": "microliter",
-                    "value": 200
-                  }
-                },
-                {
-                  "column": 4,
-                  "volume": {
-                    "unit": "microliter",
-                    "value": 200
-                  }
-                },
-                {
-                  "column": 5,
+                  "columns": [3,4,5],
                   "volume": {
                     "unit": "microliter",
                     "value": 200
@@ -674,7 +646,7 @@
               "singleContainer": true,
               "value": [
                 {
-                  "column": 6,
+                  "columns": [6],
                   "volume": {
                     "unit": "microliter",
                     "value": 200

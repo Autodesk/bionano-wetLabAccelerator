@@ -220,10 +220,11 @@ angular.module('tx.datavis')
 
         //voronoi setup
 
+        var voronoiBuffer = 10;
         var voronoi = d3.geom.voronoi()
           .x(function (d) { return d.scaled.x; })
           .y(function (d) { return d.scaled.y; })
-          .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
+          .clipExtent([[-voronoiBuffer, -voronoiBuffer], [width + voronoiBuffer, height + voronoiBuffer]]);
 
         var voronoiGroup = chart.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
