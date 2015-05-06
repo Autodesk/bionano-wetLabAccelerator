@@ -1,0 +1,23 @@
+[ng-click] {
+  cursor: pointer;
+}
+
+[contenteditable] {
+  cursor: pointer;
+}
+
+.drag-handle {
+  cursor: all-scroll;
+}
+
+.drop-hover {
+  border-bottom: 2px solid $accent;
+}
+
+.dragover {
+  background: $success;
+}
+
+.dragover-err {
+  background: $error;
+}

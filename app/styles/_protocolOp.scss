@@ -1,0 +1,63 @@
+tx-protocol-op {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 5px .50em;
+  background: transparentize($white, .5);
+
+  .operation-name {
+    color:$black;
+    cursor: all-scroll;
+    width: 100%;
+    padding: 3px 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .operation-label {
+
+    &.optional {
+      opacity: 0.75;
+    }
+  }
+
+  .operation-field {
+    width: 100%;
+  }
+
+  table {
+    border-spacing: 5px 10px;
+    margin: 0;
+    tr {
+      td {
+      &:first-child {
+        text-align: right;
+        color: $black;
+      }
+      &:last-child {
+        text-align: left;
+      }
+      }
+    }
+
+  }
+
+  &:after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-top-color: rgba(255,255,255,0.5);
+    border-width: 10px;
+    margin-left: -15px;
+  }
+
+  .open {
+    background: $white;
+  }
+}

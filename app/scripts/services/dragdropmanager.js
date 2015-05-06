@@ -10,13 +10,10 @@
 angular.module('transcripticApp')
   .service('DragDropManager', function (Omniprotocol) {
     this.groupFromOp = function (op) {
-      var opKey  = op.operation,
-          opInfo = Omniprotocol.operations[opKey];
-
       return _.extend(Omniprotocol.utils.wrapOpInGroup(op), {
-        name    : opInfo.name,
+        name    : '',
         metadata: {
-          description: opInfo.description
+          description: ''
         }
       });
     };

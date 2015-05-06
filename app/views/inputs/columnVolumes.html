@@ -4,9 +4,11 @@
   <div ng-repeat="colvol in fieldCtrl.model">
     <table>
       <tr>
-        <td class="operation-label">column (0-indexed)</td>
+        <td class="operation-label">columns (comma-sep, 0-indexed)</td>
         <td>
-          <input type="number" min="0" max="15" ng-model="colvol.column">
+          <input type="text"
+                 ng-list
+                 ng-model="colvol.columns">
         </td>
       </tr>
       <tr>

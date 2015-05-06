@@ -1,0 +1,22 @@
+.pre-scrollable {
+  display: none;
+  position: fixed;
+  right: 0;
+  top: 50px;
+  min-height: 100vh;
+  background-color: $bg-modal;
+  color: $white;
+  overflow-x: scroll;
+  overflow-y: scroll;
+
+  &.open {
+    display: block;
+    max-width: 50%;
+    z-index: 1000;
+  }
+  pre {
+    background: $bg-modal;
+    color: $white;
+    border: none;
+  }
+}

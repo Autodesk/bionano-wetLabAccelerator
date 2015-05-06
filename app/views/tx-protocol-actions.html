@@ -18,7 +18,6 @@
     </button>
     <button class="btn btn-default btn-sm"
             ng-disabled="actionCtrl.protocolForm.$error.json"
-            ng-class="{'btn-info' : actionCtrl.protocolForm.$dirty}"
             ng-click="actionCtrl.saveProtocol()"
             tooltip="Save Protocol"
             tooltip-append-to-body="true">
@@ -28,7 +27,7 @@
   <div class="btn-group">
     <button class="btn btn-default btn-sm"
             ng-click="showJSON = true"
-            tooltip="View JSON"
+            tooltip="View Protocol JSON"
             tooltip-append-to-body="true">
       <span class="glyphicon glyphicon-console"></span>
     </button>

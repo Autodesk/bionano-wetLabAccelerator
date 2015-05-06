@@ -220,10 +220,11 @@ angular.module('tx.datavis')
 
         //voronoi setup
 
+        var voronoiBuffer = 10;
         var voronoi = d3.geom.voronoi()
           .x(function (d) { return d.scaled.x; })
           .y(function (d) { return d.scaled.y; })
-          .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
+          .clipExtent([[-voronoiBuffer, -voronoiBuffer], [width + voronoiBuffer, height + voronoiBuffer]]);
 
         var voronoiGroup = chart.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -316,6 +317,7 @@ angular.module('tx.datavis')
             .attr('class', 'line');
 
           //UPDATE - only updated values
+          //note - we are actually changing the values when do this (i.e. this variable is exposed outside the scope of this directive)
           series.transition().attr('d', function (d) {
             _.map(d.values, function (val) {
               val.line = this;

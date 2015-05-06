@@ -108,8 +108,6 @@ angular.module('tx.protocolEditor')
             type    = _.result(scope.fieldCtrl.field, 'type');
             partial = type;                 //default, maybe handled differently in if/else
 
-            console.log(partial);
-
             //Special handling before we get the appropriate template
 
             // handle all dimensional values the same way

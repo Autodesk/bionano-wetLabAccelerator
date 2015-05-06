@@ -75,7 +75,19 @@
               "value": [
                 {
                   "container": "growth_plate",
+                  "well": "A1"
+                },
+                {
+                  "container": "growth_plate",
                   "well": "A2"
+                },
+                {
+                  "container": "growth_plate",
+                  "well": "B1"
+                },
+                {
+                  "container": "growth_plate",
+                  "well": "B2"
                 }
               ]
             },
@@ -88,6 +100,18 @@
                 {
                   "container": "ecoli_container",
                   "well": "A1"
+                },
+                {
+                  "container": "ecoli_container",
+                  "well": "A2"
+                },
+                {
+                  "container": "ecoli_container",
+                  "well": "A3"
+                },
+                {
+                  "container": "ecoli_container",
+                  "well": "A4"
                 }
               ]
             },

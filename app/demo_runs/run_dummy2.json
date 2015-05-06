@@ -16,7 +16,7 @@
     "success" : true,
     "description": "Run of protocol Digesting protocol"
   },
-  "parameters": [],
+  "protocol": {},
   "data" : {
     "todo" : "todo"
   }

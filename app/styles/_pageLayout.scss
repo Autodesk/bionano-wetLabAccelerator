@@ -1,0 +1,100 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content:center;
+  background: radial-gradient(at bottom right,#CCCCCC,#FFFFFF);
+
+  &:before {
+    content: " ";
+    background-image: url('/images/app-bg-big.png');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    opacity: 0.9;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+  }
+
+  header {
+    width: 100%;
+    align-self: flex-start;
+  }
+
+  main {
+    flex-grow: 1;
+    align-self: center;
+  }
+
+  .container {
+    width: 960px; // for now, keep at 960 (not responsive)
+    margin: auto auto;
+    padding: 0 10px;
+  }
+
+  footer {
+    width: 100%;
+    align-self: flex-end;
+  }
+}
+
+.flex-child,
+.flex-horizontal,
+.flex-vertical {
+  display: flex;
+  align-items: stretch;
+}
+
+.flex-horizontal {
+  flex-direction: row;
+}
+
+.flex-vertical {
+  flex-direction: column;
+}
+
+.flex-grower {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.flex-align-end {
+  align-self: flex-end;
+}
+
+.flex-align-start {
+  align-self: flex-start;
+}
+
+.flex-align-center {
+  align-self: center;
+}
+
+.scroll-y {
+  overflow-y: scroll;
+}
+
+.scroll-x {
+  overflow-x: scroll;
+}
+
+.maxout-scroll-vertical {
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
+.sidepanel {
+  min-width: 15%;
+  max-width: 30%;
+  margin: 25px 15px 0 15px;
+}
+
+.maincolumn {
+  min-width: 60%;
+  max-width: 70%;
+  margin: 25px 15px 0 15px;
+}

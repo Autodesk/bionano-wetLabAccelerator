@@ -27,7 +27,7 @@ angular.module('tx.datavis')
 
     var colors = {
       empty   : {
-        r: 255, g: 255, b: 255, a: 1
+        r: 240, g: 240, b: 240, a: 1
       },
       disabled: {
         r: 0, g: 0, b: 0, a: 0.1
@@ -44,18 +44,31 @@ angular.module('tx.datavis')
     return {
       restrict: 'E',
       scope   : {
-        container    : '=',  //shortname (key of ContainerOptions),
-        plateData    : '=',  //data as defined above
+        container: '=',  //shortname (key of ContainerOptions)
+
+        //data
+
+        plateData   : '=?',  //data as defined above
+        groupData   : '=?', //array of groups with fields name, wells (alphanums) array or 'all', color (as string). if omitted, default to plateData, and preferGroups is ignored. Can be single object
+        preferGroups: '=?', //if both plateData and groups are defined, true gives group coloring priority
+
+        //interation
+
+        noSelect     : '=?', //prevent selection of wells
         noBrush      : '=',  //boolean - prevent brush for selection, use clicks instead
-        selectPersist: '=',  //boolean - allow selections to persist across one brush / click
-        onHover      : '&',  //returns array of selected wells
-        onSelect     : '&',  //returns array of selected wells
+        selectPersist: '=?',  //boolean - allow selections to persist across one brush / click
+
+        //bindings
+
+        onHover      : '&?',  //returns array of selected wells
+        onSelect     : '&?',  //returns array of selected wells
         selectedWells: '=?', //out-binding for selected wells. use wellsInput for changes in. todo - deprecate
         wellsInput   : '=?', //in-binding for selected wells. use selectedWells for changes out.
-        groupData    : '=?', //array of groups with fields name, wells (alphanums), color (as string). if omitted, default to plateData, and preferGroups is ignored.
-        preferGroups : '=?', //if both plateData and groups are defined, true gives group coloring priority
         focusWells   : '=?', //focus wells by shrinking others,
-        noLabels     : '=?'
+
+        // UI
+
+        noLabels: '=?'
       },
       link    : function postLink (scope, element, attrs) {
 
@@ -65,6 +78,11 @@ angular.module('tx.datavis')
           element.toggleClass('no-labels', !!hiding);
         });
 
+        scope.$watch('noSelect', function (hiding) {
+          element.toggleClass('no-select', !!hiding);
+        });
+
+        //todo - perf - move to a watchGroup
         scope.$watch('container', _.partial(rerender, true));
         scope.$watch('plateData', _.partial(rerender, false));
         scope.$watch('groupData', _.partial(rerender, false));
@@ -113,7 +131,13 @@ angular.module('tx.datavis')
           .attr("width", "100%")
           .attr("height", "100%")
           .attr("viewBox", "0 0 " + full.width + " " + full.height)
-          .attr("preserveAspectRatio", "xMinYMin meet");
+          .attr("preserveAspectRatio", "xMidYMid meet");
+
+        scope.$watch(function () {
+          return element[0].offsetWidth;
+        }, function (newWidth) {
+          svg.attr('height', (newWidth / full.width) * full.height);
+        });
 
         var wellsSvg = svg.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -182,7 +206,8 @@ angular.module('tx.datavis')
               colCount           = container.col_count,
               rowCount           = wellCount / colCount,
               wellSpacing        = 2,
-              wellRadius         = ( width - (colCount * wellSpacing) ) / colCount / 2,
+              wellRadiusCalc     = ( width - (colCount * wellSpacing) ) / colCount / 2,
+              wellRadius         = (wellRadiusCalc > height / 2) ? (height/2) : wellRadiusCalc,
               wellArray          = WellConv.createArrayGivenBounds([0, 1], [rowCount - 1, colCount]),
               transitionDuration = 200;
 
@@ -220,7 +245,7 @@ angular.module('tx.datavis')
             .duration(transitionDuration)
             .attr({
               "cx": function (d, i) {
-                return Math.floor(i % colCount) * ( (wellRadius * 2) + wellSpacing ) + wellRadius
+                return (wellCount == 1) ? (width / 2) : (Math.floor(i % colCount) * ( (wellRadius * 2) + wellSpacing ) + wellRadius);
               },
               "cy": function (d, i) {
                 return Math.floor(i / colCount) * ( (wellRadius * 2) + wellSpacing ) + wellRadius
@@ -249,19 +274,24 @@ angular.module('tx.datavis')
           //check conditions for showing groups, otherwise show data
           if (!_.isEmpty(scope.groupData) && ( scope.preferGroups || _.isEmpty(scope.plateData))) {
             //reorder to map so lookup is fast
-            var groupMap = {};
-            _.forEach(scope.groupData, function (group) {
+            var groupMap  = {},
+                groupData = _.isArray(scope.groupData) ? scope.groupData : [scope.groupData];
+
+            _.forEach(groupData, function (group) {
               var color = group.color;
-              _.forEach(group.wells, function (well) {
-                groupMap[well] = color;
-              });
+              if (group.wells == 'all') {
+                groupMap = _.constant(color);
+              } else {
+                _.forEach(group.wells, function (well) {
+                  groupMap[well] = color;
+                });
+              }
             });
 
             changeWellColor(selection, groupMap, rgbaify(colors.disabled));
             scaleWellRadius(selection, {}, 1);
           } else if (!_.isEmpty(scope.plateData)) {
             //for changing radius of well
-            console.log(scope.plateData);
             scaleWellRadius(selection, _.mapValues(scope.plateData, 'value'), 0);
 
             /*//for changing fill of well
@@ -318,7 +348,7 @@ angular.module('tx.datavis')
         //should be mutually exclusive to brush - events won't go down anyway
         function wellOnClick () {
 
-          if (scope.noBrush) {
+          if (scope.noBrush && !scope.noSelect) {
 
             var $el         = d3.select(this),
                 wasSelected = $el.classed(classSelected);
@@ -342,7 +372,8 @@ angular.module('tx.datavis')
         /***** BRUSHING *****/
         // note that b/c pointer events, this competes with hovering etc. so we put it on top
 
-        if (!scope.noBrush) {
+        //todo - make this binding dynamic
+        if (!scope.noBrush && !scope.noSelect) {
           var brush = d3.svg.brush()
             .x(xScale)
             .y(yScale)
@@ -438,6 +469,7 @@ angular.module('tx.datavis')
         }
 
         function selectColumn (col) {
+          if (scope.noSelect) return;
           var rows      = yScale.domain().length - 1,
               parsedCol = parseInt(col, 10),
               wellMap   = WellConv.createMapGivenBounds([0, parsedCol], [rows, parsedCol]);
@@ -447,6 +479,7 @@ angular.module('tx.datavis')
         }
 
         function selectRow (row) {
+          if (scope.noSelect) return;
           var cols      = _.last(xScale.domain()),
               parsedRow = _.indexOf(WellConv.letters, row),
               wellMap   = WellConv.createMapGivenBounds([parsedRow, 0], [parsedRow, cols]);

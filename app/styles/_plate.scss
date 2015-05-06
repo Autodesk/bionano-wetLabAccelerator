@@ -1,0 +1,123 @@
+tx-plate {
+
+  $color-disabled: #aaaaaa;
+  $color-default: #dddddd;
+  $color-active: #d7ab34;
+  $color-add: $primary;
+  $color-remove: #dd263b;
+  $color-focused: #dd8888;
+  $color-hover: lighten($color-add, 15);
+
+  //defaults, can also define inline
+  display: block;
+  width: 600px;
+  height: auto;
+  //height: 425px;
+
+  svg {
+    display: inline-block;
+    background: $white;
+    box-shadow: $box-shadow-popover;
+    overflow: visible;
+  }
+
+  .axis {
+    path {
+      stroke: none;
+      fill: none;
+    }
+    line {
+      stroke: none;
+      fill: none;
+    }
+    text {
+      fill: #ccc;
+      font-size: $font-size-sm;
+    }
+  }
+
+  .well {
+    fill: transparent;
+    stroke-width: 0.5px;
+    stroke: transparentize($color-default, 1);
+    transition: stroke 0.15s ease-out, stroke-width 0.15s ease-out;
+
+    &:hover {
+      fill: $color-hover !important; //important to override inline-style use of color
+    }
+
+    //todo - brushing class
+
+    &.selected,
+    &.brushSelected {
+      stroke: $color-active;
+      stroke-width: 3px;
+    }
+
+    &.hidden {
+      fill: #ccc !important;
+    }
+
+    &.wellFocused {
+      fill: $color-focused !important;
+    }
+  }
+
+  &.brushing {
+    .well.brushActive {
+      stroke: $color-add;
+      stroke-width: 3px;
+    }
+
+    .well.brushActive.brushSelected {
+      stroke: $color-remove !important;
+    }
+  }
+
+  .extent {
+    fill: #000;
+    fill-opacity: .125;
+    stroke: #fff;
+  }
+
+  .wellTooltip div {
+    background: rgba(25, 25, 25, 0.75);
+    box-shadow: 0 0 2px rgba(25, 25, 25, 0.25);
+    border-radius: 6px;
+    text-align: center;
+    font-size: 12px;
+    height: 100%;
+    padding: 2px 4px;
+    color: white;
+  }
+
+  .plate-footer {
+    padding: 6px;
+    text-align: center;
+    font-size: $font-size-sm;
+    color: $grey;
+
+    span {
+      padding: 0 15px;
+      cursor: pointer;
+
+      &.disabled {
+        color: $light-grey;
+        cursor: default;
+      }
+    }
+  }
+
+  &.no-labels {
+    text,
+    .plate-footer {
+      display: none;
+    }
+  }
+
+  &.no-select {
+    .plate-footer {
+      display: none;
+    }
+  }
+}

@@ -1,48 +1,55 @@
-@import 'restyle/normalize';
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower
 
-@import 'restyle/variables';
-@import 'restyle/mixins';
-@import 'restyle/utilities';
-@import 'restyle/foundation';
+@import 'normalize';
+
+@import 'variables';
+@import 'mixins';
+@import 'utilities';
+@import 'foundation';
 
 //layout
 
-@import 'restyle/pageLayout';
-@import 'restyle/header';
-@import 'restyle/footer';
-@import 'restyle/gallery';
+@import 'pageLayout';
+@import 'header';
+@import 'footer';
+@import 'contentMenu';
 
-@import 'restyle/results';
-@import 'restyle/galleryPage';
+@import 'results';
+@import 'galleryPage';
 
 //decorators
 
-@import 'restyle/resizeable';
-@import 'restyle/interactions';
+@import 'resizeable';
+@import 'interactions';
 
 //components
 
-@import 'restyle/angularStyles';
-@import 'restyle/jsonEditor';
-@import 'restyle/glyphiconShapes';
-@import 'restyle/btnLabeled';
-@import 'restyle/modal';
+@import 'angularStyles';
+@import 'jsonEditor';
+@import 'glyphiconShapes';
+@import 'btnLabeled';
+@import 'modal';
+@import 'corner';
 
 //datavis
 
-@import 'restyle/plate';
-@import 'restyle/welltip';
-@import 'restyle/plategraph';
+@import 'plate';
+@import 'plateWrap';
+@import 'welltip';
+@import 'plategraph';
 
 //protocol
 
-@import 'restyle/protocolHeader';
-@import 'restyle/protocolEditor';
-@import 'restyle/protocolSlider';
-@import 'restyle/protocolGroup';
-@import 'restyle/protocolOp';
-@import 'restyle/protocolField';
-@import 'restyle/protocolResponse';
-@import 'restyle/protocolSetup';
-@import 'restyle/protocolMini';
-@import 'restyle/welltip';
+@import 'protocolHeader';
+@import 'protocolEditor';
+@import 'protocolSlider';
+@import 'protocolGroup';
+@import 'protocolOp';
+@import 'protocolField';
+@import 'protocolResponse';
+@import 'protocolSetup';
+@import 'protocolMini';
+@import 'welltip';

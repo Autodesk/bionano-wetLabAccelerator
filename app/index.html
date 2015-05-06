@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width">
 
     <!-- Roboto Font -->
-    <link href='http://fonts.googleapis.com/css?family=Roboto:700,300,300italic,400,400italic'
+    <!--<link href='http://fonts.googleapis.com/css?family=Roboto:700,300,300italic,400,400italic'
           rel='stylesheet'
-          type='text/css'>
+          type='text/css'>-->
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
@@ -17,7 +17,6 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/build.css">
     <!-- endbuild -->
   </head>
@@ -32,12 +31,12 @@
         </div>
         <nav>
           <ul>
-            <li><a ng-href="#/protocol">DESIGN</a></li>
-            <li><a ng-href="#/testing/restyle">BUILD</a></li>
-            <li><a ng-href="#/data">TEST</a></li>
+            <li><a ng-href="#/gallery">DESIGN</a></li>
+            <li><a ng-href="#/build">BUILD</a></li>
+            <li><a ng-href="#/results">TEST</a></li>
           </ul>
         </nav>
-        <div class="user">
+        <div class="user" ng-cloak>
           <a href="#/auth">
             <span class="glyphicon glyphicon-user"></span>
             <span ng-hide-auth>Sign In</span>
@@ -49,14 +48,14 @@
 
     </header>
 
-    <tx-gallery></tx-gallery>
+    <tx-content-menu></tx-content-menu>
 
     <main ng-view
           class="container flex-vertical"></main>
 
     <footer>
       <div class="status">
-        <tx-inspector inspect="currentlySelected"></tx-inspector>
+        <tx-inspector></tx-inspector>
       </div>
       <div class="logo-company">
         <img src="images/logo-text.png">
@@ -90,12 +89,11 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
-    <script src="bower_components/angular-ui-sortable/sortable.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
     <script src="bower_components/firebase/firebase.js"></script>
     <script src="bower_components/angularfire/dist/angularfire.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
     <!-- endbower -->
     <script src="bower_components/lodash/lodash.js"></script>
     <!-- endbuild -->
@@ -105,18 +103,23 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/dashboard.js"></script>
-    <script src="scripts/controllers/protocol.js"></script>
-    <script src="scripts/controllers/data.js"></script>
+
+    <!-- CONTROLLERS -->
     <script src="scripts/controllers/firebaselogin.js"></script>
-    <script src="scripts/controllers/ordering.js"></script>
-    <script src="scripts/controllers/order.js"></script>
-    <script src="scripts/controllers/pipette.js"></script>
+    <script src="scripts/controllers/build.js"></script>
+    <script src="scripts/controllers/results.js"></script>
+    <script src="scripts/controllers/gallery.js"></script>
+    <!--fields-->
     <script src="scripts/controllers/gel_separate.js"></script>
+    <script src="scripts/controllers/thermocycledyes.js"></script>
+    <!-- results page -->
+    <script src="scripts/controllers/results/resultsspectrophotometry.js"></script>
+    <script src="scripts/controllers/results/resultspipette.js"></script>
+    <!--testing-->
     <script src="scripts/controllers/testing/plate.js"></script>
-    <script src="scripts/controllers/testing/restyle.js"></script>
-    <script src="scripts/controllers/testing/dottest.js"></script>
-    <script src="scripts/controllers/testing/conversion.js"></script>
+
+    <!-- VALUES -->
+    <!-- todo - cleanup -->
     <script src="scripts/values/instructions.js"></script>
     <script src="scripts/values/dimensionOptions.js"></script>
     <script src="scripts/values/storageOptions.js"></script>
@@ -125,7 +128,20 @@
     <script src="scripts/values/dyeoptions.js"></script>
     <script src="scripts/values/geloptions.js"></script>
     <script src="scripts/values/oligoOptions.js"></script>
+
+    <!-- SERVICES -->
     <script src="scripts/services/simplelogin.js"></script>
+    <script src="scripts/services/omniprotocolService.js"></script>
+    <script src="scripts/services/autoprotocolService.js"></script>
+    <script src="scripts/services/wellconv.js"></script>
+    <script src="scripts/services/dataconv.js"></script>
+    <script src="scripts/services/dragdropmanager.js"></script>
+    <script src="scripts/services/containerhelper.js"></script>
+    <script src="scripts/services/protocolhelper.js"></script>
+    <script src="scripts/services/runhelper.js"></script>
+    <script src="scripts/services/uuidgen.js"></script>
+    <script src="scripts/services/authentication.js"></script>
+    <!-- transcriptic communication -->
     <script src="scripts/services/comm/_kickoff.js"></script>
     <script src="scripts/services/comm/auth.js"></script>
     <script src="scripts/services/comm/communication.js"></script>
@@ -135,66 +151,54 @@
     <script src="scripts/services/comm/data.js"></script>
     <script src="scripts/services/comm/order.js"></script>
     <script src="scripts/services/comm/mailing.js"></script>
-    <script src="scripts/services/omniprotocolService.js"></script>
-    <script src="scripts/services/autoprotocolService.js"></script>
-    <script src="scripts/services/wellconv.js"></script>
-    <script src="scripts/services/dataconv.js"></script>
+
+    <!-- FILTERS -->
     <script src="scripts/filters/capfirst.js"></script>
     <script src="scripts/filters/arrayify.js"></script>
-    <script src="scripts/directives/formHelpers/contenteditable.js"></script>
-    <script src="scripts/directives/formHelpers/jsoneditor.js"></script>
-    <script src="scripts/directives/formHelpers/autogrow.js"></script>
-    <script src="scripts/directives/simple-sticky.js"></script>
-    <script src="scripts/directives/resizeable.js"></script>
-    <script src="scripts/directives/btn-delete.js"></script>
-    <script src="scripts/directives/inputs/tx-container.js"></script>
-    <script src="scripts/directives/inputs/tx-measure.js"></script>
-    <script src="scripts/directives/inputs/tx-well.js"></script>
-    <script src="scripts/directives/inputs/tx-inputwrap.js"></script>
-    <script src="scripts/directives/inputs/tx-boolean.js"></script>
-    <script src="scripts/directives/inputs/tx-dataref.js"></script>
-    <script src="scripts/directives/inputs/tx-mixwrap.js"></script>
-    <script src="scripts/directives/tx-refs.js"></script>
-    <script src="scripts/directives/tx-instruction.js"></script>
-    <script src="scripts/directives/tx-protocol.js"></script>
-    <script src="scripts/directives/tx-gallery.js"></script>
-    <script src="scripts/directives/tx-modal.js"></script>
-    <script src="scripts/directives/tx-run.js"></script>
-    <script src="scripts/directives/tx-order.js"></script>
-    <script src="scripts/directives/tx-projectlist.js"></script>
-    <script src="scripts/directives/tx-downloadjson.js"></script>
+
+    <!-- DIRECTIVES -->
+    <!-- results / datavis -->
     <script src="scripts/directives/datavis/_kickoff.js"></script>
     <script src="scripts/directives/datavis/tx-wellplate.js"></script>
     <script src="scripts/directives/datavis/tx-plate.js"></script>
     <script src="scripts/directives/datavis/tx-timepointgraph.js"></script>
     <script src="scripts/directives/datavis/tx-welltip.js"></script>
     <script src="scripts/directives/datavis/tx-protocol-mini.js"></script>
+    <!-- editor -->
+    <script src="scripts/directives/formHelpers/contenteditable.js"></script>
+    <script src="scripts/directives/formHelpers/jsoneditor.js"></script>
+    <script src="scripts/directives/formHelpers/autogrow.js"></script>
     <script src="scripts/directives/protocolEditor/_kickoff.js"></script>
     <script src="scripts/directives/protocolEditor/tx-requestresponse.js"></script>
     <script src="scripts/directives/protocolEditor/tx-operation-list.js"></script>
     <script src="scripts/directives/protocolEditor/tx-protocol-editor.js"></script>
     <script src="scripts/directives/protocolEditor/tx-protocol-op.js"></script>
     <script src="scripts/directives/protocolEditor/tx-protocol-group.js"></script>
-    <script src="scripts/directives/protocolEditor/tx-inspector.js"></script>
     <script src="scripts/directives/protocolEditor/tx-protocol-actions.js"></script>
     <script src="scripts/directives/protocolEditor/tx-protocol-field.js"></script>
     <script src="scripts/directives/protocolEditor/tx-container-select.js"></script>
     <script src="scripts/directives/protocolEditor/tx-protocol-setup.js"></script>
+    <script src="scripts/directives/protocolEditor/tx-protocol-field-variable.js"></script>
+    <!--various-->
+    <script src="scripts/directives/simple-sticky.js"></script>
+    <script src="scripts/directives/resizeable.js"></script>
+    <script src="scripts/directives/btn-delete.js"></script>
+    <script src="scripts/directives/tx-modal.js"></script>
+    <script src="scripts/directives/tx-run.js"></script> <!--todo - rename to rundialog -->
+    <script src="scripts/directives/tx-content-menu.js"></script>
+    <script src="scripts/directives/tx-downloadjson.js"></script>
+    <script src="scripts/directives/tx-inspector.js"></script>
     <script src="scripts/directives/tx-inspector-select.js"></script>
-    <script src="scripts/controllers/thermocycledyes.js"></script>
-    <script src="scripts/controllers/testing/results.js"></script>
     <script src="scripts/directives/tx-operation-summary.js"></script>
     <script src="scripts/directives/tx-protocol-draggable.js"></script>
     <script src="scripts/directives/tx-protocol-droppable.js"></script>
-    <script src="scripts/services/dragdropmanager.js"></script>
-    <script src="scripts/services/containerhelper.js"></script>
-    <script src="scripts/services/protocolhelper.js"></script>
-    <script src="scripts/directives/tx-protocol-field-variable.js"></script>
     <script src="scripts/directives/tx-change-broadcaster.js"></script>
-    <script src="scripts/services/runhelper.js"></script>
     <script src="scripts/directives/tx-cred-transcriptic.js"></script>
-    <script src="scripts/services/uuidgen.js"></script>
-    <script src="scripts/services/authentication.js"></script>
+
+    <!-- uncategorized -->
+
+    <script src="scripts/controllers/resultsdispense.js"></script>
+    <script src="scripts/directives/tx-numbers-only.js"></script>
     <!-- endbuild -->
 </body>
 </html>

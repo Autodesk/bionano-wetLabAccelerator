@@ -1,0 +1,30 @@
+@import "variables";
+
+footer {
+  background: transparent;
+  text-align: center;
+  color: $grey;
+  font-size: $font-size;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  .status {
+    margin: 0 10px;
+    align-self: center;
+
+    tx-inspector {
+      max-height: 45px;
+    }
+  }
+
+  .logo-company {
+
+    img {
+      width: 91px;
+      height: 15px;
+      margin: $layout-spacing-lg;
+    }
+  }
+}

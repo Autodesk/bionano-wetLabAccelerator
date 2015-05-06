@@ -93,6 +93,18 @@ angular.module('tx.communication')
         view: Communication.defaultResourceActions({
           method: "GET",
           url: Communication.root + ":organization/:project/runs/:run"
+        }),
+
+        /**
+         * @name view
+         * @description Monitor the status of a run
+         * @param parameters {Object} with keys:
+         * project {String} Project ID
+         * run {String} Run ID
+         */
+        data: Communication.defaultResourceActions({
+          method: "GET",
+          url: Communication.root + ":organization/:project/runs/:run/data.json"
         })
       });
 
