@@ -16,9 +16,9 @@ ADD package.json $appFolder/package.json
 ADD app/scripts/omniprotocol $appFolder/app/scripts/omniprotocol
 RUN cd $appFolder; npm install
 
-#RUN npm install node-sass
-#RUN npm install -g grunt-cli
-#RUN npm install -g bower
+
+RUN npm install -g grunt-cli
+RUN npm install -g bower
 
 # RUN grunt serve
 
