@@ -1,67 +1,31 @@
 <div class="protocol-group-wrap"
+     ng-class="{'show-group':groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1}"
      tx-protocol-draggable="groupCtrl.optsDraggableGroup"
      tx-protocol-droppable="groupCtrl.optsDroppableGroup">
   <div class="protocol-group-header"
-       ng-click="groupCtrl.isCollapsed = !groupCtrl.isCollapsed">
-
+       ng-show="groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1;">
     <input class="group-name input-unstyled"
-           type="text"
-           auto-grow
+           type="text" auto-grow
            placeholder="Group Name"
-           ng-model="groupCtrl.group.name"
-           ng-click="$event.stopPropagation()">
-
-    <div dropdown is-open="showActions"
-         ng-click="$event.stopPropagation()">
-      <input class="group-repeat input-unstyled"
-             type="number"
-             placeholder="Repeat"
-             min="1"
-             max="100"
-             ng-model="groupCtrl.group.loop">
-      <span class="group-repeat"></span>
-      <span class="glyphicon glyphicon-cog"
-            ng-show="groupCtrl.isCollapsed"
-            ng-click="groupCtrl.toggleActionsMenu($event)"></span>
-
-      <ul class="dropdown-menu"
-          ng-show="groupCtrl.isCollapsed">
-        <li>
-          <a class="btn btn-danger"
-             ng-click="deleteGroup()">
-            Delete Group
-          </a>
-        </li>
-        <li><a ng-click="groupCtrl.toggleJsonEditing($event)">
-          Show JSON
-        </a></li>
-      </ul>
-    </div>
+           ng-model="groupCtrl.group.name">
+    <span class="group-repeat">
+      <input class="input-unstyled"
+             type="number" min="1" max="100"
+             tx-numbers-only
+             ng-model="groupCtrl.group.loop"/>
+    </span>
 
   </div>
-
-  <div class="protocol-group-main"
-       ng-show="groupCtrl.isCollapsed">
-    <p class="protocol-group-description" ng-bind="groupCtrl.group.metadata.description"></p>
+  <div class="protocol-group-main">
     <tx-protocol-op ng-repeat="step in groupCtrl.group.steps"
                     tx-protocol-draggable="groupCtrl.optsDraggableInstruction"
                     tx-protocol-droppable="groupCtrl.optsDroppableInstruction"
-                    protocol-step="groupCtrl.group.steps[$index]">
+                    protocol-step="groupCtrl.group.steps[$index]"
+                    tx-inspector-select
+                    select-trigger="mouseenter"
+                    select-title="step.operation || 'Unnamed'"
+                    select-type="'step:'"
+                    select-description="step.metadata.description">
     </tx-protocol-op>
-  </div>
-
-  <div class="protocol-group-footer">
-
-    <div class="protocol-group-footer-content"
-         ng-show="jsonEditing">
-       <pre json-editor
-            ng-if="jsonEditing"
-            contenteditable
-            json-editor-active="{{jsonEditing}}"
-            name="ProtocolGroupEditor"
-            ng-model="groupCtrl.group"
-            ng-model-options="{updateOn: 'blur'}"></pre>
-    </div>
-
   </div>
 </div>

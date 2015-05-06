@@ -17,16 +17,6 @@ footer {
     tx-inspector {
       max-height: 45px;
     }
-
-    span {
-
-      &:first-child{
-        content: ":";
-      }
-      &:last-child {
-        color: $warning;
-      }
-    }
   }
 
   .logo-company {
@@ -37,5 +27,4 @@ footer {
       margin: $layout-spacing-lg;
     }
   }
-
 }

@@ -3,7 +3,7 @@
                    tx-inspector-select
                    select-trigger="mouseenter"
                    select-title="'Setup'"
-                   select-type="'group:'"
+                   select-type="'step:'"
                    select-description="'Sets global parameters'"
                    ng-file-drop
                    ng-multiple="false"
@@ -23,7 +23,3 @@
                      protocol-group="group">
   </tx-protocol-group>
 </div>
-
-<pre class="pre-scrollable"
-     ng-bind="editorCtrl.protocol | json">
-</pre>

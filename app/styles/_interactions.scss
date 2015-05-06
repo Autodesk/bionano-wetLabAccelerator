@@ -11,13 +11,13 @@
 }
 
 .drop-hover {
-  background: red;
+  border-bottom: 2px solid $accent;
 }
 
 .dragover {
-  background: $error;
+  background: $success;
 }
 
 .dragover-err {
-  background: $success;
+  background: $error;
 }
