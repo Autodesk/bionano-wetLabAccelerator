@@ -278,9 +278,10 @@ angular.module('tx.datavis')
                 groupData = _.isArray(scope.groupData) ? scope.groupData : [scope.groupData];
 
             _.forEach(groupData, function (group) {
-              var color = group.color;
+              var color = _.result(group, 'color', rgbaify(colors.disabled));
               if (group.wells == 'all') {
                 groupMap = _.constant(color);
+                return false; //exit - this takes precedence
               } else {
                 _.forEach(group.wells, function (well) {
                   groupMap[well] = color;
@@ -463,9 +464,8 @@ angular.module('tx.datavis')
         }
 
         function changeWellColor (selection, valueMap, defaultColor) {
-          selection.style('fill', function (d) {
-            return _.result(valueMap, d, defaultColor);
-          });
+          var func = _.isFunction(valueMap) ? valueMap : _.partial(_.result, valueMap, _, defaultColor);
+          selection.style('fill', func);
         }
 
         function selectColumn (col) {
