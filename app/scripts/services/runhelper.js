@@ -136,7 +136,7 @@ angular.module('transcripticApp')
     function generateNewRunMetadata (protocol) {
       return {
         id      : UUIDGen(),
-        name    : 'Run of ' + _.result(protocol.metadata, 'name', 'CX1 Protocol'),
+        name    : 'Run of ' + _.result(protocol, 'metadata.name', 'CX1 Protocol'),
         date    : (new Date()).toString(),
         type    : 'run',
         author  : {
@@ -144,15 +144,15 @@ angular.module('transcripticApp')
           id  : Authentication.getUserId()
         },
         protocol: {
-          id    : protocol.metadata.id,
-          name  : protocol.metadata.name,
-          author: protocol.metadata.author
+          id    : _.result(protocol, 'metadata.id', null),
+          name  : _.result(protocol, 'metadata.name', null),
+          author: _.result(protocol, 'metadata.author', null)
         }
       }
     }
 
     function assignNecessaryMetadataToRun (runObj) {
-      return _.assign(runObj.metadata, generateNewRunMetadata(), runObj.metadata);
+      return _.assign(runObj.metadata, generateNewRunMetadata(runObj.protocol), runObj.metadata);
     }
 
     function hasNecessaryMetadataToSave (runObj) {
