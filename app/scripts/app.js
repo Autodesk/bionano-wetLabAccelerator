@@ -83,6 +83,11 @@ angular
         controller  : 'TestingPlateCtrl',
         controllerAs: 'testCtrl'
       })
+      .when('/testing/field', {
+        templateUrl: 'views/testing/field.html',
+        controller: 'TestingFieldCtrl',
+        controllerAs: 'testingFieldCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
