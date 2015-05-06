@@ -7,19 +7,20 @@
  * # txRun
  */
 angular.module('transcripticApp')
-  .directive('txRun', function ($q, $timeout, Auth, Autoprotocol, Omniprotocol, Run, Project, RunHelper) {
+  .directive('txRun', function ($q, $timeout, Auth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, RunHelper) {
     return {
       templateUrl     : 'views/tx-run.html',
       restrict        : 'E',
       scope           : {
-        protocol    : '=',
         protocolForm: '='
       },
       bindToController: true,
       controllerAs    : 'runCtrl',
       controller      : function ($scope, $element, $attrs) {
 
-        var self               = this;
+        var self = this;
+
+        self.protocol = ProtocolHelper.currentProtocol;
 
         self.projects = [];
 
@@ -28,14 +29,10 @@ angular.module('transcripticApp')
         });
 
         self.findProjectByname = function (projectName) {
-          return _.find(self.projects, _.matches({name : projectName}));
+          return _.find(self.projects, _.matches({name: projectName}));
         };
 
         // SUBMIT / ANALYZE RUNS
-
-        //todo - pending GH#175 - redesign of run dialog
-        //todo - this should be passed in from the list...
-        //todo - alternatively, we can just create a project behind the scenes and automatically name
 
         function resourceWrap (funcToRun, toModify) {
           angular.extend(toModify.config, {
