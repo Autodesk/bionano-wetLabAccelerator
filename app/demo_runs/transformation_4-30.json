@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "name": "Run Dummy Data",
+    "name": "Transformation 4/30",
     "id": "292983bac9e8dfa0913091309",
     "type" : "run",
     "date" : "1430006919149",
@@ -9,16 +9,21 @@
       "id": "20b2c28d023708ac0923"
     },
     "protocol" : {
-      "name" : "Digesting protocol",
+      "name" : "simpleTransform1",
       "author" : "20b2c28d023708ac0923",
       "id" : "24289898aced8af81c0b303"
     },
     "success" : true,
     "description": "Run of protocol Digesting protocol"
   },
+  "transcripticRunId" : "r17pgsuczjbcx",
+  "transcripticProjectId" : "p17pgd7vm554k",
   "protocol": {
-    "name": "simpleTransform1",
-    "metadata": {},
+    "metadata": {
+      "name" : "simpleTransform1",
+      "author" : "20b2c28d023708ac0923",
+      "id" : "24289898aced8af81c0b303"
+    },
     "parameters": [
       {
         "name": "ecoli_container",
