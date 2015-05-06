@@ -32,15 +32,16 @@
                      field="field">
   </tx-protocol-field>
 </div>
-<div class="pre-scrollable"
-     ng-class="{'open' : jsonEditing}"
-     ng-mouseleave="jsonEditing = !jsonEditing"> <!--Temporary, until close button is incorporated -->
-     <pre json-editor
-          ng-if="jsonEditing"
-          contenteditable
-          json-editor-active="{{jsonEditing}}"
-          name="ProtocolStepEditor"
-          ng-model="opCtrl.op"
-          ng-model-options="{updateOn: 'blur'}">
-     </pre>
+<div class="pre-scrollable modal-background"
+     ng-class="{'open' : jsonEditing}">
+  <span class="modal-close"
+        ng-click="jsonEditing = false">&times</span>
+  <pre json-editor
+      ng-if="jsonEditing"
+      contenteditable
+      json-editor-active="{{jsonEditing}}"
+      name="ProtocolStepEditor"
+      ng-model="opCtrl.op"
+      ng-model-options="{updateOn: 'blur'}">
+  </pre>
 </div>

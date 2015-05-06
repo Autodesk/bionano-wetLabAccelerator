@@ -7,6 +7,12 @@
   height:100%;
   background:transparentize($white,.5);
 }
+
+.modal-background {
+  color: $white;
+  background-color: $bg-modal;
+}
+
 .modal-dialog {
   z-index:10000;
   position: fixed;
@@ -22,19 +28,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: $white;
-  background-color: $bg-modal;
 
-  .modal-dialog-content {
-    padding:1px;
-    text-align: left;
-  }
-  .modal-close {
-    position: absolute;
-    top: 0;
-    right: 5px;
-    cursor: pointer;
-    font-size: 150%;
-    font-weight: bold;
-  }
+  @extend .modal-background;
+}
+
+.modal-dialog-content {
+  padding:1px;
+  text-align: left;
+}
+.modal-close {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  cursor: pointer;
+  font-size: 150%;
+  font-weight: bold;
 }

@@ -48,12 +48,14 @@
         border-radius: 10px;
         input {
           text-align: right;
+          width: 25px;
         }
         &:after {
           content: 'x';
+          font-size: 11px;
           cursor: none;
           position: relative;
-          left: -15%;
+          left: -5px;
         }
 
         &:hover {

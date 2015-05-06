@@ -140,10 +140,6 @@ angular.module('tx.protocolEditor')
         scope.deleteGroup = function () {
           editorCtrl.deleteGroup(scope.groupCtrl.group);
         };
-
-        scope.$on('editor:toggleGroupVisibility', function (e, val) {
-          scope.groupCtrl.isCollapsed = !!val;
-        });
       }
     };
   });

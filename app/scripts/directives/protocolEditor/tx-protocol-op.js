@@ -50,6 +50,10 @@ angular.module('tx.protocolEditor')
         scope.deleteStep = function () {
           groupCtrl.deleteStep(scope.opCtrl.op);
         };
+
+        scope.$on('editor:toggleGroupVisibility', function (e, val) {
+          scope.opCtrl.isCollapsed = !!val;
+        });
       }
     };
   });
