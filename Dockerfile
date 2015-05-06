@@ -1,6 +1,8 @@
 FROM ubuntu:14.04
 MAINTAINER Dion Whitehead Amago <dion.amago@autodesk.com>
 
+ENV PORT 8000
+
 ENV appFolder /cx1
 
 RUN apt-get update
@@ -26,8 +28,7 @@ RUN bower install --allow-root
 
 # RUN grunt serve
 
-EXPOSE 9000
-ENV PORT=9000
+EXPOSE $PORT
 
 ADD . $appFolder
 
