@@ -9,6 +9,7 @@
 <div ng-if="showingPlates">
   <tx-plate ng-show="fieldCtrl.containerType"
             container="fieldCtrl.containerType"
+            group-data="{'name' : fieldCtrl.containerName, wells: 'all', color: fieldCtrl.containerColor}"
             no-brush="!fieldCtrl.aliquotMultiple"
             select-persist="fieldCtrl.aliquotMultiple"
             on-select="fieldCtrl.handleAliquotSelection($wells)"
