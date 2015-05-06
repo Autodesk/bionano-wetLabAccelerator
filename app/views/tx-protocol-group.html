@@ -19,7 +19,7 @@
     <tx-protocol-op ng-repeat="step in groupCtrl.group.steps"
                     tx-protocol-draggable="groupCtrl.optsDraggableInstruction"
                     tx-protocol-droppable="groupCtrl.optsDroppableInstruction"
-                    protocol-step="step"
+                    protocol-step="groupCtrl.group.steps[$index]"
                     tx-inspector-select
                     select-trigger="mouseenter"
                     select-title="step.operation || 'Unnamed'"

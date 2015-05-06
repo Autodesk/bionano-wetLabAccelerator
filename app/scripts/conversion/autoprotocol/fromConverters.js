@@ -43,12 +43,14 @@ converterField.aliquot = _.flow(autoUtils.flattenAliquots, _.first);
 converterField['aliquot+'] = autoUtils.flattenAliquots;
 
 converterField.columnVolumes = function (input) {
-  return _.map(input, function (colVol) {
-    return {
-      column: colVol.column,
-      volume: convertDimensionalWithDefault(colVol.volume, {unit : 'microliter', value: '100'})
-    };
-  });
+  return _.flatten(_.map(input, function (colVol) {
+    return _.map(colVol.columns, function (col) {
+      return {
+        column: col,
+        volume: convertDimensionalWithDefault(colVol.volume, {unit : 'microliter', value: '100'})
+      };
+    });
+  }));
 };
 
 converterField.thermocycleGroup = function (input, fieldObj) {

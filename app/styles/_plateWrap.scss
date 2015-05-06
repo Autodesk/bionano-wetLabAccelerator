@@ -1,0 +1,45 @@
+.plate-wrap {
+
+  &-seal,
+  &-cover,
+  &-uncover,
+  &-unseal {
+    background-color: $black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    z-index: initial;
+
+    tx-plate {
+      opacity: 0.75;
+      z-index: -1;
+      line-height: 0; //weird hack to prevent bottom black border
+    }
+  }
+
+  &-seal,
+  &-cover {
+    padding: 10px;
+    border: 10px solid $black;
+    border-radius: 10px;
+  }
+
+  //todo - overlay images
+
+  &-seal {
+    background-image: url('../images/seal.png');
+    width: 100%;
+    height: 100%;
+  }
+
+  &-unseal {
+
+  }
+
+  &-uncover {
+    background-image: url('../images/uncover.png');
+
+    width: 100%;
+    height: 100%;
+  }
+}

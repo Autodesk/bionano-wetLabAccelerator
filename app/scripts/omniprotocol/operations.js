@@ -245,7 +245,7 @@ module.exports = {
           "name"   : "reagent",
           "type"   : "option",
           "options": optionEnums.reagents.dispense,
-          "value"  : "lb-broth-noAB"
+          "default"  : "lb-broth-noAB"
         },
         {
           "name"           : "columns",

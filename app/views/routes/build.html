@@ -16,15 +16,31 @@
         </thead>
         <tr>
           <td>Name</td>
-          <td><span contenteditable="true" ng-model="restyleCtrl.currentProtocol.metadata.name"></span></td>
+          <td>
+            <input type="text"
+                   class="input-unstyled protocol-metadata-field"
+                   contenteditable="true"
+                   ng-model="restyleCtrl.currentProtocol.metadata.name">
+          </td>
         </tr>
         <tr>
           <td>Description</td>
-          <td><span contenteditable="true" ng-model="restyleCtrl.currentProtocol.metadata.description"></span></td>
+          <td>
+            <input type="text"
+                   class="input-unstyled protocol-metadata-field"
+                   contenteditable="true"
+                   ng-model="restyleCtrl.currentProtocol.metadata.description">
+          </td>
         </tr>
         <tr>
           <td>Tags</td>
-          <td><span contenteditable="true" ng-list ng-model="restyleCtrl.currentProtocol.metadata.tags"></span></td>
+          <td>
+            <input type="text"
+                   class="input-unstyled protocol-metadata-field"
+                   contenteditable="true"
+                   ng-list
+                   ng-model="restyleCtrl.currentProtocol.metadata.tags">
+          </td>
         </tr>
       </table>
     </tx-modal>

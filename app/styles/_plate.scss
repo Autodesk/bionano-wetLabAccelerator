@@ -11,7 +11,8 @@ tx-plate {
   //defaults, can also define inline
   display: block;
   width: 600px;
-  height: 425px;
+  height: auto;
+  //height: 425px;
 
   svg {
     display: inline-block;
