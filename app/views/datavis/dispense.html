@@ -13,7 +13,7 @@
   <p ng-init=""
      ng-repeat="colvol in colvols">
     Columns
-    <span ng-repeat="col in colvol.columns" ng-bind="col + ($last ? '' : ', ')"></span>
+    <span ng-repeat="col in colvol.columns" ng-bind="(col + 1) + ($last ? '' : ', ')"></span>
     -
     <span ng-bind="dispCtrl.readableVolume(colvol.volume)"></span>
   </p>

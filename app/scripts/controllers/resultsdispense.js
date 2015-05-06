@@ -45,7 +45,7 @@ angular.module('transcripticApp')
     function getWellsFromColumn (columnNumber, wellsInColumn) {
       var letters = WellConv.letters;
       return _.map(_.range(wellsInColumn), function (wellnum) {
-        return letters[wellnum] + (columnNumber);
+        return letters[wellnum] + (columnNumber + 1);
       });
     }
 
