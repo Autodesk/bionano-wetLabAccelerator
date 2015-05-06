@@ -14,8 +14,12 @@ function pluckFieldValueRaw (fields, fieldName) {
   return _.result(pluckField(fields, fieldName), 'value');
 }
 
+function getContainerFromName (parameters, containerName) {
+  return _.find(parameters, {name : containerName});
+}
+
 function getContainerTypeFromName (parameters, containerName) {
-  return _.result(_.find(parameters, {name : containerName}), 'value.type');
+  return _.result(getContainerFromName(parameters, containerName), 'value.type');
 }
 
 /*******
@@ -364,6 +368,7 @@ module.exports = {
   pluckField        : pluckField,
   pluckFieldValueRaw: pluckFieldValueRaw,
 
+  getContainerFromName : getContainerFromName,
   getContainerTypeFromName : getContainerTypeFromName,
 
   interpolateValue : interpolateValue,
