@@ -59,19 +59,43 @@ angular.module('transcripticApp')
     self.updateRunInfo = function (runObj) {
       var runId       = _.result(runObj, 'transcripticRunId'),
           projectId   = _.result(runObj, 'transcripticProjectId'),
+          runData     = _.result(runObj, 'data'),
           runInfo     = _.result(runObj, 'transcripticRunInfo'),
           runStatus   = _.result(runInfo, 'status', ''),
           runCompleted = (runStatus == 'complete');
 
-      if ((_.isUndefined(runInfo) || !runCompleted) && runId && projectId) {
-        return Run.view({project: projectId, run: runId})
+      console.log(_.isUndefined(runInfo), _.isEmpty(runData), !runCompleted,  runId, projectId, runData, runObj);
+
+      if ( (_.isUndefined(runInfo) || _.isEmpty(runData) || !runCompleted) && (runId && projectId)) {
+        var requestPayload = {project: projectId, run: runId};
+        console.log('getting info');
+        return Run.view(requestPayload)
           .$promise
           .then(function updateRunInfoSuccess (runInfo) {
             return _.assign(runObj, {
               transcripticRunInfo: runInfo
             });
           })
-          .then(self.saveRun);
+          .then(self.saveRun)
+          .then(function () {
+            var runInfo     = _.result(runObj, 'transcripticRunInfo'),
+                runStatus   = _.result(runInfo, 'status', ''),
+                runCompleted = (runStatus == 'complete');
+
+            //todo - refine mechanics of this - need to handle incomplete protocols
+            if (!runCompleted) {
+              return $q.when(runObj);
+            }
+
+            return Run.data(requestPayload)
+              .$promise
+              .then(function (runData) {
+                return _.assign(runObj, {
+                  data: runData
+                });
+              })
+              .then(self.saveRun);
+          });
       } else {
         if (!runId || !projectId) {
           console.warn('run information for transcriptic is missing...')
