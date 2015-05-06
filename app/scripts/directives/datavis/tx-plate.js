@@ -136,7 +136,7 @@ angular.module('tx.datavis')
         scope.$watch(function () {
           return element[0].offsetWidth;
         }, function (newWidth) {
-          svg.attr('height', (newWidth / full.width) * full.height);
+          element.attr('height', (newWidth / full.width) * full.height);
         });
 
         var wellsSvg = svg.append("g")
