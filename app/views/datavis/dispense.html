@@ -1,9 +1,10 @@
 <div ng-controller="resultsDispenseCtrl as dispCtrl"
-        ng-init="containerType = dispCtrl.getContainerTypeFromContainerField('object');
-                 colvols = dispCtrl.getFieldValFromName('columns');
+        ng-init="containerColor = summaryCtrl.getContainerColorFromFieldName('object');
+                 containerType = summaryCtrl.getContainerTypeFromFieldName('object');
+                 colvols = summaryCtrl.getFieldValueByName('columns');
                  groupData = dispCtrl.getWellsFromColVols('columns', 'object');">
 
-  Dispense {{dispCtrl.getFieldValFromName('reagent')}} to {{dispCtrl.getFieldValFromName('object')}}
+  Dispense {{summaryCtrl.getFieldValueByName('reagent')}} to {{summaryCtrl.getFieldValueByName('object')}}
   <tx-plate container="containerType"
             no-brush="true"
             no-select="true"

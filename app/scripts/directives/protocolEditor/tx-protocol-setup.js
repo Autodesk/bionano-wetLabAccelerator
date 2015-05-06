@@ -55,7 +55,7 @@ angular.module('transcripticApp')
         var oldContainerLength;
 
         scope.$watch('setupCtrl.parameters', function (newval, oldval) {
-          $rootScope.$broadcast('editor:parameterChange', newval);
+          $rootScope.$broadcast('editor:parameterChange', newval, oldval);
         }, true);
 
         scope.checkContainerChange = function () {
