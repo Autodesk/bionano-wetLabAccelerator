@@ -1,0 +1,70 @@
+.notify-message {
+  position:fixed;
+  top:0;
+  left:50%;
+  z-index: 9999;
+  max-width:50%;
+  text-align: center;
+  padding: 0 30px 0 15px;
+  border:none;
+
+  -webkit-transition: top 0.5s ease-out,opacity 0.2s ease-out;
+  -moz-transition: top 0.5s ease-out,opacity 0.2s ease-out;
+  -o-transition: top 0.5s ease-out,opacity 0.2s ease-out;
+  transition: top 0.5s ease-out,opacity 0.2s ease-out;
+
+  visibility:hidden;
+}
+
+.notify-message a {
+  font-weight:bold;
+  color:inherit;
+}
+
+.notify-message a:hover {
+  color:inherit;
+}
+
+.notify-close {
+  -webkit-appearance: none;
+  padding: 0;
+  cursor: pointer;
+  background: 0 0;
+  border: 0;
+  font-size: 21px;
+  font-weight: 700;
+  color: $white;
+
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  line-height: 15px;
+}
+
+.notify-close:hover, .notify-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  filter: alpha(opacity=50);
+  opacity: .5;
+}
+
+.notify-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+.notify-error {
+  background: rgb(255,42,26);
+  color: $white;
+}
+.notification {
+  background: rgb(255,251,152);
+  color: $black;
+}

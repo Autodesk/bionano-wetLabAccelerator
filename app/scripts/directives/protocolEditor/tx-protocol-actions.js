@@ -7,7 +7,7 @@
  * # txProtocolActions
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolActions', function ($rootScope, ProtocolHelper, Omniprotocol) {
+  .directive('txProtocolActions', function ($rootScope, ProtocolHelper, Omniprotocol, Notify) {
     return {
       templateUrl: 'views/tx-protocol-actions.html',
       restrict: 'E',
@@ -24,6 +24,10 @@ angular.module('tx.protocolEditor')
         self.saveProtocol = function () {
           ProtocolHelper.saveProtocol(self.protocol)
             .then(self.protocolForm.$setPristine);
+          Notify({
+            message: 'Protocol Saved',
+            error: false
+          });
         };
 
         $scope.modalShown = false;
@@ -37,6 +41,10 @@ angular.module('tx.protocolEditor')
         self.toggleAllSteps = function () {
           self.allStepsOpen = !self.allStepsOpen;
           $rootScope.$broadcast('editor:toggleGroupVisibility', self.allStepsOpen);
+          Notify({
+            message: 'Umm errr there was a problem',
+            error: true
+          });
         };
       },
       link: function postLink(scope, element, attrs) {
