@@ -48,10 +48,14 @@ angular.module('tx.protocolEditor')
           self.wellsIn = wells;
         };
 
+        //limit toggling of parameters to fields which support it
+        var parameterFreeFields = ['aliquot', 'aliquot+'];
 
-        //todo - limit toggling of parameters to fields which support it
+        self.parameterAllowed = function parameterAllowed (fieldType) {
+          return _.indexOf(parameterFreeFields, fieldType) < 0;
+        };
 
-        //todo - perf - filter here, not DOM
+
         self.parameters = ProtocolHelper.currentProtocol.parameters;
 
         var parameterListeners = [];
