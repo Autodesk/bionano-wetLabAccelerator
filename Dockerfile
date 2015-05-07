@@ -26,11 +26,9 @@ ADD bower.json $appFolder/bower.json
 RUN npm install -g bower
 RUN bower install --allow-root
 
-# RUN grunt serve
-
 EXPOSE 9000
 
 ADD . $appFolder
 
-CMD ["grunt", "serve"]
+CMD ["grunt", "build"]
 
