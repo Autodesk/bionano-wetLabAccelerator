@@ -6,7 +6,6 @@
  * @description
  * # txColumnVolumes
  *
- * todo - decide if it makes sense to really just use the plate instead...
  * //todo - refactor this to being 1-indexed
  */
 angular.module('transcripticApp')
@@ -142,7 +141,7 @@ angular.module('transcripticApp')
 
         function wellOnClick (d) {
           var el = d3.select(this);
-          scope.$apply(function () {
+          scope.$applyAsync(function () {
             scope.onClick({$column : d})
           });
         }

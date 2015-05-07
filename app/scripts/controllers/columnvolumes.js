@@ -11,15 +11,6 @@ angular.module('transcripticApp')
   .controller('columnVolumesCtrl', function ($scope) {
     var self = this;
 
-    self.groups = [];
-
-    self.setGroups = function (groups) {
-      self.groups.length = 0;
-      _.forEach(groups, function (group) {
-        self.groups.push(group);
-      });
-    };
-
     self.colvolActive = 0;
 
     self.activateGroup = function (index) {
@@ -27,10 +18,26 @@ angular.module('transcripticApp')
     };
 
     self.handleColumnSelection = function (column) {
-      //todo - toggle
-      //todo - toggle other groups
-      self.groups[self.colvolActive].columns.push('' + column);
+      //coerce to string
+      column = '' + column;
+
+      var colToGroupMap = _.zipObject(_.flatten(_.map(self.groups, function (group, groupIndex) {
+        return _.map(group.columns, function (col) {
+          return [col, groupIndex]
+        });
+      }))),
+          colInGroup = _.result(colToGroupMap, column, -1);
+
+      //prune if exists
+      if (colInGroup >= 0) {
+        _.remove(self.groups[colInGroup].columns, function (val) {
+          return _.isEqual(column, val);
+        });
+      }
+
+      //add where appropriate
+      if (colInGroup == -1 || ! _.isEqual(self.colvolActive, colInGroup)) {
+        self.groups[self.colvolActive].columns.push('' + column);
+      }
     };
-
-
   });

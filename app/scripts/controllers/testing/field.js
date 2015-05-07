@@ -18,7 +18,7 @@ angular.module('transcripticApp')
           "columns": [
             "0",
             "1",
-            "3"
+            "8"
           ],
           "color" : "#ff99ff",
           "volume" : {
@@ -29,7 +29,7 @@ angular.module('transcripticApp')
         {
           "columns": [
             "2",
-            "4",
+            "9",
             "5"
           ],
           "color" : "#99ff99",

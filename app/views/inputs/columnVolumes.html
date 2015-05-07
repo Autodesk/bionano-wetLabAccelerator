@@ -4,22 +4,28 @@
 
 <div ng-show="showColumnVolumes"
      ng-controller="columnVolumesCtrl as colvolCtrl"
-     ng-init="colvolCtrl.setGroups(fieldCtrl.model)">
+     ng-init="colvolCtrl.groups = fieldCtrl.model">
 
   <tx-plate-columns group-data="fieldCtrl.model"
                     on-click="colvolCtrl.handleColumnSelection($column)"></tx-plate-columns>
 
   <table>
-    <tr ng-repeat="group in fieldCtrl.model"
+    <tr ng-repeat="group in colvolCtrl.groups"
         class="columnVolumes-group"
         ng-class="{'active' : colvolCtrl.colvolActive == $index}"
         ng-click="colvolCtrl.activateGroup($index)">
-      <td><input type="text"
+      <td ng-style="{color: group.color}">&block;</td>
+      <!--<td><input type="text"
                  class="input-unstyled"
                  ng-list
-                 ng-model="group.columns"></td>
-      <td ng-style="{color: group.color}">&block;</td>
-      <td ng-bind="group.volume.value + ' ' + group.volume.unit"></td>
+                 ng-model="group.columns"></td>-->
+      <td><span ng-repeat="col in group.columns" ng-bind="col + ($last ? '' : ', ')"></span></td>
+      <td>
+        <tx-protocol-field ng-model="group.volume"
+                           prevent-variable="true"
+                           field="{type: 'volume'}">
+        </tx-protocol-field>
+      </td>
     </tr>
   </table>
 </div>
