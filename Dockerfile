@@ -30,5 +30,5 @@ EXPOSE 9000
 
 ADD . $appFolder
 
-CMD ["grunt", "build"]
+CMD ["grunt", "serve:dist"]
 
