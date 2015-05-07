@@ -1,9 +1,7 @@
 node_modules/
-dist
 .tmp
 .sass-cache
 bower_components/
 .idea/
 .DS_Store
-app/scripts/**/index.js
 .vagrant
