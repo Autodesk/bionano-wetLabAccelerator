@@ -1,5 +1,6 @@
 .plate-wrap {
 
+  &-incubate,
   &-seal,
   &-cover,
   &-uncover,
@@ -9,6 +10,8 @@
     background-size: cover;
     background-position: center center;
     z-index: initial;
+    width: 100%;
+    height: 100%;
 
     tx-plate {
       opacity: 0.75;
@@ -24,22 +27,23 @@
     border-radius: 10px;
   }
 
-  //todo - overlay images
+  &-incubate {
+    background-image: url('../images/incubate.png');
+  }
 
   &-seal {
     background-image: url('../images/seal.png');
-    width: 100%;
-    height: 100%;
   }
 
   &-unseal {
+    background-image: url('../images/uncover.png');
+  }
 
+  &-cover {
+    background-image: url('../images/cover.png');
   }
 
   &-uncover {
     background-image: url('../images/uncover.png');
-
-    width: 100%;
-    height: 100%;
   }
 }
