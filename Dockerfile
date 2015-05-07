@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER Dion Whitehead Amago <dion.amago@autodesk.com>
 
-ENV PORT 8000
+ENV PORT 9000
 
 ENV appFolder /cx1
 
