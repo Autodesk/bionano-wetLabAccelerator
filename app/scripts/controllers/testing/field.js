@@ -9,6 +9,22 @@
  */
 angular.module('transcripticApp')
   .controller('TestingFieldCtrl', function () {
+
+    //thermocycleMelting
+    this.field =
+    {
+      name : 'melting',
+      type : 'thermocycleMelting',
+      value: {
+        "start"    : {"value": 60, "unit": "celsius"},
+        "end"      : {"value": 80, "unit": "celsius"},
+        "increment": {"value": 5, "unit": "celsius"},
+        "rate"     : {"value": 5, "unit": "minute"}
+      }
+    };
+
+    /*
+    //columnVolumes
     this.field = {
       "name"           : "columns",
       "type"           : "columnVolumes",
@@ -40,4 +56,5 @@ angular.module('transcripticApp')
         }
       ]
     }
+    */
   });
