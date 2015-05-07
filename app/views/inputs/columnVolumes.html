@@ -1,10 +1,9 @@
 <input type="checkbox"
-       ng-init="showColumnVolumes = true"
        ng-model="showColumnVolumes"> Show Column Volumes
 
 <div ng-show="showColumnVolumes"
      ng-controller="columnVolumesCtrl as colvolCtrl"
-     ng-init="colvolCtrl.groups = fieldCtrl.model; colvolCtrl.assignColors()">
+     ng-init="colvolCtrl.onInit()">
 
   <tx-plate-columns group-data="fieldCtrl.model"
                     on-click="colvolCtrl.handleColumnSelection($column)"></tx-plate-columns>

@@ -22,10 +22,18 @@ angular.module('transcripticApp')
       'white'
     ];
 
-    self.colvolActive = 0;
-
     self.activateGroup = function (index) {
       self.colvolActive = index;
+    };
+
+    self.onInit = function () {
+      //note - hack - expects a fieldCtrl
+      if (_.isEmpty($scope.fieldCtrl.model) && ! _.isArray($scope.fieldCtrl.model)) {
+        $scope.fieldCtrl.model = [];
+      }
+      self.groups = $scope.fieldCtrl.model;
+      self.assignColors();
+      self.colvolActive = self.groups.length - 1;
     };
 
     //todo - prevent adding too many empty groups
@@ -38,9 +46,12 @@ angular.module('transcripticApp')
         }
       });
       self.assignColors();
+      self.colvolActive = self.groups.length - 1;
     };
 
     self.handleColumnSelection = function (column) {
+      if (self.colvolActive < 0) return;
+
       //coerce to string
       column = '' + column;
 
