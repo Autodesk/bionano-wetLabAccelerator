@@ -4,7 +4,7 @@
 
 <div ng-show="showColumnVolumes"
      ng-controller="columnVolumesCtrl as colvolCtrl"
-     ng-init="colvolCtrl.groups = fieldCtrl.model">
+     ng-init="colvolCtrl.groups = fieldCtrl.model; colvolCtrl.assignColors()">
 
   <tx-plate-columns group-data="fieldCtrl.model"
                     on-click="colvolCtrl.handleColumnSelection($column)"></tx-plate-columns>
@@ -28,29 +28,6 @@
       </td>
     </tr>
   </table>
-</div>
 
-<div ng-hide="showColumnVolumes">
-  <div ng-repeat="colvol in fieldCtrl.model">
-    <table>
-      <tr>
-        <td class="operation-label">columns (comma-sep, 0-indexed)</td>
-        <td>
-          <input type="text"
-                 ng-list
-                 ng-model="colvol.columns">
-        </td>
-      </tr>
-      <tr>
-        <td class="operation-label">volume</td>
-        <td>
-          <tx-protocol-field ng-model="colvol.volume"
-                             field="{type: 'volume'}">
-          </tx-protocol-field>
-        </td>
-      </tr>
-    </table>
-
-  </div>
-  <button ng-click="fieldCtrl.model.length ? fieldCtrl.model.push({}) : fieldCtrl.model = [{}]">Add Column</button>
+  <button ng-click="colvolCtrl.addColumn()">Add Column</button>
 </div>
