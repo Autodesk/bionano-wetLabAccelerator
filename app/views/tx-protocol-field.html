@@ -5,7 +5,7 @@
 </div>
 <div class="field-value">
   <div class="pull-right field-parameter-toggler"
-       ng-if="!fieldCtrl.preventVariable"
+       ng-if="!fieldCtrl.preventVariable && fieldCtrl.parameterAllowed(fieldCtrl.field.type)"
        ng-click="fieldCtrl.paramListVisible = !fieldCtrl.paramListVisible"
        ng-class="{'active' : fieldCtrl.field.parameter,
                    'open' : fieldCtrl.paramListVisible}">
