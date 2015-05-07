@@ -2,7 +2,7 @@
   <tx-plate container="pipeCtrl.getContainerFromWellField('wells')"
             no-brush="true"
             no-select="true"
-            group-data="{name : 'another', wells : pipeCtrl.pluckWellsFromContainer('wells') , color: '#55dd99'}"
+            group-data="{name : '', wells : pipeCtrl.pluckWellsFromContainer('wells') , color: pipeCtrl.getContainerColorFromWellField('wells')}"
             style="display: inline-block; width: 49%">
   </tx-plate>
 </div>

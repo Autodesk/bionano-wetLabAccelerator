@@ -5,6 +5,8 @@
  * @name transcripticApp.directive:txProtocolInput
  * @description
  * # txProtocolInput
+ *
+ * todo - can probably clean this up a lot using ProtocolHelper - containerType + containerName stuff is weird
  */
 angular.module('tx.protocolEditor')
   .directive('txProtocolField', function ($http, $compile, $timeout, Omniprotocol, Autoprotocol, ProtocolHelper) {
@@ -47,7 +49,7 @@ angular.module('tx.protocolEditor')
         };
 
 
-        //todo - limit toggling to fields which support it
+        //todo - limit toggling of parameters to fields which support it
 
         //todo - perf - filter here, not DOM
         self.parameters = ProtocolHelper.currentProtocol.parameters;
@@ -180,7 +182,7 @@ angular.module('tx.protocolEditor')
               //scope.$watch('fieldCtrl.wellsOut', scope.fieldCtrl.handleAliquotSelection);
 
               scope.$on('editor:parameterNameChange', function (event, oldName, newName) {
-                //todo - may need to more explicitly make sure this runs after the $watch...
+                //verify - may need to more explicitly make sure this runs after the $watch...
                 _.forEach(scope.fieldCtrl.model, function (wellObj) {
                   if (wellObj.container == oldName) {
                     wellObj.container = newName;
@@ -192,6 +194,12 @@ angular.module('tx.protocolEditor')
                 //don't need to worry about setting wells here - change listener for wellsOut will handle whether dealing with single container
                 setWellsInput(pruneWellsFromContainer(newContainer));
               });
+
+              //todo - perf - optimize
+              scope.$on('editor:parameterChange', function (e, newparams) {
+                var cont = Omniprotocol.utils.getContainerFromName(newparams, scope.fieldCtrl.containerName);
+                scope.fieldCtrl.containerColor = cont.value.color;
+              })
             }
 
             //handle parameter as input

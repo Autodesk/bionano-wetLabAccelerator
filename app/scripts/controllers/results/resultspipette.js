@@ -27,4 +27,9 @@ angular.module('transcripticApp')
       return _.result(fieldVal, '[0].container');
     };
 
+    self.getContainerColorFromWellField = function (fieldName) {
+      var containerName = self.getContainerFromWellField(fieldName);
+      return $scope.summaryCtrl.getContainerColorFromContainerName(containerName);
+    }
+
   });

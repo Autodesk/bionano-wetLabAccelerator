@@ -30,6 +30,7 @@
         "type": "container",
         "value": {
           "id": "ct17p6qptuu5de",
+          "color" : "#dddd66",
           "storage": "cold_20",
           "isNew": false,
           "type": "micro-1.5",
@@ -41,6 +42,7 @@
         "type": "container",
         "value": {
           "id": "ct17p6qcyguqgs",
+          "color" : "#66dd66",
           "storage": "cold_20",
           "isNew": false,
           "type": "micro-1.5",
@@ -52,6 +54,7 @@
         "type": "container",
         "value": {
           "isNew": true,
+          "color" : "#66dddd",
           "type": "96-flat",
           "storage": "cold_20"
         }
@@ -60,6 +63,7 @@
         "name": "transform_tube",
         "type": "container",
         "value": {
+          "color" : "#6666dd",
           "isNew": true,
           "type": "micro-1.5",
           "storage": "cold_20"
@@ -70,6 +74,7 @@
         "type": "container",
         "value": {
           "storage": "cold_20",
+          "color" : "#dd6666",
           "id": "ct17pd4w85bted",
           "isNew": false,
           "type": "micro-1.5",
