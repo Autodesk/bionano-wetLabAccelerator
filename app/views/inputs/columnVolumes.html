@@ -1,6 +1,30 @@
-<input type="checkbox" ng-model="showColumnVolumes"> Show Column Volumes
-<div ng-show="showColumnVolumes">
+<input type="checkbox"
+       ng-init="showColumnVolumes = true"
+       ng-model="showColumnVolumes"> Show Column Volumes
 
+<div ng-show="showColumnVolumes"
+     ng-controller="columnVolumesCtrl as colvolCtrl"
+     ng-init="colvolCtrl.setGroups(fieldCtrl.model)">
+
+  <tx-plate-columns group-data="fieldCtrl.model"
+                    on-click="colvolCtrl.handleColumnSelection($column)"></tx-plate-columns>
+
+  <table>
+    <tr ng-repeat="group in fieldCtrl.model"
+        class="columnVolumes-group"
+        ng-class="{'active' : colvolCtrl.colvolActive == $index}"
+        ng-click="colvolCtrl.activateGroup($index)">
+      <td><input type="text"
+                 class="input-unstyled"
+                 ng-list
+                 ng-model="group.columns"></td>
+      <td ng-style="{color: group.color}">&block;</td>
+      <td ng-bind="group.volume.value + ' ' + group.volume.unit"></td>
+    </tr>
+  </table>
+</div>
+
+<div ng-hide="showColumnVolumes">
   <div ng-repeat="colvol in fieldCtrl.model">
     <table>
       <tr>
@@ -20,7 +44,7 @@
         </td>
       </tr>
     </table>
-  </div>
 
+  </div>
   <button ng-click="fieldCtrl.model.length ? fieldCtrl.model.push({}) : fieldCtrl.model = [{}]">Add Column</button>
 </div>

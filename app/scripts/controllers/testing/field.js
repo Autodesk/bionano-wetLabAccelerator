@@ -10,18 +10,19 @@
 angular.module('transcripticApp')
   .controller('TestingFieldCtrl', function () {
     this.field = {
-      "name": "columns",
-        "type": "columnVolumes",
-        "singleContainer": true,
-        "value": [
+      "name"           : "columns",
+      "type"           : "columnVolumes",
+      "singleContainer": true,
+      "value"          : [
         {
           "columns": [
             "0",
             "1",
             "3"
           ],
-          "volume": {
-            "unit": "microliter",
+          "color" : "#ff99ff",
+          "volume" : {
+            "unit" : "microliter",
             "value": 50
           }
         },
@@ -31,8 +32,9 @@ angular.module('transcripticApp')
             "4",
             "5"
           ],
-          "volume": {
-            "unit": "nanoliter",
+          "color" : "#99ff99",
+          "volume" : {
+            "unit" : "nanoliter",
             "value": 90
           }
         }

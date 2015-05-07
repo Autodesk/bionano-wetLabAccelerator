@@ -245,7 +245,8 @@ module.exports = function (grunt) {
       options: {
         includePaths: [
           'bower_components'
-        ]
+        ],
+        sourceMap: true
       },
       dist: {
         files: [{
@@ -254,7 +255,10 @@ module.exports = function (grunt) {
           src: ['*.scss'],
           dest: '.tmp/styles',
           ext: '.css'
-        }]
+        }],
+        options: {
+          sourceMap: false
+        }
       },
       server: {
         files: [{
@@ -263,10 +267,7 @@ module.exports = function (grunt) {
           src: ['*.scss'],
           dest: '.tmp/styles',
           ext: '.css'
-        }],
-        options: {
-          sourceMap: true
-        }
+        }]
       }
     },
 
