@@ -39,81 +39,82 @@
   ],
   "groups": [
     {
-      "name": "Unseal",
+      "name": "Dispense Group",
       "inputs": {},
-      "metadata": {
-        "description": "Unseal a container"
-      },
-      "loop": 1,
+      "metadata": {},
+      "loop": 4,
       "steps": [
         {
-          "operation": "unseal",
+          "operation": "dispense",
           "requirements": {},
           "transforms": [
             {
-              "container": "object"
+              "container": "container"
             }
           ],
           "fields": [
             {
               "name": "object",
-              "type": "container"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Mix",
-      "inputs": {},
-      "metadata": {
-        "description": "Mix specified well using a new pipette tip"
-      },
-      "loop": 1,
-      "steps": [
-        {
-          "operation": "mix",
-          "requirements": {},
-          "transforms": [
+              "type": "container",
+              "value": "growth_plate"
+            },
             {
-              "wells": "wells"
-            }
-          ],
-          "fields": [
+              "name": "reagent",
+              "type": "option",
+              "options": [
+                "autoclaved-water",
+                "water",
+                "bleach-10p",
+                "ethanol-70p",
+                "lb-broth-100ug-ml-amp",
+                "lb-broth-50ug-ml-kan",
+                "lb-broth-30ug-ml-kan",
+                "lb-broth-25ug-ml-cm",
+                "lb-broth-100ug-ml-specto",
+                "lb-broth-50ug-ml-kan-25ug-ml-cm",
+                "lb-broth-15ug-ml-tet",
+                "lb-broth-noAB",
+                "sob",
+                "soc",
+                "tb-broth-100ug-ml-amp",
+                "tb-broth-50ug-ml-kan",
+                "te-ph7.5",
+                "pbs",
+                "te-ph7.5",
+                "orange145",
+                "orange60"
+              ],
+              "default": "lb-broth-noAB",
+              "value": "bleach-10p"
+            },
             {
-              "name": "wells",
-              "type": "aliquot+",
-              "singleContainer": false,
+              "name": "columns",
+              "type": "columnVolumes",
+              "singleContainer": true,
               "value": [
                 {
-                  "container": "ecoli_container",
-                  "well": "A1"
+                  "columns": [
+                    "0",
+                    "1",
+                    "3"
+                  ],
+                  "volume": {
+                    "unit": "microliter",
+                    "value": 50
+                  }
+                },
+                {
+                  "columns": [
+                    "2",
+                    "4",
+                    "5"
+                  ],
+                  "volume": {
+                    "unit": "nanoliter",
+                    "value": 90
+                  }
                 }
               ]
-            },
-            {
-              "name": "volume",
-              "type": "volume",
-              "optional": true,
-              "default": {
-                "value": 50,
-                "unit": "microliter"
-              }
-            },
-            {
-              "name": "speed",
-              "type": "flowrate",
-              "optional": true,
-              "default": {
-                "value": 100,
-                "unit": "microliter/second"
-              }
-            },
-            {
-              "name": "repetitions",
-              "type": "integer",
-              "optional": true,
-              "default": 10
             }
           ]
         }
