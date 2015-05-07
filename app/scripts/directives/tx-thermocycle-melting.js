@@ -17,7 +17,7 @@ angular.module('transcripticApp')
         scope.$watch('melting', render, true);
 
         var full   = {height: 100, width: 600},
-            margin = {top: 30, right: 15, bottom: 15, left: 15},
+            margin = {top: 15, right: 15, bottom: 15, left: 15},
             width  = full.width - margin.left - margin.right,
             height = full.height - margin.top - margin.bottom;
 
@@ -60,7 +60,7 @@ angular.module('transcripticApp')
 
         var thermometerBack = thermometer.append('svg:rect')
           .attr({
-            width: '100%',
+            width : '100%',
             height: '100%'
           })
           .style("fill", "url(#tempGradient)");
@@ -87,13 +87,16 @@ angular.module('transcripticApp')
               end                = _.result(scope.melting, 'end.value'),
               increment          = _.result(scope.melting, 'increment.value'),
               rate               = _.result(scope.melting, 'rate.value'),
-              gradations         = _.range(start, end, increment);
+              gradations         = _.range(start, end + 1, increment),
+              extraSpace         = 15;
 
           //xScale.domain(tempRange);
           //xAxisEl.transition().duration(transitionDuration).call(xAxis);
 
           var tempLines = thermometer.selectAll('line')
             .data(gradations);
+
+          console.log(gradations);
 
           tempLines.enter()
             .append('line')
@@ -104,12 +107,22 @@ angular.module('transcripticApp')
             x1: function (d, i) {
               return d + '%'
             },
-            x2 : function (d, i) {
+            x2: function (d, i) {
               return d + '%'
             },
-            y1: 0,
-            y2: '100%'
-          })
+            y1: function (d, i) {
+              return (i == 0) ? ('-' +extraSpace + '%') : 0;
+            },
+            y2:  function (d, i) {
+              return (i == gradations.length - 1) ? ((100 + extraSpace) + '%') : '100%';
+            }
+          });
+
+          tempLines.exit()
+            .transition()
+            .duration(transitionDuration)
+            .style('opacity', 0)
+            .remove();
 
 
         }
