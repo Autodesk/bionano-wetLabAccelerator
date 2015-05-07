@@ -28,7 +28,7 @@ RUN bower install --allow-root
 
 # RUN grunt serve
 
-EXPOSE $PORT
+EXPOSE 9000
 
 ADD . $appFolder
 
