@@ -33,7 +33,7 @@ angular.module('transcripticApp')
       }
       self.groups = $scope.fieldCtrl.model;
       self.assignColors();
-      self.colvolActive = self.groups.length - 1;
+      self.colvolActive = (self.groups.length > 1) ? 0 : -1;
     };
 
     //todo - prevent adding too many empty groups

@@ -34,7 +34,7 @@ angular.module('transcripticApp')
 
         /* CONSTRUCTING THE SVG */
 
-        var full   = {height: 100, width: 600},
+        var full   = {height: 70, width: 600},
             margin = {top: 30, right: 15, bottom: 15, left: 15},
             width  = full.width - margin.left - margin.right,
             height = full.height - margin.top - margin.bottom;
@@ -82,6 +82,10 @@ angular.module('transcripticApp')
               wellRadiusCalc     = ( width - (colCount * wellSpacing) ) / colCount / 2,
               wellRadius         = (wellRadiusCalc > height / 2) ? (height/2) : wellRadiusCalc,
               transitionDuration = 200;
+
+          //show columns
+          xScale.domain(_.range(1, colCount + 1));
+          xAxisEl.transition().duration(transitionDuration).call(xAxis);
 
           wells = getAllCircles()
             .data(columns);
