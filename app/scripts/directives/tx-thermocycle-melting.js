@@ -16,10 +16,12 @@ angular.module('transcripticApp')
       link    : function postLink (scope, element, attrs) {
         scope.$watch('melting', render, true);
 
-        var full   = {height: 100, width: 600},
-            margin = {top: 15, right: 15, bottom: 15, left: 15},
+        var full   = {height: 130, width: 600},
+            margin = {top: 30, right: 30, bottom: 30, left: 30},
             width  = full.width - margin.left - margin.right,
             height = full.height - margin.top - margin.bottom;
+
+        var extraSpace = 15;
 
         //container SVG
         var svg = d3.select(element[0]).append("svg")
@@ -45,25 +47,26 @@ angular.module('transcripticApp')
 
         tempGradient.append("svg:stop")
           .attr("offset", "0%")
-          .attr("stop-color", "#00d")
+          .attr("stop-color", "#3268d4")
           .attr("stop-opacity", 1);
 
         tempGradient.append("svg:stop")
           .attr("offset", "100%")
-          .attr("stop-color", "#d00")
+          .attr("stop-color", "#d43232")
           .attr("stop-opacity", 1);
 
-        var thermometer = svg.append("g")
+        var thermometerBack = svg.append('svg:rect')
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+          .attr({
+            width : width,
+            height: height
+          })
+          .style("fill", "url(#tempGradient)");
+
+        var thermometerLines = svg.append("g")
           .attr("width", width)
           .attr("height", height)
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        var thermometerBack = thermometer.append('svg:rect')
-          .attr({
-            width : '100%',
-            height: '100%'
-          })
-          .style("fill", "url(#tempGradient)");
 
         //scales
         var xScale = d3.scale
@@ -80,43 +83,53 @@ angular.module('transcripticApp')
           .attr("class", "x axis")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        var startLabel = thermometerLines.append('text').classed('temp-label', true),
+            endLabel   = thermometerLines.append('text').classed('temp-label', true);
+
+        hideLabels();
+
         function render () {
           var transitionDuration = 200,
-              tempRange          = _.range(100),
+              tempMin            = 0,
+              tempMax            = 100,
+              tempRange          = _.range(tempMin, tempMax+1),
               start              = _.result(scope.melting, 'start.value'),
               end                = _.result(scope.melting, 'end.value'),
               increment          = _.result(scope.melting, 'increment.value'),
               rate               = _.result(scope.melting, 'rate.value'),
-              gradations         = _.range(start, end + 1, increment),
-              extraSpace         = 15;
+              gradations         = _.range(start, end + 1, increment); //todo - make inclusive
 
-          //xScale.domain(tempRange);
+          xScale.domain(tempRange);
           //xAxisEl.transition().duration(transitionDuration).call(xAxis);
 
-          var tempLines = thermometer.selectAll('line')
+          var tempLines = thermometerLines.selectAll('line')
             .data(gradations);
-
-          console.log(gradations);
 
           tempLines.enter()
             .append('line')
-            .classed('temp-line', true)
-            .style('stroke', 'white');
+            .classed('temp-line', true);
 
-          tempLines.attr({
-            x1: function (d, i) {
-              return d + '%'
-            },
-            x2: function (d, i) {
-              return d + '%'
-            },
-            y1: function (d, i) {
-              return (i == 0) ? ('-' +extraSpace + '%') : 0;
-            },
-            y2:  function (d, i) {
-              return (i == gradations.length - 1) ? ((100 + extraSpace) + '%') : '100%';
-            }
-          });
+          tempLines
+            .transition()
+            .duration(transitionDuration)
+            .attr({
+              x1: xScale,
+              x2: xScale,
+              y1: function (d, i) {
+                return (i == 0) ? -extraSpace : 0;
+              },
+              y2: function (d, i) {
+                return (i == gradations.length - 1) ? (height + extraSpace) : height;
+              }
+            })
+            .style({
+              'stroke'      : function (d, i) {
+                return (i == 0 || i == gradations.length - 1) ? 'white' : 'black';
+              },
+              'stroke-width': function (d, i) {
+                return (i == 0 || i == gradations.length - 1) ? '3px' : '1px';
+              }
+            });
 
           tempLines.exit()
             .transition()
@@ -124,8 +137,39 @@ angular.module('transcripticApp')
             .style('opacity', 0)
             .remove();
 
+          if (gradations.length) {
+            startLabel.
+              transition().
+              duration(transitionDuration).
+              attr({
+                x: xScale(gradations[0]),
+                y: - (extraSpace + 3) //note - hack
+              }).
+              style('opacity', 1).
+              text(start + '°C');
 
+            endLabel.
+              transition().
+              duration(transitionDuration).
+              attr({
+                x: xScale(_.last(gradations)),
+                y: height + ( extraSpace * 2 )
+              }).
+              style('opacity', 1).
+              text(end + '°C');
+          }
+
+          else {
+            hideLabels();
+          }
+        }
+
+        function hideLabels () {
+          _.forEach([startLabel, endLabel], function (label) {
+            label.style('opacity', 0);
+          });
         }
       }
-    };
-  });
+    }
+  })
+;
