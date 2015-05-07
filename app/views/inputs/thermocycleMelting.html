@@ -1,36 +1,42 @@
 <input type="checkbox"
        ng-model="showMelting"> Thermocycle Melting
-<table ng-show="showMelting">
-  <tr>
-    <td class="operation-label">start</td>
-    <td>
-      <tx-protocol-field ng-model="fieldCtrl.model.start"
-                         field="{type: 'temperature'}">
-      </tx-protocol-field>
-    </td>
-  </tr>
-  <tr>
-    <td class="operation-label">end</td>
-    <td>
-      <tx-protocol-field ng-model="fieldCtrl.model.end"
-                         field="{type: 'temperature'}">
-      </tx-protocol-field>
-    </td>
-  </tr>
-  <tr>
-    <td class="operation-label">increment</td>
-    <td>
-      <tx-protocol-field ng-model="fieldCtrl.model.increment"
-                         field="{type: 'temperature'}">
-      </tx-protocol-field>
-    </td>
-  </tr>
-  <tr>
-    <td class="operation-label">rate</td>
-    <td>
-      <tx-protocol-field ng-model="fieldCtrl.model.rate"
-                         field="{type: 'duration'}">
-      </tx-protocol-field>
-    </td>
-  </tr>
-</table>
+
+<div>
+  <tx-thermocycle-melting melting="fieldCtrl.model"></tx-thermocycle-melting>
+
+  <table ng-show="showMelting">
+    <tr>
+      <td class="operation-label">start</td>
+      <td>
+        <tx-protocol-field ng-model="fieldCtrl.model.start"
+                           field="{type: 'temperature'}">
+        </tx-protocol-field>
+      </td>
+    </tr>
+    <tr>
+      <td class="operation-label">end</td>
+      <td>
+        <tx-protocol-field ng-model="fieldCtrl.model.end"
+                           field="{type: 'temperature'}">
+        </tx-protocol-field>
+      </td>
+    </tr>
+    <tr>
+      <td class="operation-label">increment</td>
+      <td>
+        <tx-protocol-field ng-model="fieldCtrl.model.increment"
+                           field="{type: 'temperature'}">
+        </tx-protocol-field>
+      </td>
+    </tr>
+    <tr>
+      <td class="operation-label">rate</td>
+      <td>
+        <tx-protocol-field ng-model="fieldCtrl.model.rate"
+                           field="{type: 'duration'}">
+        </tx-protocol-field>
+      </td>
+    </tr>
+  </table>
+
+</div>
