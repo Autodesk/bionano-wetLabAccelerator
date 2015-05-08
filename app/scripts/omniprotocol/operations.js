@@ -290,7 +290,7 @@ module.exports = {
         },
         {
           "name": "groups",
-          "type": "thermocycleGroup"
+          "type": "thermocycleGroups"
         },
         {
           "name"    : "dyes",
