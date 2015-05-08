@@ -1,5 +1,6 @@
 .plate-wrap {
 
+  &-spin,
   &-incubate,
   &-seal,
   &-cover,
@@ -25,6 +26,10 @@
     padding: 10px;
     border: 10px solid $black;
     border-radius: 10px;
+  }
+
+  &-spin {
+    background-image: url('../images/spin.png');
   }
 
   &-incubate {
