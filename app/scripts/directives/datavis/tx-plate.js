@@ -207,7 +207,7 @@ angular.module('tx.datavis')
               rowCount           = wellCount / colCount,
               wellSpacing        = 2,
               wellRadiusCalc     = ( width - (colCount * wellSpacing) ) / colCount / 2,
-              wellRadius         = (wellRadiusCalc > height / 2) ? (height/2) : wellRadiusCalc,
+              wellRadius         = (wellRadiusCalc > height / 2) ? (height / 2) : wellRadiusCalc,
               wellArray          = WellConv.createArrayGivenBounds([0, 1], [rowCount - 1, colCount]),
               transitionDuration = 200;
 
@@ -293,7 +293,14 @@ angular.module('tx.datavis')
             scaleWellRadius(selection, {}, 1);
           } else if (!_.isEmpty(scope.plateData)) {
             //for changing radius of well
-            scaleWellRadius(selection, _.mapValues(scope.plateData, 'value'), 0);
+            var mapped     = _.mapValues(scope.plateData, 'value'),
+                extent     = d3.extent(_.values(mapped)),
+                min        = extent[0],
+                max        = extent[1],
+                normalizer = d3.scale.linear().domain(extent).range([0,1]).nice(),
+                normalized = _.mapValues(mapped, normalizer);
+
+            scaleWellRadius(selection, normalized, 0);
 
             /*//for changing fill of well
             selection.style('fill', function (d) {
