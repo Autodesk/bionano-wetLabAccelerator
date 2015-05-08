@@ -469,7 +469,7 @@ module.exports = function (grunt) {
     browserify: {
       options: {
         browserifyOptions: {
-          debug: true
+          //debug: true
         }
       },
       omniprotocol: {

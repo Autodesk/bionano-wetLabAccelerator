@@ -127,12 +127,18 @@ module.exports = {
           });
     }
   },
+  "thermocycleGroups"  : {
+    description : "Set of groups in thermocycle",
+    verification: function (input) {
+      return true;
+    }
+  },
   "thermocycleGroup"  : {
     description : "Set of steps in thermocycle",
     verification: function (input) {
       return _.isArray(input) && _.every(input, function (item) {
-            return _.isNumber(item.column) && _.isString(item.volume);
-          });
+        return _.isNumber(item.cycles) && !_.isEmpty(item.steps);
+      });
     }
   },
   "thermocycleMelting": {
