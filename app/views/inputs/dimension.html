@@ -1,10 +1,20 @@
-<input ng-model="fieldCtrl.model.value"
+<input class="input-styled"
+       ng-model="fieldCtrl.model.value"
        ng-required="fieldCtrl.model.unit"
        type="number"
-       placeholder="{{fieldCtrl.field.default.value}}">
-<select ng-model="fieldCtrl.model.unit"
-        ng-options="o as o for o in unitOptions">
-    <option ng-if="!fieldCtrl.model.unit && fieldCtrl.field.default.unit"
-            value=""
-            disabled selected>{{fieldCtrl.field.default.unit}}</option>
-</select>
+       placeholder="value">
+<div ng-click="showOptions = !showOptions"
+     ng-class="{'open' : showOptions}">
+  <button>
+    <span>
+    {{fieldCtrl.model.unit ? fieldCtrl.model.unit : (fieldCtrl.field.default.unit ? fieldCtrl.field.default.unit : unitOptions[0])}}
+    </span>
+    <span class="glyphicon glyphicon-menu-down"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li ng-repeat="unit in unitOptions"
+        ng-click="fieldCtrl.model.unit = unit">
+      <a>{{unit}}</a>
+    </li>
+  </ul>
+</div>

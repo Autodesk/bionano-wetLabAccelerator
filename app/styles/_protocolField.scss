@@ -1,5 +1,6 @@
 tx-protocol-field {
-  display: block;
+  display: flex;
+  flex-direction: row;
   width: 100%;
   margin: 3px 0;
 
@@ -13,12 +14,18 @@ tx-protocol-field {
 
   .field-value {
     display: inline-block;
-    width: 55%;
+    width: 100%;
     text-align: left;
   }
 
   .field-value-inner {
     display: inline-block;
+    width: 100%;
+
+    tx-protocol-field-inner {
+      display: flex;
+      flex-direction: row;
+    }
   }
 
   .field-variable {

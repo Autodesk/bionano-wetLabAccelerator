@@ -16,12 +16,76 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-between;
+      &:last-child {
+        padding: 5px 0;
+        button {
+          background: transparent;
+          color: $warning;
+          width: 130px;
+          height: 30px;
+          border: none;
+
+          &:hover {
+            color: $white;
+            background: $accent;
+          }
+
+          &[disabled] {
+            color: $light-grey;
+            background: transparent;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+    .cell-1 {
+      display: flex;
+      flex-direction: row;
+      width: 45%;
+      justify-content: flex-end;
+      align-items: center;
+
+      input {
+        text-align: left;
+      }
+    }
+    .cell-2 {
+      display: flex;
+      flex-direction: row;
+      width: 50%;
+      justify-content: space-between;
+      align-items: center;
+
+      tx-protocol-field-inner {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+    .cell-3 {
+      width: 5%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   table {
     border-collapse: separate;
-    border-spacing: 20px 0px;
-    margin: 0
+    border-spacing: 20px 0;
+    margin: 0;
+    display: flex;
+
+    tr:last-child {
+      display: flex;
+      justify-content: space-around;
+    }
   }
 
   &:after {
@@ -40,5 +104,30 @@
   .open {
     background: $white;
   }
+  .highlight {
+    background: $accent;
+    color: $white;
+  }
 
+  button {
+    -webkit-appearance: none;
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: baseline;
+    background: transparent;
+    color: $black;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    padding: 2px;
+    &:hover {
+      -webkit-appearance: none;
+      background: $accent;
+      color: $white;
+    }
+    span {
+      display: inline-block;
+      margin: 0 3px;
+    }
+  }
 }
