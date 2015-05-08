@@ -1,0 +1,14 @@
+tx-thermocycle-group {
+
+  display: block;
+
+  .axis text {
+    display: none;
+  }
+
+  .thermocycle-line {
+    fill: none;
+    stroke: $black;
+    stroke-width: 2px;
+  }
+}
