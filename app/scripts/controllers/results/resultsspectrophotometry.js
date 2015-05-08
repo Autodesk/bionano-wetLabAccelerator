@@ -43,7 +43,7 @@ angular.module('transcripticApp')
       // todo - dynamic based on the actual data, accounting for not all being same container
       self.currentContainer = _.result(_.sample(self.rundataFiltered), 'container_type.shortname');
 
-      self.timepointValues = _.keys(self.graphData);
+      self.timepointValues = _.sortBy(_.keys(self.graphData));
       self.selectTimepoint(0);
     };
 
