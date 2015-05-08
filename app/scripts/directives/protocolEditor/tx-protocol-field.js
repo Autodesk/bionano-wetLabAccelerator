@@ -142,6 +142,11 @@ angular.module('tx.protocolEditor')
 
             /* get the partial */
 
+            //special hiding for dataref
+            if (_.result(scope.fieldCtrl.field, 'name') == 'dataref') {
+              iElement.remove();
+            }
+
             return $http.get('views/inputs/' + partial + '.html', {cache: true}).then(function (data) {
               var $el = angular.element(data.data);
               iElement.find('tx-protocol-field-inner').html($compile($el)(scope));
