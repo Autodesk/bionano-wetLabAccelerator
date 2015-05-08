@@ -80,7 +80,7 @@ angular.module('transcripticApp')
 
         //init
         //fixme - is updating indices even when cancel $timeout.. increases once with each mouseenter
-        if (angular.isDefined(attrs['autoScroll'])) {
+        if (angular.isDefined(attrs['autoScroll']) && angular.isDefined(scope.miniCtrl.protocol)) {
           //initial timeout to ensure protocol is propagated
           $timeout(function () {
             _.reduce(_.range(Omniprotocol.utils.getNumberUnfoldedSteps(scope.miniCtrl.protocol)), function (chain, unfoldedNum) {

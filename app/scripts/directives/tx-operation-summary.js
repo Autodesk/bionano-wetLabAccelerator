@@ -73,7 +73,7 @@ angular.module('transcripticApp')
           var opName       = _.result(operation, 'operation'),
               templateName = _.result(templateMap, opName, opName);
 
-          $http.get('views/datavis/' + templateName + '.html', {cache: true}).
+          angular.isDefined(templateName) && $http.get('views/datavis/' + templateName + '.html', {cache: true}).
             success(function (data) {
               var $el = angular.element(data);
               element.html($compile($el)(scope));
