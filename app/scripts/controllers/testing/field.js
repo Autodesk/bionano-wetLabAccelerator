@@ -10,9 +10,73 @@
 angular.module('transcripticApp')
   .controller('TestingFieldCtrl', function () {
 
+    //thermocycleGroup
+    this.field = {
+      "name": "group",
+      "type": "thermocycleGroups",
+      "value": [
+        {
+          "type" : "thermocycleGroup",
+          "value": {
+            "steps" : [
+              {
+                "duration"   : {
+                  "unit" : "minute",
+                  "value": 5
+                },
+                "temperature": {
+                  "unit" : "celsius",
+                  "value": 50
+                }
+              }
+            ],
+            "cycles": 1
+          }
+        },
+        {
+          "type" : "thermocycleGroup",
+          "value": {
+            "steps" : [
+              {
+                "duration"   : {
+                  "unit" : "second",
+                  "value": 30
+                },
+                "temperature": {
+                  "unit" : "celsius",
+                  "value": 40
+                }
+              },
+              {
+                "duration"   : {
+                  "unit" : "minute",
+                  "value": 2
+                },
+                "temperature": {
+                  "unit" : "celsius",
+                  "value": 95
+                }
+              },
+              {
+                "duration"   : {
+                  "unit" : "minute",
+                  "value": 1
+                },
+                "temperature": {
+                  "unit" : "celsius",
+                  "value": 60
+                }
+              }
+            ],
+            "cycles": 30
+          }
+        }
+      ]
+    };
+
+    /*
     //thermocycleMelting
-    this.field =
-    {
+    this.field = {
       name : 'melting',
       type : 'thermocycleMelting',
       value: {
@@ -22,6 +86,7 @@ angular.module('transcripticApp')
         "rate"     : {"value": 5, "unit": "minute"}
       }
     };
+    */
 
     /*
     //columnVolumes

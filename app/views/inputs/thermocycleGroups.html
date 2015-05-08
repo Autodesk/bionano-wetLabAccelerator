@@ -1,0 +1,12 @@
+<input type="checkbox"
+       ng-model="showGroup"> Thermocycle Groups
+<div ng-controller="thermocycleGroupsCtrl as thermoCtrl"
+     ng-init="thermoCtrl.onInit()">
+
+  <tx-protocol-field ng-repeat="group in fieldCtrl.model"
+                     field="group"
+                     ng-model="group.value">
+  </tx-protocol-field>
+
+  <button ng-click="thermoCtrl.addGroup()">+ group</button>
+</div>

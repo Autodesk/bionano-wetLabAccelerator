@@ -49,7 +49,7 @@ angular.module('tx.protocolEditor')
         };
 
         //limit toggling of parameters to fields which support it
-        var parameterFreeFields = ['aliquot', 'aliquot+'];
+        var parameterFreeFields = ['aliquot', 'aliquot+', 'thermocycleGroups'];
 
         self.parameterAllowed = function parameterAllowed (fieldType) {
           return _.indexOf(parameterFreeFields, fieldType) < 0;

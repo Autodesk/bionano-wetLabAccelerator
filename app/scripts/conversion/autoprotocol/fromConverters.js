@@ -47,36 +47,41 @@ converterField.columnVolumes = function (input) {
     return _.map(colVol.columns, function (col) {
       return {
         column: parseInt(col, 10),
-        volume: convertDimensionalWithDefault(colVol.volume, {unit : 'microliter', value: '100'})
+        volume: convertDimensionalWithDefault(colVol.volume, {unit: 'microliter', value: '100'})
       };
     });
   }));
 };
 
+converterField.thermocycleGroups = function (input, fieldObj) {
+  var inputDefault = _.result(fieldObj, 'default', {});
+  return _.map(input.value, function (group) {
+    return converterField.thermocycleGroup(group.value, _.assign({}, inputDefault, group));
+  });
+};
+
 converterField.thermocycleGroup = function (input, fieldObj) {
   var inputDefault = _.result(fieldObj, 'default', {});
-  return _.map(input, function (group) {
-    return {
-      cycles: group.cycles,
-      steps : _.map(group.steps, function (step) {
-        return _.assign({
-            duration: convertDimensionalWithDefault(step.duration, inputDefault.duration),
-            read    : _.result(step, 'read', true)
-          }, (!!step.isGradient ?
-          {
-            gradient: {
-              top: convertDimensionalWithDefault(step.gradientStart, inputDefault.gradientStart),
-              end: convertDimensionalWithDefault(step.gradientEnd, inputDefault.gradientEnd)
-            }
-          } :
-          {
-            temperature: convertDimensionalWithDefault(step.temperature, inputDefault.temperature)
+  return {
+    cycles: input.cycles,
+    steps : _.map(input.steps, function (step) {
+      return _.assign({
+          duration: convertDimensionalWithDefault(step.duration, inputDefault.duration),
+          read    : _.result(step, 'read', true)
+        }, (!!step.isGradient ?
+        {
+          gradient: {
+            top: convertDimensionalWithDefault(step.gradientStart, inputDefault.gradientStart),
+            end: convertDimensionalWithDefault(step.gradientEnd, inputDefault.gradientEnd)
           }
-          )
-        );
-      })
-    };
-  });
+        } :
+        {
+          temperature: convertDimensionalWithDefault(step.temperature, inputDefault.temperature)
+        }
+        )
+      );
+    })
+  };
 };
 
 
@@ -89,7 +94,7 @@ converterField.thermocycleDyes = function (input) {
 };
 
 converterField.thermocycleMelting = function (input, fieldObj) {
-  var fields = [ 'start', 'end', 'increment', 'rate'];
+  var fields = ['start', 'end', 'increment', 'rate'];
   return mapSomeDimensionalFields(input, _.result(fieldObj, 'default'), fields);
 };
 
@@ -116,10 +121,10 @@ function wrapInPipette (instruction) {
   };
 }
 
-converterInstruction.cover = simpleMapOperation;
+converterInstruction.cover   = simpleMapOperation;
 converterInstruction.uncover = simpleMapOperation;
-converterInstruction.seal = simpleMapOperation;
-converterInstruction.unseal = simpleMapOperation;
+converterInstruction.seal    = simpleMapOperation;
+converterInstruction.unseal  = simpleMapOperation;
 
 /* SPECTROMETRY */
 
@@ -127,7 +132,7 @@ converterInstruction.fluorescence = _.flow(simpleMapOperation,
   _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
 converterInstruction.luminescence = _.flow(simpleMapOperation,
   _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
-converterInstruction.absorbance = _.flow(simpleMapOperation,
+converterInstruction.absorbance   = _.flow(simpleMapOperation,
   _.partial(autoUtils.pluckOperationContainerFromWells, _, 'object', 'wells'));
 
 /* LIQUID HANDLING */
@@ -168,7 +173,7 @@ converterInstruction.transfer = function (op) {
   } else {
     xfers = _.map(transfers, function (xfer) {
       return {
-        transfer : [xfer]
+        transfer: [xfer]
       };
     });
   }
@@ -215,7 +220,7 @@ converterInstruction.distribute = function (op) {
   _.forEach(toWells, function (fromWell) {
     toArray.push(_.assign({
       volume: volume,
-      well    : fromWell
+      well  : fromWell
     }, optionalToObj))
   });
 
@@ -262,7 +267,7 @@ converterInstruction.gel_separate = simpleMapOperation;
 
 converterInstruction.spin = simpleMapOperation;
 
-converterInstruction.store = simpleMapOperation;
+converterInstruction.store   = simpleMapOperation;
 converterInstruction.discard = simpleMapOperation;
 
 module.exports = {
