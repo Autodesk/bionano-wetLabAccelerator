@@ -3,7 +3,7 @@ tx-protocol-op {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin: 5px .50em;
+  margin: 5px 3em;
   background: transparentize($white, .5);
 
   .operation-name {
@@ -22,7 +22,7 @@ tx-protocol-op {
     }
   }
 
-  .operation-field {
+  .operation-fields {
     width: 100%;
   }
 
@@ -43,6 +43,10 @@ tx-protocol-op {
 
   }
 
+  &.open {
+    background: $white;
+  }
+
   &:after {
     top: 100%;
     left: 50%;
@@ -55,9 +59,5 @@ tx-protocol-op {
     border-top-color: rgba(255,255,255,0.5);
     border-width: 10px;
     margin-left: -15px;
-  }
-
-  .open {
-    background: $white;
   }
 }

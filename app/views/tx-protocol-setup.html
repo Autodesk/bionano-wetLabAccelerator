@@ -12,6 +12,15 @@
   </tr>
   </thead>
   <tr ng-repeat="param in setupCtrl.parameters">
+    <!--hack - this should be a div, pending restyling of setupCtrl -->
+    <td class="verification" ng-if="param.verification">
+      <div class="verification-alert">
+        <span class="glyphicon glyphicon-alert"></span>
+      </div>
+      <div class="verification-flag">
+        <span ng-bind="param.verification.message"></span>
+      </div>
+    </td>
     <td><input type="text"
                ng-model="param.name"
                tx-change-broadcaster="editor:parameterNameChange"></td>
