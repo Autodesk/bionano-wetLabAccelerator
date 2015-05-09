@@ -7,9 +7,62 @@ tx-protocol-op {
   background: transparentize($white, .5);
 
   .operation-verification {
+
+    $space-top: 3px;
+
     position: absolute;
-    top: 4px;
-    left: -20px;
+    top:0; bottom:0; left: 0; right: 0;
+    pointer-events: none;
+
+    &-alert {
+      position: absolute;
+      top: $space-top;
+      left: -2em;
+      background: $black;
+      border-radius: 50%;
+      width: 1.5em;
+      height: 1.5em;
+      text-align: center;
+
+      .glyphicon {
+        color: $warning;
+        font-size: 0.75em;
+        top: 0;
+      }
+    }
+
+    &-flag {
+
+      $clip-arrow-width: 15px;
+      $flag-color: lighten($warning, 40);
+
+      position: absolute;
+      display: block;
+      right: -($clip-arrow-width + 5px);
+      top: $space-top + 8px; //hack - want to be halfway down op header
+      padding: 3px 5px;
+      transform: translate(100%, -50%);
+      background: $flag-color;
+      max-width: 200px;
+
+      opacity: 0; //toggled at bottom by parent class open
+      transition: opacity 0.25s linear;
+
+      &:after {
+        right: 100%;
+        top: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: transparent;
+        border-right-color: $flag-color;
+        border-width: $clip-arrow-width;
+        margin-top: -$clip-arrow-width;
+      }
+    }
   }
 
   .operation-name {
@@ -28,7 +81,7 @@ tx-protocol-op {
     }
   }
 
-  .operation-field {
+  .operation-fields {
     width: 100%;
   }
 
@@ -63,7 +116,14 @@ tx-protocol-op {
     margin-left: -15px;
   }
 
-  .open {
+  &.open {
     background: $white;
+  }
+
+  &.open,
+  &:hover {
+    .operation-verification-flag {
+      opacity: 1;
+    }
   }
 }

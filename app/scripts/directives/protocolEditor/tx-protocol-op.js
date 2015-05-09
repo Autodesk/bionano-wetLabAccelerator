@@ -46,18 +46,22 @@ angular.module('tx.protocolEditor')
 
         //note - called by protocol-editor
         $scope.receiveVerification = function (ver) {
-          console.log(ver);
           _.assign(self, {verification : ver});
         };
 
       },
       link: function (scope, element, attrs, groupCtrl) {
+
+        scope.$watch('opCtrl.isVisible', function (viz) {
+          element.toggleClass('open', !!viz);
+        });
+
         scope.deleteStep = function () {
           groupCtrl.deleteStep(scope.opCtrl.op);
         };
 
         scope.$on('editor:toggleGroupVisibility', function (e, val) {
-          scope.opCtrl.isCollapsed = !!val;
+          scope.opCtrl.isVisible = !!val;
         });
 
         scope.$on('editor:verificationSuccess', function (e, val) {

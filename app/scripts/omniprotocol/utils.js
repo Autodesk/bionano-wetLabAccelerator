@@ -272,7 +272,7 @@ function getFoldedStepInfo (protocol, unfoldNum) {
           });
         }
 
-        if (groupIndex === 0 && groupLoopIndex === 0) {
+        if (groupLoopIndex === 0) {
           foldedIndex += 1;
         }
         unfoldedIndex += 1;

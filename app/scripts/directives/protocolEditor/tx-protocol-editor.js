@@ -90,9 +90,6 @@ angular.module('tx.protocolEditor')
 
         scope.$on('editor:verificationFailure', function (event, verifications) {
 
-          var setupBroadcastChannel     = 'editor:verificationFailure:setup',
-              operationBroadcastChannel = 'editor:verificationFailure:operation';
-
           //verifications come in the form { message : '', context : { instruction : # } } }
           //we add indicies in form {group : #, step: #, loop : #, folded : #, unfolded : # } where unfolded matches instruction
 
