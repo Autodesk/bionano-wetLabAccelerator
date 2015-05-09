@@ -1,18 +1,22 @@
-<div ng-controller="ThermocycleDyesCtrl as dyeCtrl">
-    <input type="checkbox"
-           ng-model="showDyes"> Thermocycle Dyes
+<a class="field-details-button"
+   ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible">
+  details...
+</a>
 
-    <table ng-show="showDyes">
-        <tr ng-repeat="(channel, dyes) in dyeCtrl.dyeOptions">
-            <td>
-                {{channel}}: <select ng-model="fieldCtrl.model[$index].dye" ng-options="d as d for d in dyes"></select>
-                <span ng-show="fieldCtrl.model[$index].dye">show Plate: <input type="checkbox" ng-model="showPlate"></span>
-            </td>
-            <td ng-show="fieldCtrl.model[$index].dye">
-                <!-- hack - container does not change with selection of "object" -->
-                <tx-plate ng-show="showPlate" container="'96-flat'" selected-wells="fieldCtrl.model[$index].wells"></tx-plate>
-            </td>
-        </tr>
+<tx-modal ng-show="fieldCtrl.detailsVisible"
+          title="Thermocycle Melting">
+  <div ng-controller="ThermocycleDyesCtrl as dyeCtrl">
+    <table>
+      <tr ng-repeat="(channel, dyes) in dyeCtrl.dyeOptions">
+        <td>
+          {{channel}}: <select ng-model="fieldCtrl.model[$index].dye" ng-options="d as d for d in dyes"></select>
+          <span ng-show="fieldCtrl.model[$index].dye">show Plate: <input type="checkbox" ng-model="showPlate"></span>
+        </td>
+        <td ng-show="fieldCtrl.model[$index].dye">
+          <!-- hack - container does not change with selection of "object" -->
+          <tx-plate ng-show="showPlate" container="'96-flat'" selected-wells="fieldCtrl.model[$index].wells"></tx-plate>
+        </td>
+      </tr>
     </table>
-
-</div>
+  </div>
+</tx-modal>

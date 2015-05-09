@@ -12,7 +12,8 @@ angular.module('transcripticApp')
         templateUrl: 'views/tx-modal.html',
         restrict: 'E',
         scope: {
-          ngShow: '='
+          ngShow: '=',
+          title: '@?'
         },
         transclude: true,
         link: function(scope, element, attrs) {
