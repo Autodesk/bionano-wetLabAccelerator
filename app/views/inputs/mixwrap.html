@@ -1,33 +1,37 @@
-<input type="checkbox"
-       ng-model="showMixwrap"> {{fieldCtrl.field.name}}
+<a class="field-action-button"
+   ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible">
+  edit...
+</a>
 
-<table ng-show="showMixwrap">
+
+<tx-modal ng-show="fieldCtrl.detailsVisible"
+          title="{{fieldCtrl.field.name}}">
+  <table>
     <tr>
-        <td class="operation-label">volume</td>
-        <td>
-            <!-- todo - this is a hack. maybe it makes sense to create a directive specifically for dimensional values -->
-            <tx-protocol-field ng-model="fieldCtrl.model.volume"
-                               field="{type: 'volume'}">
-            </tx-protocol-field>
-        </td>
+      <td class="operation-label">volume</td>
+      <td>
+        <tx-protocol-field ng-model="fieldCtrl.model.volume"
+                           field="{type: 'volume'}">
+        </tx-protocol-field>
+      </td>
     </tr>
 
     <tr>
-        <td class="operation-label">speed</td>
-        <td>
-            <!-- todo - this is a hack. maybe it makes sense to create a directive specifically for dimensional values -->
-            <tx-protocol-field ng-model="fieldCtrl.model.speed"
-                               field="{type: 'flowrate'}">
-            </tx-protocol-field>
-        </td>
+      <td class="operation-label">speed</td>
+      <td>
+        <tx-protocol-field ng-model="fieldCtrl.model.speed"
+                           field="{type: 'flowrate'}">
+        </tx-protocol-field>
+      </td>
     </tr>
 
     <tr>
-        <td class="operation-label">repetitions</td>
-        <td>
-            <input type="number"
-                   ng-model="fieldCtrl.model.repetitions"
-                   ng-required="true">
-        </td>
+      <td class="operation-label">repetitions</td>
+      <td>
+        <input type="number"
+               ng-model="fieldCtrl.model.repetitions"
+               ng-required="true">
+      </td>
     </tr>
-</table>
+  </table>
+</tx-modal>

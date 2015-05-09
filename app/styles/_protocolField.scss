@@ -21,7 +21,34 @@ tx-protocol-field {
     display: inline-block;
   }
 
-  .field-variable {
+  //buttons
+
+  .field-action-button,
+  .field-details-button {
+    padding: 3px 8px;
+    border-radius: 1em;
+    font-size: 12px;
+    font-weight: bold;
+
+    &:hover {
+      color: $white;
+      background-color: $primary;
+    }
+  }
+
+  .field-details-button {
+    background-color: $light-grey;
+  }
+
+  .field-action-button {
+    color: $warning;
+    font-weight: normal;
+  }
+
+
+  //PARAMETER
+
+  .field-parameter {
     color: $primary;
   }
 
@@ -45,13 +72,12 @@ tx-protocol-field {
 
   .field-parameter-dropdown {
     color: $grey;
-
   }
 
   &:hover {
     .field-parameter-toggler {
       opacity: 1;
-      background-color: transparentize($grey, 0.5);
+      background-color: $light-grey;
     }
   }
 }

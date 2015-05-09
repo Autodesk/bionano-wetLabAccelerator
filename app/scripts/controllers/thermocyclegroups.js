@@ -20,6 +20,10 @@ angular.module('transcripticApp')
       });
     };
 
+    self.deleteGroup = function (group) {
+      _.remove(self.groups, group)
+    };
+
     self.addStep = function (group) {
       group.steps.push({});
     };

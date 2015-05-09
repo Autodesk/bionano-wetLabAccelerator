@@ -1,10 +1,14 @@
-<input type="checkbox"
-       ng-model="showMelting"> Thermocycle Melting
+<a class="field-details-button"
+   ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible">
+  details...
+</a>
 
-<div>
+<tx-modal ng-show="fieldCtrl.detailsVisible"
+          title="Thermocycle Melting">
+
   <tx-thermocycle-melting melting="fieldCtrl.model"></tx-thermocycle-melting>
 
-  <table ng-show="showMelting">
+  <table>
     <tr>
       <td class="operation-label">start</td>
       <td>
@@ -39,4 +43,4 @@
     </tr>
   </table>
 
-</div>
+</tx-modal>

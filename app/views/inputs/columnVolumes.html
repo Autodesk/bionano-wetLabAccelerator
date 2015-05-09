@@ -1,32 +1,35 @@
-<input type="checkbox"
-       ng-model="showColumnVolumes"> Show Column Volumes
+<a class="field-details-button"
+        ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible">
+  details...
+</a>
+<tx-modal ng-show="fieldCtrl.detailsVisible"
+          title="Column Volumes">
+  <div ng-controller="columnVolumesCtrl as colvolCtrl"
+       ng-init="colvolCtrl.onInit()">
 
-<div ng-show="showColumnVolumes"
-     ng-controller="columnVolumesCtrl as colvolCtrl"
-     ng-init="colvolCtrl.onInit()">
+    <tx-plate-columns group-data="fieldCtrl.model"
+                      on-click="colvolCtrl.handleColumnSelection($column)"></tx-plate-columns>
 
-  <tx-plate-columns group-data="fieldCtrl.model"
-                    on-click="colvolCtrl.handleColumnSelection($column)"></tx-plate-columns>
+    <table>
+      <tr ng-repeat="group in colvolCtrl.groups"
+          class="columnVolumes-group"
+          ng-class="{'active' : colvolCtrl.colvolActive == $index}"
+          ng-click="colvolCtrl.activateGroup($index)">
+        <td ng-style="{color: group.color}">&block;</td>
+        <!--<td><input type="text"
+                   class="input-unstyled"
+                   ng-list
+                   ng-model="group.columns"></td>-->
+        <td><span ng-repeat="col in group.columns" ng-bind="col + ($last ? '' : ', ')"></span></td>
+        <td>
+          <tx-protocol-field ng-model="group.volume"
+                             prevent-variable="true"
+                             field="{type: 'volume'}">
+          </tx-protocol-field>
+        </td>
+      </tr>
+    </table>
 
-  <table>
-    <tr ng-repeat="group in colvolCtrl.groups"
-        class="columnVolumes-group"
-        ng-class="{'active' : colvolCtrl.colvolActive == $index}"
-        ng-click="colvolCtrl.activateGroup($index)">
-      <td ng-style="{color: group.color}">&block;</td>
-      <!--<td><input type="text"
-                 class="input-unstyled"
-                 ng-list
-                 ng-model="group.columns"></td>-->
-      <td><span ng-repeat="col in group.columns" ng-bind="col + ($last ? '' : ', ')"></span></td>
-      <td>
-        <tx-protocol-field ng-model="group.volume"
-                           prevent-variable="true"
-                           field="{type: 'volume'}">
-        </tx-protocol-field>
-      </td>
-    </tr>
-  </table>
-
-  <button ng-click="colvolCtrl.addColumn()">Add Column</button>
-</div>
+    <button ng-click="colvolCtrl.addColumn()">Add Column</button>
+  </div>
+</tx-modal>
