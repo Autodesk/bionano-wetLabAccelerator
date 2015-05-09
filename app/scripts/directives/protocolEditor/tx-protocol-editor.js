@@ -93,32 +93,60 @@ angular.module('tx.protocolEditor')
           //verifications come in the form { message : '', context : { instruction : # } } }
           //we add indicies in form {group : #, step: #, loop : #, folded : #, unfolded : # } where unfolded matches instruction
 
-          var map    = _.map(verifications, function (ver, verIndex) {
-                var targetInstruction = _.result(ver, 'context.instruction', -1);
-                //todo - handle differently if not a group (e.g. ref)
-                return _.assign(Omniprotocol.utils.getFoldedStepInfo(scope.editorCtrl.protocol, targetInstruction), {
-                  message     : ver.message,
-                  source      : 'transcriptic',
-                  target      : {
-                    type : 'group',
-                    value: targetInstruction
-                  },
-                  verification: ver
-                });
-              }),
-              pruned = _.filter(map, {loop: 0});
+          var instructions = _(verifications).
+            filter(function (ver) {
+              return _.has(ver, 'context.instruction');
+            }).
+            map(function (ver, verIndex) {
+              var targetInstruction = _.result(ver, 'context.instruction', -1);
+              return _.assign({}, {
+                indices: Omniprotocol.utils.getFoldedStepInfo(scope.editorCtrl.protocol, targetInstruction)
+              }, {
+                message     : ver.message,
+                source      : 'transcriptic',
+                target      : 'group',
+                verification: ver
+              });
+            }).
+            filter(function (ver) {
+              return _.result(ver, 'indices.loop', -1) == 0;
+            }).
+            uniq(false, function (ver) {
+              //filter out duplicate messages for the same instruction
+              return ver.indices.unfolded + ':' + ver.message;
+            }).
+            forEach(function (ver) {
+              var foldedIndex = ver.indices.folded,
+                  $el         = element.find('tx-protocol-op')[foldedIndex];
 
-          _.forEach(pruned, function (verObj) {
-            var message     = verObj.message,
-                foldedIndex = verObj.folded,
-                $el         = element.find('tx-protocol-op')[foldedIndex];
+              //todo - merge different messages for same instruction
+              //(e.g. try bad dispense, get two errors - one for range, one increments)
 
-            //hack - calling function by querying the DOM is not so great...
-            //should probably just use another $broadcast, but then each op needs to know its indices (dynamically recalculated each change...)
-            //note - function inside tx-protocol-op link
-            angular.element($el).children().scope().receiveVerification(verObj);
-          });
+              //hack - calling function by querying the DOM is not so great...
+              //should probably just use another $broadcast, but then each op needs to know its indices (dynamically recalculated each change...)
+              //note - function inside tx-protocol-op link
+              angular.element($el).children().scope().receiveVerification(ver);
+            }).
+            value();
 
+          var refs = _(verifications).
+            filter(function (ver) {
+              return _.has(ver, 'context.ref');
+            }).
+            map(function (ver, verIndex) {
+              return {
+                message     : ver.message,
+                source      : 'transcriptic',
+                target      : 'parameter',
+                container   : _.result(ver, 'context.ref'),
+                verification: ver
+              };
+            }).
+            tap(function (verifications) {
+              //todo - merge for same container?
+              element.find('tx-protocol-setup').children().scope().receiveVerifications(verifications);
+            }).
+            value();
         });
 
       }

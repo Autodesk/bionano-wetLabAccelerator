@@ -1,8 +1,10 @@
-<div class="operation-verification" ng-show="opCtrl.verification">
-  <div class="operation-verification-alert">
+<div class="verification"
+     ng-class="{'expanded' : opCtrl.isVisible}"
+     ng-if="opCtrl.verification">
+  <div class="verification-alert">
     <span class="glyphicon glyphicon-alert"></span>
   </div>
-  <div class="operation-verification-flag"
+  <div class="verification-flag"
        ng-class="{'op-open' : opCtrl.isVisible}">
     <span ng-bind="opCtrl.verification.message"></span>
   </div>

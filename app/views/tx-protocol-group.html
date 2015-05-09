@@ -8,12 +8,12 @@
            type="text" auto-grow
            placeholder="Group Name"
            ng-model="groupCtrl.group.name">
-    <span class="group-repeat">
+    <div class="group-repeat">
       <input class="input-unstyled"
              type="number" min="1" max="100"
-             tx-numbers-only
+             ng-model-options="{updateOn: 'blur'}"
              ng-model="groupCtrl.group.loop"/>
-    </span>
+    </div>
 
   </div>
   <div class="protocol-group-main">

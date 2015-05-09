@@ -54,6 +54,8 @@ angular.module('transcripticApp')
       link            : function postLink (scope, element, attrs) {
         var oldContainerLength;
 
+        //CHANGE CHECKING / CONTAINERS
+
         scope.$watch('setupCtrl.parameters', function (newval, oldval) {
           $rootScope.$broadcast('editor:parameterChange', newval, oldval);
         }, true);
@@ -72,10 +74,26 @@ angular.module('transcripticApp')
           $rootScope.$broadcast('editor:containerChange');
         };
 
+        scope.$on('editor:newprotocol', scope.checkContainerChange);
+
+        //VERIFICATIONS
+
+        scope.$on('editor:verificationSuccess', function (event) {
+          _.forEach(scope.setupCtrl.parameters, function (param) {
+            delete param.verification;
+          });
+        });
+
+        scope.receiveVerifications = function (vers) {
+          //todo - need to show verification for whole setup
+          _.forEach(vers, function (ver) {
+            _.assign(_.find(scope.setupCtrl.parameters, {name : ver.container}), {verification : ver});
+          });
+        };
+
+
         //init
         scope.checkContainerChange();
-
-        scope.$on('editor:newprotocol', scope.checkContainerChange)
       }
     };
   });

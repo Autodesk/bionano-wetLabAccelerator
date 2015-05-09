@@ -46,6 +46,7 @@ angular.module('tx.protocolEditor')
 
         //note - called by protocol-editor
         $scope.receiveVerification = function (ver) {
+          console.log(ver);
           _.assign(self, {verification : ver});
         };
 

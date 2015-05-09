@@ -35,6 +35,15 @@
         "storage": "cold_4"
       },
       "name": "container_uno"
+    },
+    {
+      "type": "container",
+      "value": {
+        "isNew": true,
+        "type": "96-pcr",
+        "storage": "warm_37"
+      },
+      "name": "dfdfd"
     }
   ],
   "groups": [
@@ -42,7 +51,7 @@
       "name": "Dispense Group",
       "inputs": {},
       "metadata": {},
-      "loop": 4,
+      "loop": 2,
       "steps": [
         {
           "operation": "dispense",
@@ -56,7 +65,7 @@
             {
               "name": "object",
               "type": "container",
-              "value": "growth_plate"
+              "value": "container_uno"
             },
             {
               "name": "reagent",

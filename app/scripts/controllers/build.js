@@ -16,7 +16,7 @@ angular.module('transcripticApp')
     self.currentProtocol = ProtocolHelper.currentProtocol;
 
     self.loadDemo = function () {
-      $http.get('demo_protocols/omniprotocol/protocol_transfer.json').success(function (d) {
+      $http.get('demo_protocols/omniprotocol/protocol_dummy.json').success(function (d) {
         ProtocolHelper.assignCurrentProtocol(d);
       });
     };
