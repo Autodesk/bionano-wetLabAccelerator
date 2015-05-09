@@ -7,7 +7,7 @@
  * # txRun
  */
 angular.module('transcripticApp')
-  .directive('txRun', function ($q, $timeout, Auth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, RunHelper) {
+  .directive('txRun', function ($q, $timeout, $rootScope, Auth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, RunHelper) {
     return {
       templateUrl     : 'views/tx-run.html',
       restrict        : 'E',
@@ -75,6 +75,7 @@ angular.module('transcripticApp')
                   error     : false
                 });
                 angular.extend(toModify.response, d);
+                $rootScope.$broadcast('editor:verificationSuccess', d);
               }, function runFailure (e) {
                 console.log(e);
                 angular.extend(toModify.config, {
@@ -85,6 +86,7 @@ angular.module('transcripticApp')
                 if (angular.isUndefined(e.data.protocol)) {
                   angular.extend(toModify.response, {"error": "Request did not go through... check the console"})
                 } else {
+                  $rootScope.$broadcast('editor:verificationFailure', e.data.protocol);
                   angular.extend(toModify.response, e.data.protocol);
                 }
               });

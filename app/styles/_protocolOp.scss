@@ -3,8 +3,14 @@ tx-protocol-op {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin: 5px .50em;
+  margin: 5px 3em;
   background: transparentize($white, .5);
+
+  .operation-verification {
+    position: absolute;
+    top: 4px;
+    left: -20px;
+  }
 
   .operation-name {
     color:$black;

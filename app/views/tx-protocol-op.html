@@ -1,3 +1,6 @@
+<div class="operation-verification" ng-show="opCtrl.verification">
+  <span class="glyphicon glyphicon-alert"></span>
+</div>
 <div class="operation-name"
      ng-click="opCtrl.isCollapsed = !opCtrl.isCollapsed"
      ng-class="{'open': opCtrl.isCollapsed}">
@@ -22,7 +25,7 @@
   </div>
 </div>
 <tx-modal ng-show='modalShown'>
-  <tx-run protocol="see-note"></tx-run> <!--Need to pass in protocol-->
+  <tx-run></tx-run>
 </tx-modal>
 <div class="operation-field"
      ng-show="opCtrl.isCollapsed"

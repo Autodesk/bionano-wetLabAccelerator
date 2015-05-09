@@ -8,7 +8,7 @@
  */
   //todo - listen for parameters changing, propagate variable name throughout
 angular.module('tx.protocolEditor')
-  .directive('txProtocolEditor', function ($window, $rootScope, $timeout, DragDropManager, ProtocolHelper) {
+  .directive('txProtocolEditor', function ($window, $rootScope, $timeout, DragDropManager, ProtocolHelper, Omniprotocol) {
     return {
       templateUrl     : 'views/tx-protocol-editor.html',
       restrict        : 'E',
@@ -46,8 +46,8 @@ angular.module('tx.protocolEditor')
 
             var fileReader = new FileReader();
 
-            fileReader.onload = function(e) {
-              $scope.$apply(function() {
+            fileReader.onload = function (e) {
+              $scope.$apply(function () {
                 try {
                   ProtocolHelper.assignCurrentProtocol(angular.fromJson(e.target.result));
                 } catch (e) {
@@ -87,6 +87,42 @@ angular.module('tx.protocolEditor')
         };
       },
       link            : function postLink (scope, element, attrs) {
+
+        scope.$on('editor:verificationFailure', function (event, verifications) {
+
+          var setupBroadcastChannel     = 'editor:verificationFailure:setup',
+              operationBroadcastChannel = 'editor:verificationFailure:operation';
+
+          //verifications come in the form { message : '', context : { instruction : # } } }
+          //we add indicies in form {group : #, step: #, loop : #, folded : #, unfolded : # } where unfolded matches instruction
+
+          var map    = _.map(verifications, function (ver, verIndex) {
+                var targetInstruction = _.result(ver, 'context.instruction', -1);
+                //todo - handle differently if not a group (e.g. ref)
+                return _.assign(Omniprotocol.utils.getFoldedStepInfo(scope.editorCtrl.protocol, targetInstruction), {
+                  message     : ver.message,
+                  source      : 'transcriptic',
+                  target      : {
+                    type : 'group',
+                    value: targetInstruction
+                  },
+                  verification: ver
+                });
+              }),
+              pruned = _.filter(map, {loop: 0});
+
+          _.forEach(pruned, function (verObj) {
+            var message     = verObj.message,
+                foldedIndex = verObj.folded,
+                $el         = element.find('tx-protocol-op')[foldedIndex];
+
+            //hack - calling function by querying the DOM is not so great...
+            //should probably just use another $broadcast, but then each op needs to know its indices (dynamically recalculated each change...)
+            //note - function inside tx-protocol-op link
+            angular.element($el).children().scope().receiveVerification(verObj);
+          });
+
+        });
 
       }
     };
