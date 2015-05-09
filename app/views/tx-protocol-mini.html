@@ -14,7 +14,7 @@
       <div ng-if="!multichild && !looping"
            class="protocol-instruction"
            ng-mouseenter="handleMouseover($event, groupIndex)">
-        {{group.name}}
+        {{(group.name || group.steps[0].operation) | capfirst}}
       </div>
 
       <div ng-if="looping || multichild">
@@ -27,7 +27,7 @@
                ng-init="stepIndex = $index"
                ng-class="{'has-arrow' : !$last}"
                ng-mouseenter="handleMouseover($event, groupIndex, stepIndex, loopIndex)">
-            {{step.operation}}
+            {{step.operation | capfirst}}
           </div>
         </div>
       </div>
