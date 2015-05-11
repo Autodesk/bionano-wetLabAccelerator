@@ -4,19 +4,30 @@
 </a>
 
 <tx-modal ng-show="fieldCtrl.detailsVisible"
-          title="Thermocycle Melting">
-  <div ng-controller="ThermocycleDyesCtrl as dyeCtrl">
-    <table>
-      <tr ng-repeat="(channel, dyes) in dyeCtrl.dyeOptions">
-        <td>
-          {{channel}}: <select ng-model="fieldCtrl.model[$index].dye" ng-options="d as d for d in dyes"></select>
-          <span ng-show="fieldCtrl.model[$index].dye">show Plate: <input type="checkbox" ng-model="showPlate"></span>
-        </td>
-        <td ng-show="fieldCtrl.model[$index].dye">
-          <!-- hack - container does not change with selection of "object" -->
-          <tx-plate ng-show="showPlate" container="'96-flat'" selected-wells="fieldCtrl.model[$index].wells"></tx-plate>
-        </td>
-      </tr>
-    </table>
+          title="Thermocycle Dyes">
+  <div ng-controller="ThermocycleDyesCtrl as dyeCtrl"
+          ng-init="dyeCtrl.init()">
+
+    <div class="col-md-4">
+      <div ng-repeat="(channel, dyes) in dyeCtrl.dyeOptions"
+           ng-init="fieldCtrl.model[$index].color = dyeCtrl.colors[channel]">
+        <span ng-style="{'color' : fieldCtrl.model[$index].color}">&block;</span>
+        <span ng-bind="channel"></span>
+        <select ng-model="fieldCtrl.model[$index].dye"
+                ng-change="dyeCtrl.activateChannelIndex($index)"
+                ng-options="d as d for d in dyes"></select>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <tx-plate container="'96-flat'"
+                group-data="fieldCtrl.model"
+                select-persist="true"
+                wells-input="dyeCtrl.dyeWells"
+                on-select="dyeCtrl.handleWellSelection($wells)"></tx-plate>
+
+    </div>
+
+    <pre ng-bind="fieldCtrl.model | json"></pre>
   </div>
 </tx-modal>
