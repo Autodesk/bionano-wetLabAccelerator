@@ -48,14 +48,9 @@
       }
     }
 
-    .parameter-list {
-      padding: 0 $layout-spacing-md;
-      display: block; //hack - override bootstrap hiding
-    }
+    .parameter-list {}
 
-    .parameter-option {
-      display: block;
-    }
+    .parameter-option {}
 
     .cell-1 {
       display: flex;

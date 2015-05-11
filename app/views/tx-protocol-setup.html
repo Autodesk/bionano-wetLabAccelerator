@@ -80,18 +80,28 @@
            ng-class="{'open' : showParameters}">
         <span class="glyphicon glyphicon-plus"></span>
         Add Parameter
-        <div class="dropdown-menu parameter-list"
-             ng-show="showParameters"
-             ng-mouseleave="showParameters = false">
-          <div ng-repeat="(group, items) in setupCtrl.paramTypes">
-            <span class="dropdown-header"
-                  ng-bind="group"></span>
+        <ul class="dropdown-menu parameter-list"
+            ng-mouseleave="showParameters = false">
+          <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'dimensional'}">
             <a class="parameter-option"
-               ng-repeat="item in items"
-               ng-click="setupCtrl.addParam(item.name)">{{item.name}}</a>
-            <hr ng-hide="$last">
-          </div>
-        </div>
+               ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
+          </li>
+          <li class="divider"></li>
+          <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'primitive'}">
+            <a class="parameter-option"
+               ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
+          </li>
+          <li class="divider"></li>
+          <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'container'}">
+            <a class="parameter-option"
+               ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
+          </li>
+          <li class="divider"></li>
+          <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'custom'}">
+            <a class="parameter-option"
+               ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

@@ -20,11 +20,10 @@ angular.module('transcripticApp')
         var self = this;
 
         this.paramTypes       = _(Omniprotocol.inputTypes).
-          pick(_.matches({canParameterize: true})).
           forEach(function (param, name) {
             _.assign(param, {name: name});
           }).
-          groupBy('type').
+          filter(_.matches({canParameterize: true})).
           value();
         this.containerOptions = Omniprotocol.optionEnums.containers;
         this.storageOptions   = _.union([false], Omniprotocol.optionEnums.storage.storage);
