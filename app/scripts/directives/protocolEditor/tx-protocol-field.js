@@ -26,12 +26,11 @@ angular.module('tx.protocolEditor')
         var self = this;
 
         //limit toggling of parameters to fields which support it
-        var parameterFreeFields = ['aliquot', 'aliquot+', 'thermocycleGroups', 'container'];
+        var parameterizables = _.keys(_.pick(Omniprotocol.inputTypes, _.matches({canParameterize: true})));
 
         self.parameterAllowed = function parameterAllowed (fieldType) {
-          return _.indexOf(parameterFreeFields, fieldType) < 0;
+          return _.indexOf(parameterizables, fieldType) >= 0;
         };
-
 
         self.parameters = ProtocolHelper.currentProtocol.parameters;
 
@@ -92,8 +91,7 @@ angular.module('tx.protocolEditor')
             //Special handling before we get the appropriate template
 
             // handle all dimensional values the same way
-            // future - should check this better... not bake in for autoprotocol
-            if (_.contains(Autoprotocol.utils.dimensionalFields, type)) {
+            if (Omniprotocol.inputTypes[type].type == 'dimensional') {
 
               var inputType     = Omniprotocol.inputTypes[type];
               partial           = 'dimension';

@@ -24,26 +24,39 @@
       justify-content: space-between;
       &:last-child {
         padding: 5px 0;
-        button {
-          background: transparent;
-          color: $warning;
-          width: 130px;
-          height: 30px;
-          border: none;
-
-          &:hover {
-            color: $white;
-            background: $primary;
-          }
-
-          &[disabled] {
-            color: $light-grey;
-            background: transparent;
-            cursor: not-allowed;
-          }
-        }
       }
     }
+
+    .add-parameter {
+      background: transparent;
+      color: $warning;
+      text-align: center;
+      width: 130px;
+      height: 30px;
+      border: none;
+      position: relative;
+
+      &:hover {
+        color: $white;
+        background: $primary;
+      }
+
+      &.disabled {
+        color: $light-grey;
+        background: transparent;
+        cursor: not-allowed;
+      }
+    }
+
+    .parameter-list {
+      padding: 0 $layout-spacing-md;
+      display: block; //hack - override bootstrap hiding
+    }
+
+    .parameter-option {
+      display: block;
+    }
+
     .cell-1 {
       display: flex;
       flex-direction: row;

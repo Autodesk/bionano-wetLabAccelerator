@@ -19,17 +19,23 @@ angular.module('transcripticApp')
       controller      : function ($scope, $element, $attrs) {
         var self = this;
 
-        this.paramTypes       = Omniprotocol.inputTypes;
+        this.paramTypes       = _(Omniprotocol.inputTypes).
+          pick(_.matches({canParameterize: true})).
+          forEach(function (param, name) {
+            _.assign(param, {name: name});
+          }).
+          groupBy('type').
+          value();
         this.containerOptions = Omniprotocol.optionEnums.containers;
         this.storageOptions   = _.union([false], Omniprotocol.optionEnums.storage.storage);
 
         self.addParam = function (type) {
-          self.parameters.push({type:type});
+          self.parameters.push({type: type});
           $scope.showParameters = false;
         };
 
         self.clearParamValue = function (param) {
-          _.assign(param, {value : null});
+          _.assign(param, {value: null});
         };
 
         self.deleteParam = function (param) {
@@ -59,15 +65,10 @@ angular.module('transcripticApp')
 
         scope.$watch('setupCtrl.parameters', function (newval, oldval) {
           $rootScope.$broadcast('editor:parameterChange', newval);
-          if (_.every(newval, 'name') && _.every(newval, 'value')) {
-            scope.paramDataEmpty = false;
-          } else {
-            scope.paramDataEmpty =  true;
-          }
         }, true);
 
         scope.checkContainerChange = function () {
-          var containerList = _.filter(scope.setupCtrl.parameters, {type : 'container'});
+          var containerList = _.filter(scope.setupCtrl.parameters, {type: 'container'});
           if (containerList.length != oldContainerLength) {
             ContainerHelper.setLocal(containerList);
             scope.notifyContainerChange();
@@ -93,7 +94,7 @@ angular.module('transcripticApp')
         scope.receiveVerifications = function (vers) {
           //todo - need to show verification for whole setup
           _.forEach(vers, function (ver) {
-            _.assign(_.find(scope.setupCtrl.parameters, {name : ver.container}), {verification : ver});
+            _.assign(_.find(scope.setupCtrl.parameters, {name: ver.container}), {verification: ver});
           });
         };
 
