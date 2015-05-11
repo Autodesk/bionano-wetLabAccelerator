@@ -36,6 +36,7 @@ angular.module('tx.protocolEditor')
 
         self.optsDraggableInstruction = {
           handle: '.operation-name',
+          axis  : 'y',
           revert: true,
           start : function (e, ui) {
             var opScope = angular.element(e.target).scope(),

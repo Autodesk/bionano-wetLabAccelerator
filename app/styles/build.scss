@@ -34,6 +34,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import 'modal';
 @import 'notify';
 @import 'corner';
+@import 'verification';
 
 //datavis
 
@@ -41,12 +42,14 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import 'plateWrap';
 @import 'welltip';
 @import 'plategraph';
+@import 'columnVolumes';
+@import 'thermocycleMelting';
+@import 'thermocycleGroup';
 
 //protocol
 
 @import 'protocolHeader';
 @import 'protocolEditor';
-@import 'protocolSlider';
 @import 'protocolGroup';
 @import 'protocolOp';
 @import 'protocolField';

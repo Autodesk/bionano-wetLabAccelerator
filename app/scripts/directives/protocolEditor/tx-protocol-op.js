@@ -6,7 +6,6 @@
  * @description
  * # txOperation
  *
- * todo - may want to get the scaffold and populate that way to handle unspecified fields?
  */
 angular.module('tx.protocolEditor')
   .directive('txProtocolOp', function () {
@@ -45,14 +44,29 @@ angular.module('tx.protocolEditor')
           $scope.modalShown = !$scope.modalShown;
         };
 
+        //note - called by protocol-editor
+        $scope.receiveVerification = function (ver) {
+          console.log(ver);
+          _.assign(self, {verification : ver});
+        };
+
       },
       link: function (scope, element, attrs, groupCtrl) {
+
+        scope.$watch('opCtrl.isVisible', function (viz) {
+          element.toggleClass('open', !!viz);
+        });
+
         scope.deleteStep = function () {
           groupCtrl.deleteStep(scope.opCtrl.op);
         };
 
         scope.$on('editor:toggleGroupVisibility', function (e, val) {
-          scope.opCtrl.isCollapsed = !!val;
+          scope.opCtrl.isVisible = !!val;
+        });
+
+        scope.$on('editor:verificationSuccess', function (e, val) {
+          delete scope.opCtrl.verification;
         });
       }
     };

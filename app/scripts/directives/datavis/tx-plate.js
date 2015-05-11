@@ -136,7 +136,7 @@ angular.module('tx.datavis')
         scope.$watch(function () {
           return element[0].offsetWidth;
         }, function (newWidth) {
-          svg.attr('height', (newWidth / full.width) * full.height);
+          element.attr('height', (newWidth / full.width) * full.height);
         });
 
         var wellsSvg = svg.append("g")
@@ -207,7 +207,7 @@ angular.module('tx.datavis')
               rowCount           = wellCount / colCount,
               wellSpacing        = 2,
               wellRadiusCalc     = ( width - (colCount * wellSpacing) ) / colCount / 2,
-              wellRadius         = (wellRadiusCalc > height / 2) ? (height/2) : wellRadiusCalc,
+              wellRadius         = (wellRadiusCalc > height / 2) ? (height / 2) : wellRadiusCalc,
               wellArray          = WellConv.createArrayGivenBounds([0, 1], [rowCount - 1, colCount]),
               transitionDuration = 200;
 
@@ -278,9 +278,10 @@ angular.module('tx.datavis')
                 groupData = _.isArray(scope.groupData) ? scope.groupData : [scope.groupData];
 
             _.forEach(groupData, function (group) {
-              var color = group.color;
+              var color = _.result(group, 'color', rgbaify(colors.disabled));
               if (group.wells == 'all') {
                 groupMap = _.constant(color);
+                return false; //exit - this takes precedence
               } else {
                 _.forEach(group.wells, function (well) {
                   groupMap[well] = color;
@@ -292,7 +293,14 @@ angular.module('tx.datavis')
             scaleWellRadius(selection, {}, 1);
           } else if (!_.isEmpty(scope.plateData)) {
             //for changing radius of well
-            scaleWellRadius(selection, _.mapValues(scope.plateData, 'value'), 0);
+            var mapped     = _.mapValues(scope.plateData, 'value'),
+                extent     = d3.extent(_.values(mapped)),
+                min        = extent[0],
+                max        = extent[1],
+                normalizer = d3.scale.linear().domain(extent).range([0,1]).nice(),
+                normalized = _.mapValues(mapped, normalizer);
+
+            scaleWellRadius(selection, normalized, 0);
 
             /*//for changing fill of well
             selection.style('fill', function (d) {
@@ -463,9 +471,8 @@ angular.module('tx.datavis')
         }
 
         function changeWellColor (selection, valueMap, defaultColor) {
-          selection.style('fill', function (d) {
-            return _.result(valueMap, d, defaultColor);
-          });
+          var func = _.isFunction(valueMap) ? valueMap : _.partial(_.result, valueMap, _, defaultColor);
+          selection.style('fill', func);
         }
 
         function selectColumn (col) {

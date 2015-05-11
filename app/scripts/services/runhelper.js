@@ -118,6 +118,7 @@ angular.module('transcripticApp')
         return self.firebaseRuns.$save(firebaseRecord)
           .then(updateRunsExposed);
       } else {
+        //fixme - this often gets called unnecessarily
         return self.firebaseRuns.$add(runObj).
           then(function (ref) {
             var firebaseProto = self.firebaseRuns.$getRecord(ref.key());
@@ -150,7 +151,7 @@ angular.module('transcripticApp')
       });
 
       //assign metadata
-      _.assign(run.metadata, generateNewRunMetadata(protocol));
+      _.assign(run.metadata, generateNewRunMetadata(protocol), run.metadata);
 
       return run;
     }

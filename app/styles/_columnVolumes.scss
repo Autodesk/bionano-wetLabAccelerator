@@ -1,0 +1,10 @@
+tx-plate-columns {
+
+}
+
+.columnVolumes-group {
+
+  &.active {
+    background-color: transparentize($primary, 0.8);
+  }
+}

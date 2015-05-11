@@ -8,7 +8,7 @@ body {
 
   &:before {
     content: " ";
-    background-image: url('/images/app-bg-big.png');
+    background-image: url('/images/phix-background.png');
     background-position: 50% 50%;
     background-repeat: no-repeat;
     opacity: 0.9;
@@ -84,7 +84,7 @@ body {
 
 .maxout-scroll-vertical {
   max-height: 100vh;
-  overflow-y: scroll;
+  //overflow-y: scroll;
 }
 
 .sidepanel {

@@ -11,6 +11,14 @@
        ng-mouseenter="hovering = true"
        ng-mouseleave="hovering = false"
        ng-class="{'highlight' : deleteRow}">
+    <div class="verification" ng-if="param.verification">
+      <div class="verification-alert">
+        <span class="glyphicon glyphicon-alert"></span>
+      </div>
+      <div class="verification-flag">
+        <span ng-bind="param.verification.message"></span>
+      </div>
+    </div>
     <div class="cell-1">
       <span>{{param.type}}</span>
       <input class="input-styled"
@@ -23,6 +31,11 @@
          ng-switch="param.type">
       <table ng-switch-when="container" ng-class="{'highlight' : deleteRow}">
         <tr>
+          <td>
+            <input type="color"
+                     ng-required="true"
+                     ng-model="param.value.color">
+          </td>
           <td>
             <input type="checkbox"
                    ng-model="param.value.isNew"> new?
@@ -57,8 +70,8 @@
       <a class="close"
          ng-show="hovering"
          ng-click="setupCtrl.deleteParam(param)"
-         ng-mouseenter="deleteRow = !deleteRow"
-         ng-mouseleave="deleteRow = !deleteRow">&times;</a>
+         ng-mouseenter="deleteRow = true"
+         ng-mouseleave="deleteRow = false">&times;</a>
     </div>
   </div>
   <div class="row">

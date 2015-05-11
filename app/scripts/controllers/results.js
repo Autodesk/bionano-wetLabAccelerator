@@ -13,8 +13,10 @@ angular.module('transcripticApp')
 
     self.run = RunHelper.currentRun;
 
+    /*
     $http.get('demo_runs/transformation_4-30.json')
       .success(RunHelper.assignCurrentRun);
+     */
 
     $scope.$watch(function () {
       return self.run.transcripticRunId;
@@ -38,8 +40,8 @@ angular.module('transcripticApp')
   */
       $scope.$watch('resultsCtrl.currentInfo', function (newval) {
         if (!_.isEmpty(newval)) {
-          self.currentGroup     = self.run.protocol.groups[newval.group];
-          self.currentOperation = self.currentGroup.steps[newval.step];
+          self.currentGroup     = _.result(self.run, 'protocol.groups', {})[newval.group];
+          self.currentOperation = _.result(self.currentGroup, 'steps', {})[newval.step];
         }
       });
 

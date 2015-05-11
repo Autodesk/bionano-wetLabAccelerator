@@ -27,9 +27,38 @@ module.exports = {
       return _.isNumber(parseFloat(input));
     }
   },
+  "group"  : {
+    description        : "an object",
+    "autoprotocol-type": "group",
+    verification       : function (input) {
+      return _.isObject(input) && !_.isEmpty(input);
+    }
+  },
+  "group+" : {
+    description        : "An Array of objects (groups)",
+    "autoprotocol-type": "group+",
+    verification       : function (input) {
+      return _.isArray(input) && _.every(input, _.isObject);
+    }
+  },
 
   //container / well
 
+  "aliquot"  : {
+    description        : "A single aliquot",
+    "autoprotocol-type": "Well",
+    verification       : _.constant(true)
+  },
+  "aliquot+" : {
+    description        : "Several aliquot",
+    "autoprotocol-type": "WellGroup",
+    verification       : _.constant(true)
+  },
+  "aliquot++": {
+    description        : "Group of multiple aliquots",
+    "autoprotocol-type": "list(WellGroup)",
+    verification       : _.constant(true)
+  },
   "container": {
     description        : "A single container",
     "autoprotocol-type": "Container",
@@ -77,6 +106,13 @@ module.exports = {
 
   //custom -- should separate these
 
+  "option"            : {
+    description : "A dropdown with options",
+    verification: function (input, options) {
+      //todo - how to know need to pass in options, and do so dynamically?
+      return _.indexOf(options, input) > -1;
+    }
+  },
   "mixwrap"           : {
     description : "A pre- or post- mixing step, in some liquid handling operations",
     verification: function (input) {
@@ -91,12 +127,26 @@ module.exports = {
           });
     }
   },
-  "thermocycle"       : {
+  "thermocycleGroups"  : {
+    description : "Set of groups in thermocycle",
+    verification: function (input) {
+      return true;
+    }
+  },
+  "thermocycleGroup"  : {
     description : "Set of steps in thermocycle",
     verification: function (input) {
       return _.isArray(input) && _.every(input, function (item) {
-            return _.isNumber(item.column) && _.isString(item.volume);
-          });
+        return _.isNumber(item.cycles) && !_.isEmpty(item.steps);
+      });
     }
+  },
+  "thermocycleMelting": {
+    description : "Melting temperature / gradient in thermocycle",
+    verification: _.constant(true)
+  },
+  "thermocycleDyes"   : {
+    description : "Dyes mapped to wells for thermocycle",
+    verification: _.constant(true)
   }
 };

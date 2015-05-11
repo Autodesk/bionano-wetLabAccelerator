@@ -65,10 +65,10 @@ module.exports = {
           }
         },
         {
-          "name"   : "one_tip",
-          "type"   : "boolean",
-          "optional" : true,
-          "default": false
+          "name"    : "one_tip",
+          "type"    : "boolean",
+          "optional": true,
+          "default" : false
         }
       ]
     }
@@ -245,7 +245,7 @@ module.exports = {
           "name"   : "reagent",
           "type"   : "option",
           "options": optionEnums.reagents.dispense,
-          "default"  : "lb-broth-noAB"
+          "default": "lb-broth-noAB"
         },
         {
           "name"           : "columns",
@@ -277,7 +277,7 @@ module.exports = {
           "name"    : "dataref",
           "type"    : "string",
           "optional": true,
-          "value"   : "thermocycle_${index}"
+          "default" : "thermocycle_${index}"
         },
         {
           "name": "object",
@@ -290,7 +290,7 @@ module.exports = {
         },
         {
           "name": "groups",
-          "type": "thermocycleGroup"
+          "type": "thermocycleGroups"
         },
         {
           "name"    : "dyes",
@@ -509,9 +509,9 @@ module.exports = {
       ],
       "fields"         : [
         {
-          "name"   : "dataref",
-          "type"   : "string",
-          "default": "absorbance_${index}"
+          "name"    : "dataref",
+          "type"    : "string",
+          "default" : "absorbance_${index}"
         },
         {
           "name"           : "wells",
@@ -553,9 +553,9 @@ module.exports = {
       ],
       "fields"         : [
         {
-          "name"   : "dataref",
-          "type"   : "string",
-          "default": "fluorescence_${index}"
+          "name"    : "dataref",
+          "type"    : "string",
+          "default" : "fluorescence_${index}"
         },
         {
           "name"           : "wells",
@@ -676,53 +676,53 @@ module.exports = {
 
   //containers
 
-/*
-  "store": {
-    "operation"  : "store",
-    "description": "Deliver a plate to a storage location specified by the where parameter.",
-    "name"       : "Store",
-    "scaffold"   : {
-      "operation"   : "store",
-      "requirements": {},
-      "transforms"  : [
-        {
-          "container": "container"
-        }
-      ],
-      "fields"      : [
-        {
-          "name": "object",
-          "type": "container"
-        },
-        {
-          "name"   : "where",
-          "type"   : "option",
-          "options": optionEnums.storage.storage,
-          "default": "ambient"
-        }
-      ]
-    }
-  },
+  /*
+    "store": {
+      "operation"  : "store",
+      "description": "Deliver a plate to a storage location specified by the where parameter.",
+      "name"       : "Store",
+      "scaffold"   : {
+        "operation"   : "store",
+        "requirements": {},
+        "transforms"  : [
+          {
+            "container": "container"
+          }
+        ],
+        "fields"      : [
+          {
+            "name": "object",
+            "type": "container"
+          },
+          {
+            "name"   : "where",
+            "type"   : "option",
+            "options": optionEnums.storage.storage,
+            "default": "ambient"
+          }
+        ]
+      }
+    },
 
-  "discard": {
-    "operation"  : "discard",
-    "description": "Discard a container. The container will be removed from your inventory and no longer accessible.",
-    "name"       : "Discard",
-    "scaffold"   : {
-      "operation"   : "discard",
-      "requirements": {},
-      "transforms"  : [
-        {
-          "container": "container"
-        }
-      ],
-      "fields"      : [
-        {
-          "name": "object",
-          "type": "container"
-        }
-      ]
+    "discard": {
+      "operation"  : "discard",
+      "description": "Discard a container. The container will be removed from your inventory and no longer accessible.",
+      "name"       : "Discard",
+      "scaffold"   : {
+        "operation"   : "discard",
+        "requirements": {},
+        "transforms"  : [
+          {
+            "container": "container"
+          }
+        ],
+        "fields"      : [
+          {
+            "name": "object",
+            "type": "container"
+          }
+        ]
+      }
     }
-  }
-  */
+    */
 };
