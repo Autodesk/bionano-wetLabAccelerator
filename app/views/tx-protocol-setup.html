@@ -75,12 +75,13 @@
     </div>
   </div>
   <div class="row">
-    <button ng-disabled="paramDataEmpty"
+    <button class="dropdown"
+            ng-disabled="paramDataEmpty"
             ng-click="showParameters = !showParameters"
             ng-class="{'open' : showParameters}">
       <span class="glyphicon glyphicon-plus"></span>
       Add Parameter
-      <ul class="dropdown-menu"
+      <ul class="dropdown-menu dropdown-menu-right"
           ng-mouseleave="showParameters = false">
         <li ng-repeat="(type, meta) in setupCtrl.paramTypes">
           <a ng-click="setupCtrl.addParam(type)">{{type}}</a>

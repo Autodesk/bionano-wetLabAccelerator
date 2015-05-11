@@ -3,18 +3,18 @@
        ng-required="fieldCtrl.model.unit"
        type="number"
        placeholder="value">
-<div ng-click="showOptions = !showOptions"
-     ng-class="{'open' : showOptions}">
-  <button>
-    <span>
-    {{fieldCtrl.model.unit ? fieldCtrl.model.unit : (fieldCtrl.field.default.unit ? fieldCtrl.field.default.unit : unitOptions[0])}}
-    </span>
-    <span class="glyphicon glyphicon-menu-down"></span>
-  </button>
-  <ul class="dropdown-menu">
+<button class="dropdown"
+        ng-click="showOptions = !showOptions"
+        ng-mouseleave="showOptions = false"
+        ng-class="{'open' : showOptions}">
+  <span>
+  {{fieldCtrl.model.unit ? fieldCtrl.model.unit : (fieldCtrl.field.default.unit ? fieldCtrl.field.default.unit : unitOptions[0])}}
+  </span>
+  <span class="glyphicon glyphicon-menu-down"></span>
+  <ul class="dropdown-menu dropdown-menu-right">
     <li ng-repeat="unit in unitOptions"
         ng-click="fieldCtrl.model.unit = unit">
       <a>{{unit}}</a>
     </li>
   </ul>
-</div>
+</button>

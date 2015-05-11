@@ -80,6 +80,12 @@ angular.module('tx.protocolEditor')
           });
         };
 
+        self.closeDropdown = function () {
+            $timeout(function(){
+              self.paramListVisible = false;
+            }, 150);
+        };
+
       },
       compile         : function compile (tElement, tAttrs, transclude) {
         var type,
