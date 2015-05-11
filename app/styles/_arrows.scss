@@ -1,0 +1,25 @@
+@mixin arrow-bottom ($default, $active, $activeClass: 'open') {
+  background: $default;
+
+  &:after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-top-color: $default;
+    border-width: 10px;
+    margin-left: -15px;
+  }
+
+  &.#{$activeClass} {
+    background: $active;
+
+    &:after {
+      border-top-color: $active;
+    }
+  }
+}

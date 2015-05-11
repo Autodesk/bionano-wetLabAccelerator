@@ -5,6 +5,12 @@
   border: 0;
   background: transparent;
   cursor: text;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 .background-dark {
@@ -46,10 +52,4 @@
   &::-webkit-input-placeholder {
        color: $warning;
      }
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }

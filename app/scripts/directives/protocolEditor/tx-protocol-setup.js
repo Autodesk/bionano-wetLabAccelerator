@@ -97,6 +97,9 @@ angular.module('transcripticApp')
           });
         };
 
+        scope.$watch('isCollapsed', function (newval) {
+          element.toggleClass('open', newval);
+        });
 
         //init
         scope.checkContainerChange();

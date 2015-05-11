@@ -1,21 +1,23 @@
 @import "variables";
 
 footer {
-  background: transparent;
+  background: $footer-bg;
   text-align: center;
-  color: $grey;
-  font-size: $font-size;
+  color: $footer-color;
+  font-size: $footer-font-size;
+  padding: 0 $space-page $space-page;
 
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
 
   .status {
-    margin: 0 10px;
+    margin: 0;
     align-self: center;
 
     tx-inspector {
       max-height: 45px;
+      max-width: 70%;
     }
   }
 
@@ -24,7 +26,7 @@ footer {
     img {
       width: 91px;
       height: 15px;
-      margin: $layout-spacing-lg;
+      margin: 0;
     }
   }
 }
