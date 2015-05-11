@@ -1,6 +1,7 @@
 <div class="protocol-setup-header"
      ng-click="isCollapsed = !isCollapsed">
   setup
+</div>
   <div class="protocol-setup-main"
        ng-show="isCollapsed">
     <div class="row"
@@ -63,28 +64,27 @@
                            ng-class="{'highlight' : deleteRow}">
         </tx-protocol-field>
       </div>
+      <div class="cell-3">
+        <a class="close"
+           ng-show="hovering"
+           ng-click="setupCtrl.deleteParam(param)"
+           ng-mouseenter="deleteRow = true"
+           ng-mouseleave="deleteRow = false">&times;</a>
+      </div>
     </div>
-    <div class="cell-3">
-      <a class="close"
-         ng-show="hovering"
-         ng-click="setupCtrl.deleteParam(param)"
-         ng-mouseenter="deleteRow = true"
-         ng-mouseleave="deleteRow = false">&times;</a>
+    <div class="row">
+      <button class="dropdown"
+              ng-disabled="paramDataEmpty"
+              ng-click="showParameters = !showParameters"
+              ng-class="{'open' : showParameters}">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add Parameter
+        <ul class="dropdown-menu dropdown-menu-right"
+            ng-mouseleave="showParameters = false">
+          <li ng-repeat="(type, meta) in setupCtrl.paramTypes">
+            <a ng-click="setupCtrl.addParam(type)">{{type}}</a>
+          </li>
+        </ul>
+      </button>
     </div>
-  </div>
-  <div class="row">
-    <button class="dropdown"
-            ng-disabled="paramDataEmpty"
-            ng-click="showParameters = !showParameters"
-            ng-class="{'open' : showParameters}">
-      <span class="glyphicon glyphicon-plus"></span>
-      Add Parameter
-      <ul class="dropdown-menu dropdown-menu-right"
-          ng-mouseleave="showParameters = false">
-        <li ng-repeat="(type, meta) in setupCtrl.paramTypes">
-          <a ng-click="setupCtrl.addParam(type)">{{type}}</a>
-        </li>
-      </ul>
-    </button>
-  </div>
 </div>
