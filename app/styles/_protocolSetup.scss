@@ -33,7 +33,7 @@
 
           &:hover {
             color: $white;
-            background: $accent;
+            background: $primary;
           }
 
           &[disabled] {
@@ -96,14 +96,11 @@
     border: solid transparent;
     content: " ";
     pointer-events: none;
-    border-top-color: rgba(255,255,255,0.5);
+    border-top-color: rgba(255, 255, 255, 0.5);
     border-width: 10px;
     margin-left: -15px;
   }
 
-  .open {
-    background: $white;
-  }
   .highlight {
     background: $accent;
     color: $white;
@@ -130,4 +127,6 @@
       margin: 0 3px;
     }
   }
+
+  @include arrow-bottom($step-background-inactive, $step-background-active);
 }

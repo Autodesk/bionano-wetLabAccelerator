@@ -4,10 +4,10 @@ tx-protocol-op {
   align-items: center;
   width: 100%;
   margin: 5px 3em;
-  background: transparentize($white, .5);
+  background: $step-background-inactive;
 
   .operation-name {
-    color:$black;
+    color: $black;
     cursor: all-scroll;
     width: 100%;
     padding: 3px 5px;
@@ -39,24 +39,7 @@ tx-protocol-op {
       }
       }
     }
-
   }
 
-  &.open {
-    background: $white;
-  }
-
-  &:after {
-    top: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-top-color: rgba(255,255,255,0.5);
-    border-width: 10px;
-    margin-left: -15px;
-  }
+  @include arrow-bottom($step-background-inactive, $step-background-active);
 }

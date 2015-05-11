@@ -82,10 +82,9 @@ angular.module('tx.datavis')
           element.toggleClass('no-select', !!hiding);
         });
 
-        //todo - perf - move to a watchGroup
         scope.$watch('container', _.partial(rerender, true));
         scope.$watch('plateData', _.partial(rerender, false));
-        scope.$watch('groupData', _.partial(rerender, false));
+        scope.$watch('groupData', _.partial(rerender, false), true);
 
         scope.$watch('wellsInput', function (newWells, oldWells) {
           if (_.isArray(newWells)) {
@@ -95,7 +94,6 @@ angular.module('tx.datavis')
           }
         });
 
-        //todo - performance boost this
         scope.$watch('focusWells', function (newval) {
           if (!_.isUndefined(newval) && _.isArray(newval) && newval.length) {
             var map = createWellMap(newval, true);
