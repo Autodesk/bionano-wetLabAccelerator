@@ -10,3 +10,46 @@
 .background-dark {
   background: $grey;
 }
+
+.input-styled {
+  -webkit-appearance: none;
+  display: inline-block;
+  width: 150px;
+  outline: 0;
+  border: 2px solid transparent;
+  padding: 0 5px;
+  margin: 0 10px;
+  background: transparent;
+  color: $black;
+  cursor: text;
+  text-align: center;
+
+  &:hover {
+    -webkit-appearance: none;
+    background: $accent;
+    color: $white;
+    &::-webkit-input-placeholder {
+      color: $white;
+    }
+  }
+
+  &:focus {
+    -webkit-appearance: none;
+    border: 2px solid $accent;
+    background: transparent;
+    color: $black;
+    &::-webkit-input-placeholder {
+      color: $black;
+    }
+  }
+
+  &::-webkit-input-placeholder {
+       color: $warning;
+     }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
