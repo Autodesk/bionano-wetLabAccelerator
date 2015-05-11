@@ -74,10 +74,6 @@ angular.module('transcripticApp').service('Notify', function($timeout,$http,$com
       angular.element(args.container).append(templateElement);
       messageElements.push(templateElement);
 
-      $timeout(function () {
-        scope.$centerMargin = '-' + (templateElement[0].offsetWidth / 2) + 'px';
-      });
-
       scope.$close = function () {
         templateElement.css('opacity', 0).attr('data-closing', 'true');
         layoutMessages();

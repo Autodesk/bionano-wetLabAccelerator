@@ -1,91 +1,89 @@
 <div class="protocol-setup-header"
-     ng-click="isCollapsed = !isCollapsed"
-     ng-class="{'open':isCollapsed}">
+     ng-click="isCollapsed = !isCollapsed">
   setup
-</div>
-<div class="protocol-setup-main"
-       ng-show="isCollapsed"
-       ng-class="{'open' : isCollapsed}">
-  <div class="row"
-       ng-repeat="param in setupCtrl.parameters"
-       ng-mouseenter="hovering = true"
-       ng-mouseleave="hovering = false"
-       ng-class="{'highlight' : deleteRow}">
-    <div class="verification" ng-if="param.verification">
-      <div class="verification-alert">
-        <span class="glyphicon glyphicon-alert"></span>
+  <div class="protocol-setup-main"
+       ng-show="isCollapsed">
+    <div class="row"
+         ng-repeat="param in setupCtrl.parameters"
+         ng-mouseenter="hovering = true"
+         ng-mouseleave="hovering = false"
+         ng-class="{'highlight' : deleteRow}">
+      <div class="verification" ng-if="param.verification">
+        <div class="verification-alert">
+          <span class="glyphicon glyphicon-alert"></span>
+        </div>
+        <div class="verification-flag">
+          <span ng-bind="param.verification.message"></span>
+        </div>
       </div>
-      <div class="verification-flag">
-        <span ng-bind="param.verification.message"></span>
+      <div class="cell-1">
+        <span>{{param.type}}</span>
+        <input class="input-styled"
+               ng-class="{'highlight' : deleteRow}"
+               type="text" placeholder="name"
+               ng-model="param.name"
+               tx-change-broadcaster="editor:parameterNameChange">
       </div>
-    </div>
-    <div class="cell-1">
-      <span>{{param.type}}</span>
-      <input class="input-styled"
-             ng-class="{'highlight' : deleteRow}"
-             type="text" placeholder="name"
-             ng-model="param.name"
-             tx-change-broadcaster="editor:parameterNameChange">
-    </div>
-    <div class="cell-2"
-         ng-switch="param.type">
-      <table ng-switch-when="container" ng-class="{'highlight' : deleteRow}">
-        <tr>
-          <td>
-            <input type="color"
+      <div class="cell-2"
+           ng-switch="param.type">
+        <table ng-switch-when="container" ng-class="{'highlight' : deleteRow}">
+          <tr>
+            <td>
+              <input type="color"
                      ng-required="true"
                      ng-model="param.value.color">
-          </td>
-          <td>
-            <input type="checkbox"
-                   ng-model="param.value.isNew"> new?
-          </td>
-          <td ng-if="param.value.isNew">
-            <select ng-model="param.value.type"
-                    ng-required="param.value.isNew"
-                    ng-change="notifyContainerChange()"
-                    ng-options="t as t for (t, opts) in setupCtrl.containerOptions"></select>
-          </td>
-          <td ng-if="!param.value.isNew">
-            <select ng-model="dummyRemote"
-                    ng-required="!param.value.isNew"
-                    ng-change="setupCtrl.handleSelectRemoteContainer(param, dummyRemote)"
-                    ng-options="c as (c.name || c.id) for c in setupCtrl.remoteContainers"></select>
-          </td>
-          <td>
-            <select ng-model="param.value.storage"
-                    ng-options="o as o for o in setupCtrl.storageOptions"></select>
-          </td>
-        </tr>
-      </table>
-      <tx-protocol-field ng-switch-default
-                         field="param"
-                         ng-model="param.value"
-                         hide-title="true"
-                         prevent-variable="true"
-                         ng-class="{'highlight' : deleteRow}">
-      </tx-protocol-field>
+            </td>
+            <td>
+              <input type="checkbox"
+                     ng-model="param.value.isNew"> new?
+            </td>
+            <td ng-if="param.value.isNew">
+              <select ng-model="param.value.type"
+                      ng-required="param.value.isNew"
+                      ng-change="notifyContainerChange()"
+                      ng-options="t as t for (t, opts) in setupCtrl.containerOptions"></select>
+            </td>
+            <td ng-if="!param.value.isNew">
+              <select ng-model="dummyRemote"
+                      ng-required="!param.value.isNew"
+                      ng-change="setupCtrl.handleSelectRemoteContainer(param, dummyRemote)"
+                      ng-options="c as (c.name || c.id) for c in setupCtrl.remoteContainers"></select>
+            </td>
+            <td>
+              <select ng-model="param.value.storage"
+                      ng-options="o as o for o in setupCtrl.storageOptions"></select>
+            </td>
+          </tr>
+        </table>
+        <tx-protocol-field ng-switch-default
+                           field="param"
+                           ng-model="param.value"
+                           hide-title="true"
+                           prevent-variable="true"
+                           ng-class="{'highlight' : deleteRow}">
+        </tx-protocol-field>
+      </div>
+      <div class="cell-3">
+        <a class="close"
+           ng-show="hovering"
+           ng-click="setupCtrl.deleteParam(param)"
+           ng-mouseenter="deleteRow = true"
+           ng-mouseleave="deleteRow = false">&times;</a>
+      </div>
     </div>
-    <div class="cell-3">
-      <a class="close"
-         ng-show="hovering"
-         ng-click="setupCtrl.deleteParam(param)"
-         ng-mouseenter="deleteRow = true"
-         ng-mouseleave="deleteRow = false">&times;</a>
+    <div class="row">
+      <button ng-disabled="paramDataEmpty"
+              ng-click="showParameters = !showParameters"
+              ng-class="{'open' : showParameters}">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add Parameter
+        <ul class="dropdown-menu"
+            ng-mouseleave="showParameters = false">
+          <li ng-repeat="(type, meta) in setupCtrl.paramTypes">
+            <a ng-click="setupCtrl.addParam(type)">{{type}}</a>
+          </li>
+        </ul>
+      </button>
     </div>
-  </div>
-  <div class="row">
-    <button ng-disabled="paramDataEmpty"
-            ng-click="showParameters = !showParameters"
-            ng-class="{'open' : showParameters}">
-      <span class="glyphicon glyphicon-plus"></span>
-      Add Parameter
-      <ul class="dropdown-menu"
-          ng-mouseleave="showParameters = false">
-        <li ng-repeat="(type, meta) in setupCtrl.paramTypes">
-          <a ng-click="setupCtrl.addParam(type)">{{type}}</a>
-        </li>
-      </ul>
-    </button>
   </div>
 </div>
