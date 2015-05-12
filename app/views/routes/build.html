@@ -1,5 +1,5 @@
 <div ng-show="restyleCtrl.currentProtocol.metadata"
-     class="flex-grower flex-vertical">
+     class="build-wrap flex-grower flex-vertical">
 
   <div>
     <span ng-bind="restyleCtrl.currentProtocol.metadata.name"></span>
@@ -45,7 +45,7 @@
 
   <div class="flex-horizontal flex-grower">
 
-    <div class="sidepanel flex-vertical"
+    <div class="sidepanel operation-list flex-vertical"
          resizeable
          resize-property="width"
          resize-position="right"
@@ -53,7 +53,7 @@
       <tx-operation-list class="flex-grower scroll-y"></tx-operation-list>
     </div>
 
-    <div class="maincolumn flex-grower maxout-scroll-vertical">
+    <div class="maincolumn flex-grower maxout-scroll-vertical protocol-steps">
 
       <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
                            protocol-form="ProtocolForm"></tx-protocol-actions>
