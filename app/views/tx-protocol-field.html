@@ -3,7 +3,7 @@
      ng-class="{optional: fieldCtrl.field.optional == true}"
      ng-bind="fieldCtrl.field.name">
 </div>
-<div class="field-value" ng-mouseleave="fieldCtrl.closeDropdown()">
+<div class="field-value" ng-mouseleave="fieldCtrl.closeDropdown()" ng-mouseenter="fieldCtrl.cancelDropdown()">
   <div class="pull-right field-parameter-toggler"
        ng-if="!fieldCtrl.preventVariable && fieldCtrl.parameterAllowed(fieldCtrl.field.type)"
        ng-click="fieldCtrl.paramListVisible = !fieldCtrl.paramListVisible"
