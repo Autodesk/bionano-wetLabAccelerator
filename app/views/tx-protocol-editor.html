@@ -11,7 +11,7 @@
                    drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
                    ng-file-change="editorCtrl.onFileDrop($files, $event, $rejectedFiles)">
 </tx-protocol-setup>
-<div class="protocol-instructions"
+<div class="protocol-instructions flex-grower"
      tx-protocol-droppable="editorCtrl.optsDroppableEditor">
   <tx-protocol-group ng-repeat="group in editorCtrl.protocol.groups"
                      class="protocol-group"
