@@ -20,7 +20,7 @@ header.site-header {
     .logo {
       display: flex;
       width: 50px;
-      margin-right: 40px; //hack - accommodate the user and match it's size
+      margin-right: 30px; //hack - accommodate the user and match it's size
 
       img {
         width: $header-logo-dim;
