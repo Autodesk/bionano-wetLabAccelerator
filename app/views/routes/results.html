@@ -5,11 +5,32 @@
       <p>Protocol Overview</p>
     </div>
     <div class="maincolumn flex-grower">
-      <p class="pull-right">
-        <a tx-downloadjson
-           filename="{{(resultsCtrl.run.metadata.name ? resultsCtrl.run.metadata.name : 'run_data') + '.json'}}"
-           download-model="resultsCtrl.run">Download</a>
-      </p>
+      <div class="pull-right"
+           style="position: relative;"
+           tooltip="Download Data"
+           tooltip-append-to-body="true"
+           ng-class="{'open' : downloadOptionsVisible}"
+           ng-mouseenter="downloadOptionsVisible = true"
+           ng-mouseleave="downloadOptionsVisible = false">
+        <ul class="dropdown-menu">
+          <li><a tx-downloadjson
+                 filename="{{(resultsCtrl.run.metadata.name ? resultsCtrl.run.metadata.name : 'run_data') + '.json'}}"
+                 download-model="resultsCtrl.run">
+            Everything
+          </a></li>
+          <li><a tx-downloadjson
+                 filename="{{(resultsCtrl.run.metadata.name || 'run') + '.json'}}"
+                 download-model="resultsCtrl.run.data">
+            Run Data (JSON)
+          </a></li>
+          <li><a download
+                 ng-href="{{resultsCtrl.generateRunCsvUrl(resultsCtrl.run)}}">
+            Run Data (CSV)
+          </a></li>
+        </ul>
+        <span>Download</span>
+      </div>
+
       <p>Run Results</p>
     </div>
   </div>
