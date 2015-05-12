@@ -37,8 +37,11 @@ angular.module('transcripticApp')
       var letters = WellConv.letters;
       return _.map(_.range(wellsInColumn), function (wellnum) {
         //increment column number by one to match plate
-        return letters[wellnum] + (columnNumber + 1);
+        console.log(columnNumber, parseInt(columnNumber, 10), parseInt(columnNumber, 10) + 1);
+        return letters[wellnum] + (_.parseInt(columnNumber, 10) + 1);
       });
     }
+
+    self.parseInt = _.parseInt;
 
   });

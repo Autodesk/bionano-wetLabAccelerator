@@ -276,7 +276,7 @@ angular.module('tx.datavis')
                 groupData = _.isArray(scope.groupData) ? scope.groupData : [scope.groupData];
 
             _.forEach(groupData, function (group) {
-              var color = _.result(group, 'color', rgbaify(colors.disabled));
+              var color = _.result(group, 'color', rgbaify(colors.data));
               if (group.wells == 'all') {
                 groupMap = _.constant(color);
                 return false; //exit - this takes precedence
@@ -550,6 +550,14 @@ angular.module('tx.datavis')
             //brushend();
           }
           toggleWellsFromMap({}, classActive, true);
+        }
+
+        function colorFromString (str) {
+          // str to hash
+          for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
+          // int/hash to hex
+          for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
+          return colour;
         }
       }
     };
