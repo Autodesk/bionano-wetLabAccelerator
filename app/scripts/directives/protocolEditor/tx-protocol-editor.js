@@ -49,7 +49,9 @@ angular.module('tx.protocolEditor')
             fileReader.onload = function (e) {
               $scope.$apply(function () {
                 try {
-                  ProtocolHelper.assignCurrentProtocol(angular.fromJson(e.target.result));
+                  var protocol = angular.fromJson(e.target.result);
+                  ProtocolHelper.clearIdentifyingInfo(protocol);
+                  ProtocolHelper.assignCurrentProtocol(protocol);
                 } catch (e) {
                   console.log('couldnt parse dropped JSON', e);
                 }

@@ -31,7 +31,50 @@
         <span>Download</span>
       </div>
 
-      <p>Run Results</p>
+      <div>
+        <span ng-bind="'Results: ' + resultsCtrl.run.metadata.name"></span>
+
+        <div class="glyphicon-ellipse" ng-click='toggleModal()'>
+          <span class="glyphicon glyphicon-option-horizontal"></span>
+        </div>
+        <tx-modal class="centered"
+                  title="Run Metadata"
+                  ng-show='modalShown'
+                on-close="resultsCtrl.onModalClose()">
+          <table>
+            <thead>
+            <tr>
+              <td colspan="2">Edit protocol metadata</td>
+            </tr>
+            </thead>
+            <tr>
+              <td>Name</td>
+              <td>
+                <input type="text"
+                       class="input-unstyled protocol-metadata-field"
+                       ng-model="resultsCtrl.run.metadata.name">
+              </td>
+            </tr>
+            <tr>
+              <td>Description</td>
+              <td>
+                <input type="text"
+                       class="input-unstyled protocol-metadata-field"
+                       ng-model="resultsCtrl.run.metadata.description">
+              </td>
+            </tr>
+            <tr>
+              <td>Tags</td>
+              <td>
+                <input type="text"
+                       class="input-unstyled protocol-metadata-field"
+                       ng-list
+                       ng-model="resultsCtrl.run.metadata.tags">
+              </td>
+            </tr>
+          </table>
+        </tx-modal>
+      </div>
     </div>
   </div>
 

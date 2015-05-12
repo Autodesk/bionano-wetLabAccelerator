@@ -495,17 +495,13 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       //'wiredep', // doesn't work without internet
+      'browersify',
       'configureProxies:livereload',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
       'watch'
     ]);
-  });
-
-  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
   });
 
   grunt.registerTask('test', [
@@ -519,6 +515,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
+    'browersify',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -529,7 +526,7 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'filerev',
-    'usemin',
+    'usemin'
     //'htmlmin' //this process hangs
   ]);
 

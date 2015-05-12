@@ -1,0 +1,20 @@
+<div class="dropdown"
+     ng-class="{'open' : showingContainers}">
+  <a ng-click="showingContainers = !showingContainers"
+     ng-bind="containerSelectCtrl.model || 'select...'"></a>
+  <ul class="dropdown-menu">
+    <li ng-repeat="c in containerSelectCtrl.localContainers">
+      <a ng-class="{'active' : c.name == containerSelectCtrl.model}"
+         ng-click="selectLocalContainer(c)">
+        <span ng-style="{color: c.value.color}">&block;</span>
+        <span ng-bind="c.name"></span>
+      </a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">New...</li>
+    <li ng-repeat="c in containerSelectCtrl.containerOptions">
+      <a ng-click="createNewContainer(c)"
+         ng-bind="c.name"></a>
+    </li>
+  </ul>
+</div>

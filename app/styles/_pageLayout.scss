@@ -31,9 +31,9 @@ body {
   }
 
   .container {
-    width: 960px; // for now, keep at 960 (not responsive)
+    width: $layout-container-width + (2 * $layout-container-padding-side);
     margin: auto auto;
-    padding: 0 10px;
+    padding: 0 $layout-container-padding-side;
   }
 
   footer {
@@ -87,14 +87,31 @@ body {
   //overflow-y: scroll;
 }
 
-.sidepanel {
-  min-width: 15%;
-  max-width: 30%;
-  margin: 25px 15px 0 15px;
+.sidepanel,
+.maincolumn {
+  margin: 25px 0 0;
 }
 
-.maincolumn {
-  min-width: 60%;
-  max-width: 70%;
-  margin: 25px 15px 0 15px;
+.sidepanel {}
+
+.maincolumn {}
+
+// build page
+
+.build-wrap {
+  margin-left: $layout-operations-outside-left !important;
+}
+
+.operation-list {
+  width: $layout-operationList-width;
+  float: left;
+  display: block;
+}
+
+.protocol-steps {
+  float: left;
+  width: $layout-operations-width;
+  //padding to handle overflow-x hidden
+  padding-left: $layout-operations-padding-left;
+  padding-right: $layout-operations-padding-right;
 }
