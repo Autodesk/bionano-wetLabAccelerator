@@ -20,7 +20,8 @@ angular.module('transcripticApp')
     self.currentProtocol = {};
 
     self.assignCurrentProtocol = function (newProtocol) {
-      _.assign(self.currentProtocol, Omniprotocol.utils.getScaffoldProtocol(), newProtocol);
+      //second object is hack for firebase
+      _.assign(self.currentProtocol, {$id : null, $priority: null}, Omniprotocol.utils.getScaffoldProtocol(), newProtocol);
       $timeout(function () {
         $rootScope.$broadcast('editor:newprotocol');
       })

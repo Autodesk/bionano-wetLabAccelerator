@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('ResultsCtrl', function ($scope, $q, $http, RunHelper) {
+  .controller('ResultsCtrl', function ($scope, $q, $http, RunHelper, Auth) {
     var self = this;
 
     self.run = RunHelper.currentRun;
@@ -44,5 +44,9 @@ angular.module('transcripticApp')
           self.currentOperation = _.result(self.currentGroup, 'steps', {})[newval.step];
         }
       });
+
+    self.generateRunCsvUrl = function (run) {
+      return 'http://secure.transcriptic.com/' + Auth.organization() + '/' + run.transcripticProjectId + '/runs/' + run.transcripticRunId + '/data.zip';
+    };
 
     });
