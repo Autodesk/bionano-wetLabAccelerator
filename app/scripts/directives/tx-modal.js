@@ -13,7 +13,8 @@ angular.module('transcripticApp')
         restrict: 'E',
         scope: {
           ngShow: '=',
-          title: '@?'
+          title: '@?',
+          onClose: '&?'
         },
         transclude: true,
         link: function(scope, element, attrs) {
@@ -25,6 +26,7 @@ angular.module('transcripticApp')
             scope.dialogStyle.height = attrs.height;
           }
           scope.hideModal = function() {
+            angular.isFunction(scope.onClose) && scope.onClose();
             scope.ngShow = false;
           };
         }
