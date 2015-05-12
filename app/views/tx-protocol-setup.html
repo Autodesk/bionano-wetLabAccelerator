@@ -1,10 +1,10 @@
 <div class="protocol-setup-header"
-     ng-click="isCollapsed = !isCollapsed">
+     ng-click="isVisible = !isVisible">
   setup
 </div>
 <div>
   <div class="protocol-setup-main"
-       ng-show="isCollapsed">
+       ng-show="isVisible">
     <div class="row"
          ng-repeat="param in setupCtrl.parameters"
          ng-mouseenter="hovering = true"
