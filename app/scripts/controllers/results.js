@@ -49,4 +49,13 @@ angular.module('transcripticApp')
       return 'http://secure.transcriptic.com/' + Auth.organization() + '/' + run.transcripticProjectId + '/runs/' + run.transcripticRunId + '/data.zip';
     };
 
-    });
+    $scope.modalShown = false;
+    $scope.toggleModal = function() {
+      $scope.modalShown = !$scope.modalShown;
+    };
+
+    self.onModalClose = function () {
+      RunHelper.saveRun(self.run);
+    };
+
+  });
