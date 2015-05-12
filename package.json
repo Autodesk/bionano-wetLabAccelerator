@@ -2,7 +2,7 @@
   "name": "transcriptic",
   "version": "0.0.0",
   "dependencies": {
-    "lodash": "~3.7.0",
+    "lodash": "^3.7.0",
     "omniprotocol": "./app/scripts/omniprotocol/"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "load-grunt-tasks": "^0.4.0",
     "time-grunt": "^0.3.1",
-    "node-sass" : "^3.0.0-"
+    "node-sass": "^3.0.0-"
   },
   "engines": {
     "node": ">=0.10.0"

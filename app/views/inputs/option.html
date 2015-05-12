@@ -1,3 +1,18 @@
-<select ng-model="fieldCtrl.model"
-        placeholder="fieldCtrl.field.default"
-        ng-options="o as o for o in modelOptions"></select>
+<div class="button dropdown"
+     ng-click="showOptions = !showOptions"
+     ng-class="{'open' : showOptions}"
+     ng-mouseenter="showCaret = true"
+     ng-mouseleave="showCaret = false; showOptions = false">
+  <span>
+  {{fieldCtrl.model || fieldCtrl.field.default}}
+  </span>
+  <span class="glyphicon glyphicon-menu-down"
+        ng-class="{'visible': showCaret,'invisible': !showCaret}">
+  </span>
+  <ul class="dropdown-menu dropdown-menu-right">
+    <li ng-repeat="option in modelOptions"
+        ng-click="fieldCtrl.model = option">
+      <a ng-bind="option"></a>
+    </li>
+  </ul>
+</div>
