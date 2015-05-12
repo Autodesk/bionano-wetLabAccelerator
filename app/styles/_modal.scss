@@ -68,6 +68,10 @@
     //styling of inner content in a modal
     color: $white;
 
+    .centered & {
+      display: table;
+    }
+
   }
 
   .modal-constrain & {

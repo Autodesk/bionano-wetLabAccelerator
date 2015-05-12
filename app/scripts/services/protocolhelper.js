@@ -41,9 +41,7 @@ angular.module('transcripticApp')
     self.duplicateProtocol = function (protocol) {
       var dup = _.cloneDeep(protocol);
 
-      //todo - smarter creation / update of metadata
-
-      _.assign(dup.metadata, generateNewProtocolMetadata());
+      self.clearIdentifyingInfo(dup);
 
       //note - firebase
       return self.firebaseProtocols.$add(dup)
@@ -86,6 +84,14 @@ angular.module('transcripticApp')
 
     };
 
+    self.clearIdentifyingInfo = function (protocol) {
+      //firebase
+      delete protocol.$id;
+      delete protocol.$priority;
+
+      return _.assign(protocol.metadata, generateNewProtocolMetadata());
+    };
+
     self.clearProtocol = function (protocol) {
       return $q.when(_.assign(protocol, Omniprotocol.utils.getScaffoldProtocol()));
     };
@@ -126,7 +132,7 @@ angular.module('transcripticApp')
 
     function hasNecessaryMetadataToSave (protocol) {
       return _.every(['id', 'name', 'type', 'author'], function (field) {
-        return !_.isUndefined(_.result(protocol.metadata, field));
+        return !_.isEmpty(_.result(protocol.metadata, field));
       });
     }
 

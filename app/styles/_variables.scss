@@ -82,6 +82,10 @@ $transition-out-ease: ease-out;
 ////////////////////
 // spacing
 ////////////////////
+$layout-width-column: 80px;
+$layout-container-width: 1000px;
+$layout-width-page: $layout-container-width + (2 * $layout-width-column);
+$layout-container-padding-side: 10px;
 
 //spacing
 
@@ -93,8 +97,23 @@ $layout-spacing-sm: 5px;
 $space-page: 10px;
 
 //layout
+
 $layout-height-header: 50px;
 $layout-width-sidepanel: 300px;
+
+$layout-operations-space-left: 175px;
+$layout-operations-space-right: 275px;
+$layout-operations-size: 450px;
+$layout-operations-outside-left: $layout-operations-space-right - $layout-operations-space-left;
+$layout-operations-spacing: $layout-spacing-xl;
+
+
+$layout-operationList-width: $layout-operations-space-left - $layout-operations-spacing;
+$layout-operations-padding-left: $layout-operations-spacing;
+$layout-operations-padding-right: $layout-operations-space-right;
+$layout-operations-width: $layout-operations-size + $layout-operations-padding-left + $layout-operations-padding-right;
+
+
 
 ////////////////////
 // UI stuff

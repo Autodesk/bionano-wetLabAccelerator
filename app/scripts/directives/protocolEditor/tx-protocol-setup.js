@@ -41,6 +41,7 @@ angular.module('transcripticApp')
               isNew : true
             }
           });
+          $scope.checkContainerChange();
         };
 
         self.clearParamValue = function (param) {
