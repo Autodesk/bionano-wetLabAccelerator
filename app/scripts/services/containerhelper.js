@@ -50,6 +50,10 @@ angular.module('transcripticApp')
       });
     };
 
+    self.randomColor = function () {
+      return '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
+    };
+
     // helpers
 
     //for setting local or remote - will update union

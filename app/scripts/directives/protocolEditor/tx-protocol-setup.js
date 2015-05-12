@@ -33,6 +33,16 @@ angular.module('transcripticApp')
           $scope.showParameters = false;
         };
 
+        self.addContainer = function () {
+          self.parameters.push({
+            type: 'container',
+            value: {
+              color: ContainerHelper.randomColor(),
+              isNew : true
+            }
+          });
+        };
+
         self.clearParamValue = function (param) {
           _.assign(param, {value: null});
         };

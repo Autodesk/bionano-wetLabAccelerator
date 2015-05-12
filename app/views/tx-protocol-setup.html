@@ -82,6 +82,11 @@
         Add Parameter
         <ul class="dropdown-menu parameter-list"
             ng-mouseleave="showParameters = false">
+          <li>
+            <a class="parameter-option"
+               ng-click="setupCtrl.addContainer()">{{'container' | capfirst}}</a>
+          </li>
+          <li class="divider"></li>
           <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'dimensional'}">
             <a class="parameter-option"
                ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
