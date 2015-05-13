@@ -121,10 +121,6 @@ angular.module('transcripticApp')
           });
         };
 
-        scope.$watch('isVisible', function (newval) {
-          element.toggleClass('open', newval);
-        });
-
         //init
         scope.checkContainerChange();
       }

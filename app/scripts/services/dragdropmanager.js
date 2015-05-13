@@ -9,6 +9,9 @@
  */
 angular.module('transcripticApp')
   .service('DragDropManager', function (Omniprotocol) {
+
+    var self = this;
+
     this.groupFromOp = function (op) {
       return _.extend(Omniprotocol.utils.wrapOpInGroup(op), {
         name    : '',
@@ -25,11 +28,23 @@ angular.module('transcripticApp')
       });
     };
 
+    this.groupFromModel = function () {
+      return self.type == 'operation' ?
+        self.groupFromOp(self.model) :
+        self.model;
+    };
+
+    this.stepsFromModel = function () {
+      return self.type == 'operation' ?
+        [self.model] :
+        self.model.steps;
+    };
+
     this.clear = function () {
-      this.type   = {};
-      this.model  = {};
-      this.onDrop = _.noop;
-    }.bind(this);
+      self.type   = {};
+      self.model  = {};
+      self.onDrop = _.noop;
+    };
 
     //init
     this.clear();

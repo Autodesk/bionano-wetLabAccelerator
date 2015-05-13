@@ -1,10 +1,17 @@
 tx-protocol-op {
-  display: flex;
-  flex-direction: column;
+
+  $header-margin-bottom: $step-header-space - $drop-hover-border-width;
+
   align-items: center;
   width: 100%;
-  margin: 5px 3em;
-  background: $step-background-inactive;
+  margin: $step-header-space 3em;
+  border-bottom: $drop-hover-border-phantom;
+
+  box-sizing: border-box;
+
+  .protocol-op-wrap {}
+
+  @include arrow-bottom($step-background-inactive, $step-background-active, $includeBackground: true, $activeClass: 'open');
 
   .operation-name {
     color: $black;
@@ -31,15 +38,26 @@ tx-protocol-op {
     margin: 0;
     tr {
       td {
-      &:first-child {
-        text-align: right;
-      }
-      &:last-child {
-        text-align: left;
-      }
+        &:first-child {
+          text-align: right;
+        }
+        &:last-child {
+          text-align: left;
+        }
       }
     }
   }
 
-  @include arrow-bottom($step-background-inactive, $step-background-active);
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &.drop-hover:only-child,
+  &.drop-hover:last-child {
+    border-bottom: $drop-hover-border;
+  }
 }

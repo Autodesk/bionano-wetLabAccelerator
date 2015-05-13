@@ -12,6 +12,7 @@ angular.module('transcripticApp')
       restrict: 'A',
       link    : function postLink (scope, element, attrs) {
 
+        //note that many places in editor expect these defaults
         var dropDefaults = {
               greedy    : true,
               tolerance : 'pointer',

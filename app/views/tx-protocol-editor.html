@@ -1,4 +1,5 @@
 <tx-protocol-setup parameters="editorCtrl.protocol.parameters"
+                   tx-protocol-droppable="editorCtrl.optsDroppableSetup"
                    class="protocol-setup"
                    tx-inspector-select
                    select-trigger="mouseenter"
@@ -11,7 +12,7 @@
                    drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
                    ng-file-change="editorCtrl.onFileDrop($files, $event, $rejectedFiles)">
 </tx-protocol-setup>
-<div class="protocol-instructions flex-grower"
+<div class="protocol-instructions"
      tx-protocol-droppable="editorCtrl.optsDroppableEditor">
   <tx-protocol-group ng-repeat="group in editorCtrl.protocol.groups"
                      class="protocol-group"
@@ -23,3 +24,5 @@
                      protocol-group="group">
   </tx-protocol-group>
 </div>
+<div class="editor-bottom-space flex-grower"
+     tx-protocol-droppable="editorCtrl.optsDroppableEditorBottom"></div>

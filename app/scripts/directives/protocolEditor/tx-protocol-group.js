@@ -32,6 +32,11 @@ angular.module('tx.protocolEditor')
           }
         };
 
+        self.insertBeforeStep = function (step, newSteps) {
+          var index = _.indexOf(self.group, step);
+          Array.prototype.splice.apply(self.group.steps, [index, 0].concat(newSteps));
+        };
+
         //drag and drop interaction
 
         self.optsDraggableInstruction = {
@@ -74,13 +79,30 @@ angular.module('tx.protocolEditor')
           }
         };
 
+        self.optsDroppableGroupTop = {
+          drop: function (e, ui) {
+            $scope.$apply(function () {
+              DragDropManager.onDrop();
+              $scope.insertBeforeGroup(DragDropManager.groupFromModel());
+              DragDropManager.clear();
+            });
+          }
+        };
+
+        self.optsDroppableGroupHeader = {
+          drop: function (e, ui) {
+            handleDropGivenIndex(0);
+          }
+        };
+
+        //todo - deprecate
         self.optsDroppableGroup = {
-          tolerance: 'pointer',
-          greedy   : true,
-          drop     : handleDrop
+          drop: handleDrop
         };
 
         self.optsDroppableInstruction = self.optsDroppableGroup;
+
+        //helpers
 
         function getOperationDropIndex (dropY) {
           var draggableTop = dropY,
@@ -92,11 +114,15 @@ angular.module('tx.protocolEditor')
         }
 
         function handleDrop (e, ui) {
-          var dropIndex    = getOperationDropIndex(e.pageY),
-              indexInGroup = _.findIndex(self.group.steps, function (step) {
-                //note - could speed if wasn't using clones...
-                return _.isEqual(step, DragDropManager.model);
-              });
+          var dropIndex = getOperationDropIndex(e.pageY);
+          handleDropGivenIndex(dropIndex);
+        }
+
+        function handleDropGivenIndex (dropIndex) {
+          var indexInGroup = _.findIndex(self.group.steps, function (step) {
+            //note - could speed if wasn't using clones...
+            return _.isEqual(step, DragDropManager.model);
+          });
 
           if (indexInGroup > -1) {
             $scope.$apply(function () {
@@ -140,6 +166,10 @@ angular.module('tx.protocolEditor')
 
         scope.deleteGroup = function () {
           editorCtrl.deleteGroup(scope.groupCtrl.group);
+        };
+
+        scope.insertBeforeGroup = function (newGroup) {
+          editorCtrl.insertBeforeGroup(scope.groupCtrl.group, newGroup);
         };
       }
     };

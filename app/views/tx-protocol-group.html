@@ -1,31 +1,39 @@
+<div class="protocol-item-space-top"
+     tx-protocol-droppable="groupCtrl.optsDroppableGroupTop">
+</div>
 <div class="protocol-group-wrap"
-     ng-class="{'show-group':groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1}"
-     tx-protocol-draggable="groupCtrl.optsDraggableGroup"
      tx-protocol-droppable="groupCtrl.optsDroppableGroup">
-  <div class="protocol-group-header"
-       ng-show="groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1;">
-    <input class="group-name input-unstyled"
-           type="text" auto-grow
-           placeholder="Group Name"
-           ng-model="groupCtrl.group.name">
-    <div class="group-repeat">
-      <input class="input-unstyled"
-             type="number" min="1" max="100"
-             ng-model-options="{updateOn: 'blur'}"
-             ng-model="groupCtrl.group.loop"/>
-    </div>
+  <div class="protocol-group-inner"
+       ng-class="{'show-group':groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1}"
+       tx-protocol-draggable="groupCtrl.optsDraggableGroup">
+    <div class="protocol-group-header"
+         tx-protocol-droppable="groupCtrl.optsDroppableGroupHeader"
+         ng-show="groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1;">
+      <input class="group-name input-unstyled"
+             type="text" auto-grow
+             placeholder="Group Name"
+             ng-model="groupCtrl.group.name">
 
-  </div>
-  <div class="protocol-group-main">
-    <tx-protocol-op ng-repeat="step in groupCtrl.group.steps"
-                    tx-protocol-draggable="groupCtrl.optsDraggableInstruction"
-                    tx-protocol-droppable="groupCtrl.optsDroppableInstruction"
-                    protocol-step="groupCtrl.group.steps[$index]"
-                    tx-inspector-select
-                    select-trigger="mouseenter"
-                    select-title="step.operation || 'Unnamed'"
-                    select-type="'step:'"
-                    select-description="step.metadata.description">
-    </tx-protocol-op>
+      <div class="group-repeat">
+        <input class="input-unstyled"
+               type="number" min="1" max="100"
+               ng-model-options="{updateOn: 'blur'}"
+               ng-model="groupCtrl.group.loop"/>
+      </div>
+
+    </div>
+    <div class="protocol-group-main">
+
+      <tx-protocol-op ng-repeat="step in groupCtrl.group.steps"
+                      tx-protocol-draggable="groupCtrl.optsDraggableInstruction"
+                      tx-protocol-droppable="groupCtrl.optsDroppableInstruction"
+                      protocol-step="groupCtrl.group.steps[$index]"
+                      tx-inspector-select
+                      select-trigger="mouseenter"
+                      select-title="step.operation || 'Unnamed'"
+                      select-type="'step:'"
+                      select-description="step.metadata.description">
+      </tx-protocol-op>
+    </div>
   </div>
 </div>

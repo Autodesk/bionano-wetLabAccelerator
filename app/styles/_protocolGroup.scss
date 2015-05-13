@@ -1,11 +1,12 @@
-.protocol-group {
+tx-protocol-group {
 
   $border-color-inactive: $light-grey;
   $border-inner: 1px solid $border-color-inactive;
   $padding-internal: $layout-spacing-sm;
 
   display: block;
-  margin: $layout-spacing-md 0;
+  position: relative;
+  margin: 0;
   font-size: 14px;
 
   &:first-child {
@@ -14,106 +15,85 @@
 
   &:last-child {
     margin-bottom: 0;
-    .protocol-group-wrap {
-      &:after {
-        border: none;
-        content: " ";
-        top: 0;
-        left: 0;
-        height: 0;
-        width: 0;
-        margin: 0;
-        position: absolute;
-        pointer-events: none;
-      }
-    }
   }
 
-  .protocol-group-wrap {
-
-    .protocol-group-header {
-      position: relative;
-      line-height: 1em;
-      cursor: row-resize;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      background: transparent;
-      padding: 5px 5px;
-
-      .group-repeat {
-
-        background: $white;
-        color: $grey;
-        border-radius: 10px;
-        input {
-          text-align: right;
-          width: 25px;
-        }
-        &:after {
-          content: 'x';
-          font-size: 11px;
-          cursor: none;
-          position: relative;
-          left: -5px;
-        }
-
-        &:hover {
-          background: $accent;
-          color: $white;
-        }
-        &.selected {
-          background: $accent;
-          color: $white;
-        }
-      }
-
-    }
-
-    .protocol-group-main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      tx-protocol-op {
-        &:first-child {
-          margin-top: 0;
-        }
-        &:last-child {
-          margin-bottom: 0;
-          &:after {
-            border: none;
-            content: " ";
-            top: 0;
-            left: 0;
-            height: 0;
-            width: 0;
-            margin: 0;
-            position: absolute;
-            pointer-events: none;
-          }
-        }
-      }
-    }
-
+  .protocol-group-inner {
     &.show-group {
       background: transparent;
       border: 2px solid $white;
     }
+  }
 
-    &:after {
-      top: 103%;
-      left: 50%;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-top-color: rgba(255,255,255,0.5);
-      border-width: 10px;
-      margin-left: -15px;
+  .protocol-group-header {
+    position: relative;
+    line-height: 1em;
+    cursor: row-resize;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: transparent;
+    padding: $step-header-space $step-header-space ($step-header-space - $drop-hover-border-width);
+    border-bottom: $drop-hover-border-phantom;
+
+    &.drop-hover {
+      border-bottom: $drop-hover-border;
     }
+
+    .group-repeat {
+
+      background: $white;
+      color: $grey;
+      border-radius: 10px;
+      input {
+        text-align: right;
+        width: 25px;
+      }
+      &:after {
+        content: 'x';
+        font-size: 11px;
+        cursor: none;
+        position: relative;
+        left: -5px;
+      }
+
+      &:hover {
+        background: $accent;
+        color: $white;
+      }
+      &.selected {
+        background: $accent;
+        color: $white;
+      }
+    }
+
+  }
+
+  .protocol-group-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+  /*
+  //all ops have arrows, not groups
+  &:not(:last-child) {
+    @include arrow-bottom($step-background-inactive, $step-background-active, $includeBackground: false);
+  }
+  */
+
+  tx-protocol-op:after {
+    margin-top: $drop-hover-border-width;
+  }
+
+  &:last-child {
+    tx-protocol-op:last-child:after {
+      border: none;
+    }
+  }
+
+  .show-group tx-protocol-op:last-child:after {
+    margin-top: $drop-hover-border-width * 2;
   }
 
   //internals
@@ -122,5 +102,19 @@
     min-height: 1em;
     min-width: 85px;
     cursor: text;
+  }
+}
+
+//todo - move so more explicit that protocol-op uses this too
+.protocol-item-space-top {
+  background: transparent;
+  height: $layout-spacing-md;
+
+  &.drop-hover {
+    border-bottom: $drop-hover-border;
+  }
+
+  :first-child > & {
+    display: none;
   }
 }
