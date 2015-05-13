@@ -671,7 +671,7 @@ module.exports = {
         }
       ]
     }
-  }
+  },
 
 
   //containers
@@ -725,4 +725,24 @@ module.exports = {
       }
     }
     */
+
+  //special
+
+  "autoprotocol": {
+    "operation"  : "autoprotocol",
+    "description": "Type the JSON of an autoprotocol operation manually",
+    "name"       : "Autoprotocol (JSON)",
+    "scaffold"   : {
+      "operation"   : "autoprotocol",
+      "requirements": {},
+      "transforms"  : [],
+      "fields"      : [
+        {
+          "name"   : "json",
+          "type"   : "string",
+          "default": "{}"
+        }
+      ]
+    }
+  }
 };
