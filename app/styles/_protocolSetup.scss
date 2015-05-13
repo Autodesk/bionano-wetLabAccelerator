@@ -105,6 +105,28 @@ tx-protocol-setup {
     color: $white;
   }
 
+  .field-action-button,
+  .field-details-button {
+    padding: 3px 8px;
+    border-radius: 1em;
+    font-size: 12px;
+    font-weight: bold;
+
+    &:hover {
+      color: $white;
+      background-color: $primary;
+    }
+  }
+
+  .field-details-button {
+    background-color: $light-grey;
+  }
+
+  .field-action-button {
+    color: $warning;
+    font-weight: normal;
+  }
+
   &:after {
     height: 0;
     width: 0;
@@ -116,33 +138,6 @@ tx-protocol-setup {
     border-top-color: rgba(255, 255, 255, 0.5);
     border-width: 10px;
     margin-left: -15px;
-  }
-
-  .highlight {
-    background: $accent;
-    color: $white;
-  }
-
-  button {
-    -webkit-appearance: none;
-    display: inline-flex;
-    justify-content: space-around;
-    align-items: baseline;
-    background: transparent;
-    color: $black;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    padding: 2px;
-    &:hover {
-      -webkit-appearance: none;
-      background: $accent;
-      color: $white;
-    }
-    span {
-      display: inline-block;
-      margin: 0 3px;
-    }
   }
 
   &.drop-hover {

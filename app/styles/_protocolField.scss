@@ -41,12 +41,13 @@ tx-protocol-field {
         border: none;
         cursor: pointer;
         text-align: center;
-        padding:2px 5px;
+        padding:2px 0;
         outline: 0;
         &:hover {
           -webkit-appearance: none;
           background: $accent;
           color: $white;
+          padding: 2px 5px;
         }
         > span {
           padding: 0 2px;

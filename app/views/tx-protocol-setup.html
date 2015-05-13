@@ -26,29 +26,34 @@
            ng-model="param.name"
            tx-change-broadcaster="editor:parameterNameChange">
     <div class="setup-container" ng-switch-when="container" ng-class="{'highlight' : deleteRow}">
-      <input type="color"
-             ng-required="true"
-             ng-model="param.value.color"
-             disabled >
+      <input  disabled
+              type="color"
+              ng-required="true"
+              ng-model="param.value.color">
       <span ng-bind="param.value.type"></span>
-        <!--
+      <a class="field-details-button"
+         ng-click="setupCtrl.detailsVisible = !fieldCtrl.detailsVisible">
+        details...
+      </a>
+      <tx-modal ng-show="setupCtrl.detailsVisible">
+        <input type="color"
+               ng-required="true"
+               ng-model="param.value.color">
         <input type="checkbox"
-                 ng-model="param.value.isNew"> new?
-        <td ng-if="param.value.isNew">
-          <select ng-model="param.value.type"
-                  ng-required="param.value.isNew"
-                  ng-change="notifyContainerChange()"
-                  ng-options="t as t for (t, opts) in setupCtrl.containerOptions"></select>
-        </td>
-        <td ng-if="!param.value.isNew">
-          <select ng-model="dummyRemote"
-                  ng-required="!param.value.isNew"
-                  ng-change="setupCtrl.handleSelectRemoteContainer(param, dummyRemote)"
-                  ng-options="c as (c.name || c.id) for c in setupCtrl.remoteContainers"></select>
-        </td>
+               ng-model="param.value.isNew"> new?
+        <select ng-if="param.value.isNew"
+                ng-model="param.value.type"
+                ng-required="param.value.isNew"
+                ng-change="notifyContainerChange()"
+                ng-options="t as t for (t, opts) in setupCtrl.containerOptions"></select>
+        <select ng-if="!param.value.isNew"
+                ng-model="dummyRemote"
+                ng-required="!param.value.isNew"
+                ng-change="setupCtrl.handleSelectRemoteContainer(param, dummyRemote)"
+                ng-options="c as (c.name || c.id) for c in setupCtrl.remoteContainers"></select>
         <select ng-model="param.value.storage"
                 ng-options="o as o for o in setupCtrl.storageOptions"></select>
-        -->
+      </tx-modal>
     </div>
     <tx-protocol-field ng-switch-default
                        field="param"
