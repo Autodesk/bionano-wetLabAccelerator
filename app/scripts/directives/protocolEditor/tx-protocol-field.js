@@ -79,6 +79,18 @@ angular.module('tx.protocolEditor')
           });
         };
 
+        var hideDropDown;
+
+        self.closeDropdown = function () {
+          hideDropDown = $timeout(function(){
+              self.paramListVisible = false;
+            }, 1500);
+        };
+
+        self.cancelDropdown = function () {
+          $timeout.cancel(hideDropDown);
+        };
+
       },
       compile         : function compile (tElement, tAttrs, transclude) {
         var type,
