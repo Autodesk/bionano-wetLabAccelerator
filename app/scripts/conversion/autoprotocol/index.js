@@ -337,8 +337,17 @@ converterInstruction.gel_separate = simpleMapOperation;
 
 converterInstruction.spin = simpleMapOperation;
 
-converterInstruction.store   = simpleMapOperation;
-converterInstruction.discard = simpleMapOperation;
+/* SPECIAL */
+
+converterInstruction.autoprotocol = function (op) {
+  var jsonString = omniUtils.pluckFieldValueRaw(op.fields, 'json');
+  try {
+    return JSON.parse(jsonString);
+  } catch (e) {
+    console.warn('JSON was invalid', jsonString);
+    return null
+  }
+};
 
 module.exports = {
   field      : converterField,
