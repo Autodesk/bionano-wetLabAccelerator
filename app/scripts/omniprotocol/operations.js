@@ -646,7 +646,6 @@ module.exports = {
         {
           "name"   : "dataref",
           "type"   : "string",
-          "optional": true,
           "default": "gelSeparate_${step}"
         },
         {
