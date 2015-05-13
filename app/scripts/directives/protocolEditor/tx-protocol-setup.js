@@ -33,14 +33,22 @@ angular.module('transcripticApp')
           $scope.showParameters = false;
         };
 
-        self.addContainer = function () {
-          self.parameters.push({
+        self.addContainer = function (param) {
+          var parameter = {
             type: 'container',
             value: {
               color: ContainerHelper.randomColor(),
               isNew : true
             }
-          });
+          };
+
+          if (_.isString(param)) {
+            parameter.value.type = param;
+          } else if (_.isObject(param)) {
+            _.merge(parameter, param);
+          }
+
+          self.parameters.push(parameter);
           $scope.checkContainerChange();
         };
 
@@ -91,6 +99,11 @@ angular.module('transcripticApp')
           $rootScope.$broadcast('editor:containerChange');
         };
 
+        scope.$on('editor:protocol:addContainer', function (event, param) {
+          scope.setupCtrl.addContainer(param);
+          scope.isVisible = true;
+        });
+
         scope.$on('editor:newprotocol', scope.checkContainerChange);
 
         //VERIFICATIONS
@@ -107,10 +120,6 @@ angular.module('transcripticApp')
             _.assign(_.find(scope.setupCtrl.parameters, {name: ver.container}), {verification: ver});
           });
         };
-
-        scope.$watch('isCollapsed', function (newval) {
-          element.toggleClass('open', newval);
-        });
 
         //init
         scope.checkContainerChange();

@@ -1,9 +1,10 @@
+<div class="protocol-setup-wrap" ng-class="{'open' : isVisible}">
 <div class="protocol-setup-header"
-     ng-click="isCollapsed = !isCollapsed">
+     ng-click="isVisible = !isVisible">
   setup
 </div>
 <div class="protocol-setup-main"
-     ng-show="isCollapsed">
+     ng-show="isVisible">
   <div class="setup-variable"
        ng-repeat="param in setupCtrl.parameters"
        ng-mouseenter="hovering = true"
@@ -97,4 +98,5 @@
       </ul>
     </div>
   </div>
+</div>
 </div>

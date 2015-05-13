@@ -66,7 +66,7 @@ angular.module('tx.protocolEditor')
               param     = {
                 name : paramName,
                 type : self.field.type,
-                value: _.cloneDeep(self.model)
+                value: _.isUndefined(self.model) ? _.cloneDeep(self.field.default) : _.cloneDeep(self.model)
               };
           ProtocolHelper.currentProtocol.parameters.push(param);
           self.selectParameter(param);
@@ -77,6 +77,18 @@ angular.module('tx.protocolEditor')
           _.forEach(parameterListeners, function (listener) {
             _.isFunction(listener) && listener();
           });
+        };
+
+        var hideDropDown;
+
+        self.closeDropdown = function () {
+          hideDropDown = $timeout(function(){
+              self.paramListVisible = false;
+            }, 1500);
+        };
+
+        self.cancelDropdown = function () {
+          $timeout.cancel(hideDropDown);
         };
 
       },

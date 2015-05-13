@@ -8,7 +8,7 @@
  *
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolOp', function () {
+  .directive('txProtocolOp', function (DragDropManager) {
     return {
       templateUrl: 'views/tx-protocol-op.html',
       restrict: 'E',
@@ -37,6 +37,16 @@ angular.module('tx.protocolEditor')
             !( $scope.jsonEditing );
         };
 
+        self.optsDroppableOpTop = {
+          drop: function (e, ui) {
+            $scope.$apply(function () {
+              DragDropManager.onDrop();
+              $scope.insertBeforeStep(DragDropManager.stepsFromModel());
+              DragDropManager.clear();
+            });
+          }
+        };
+
         $scope.modalShown = false;
         self.toggleModal = function($event) {
           $event.preventDefault();
@@ -59,6 +69,10 @@ angular.module('tx.protocolEditor')
 
         scope.deleteStep = function () {
           groupCtrl.deleteStep(scope.opCtrl.op);
+        };
+
+        scope.insertBeforeStep = function (newSteps) {
+          groupCtrl.insertBeforeStep(scope.opCtrl.op, newSteps);
         };
 
         scope.$on('editor:toggleGroupVisibility', function (e, val) {

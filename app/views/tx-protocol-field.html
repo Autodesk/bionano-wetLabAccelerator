@@ -3,21 +3,19 @@
      ng-class="{optional: fieldCtrl.field.optional == true}"
      ng-bind="fieldCtrl.field.name">
 </div>
-<div class="field-value">
+<div class="field-value" ng-mouseleave="fieldCtrl.closeDropdown()" ng-mouseenter="fieldCtrl.cancelDropdown()">
   <div class="pull-right field-parameter-toggler"
        ng-if="!fieldCtrl.preventVariable && fieldCtrl.parameterAllowed(fieldCtrl.field.type)"
        ng-click="fieldCtrl.paramListVisible = !fieldCtrl.paramListVisible"
        ng-class="{'active' : fieldCtrl.field.parameter,
                    'open' : fieldCtrl.paramListVisible}">
-    $
+    <span class="glyphicon glyphicon-usd"></span>
     <ul class="field-parameter-dropdown dropdown-menu">
       <li ng-repeat="p in fieldCtrl.parameters | filter:{type: fieldCtrl.field.type}"
-          ng-click="fieldCtrl.selectParameter(p, $event)"
-          ng-bind="p.name">
-      </li>
-      <li class="divider"></li>
-      <li ng-click="fieldCtrl.createNewParameter()">Create New...</li>
-      <li ng-click="fieldCtrl.clearParameter()">Unbind Parameter</li>
+          ng-click="fieldCtrl.selectParameter(p, $event)"><a ng-bind="p.name"></a></li>
+      <li class="divider" ng-if="fieldCtrl.parameters[fieldCtrl.field.type]"></li>
+      <li ng-click="fieldCtrl.createNewParameter()"><a>create new parameter...</a></li>
+      <li ng-show="fieldCtrl.field.parameter" ng-click="fieldCtrl.clearParameter()"><a>unbind parameter</a></li>
     </ul>
   </div>
   <div ng-show="fieldCtrl.field.parameter" class="field-value-inner field-parameter">
@@ -27,5 +25,3 @@
     <tx-protocol-field-inner></tx-protocol-field-inner>
   </div>
 </div>
-
-

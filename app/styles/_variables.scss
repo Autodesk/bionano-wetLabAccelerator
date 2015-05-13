@@ -122,6 +122,12 @@ $layout-operations-width: $layout-operations-size + $layout-operations-padding-l
 $box-shadow-black-inner: inset 0 0 20px 0px transparentize($black, 0.25);
 $box-shadow-popover: 0 0 10px transparentize($white, 0.2);
 
+
+//interactions
+$drop-hover-border-width: 2px;
+$drop-hover-border: $drop-hover-border-width solid $primary;
+$drop-hover-border-phantom: $drop-hover-border-width solid transparent;
+
 //////////////////////////
 //////////////////////////
 // Component specific variables should just go in the component, but where relevant put here
@@ -143,6 +149,7 @@ $content-menu-bg: $bg-dark;
 
 $step-background-active: $bg-white;
 $step-background-inactive : $bg-white-semitransparent;
+$step-header-space: 5px;
 
 //modal
 

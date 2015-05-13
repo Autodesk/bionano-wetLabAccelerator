@@ -21,17 +21,6 @@ angular.module('tx.protocolEditor')
       controller      : function ($scope, $element, $attrs) {
         var self = this;
 
-        /*
-        //ui-sortable options
-        self.groupSortableOptions = {
-          axis       : 'y',
-          scroll     : true,
-          handle     : '.protocol-group-header',
-          containment: '.protocol-instructions',
-          tolerance  : 'pointer'
-        };
-        */
-
         self.duplicateGroup = function (group) {
           var index = _.indexOf(self.protocol.groups, group);
           self.protocol.groups.splice(index, 0, _.clone(group, true));
@@ -39,6 +28,11 @@ angular.module('tx.protocolEditor')
 
         self.deleteGroup = function (group) {
           _.remove(self.protocol.groups, group);
+        };
+
+        self.insertBeforeGroup = function (group, toInsert) {
+          var index = _.indexOf(self.protocol.groups, group);
+          self.protocol.groups.splice(index, 0, toInsert);
         };
 
         self.onFileDrop = function (files, event, rejected) {
@@ -49,7 +43,9 @@ angular.module('tx.protocolEditor')
             fileReader.onload = function (e) {
               $scope.$apply(function () {
                 try {
-                  ProtocolHelper.assignCurrentProtocol(angular.fromJson(e.target.result));
+                  var protocol = angular.fromJson(e.target.result);
+                  ProtocolHelper.clearIdentifyingInfo(protocol);
+                  ProtocolHelper.assignCurrentProtocol(protocol);
                 } catch (e) {
                   console.log('couldnt parse dropped JSON', e);
                 }
@@ -60,21 +56,17 @@ angular.module('tx.protocolEditor')
           }
         };
 
+        //todo - deprecate
         self.optsDroppableEditor = {
-          greedy   : true,
-          tolerance: 'pointer',
           drop     : function (e, ui) {
-            console.log(e);
+            console.log('dropped on editor', e);
             var draggableTop = e.pageY,
                 neighborTops = DragDropManager.getNeighborTops('tx-protocol-group', $element),
                 dropIndex    = (_.takeWhile(neighborTops, function (neighborTop) {
                   return neighborTop < draggableTop;
                 })).length;
 
-            //assuming we only have groups and operations
-            var group = (DragDropManager.type == 'operation') ?
-              DragDropManager.groupFromOp(DragDropManager.model) :
-              DragDropManager.model;
+            var group = DragDropManager.groupFromModel();
 
             //console.log(draggableTop, neighborTops, group, self.protocol);
 
@@ -85,6 +77,26 @@ angular.module('tx.protocolEditor')
             });
           }
         };
+
+        self.optsDroppableSetup = {
+          drop: function(e, ui) {
+            $scope.$apply(function () {
+              DragDropManager.onDrop();
+              self.protocol.groups.unshift(DragDropManager.groupFromModel());
+              DragDropManager.clear();
+            });
+          }
+        };
+
+        self.optsDroppableEditorBottom = {
+          drop: function(e, ui) {
+            $scope.$apply(function () {
+              DragDropManager.onDrop();
+              self.protocol.groups.push(DragDropManager.groupFromModel());
+              DragDropManager.clear();
+            });
+          }
+        }
       },
       link            : function postLink (scope, element, attrs) {
 

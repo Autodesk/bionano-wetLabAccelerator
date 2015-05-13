@@ -2,7 +2,12 @@ tx-protocol-editor {
   display: block;
 
   .protocol-instructions {
-    min-height: 50vh; //necessary to ensure drag and drop zone always available
-    padding: 10px 0; //for drop zone
+    padding: 0 0 $layout-spacing-md;
+  }
+
+  .editor-bottom-space{
+    &.drop-hover {
+      border-top: $drop-hover-border;
+    }
   }
 }

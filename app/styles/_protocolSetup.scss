@@ -1,9 +1,16 @@
-.protocol-setup {
+tx-protocol-setup {
   display: block;
   position: relative;
-  margin-top: $layout-spacing-md;
-  margin-bottom: 0;
+  padding-top: $layout-spacing-md;
+  padding-bottom: $layout-spacing-md;
   font-size: 14px;
+  border-bottom: $drop-hover-border-phantom;
+
+  //div to aid drag and drop (padding outside wrap)
+  .protocol-setup-wrap {
+    position: relative;
+    @include arrow-bottom($step-background-inactive, $step-background-active, $activeClass: 'open');
+  }
 
   .protocol-setup-header {
     padding: 3px 10px;
@@ -98,8 +105,6 @@
     color: $white;
   }
 
-  @include arrow-bottom($step-background-inactive, $step-background-active);
-
   &:after {
     height: 0;
     width: 0;
@@ -112,4 +117,37 @@
     border-width: 10px;
     margin-left: -15px;
   }
+
+  .highlight {
+    background: $accent;
+    color: $white;
+  }
+
+  button {
+    -webkit-appearance: none;
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: baseline;
+    background: transparent;
+    color: $black;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    padding: 2px;
+    &:hover {
+      -webkit-appearance: none;
+      background: $accent;
+      color: $white;
+    }
+    span {
+      display: inline-block;
+      margin: 0 3px;
+    }
+  }
+
+  &.drop-hover {
+    border-bottom: $drop-hover-border;
+  }
+
+  @include arrow-bottom($step-background-inactive, $step-background-active);
 }

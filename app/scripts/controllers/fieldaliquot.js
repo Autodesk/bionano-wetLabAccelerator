@@ -38,8 +38,11 @@ angular.module('transcripticApp')
 
     self.init = function () {
       //hack - get fieldCtrl
-      self.model = $scope.fieldCtrl.model;
       self.field = $scope.fieldCtrl.field;
+      if (_.isUndefined(self.field.model)) {
+        self.field.model = [];
+      }
+      self.model = self.field.model;
       self.aliquotMultiple = (self.field.type != 'aliquot');
 
       //todo - handle single container in view

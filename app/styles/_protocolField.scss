@@ -83,14 +83,16 @@ tx-protocol-field {
   //PARAMETER
 
   .field-parameter {
-    color: $primary;
+    color: $accent;
   }
 
   .field-parameter-toggler {
+    margin: 0 10px;
     padding: 4px;
+    border-radius: 4px;
     position: relative;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 12px;
     color: $white;
     text-align: center;
     width: 20px;
@@ -100,18 +102,23 @@ tx-protocol-field {
 
     &.active {
       opacity: 1;
-      background-color: $primary;
+      background-color: $accent;
+
+      &:hover {
+        background-color: $accent;
+      }
     }
   }
 
   .field-parameter-dropdown {
-    color: $grey;
+    color: $black;
   }
 
   &:hover {
     .field-parameter-toggler {
       opacity: 1;
       background-color: $light-grey;
+      transition: opacity $transition-out-time ease-in;
     }
   }
 }

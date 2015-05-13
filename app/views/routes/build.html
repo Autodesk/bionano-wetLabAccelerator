@@ -53,11 +53,12 @@
       <tx-operation-list class="flex-grower scroll-y"></tx-operation-list>
     </div>
 
-    <div class="maincolumn flex-grower maxout-scroll-vertical protocol-steps">
+    <div class="maincolumn flex-vertical flex-grower maxout-scroll-vertical protocol-steps">
 
       <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
                            protocol-form="ProtocolForm"></tx-protocol-actions>
-      <tx-protocol-editor ng-form="ProtocolForm"
+      <tx-protocol-editor class="flex-grower flex-vertical"
+                          ng-form="ProtocolForm"
                           protocol="restyleCtrl.currentProtocol">
       </tx-protocol-editor>
     </div>
