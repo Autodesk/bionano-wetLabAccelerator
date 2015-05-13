@@ -91,7 +91,7 @@ tx-protocol-field {
     .field-parameter-toggler {
       opacity: 1;
       background-color: $light-grey;
-      transition: opacity 0.15s ease-in;
+      transition: opacity $transition-out-time ease-in;
     }
   }
 }

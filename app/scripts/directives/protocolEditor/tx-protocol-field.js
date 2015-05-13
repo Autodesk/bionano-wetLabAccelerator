@@ -66,7 +66,7 @@ angular.module('tx.protocolEditor')
               param     = {
                 name : paramName,
                 type : self.field.type,
-                value: _.cloneDeep(self.model)
+                value: _.isUndefined(self.model) ? _.cloneDeep(self.field.default) : _.cloneDeep(self.model)
               };
           ProtocolHelper.currentProtocol.parameters.push(param);
           self.selectParameter(param);
