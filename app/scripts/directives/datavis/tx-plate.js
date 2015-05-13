@@ -68,8 +68,9 @@ angular.module('tx.datavis')
 
         // UI
 
-        hideTooltip: '=?',
-        noLabels   : '=?'
+        showTranspose: '=?', //transpose arrow and toggle in footer should be present
+        hideTooltip  : '=?', //hide tooltips for well hovering (brushing will prevent tooltip)
+        noLabels     : '=?'  //hide labels on plate
       },
       link    : function postLink (scope, element, attrs) {
 
@@ -182,6 +183,15 @@ angular.module('tx.datavis')
                 'width' : full.width + 'px',
                 'height': margin.bottom + 'px'
               });
+
+
+        var transposeButton;
+        if (scope.showTranspose) {
+          transposeButton = footerEl.append('span').text('transpose')
+            .on('click', transposeButtonClick)
+            .classed('disabled', true);
+          //todo - enable in render if wells input
+        }
 
         footerEl.append('span').text('reset').on('click', clearWellsAndSelection);
 
@@ -395,12 +405,24 @@ angular.module('tx.datavis')
           safeClearBrush();
           toggleWellsFromMap({}, classSelected, true);
           propagateWellSelection();
+          transposeArrow.classed('hidden', true);
         }
 
         /***** BRUSHING *****/
-        // note that b/c pointer events, this competes with hovering etc. so we put it on top
+            // note that b/c pointer events, this competes with hovering etc. so we put it on top
 
-        //todo - make this binding dynamic
+        var transposePosition   = 0,
+            transposeArrowWidth = 12,
+            transposeArrow      = wellsSvg.append('path')
+              .attr('d', function (d) {
+                //append the arrow, by default in the top-left
+                //translate to move it around
+                return 'M ' + (-transposeArrowWidth) + ' ' + (-transposeArrowWidth * 0.75) + ' l ' +
+                  transposeArrowWidth + ' ' + (transposeArrowWidth * 0.75) + ' ' + ' l ' +
+                  (-transposeArrowWidth) + ' ' + (transposeArrowWidth * 0.75) + ' z';
+              })
+        //.classed('hidden', true);
+
         if (!scope.noBrush && !scope.noSelect) {
           var brush = d3.svg.brush()
             .x(xScale)
@@ -415,7 +437,7 @@ angular.module('tx.datavis')
           brushg.call(brush);
         }
 
-        var brushIsDrawn = false;       //helper for new brush / drag old brush todo - what should this actually track?
+        var brushIsDrawn = false;       //helper for new brush / drag old brush
 
         function brushstart () {
 
@@ -436,7 +458,7 @@ angular.module('tx.datavis')
 
           var map = getWellsInExtent(brush.extent());
 
-          //todo - ideally this would only run on a real move, not every cycle
+          //note - ideally this would only run on a real move, not every cycle, but not how d3 handles this
           brushIsDrawn = !brush.empty() && (_.keys(map)).length > 0;
 
           toggleWellsFromMap(map, classActive, true);
@@ -473,7 +495,71 @@ angular.module('tx.datavis')
 
           propagateWellSelection();
 
+          //todo - handle arrow + transposing
+          if (scope.showTranspose) {
+            transposeArrow.classed('hidden', !scope.showTranspose);
+            transposeBrush();
+          }
+
+          //todo - more robust + handle on input
+          !_.isUndefined(transposeButton) && transposeButton.classed('disabled', false);
+
           element.removeClass('brushing');
+        }
+
+        function transposeButtonClick () {
+          transposePosition = (transposePosition + 1) % 8;
+          transposeBrush();
+        }
+
+
+        /*
+          positions in numbers, wells as dots...
+
+            1     2
+          0 • • • • 3
+            • • • •
+          7 • • • • 4
+            6     5
+         */
+        function transposeBrush () {
+          var wellBounds = getWellExtent(getSelectedWells());
+          console.log(transposePosition, wellBounds);
+          transposeArrow.attr('transform', function () {
+            var rotation   = (Math.floor((transposePosition + 1) / 2) * 90),
+                firstPos   = getPositionWell(wellBounds[0]),
+                lastPos    = getPositionWell(wellBounds[1]),
+                wellRadius = firstPos[2],
+                x_init     = _.includes([2, 3, 4, 5], transposePosition) ? lastPos[0] : firstPos[0],
+                x_adjust   = _.result({
+                  0: -wellRadius,
+                  1: 0,
+                  2: 0,
+                  3: wellRadius,
+                  4: wellRadius,
+                  5: 0,
+                  6: 0,
+                  7: -wellRadius
+                }, transposePosition, 0),
+                x_trans    = x_init + x_adjust,
+                y_init     = _.includes([0,1,2,3], transposePosition) ? firstPos[1] : lastPos[1],
+                y_adjust     =_.result({
+                    0: 0,
+                    1: -wellRadius,
+                    2: -wellRadius,
+                    3: 0,
+                    4: 0,
+                    5: wellRadius,
+                    6: wellRadius,
+                    7: 0
+                  }, transposePosition, 0),
+                y_trans    = y_init + y_adjust;
+
+
+                console.log(firstPos, lastPos, x_trans, y_trans);
+
+            return 'translate(' + x_trans + ' ' + y_trans + ') rotate(' + rotation + ')';
+          })
         }
 
         /**** helpers ****/
@@ -523,6 +609,26 @@ angular.module('tx.datavis')
           return _.zipObject(wells, _.range(wells.length).map(_.constant(value)));
         }
 
+        //todo - move to WellConv
+        //given array of wells, gives topleft and bottom right wells as tuple (array)
+        function getWellExtent (wells) {
+          var letters = [],
+              numbers = [];
+
+          _.forEach(wells, function (well) {
+            letters.push(well[0]);
+            numbers.push(_.parseInt(well.substr(1)));
+          });
+
+          return _.map(_.zip(
+            d3.extent(letters),
+            d3.extent(numbers)
+          ), function (tuple) {
+            return tuple[0] + tuple[1];
+          });
+        }
+
+        //for a given d3 extent, get well map of all contained wells
         function getWellsInExtent (extent) {
           var d           = xScale.domain(),
               r           = xScale.range(),
@@ -531,6 +637,17 @@ angular.module('tx.datavis')
               bottomRight = [d[d3.bisect(r, extent[1][1]) - 1] - 1, d[d3.bisect(r, extent[1][0]) - 1]];
 
           return WellConv.createMapGivenBounds(topLeft, bottomRight);
+        }
+
+        function getPositionWell (well) {
+          var filterFunction = _.partial(_.isEqual, well, _);
+          var wellEl         = getAllCircles().filter(filterFunction);
+
+          return [
+            parseFloat(wellEl.attr('cx'), 10),
+            parseFloat(wellEl.attr('cy'), 10),
+            parseFloat(wellEl.property('r_init'), 10)
+          ];
         }
 
         function toggleWellsFromMap (map, className, toggleAll) {
@@ -573,12 +690,6 @@ angular.module('tx.datavis')
           }
           toggleWellsFromMap({}, classActive, true);
         }
-
-        //todo - move to WellConv
-        //given array of wells, gives topleft and bottom right wells as tuple (array)
-        function getWellExtent (wells) {
-          //todo
-        }
       }
-    };
+    }
   });
