@@ -1,20 +1,25 @@
 tx-protocol-field {
   display: flex;
   flex-direction: row;
+  align-items: baseline;
   width: 100%;
   margin: 3px 0;
 
   .field-label {
     display: inline-block;
-    width: 40%;
+    width: 50%;
     color: $grey;
     text-align: right;
     padding-right: $layout-spacing-md;
+    &:after {
+      content: ':';
+    }
   }
 
   .field-value {
     display: inline-block;
-    width: 100%;
+    width: 50%;
+    padding-left: 10px;
     text-align: left;
   }
 
@@ -25,6 +30,29 @@ tx-protocol-field {
     tx-protocol-field-inner {
       display: flex;
       flex-direction: row;
+
+      .button {
+        -webkit-appearance: none;
+        display: inline-flex;
+        justify-content: center;
+        align-items: baseline;
+        min-width: 50px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        padding:2px 0;
+        outline: 0;
+        &:hover {
+          -webkit-appearance: none;
+          background: $accent;
+          color: $white;
+          padding: 2px 5px;
+        }
+        > span {
+          padding: 0 2px;
+        }
+      }
     }
   }
 

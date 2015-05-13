@@ -1236,13 +1236,13 @@ module.exports = {
     "soc",
     "tb-broth-100ug-ml-amp",
     "tb-broth-50ug-ml-kan",
-    "te-ph7.5",
     "pbs",
     "te-ph7.5",
     "orange145",
     "orange60"
   ]
 };
+
 },{}],12:[function(require,module,exports){
 module.exports = {
   "storage" : ["ambient", "warm_37", "cold_4", "cold_20", "cold_80"],

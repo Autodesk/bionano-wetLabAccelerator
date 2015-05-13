@@ -16,7 +16,6 @@ module.exports = {
     "soc",
     "tb-broth-100ug-ml-amp",
     "tb-broth-50ug-ml-kan",
-    "te-ph7.5",
     "pbs",
     "te-ph7.5",
     "orange145",

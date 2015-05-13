@@ -24,17 +24,63 @@ tx-protocol-setup {
     flex-direction: column;
     align-items: center;
 
-    .row {
+    .setup-variable {
       display: flex;
       flex-direction: row;
       width: 100%;
-      justify-content: space-between;
+      justify-content: flex-start;
+      align-items: center;
+
+      .parameter-type {
+        width: 100px;
+        padding-right: 10px;
+        text-align: right;
+      }
+      > input {
+        width: 110px;
+        margin: 0 10px;
+      }
+      > .setup-container, tx-protocol-field {
+        width: 205px;
+        margin: 0;
+        .field-value {
+          width: 100%;
+          padding: 0;
+        }
+
+        input[type="color"] {
+          -webkit-appearance: none;
+          width: 20px;
+          height: 20px;
+          padding: 0;
+          color: transparent;
+          background-color: transparent;
+          border: 1px solid transparent;
+          &::-webkit-color-swatch-wrapper {
+            padding: 0;
+            border: 1px solid transparent;
+          }
+          &::-webkit-color-swatch {
+            border: 1px solid transparent;
+            border-radius: 10px;
+          }
+        }
+      }
+      > .close {
+        width: 15px;
+      }
+
       &:last-child {
+        justify-content: center;
         padding: 5px 0;
       }
     }
 
     .add-parameter {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
       background: transparent;
       color: $warning;
       text-align: center;
@@ -45,64 +91,40 @@ tx-protocol-setup {
 
       &:hover {
         color: $white;
-        background: $primary;
-      }
-
-      &.disabled {
-        color: $light-grey;
-        background: transparent;
-        cursor: not-allowed;
+        background: $accent;
       }
     }
 
     .parameter-list {}
 
-    .parameter-option {
+    .parameter-option {}
+  }
 
-    }
+  .highlight {
+    background: $accent;
+    color: $white;
+  }
 
-    .cell-1 {
-      display: flex;
-      flex-direction: row;
-      width: 45%;
-      justify-content: flex-end;
-      align-items: center;
+  .field-action-button,
+  .field-details-button {
+    padding: 3px 8px;
+    border-radius: 1em;
+    font-size: 12px;
+    font-weight: bold;
 
-      input {
-        text-align: left;
-      }
-    }
-    .cell-2 {
-      display: flex;
-      flex-direction: row;
-      width: 50%;
-      justify-content: space-between;
-      align-items: center;
-
-      tx-protocol-field-inner {
-        width: 100%;
-        justify-content: space-between;
-      }
-    }
-    .cell-3 {
-      width: 5%;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
+    &:hover {
+      color: $white;
+      background-color: $primary;
     }
   }
 
-  table {
-    border-collapse: separate;
-    border-spacing: 20px 0;
-    margin: 0;
-    display: flex;
+  .field-details-button {
+    background-color: $light-grey;
+  }
 
-    tr:last-child {
-      display: flex;
-      justify-content: space-around;
-    }
+  .field-action-button {
+    color: $warning;
+    font-weight: normal;
   }
 
   &:after {
@@ -118,34 +140,9 @@ tx-protocol-setup {
     margin-left: -15px;
   }
 
-  .highlight {
-    background: $accent;
-    color: $white;
-  }
-
-  button {
-    -webkit-appearance: none;
-    display: inline-flex;
-    justify-content: space-around;
-    align-items: baseline;
-    background: transparent;
-    color: $black;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    padding: 2px;
-    &:hover {
-      -webkit-appearance: none;
-      background: $accent;
-      color: $white;
-    }
-    span {
-      display: inline-block;
-      margin: 0 3px;
-    }
-  }
-
   &.drop-hover {
     border-bottom: $drop-hover-border;
   }
+
+  @include arrow-bottom($step-background-inactive, $step-background-active);
 }

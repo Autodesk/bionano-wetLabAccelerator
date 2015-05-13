@@ -1,20 +1,23 @@
 <input class="input-styled"
        ng-model="fieldCtrl.model.value"
        ng-required="fieldCtrl.model.unit"
-       type="number"
+       type="number" auto-grow="10"
        placeholder="value">
-<button class="dropdown"
-        ng-click="showOptions = !showOptions"
-        ng-mouseleave="showOptions = false"
-        ng-class="{'open' : showOptions}">
-  <span>
-  {{fieldCtrl.model.unit ? fieldCtrl.model.unit : (fieldCtrl.field.default.unit ? fieldCtrl.field.default.unit : unitOptions[0])}}
-  </span>
-  <span class="glyphicon glyphicon-menu-down"></span>
-  <ul class="dropdown-menu dropdown-menu-right">
-    <li ng-repeat="unit in unitOptions"
-        ng-click="fieldCtrl.model.unit = unit">
-      <a>{{unit}}</a>
-    </li>
-  </ul>
-</button>
+<div class="button dropdown"
+     ng-click="showOptions = !showOptions"
+     ng-class="{'open' : showOptions}"
+     ng-mouseenter="showCaret = true"
+     ng-mouseleave="showCaret = false">
+    <span>
+    {{fieldCtrl.model.unit ? fieldCtrl.model.unit : (fieldCtrl.field.default.unit ? fieldCtrl.field.default.unit : unitOptions[0])}}
+    </span>
+    <span class="glyphicon glyphicon-menu-down"
+          ng-class="{'visible': showCaret,'invisible': !showCaret}">
+    </span>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li ng-repeat="unit in unitOptions"
+          ng-click="fieldCtrl.model.unit = unit">
+        <a>{{unit}}</a>
+      </li>
+    </ul>
+</div>
