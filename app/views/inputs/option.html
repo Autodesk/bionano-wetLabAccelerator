@@ -4,7 +4,7 @@
      ng-mouseenter="showCaret = true"
      ng-mouseleave="showCaret = false; showOptions = false">
   <span>
-  {{fieldCtrl.model || fieldCtrl.field.default}}
+  {{fieldCtrl.model || fieldCtrl.field.default || 'select...'}}
   </span>
   <span class="glyphicon glyphicon-menu-down"
         ng-class="{'visible': showCaret,'invisible': !showCaret}">

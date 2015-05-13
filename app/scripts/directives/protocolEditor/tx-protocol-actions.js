@@ -41,10 +41,6 @@ angular.module('tx.protocolEditor')
         self.toggleAllSteps = function () {
           self.allStepsOpen = !self.allStepsOpen;
           $rootScope.$broadcast('editor:toggleGroupVisibility', self.allStepsOpen);
-          Notify({
-            message: 'Umm errr there was a problem',
-            error: true
-          });
         };
       },
       link: function postLink(scope, element, attrs) {

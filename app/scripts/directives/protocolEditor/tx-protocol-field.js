@@ -123,7 +123,7 @@ angular.module('tx.protocolEditor')
 
             /* get the partial */
 
-            //special hiding for dataref
+            //hack - special hiding for dataref
             if (_.result(scope.fieldCtrl.field, 'name') == 'dataref') {
               iElement.remove();
             }
