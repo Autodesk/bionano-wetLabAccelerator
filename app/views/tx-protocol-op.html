@@ -19,9 +19,9 @@
     <span class="glyphicon glyphicon-cog"
           ng-show="opCtrl.isVisible"
           ng-click="opCtrl.toggleActionsMenu($event)"></span>
-      <ul class="dropdown-menu"
-          ng-mouseleave="opCtrl.toggleActionsMenu($event)">
-        <li><a ng-click="opCtrl.toggleModal($event)">
+    <ul class="dropdown-menu dropdown-menu-right"
+        ng-mouseleave="opCtrl.toggleActionsMenu($event)">
+      <li><a ng-click="opCtrl.toggleModal($event)">
           Verify Protocol
         </a></li>
         <li><a ng-click="opCtrl.toggleJsonEditing($event)">
