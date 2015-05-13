@@ -647,7 +647,7 @@ module.exports = {
           "name"   : "dataref",
           "type"   : "string",
           "optional": true,
-          "default": "gelSeparate_${index}"
+          "default": "gelSeparate_${step}"
         },
         {
           "name"           : "objects",

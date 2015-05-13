@@ -86,8 +86,7 @@ angular.module('tx.protocolEditor')
           scroll: true,
           start: function (e, ui) {
             var opKey = angular.element(e.target).scope().op,
-                opInfo = Omniprotocol.operations[opKey],
-                opScaffold = _.clone(opInfo.scaffold, true);
+                opScaffold = Omniprotocol.utils.scaffoldOperationWithValues(opKey);
 
             _.assign(DragDropManager, {
               type : 'operation',
