@@ -143,6 +143,4 @@ tx-protocol-setup {
   &.drop-hover {
     border-bottom: $drop-hover-border;
   }
-
-  @include arrow-bottom($step-background-inactive, $step-background-active);
 }
