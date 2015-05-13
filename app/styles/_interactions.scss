@@ -10,6 +10,14 @@
   cursor: all-scroll;
 }
 
+.drop-hover-top {
+  border-top: $drop-hover-border;
+}
+
+.drop-hover-bottom {
+  border-bottom: $drop-hover-border;
+}
+
 .dragover {
   background: $success;
 }
