@@ -130,208 +130,73 @@
       ]
     },
     {
+      "name": "",
+      "inputs": {},
       "metadata": {
-        "name": "Dummy Protocol",
-        "id": "2982cbb2ebedfa98220223",
-        "type": "protocol",
-        "author": {
-          "name": "Mojimbo Tenke",
-          "id": "8a99cb0er9023b22c2def2"
-        },
-        "description": "This is a stupid protocol"
+        "description": ""
       },
-      "parameters": [
+      "loop": 1,
+      "steps": [
         {
-          "name": "myAbsorbance",
-          "type": "length",
-          "value": {
-            "value": 600,
-            "unit": "nanometer"
-          },
-          "example": {
-            "value": 600,
-            "unit": "nanometer"
-          },
-          "default": {
-            "value": 600,
-            "unit": "nanometer"
-          },
-          "description": "Wavelength used for fluorescence readings"
-        },
-        {
-          "type": "container",
-          "value": {
-            "isNew": true,
-            "type": "96-flat",
-            "storage": "cold_4"
-          },
-          "name": "container_uno"
-        },
-        {
-          "type": "container",
-          "value": {
-            "isNew": true,
-            "type": "96-pcr",
-            "storage": "warm_37"
-          },
-          "name": "dfdfd"
-        }
-      ],
-      "groups": [
-        {
-          "name": "Dispense Group",
-          "inputs": {},
-          "metadata": {},
-          "loop": 2,
-          "steps": [
+          "operation": "thermocycle",
+          "requirements": {},
+          "transforms": [
             {
-              "operation": "dispense",
-              "requirements": {},
-              "transforms": [
-                {
-                  "container": "container"
-                }
-              ],
-              "fields": [
-                {
-                  "name": "object",
-                  "type": "container",
-                  "value": "container_uno"
-                },
-                {
-                  "name": "reagent",
-                  "type": "option",
-                  "options": [
-                    "autoclaved-water",
-                    "water",
-                    "bleach-10p",
-                    "ethanol-70p",
-                    "lb-broth-100ug-ml-amp",
-                    "lb-broth-50ug-ml-kan",
-                    "lb-broth-30ug-ml-kan",
-                    "lb-broth-25ug-ml-cm",
-                    "lb-broth-100ug-ml-specto",
-                    "lb-broth-50ug-ml-kan-25ug-ml-cm",
-                    "lb-broth-15ug-ml-tet",
-                    "lb-broth-noAB",
-                    "sob",
-                    "soc",
-                    "tb-broth-100ug-ml-amp",
-                    "tb-broth-50ug-ml-kan",
-                    "te-ph7.5",
-                    "pbs",
-                    "te-ph7.5",
-                    "orange145",
-                    "orange60"
-                  ],
-                  "default": "lb-broth-noAB",
-                  "value": "bleach-10p"
-                },
-                {
-                  "name": "columns",
-                  "type": "columnVolumes",
-                  "singleContainer": true,
-                  "value": [
-                    {
-                      "columns": [
-                        "0",
-                        "1",
-                        "3"
-                      ],
-                      "volume": {
-                        "unit": "microliter",
-                        "value": 50
-                      },
-                      "color": "red"
-                    },
-                    {
-                      "columns": [
-                        "2",
-                        "4",
-                        "5"
-                      ],
-                      "volume": {
-                        "unit": "nanoliter",
-                        "value": 90
-                      },
-                      "color": "blue"
-                    }
+              "container": "container"
+            }
+          ],
+          "fields": [
+            {
+              "name": "dataref",
+              "type": "string",
+              "optional": true,
+              "default": "thermocycle_${index}"
+            },
+            {
+              "name": "object",
+              "type": "container"
+            },
+            {
+              "name": "volume",
+              "type": "volume",
+              "default": {
+                "value": 10,
+                "unit": "microliter"
+              }
+            },
+            {
+              "name": "groups",
+              "type": "thermocycleGroups",
+              "value": []
+            },
+            {
+              "name": "dyes",
+              "type": "thermocycleDyes",
+              "optional": true,
+              "value": {
+                "0": {
+                  "dye": "FAM",
+                  "wells": [
+                    "A1",
+                    "A2",
+                    "A3",
+                    "A4",
+                    "B1",
+                    "B2",
+                    "B3",
+                    "B4",
+                    "C1",
+                    "C2",
+                    "C3",
+                    "C4"
                   ]
                 }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "",
-          "inputs": {},
-          "metadata": {
-            "description": ""
-          },
-          "loop": 1,
-          "steps": [
+              }
+            },
             {
-              "operation": "thermocycle",
-              "requirements": {},
-              "transforms": [
-                {
-                  "container": "container"
-                }
-              ],
-              "fields": [
-                {
-                  "name": "dataref",
-                  "type": "string",
-                  "optional": true,
-                  "default": "thermocycle_${index}"
-                },
-                {
-                  "name": "object",
-                  "type": "container"
-                },
-                {
-                  "name": "volume",
-                  "type": "volume",
-                  "default": {
-                    "value": 10,
-                    "unit": "microliter"
-                  }
-                },
-                {
-                  "name": "groups",
-                  "type": "thermocycleGroups",
-                  "value": []
-                },
-                {
-                  "name": "dyes",
-                  "type": "thermocycleDyes",
-                  "optional": true,
-                  "value": {
-                    "0": {
-                      "dye": "FAM",
-                      "wells": [
-                        "A1",
-                        "A2",
-                        "A3",
-                        "A4",
-                        "B1",
-                        "B2",
-                        "B3",
-                        "B4",
-                        "C1",
-                        "C2",
-                        "C3",
-                        "C4"
-                      ]
-                    }
-                  }
-                },
-                {
-                  "name": "melting",
-                  "type": "thermocycleMelting",
-                  "optional": true
-                }
-              ]
+              "name": "melting",
+              "type": "thermocycleMelting",
+              "optional": true
             }
           ]
         }

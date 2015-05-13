@@ -1,5 +1,8 @@
-@mixin arrow-bottom ($default, $active, $activeClass: 'open') {
-  background: $default;
+@mixin arrow-bottom ($default, $active, $includeBackground: true, $activeClass: 'open') {
+
+  @if $includeBackground {
+    background: $default;
+  }
 
   &:after {
     top: 100%;
@@ -16,7 +19,9 @@
   }
 
   &.#{$activeClass} {
-    background: $active;
+    @if $includeBackground {
+      background: $active;
+    }
 
     &:after {
       border-top-color: $active;

@@ -10,8 +10,12 @@
   cursor: all-scroll;
 }
 
-.drop-hover {
-  border-bottom: 2px solid $accent;
+.drop-hover-top {
+  border-top: $drop-hover-border;
+}
+
+.drop-hover-bottom {
+  border-bottom: $drop-hover-border;
 }
 
 .dragover {
