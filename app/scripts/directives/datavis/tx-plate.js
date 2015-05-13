@@ -18,7 +18,7 @@
  * Through combination of attributes no-brush and select-persist, you can specify whether one/many wells can be selected, and whether multiple groups can be selected
  */
 angular.module('tx.datavis')
-  .directive('txPlate', function (ContainerOptions, WellConv) {
+  .directive('txPlate', function ($timeout, ContainerOptions, WellConv) {
 
     var classActive      = 'brushActive',
         classSelected    = 'brushSelected',
@@ -90,9 +90,16 @@ angular.module('tx.datavis')
 
         scope.$watch('wellsInput', function (newWells, oldWells) {
           if (_.isArray(newWells)) {
-            safeClearBrush();
-            toggleWellsFromMap(createWellMap(newWells, true), classSelected, true);
-            propagateWellSelection(newWells);
+            //prevent infinite looping
+            if (!_.isEqual(newWells, getSelectedWells())) {
+              //timeout to ensure that well circles are drawn
+              $timeout(function () {
+                safeClearBrush();
+                toggleWellsFromMap(createWellMap(newWells, true), classSelected, true);
+                propagateWellSelection(newWells);
+                refreshTransposeArrow();
+              });
+            }
           }
         });
 
@@ -110,12 +117,13 @@ angular.module('tx.datavis')
           }
         });
 
-        function propagateWellSelection (wellsInput) {
-          var wells = _.isUndefined(wellsInput) ? getSelectedWells() : wellsInput;
+        function propagateWellSelection (wellsInput, dontSort) {
+          var wells  = (_.isNull(wellsInput) || _.isUndefined(wellsInput)) ? getSelectedWells() : wellsInput,
+              sorted = !!dontSort ? wells : orderWellsWithTranspose(wells);
 
           scope.$applyAsync(function () {
-            scope.selectedWells = wells;
-            scope.onSelect({$wells: wells});
+            scope.selectedWells = sorted;
+            scope.onSelect({$wells: sorted});
           });
         }
 
@@ -171,6 +179,7 @@ angular.module('tx.datavis')
           .attr("class", "y axis")
           .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
+
         var footerWrap = svg.append('svg:foreignObject')
               .attr({
                 transform: 'translate(0,' + (full.height - margin.bottom) + ')',
@@ -184,16 +193,14 @@ angular.module('tx.datavis')
                 'height': margin.bottom + 'px'
               });
 
+        var transposeButton = footerEl.append('span').text('transpose');
+        var resetButton     = footerEl.append('span').text('reset').on('click', clearWellsAndSelection);
 
-        var transposeButton;
         if (scope.showTranspose) {
-          transposeButton = footerEl.append('span').text('transpose')
-            .on('click', transposeButtonClick)
-            .classed('disabled', true);
-          //todo - enable in render if wells input
+          transposeButton.on('click', transposeButtonClick);
+        } else {
+          transposeButton.classed('hidden', true);
         }
-
-        footerEl.append('span').text('reset').on('click', clearWellsAndSelection);
 
 
         //data selection shared between multiple functions
@@ -330,11 +337,13 @@ angular.module('tx.datavis')
           height: 20,
           width : 80
         },
-            tooltipEl         = d3.select(element[0]).append('div')
+            tooltipEl         = d3.select(element[0]).append('div'),
+              /*
               .style({
-                //width : tooltipDimensions.width + 'px'
-                //height: tooltipDimensions.height + 'px'
+                width : tooltipDimensions.width + 'px',
+                height: tooltipDimensions.height + 'px'
               }),
+               */
             tooltipInner      = tooltipEl.append("xhtml:span");
 
         tooltipEl.classed('wellTooltip hidden', true);
@@ -370,7 +379,9 @@ angular.module('tx.datavis')
         function wellOnMouseleave () {
           //hide the tooltip
           tooltipEl.classed("hidden", true);
-          d3.select(element[0]).on('mousemove', null);
+          if (!scope.hideTooltip) {
+            d3.select(element[0]).on('mousemove', null);
+          }
         }
 
         var wellMousemoveListener = function () {
@@ -405,6 +416,7 @@ angular.module('tx.datavis')
           safeClearBrush();
           toggleWellsFromMap({}, classSelected, true);
           propagateWellSelection();
+          hideTransposeArrow();
         }
 
         /***** BRUSHING *****/
@@ -494,15 +506,9 @@ angular.module('tx.datavis')
 
           toggleWellsFromMap(toggled, classSelected);
 
-          if (scope.showTranspose) {
-            transposePosition = 0;
-            transposeBrush();
-            transposeArrow.classed('hidden', !scope.showTranspose);
-            updateModelFromTranspose();
-            transposeButton.classed('disabled', false);
-          } else {
-            propagateWellSelection();
-          }
+          refreshTransposeArrow();
+
+          propagateWellSelection();
 
           element.removeClass('brushing');
         }
@@ -510,9 +516,17 @@ angular.module('tx.datavis')
         function transposeButtonClick () {
           transposePosition = (transposePosition + 1) % 8;
           transposeBrush();
-          updateModelFromTranspose();
+          propagateWellSelection();
         }
 
+        function refreshTransposeArrow () {
+          if (scope.showTranspose) {
+            transposePosition = 0;
+            transposeBrush();
+            transposeArrow.classed('hidden', false);
+            transposeButton.classed('disabled', false);
+          }
+        }
 
         /*
           positions in numbers, wells as dots...
@@ -524,7 +538,11 @@ angular.module('tx.datavis')
             6     5
          */
         function transposeBrush () {
-          var wellBounds = getWellExtent(getSelectedWells());
+          var wells = getSelectedWells();
+          if (_.isEmpty(wells)) {
+            return;
+          }
+          var wellBounds = getWellExtent(wells);
           transposeArrow.attr('transform', function () {
             var rotation   = (Math.floor((transposePosition + 1) / 2) * 90),
                 firstPos   = getPositionWell(wellBounds[0]),
@@ -558,10 +576,6 @@ angular.module('tx.datavis')
           });
         }
 
-        function updateModelFromTranspose () {
-          propagateWellSelection(orderWellsGivenTranspose());
-        }
-
         /*
        How these get sorted: + is ascending, < shows precedence
 
@@ -575,8 +589,15 @@ angular.module('tx.datavis')
         6 - < +
         7 - > +
          */
-        function orderWellsGivenTranspose (transpose) {
-          transpose         = _.isUndefined(transpose) ? transposePosition : transpose;
+        function orderWellsWithTranspose (wells, transpose) {
+          wells = _.isUndefined(wells) ? getSelectedWells() : wells;
+
+          if (!scope.showTranspose && !transpose) {
+            return wells;
+          }
+
+          transpose = _.isUndefined(transpose) ? transposePosition : transpose;
+
           var sortAscending = {
                 row   : _.includes([0, 1, 2, 3], transpose),
                 column: _.includes([0, 1, 6, 7], transpose)
@@ -586,7 +607,7 @@ angular.module('tx.datavis')
               sortAscents   = _.map(sortValues, function (field) {
                 return _.result(sortAscending, field);
               }),
-              sorted        = _(getSelectedWells())
+              sorted        = _(wells)
                 .map(function (alphanum) {
                   return {
                     row   : alphanum.charAt(0),
@@ -605,7 +626,6 @@ angular.module('tx.datavis')
         /**** helpers ****/
 
         function scaleWellRadius (selection, valueMap, defaultRadius) {
-          //todo - need to bound not to 0-1
           defaultRadius = _.isNumber(defaultRadius) ? defaultRadius : 1;
           var initRadius;
           return selection.attr('r', function (d) {
@@ -683,6 +703,8 @@ angular.module('tx.datavis')
           var filterFunction = _.partial(_.isEqual, well, _);
           var wellEl         = getAllCircles().filter(filterFunction);
 
+          console.log(well, getAllCircles(), wellEl, wellEl.attr('cx'));
+
           return [
             parseFloat(wellEl.attr('cx'), 10),
             parseFloat(wellEl.attr('cy'), 10),
@@ -729,6 +751,9 @@ angular.module('tx.datavis')
             //brushend();
           }
           toggleWellsFromMap({}, classActive, true);
+        }
+
+        function hideTransposeArrow () {
           transposeArrow.classed('hidden', true);
         }
       }

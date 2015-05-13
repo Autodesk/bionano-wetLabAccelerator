@@ -5,6 +5,7 @@
   </tx-container-select>
 
   <input type="checkbox"
+         ng-show="aliquotCtrl.containerType"
          ng-model="showingPlates"
          ng-init="showingPlates=false;">
   {{showingPlates ? 'Hide' : 'Show'}} Wells
