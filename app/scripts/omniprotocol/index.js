@@ -966,7 +966,8 @@ module.exports = {
         {
           "name"   : "dataref",
           "type"   : "string",
-          "default": "gelSeparate_${index}"
+          "optional": true,
+          "default": "gelSeparate_${step}"
         },
         {
           "name"           : "objects",
@@ -1328,6 +1329,10 @@ function scaffoldOperationWithValues (operationName, fieldVals) {
   if (_.isEmpty(scaffold)) {
     throw new Error("operation " + operationName + " not present")
   }
+
+  _.assign(scaffold, {
+    description: clone.description
+  });
 
   _.forEach(fieldVals, function (fieldVal, fieldName) {
     _.assign(pluckField(scaffold.fields, fieldName), {value: fieldVal});

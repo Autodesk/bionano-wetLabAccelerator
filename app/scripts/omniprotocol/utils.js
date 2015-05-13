@@ -77,6 +77,10 @@ function scaffoldOperationWithValues (operationName, fieldVals) {
     throw new Error("operation " + operationName + " not present")
   }
 
+  _.assign(scaffold, {
+    description: clone.description
+  });
+
   _.forEach(fieldVals, function (fieldVal, fieldName) {
     _.assign(pluckField(scaffold.fields, fieldName), {value: fieldVal});
   });
