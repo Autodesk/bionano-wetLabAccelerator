@@ -68,7 +68,8 @@ angular.module('tx.datavis')
 
         // UI
 
-        noLabels: '=?'
+        hideTooltip: '=?',
+        noLabels   : '=?'
       },
       link    : function postLink (scope, element, attrs) {
 
@@ -130,6 +131,8 @@ angular.module('tx.datavis')
           .attr("height", "100%")
           .attr("viewBox", "0 0 " + full.width + " " + full.height)
           .attr("preserveAspectRatio", "xMidYMid meet");
+
+        svg.classed('plate', true);
 
         scope.$watch(function () {
           return element[0].offsetWidth;
@@ -295,7 +298,7 @@ angular.module('tx.datavis')
                 extent     = d3.extent(_.values(mapped)),
                 min        = extent[0],
                 max        = extent[1],
-                normalizer = d3.scale.linear().domain(extent).range([0,1]).nice(),
+                normalizer = d3.scale.linear().domain(extent).range([0, 1]).nice(),
                 normalized = _.mapValues(mapped, normalizer);
 
             scaleWellRadius(selection, normalized, 0);
@@ -317,37 +320,56 @@ angular.module('tx.datavis')
           height: 20,
           width : 80
         },
-            tooltipEl         = svg.append('svg:foreignObject')
-              .classed('wellTooltip hidden', true)
-              .attr(tooltipDimensions),
-            tooltipInner      = tooltipEl.append("xhtml:div");
+            tooltipEl         = d3.select(element[0]).append('div')
+              .style({
+                //width : tooltipDimensions.width + 'px'
+                //height: tooltipDimensions.height + 'px'
+              }),
+            tooltipInner      = tooltipEl.append("xhtml:span");
+
+        tooltipEl.classed('wellTooltip hidden', true);
 
         function wellOnMouseover (d) {
-          if (scope.noBrush) {
+          if (scope.noBrush && !scope.hideTooltip) {
             //Get this well's values
             var d3El      = d3.select(this),
                 radius    = parseFloat(d3El.attr("r"), 10),
-                xPosition = parseFloat(d3El.attr("cx"), 10) - ( tooltipDimensions.width / 2 ) + margin.left,
-                yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top,
                 wellValue = _.isEmpty(scope.plateData) || _.isUndefined(scope.plateData[d]) ?
                   null :
                   (+(scope.plateData[d].value)).toFixed(2);
 
+            /*
+            //to position the tooltip statically above the well (won't scale for viewbox if tooltip appended outside svg)
+            var xPosition = parseFloat(d3El.attr("cx"), 10) - ( tooltipDimensions.width / 2 ) + margin.left,
+                yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top,
             //Update the tooltip position and value
-            tooltipEl.attr({
-              x: xPosition,
-              y: yPosition
+            tooltipEl.style({
+              left: xPosition + 'px',
+              top : yPosition + 'px'
             });
+            */
 
             tooltipInner.text(d + (wellValue ? ' : ' + wellValue : ''));
             tooltipEl.classed("hidden", false);
+
+            wellMousemoveListener();
+            d3.select(element[0]).on('mousemove', wellMousemoveListener);
           }
         }
 
         function wellOnMouseleave () {
           //hide the tooltip
           tooltipEl.classed("hidden", true);
+          d3.select(element[0]).on('mousemove', null);
         }
+
+        var wellMousemoveListener = function () {
+          var pos = d3.mouse(element[0]);
+          tooltipEl.style({
+            left: (pos[0] + 4) + 'px',
+            top : (pos[1] + 15) + 'px'
+          });
+        };
 
         /****** Well clicking ******/
 
@@ -552,12 +574,10 @@ angular.module('tx.datavis')
           toggleWellsFromMap({}, classActive, true);
         }
 
-        function colorFromString (str) {
-          // str to hash
-          for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
-          // int/hash to hex
-          for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
-          return colour;
+        //todo - move to WellConv
+        //given array of wells, gives topleft and bottom right wells as tuple (array)
+        function getWellExtent (wells) {
+          //todo
         }
       }
     };
