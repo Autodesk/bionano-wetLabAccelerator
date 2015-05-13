@@ -22,7 +22,8 @@
     <div class="parameter-type">{{param.type}}</div>
     <input class="input-styled"
            ng-class="{'highlight' : deleteRow}"
-           type="text" placeholder="name"
+           type="text"
+           placeholder="name"
            ng-model="param.name"
            tx-change-broadcaster="editor:parameterNameChange">
     <div class="setup-container" ng-switch-when="container" ng-class="{'highlight' : deleteRow}">
@@ -37,6 +38,7 @@
       </a>
       <tx-modal ng-show="setupCtrl.detailsVisible">
         <input type="color"
+               style="background-color: white;"
                ng-required="true"
                ng-model="param.value.color">
         <input type="checkbox"

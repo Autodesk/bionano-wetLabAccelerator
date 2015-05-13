@@ -10,7 +10,7 @@
  * todo - can probably clean this up a lot using ProtocolHelper - containerType + containerName stuff is weird
  */
 angular.module('transcripticApp')
-  .controller('fieldAliquotCtrl', function ($scope, Omniprotocol) {
+  .controller('fieldAliquotCtrl', function ($scope, Omniprotocol, ProtocolHelper) {
     var self = this;
 
     self.handleAliquotSelection = function (wells) {
@@ -42,7 +42,7 @@ angular.module('transcripticApp')
       if (_.isUndefined(self.field.value)) {
         self.field.value = [];
       }
-      self.model = self.field.value;
+      self.model           = self.field.value;
       self.aliquotMultiple = (self.field.type != 'aliquot');
 
       //todo - handle single container in view
@@ -54,7 +54,7 @@ angular.module('transcripticApp')
 
       // containerType will be handled by the directive, which knows about this mapping
       if (_.isArray(model) && model.length) {
-        var firstContainer            = _.result(_.first(model), 'container');
+        var firstContainer = _.result(_.first(model), 'container');
         self.containerName = firstContainer;
         setWellsInput(pruneWellsFromContainer(firstContainer));
       }
@@ -68,16 +68,22 @@ angular.module('transcripticApp')
         });
       });
 
-      $scope.$watch('fieldCtrl.containerName', function (newContainer) {
+      $scope.$watch('aliquotCtrl.containerName', function (newContainer) {
         //don't need to worry about setting wells here - change listener for wellsOut will handle whether dealing with single container
         setWellsInput(pruneWellsFromContainer(newContainer));
+        getAndSetContainerColor();
       });
 
       //todo - perf - optimize - avoid unless actually this container
       $scope.$on('editor:parameterChange', function (e, newparams) {
-        var cont                       = Omniprotocol.utils.getContainerFromName(newparams, self.containerName);
-        self.containerColor = _.result(cont, 'value.color');
+        getAndSetContainerColor(newparams);
       });
+
+      function getAndSetContainerColor (parameters) {
+        parameters          = _.isUndefined(parameters) ? ProtocolHelper.currentProtocol.parameters : parameters;
+        var cont            = Omniprotocol.utils.getContainerFromName(parameters, self.containerName);
+        self.containerColor = _.result(cont, 'value.color');
+      }
     };
 
     //so hack!
