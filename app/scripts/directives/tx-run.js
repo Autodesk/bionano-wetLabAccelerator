@@ -7,19 +7,20 @@
  * # txRun
  */
 angular.module('transcripticApp')
-  .directive('txRun', function ($q, $timeout, Auth, Autoprotocol, Omniprotocol, Run, Project, RunHelper) {
+  .directive('txRun', function ($q, $timeout, $rootScope, Auth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, RunHelper) {
     return {
       templateUrl     : 'views/tx-run.html',
       restrict        : 'E',
       scope           : {
-        protocol    : '=',
         protocolForm: '='
       },
       bindToController: true,
       controllerAs    : 'runCtrl',
       controller      : function ($scope, $element, $attrs) {
 
-        var self               = this;
+        var self = this;
+
+        self.protocol = ProtocolHelper.currentProtocol;
 
         self.projects = [];
 
@@ -28,14 +29,10 @@ angular.module('transcripticApp')
         });
 
         self.findProjectByname = function (projectName) {
-          return _.find(self.projects, _.matches({name : projectName}));
+          return _.find(self.projects, _.matches({name: projectName}));
         };
 
         // SUBMIT / ANALYZE RUNS
-
-        //todo - pending GH#175 - redesign of run dialog
-        //todo - this should be passed in from the list...
-        //todo - alternatively, we can just create a project behind the scenes and automatically name
 
         function resourceWrap (funcToRun, toModify) {
           angular.extend(toModify.config, {
@@ -78,6 +75,7 @@ angular.module('transcripticApp')
                   error     : false
                 });
                 angular.extend(toModify.response, d);
+                $rootScope.$broadcast('editor:verificationSuccess', d);
               }, function runFailure (e) {
                 console.log(e);
                 angular.extend(toModify.config, {
@@ -85,9 +83,10 @@ angular.module('transcripticApp')
                   error     : true
                 });
                 //use as simple check for something like a 404 error - i.e. not protocol error but $http error
-                if (angular.isUndefined(e.data.protocol)) {
+                if (angular.isUndefined(e.data) || _.isUndefined(e.data.protocol)) {
                   angular.extend(toModify.response, {"error": "Request did not go through... check the console"})
                 } else {
+                  $rootScope.$broadcast('editor:verificationFailure', e.data.protocol);
                   angular.extend(toModify.response, e.data.protocol);
                 }
               });

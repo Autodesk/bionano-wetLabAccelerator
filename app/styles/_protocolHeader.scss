@@ -4,14 +4,6 @@
     display: inline-block;
     margin: 5px 3px;
   }
-
-  .glyphicon-circle {
-
-    .show-metadata {
-      position: absolute;
-      clip: rect(0, 0, 0, 0);
-    }
-  }
 }
 
 tx-protocol-actions {
@@ -19,10 +11,10 @@ tx-protocol-actions {
   position: relative;
   justify-content: space-between;
   align-items: center;
-  padding: 0 $layout-spacing-sm;
 }
 
 .protocol-metadata-field {
   min-width: 300px;
   border-bottom: 1px solid $grey;
 }
+

@@ -1,4 +1,5 @@
-tx-plate {
+tx-plate,
+tx-plate-columns {
 
   $color-disabled: #aaaaaa;
   $color-default: #dddddd;
@@ -10,15 +11,19 @@ tx-plate {
 
   //defaults, can also define inline
   display: block;
+  position: relative;
   width: 600px;
   height: auto;
   //height: 425px;
 
   svg {
     display: inline-block;
+    overflow: visible;
+  }
+
+  .plate {
     background: $white;
     box-shadow: $box-shadow-popover;
-    overflow: visible;
   }
 
   .axis {
@@ -80,16 +85,21 @@ tx-plate {
     stroke: #fff;
   }
 
-  .wellTooltip div {
-    background: rgba(25, 25, 25, 0.75);
+  .wellTooltip {
+    position: absolute;
+    display: inline-block;
+    background: $primary;
+    border: 2px solid $white;
+    border-radius: 1em;
     box-shadow: 0 0 2px rgba(25, 25, 25, 0.25);
-    border-radius: 6px;
     text-align: center;
-    font-size: 12px;
-    height: 100%;
-    padding: 2px 4px;
+    font-size: 11px;
+    padding: 0 10px;
     color: white;
+    pointer-events: none;
+    white-space: nowrap;
   }
+
 
   .plate-footer {
     padding: 6px;

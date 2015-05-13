@@ -1,5 +1,5 @@
 <div ng-show="restyleCtrl.currentProtocol.metadata"
-     class="flex-grower flex-vertical">
+     class="build-wrap flex-grower flex-vertical">
 
   <div>
     <span ng-bind="restyleCtrl.currentProtocol.metadata.name"></span>
@@ -19,7 +19,6 @@
           <td>
             <input type="text"
                    class="input-unstyled protocol-metadata-field"
-                   contenteditable="true"
                    ng-model="restyleCtrl.currentProtocol.metadata.name">
           </td>
         </tr>
@@ -28,7 +27,6 @@
           <td>
             <input type="text"
                    class="input-unstyled protocol-metadata-field"
-                   contenteditable="true"
                    ng-model="restyleCtrl.currentProtocol.metadata.description">
           </td>
         </tr>
@@ -37,7 +35,6 @@
           <td>
             <input type="text"
                    class="input-unstyled protocol-metadata-field"
-                   contenteditable="true"
                    ng-list
                    ng-model="restyleCtrl.currentProtocol.metadata.tags">
           </td>
@@ -48,7 +45,7 @@
 
   <div class="flex-horizontal flex-grower">
 
-    <div class="sidepanel flex-vertical"
+    <div class="sidepanel operation-list flex-vertical"
          resizeable
          resize-property="width"
          resize-position="right"
@@ -56,11 +53,12 @@
       <tx-operation-list class="flex-grower scroll-y"></tx-operation-list>
     </div>
 
-    <div class="maincolumn flex-grower maxout-scroll-vertical">
+    <div class="maincolumn flex-vertical flex-grower maxout-scroll-vertical protocol-steps">
 
       <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
                            protocol-form="ProtocolForm"></tx-protocol-actions>
-      <tx-protocol-editor ng-form="ProtocolForm"
+      <tx-protocol-editor class="flex-grower flex-vertical"
+                          ng-form="ProtocolForm"
                           protocol="restyleCtrl.currentProtocol">
       </tx-protocol-editor>
     </div>

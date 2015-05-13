@@ -4,7 +4,7 @@
   right: 0;
   top: 50px;
   min-height: 100vh;
-  background-color: $bg-modal;
+  background-color: $modal-bg;
   color: $white;
   overflow-x: scroll;
   overflow-y: scroll;
@@ -15,7 +15,7 @@
     z-index: 1000;
   }
   pre {
-    background: $bg-modal;
+    background: $modal-bg;
     color: $white;
     border: none;
   }

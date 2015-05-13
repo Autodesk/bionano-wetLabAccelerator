@@ -24,7 +24,7 @@ angular.module('transcripticApp')
           'fontFamily': element.css('fontFamily'),
           'white-space': 'pre'
         });
-        element.after($shadow);
+        angular.element(document.body).after($shadow);
 
         var update = function() {
           var val = element.val()
@@ -41,7 +41,7 @@ angular.module('transcripticApp')
           }
 
           //extra to handle new letter before next $digest
-          var calcWidth = $shadow[0].offsetWidth + 26;
+          var calcWidth = $shadow[0].offsetWidth + 16;
           var newWidth = Math.max(calcWidth, minWidth) + "px";
           element.css('width', newWidth);
         };
@@ -58,6 +58,10 @@ angular.module('transcripticApp')
         // $timeout is needed because the value of element is updated only after the $digest cycle
         // TODO: Maybe on compile time if we call update we won't need $timeout
         $timeout(update);
+
+        scope.$on('$destroy', function () {
+          $shadow.remove();
+        })
       }
     }
   });

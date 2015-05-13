@@ -1,1 +1,4 @@
-<input type="text" ng-model="fieldCtrl.model" placeholder="{{fieldCtrl.field.default}}">
+<input type="text"
+       class="input-styled"
+       ng-model="fieldCtrl.model"
+       placeholder="{{fieldCtrl.field.default ? fieldCtrl.field.default :'value'}}">

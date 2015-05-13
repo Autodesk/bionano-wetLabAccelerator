@@ -1,13 +1,20 @@
 tx-protocol-op {
-  display: flex;
-  flex-direction: column;
+
+  $header-margin-bottom: $step-header-space - $drop-hover-border-width;
+
   align-items: center;
   width: 100%;
-  margin: 5px .50em;
-  background: transparentize($white, .5);
+  margin: $step-header-space 3em;
+  border-bottom: $drop-hover-border-phantom;
+
+  box-sizing: border-box;
+
+  .protocol-op-wrap {}
+
+  @include arrow-bottom($step-background-inactive, $step-background-active, $includeBackground: true, $activeClass: 'open');
 
   .operation-name {
-    color:$black;
+    color: $black;
     cursor: all-scroll;
     width: 100%;
     padding: 3px 5px;
@@ -22,7 +29,7 @@ tx-protocol-op {
     }
   }
 
-  .operation-field {
+  .operation-fields {
     width: 100%;
   }
 
@@ -31,33 +38,26 @@ tx-protocol-op {
     margin: 0;
     tr {
       td {
-      &:first-child {
-        text-align: right;
-        color: $black;
-      }
-      &:last-child {
-        text-align: left;
-      }
+        &:first-child {
+          text-align: right;
+        }
+        &:last-child {
+          text-align: left;
+        }
       }
     }
-
   }
 
-  &:after {
-    top: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-top-color: rgba(255,255,255,0.5);
-    border-width: 10px;
-    margin-left: -15px;
+  &:first-child {
+    margin-top: 0;
   }
 
-  .open {
-    background: $white;
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &.drop-hover:only-child,
+  &.drop-hover:last-child {
+    border-bottom: $drop-hover-border;
   }
 }

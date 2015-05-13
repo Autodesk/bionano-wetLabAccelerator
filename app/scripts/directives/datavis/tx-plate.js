@@ -68,7 +68,8 @@ angular.module('tx.datavis')
 
         // UI
 
-        noLabels: '=?'
+        hideTooltip: '=?',
+        noLabels   : '=?'
       },
       link    : function postLink (scope, element, attrs) {
 
@@ -82,10 +83,9 @@ angular.module('tx.datavis')
           element.toggleClass('no-select', !!hiding);
         });
 
-        //todo - perf - move to a watchGroup
         scope.$watch('container', _.partial(rerender, true));
         scope.$watch('plateData', _.partial(rerender, false));
-        scope.$watch('groupData', _.partial(rerender, false));
+        scope.$watch('groupData', _.partial(rerender, false), true);
 
         scope.$watch('wellsInput', function (newWells, oldWells) {
           if (_.isArray(newWells)) {
@@ -95,7 +95,6 @@ angular.module('tx.datavis')
           }
         });
 
-        //todo - performance boost this
         scope.$watch('focusWells', function (newval) {
           if (!_.isUndefined(newval) && _.isArray(newval) && newval.length) {
             var map = createWellMap(newval, true);
@@ -133,10 +132,12 @@ angular.module('tx.datavis')
           .attr("viewBox", "0 0 " + full.width + " " + full.height)
           .attr("preserveAspectRatio", "xMidYMid meet");
 
+        svg.classed('plate', true);
+
         scope.$watch(function () {
           return element[0].offsetWidth;
         }, function (newWidth) {
-          svg.attr('height', (newWidth / full.width) * full.height);
+          element.attr('height', (newWidth / full.width) * full.height);
         });
 
         var wellsSvg = svg.append("g")
@@ -207,7 +208,7 @@ angular.module('tx.datavis')
               rowCount           = wellCount / colCount,
               wellSpacing        = 2,
               wellRadiusCalc     = ( width - (colCount * wellSpacing) ) / colCount / 2,
-              wellRadius         = (wellRadiusCalc > height / 2) ? (height/2) : wellRadiusCalc,
+              wellRadius         = (wellRadiusCalc > height / 2) ? (height / 2) : wellRadiusCalc,
               wellArray          = WellConv.createArrayGivenBounds([0, 1], [rowCount - 1, colCount]),
               transitionDuration = 200;
 
@@ -278,9 +279,10 @@ angular.module('tx.datavis')
                 groupData = _.isArray(scope.groupData) ? scope.groupData : [scope.groupData];
 
             _.forEach(groupData, function (group) {
-              var color = group.color;
+              var color = _.result(group, 'color', rgbaify(colors.data));
               if (group.wells == 'all') {
                 groupMap = _.constant(color);
+                return false; //exit - this takes precedence
               } else {
                 _.forEach(group.wells, function (well) {
                   groupMap[well] = color;
@@ -292,7 +294,14 @@ angular.module('tx.datavis')
             scaleWellRadius(selection, {}, 1);
           } else if (!_.isEmpty(scope.plateData)) {
             //for changing radius of well
-            scaleWellRadius(selection, _.mapValues(scope.plateData, 'value'), 0);
+            var mapped     = _.mapValues(scope.plateData, 'value'),
+                extent     = d3.extent(_.values(mapped)),
+                min        = extent[0],
+                max        = extent[1],
+                normalizer = d3.scale.linear().domain(extent).range([0, 1]).nice(),
+                normalized = _.mapValues(mapped, normalizer);
+
+            scaleWellRadius(selection, normalized, 0);
 
             /*//for changing fill of well
             selection.style('fill', function (d) {
@@ -311,37 +320,56 @@ angular.module('tx.datavis')
           height: 20,
           width : 80
         },
-            tooltipEl         = svg.append('svg:foreignObject')
-              .classed('wellTooltip hidden', true)
-              .attr(tooltipDimensions),
-            tooltipInner      = tooltipEl.append("xhtml:div");
+            tooltipEl         = d3.select(element[0]).append('div')
+              .style({
+                //width : tooltipDimensions.width + 'px'
+                //height: tooltipDimensions.height + 'px'
+              }),
+            tooltipInner      = tooltipEl.append("xhtml:span");
+
+        tooltipEl.classed('wellTooltip hidden', true);
 
         function wellOnMouseover (d) {
-          if (scope.noBrush) {
+          if (scope.noBrush && !scope.hideTooltip) {
             //Get this well's values
             var d3El      = d3.select(this),
                 radius    = parseFloat(d3El.attr("r"), 10),
-                xPosition = parseFloat(d3El.attr("cx"), 10) - ( tooltipDimensions.width / 2 ) + margin.left,
-                yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top,
                 wellValue = _.isEmpty(scope.plateData) || _.isUndefined(scope.plateData[d]) ?
                   null :
                   (+(scope.plateData[d].value)).toFixed(2);
 
+            /*
+            //to position the tooltip statically above the well (won't scale for viewbox if tooltip appended outside svg)
+            var xPosition = parseFloat(d3El.attr("cx"), 10) - ( tooltipDimensions.width / 2 ) + margin.left,
+                yPosition = parseFloat(d3El.attr("cy"), 10) - ( radius + tooltipDimensions.height ) + margin.top,
             //Update the tooltip position and value
-            tooltipEl.attr({
-              x: xPosition,
-              y: yPosition
+            tooltipEl.style({
+              left: xPosition + 'px',
+              top : yPosition + 'px'
             });
+            */
 
             tooltipInner.text(d + (wellValue ? ' : ' + wellValue : ''));
             tooltipEl.classed("hidden", false);
+
+            wellMousemoveListener();
+            d3.select(element[0]).on('mousemove', wellMousemoveListener);
           }
         }
 
         function wellOnMouseleave () {
           //hide the tooltip
           tooltipEl.classed("hidden", true);
+          d3.select(element[0]).on('mousemove', null);
         }
+
+        var wellMousemoveListener = function () {
+          var pos = d3.mouse(element[0]);
+          tooltipEl.style({
+            left: (pos[0] + 4) + 'px',
+            top : (pos[1] + 15) + 'px'
+          });
+        };
 
         /****** Well clicking ******/
 
@@ -463,9 +491,8 @@ angular.module('tx.datavis')
         }
 
         function changeWellColor (selection, valueMap, defaultColor) {
-          selection.style('fill', function (d) {
-            return _.result(valueMap, d, defaultColor);
-          });
+          var func = _.isFunction(valueMap) ? valueMap : _.partial(_.result, valueMap, _, defaultColor);
+          selection.style('fill', func);
         }
 
         function selectColumn (col) {
@@ -545,6 +572,12 @@ angular.module('tx.datavis')
             //brushend();
           }
           toggleWellsFromMap({}, classActive, true);
+        }
+
+        //todo - move to WellConv
+        //given array of wells, gives topleft and bottom right wells as tuple (array)
+        function getWellExtent (wells) {
+          //todo
         }
       }
     };

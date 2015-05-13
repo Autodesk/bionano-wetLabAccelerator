@@ -1,0 +1,77 @@
+// The dropdown menu
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 100px;
+  padding: 3px 0;
+  margin: 2px 0;
+  list-style: none;
+  font-size: 11px;
+  text-align: left;
+  background-color: $white;
+  border: none;
+  box-shadow: 0 0px 15px $light-grey;
+
+  .divider {
+    background: $grey;
+  }
+
+  > li > a {
+    display: block;
+    padding: 2px 15px;
+    clear: both;
+    font-weight: 500;
+    line-height: $line-height-base;
+    color: $black;
+    white-space: nowrap;
+  }
+
+  &-right {
+    left: auto;
+    right: 0;
+  }
+
+  &-left {
+    left: 0;
+    right: auto;
+  }
+}
+
+// Hover/Focus state
+.dropdown-menu > li > a {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    background-color: $white;
+    color: $accent;
+  }
+}
+
+// Active state
+.dropdown-menu > .active > a {
+  &,
+  &:hover,
+  &:focus {
+    color: $accent;
+    background-color: $white;
+    text-decoration: none;
+    outline: 0;
+  }
+}
+
+
+// Open state for the dropdown
+.open {
+  > .dropdown-menu {
+    display: block;
+  }
+  > a {
+    outline: 0;
+  }
+}

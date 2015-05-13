@@ -11,14 +11,9 @@ angular.module('transcripticApp')
   .controller('resultsDispenseCtrl', function ($scope, ContainerOptions, WellConv, Omniprotocol) {
     var self = this;
 
-    self.getContainerTypeFromContainerField = function (fieldName) {
-      var fieldVal = Omniprotocol.utils.pluckFieldValueRaw($scope.summaryCtrl.operation.fields, fieldName);
-      return Omniprotocol.utils.getContainerTypeFromName($scope.summaryCtrl.protocol.parameters, fieldVal);
-    };
-
     self.getWellsFromColVols = function (fieldName, containerFieldName) {
       //need to prune wells to container size
-      var contType      = self.getContainerTypeFromContainerField(containerFieldName),
+      var contType      = $scope.summaryCtrl.getContainerTypeFromFieldName(containerFieldName),
           contObj       = _.result(ContainerOptions, contType),
           wellsInColumn = _.result(contObj, 'col_count', 24),
           colvols       = Omniprotocol.utils.pluckFieldValueRaw($scope.summaryCtrl.operation.fields, fieldName);
@@ -26,16 +21,12 @@ angular.module('transcripticApp')
       return _.map(colvols, function (colvol) {
         return {
           name : self.readableVolume(colvol.volume),
-          color: '#' + Math.floor(Math.random() * 16777215).toString(16), //todo - use plate color
+          color: $scope.summaryCtrl.getContainerColorFromFieldName('object'),
           wells: _.flatten(_.map(colvol.columns, function (column) {
             return getWellsFromColumn(column, wellsInColumn);
           }))
         };
       });
-    };
-
-    self.getFieldValFromName = function (fieldName) {
-      return Omniprotocol.utils.pluckFieldValueRaw($scope.summaryCtrl.operation.fields, fieldName);
     };
 
     self.readableVolume = function (volDim) {
@@ -45,8 +36,12 @@ angular.module('transcripticApp')
     function getWellsFromColumn (columnNumber, wellsInColumn) {
       var letters = WellConv.letters;
       return _.map(_.range(wellsInColumn), function (wellnum) {
-        return letters[wellnum] + (columnNumber);
+        //increment column number by one to match plate
+        console.log(columnNumber, parseInt(columnNumber, 10), parseInt(columnNumber, 10) + 1);
+        return letters[wellnum] + (_.parseInt(columnNumber, 10) + 1);
       });
     }
+
+    self.parseInt = _.parseInt;
 
   });

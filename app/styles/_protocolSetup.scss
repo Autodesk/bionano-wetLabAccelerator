@@ -1,9 +1,16 @@
-.protocol-setup {
+tx-protocol-setup {
   display: block;
   position: relative;
-  margin-top: $layout-spacing-md;
-  margin-bottom: 0;
+  padding-top: $layout-spacing-md;
+  padding-bottom: $layout-spacing-md;
   font-size: 14px;
+  border-bottom: $drop-hover-border-phantom;
+
+  //div to aid drag and drop (padding outside wrap)
+  .protocol-setup-wrap {
+    position: relative;
+    @include arrow-bottom($step-background-inactive, $step-background-active, $activeClass: 'open');
+  }
 
   .protocol-setup-header {
     padding: 3px 10px;
@@ -16,12 +23,108 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    .setup-variable {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: flex-start;
+      align-items: center;
+
+      .parameter-type {
+        width: 100px;
+        padding-right: 10px;
+        text-align: right;
+      }
+      > input {
+        width: 110px;
+        margin: 0 10px;
+      }
+      > .setup-container, tx-protocol-field {
+        width: 205px;
+        margin: 0;
+        .field-value {
+          width: 100%;
+          padding: 0;
+        }
+
+        input[type="color"] {
+          -webkit-appearance: none;
+          width: 20px;
+          height: 20px;
+          padding: 0;
+          color: transparent;
+          background-color: transparent;
+          border: 1px solid transparent;
+          &::-webkit-color-swatch-wrapper {
+            padding: 0;
+            border: 1px solid transparent;
+          }
+          &::-webkit-color-swatch {
+            border: 1px solid transparent;
+            border-radius: 10px;
+          }
+        }
+      }
+      > .close {
+        width: 15px;
+      }
+
+      &:last-child {
+        justify-content: center;
+        padding: 5px 0;
+      }
+    }
+
+    .add-parameter {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      background: transparent;
+      color: $warning;
+      text-align: center;
+      width: 130px;
+      height: 30px;
+      border: none;
+      position: relative;
+
+      &:hover {
+        color: $white;
+        background: $accent;
+      }
+    }
+
+    .parameter-list {}
+
+    .parameter-option {}
   }
 
-  table {
-    border-collapse: separate;
-    border-spacing: 20px 0px;
-    margin: 0
+  .highlight {
+    background: $accent;
+    color: $white;
+  }
+
+  .field-action-button,
+  .field-details-button {
+    padding: 3px 8px;
+    border-radius: 1em;
+    font-size: 12px;
+    font-weight: bold;
+
+    &:hover {
+      color: $white;
+      background-color: $primary;
+    }
+  }
+
+  .field-details-button {
+    background-color: $light-grey;
+  }
+
+  .field-action-button {
+    color: $warning;
+    font-weight: normal;
   }
 
   &:after {
@@ -32,13 +135,12 @@
     border: solid transparent;
     content: " ";
     pointer-events: none;
-    border-top-color: rgba(255,255,255,0.5);
+    border-top-color: rgba(255, 255, 255, 0.5);
     border-width: 10px;
     margin-left: -15px;
   }
 
-  .open {
-    background: $white;
+  &.drop-hover {
+    border-bottom: $drop-hover-border;
   }
-
 }

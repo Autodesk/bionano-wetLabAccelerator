@@ -14,8 +14,12 @@ function pluckFieldValueRaw (fields, fieldName) {
   return _.result(pluckField(fields, fieldName), 'value');
 }
 
+function getContainerFromName (parameters, containerName) {
+  return _.find(parameters, {name : containerName});
+}
+
 function getContainerTypeFromName (parameters, containerName) {
-  return _.result(_.find(parameters, {name : containerName}), 'value.type');
+  return _.result(getContainerFromName(parameters, containerName), 'value.type');
 }
 
 /*******
@@ -231,12 +235,9 @@ function getUnfoldedStepNumbers (protocol, groupIndex, stepIndex) {
 }
 
 function getUnfoldedStepNumber (protocol, groupIndex, stepIndex, loopIndex) {
-  return getUnfoldedStepNumbers(protocol, groupIndex, stepIndex)[loopIndex];
+  return getUnfoldedStepNumbers(protocol, groupIndex, stepIndex)[(_.isUndefined(loopIndex) ? 0 : loopIndex)];
 }
 
-//todo - what is the point of this function? deprecate
-//given index of group, index of step in group,
-// todo - optionally index in loop (of group.loop) as loopIndex
 function getFoldedStepNumber (protocol, groupIndex, stepIndex) {
   var result = -1;
   _.reduce(protocol.groups, function (priorSteps, group, groupLoop) {
@@ -250,11 +251,12 @@ function getFoldedStepNumber (protocol, groupIndex, stepIndex) {
   return result;
 }
 
-//given index in unfolded protocol,
-//returns single number
+//given unfolded index for protocol,
+//returns object with group, step, loop, and unfolded indices
 function getFoldedStepInfo (protocol, unfoldNum) {
   var result        = {},
-      unfoldedIndex = 0;
+      unfoldedIndex = 0,
+      foldedIndex = 0;
 
   _.forEach(protocol.groups, function (group, groupIndex) {
     var loopNum = _.result(group, 'loop', 1);
@@ -265,10 +267,14 @@ function getFoldedStepInfo (protocol, unfoldNum) {
             group   : groupIndex,
             step    : stepIndex,
             loop    : groupLoopIndex,
+            folded : foldedIndex,
             unfolded: unfoldNum
           });
         }
 
+        if (groupLoopIndex === 0) {
+          foldedIndex += 1;
+        }
         unfoldedIndex += 1;
       });
     });
@@ -364,6 +370,7 @@ module.exports = {
   pluckField        : pluckField,
   pluckFieldValueRaw: pluckFieldValueRaw,
 
+  getContainerFromName : getContainerFromName,
   getContainerTypeFromName : getContainerTypeFromName,
 
   interpolateValue : interpolateValue,

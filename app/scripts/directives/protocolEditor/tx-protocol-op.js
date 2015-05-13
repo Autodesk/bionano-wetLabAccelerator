@@ -6,10 +6,9 @@
  * @description
  * # txOperation
  *
- * todo - may want to get the scaffold and populate that way to handle unspecified fields?
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolOp', function () {
+  .directive('txProtocolOp', function (DragDropManager) {
     return {
       templateUrl: 'views/tx-protocol-op.html',
       restrict: 'E',
@@ -38,6 +37,16 @@ angular.module('tx.protocolEditor')
             !( $scope.jsonEditing );
         };
 
+        self.optsDroppableOpTop = {
+          drop: function (e, ui) {
+            $scope.$apply(function () {
+              DragDropManager.onDrop();
+              $scope.insertBeforeStep(DragDropManager.stepsFromModel());
+              DragDropManager.clear();
+            });
+          }
+        };
+
         $scope.modalShown = false;
         self.toggleModal = function($event) {
           $event.preventDefault();
@@ -45,14 +54,33 @@ angular.module('tx.protocolEditor')
           $scope.modalShown = !$scope.modalShown;
         };
 
+        //note - called by protocol-editor
+        $scope.receiveVerification = function (ver) {
+          console.log(ver);
+          _.assign(self, {verification : ver});
+        };
+
       },
       link: function (scope, element, attrs, groupCtrl) {
+
+        scope.$watch('opCtrl.isVisible', function (viz) {
+          element.toggleClass('open', !!viz);
+        });
+
         scope.deleteStep = function () {
           groupCtrl.deleteStep(scope.opCtrl.op);
         };
 
+        scope.insertBeforeStep = function (newSteps) {
+          groupCtrl.insertBeforeStep(scope.opCtrl.op, newSteps);
+        };
+
         scope.$on('editor:toggleGroupVisibility', function (e, val) {
-          scope.opCtrl.isCollapsed = !!val;
+          scope.opCtrl.isVisible = !!val;
+        });
+
+        scope.$on('editor:verificationSuccess', function (e, val) {
+          delete scope.opCtrl.verification;
         });
       }
     };

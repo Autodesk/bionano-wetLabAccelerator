@@ -10,13 +10,15 @@
  * //todo - merge in containerOptions, and expose functionality here
  */
 angular.module('transcripticApp')
-  .service('ContainerHelper', function ($rootScope, Auth, Container) {
+  .service('ContainerHelper', function ($rootScope, Auth, Container, ContainerOptions) {
     var self = this;
 
     self.local  = [];
     self.remote = [];
 
     self.containers = [];
+
+    self.containerOptions = ContainerOptions;
 
     Auth.watch(function (info) {
       !!info && Container.list().$promise.then(self.setRemote);
@@ -48,6 +50,10 @@ angular.module('transcripticApp')
       return _.find(self.containers, function (cont) {
         return _.result(cont.metadata, 'name') == id;
       });
+    };
+
+    self.randomColor = function () {
+      return '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
     };
 
     // helpers

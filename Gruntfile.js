@@ -132,9 +132,9 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
-          //port: 80,
+          port: 9000,
           open: true,
-          //hostname: '0.0.0.0', //comment out to use localhost, e.g. for ngrok
+          hostname: '0.0.0.0', //comment out to use localhost, e.g. for ngrok
           base: '<%= yeoman.dist %>',
           middleware: function (connect) {
             //todo - get this integrated --- seems to be undefined in grunt serve:dist
@@ -245,7 +245,8 @@ module.exports = function (grunt) {
       options: {
         includePaths: [
           'bower_components'
-        ]
+        ],
+        sourceMap: true
       },
       dist: {
         files: [{
@@ -254,7 +255,10 @@ module.exports = function (grunt) {
           src: ['*.scss'],
           dest: '.tmp/styles',
           ext: '.css'
-        }]
+        }],
+        options: {
+          sourceMap: false
+        }
       },
       server: {
         files: [{
@@ -263,10 +267,7 @@ module.exports = function (grunt) {
           src: ['*.scss'],
           dest: '.tmp/styles',
           ext: '.css'
-        }],
-        options: {
-          sourceMap: true
-        }
+        }]
       }
     },
 
@@ -468,7 +469,7 @@ module.exports = function (grunt) {
     browserify: {
       options: {
         browserifyOptions: {
-          debug: true
+          //debug: true
         }
       },
       omniprotocol: {
@@ -494,17 +495,13 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       //'wiredep', // doesn't work without internet
+      'browserify',
       'configureProxies:livereload',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
       'watch'
     ]);
-  });
-
-  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
   });
 
   grunt.registerTask('test', [
@@ -518,6 +515,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
+    'browersify',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -528,7 +526,7 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'filerev',
-    'usemin',
+    'usemin'
     //'htmlmin' //this process hangs
   ]);
 

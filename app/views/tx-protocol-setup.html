@@ -1,59 +1,107 @@
+<div class="protocol-setup-wrap" ng-class="{'open' : isVisible}">
 <div class="protocol-setup-header"
-     ng-click="isCollapsed = !isCollapsed"
-     ng-class="{'open':isCollapsed}">
+     ng-click="isVisible = !isVisible">
   setup
 </div>
-<table class="protocol-setup-main"
-       ng-show="isCollapsed"
-       ng-class="{'open':isCollapsed}">
-  <thead>
-  <tr>
-    <th colspan="4"><button class="btn btn-default" ng-click="setupCtrl.addParam()">Add Parameter</button></th>
-  </tr>
-  </thead>
-  <tr ng-repeat="param in setupCtrl.parameters">
-    <td><input type="text"
-               ng-model="param.name"
-               tx-change-broadcaster="editor:parameterNameChange"></td>
-    <td><select ng-model="param.type"
-                ng-change="setupCtrl.handleChangeParamType(param)"
-                ng-options="o as o for (o, meta) in setupCtrl.paramTypes"></select></td>
-    <td ng-switch="param.type">
-      <div ng-switch-when="container">
-        <table>
-          <tr>
-            <td>
-              <input type="checkbox"
-                     ng-model="param.value.isNew"> new?
-            </td>
-            <td ng-if="param.value.isNew">
-              <select ng-model="param.value.type"
-                      ng-required="param.value.isNew"
-                      ng-change="notifyContainerChange()"
-                      ng-options="t as t for (t, opts) in setupCtrl.containerOptions"></select>
-            </td>
-            <td ng-if="!param.value.isNew">
-              <select ng-model="dummyRemote"
-                      ng-required="!param.value.isNew"
-                      ng-change="setupCtrl.handleSelectRemoteContainer(param, dummyRemote)"
-                      ng-options="c as (c.name || c.id) for c in setupCtrl.remoteContainers"></select>
-            </td>
-            <td>
-              <select ng-model="param.value.storage"
-                      ng-options="o as o for o in setupCtrl.storageOptions"></select>
-            </td>
-          </tr>
-        </table>
+<div class="protocol-setup-main"
+     ng-show="isVisible">
+  <div class="setup-variable"
+       ng-repeat="param in setupCtrl.parameters"
+       ng-mouseenter="hovering = true"
+       ng-mouseleave="hovering = false"
+       ng-class="{'highlight' : deleteRow}"
+       ng-switch="param.type">
+    <div class="verification" ng-if="param.verification">
+      <div class="verification-alert">
+        <span class="glyphicon glyphicon-alert"></span>
       </div>
-      <div ng-switch-default>
-        <tx-protocol-field field="param"
-                           ng-model="param.value"
-                           hide-title="true"
-                           prevent-variable="true"></tx-protocol-field>
+      <div class="verification-flag">
+        <span ng-bind="param.verification.message"></span>
       </div>
-    </td>
-    <td>
-      <a class="close" ng-click="setupCtrl.deleteParam(param)">&times;</a>
-    </td>
-  </tr>
-</table>
+    </div>
+    <div class="parameter-type">{{param.type}}</div>
+    <input class="input-styled"
+           ng-class="{'highlight' : deleteRow}"
+           type="text" placeholder="name"
+           ng-model="param.name"
+           tx-change-broadcaster="editor:parameterNameChange">
+    <div class="setup-container" ng-switch-when="container" ng-class="{'highlight' : deleteRow}">
+      <input  disabled
+              type="color"
+              ng-required="true"
+              ng-model="param.value.color">
+      <span ng-bind="param.value.type"></span>
+      <a class="field-details-button"
+         ng-click="setupCtrl.detailsVisible = !fieldCtrl.detailsVisible">
+        details...
+      </a>
+      <tx-modal ng-show="setupCtrl.detailsVisible">
+        <input type="color"
+               ng-required="true"
+               ng-model="param.value.color">
+        <input type="checkbox"
+               ng-model="param.value.isNew"> new?
+        <select ng-if="param.value.isNew"
+                ng-model="param.value.type"
+                ng-required="param.value.isNew"
+                ng-change="notifyContainerChange()"
+                ng-options="t as t for (t, opts) in setupCtrl.containerOptions"></select>
+        <select ng-if="!param.value.isNew"
+                ng-model="dummyRemote"
+                ng-required="!param.value.isNew"
+                ng-change="setupCtrl.handleSelectRemoteContainer(param, dummyRemote)"
+                ng-options="c as (c.name || c.id) for c in setupCtrl.remoteContainers"></select>
+        <select ng-model="param.value.storage"
+                ng-options="o as o for o in setupCtrl.storageOptions"></select>
+      </tx-modal>
+    </div>
+    <tx-protocol-field ng-switch-default
+                       field="param"
+                       ng-model="param.value"
+                       hide-title="true"
+                       prevent-variable="true"
+                       ng-class="{'highlight' : deleteRow}">
+    </tx-protocol-field>
+    <a class="close"
+       ng-show="hovering"
+       ng-click="setupCtrl.deleteParam(param)"
+       ng-mouseenter="deleteRow = true"
+       ng-mouseleave="deleteRow = false">&times;</a>
+  </div>
+  <div class="setup-variable">
+    <div class="add-parameter dropdown"
+         ng-click="showParameters = !showParameters"
+         ng-class="{'open' : showParameters}">
+      <span class="glyphicon glyphicon-plus"></span>
+      Add Parameter
+      <ul class="dropdown-menu parameter-list dropdown-menu-right"
+          ng-mouseleave="showParameters = false">
+        <li>
+          <a class="parameter-option"
+             ng-click="setupCtrl.addContainer()">{{'container' | capfirst}}</a>
+        </li>
+        <li class="divider"></li>
+        <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'dimensional'}">
+          <a class="parameter-option"
+             ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
+        </li>
+        <li class="divider"></li>
+        <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'primitive'}">
+          <a class="parameter-option"
+             ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
+        </li>
+        <li class="divider"></li>
+        <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'container'}">
+          <a class="parameter-option"
+             ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
+        </li>
+        <li class="divider"></li>
+        <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'custom'}">
+          <a class="parameter-option"
+             ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>

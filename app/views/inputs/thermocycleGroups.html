@@ -1,0 +1,16 @@
+<div ng-controller="thermocycleGroupsCtrl as thermoCtrl"
+     ng-init="thermoCtrl.onInit()">
+
+  <div ng-repeat="group in fieldCtrl.model">
+    <tx-protocol-field field="group"
+                       hide-title="true"
+                       ng-model="group.value">
+    </tx-protocol-field>
+    <span class="close" ng-click="thermoCtrl.deleteGroup(group)">&times;</span>
+  </div>
+
+  <a class="field-action-button"
+     ng-click="thermoCtrl.addGroup()">
+    add group...
+  </a>
+</div>

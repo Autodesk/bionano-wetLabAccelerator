@@ -8,13 +8,15 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('ResultsCtrl', function ($scope, $q, $http, RunHelper) {
+  .controller('ResultsCtrl', function ($scope, $q, $http, RunHelper, Auth) {
     var self = this;
 
     self.run = RunHelper.currentRun;
 
+    /*
     $http.get('demo_runs/transformation_4-30.json')
       .success(RunHelper.assignCurrentRun);
+     */
 
     $scope.$watch(function () {
       return self.run.transcripticRunId;
@@ -38,9 +40,22 @@ angular.module('transcripticApp')
   */
       $scope.$watch('resultsCtrl.currentInfo', function (newval) {
         if (!_.isEmpty(newval)) {
-          self.currentGroup     = self.run.protocol.groups[newval.group];
-          self.currentOperation = self.currentGroup.steps[newval.step];
+          self.currentGroup     = _.result(self.run, 'protocol.groups', {})[newval.group];
+          self.currentOperation = _.result(self.currentGroup, 'steps', {})[newval.step];
         }
       });
 
-    });
+    self.generateRunCsvUrl = function (run) {
+      return 'http://secure.transcriptic.com/' + Auth.organization() + '/' + run.transcripticProjectId + '/runs/' + run.transcripticRunId + '/data.zip';
+    };
+
+    $scope.modalShown = false;
+    $scope.toggleModal = function() {
+      $scope.modalShown = !$scope.modalShown;
+    };
+
+    self.onModalClose = function () {
+      RunHelper.saveRun(self.run);
+    };
+
+  });

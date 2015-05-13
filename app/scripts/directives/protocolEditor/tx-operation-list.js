@@ -91,7 +91,8 @@ angular.module('tx.protocolEditor')
 
             _.assign(DragDropManager, {
               type : 'operation',
-              model : opScaffold
+              model : opScaffold,
+              onDrop: _.noop
             });
           }
         };

@@ -5,39 +5,50 @@
 // colors
 
 $white: #fafafa;
-$black: #111111;
-$dark: lighten($black, 10);
-$dark-grey: #666666;
-$grey: #a1a1a1;
 $light-grey: #dddddd;
+$grey: #a1a1a1;
+$dark-grey: #666666;
+$black: #111111;
+
+$dark: lighten($black, 10);
+
 $primary: #6798d4;
-$accent: #7589d0;
+$accent: #7589d0; //todo - deprecate
 $warning: #ffa500;
-$error: #e7a9a9;
+$error: #e71a37;
 $success: #50c050;
 
 // fonts
 
-$font-family: Helvetica Neue,'Roboto', 'Myriad Pro', Helvetica, Arial, sans-serif;
-$font-size: 16px;
+$font-family: Helvetica Neue, Helvetica, 'Myriad Pro', Arial, sans-serif;
+$font-family-light: Helvetica Neue Light, Helvetica, 'Myriad Pro', Arial, sans-serif;
+$font-family-bold: Helvetica Neue Medium, Helvetica Bold, 'Myriad Pro', Arial, sans-serif;
+
+$font-size: 14px;
+$font-size-lg: 16px;
 $font-size-md: 14px;
 $font-size-sm: 12px;
+
 $font-weight: 400;
+$font-weight-light: 200;
 $font-weight-medium: 400;
 $font-weight-bold: 600;
+
 $font-line-height: 1.5;
 
 // z-index
 
+$z-sidepanel: 10;
+$z-notification: 9000;
+$z-overlay: 10000;
 
 // backgrounds
 
+$bg-transparency-factor-default: 0.5;
 $bg-body: $white;
 $bg-dark: $dark;
-$bg-gallery: $light-grey;
-$bg-footer: $bg-dark;
-$bg-medgrey : #3d3d3d; //grey with lines (but without lines)
-$bg-modal: #343434;
+$bg-white: $white;
+$bg-white-semitransparent: transparentize($bg-white, $bg-transparency-factor-default);
 
 //borders
 
@@ -65,26 +76,85 @@ $color-link-footer-hover: $color-link-post-hover;
 
 $transition-in-time: 0.4s;
 $transition-out-time: 0.2s;
-$transition-in-type: ease-out;
-$transition-out-type: ease-out;
+$transition-in-ease: ease-out;
+$transition-out-ease: ease-out;
 
 ////////////////////
 // spacing
 ////////////////////
+$layout-width-column: 80px;
+$layout-container-width: 1000px;
+$layout-width-page: $layout-container-width + (2 * $layout-width-column);
+$layout-container-padding-side: 10px;
 
-//layout
+//spacing
 
+$layout-spacing-xl: 30px;
 $layout-spacing-lg: 15px;
 $layout-spacing-md: 10px;
 $layout-spacing-sm: 5px;
+
+$space-page: 10px;
+
+//layout
+
+$layout-height-header: 50px;
+$layout-width-sidepanel: 300px;
+
+$layout-operations-space-left: 175px;
+$layout-operations-space-right: 270px;
+$layout-operations-size: 450px;
+$layout-operations-outside-left: $layout-operations-space-right - $layout-operations-space-left;
+$layout-operations-spacing: $layout-spacing-xl;
+
+
+$layout-operationList-width: $layout-operations-space-left - $layout-operations-spacing;
+$layout-operations-padding-left: $layout-operations-spacing;
+$layout-operations-padding-right: $layout-operations-space-right;
+$layout-operations-width: $layout-operations-size + $layout-operations-padding-left + $layout-operations-padding-right;
+
 
 
 ////////////////////
 // UI stuff
 ////////////////////
 
-$box-shadow-popover: 0 0 10px #ccc;
+$box-shadow-black-inner: inset 0 0 20px 0px transparentize($black, 0.25);
+$box-shadow-popover: 0 0 10px transparentize($white, 0.2);
+
+
+//interactions
+$drop-hover-border-width: 2px;
+$drop-hover-border: $drop-hover-border-width solid $primary;
+$drop-hover-border-phantom: $drop-hover-border-width solid transparent;
 
 //////////////////////////
 //////////////////////////
-// Component specific variables should just go in the component
+// Component specific variables should just go in the component, but where relevant put here
+// namespace by component, not type
+
+//header
+$header-bg: $bg-white-semitransparent;
+$header-nav-font-size: 11px;
+
+//footer
+$footer-bg: transparent;
+$footer-color: $grey;
+$footer-font-size: 14px;
+
+//content-menu
+$content-menu-bg: $bg-dark;
+
+//steps (operations + setup)
+
+$step-background-active: $bg-white;
+$step-background-inactive : $bg-white-semitransparent;
+$step-header-space: 5px;
+
+//modal
+
+$modal-bg: $bg-dark;
+$modal-z: $z-overlay;
+
+//gallery
+$gallery-bg: $light-grey;

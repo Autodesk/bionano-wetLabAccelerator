@@ -37,6 +37,7 @@ angular.module('tx.datavis')
         graphMeta     : '=', //accepts xlabel, ylabel, title
         seriesSelected: '=',
         onHover       : '&',
+        interpolation : '=?', //interpolation function to use (e.g. linear, default cardinal)
         isLinear      : '='
       },
       link    : function postLink (scope, element, attrs) {
@@ -171,7 +172,7 @@ angular.module('tx.datavis')
 
         //line generator (time / value for each well)
         var line = d3.svg.line()
-          .interpolate('cardinal')
+          .interpolate(scope.interpolation || 'cardinal')
           .x(function (d) { return d.scaled.x; })
           .y(function (d) { return d.scaled.y; });
 
@@ -221,7 +222,7 @@ angular.module('tx.datavis')
         //voronoi setup
 
         var voronoiBuffer = 10;
-        var voronoi = d3.geom.voronoi()
+        var voronoi       = d3.geom.voronoi()
           .x(function (d) { return d.scaled.x; })
           .y(function (d) { return d.scaled.y; })
           .clipExtent([[-voronoiBuffer, -voronoiBuffer], [width + voronoiBuffer, height + voronoiBuffer]]);
@@ -276,7 +277,7 @@ angular.module('tx.datavis')
 
           if (!data) return;
 
-          var timepoints = _.keys(data);
+          var timepoints = _.sortBy(_.keys(data), _.identity);
 
           seriesData = _.flatten(_.map(data, _.values));
 
@@ -297,13 +298,13 @@ angular.module('tx.datavis')
           var rolledData = d3.nest()
             .key(function (d) { return d.key; })
             .rollup(function (vals) {
-              _.map(vals, function (val) {
+              return _.sortBy(vals, function (val) {
                 val.scaled = {
                   x: getXScaled(val),
                   y: getYScaled(val)
                 };
+                return val.ordinal;
               });
-              return vals;
             })
             .entries(seriesData);
 

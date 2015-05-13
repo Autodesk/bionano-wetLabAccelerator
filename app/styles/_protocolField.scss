@@ -1,35 +1,99 @@
 tx-protocol-field {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
   width: 100%;
   margin: 3px 0;
 
   .field-label {
     display: inline-block;
-    width: 40%;
+    width: 50%;
     color: $grey;
     text-align: right;
     padding-right: $layout-spacing-md;
+    &:after {
+      content: ':';
+    }
   }
 
   .field-value {
     display: inline-block;
-    width: 55%;
+    width: 50%;
+    padding-left: 10px;
     text-align: left;
   }
 
   .field-value-inner {
-    display: inline-block;
+    display: inline;
+    width: 100%;
+
+    tx-protocol-field-inner {
+      display: flex;
+      flex-direction: row;
+
+      .button {
+        -webkit-appearance: none;
+        display: inline-flex;
+        justify-content: center;
+        align-items: baseline;
+        min-width: 50px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        padding:2px 0;
+        outline: 0;
+        &:hover {
+          -webkit-appearance: none;
+          background: $accent;
+          color: $white;
+          padding: 2px 5px;
+        }
+        > span {
+          padding: 0 2px;
+        }
+      }
+    }
   }
 
-  .field-variable {
-    color: $primary;
+  //buttons
+
+  .field-action-button,
+  .field-details-button {
+    padding: 3px 8px;
+    border-radius: 1em;
+    font-size: 12px;
+    font-weight: bold;
+
+    &:hover {
+      color: $white;
+      background-color: $primary;
+    }
+  }
+
+  .field-details-button {
+    background-color: $light-grey;
+  }
+
+  .field-action-button {
+    color: $warning;
+    font-weight: normal;
+  }
+
+
+  //PARAMETER
+
+  .field-parameter {
+    color: $accent;
   }
 
   .field-parameter-toggler {
+    margin: 0 10px;
     padding: 4px;
+    border-radius: 4px;
     position: relative;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 12px;
     color: $white;
     text-align: center;
     width: 20px;
@@ -39,19 +103,23 @@ tx-protocol-field {
 
     &.active {
       opacity: 1;
-      background-color: $primary;
+      background-color: $accent;
+
+      &:hover {
+        background-color: $accent;
+      }
     }
   }
 
   .field-parameter-dropdown {
-    color: $grey;
-
+    color: $black;
   }
 
   &:hover {
     .field-parameter-toggler {
       opacity: 1;
-      background-color: transparentize($grey, 0.5);
+      background-color: $light-grey;
+      transition: opacity $transition-out-time ease-in;
     }
   }
 }

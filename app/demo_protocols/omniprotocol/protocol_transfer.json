@@ -226,7 +226,7 @@
             {
               "name": "dataref",
               "type": "string",
-              "value": "dataref_${index}"
+              "default": "absorbance_${step}"
             },
             {
               "name": "wells",

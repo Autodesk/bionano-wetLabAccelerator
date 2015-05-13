@@ -1,11 +1,11 @@
 header.site-header {
 
-  $header-logo-dim: 40px;
-  $header-nav-font-size: 11px;
-  $logo-spacing: 5px;
-  $nav-height : $header-logo-dim + ($logo-spacing * 2);
+  $header-logo-spacing: ($space-page / 2);
+  $header-logo-dim: $layout-height-header - ($header-logo-spacing * 2);
+  $nav-height : $layout-height-header;
 
   line-height: 1;
+  height: $layout-height-header;
 
   .container {
 
@@ -15,16 +15,17 @@ header.site-header {
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: transparentize($white,0.50);
+    background-color: $bg-white-semitransparent;
 
     .logo {
       display: flex;
-      width: 93px;
+      width: 50px;
+      margin-right: 30px; //hack - accommodate the user and match it's size
 
       img {
         width: $header-logo-dim;
         height: $header-logo-dim;
-        margin: $logo-spacing;
+        margin: $header-logo-spacing;
         background-position: center center;
         background-size: $header-logo-dim $header-logo-dim;
       }
@@ -76,12 +77,12 @@ header.site-header {
         font-size: $header-nav-font-size;
         color: #c2c2c2;
         opacity: 0.6;
-        transition: opacity $transition-in-time $transition-in-type;
+        transition: opacity $transition-in-time $transition-in-ease;
 
         &:hover {
           opacity: 0.5;
           color: #222;
-          transition: opacity $transition-out-time $transition-out-type;
+          transition: opacity $transition-out-time $transition-out-ease;
         }
 
       }

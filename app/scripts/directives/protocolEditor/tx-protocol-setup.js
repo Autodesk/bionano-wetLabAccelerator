@@ -19,16 +19,41 @@ angular.module('transcripticApp')
       controller      : function ($scope, $element, $attrs) {
         var self = this;
 
-        this.paramTypes       = Omniprotocol.inputTypes;
+        this.paramTypes       = _(Omniprotocol.inputTypes).
+          forEach(function (param, name) {
+            _.assign(param, {name: name});
+          }).
+          filter(_.matches({canParameterize: true})).
+          value();
         this.containerOptions = Omniprotocol.optionEnums.containers;
         this.storageOptions   = _.union([false], Omniprotocol.optionEnums.storage.storage);
 
-        self.addParam = function () {
-          self.parameters.push({});
+        self.addParam = function (type) {
+          self.parameters.push({type: type});
+          $scope.showParameters = false;
+        };
+
+        self.addContainer = function (param) {
+          var parameter = {
+            type: 'container',
+            value: {
+              color: ContainerHelper.randomColor(),
+              isNew : true
+            }
+          };
+
+          if (_.isString(param)) {
+            parameter.value.type = param;
+          } else if (_.isObject(param)) {
+            _.merge(parameter, param);
+          }
+
+          self.parameters.push(parameter);
+          $scope.checkContainerChange();
         };
 
         self.clearParamValue = function (param) {
-          _.assign(param, {value : null});
+          _.assign(param, {value: null});
         };
 
         self.deleteParam = function (param) {
@@ -44,7 +69,7 @@ angular.module('transcripticApp')
           self.clearParamValue(param);
           $scope.checkContainerChange();
         };
-        
+
         self.handleSelectRemoteContainer = function (param, remote) {
           _.assign(param.value, remote);
           $scope.notifyContainerChange();
@@ -54,12 +79,14 @@ angular.module('transcripticApp')
       link            : function postLink (scope, element, attrs) {
         var oldContainerLength;
 
+        //CHANGE CHECKING / CONTAINERS
+
         scope.$watch('setupCtrl.parameters', function (newval, oldval) {
           $rootScope.$broadcast('editor:parameterChange', newval);
         }, true);
 
         scope.checkContainerChange = function () {
-          var containerList = _.filter(scope.setupCtrl.parameters, {type : 'container'});
+          var containerList = _.filter(scope.setupCtrl.parameters, {type: 'container'});
           if (containerList.length != oldContainerLength) {
             ContainerHelper.setLocal(containerList);
             scope.notifyContainerChange();
@@ -72,10 +99,30 @@ angular.module('transcripticApp')
           $rootScope.$broadcast('editor:containerChange');
         };
 
+        scope.$on('editor:protocol:addContainer', function (event, param) {
+          scope.setupCtrl.addContainer(param);
+          scope.isVisible = true;
+        });
+
+        scope.$on('editor:newprotocol', scope.checkContainerChange);
+
+        //VERIFICATIONS
+
+        scope.$on('editor:verificationSuccess', function (event) {
+          _.forEach(scope.setupCtrl.parameters, function (param) {
+            delete param.verification;
+          });
+        });
+
+        scope.receiveVerifications = function (vers) {
+          //todo - need to show verification for whole setup
+          _.forEach(vers, function (ver) {
+            _.assign(_.find(scope.setupCtrl.parameters, {name: ver.container}), {verification: ver});
+          });
+        };
+
         //init
         scope.checkContainerChange();
-
-        scope.$on('editor:newprotocol', scope.checkContainerChange)
       }
     };
   });

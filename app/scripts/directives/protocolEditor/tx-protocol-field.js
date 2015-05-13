@@ -5,6 +5,8 @@
  * @name transcripticApp.directive:txProtocolInput
  * @description
  * # txProtocolInput
+ *
+ * todo - can probably clean this up a lot using ProtocolHelper - containerType + containerName stuff is weird
  */
 angular.module('tx.protocolEditor')
   .directive('txProtocolField', function ($http, $compile, $timeout, Omniprotocol, Autoprotocol, ProtocolHelper) {
@@ -23,33 +25,13 @@ angular.module('tx.protocolEditor')
       controller      : function ($scope, $element, $attrs) {
         var self = this;
 
-        self.handleAliquotSelection = function (wells) {
-          //view guarantees that containerName is set given a change in wells (tx-plate)
+        //limit toggling of parameters to fields which support it
+        var parameterizables = _.keys(_.pick(Omniprotocol.inputTypes, _.matches({canParameterize: true})));
 
-          var mapped = _.map(wells, function (well) {
-            return {
-              container: self.containerName,
-              well     : well
-            };
-          });
-
-          if (self.singleContainer === false) {
-            self.model = _.union(
-              _.reject(self.model, _.matches({container: self.containerName})),
-              mapped
-            );
-          } else {
-            self.model = mapped;
-          }
-
-          // todo - perf - check if triggers new digest
-          self.wellsIn = wells;
+        self.parameterAllowed = function parameterAllowed (fieldType) {
+          return _.indexOf(parameterizables, fieldType) >= 0;
         };
 
-
-        //todo - limit toggling to fields which support it
-
-        //todo - perf - filter here, not DOM
         self.parameters = ProtocolHelper.currentProtocol.parameters;
 
         var parameterListeners = [];
@@ -84,7 +66,7 @@ angular.module('tx.protocolEditor')
               param     = {
                 name : paramName,
                 type : self.field.type,
-                value: _.cloneDeep(self.model)
+                value: _.isUndefined(self.model) ? _.cloneDeep(self.field.default) : _.cloneDeep(self.model)
               };
           ProtocolHelper.currentProtocol.parameters.push(param);
           self.selectParameter(param);
@@ -97,7 +79,17 @@ angular.module('tx.protocolEditor')
           });
         };
 
-        //todo - set to parameter on input / init
+        var hideDropDown;
+
+        self.closeDropdown = function () {
+          hideDropDown = $timeout(function(){
+              self.paramListVisible = false;
+            }, 1500);
+        };
+
+        self.cancelDropdown = function () {
+          $timeout.cancel(hideDropDown);
+        };
 
       },
       compile         : function compile (tElement, tAttrs, transclude) {
@@ -111,8 +103,7 @@ angular.module('tx.protocolEditor')
             //Special handling before we get the appropriate template
 
             // handle all dimensional values the same way
-            // future - should check this better... not bake in for autoprotocol
-            if (_.contains(Autoprotocol.utils.dimensionalFields, type)) {
+            if (Omniprotocol.inputTypes[type].type == 'dimensional') {
 
               var inputType     = Omniprotocol.inputTypes[type];
               partial           = 'dimension';
@@ -122,19 +113,20 @@ angular.module('tx.protocolEditor')
 
             }
             else if (type == 'option') {
-              scope.modelOptions = scope.fieldCtrl.field.options;
-            }
-            else if (type == 'aliquot') {
-              scope.fieldCtrl.aliquotMultiple = false;
+              scope.modelOptions = _.uniq(scope.fieldCtrl.field.options);
             }
             else if (type == 'aliquot+') {
-              partial                         = 'aliquot';
-              scope.fieldCtrl.aliquotMultiple = true;
+              partial = 'aliquot';
             }
 
             /* functions for specific types */
 
             /* get the partial */
+
+            //hack - special hiding for dataref
+            if (_.result(scope.fieldCtrl.field, 'name') == 'dataref') {
+              iElement.remove();
+            }
 
             return $http.get('views/inputs/' + partial + '.html', {cache: true}).then(function (data) {
               var $el = angular.element(data.data);
@@ -143,8 +135,7 @@ angular.module('tx.protocolEditor')
           },
           post: function postLink (scope, iElement, iAttrs, ngModel) {
 
-            //todo - probably makes sense to make a controller for each one of these...
-
+            //have dimensional here instead of own conroller because needs ngModel controller
             //if dimensional, ensure that unit is defined when changed
             //kinda a hack, but nice guarantee and easier than lots of object passing in conversion later
             if (partial == 'dimension') {
@@ -160,61 +151,12 @@ angular.module('tx.protocolEditor')
               }
             }
 
-
-            if (partial == 'aliquot') {
-              scope.fieldCtrl.singleContainer = _.result(scope.fieldCtrl.field, 'singleContainer');
-              //todo - handle single container in view
-
-              //this stuff is in post link because need model bound
-              var model           = scope.fieldCtrl.model,
-                  multiple        = scope.fieldCtrl.aliquotMultiple,
-                  singleContainer = scope.fieldCtrl.singleContainer;
-
-              // containerType will be handled by the directive, which knows about this mapping
-              if (_.isArray(model) && model.length) {
-                var firstContainer            = _.result(_.first(model), 'container');
-                scope.fieldCtrl.containerName = firstContainer;
-                setWellsInput(pruneWellsFromContainer(firstContainer));
-              }
-
-              //scope.$watch('fieldCtrl.wellsOut', scope.fieldCtrl.handleAliquotSelection);
-
-              scope.$on('editor:parameterNameChange', function (event, oldName, newName) {
-                //todo - may need to more explicitly make sure this runs after the $watch...
-                _.forEach(scope.fieldCtrl.model, function (wellObj) {
-                  if (wellObj.container == oldName) {
-                    wellObj.container = newName;
-                  }
-                });
-              });
-
-              scope.$watch('fieldCtrl.containerName', function (newContainer) {
-                //don't need to worry about setting wells here - change listener for wellsOut will handle whether dealing with single container
-                setWellsInput(pruneWellsFromContainer(newContainer));
-              });
-            }
-
             //handle parameter as input
             if (scope.fieldCtrl.field.parameter) {
               var relevantParam = _.find(ProtocolHelper.currentProtocol.parameters, {name: scope.fieldCtrl.field.parameter});
               scope.fieldCtrl.selectParameter(relevantParam);
             }
 
-            //so hack!
-            //need to wait for tx-container-select to propagate type before setting input, because container will re-render and render selection empty
-            function setWellsInput (wells) {
-              var listener = scope.$watch('fieldCtrl.containerType', function (newval) {
-                if (!!newval) {
-                  scope.fieldCtrl.wellsIn = wells;
-                  listener();
-                }
-              });
-            }
-
-            function pruneWellsFromContainer (container) {
-              //use model directly to avoid object reference weirdness + ensure everything actually in sync
-              return _.pluck(_.filter(scope.fieldCtrl.model, _.matches({container: container})), 'well');
-            }
           }
         }
       }
