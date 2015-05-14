@@ -187,14 +187,14 @@ module.exports = {
 
   "aliquot"  : {
     type               : "container",
-    canParameterize    : true,
+    canParameterize    : false,
     description        : "A single aliquot",
     "autoprotocol-type": "Well",
     verification       : _.constant(true)
   },
   "aliquot+" : {
     type               : "container",
-    canParameterize    : true,
+    canParameterize    : false,
     description        : "Several aliquot",
     "autoprotocol-type": "WellGroup",
     verification       : _.constant(true)
@@ -1381,7 +1381,8 @@ function getScaffoldProtocol () {
       "type"       : "protocol",
       "author"     : {},
       "description": "",
-      tags         : []
+      "tags"       : [],
+      "db"         : []
     },
     "parameters": [],
     "groups"    : []
@@ -1403,7 +1404,8 @@ function getScaffoldRun () {
       "date"       : "",
       "author"     : {},
       "description": "",
-      tags         : []
+      "tags"       : [],
+      "db"         : []
     },
     "protocol": {},
     "data"    : {}
