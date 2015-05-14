@@ -27,6 +27,8 @@ angular.module('tx.protocolEditor')
 
         //limit toggling of parameters to fields which support it
         var parameterizables = _.keys(_.pick(Omniprotocol.inputTypes, _.matches({canParameterize: true})));
+        
+        console.log(parameterizables);
 
         self.parameterAllowed = function parameterAllowed (fieldType) {
           return _.indexOf(parameterizables, fieldType) >= 0;

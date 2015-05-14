@@ -72,7 +72,7 @@
                   <div class="col-sm-7"
                        dropdown
                        is-open="showContainerTypes">
-                    <a ng-bind="param.value.type"
+                    <a ng-bind="param.value.type || 'select...'"
                        dropdown-toggle
                        ng-disabled="!param.value.isNew"></a>
                     <ul class="dropdown-menu">
@@ -90,7 +90,7 @@
 
                   <div class="col-sm-7"
                        dropdown>
-                    <a ng-bind="(param.value.storage === false) ? 'discard' : param.value.storage"
+                    <a ng-bind="((param.value.storage === false) ? 'discard' : param.value.storage) || 'select...'"
                        dropdown-toggle></a>
                     <ul class="dropdown-menu">
                       <li>
@@ -111,6 +111,7 @@
 
                   <div class="col-sm-7">
                     <input class="input-unstyled"
+                           placeholder="container name"
                            ng-model="param.name">
                   </div>
                 </div>
@@ -174,11 +175,6 @@
           </li>
           <li class="divider"></li>
           <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'primitive'}">
-            <a class="parameter-option"
-               ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
-          </li>
-          <li class="divider"></li>
-          <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'container'}">
             <a class="parameter-option"
                ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
           </li>

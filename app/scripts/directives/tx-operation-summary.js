@@ -26,7 +26,9 @@ angular.module('transcripticApp')
       'seal'    : 'container',
       'unseal'  : 'container',
       'cover'   : 'container',
-      'uncover' : 'container'
+      'uncover' : 'container',
+
+      'gel_separate' : 'gel_separate'
     };
 
     return {
@@ -43,9 +45,13 @@ angular.module('transcripticApp')
       controller      : function protocolMiniController ($scope, $element, $attrs) {
         var self = this;
 
+        //general helper functions
+
         self.getFieldValueByName = function (fieldName) {
           return Omniprotocol.utils.pluckFieldValueRaw(self.operation.fields, fieldName);
         };
+
+        //functions for fields with type container
 
         self.getContainerTypeFromFieldName = function (fieldName) {
           var containerName = self.getFieldValueByName(fieldName);
@@ -61,6 +67,9 @@ angular.module('transcripticApp')
           var containerName = self.getFieldValueByName(fieldName);
           return self.getContainerColorFromContainerName(containerName);
         };
+
+        //todo - will need have in controller, and use a resource to do this
+        self.transcripticUrlRoot = 'http://secure.transcriptic.com/'
 
       },
       link            : function (scope, element, attrs) {
