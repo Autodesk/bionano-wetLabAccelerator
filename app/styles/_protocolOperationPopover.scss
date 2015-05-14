@@ -1,0 +1,34 @@
+tx-operation-popover {
+
+  $oppop-fromTop: 15px;
+
+  $oppop-arrow-width: 12px;
+  $oppop-arrow-top: $oppop-arrow-width + $oppop-fromTop;
+
+  $oppop-padding: $layout-spacing-md;
+
+  position: absolute;
+  left: calc(100% + #{$oppop-arrow-width});
+  top: - $oppop-fromTop;
+  background-color: $white;
+  width: $layout-opSummary-width;
+
+  &:after {
+      right: 100%;
+      top: $oppop-arrow-top;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: transparent;
+      border-right-color: $white;
+      border-width: $oppop-arrow-width;
+      margin-top: -$oppop-arrow-width;
+  }
+
+  .oppop-wrap {
+    padding: $oppop-padding;
+  }
+}

@@ -10,6 +10,7 @@
       <span ng-bind="opCtrl.verification.message"></span>
     </div>
   </div>
+
   <div class="operation-name"
        ng-click="opCtrl.isVisible = !opCtrl.isVisible">
     <span ng-bind="opCtrl.op.operation"></span>
@@ -33,9 +34,7 @@
       </ul>
     </div>
   </div>
-  <tx-modal ng-show='modalShown'>
-    <tx-run></tx-run>
-  </tx-modal>
+
   <div class="operation-fields"
        ng-show="opCtrl.isVisible">
     <tx-protocol-field ng-repeat="field in opCtrl.op.fields"
@@ -43,6 +42,11 @@
                        field="field">
     </tx-protocol-field>
   </div>
+
+  <tx-modal ng-show='modalShown'>
+    <tx-run></tx-run>
+  </tx-modal>
+
   <div class="pre-scrollable modal-background"
        ng-class="{'open' : jsonEditing}">
     <span class="modal-close"
@@ -56,4 +60,7 @@
          ng-model-options="{updateOn: 'blur'}">
     </pre>
   </div>
+
+  <tx-operation-popover ng-if="opCtrl.isVisible"
+                        operation="opCtrl.op"></tx-operation-popover>
 </div>
