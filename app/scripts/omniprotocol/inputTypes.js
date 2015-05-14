@@ -73,14 +73,14 @@ module.exports = {
 
   "aliquot"  : {
     type               : "container",
-    canParameterize    : true,
+    canParameterize    : false,
     description        : "A single aliquot",
     "autoprotocol-type": "Well",
     verification       : _.constant(true)
   },
   "aliquot+" : {
     type               : "container",
-    canParameterize    : true,
+    canParameterize    : false,
     description        : "Several aliquot",
     "autoprotocol-type": "WellGroup",
     verification       : _.constant(true)

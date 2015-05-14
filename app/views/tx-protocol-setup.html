@@ -179,11 +179,6 @@
                ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
           </li>
           <li class="divider"></li>
-          <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'container'}">
-            <a class="parameter-option"
-               ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
-          </li>
-          <li class="divider"></li>
           <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'custom'}">
             <a class="parameter-option"
                ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
