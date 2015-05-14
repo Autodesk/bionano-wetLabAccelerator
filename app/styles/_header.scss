@@ -1,6 +1,6 @@
 header.site-header {
 
-  $header-logo-spacing: ($space-page / 2);
+  $header-logo-spacing: ($layout-width-padding-side / 2);
   $header-logo-dim: $layout-height-header - ($header-logo-spacing * 2);
   $nav-height : $layout-height-header;
 

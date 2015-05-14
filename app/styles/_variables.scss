@@ -5,17 +5,17 @@
 // colors
 
 $white: #fafafa;
-$light-grey: #dddddd;
+$light-grey: #CCCCCC;
 $grey: #a1a1a1;
 $dark-grey: #666666;
-$black: #111111;
+$black: #191919;
 
 $dark: lighten($black, 10);
 
-$primary: #6798d4;
-$accent: #7589d0; //todo - deprecate
-$warning: #ffa500;
-$error: #e71a37;
+$primary: #6E89E4;
+$warning: #FF8000;
+$error: #FF0000;
+$notify: #FFFF7F;
 $success: #50c050;
 
 // fonts
@@ -23,6 +23,7 @@ $success: #50c050;
 $font-family: Helvetica Neue, Helvetica, 'Myriad Pro', Arial, sans-serif;
 $font-family-light: Helvetica Neue Light, Helvetica, 'Myriad Pro', Arial, sans-serif;
 $font-family-bold: Helvetica Neue Medium, Helvetica Bold, 'Myriad Pro', Arial, sans-serif;
+$font-family-monospace: Courier, monospace;
 
 $font-size: 14px;
 $font-size-lg: 16px;
@@ -31,7 +32,8 @@ $font-size-sm: 12px;
 
 $font-weight: 400;
 $font-weight-light: 200;
-$font-weight-medium: 400;
+$font-weight-medium: 500;
+$font-weight-regular: 400;
 $font-weight-bold: 600;
 
 $font-line-height: 1.5;
@@ -65,8 +67,8 @@ $color-font-dark: darken($color-font, 10);
 $color-link-default: #888888;
 $color-link-default-hover: #555555;
 
-$color-link-post: $accent;
-$color-link-post-hover: darken($accent, 15);
+$color-link-post: $primary;
+$color-link-post-hover: darken($primary, 15);
 
 $color-font-footer: $white;
 $color-link-footer: $color-link-post;
@@ -82,10 +84,9 @@ $transition-out-ease: ease-out;
 ////////////////////
 // spacing
 ////////////////////
-$layout-width-column: 80px;
-$layout-container-width: 1000px;
-$layout-width-page: $layout-container-width + (2 * $layout-width-column);
-$layout-container-padding-side: 10px;
+$layout-width-column: 40px;
+$layout-width-columnspace: 20px;
+$layout-width-padding-side: 10px;
 
 //spacing
 
@@ -94,25 +95,36 @@ $layout-spacing-lg: 15px;
 $layout-spacing-md: 10px;
 $layout-spacing-sm: 5px;
 
-$space-page: 10px;
+//containers + columns
+
+$layout-container-width: 960px;
+$layout-container-padding-side: 10px;
+$layout-container-padding-left: $layout-width-column + $layout-width-columnspace + $layout-container-padding-side;
+$layout-width-page: $layout-container-width + (2 * $layout-container-padding-side);
+
+@function widthFromColumns ($cols) {
+  @return ($cols * $layout-width-column) + (($cols - 1) * $layout-width-columnspace);
+}
 
 //layout
 
 $layout-height-header: 50px;
 $layout-width-sidepanel: 300px;
 
-$layout-operations-space-left: 175px;
-$layout-operations-space-right: 270px;
-$layout-operations-size: 450px;
-$layout-operations-outside-left: $layout-operations-space-right - $layout-operations-space-left;
+//layout - build
+
+$layout-opGroups-width: widthFromColumns(8);
+$layout-opSummary-width: widthFromColumns(4);
+
+//need to have extra padding on the side to show verifications, and shrink operations accordingly
 $layout-operations-spacing: $layout-spacing-xl;
+$layout-operations-spacing-correction: $layout-operations-spacing - $layout-width-columnspace;
 
-
-$layout-operationList-width: $layout-operations-space-left - $layout-operations-spacing;
 $layout-operations-padding-left: $layout-operations-spacing;
-$layout-operations-padding-right: $layout-operations-space-right;
-$layout-operations-width: $layout-operations-size + $layout-operations-padding-left + $layout-operations-padding-right;
+$layout-operations-padding-right: $layout-opSummary-width + $layout-width-columnspace;
+$layout-operations-width: $layout-opGroups-width + $layout-operations-padding-left + $layout-operations-padding-right;
 
+$layout-opList-width: widthFromColumns(3) - $layout-operations-spacing-correction;
 
 
 ////////////////////

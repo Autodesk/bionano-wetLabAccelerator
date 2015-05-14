@@ -5,7 +5,7 @@ footer {
   text-align: center;
   color: $footer-color;
   font-size: $footer-font-size;
-  padding: 0 $space-page $space-page;
+  padding: 0 $layout-width-padding-side $layout-width-padding-side;
 
   display: flex;
   flex-flow: row nowrap;

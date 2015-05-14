@@ -57,11 +57,11 @@ tx-protocol-group {
       }
 
       &:hover {
-        background: $accent;
+        background: $primary;
         color: $white;
       }
       &.selected {
-        background: $accent;
+        background: $primary;
         color: $white;
       }
     }
