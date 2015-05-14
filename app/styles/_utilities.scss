@@ -32,7 +32,7 @@
 
   &:hover {
     -webkit-appearance: none;
-    background: $accent;
+    background: $primary;
     color: $white;
     text-align: center;
     padding: 0 1px;
@@ -43,7 +43,7 @@
 
   &:focus {
     -webkit-appearance: none;
-    border: 2px solid $accent;
+    border: 2px solid $primary;
     background: transparent;
     color: $black;
     text-align: center;

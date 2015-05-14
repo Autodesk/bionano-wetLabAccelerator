@@ -45,7 +45,7 @@ tx-protocol-field {
         outline: 0;
         &:hover {
           -webkit-appearance: none;
-          background: $accent;
+          background: $primary;
           color: $white;
           padding: 2px 5px;
         }
@@ -84,7 +84,7 @@ tx-protocol-field {
   //PARAMETER
 
   .field-parameter {
-    color: $accent;
+    color: $primary;
   }
 
   .field-parameter-toggler {
@@ -103,10 +103,10 @@ tx-protocol-field {
 
     &.active {
       opacity: 1;
-      background-color: $accent;
+      background-color: $primary;
 
       &:hover {
-        background-color: $accent;
+        background-color: $primary;
       }
     }
   }

@@ -5,17 +5,17 @@
 // colors
 
 $white: #fafafa;
-$light-grey: #dddddd;
+$light-grey: #CCCCCC;
 $grey: #a1a1a1;
 $dark-grey: #666666;
-$black: #111111;
+$black: #191919;
 
 $dark: lighten($black, 10);
 
-$primary: #6798d4;
-$accent: #7589d0; //todo - deprecate
-$warning: #ffa500;
-$error: #e71a37;
+$primary: #6E89E4;
+$warning: #FF8000;
+$error: #FF0000;
+$notify: #FFFF7F;
 $success: #50c050;
 
 // fonts
@@ -23,6 +23,7 @@ $success: #50c050;
 $font-family: Helvetica Neue, Helvetica, 'Myriad Pro', Arial, sans-serif;
 $font-family-light: Helvetica Neue Light, Helvetica, 'Myriad Pro', Arial, sans-serif;
 $font-family-bold: Helvetica Neue Medium, Helvetica Bold, 'Myriad Pro', Arial, sans-serif;
+$font-family-monospace: Courier, monospace;
 
 $font-size: 14px;
 $font-size-lg: 16px;
@@ -31,7 +32,8 @@ $font-size-sm: 12px;
 
 $font-weight: 400;
 $font-weight-light: 200;
-$font-weight-medium: 400;
+$font-weight-medium: 500;
+$font-weight-regular: 400;
 $font-weight-bold: 600;
 
 $font-line-height: 1.5;
@@ -65,8 +67,8 @@ $color-font-dark: darken($color-font, 10);
 $color-link-default: #888888;
 $color-link-default-hover: #555555;
 
-$color-link-post: $accent;
-$color-link-post-hover: darken($accent, 15);
+$color-link-post: $primary;
+$color-link-post-hover: darken($primary, 15);
 
 $color-font-footer: $white;
 $color-link-footer: $color-link-post;
