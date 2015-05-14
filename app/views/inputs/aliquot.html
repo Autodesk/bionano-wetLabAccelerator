@@ -4,11 +4,14 @@
                        ng-model="aliquotCtrl.containerName">
   </tx-container-select>
 
-  <input type="checkbox"
-         ng-show="aliquotCtrl.containerType"
-         ng-model="showingPlates"
-         ng-init="showingPlates=false;">
-  {{showingPlates ? 'Hide' : 'Show'}} Wells
+  <div ng-show="aliquotCtrl.containerType"
+       style="display: inline-block;">
+    <a class="field-details-button"
+       ng-click="showingPlates = !showingPlates"
+       ng-init="showingPlates=false;">
+      {{showingPlates ? 'hide' : 'edit...'}}
+    </a>
+  </div>
   <div ng-if="showingPlates">
     <tx-plate ng-show="aliquotCtrl.containerType"
               container="aliquotCtrl.containerType"

@@ -74,6 +74,9 @@ angular.module('tx.datavis')
       },
       link    : function postLink (scope, element, attrs) {
 
+        //todo - more robust, make sure this is everywhere needed
+        var internalSelectedWells = [];
+
         /* WATCHERS */
 
         scope.$watch('noLabels', function (hiding) {
@@ -91,13 +94,16 @@ angular.module('tx.datavis')
         scope.$watch('wellsInput', function (newWells, oldWells) {
           if (_.isArray(newWells)) {
             //prevent infinite looping
-            if (!_.isEqual(newWells, getSelectedWells())) {
+            if (!_.isEqual(newWells, internalSelectedWells)) {
+
+              console.log('new wells input', newWells, internalSelectedWells);
+
               //timeout to ensure that well circles are drawn
               $timeout(function () {
                 safeClearBrush();
                 toggleWellsFromMap(createWellMap(newWells, true), classSelected, true);
                 propagateWellSelection(newWells);
-                refreshTransposeArrow();
+                refreshTransposeArrow(false);
               });
             }
           }
@@ -118,12 +124,13 @@ angular.module('tx.datavis')
         });
 
         function propagateWellSelection (wellsInput, dontSort) {
-          var wells  = (_.isNull(wellsInput) || _.isUndefined(wellsInput)) ? getSelectedWells() : wellsInput,
-              sorted = !!dontSort ? wells : orderWellsWithTranspose(wells);
+          var wells  = (_.isNull(wellsInput) || _.isUndefined(wellsInput)) ? getSelectedWells() : wellsInput;
+
+          internalSelectedWells = !!dontSort ? wells : orderWellsWithTranspose(wells);
 
           scope.$applyAsync(function () {
-            scope.selectedWells = sorted;
-            scope.onSelect({$wells: sorted});
+            scope.selectedWells = internalSelectedWells;
+            scope.onSelect({$wells: internalSelectedWells});
           });
         }
 
@@ -508,7 +515,7 @@ angular.module('tx.datavis')
 
           toggleWellsFromMap(toggled, classSelected);
 
-          refreshTransposeArrow();
+          refreshTransposeArrow(false);
 
           propagateWellSelection();
 
@@ -521,9 +528,11 @@ angular.module('tx.datavis')
           propagateWellSelection();
         }
 
-        function refreshTransposeArrow () {
+        function refreshTransposeArrow (reset) {
           if (scope.showTranspose) {
-            transposePosition = 0;
+            if (!!reset) {
+              transposePosition = 0;
+            }
             transposeBrush();
             transposeArrow.classed('hidden', false);
             transposeButton.classed('disabled', false);
@@ -704,8 +713,6 @@ angular.module('tx.datavis')
         function getPositionWell (well) {
           var filterFunction = _.partial(_.isEqual, well, _);
           var wellEl         = getAllCircles().filter(filterFunction);
-
-          console.log(well, getAllCircles(), wellEl, wellEl.attr('cx'));
 
           return [
             parseFloat(wellEl.attr('cx'), 10),
