@@ -250,11 +250,13 @@ angular.module('tx.datavis')
               .on('mouseenter', wellOnMouseover) //note that nothing will happen if brush is present
               .on('mouseleave', wellOnMouseleave)
               .on('click', wellOnClick)
-              .style('fill', rgbaify(colors.data))
-              .each(function (d, i) {
-                d3.select(this).property('r_init', wellRadius);
-                //could bind data beyond just well here... but what makes sense?
-              });
+              .style('fill', rgbaify(colors.data));
+
+            //update all wells with new initial radius
+            wells.each(function (d, i) {
+              d3.select(this).property('r_init', wellRadius);
+              //could bind data beyond just well here... but what makes sense?
+            });
           }
 
           //update
@@ -338,12 +340,12 @@ angular.module('tx.datavis')
           width : 80
         },
             tooltipEl         = d3.select(element[0]).append('div'),
-              /*
-              .style({
-                width : tooltipDimensions.width + 'px',
-                height: tooltipDimensions.height + 'px'
-              }),
-               */
+            /*
+            .style({
+              width : tooltipDimensions.width + 'px',
+              height: tooltipDimensions.height + 'px'
+            }),
+             */
             tooltipInner      = tooltipEl.append("xhtml:span");
 
         tooltipEl.classed('wellTooltip hidden', true);
