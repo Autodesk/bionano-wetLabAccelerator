@@ -19,14 +19,19 @@ angular.module('transcripticApp')
       controller      : function ($scope, $element, $attrs) {
         var self = this;
 
-        this.paramTypes       = _(Omniprotocol.inputTypes).
+        //parameters
+        this.paramTypes = _(Omniprotocol.inputTypes).
           forEach(function (param, name) {
             _.assign(param, {name: name});
           }).
           filter(_.matches({canParameterize: true})).
           value();
-        this.containerOptions = Omniprotocol.optionEnums.containers;
-        this.storageOptions   = _.union([false], Omniprotocol.optionEnums.storage.storage);
+
+        //containers
+        self.containerColorOptions = ContainerHelper.definedColors;
+        self.containerOptions      = ContainerHelper.containerOptions;
+        self.storageOptions        = _.union([false], Omniprotocol.optionEnums.storage.storage);
+
 
         self.addParam = function (type) {
           self.parameters.push({type: type});
@@ -35,10 +40,10 @@ angular.module('transcripticApp')
 
         self.addContainer = function (param) {
           var parameter = {
-            type: 'container',
+            type : 'container',
             value: {
               color: ContainerHelper.randomColor(),
-              isNew : true
+              isNew: true
             }
           };
 
@@ -61,6 +66,19 @@ angular.module('transcripticApp')
         };
 
         /* containers */
+
+        self.selectNewContainer = function (param) {
+          _.merge(param, {value: {
+            isNew: true
+          }});
+          $scope.notifyContainerChange()
+        };
+
+        self.selectRemoteContainer = function (param, remote) {
+          param.readable = remote.name || remote.id;
+          _.assign(param.value, remote);
+          $scope.notifyContainerChange();
+        };
 
         //this is set dynamically, reference should never be broken
         self.remoteContainers = ContainerHelper.remote;
