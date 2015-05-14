@@ -52,8 +52,19 @@ angular.module('transcripticApp')
       });
     };
 
+    self.definedColors = {
+      'maraschino': '#c5535b',
+      'tangerine' : '#f28500',
+      'aqua'      : '#00FFFF',
+      'moss'      : '#addfad',
+      'cayenne'   : '#EC0704',
+      'carnation' : '#FFA6C9',
+      'lime'      : '#00FF00',
+      'plum'      : '#DDA0DD'
+    };
+
     self.randomColor = function () {
-      return '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
+      return '#' + ('000000' + (Math.random() * 0xFFFFFF << 0).toString(16)).slice(-6);
     };
 
     // helpers
@@ -68,7 +79,7 @@ angular.module('transcripticApp')
     }
 
     function assignUnion () {
-      var union = _.union(self.local, self.remote);
+      var union              = _.union(self.local, self.remote);
       self.containers.length = 0;
       _.forEach(union, function (cont) {
         self.containers.push(cont);
