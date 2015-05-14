@@ -56,7 +56,7 @@ h1, h2, h3, h4 {
 a {
   color: $color-link-default;
   text-decoration: none;
-  transition: color $transition-in-ease $transition-in-time;
+  transition: color $transition-out-ease $transition-out-time;
 
   &:visited {
     color: $color-link-default;

@@ -81,10 +81,18 @@ angular.module('tx.protocolEditor')
         */
 
         scope.draggableOptions = {
-          helper: 'clone',
+          helper: function () {
+            var helper = $(this).clone();
+            helper.addClass('active');
+            console.log(helper);
+
+            return helper;
+          },
           appendTo: document.body,
           scroll: true,
           start: function (e, ui) {
+            //angular.element(ui.helper).addClass('operation-list-item active');
+
             var opKey = angular.element(e.target).scope().op,
                 opScaffold = Omniprotocol.utils.scaffoldOperationWithValues(opKey);
 

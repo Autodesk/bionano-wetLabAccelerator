@@ -1,7 +1,6 @@
 <span style="padding: 0 10px; border: 0;">Operations</span>
-<div class="list-group">
-    <a class="list-group-item drag-handle"
-       style="padding: 2px 10px; margin-bottom: 3px; border: 0;"
+<div class="operation-list">
+    <a class="operation-list-item drag-handle"
        ng-repeat="op in operationKeys"
        ng-bind="op | capfirst"
        tx-protocol-draggable="draggableOptions"
