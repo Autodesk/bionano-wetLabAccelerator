@@ -15,7 +15,7 @@ function pluckFieldValueRaw (fields, fieldName) {
 }
 
 function getContainerFromName (parameters, containerName) {
-  return _.find(parameters, {name : containerName});
+  return _.find(parameters, {name: containerName});
 }
 
 function getContainerTypeFromName (parameters, containerName) {
@@ -128,7 +128,8 @@ function getScaffoldProtocol () {
       "id"         : "",
       "type"       : "protocol",
       "author"     : {},
-      "description": ""
+      "description": "",
+      tags         : []
     },
     "parameters": [],
     "groups"    : []
@@ -149,7 +150,8 @@ function getScaffoldRun () {
       "type"       : "run",
       "date"       : "",
       "author"     : {},
-      "description": ""
+      "description": "",
+      tags         : []
     },
     "protocol": {},
     "data"    : {}
@@ -260,7 +262,7 @@ function getFoldedStepNumber (protocol, groupIndex, stepIndex) {
 function getFoldedStepInfo (protocol, unfoldNum) {
   var result        = {},
       unfoldedIndex = 0,
-      foldedIndex = 0;
+      foldedIndex   = 0;
 
   _.forEach(protocol.groups, function (group, groupIndex) {
     var loopNum = _.result(group, 'loop', 1);
@@ -271,7 +273,7 @@ function getFoldedStepInfo (protocol, unfoldNum) {
             group   : groupIndex,
             step    : stepIndex,
             loop    : groupLoopIndex,
-            folded : foldedIndex,
+            folded  : foldedIndex,
             unfolded: unfoldNum
           });
         }
@@ -374,8 +376,8 @@ module.exports = {
   pluckField        : pluckField,
   pluckFieldValueRaw: pluckFieldValueRaw,
 
-  getContainerFromName : getContainerFromName,
-  getContainerTypeFromName : getContainerTypeFromName,
+  getContainerFromName    : getContainerFromName,
+  getContainerTypeFromName: getContainerTypeFromName,
 
   interpolateValue : interpolateValue,
   interpolateObject: interpolateObject,

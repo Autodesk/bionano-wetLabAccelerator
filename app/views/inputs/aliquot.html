@@ -5,6 +5,7 @@
   </tx-container-select>
 
   <input type="checkbox"
+         ng-show="aliquotCtrl.containerType"
          ng-model="showingPlates"
          ng-init="showingPlates=false;">
   {{showingPlates ? 'Hide' : 'Show'}} Wells
@@ -15,6 +16,7 @@
               no-brush="!aliquotCtrl.aliquotMultiple"
               select-persist="aliquotCtrl.aliquotMultiple"
               on-select="aliquotCtrl.handleAliquotSelection($wells)"
+              show-transpose="true"
               wells-input="aliquotCtrl.wellsIn">
     </tx-plate>
   </div>

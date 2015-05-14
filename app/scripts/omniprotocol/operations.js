@@ -646,7 +646,6 @@ module.exports = {
         {
           "name"   : "dataref",
           "type"   : "string",
-          "optional": true,
           "default": "gelSeparate_${step}"
         },
         {
@@ -668,7 +667,7 @@ module.exports = {
         {
           "name"   : "duration",
           "type"   : "duration",
-          "default": {"value": 60, "unit": "minute"}
+          "default": {"value": 20, "unit": "minute"}
         }
       ]
     }
