@@ -4,7 +4,7 @@ body {
   flex-direction: column;
   align-items: stretch;
   justify-content:center;
-  background: radial-gradient(at bottom right,#CCCCCC,#FFFFFF);
+  background-image: radial-gradient(at bottom right,#CCCCCC,#FFFFFF);
 
   &:before {
     content: " ";
@@ -31,9 +31,9 @@ body {
   }
 
   .container {
-    width: $layout-container-width + (2 * $layout-container-padding-side);
+    width: $layout-width-page;
     margin: auto auto;
-    padding: 0 $layout-container-padding-side;
+    padding: 0 $layout-container-padding-side 0 $layout-container-padding-left;
   }
 
   footer {
@@ -98,12 +98,8 @@ body {
 
 // build page
 
-.build-wrap {
-  margin-left: $layout-operations-outside-left !important;
-}
-
 .operation-list {
-  width: $layout-operationList-width;
+  width: $layout-opList-width;
   float: left;
   display: block;
 }
