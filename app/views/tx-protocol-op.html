@@ -38,6 +38,9 @@
   </tx-modal>
   <div class="operation-fields"
        ng-show="opCtrl.isVisible">
+    <tx-protocol-field ng-model="opCtrl.op.description"
+                       field="{name: 'description', type: 'string'}">
+    </tx-protocol-field>
     <tx-protocol-field ng-repeat="field in opCtrl.op.fields"
                        ng-model="field.value"
                        field="field">

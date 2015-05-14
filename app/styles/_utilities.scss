@@ -46,10 +46,10 @@
     border: 2px solid $primary;
     background: transparent;
     color: $black;
-    text-align: center;
+    text-align: left;
     padding:0;
     &::-webkit-input-placeholder {
-      color: $black;
+      color: transparent;
     }
   }
 
@@ -73,4 +73,64 @@
 .invisible {
   visibility: hidden;
   opacity: 0;
+}
+
+.true-false-button {
+  width: 100px;
+  height: 21px;
+  background: $light-grey;
+  border-radius: 50px;
+  position: relative;
+
+  &:before {
+    content: 'TRUE';
+    color: $grey;
+    position: relative;
+    left: 7px;
+    z-index: 0;
+  }
+
+  &:after {
+    content: 'FALSE';
+    color: $grey;
+    position: relative;
+    right: 3px;
+    z-index: 0;
+  }
+
+  & label {
+    display: block;
+    width: 52px;
+    height: 21px;
+    top:0;
+    border-radius: 50px;
+    transition: all .4s ease;
+    cursor: pointer;
+    position: absolute;
+    left: 48px;
+    z-index: 1;
+    background: $dark-grey;
+    color: $white;
+
+    &:after {
+      content: 'FALSE';
+      position: relative;
+      left: 3px;
+    }
+  }
+
+  & input[type=checkbox]:checked + label {
+    width: 48px;
+    left: 0;
+    background: $primary;
+
+    &:after {
+      content: 'TRUE';
+      left: 4px;
+    }
+  }
+
+  input[type=checkbox] {
+    visibility: hidden;
+  }
 }
