@@ -1,0 +1,62 @@
+---
+
+# for fetching assets
+aws_access_key: AKIAIKLSGHEVQ47ST
+aws_secret_key: 0OyPyqkGhFKWS1s+R2or4eBA0HxKd4Fg6eyD8
+asset_tag: 20141216.1355
+
+environment: develop
+chromedriver: /usr/lib/chromium-chromedriver/chromedriver/chromedriver
+default_tolerance: 8
+browser: firefox
+
+
+
+remoteWebDriverURL: http://sfoush302a0L4
+
+# or set a single token at the top level
+# token:
+
+environments:
+  develop:
+    consumerkey: d0a95598-8357-4668-90f8-37d887517b3b
+    consumersecret: a2846bd3-1c24-40e8-abd1-00eaf1f26e74
+    login: 
+    password: 
+    uri_root: http://localhost:9000/#/
+    token: "MJeTXKeSnDz8dr3khIqA9vJD+Hg="
+
+    # assets are specific to the environment, whereas images of those assets are not
+    assets:
+      bluething: 'urn:'
+      yellowCar: 'urn:'
+      1jj2: 'urn'
+
+  qa:
+    browser: chrome
+    consumerkey: d0a95598-8357-4668-90f8-37d887517b3b
+    consumersecret: a2846bd3-1c24-40e8-abd1-00eaf1f26e74
+    login:
+    password:
+    uri_root: http://tirrenu_develop.dokku.bionano.autodesk.com
+    token: "MJeTXKeSnDz8dr3khIqA9vJD+Hg="
+
+    # assets are specific to the environment, whereas images of those assets are not
+    assets:
+      bluething: 'urn:'
+      yellowCar: 'urn:'
+      1jj2: 'urn'
+
+
+# window size defaults
+viewport:
+  width: 1600
+  height: 1024
+
+# until we have a library for fetching images from autodesk prime - here are some
+# hard coded images
+images:
+
+  bluething:
+    tolerance:
+      firefox: 0.1
