@@ -129,7 +129,8 @@ function getScaffoldProtocol () {
       "type"       : "protocol",
       "author"     : {},
       "description": "",
-      tags         : []
+      "tags"       : [],
+      "db"         : []
     },
     "parameters": [],
     "groups"    : []
@@ -151,7 +152,8 @@ function getScaffoldRun () {
       "date"       : "",
       "author"     : {},
       "description": "",
-      tags         : []
+      "tags"       : [],
+      "db"         : []
     },
     "protocol": {},
     "data"    : {}
