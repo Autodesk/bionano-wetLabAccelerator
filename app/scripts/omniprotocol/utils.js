@@ -130,7 +130,7 @@ function getScaffoldProtocol () {
       "author"     : {},
       "description": "",
       "tags"       : [],
-      "db"         : []
+      "db"         : {}
     },
     "parameters": [],
     "groups"    : []
@@ -153,7 +153,7 @@ function getScaffoldRun () {
       "author"     : {},
       "description": "",
       "tags"       : [],
-      "db"         : []
+      "db"         : {}
     },
     "protocol": {},
     "data"    : {}

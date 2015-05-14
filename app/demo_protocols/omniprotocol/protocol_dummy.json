@@ -7,7 +7,12 @@
       "name": "Mojimbo Tenke",
       "id": "8a99cb0er9023b22c2def2"
     },
-    "description": "This is a stupid protocol"
+    "description": "This is a stupid protocol",
+    "tags" : [],
+    "db": {
+      "parent" : "092358029385209358209235",
+      "intention" : "2340928354092384092384092384"
+    }
   },
   "parameters": [
     {
@@ -55,6 +60,7 @@
       "steps": [
         {
           "operation": "dispense",
+          "description" : "Dispense a reagent from the aether into columns of a container",
           "requirements": {},
           "transforms": [
             {
@@ -139,6 +145,7 @@
       "steps": [
         {
           "operation": "thermocycle",
+          "description" : "Thermocycle a container, as in for PCR",
           "requirements": {},
           "transforms": [
             {
