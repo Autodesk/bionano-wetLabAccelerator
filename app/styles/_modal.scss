@@ -62,6 +62,7 @@
   }
 
   .modal-transclude {
+    display: block; //necessary for custom element
     overflow-y: scroll;
     margin: ($modal-padding-top + $modal-size-heading) auto;
 
