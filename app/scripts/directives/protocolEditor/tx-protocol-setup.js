@@ -30,7 +30,7 @@ angular.module('transcripticApp')
         //containers
         self.containerColorOptions = ContainerHelper.definedColors;
         self.containerOptions      = ContainerHelper.containerOptions;
-        self.storageOptions        = _.union([false], Omniprotocol.optionEnums.storage.storage);
+        self.storageOptions        = Omniprotocol.optionEnums.storage.storage;
 
 
         self.addParam = function (type) {
