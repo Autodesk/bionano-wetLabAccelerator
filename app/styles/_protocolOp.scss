@@ -56,8 +56,17 @@ tx-protocol-op {
     margin-bottom: 0;
   }
 
-  &.drop-hover:only-child,
   &.drop-hover:last-child {
     border-bottom: $drop-hover-border;
+  }
+
+  &.drop-hover:only-child {
+    background-color: transparentize($primary, 0.75);
+    border-bottom: $drop-hover-border-phantom;
+
+    .show-group & {
+      background-color: $step-background-inactive;
+      border-bottom: $drop-hover-border;
+    }
   }
 }
