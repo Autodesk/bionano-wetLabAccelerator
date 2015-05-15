@@ -4,13 +4,15 @@
 <div class="protocol-group-wrap"
      tx-protocol-droppable="groupCtrl.optsDroppableGroup">
   <div class="protocol-group-inner"
-       ng-class="{'show-group':groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1}"
+       ng-class="{'show-group': (groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1),
+                  'multichild' : groupCtrl.group.steps.length > 1 }"
        tx-protocol-draggable="groupCtrl.optsDraggableGroup">
     <div class="protocol-group-header"
          tx-protocol-droppable="groupCtrl.optsDroppableGroupHeader"
          ng-show="groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1;">
       <input class="group-name input-unstyled"
-             type="text" auto-grow
+             type="text"
+             auto-grow
              placeholder="Group Name"
              ng-model="groupCtrl.group.name">
 
