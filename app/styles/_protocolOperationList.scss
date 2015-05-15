@@ -1,0 +1,24 @@
+tx-operation-list {
+
+  .operation-list {
+
+  }
+
+}
+
+
+//outside so that styling can apply when dragging
+.operation-list-item {
+  display: block;
+  padding: 4px 10px;
+  width: $layout-opList-width;
+  margin: 0;
+  border: 0;
+
+  &.active,
+  &:hover {
+    background-color: white;
+    color: $primary;
+    transition: background $transition-out-time $transition-out-ease, color $transition-out-time $transition-out-ease;
+  }
+}

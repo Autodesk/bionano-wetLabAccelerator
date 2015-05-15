@@ -7,7 +7,7 @@
  * # txOperationSummary
  */
 angular.module('transcripticApp')
-  .directive('txOperationSummary', function ($http, $compile, Omniprotocol) {
+  .directive('txOperationSummary', function ($http, $compile, Omniprotocol, ProtocolHelper) {
 
     var templateMap = {
       'transfer'   : 'pipette',
@@ -34,7 +34,6 @@ angular.module('transcripticApp')
     return {
       restrict        : 'E',
       scope           : {
-        protocol : '=',
         indices  : '=', //object with keys group, step, loop, unfolded
         operation: '=',
         runData  : '='
@@ -42,36 +41,7 @@ angular.module('transcripticApp')
       },
       bindToController: true,
       controllerAs    : 'summaryCtrl',
-      controller      : function protocolMiniController ($scope, $element, $attrs) {
-        var self = this;
-
-        //general helper functions
-
-        self.getFieldValueByName = function (fieldName) {
-          return Omniprotocol.utils.pluckFieldValueRaw(self.operation.fields, fieldName);
-        };
-
-        //functions for fields with type container
-
-        self.getContainerTypeFromFieldName = function (fieldName) {
-          var containerName = self.getFieldValueByName(fieldName);
-          return Omniprotocol.utils.getContainerTypeFromName(self.protocol.parameters, containerName);
-        };
-
-        self.getContainerColorFromContainerName = function (containerName) {
-          var cont = Omniprotocol.utils.getContainerFromName(self.protocol.parameters, containerName);
-          return _.result(cont, 'value.color');
-        };
-
-        self.getContainerColorFromFieldName = function (fieldName) {
-          var containerName = self.getFieldValueByName(fieldName);
-          return self.getContainerColorFromContainerName(containerName);
-        };
-
-        //todo - will need have in controller, and use a resource to do this
-        self.transcripticUrlRoot = 'http://secure.transcriptic.com/'
-
-      },
+      controller      : 'operationSummaryCtrl',
       link            : function (scope, element, attrs) {
 
         scope.$watch('summaryCtrl.operation', getOperationTemplate);

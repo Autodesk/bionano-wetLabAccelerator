@@ -80,9 +80,10 @@ tx-plate-columns {
   }
 
   .extent {
-    fill: #000;
-    fill-opacity: .125;
-    stroke: #fff;
+    fill: transparent;
+    //fill: #000;
+    //fill-opacity: .125;
+    //stroke: #fff;
   }
 
   .wellTooltip {
