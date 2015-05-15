@@ -41,7 +41,7 @@
            ng-click="containerDetailsVisible = !containerDetailsVisible">
           details...
         </a>
-        <tx-modal ng-show="containerDetailsVisible">
+        <tx-modal ng-if="containerDetailsVisible" ng-show="containerDetailsVisible">
           <div class="row">
             <div class="col-md-5">
               <div class="form-horizontal">
