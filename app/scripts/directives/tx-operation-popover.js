@@ -12,7 +12,7 @@ angular.module('transcripticApp')
       templateUrl: 'views/tx-operation-popover.html',
       restrict: 'E',
       scope: {
-        operation: '='
+        op: '=operation'
       },
       bindToController: true,
       controllerAs: 'popCtrl',

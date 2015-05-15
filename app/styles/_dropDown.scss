@@ -1,3 +1,5 @@
+//todo - move to variables
+
 // The dropdown menu
 .dropdown {
   position: relative;
@@ -12,7 +14,7 @@
   padding: 3px 0;
   margin: 2px 0;
   list-style: none;
-  font-size: 11px;
+  font-size: $font-size-sm;
   text-align: left;
   background-color: $white;
   border: none;

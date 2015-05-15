@@ -1,3 +1,4 @@
 <div class="oppop-wrap">
-  {{popCtrl.operation.description}}
+  {{popCtrl.op.description || popCtrl.op.name}}
+  <tx-operation-summary operation="popCtrl.op"></tx-operation-summary>
 </div>

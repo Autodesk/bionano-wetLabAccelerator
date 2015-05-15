@@ -84,8 +84,6 @@ angular.module('tx.protocolEditor')
           helper: function () {
             var helper = $(this).clone();
             helper.addClass('active');
-            console.log(helper);
-
             return helper;
           },
           appendTo: document.body,

@@ -95,9 +95,6 @@ angular.module('tx.datavis')
           if (_.isArray(newWells)) {
             //prevent infinite looping
             if (!_.isEqual(newWells, internalSelectedWells)) {
-
-              console.log('new wells input', newWells, internalSelectedWells);
-
               //timeout to ensure that well circles are drawn
               $timeout(function () {
                 safeClearBrush();

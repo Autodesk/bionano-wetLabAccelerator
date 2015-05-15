@@ -7,28 +7,63 @@ tx-operation-popover {
 
   $oppop-padding: $layout-spacing-md;
 
+  /*
+  * > & {
+    display: none;
+  }
+
+  *:hover > & {
+    display: block;
+  }
+  */
+
   position: absolute;
   left: calc(100% + #{$oppop-arrow-width});
-  top: - $oppop-fromTop;
+  top: 50%;
+  transform: translateY(-50%);
   background-color: $white;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-light;
   width: $layout-opSummary-width;
+  box-shadow: $box-shadow-popover;
 
   &:after {
-      right: 100%;
-      top: $oppop-arrow-top;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-color: transparent;
-      border-right-color: $white;
-      border-width: $oppop-arrow-width;
-      margin-top: -$oppop-arrow-width;
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: transparent;
+    border-right-color: $white;
+    border-width: $oppop-arrow-width;
+    margin-top: -$oppop-arrow-width;
   }
+
+  /*
+  &.ng-enter,
+  &.ng-leave {
+    transition: opacity $transition-out-time $transition-out-ease;
+  }
+
+  &.ng-leave.ng-leave-active,
+  &.ng-enter {
+    opacity: 0;
+  }
+
+  &.ng-enter.ng-enter-active,
+  &.ng-leave {
+    opacity: 1;
+  }
+  */
 
   .oppop-wrap {
     padding: $oppop-padding;
+
+    tx-plate {
+      width: 100%;
+    }
   }
 }

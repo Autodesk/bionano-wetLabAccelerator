@@ -11,7 +11,7 @@ angular.module('transcripticApp')
   .controller('resultsDispenseCtrl', function ($scope, ContainerOptions, WellConv, Omniprotocol) {
     var self = this;
 
-    self.getWellsFromColVols = function (fieldName, containerFieldName) {
+    self.getGroupDataFromColVols = function (fieldName, containerFieldName) {
       //need to prune wells to container size
       var contType      = $scope.summaryCtrl.getContainerTypeFromFieldName(containerFieldName),
           contObj       = _.result(ContainerOptions, contType),
@@ -37,7 +37,6 @@ angular.module('transcripticApp')
       var letters = WellConv.letters;
       return _.map(_.range(wellsInColumn), function (wellnum) {
         //increment column number by one to match plate
-        console.log(columnNumber, parseInt(columnNumber, 10), parseInt(columnNumber, 10) + 1);
         return letters[wellnum] + (_.parseInt(columnNumber, 10) + 1);
       });
     }
