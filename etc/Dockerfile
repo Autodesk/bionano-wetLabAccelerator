@@ -1,4 +1,3 @@
-#Docker file for local building and serving only
 FROM ubuntu:14.04
 MAINTAINER Dion Whitehead Amago <dion.amago@autodesk.com>
 
@@ -12,24 +11,5 @@ RUN apt-get install -y nodejs
 
 RUN npm install -g grunt-cli
 RUN npm install -g bower
-RUN npm install -g forever
-
-ENV PORT 9000
-EXPOSE 9000
-ENV APP /app
-
-COPY . $APP/
-
-WORKDIR $APP
-
-RUN npm install
-RUN bower install --allow-root
-
-RUN grunt build
-
-CMD ["node", "server/server.js"]
-
-
-
-
-
+RUN npm install -g nodemon
+RUN npm install -g bunyan
