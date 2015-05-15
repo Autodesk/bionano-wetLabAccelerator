@@ -19,6 +19,29 @@ angular.module('transcripticApp')
       return Omniprotocol.utils.pluckFieldValueRaw(self.operation.fields, fieldName);
     };
 
+    //wells - pipette (mostly)
+
+    self.pluckWellsFromContainer = function (fieldName, container) {
+      var fieldVal = Omniprotocol.utils.pluckFieldValueRaw(self.operation.fields, fieldName),
+          filterFunction = _.isUndefined(container) ? _.constant(true) : _.matches({container: container});
+      return _.pluck(_.filter(fieldVal, filterFunction), 'well');
+    };
+
+    self.getContainerFromWellField = function (fieldName) {
+      var fieldVal = Omniprotocol.utils.pluckFieldValueRaw(self.operation.fields, fieldName);
+      return _.result(fieldVal, '[0].container');
+    };
+
+    self.getContainerTypeFromWellField = function (fieldName) {
+      var containerName = self.getContainerFromWellField(fieldName);
+      return Omniprotocol.utils.getContainerTypeFromName(self.protocol.parameters, containerName);
+    };
+    
+    self.getContainerColorFromWellField = function (fieldName) {
+      var containerName = self.getContainerFromWellField(fieldName);
+      return self.getContainerColorFromContainerName(containerName);
+    };
+
     //functions for fields with type container
 
     self.getContainerTypeFromFieldName = function (fieldName) {

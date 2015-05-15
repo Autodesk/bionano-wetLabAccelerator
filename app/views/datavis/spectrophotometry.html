@@ -1,4 +1,7 @@
-<div ng-controller="ResultsSpectrophotometryCtrl as spectroCtrl">
+<div ng-controller="ResultsSpectrophotometryCtrl as spectroCtrl"
+        ng-init="initialContainer = summaryCtrl.getContainerTypeFromWellField('wells');
+                 initialWells = summaryCtrl.pluckWellsFromContainer('wells');
+                 initialContainerColor = summaryCtrl.getContainerColorFromWellField('wells')">
 
   <div class="btn-group"
        ng-if="spectroCtrl.containers.length > 1">
@@ -8,20 +11,24 @@
             ng-click="spectroCtrl.setCurrentDataContainer(c)">{{c}}</button>
   </div>
 
-  <tx-timepointgraph data="spectroCtrl.graphData"
+  <tx-timepointgraph ng-if="spectroCtrl.graphData"
+                     data="spectroCtrl.graphData"
                      series-selected="spectroCtrl.currentWells"
                      is-linear="true"
                      on-hover="spectroCtrl.onGraphHover($well)">
   </tx-timepointgraph>
 
-  <input ng-model="spectroCtrl.timepointSlider"
+  <input ng-if="spectroCtrl.graphData"
+         ng-model="spectroCtrl.timepointSlider"
          min="0"
          max="{{spectroCtrl.timepointValues.length - 1}}"
          ng-change="spectroCtrl.selectTimepoint(spectroCtrl.timepointSlider)"
          type="range"/>
 
-  <tx-plate container="spectroCtrl.currentContainer"
+  <tx-plate container="spectroCtrl.currentContainer || initialContainer"
+            no-select="!spectroCtrl.graphData"
             plate-data="spectroCtrl.graphData[spectroCtrl.currentTimepoint]"
+            group-data="{name: 'spectrowells', wells: initialWells, color: initialContainerColor}"
             on-hover="spectroCtrl.hoverPlateWells($wells)"
             focus-wells="spectroCtrl.focusedWells"
             on-select="spectroCtrl.selectPlateWells($wells)"></tx-plate>
