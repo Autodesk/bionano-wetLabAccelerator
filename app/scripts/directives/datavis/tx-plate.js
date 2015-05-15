@@ -295,6 +295,9 @@ angular.module('tx.datavis')
         function transitionData (selection) {
           if (!selection || selection.empty()) return;
 
+          console.log(scope.groupData);
+
+
           //check conditions for showing groups, otherwise show data
           if (!_.isEmpty(scope.groupData) && ( scope.preferGroups || _.isEmpty(scope.plateData))) {
             //reorder to map so lookup is fast
@@ -312,6 +315,8 @@ angular.module('tx.datavis')
                 });
               }
             });
+
+            console.log(groupMap);
 
             changeWellColor(selection, groupMap, rgbaify(colors.disabled));
             scaleWellRadius(selection, {}, 1);
