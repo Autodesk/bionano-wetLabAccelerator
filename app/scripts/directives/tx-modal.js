@@ -32,7 +32,6 @@ angular.module('transcripticApp')
           scope.ngShow = false;
 
           transcludeFn(function (clone, scope) {
-            console.log(scope);
             _.attempt(scope.$onClose);
           });
         };
