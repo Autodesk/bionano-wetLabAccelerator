@@ -1,0 +1,15 @@
+<div ng-controller="resultsThermoCtrl as thermoCtrl"
+     ng-init="thermoCtrl.onInit();
+              containerType = summaryCtrl.getContainerTypeFromFieldName('object');
+              initialContainerColor = summaryCtrl.getContainerColorFromFieldName('object');
+              initialGroupData = summaryCtrl.getFieldValueByName('dyes')">
+
+  <tx-plate container="containerType"
+            no-select="!thermoCtrl.graphData"
+            plate-data="thermoCtrl.graphData"
+            group-data="initialGroupData"
+            on-hover="thermoCtrl.hoverPlateWells($wells)"
+            focus-wells="thermoCtrl.focusedWells"
+            on-select="thermoCtrl.selectPlateWells($wells)"></tx-plate>
+
+</div>
