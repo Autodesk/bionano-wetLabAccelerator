@@ -53,6 +53,10 @@ class Page:
         # alas, the browser can return is_displayed() prior to the hide :(
         time.sleep(2)
 
+
+    def containsClass(self, element, className):
+        return className in element.get_attribute('class').split(" ")
+
     def snapshot(self, dest=None):
         """Take a snapshot of the browser's viewport"""
         if dest:

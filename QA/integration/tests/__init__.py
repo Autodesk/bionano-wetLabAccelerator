@@ -4,6 +4,9 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
 from pages.IndexPage import IndexPage
 from pages.Build import Build
+from pages.Build import ProtocolSetup
+from pages.Build import SetupParameter
+from pages.Build import ProtocolInstructions
 import helpers
 
 
@@ -22,6 +25,7 @@ class TestBase(Base._BaseTest):
         self.page.open()
 
         self.build = Build(self.DRIVER)
+        # self.protocolSetup = ProtocolSetup(self.DRIVER)
 
         try:
             WebDriverWait(self.DRIVER, self.TIMEOUT).until(

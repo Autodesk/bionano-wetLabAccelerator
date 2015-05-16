@@ -5,6 +5,7 @@ from pages import Page
 class Build(Page):
     def __init__(self, driver):
         self.DRIVER = driver
+        # self.protocolSetup = ProtocolSetup(self.DRIVER)
 
     def getOperationNames(self):
         operationNames = []
@@ -27,14 +28,7 @@ class Build(Page):
         return self.DRIVER.find_element_by_class_name("maincolumn")
 
     def getProtocolSetup(self):
-        return self.DRIVER.find_element_by_class_name("protocol-setup-header")
-
-    def isProtocolSetupExpanded(self):
-        return self.containsClass(self.getProtocolSetup().find_element_by_xpath('..'), "open")
-
-    def expandProtocolSetup(self):
-        if self.isProtocolSetupExpanded() == False:
-            self.getProtocolSetup().click()
+        return ProtocolSetup(self.DRIVER)
 
     def getProtocolInstructions(self):
         return self.getMainColumn().find_element_by_class_name("protocol-instructions")
@@ -68,5 +62,73 @@ class Build(Page):
     def getButtonByTooltip(self, tooltipValue):
         return self.findElementByAttributeValue("button", "tooltip", tooltipValue)
 
-    def containsClass(self, element, className):
-        return className in element.get_attribute('class').split(" ")
+
+
+class ProtocolSetup(Page):
+    def __init__(self, driver):
+        self.DRIVER = driver
+
+    def getParameters(self):
+        parameterElements = self.DRIVER.find_elements_by_class_name("setup-variable")
+        parameters = []
+        for parameterElement in parameterElements:
+            if self.containsClass(parameterElement, "ng-scope"):
+                setupParameter = SetupParameter(parameterElement)
+                parameters.append(setupParameter)
+
+        return parameters
+
+    def isExpanded(self):
+        return self.containsClass(self.getSetupHeaderElement().find_element_by_xpath('..'), "open")
+
+    def collapse(self):
+        print("collapse protocol setup")
+        if self.isExpanded():
+            self.getSetupHeaderElement().click()
+
+    def expand(self):
+        print("expand protocol setup")
+        if self.isExpanded() == False:
+            self.getSetupHeaderElement().click()
+
+    def getSetupHeaderElement(self):
+        return self.DRIVER.find_element_by_class_name("protocol-setup-header")
+
+    def addParameter(self, parameterType):
+        print("add parameter: " + parameterType)
+        self.getAddParameterElement().click()
+        self.getAddParameterElement().find_element_by_xpath("//a[text()='" + parameterType + "']").click()
+        newParam = self.getParameters()[-1]
+        print(newParam.getParameterType())
+        return newParam
+
+    def getAddParameterElement(self):
+        return self.DRIVER.find_element_by_class_name("add-parameter")
+
+
+
+class SetupParameter(Page):
+    def __init__(self, parameterElement):
+        self.parameterElement = parameterElement
+
+    def getParameterType(self):
+        return self.parameterElement.find_element_by_class_name("parameter-type").text
+
+    def getVariableName(self):
+        return self.getVariableNameInputField().get_attribute("value")
+
+    def setVariableName(self, variableName):
+        self.getVariableNameInputField().click()
+        self.getVariableNameInputField().send_keys(variableName)
+        self.getVariableNameInputField().send_keys(Keys.ENTER)
+
+    def getVariableNameInputField(self):
+        return self.parameterElement.find_element_by_class_name("input-styled")
+
+
+class ProtocolInstructions(Page):
+    def __init__(self, driver):
+        self.DRIVER = driver
+
+    def getProtocolInstructionsElement(self):
+        return self.DRIVER.find_element_by_class_name("protocol-instructions")
