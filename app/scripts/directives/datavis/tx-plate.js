@@ -295,14 +295,13 @@ angular.module('tx.datavis')
         function transitionData (selection) {
           if (!selection || selection.empty()) return;
 
-          console.log(scope.groupData);
-
+          //console.log(scope.groupData);
 
           //check conditions for showing groups, otherwise show data
           if (!_.isEmpty(scope.groupData) && ( scope.preferGroups || _.isEmpty(scope.plateData))) {
             //reorder to map so lookup is fast
             var groupMap  = {},
-                groupData = _.isArray(scope.groupData) ? scope.groupData : [scope.groupData];
+                groupData = _.has(scope.groupData, 'wells') ? [scope.groupData] : scope.groupData;
 
             _.forEach(groupData, function (group) {
               var color = _.result(group, 'color', rgbaify(colors.data));
@@ -315,8 +314,6 @@ angular.module('tx.datavis')
                 });
               }
             });
-
-            console.log(groupMap);
 
             changeWellColor(selection, groupMap, rgbaify(colors.disabled));
             scaleWellRadius(selection, {}, 1);
