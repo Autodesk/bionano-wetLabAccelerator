@@ -361,6 +361,7 @@ var _                    = require('lodash'),
     utils                = require('./utils.js'),
     converterField       = fromConverters.field,
     converterInstruction = fromConverters.instruction,
+    omniContainers       = global.omniprotocol.optionEnums.containers,
     omniConv             = global.omniprotocol.conv;
 
 function convertInstruction (inst, localParams) {
@@ -418,6 +419,14 @@ function makeReference (ref) {
     };
   } else {
     internal.discard = true;
+  }
+
+  //hack - special handling for reservations, which currently is only the 6-well pre-poured plate (5/20)
+  var resId = _.result(_.result(omniContainers, ref.value.type), 'reservation');
+  if (resId) {
+    delete internal.new;
+    delete internal.id;
+    internal.reserve = resId
   }
 
   obj[ref.name] = internal;
