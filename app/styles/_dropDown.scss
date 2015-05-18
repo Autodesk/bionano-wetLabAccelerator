@@ -10,7 +10,7 @@
   z-index: 1000;
   display: none;
   float: left;
-  min-width: 100px;
+  min-width: 50px;
   padding: 3px 0;
   margin: 2px 0;
   list-style: none;
@@ -18,7 +18,7 @@
   text-align: left;
   background-color: $white;
   border: none;
-  box-shadow: 0 0px 15px $light-grey;
+  box-shadow: 0 0 15px $light-grey;
 
   .divider {
     background: $grey;
