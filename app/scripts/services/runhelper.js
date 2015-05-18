@@ -16,7 +16,9 @@ angular.module('transcripticApp')
     self.currentRun = {};
 
     self.assignCurrentRun = function (inputRun) {
-      return _.assign(self.currentRun, Omniprotocol.utils.getScaffoldRun(), inputRun);
+      _.assign(self.currentRun, Omniprotocol.utils.getScaffoldRun(), inputRun);
+      ProtocolHelper.assignCurrentProtocol(self.currentRun.protocol);
+      return self.currentRun;
     };
 
     self.verifyRun = function (protocol, transcripticProject, testMode) {

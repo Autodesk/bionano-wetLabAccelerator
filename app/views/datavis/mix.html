@@ -1,8 +1,7 @@
-<div ng-controller="resultsPipetteCtrl as pipeCtrl">
-  <tx-plate container="pipeCtrl.getContainerFromWellField('wells')"
+<div>
+  <tx-plate container="summaryCtrl.getContainerTypeFromWellField('wells')"
             no-brush="true"
             no-select="true"
-            group-data="{name : '', wells : pipeCtrl.pluckWellsFromContainer('wells') , color: pipeCtrl.getContainerColorFromWellField('wells')}"
-            style="display: inline-block; width: 49%">
+            group-data="{name : '', wells : summaryCtrl.pluckWellsFromContainer('wells') , color: summaryCtrl.getContainerColorFromWellField('wells')}">
   </tx-plate>
 </div>

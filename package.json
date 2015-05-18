@@ -2,6 +2,10 @@
   "name": "transcriptic",
   "version": "0.0.0",
   "dependencies": {
+    "bunyan": "^1.3.5",
+    "express": "^4.12.3",
+    "express-bunyan-logger": "^1.1.1",
+    "http-proxy": "^1.11.1",
     "lodash": "^3.7.0",
     "omniprotocol": "./app/scripts/omniprotocol/"
   },
@@ -44,6 +48,17 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "docker.prepare": "cd etc ; docker build -t autovirology etc/Dockerfile>",
+    "predocker.npm": "rm -rf node_modules",
+    "predocker.bower": "rm -rf bower_components",
+    "docker.npm": "npm run docker.prepare ; docker run -v `pwd`:/app -w /app autovirology npm install",
+    "docker.bower": "npm run docker.prepare ; docker run -v `pwd`:/app -w /app autovirology bower install --allow-root",
+    "docker.build": "docker run -v `pwd`:/app -w /app autovirology grunt build",
+    "docker.buildall": "npm run docker.npm ; npm run docker.bower ; npm run docker.build",
+    "docker.server": "docker run --rm -t -i -p 9000:9000 -v `pwd`:/app -w /app autovirology node server/server.js | bunyan",
+    "start": "npm run docker.server",
+    "build.standalone.docker": "docker build -t cx1 .",
+    "run.standalone.docker": "docker run -t -i -p 9000:9000 cx1"
   }
 }

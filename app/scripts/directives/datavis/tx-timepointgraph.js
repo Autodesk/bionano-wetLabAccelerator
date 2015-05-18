@@ -357,9 +357,11 @@ angular.module('tx.datavis')
         }
 
         function handleSeriesSelection (selectedWells) {
-          var map = _.zipObject(selectedWells, true); //note - sets to undefined but doesn't matter
-          highlightSeries(map);
-          drawVoronoi(map);
+          if (selectedWells) {
+            var map = _.zipObject(selectedWells, true);//note - sets to undefined but doesn't matter
+            highlightSeries(map);
+            drawVoronoi(map);
+          }
         }
 
         function highlightSeries (wellMap, oldval) {

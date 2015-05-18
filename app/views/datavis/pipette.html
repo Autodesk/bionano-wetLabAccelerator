@@ -1,19 +1,19 @@
-<div ng-controller="resultsPipetteCtrl as pipeCtrl">
-  <p ng-bind="pipeCtrl.getContainerFromWellField('from')"></p>
+<div>
+  <p ng-bind="summaryCtrl.getContainerFromWellField('from')"></p>
   <div class="clearfix">
-    <tx-plate container="pipeCtrl.getContainerTypeFromWellField('from')"
+    <tx-plate container="summaryCtrl.getContainerTypeFromWellField('from')"
               no-brush="true"
               no-select="true"
-              group-data="{name : 'from', wells : pipeCtrl.pluckWellsFromContainer('from'), color: pipeCtrl.getContainerColorFromWellField('from')}"
+              group-data="{name : 'from', wells : summaryCtrl.pluckWellsFromContainer('from'), color: summaryCtrl.getContainerColorFromWellField('from')}"
               style="display: inline-block; width: 49%">
     </tx-plate>
 
-    <tx-plate container="pipeCtrl.getContainerTypeFromWellField('to')"
+    <tx-plate container="summaryCtrl.getContainerTypeFromWellField('to')"
               no-brush="true"
               no-select="true"
-              group-data="{name : 'to', wells : pipeCtrl.pluckWellsFromContainer('to') , color: pipeCtrl.getContainerColorFromWellField('to')}"
+              group-data="{name : 'to', wells : summaryCtrl.pluckWellsFromContainer('to') , color: summaryCtrl.getContainerColorFromWellField('to')}"
               style="display: inline-block; width: 49%">
     </tx-plate>
   </div>
-  <p class="pull-right" ng-bind="pipeCtrl.getContainerFromWellField('to')"></p>
+  <p class="pull-right" ng-bind="summaryCtrl.getContainerFromWellField('to')"></p>
 </div>

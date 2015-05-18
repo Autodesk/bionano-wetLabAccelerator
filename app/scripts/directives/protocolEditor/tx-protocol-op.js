@@ -67,6 +67,14 @@ angular.module('tx.protocolEditor')
           element.toggleClass('open', !!viz);
         });
 
+        element.on('mouseenter', function () {
+          scope.opCtrl.isHovered = true;
+        });
+
+        element.on('mouseleave', function () {
+          scope.opCtrl.isHovered = false;
+        });
+
         scope.deleteStep = function () {
           groupCtrl.deleteStep(scope.opCtrl.op);
         };

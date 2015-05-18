@@ -50,6 +50,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 //protocol
 
+@import 'protocolOperationList';
 @import 'protocolHeader';
 @import 'protocolEditor';
 @import 'protocolGroup';
@@ -58,4 +59,5 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import 'protocolResponse';
 @import 'protocolSetup';
 @import 'protocolMini';
+@import 'protocolOperationPopover';
 @import 'welltip';

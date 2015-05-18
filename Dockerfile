@@ -1,34 +1,35 @@
+#Docker file for local building and serving only
 FROM ubuntu:14.04
 MAINTAINER Dion Whitehead Amago <dion.amago@autodesk.com>
-
-ENV PORT 9000
-
-ENV appFolder /cx1
 
 RUN apt-get update
 RUN apt-get install curl -y
 RUN apt-get install git -y
 
+#Node.js https://nodesource.com/blog/nodejs-v012-iojs-and-the-nodesource-linux-repositories
 RUN curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
 RUN apt-get install -y nodejs
 
-RUN mkdir $appFolder
-WORKDIR $appFolder
-
-ADD package.json $appFolder/package.json
-ADD app/scripts/omniprotocol $appFolder/app/scripts/omniprotocol
-RUN cd $appFolder; npm install
-
-
 RUN npm install -g grunt-cli
-
-ADD bower.json $appFolder/bower.json
 RUN npm install -g bower
+RUN npm install -g forever
+
+ENV PORT 9000
+EXPOSE 9000
+ENV APP /app
+
+COPY . $APP/
+
+WORKDIR $APP
+
+RUN npm install
 RUN bower install --allow-root
 
-EXPOSE 9000
+RUN grunt build
 
-ADD . $appFolder
+CMD ["node", "server/server.js"]
 
-CMD ["grunt", "serve:dist"]
+
+
+
 

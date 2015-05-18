@@ -515,7 +515,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
-    'browersify',
+    'browserify',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
