@@ -19,12 +19,20 @@ class Page:
     ASSETS_TO_BLESS = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'assets.to.bless', _HOSTNAME))
     ENVIRONMENTS = config['environments'][environment()]['uri_root']
 
-    BASE_URL = config['environments'][environment()]['uri_root']
+    URL_POSTFIX = config['url_postfix']
+    URL_PREFIX = os.environ.get('URL_PREFIX')
+
+    if URL_PREFIX != None and URL_PREFIX != "''":
+        BASE_URL = "http://" + URL_PREFIX + "." + URL_POSTFIX
+        print("URL_PREFIX != None and URL_PREFIX != ""''""")
+    else:
+        BASE_URL = ENVIRONMENTS
 
     REMOTE_URL = config['remoteWebDriverURL']
 
     def __init__(self, driver):
         self.DRIVER = driver
+        print(self.BASE_URL)
 
     def toggle_visibility_by_class(self, classname):
         """Toggle the visibility of the object by a classname selector.
