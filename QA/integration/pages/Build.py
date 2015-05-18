@@ -19,7 +19,7 @@ class Build(Page):
         return self.DRIVER.find_element_by_xpath("//a[text()='" + operationName + "']")
 
     def getOperationsList(self):
-        return self.DRIVER.find_elements_by_class_name("list-group-item")
+        return self.DRIVER.find_elements_by_class_name("operation-list-item")
 
     def getSidePanel(self):
         return self.DRIVER.find_element_by_class_name("sidepanel")
