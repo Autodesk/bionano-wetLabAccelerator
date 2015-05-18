@@ -1,12 +1,12 @@
 <span style="padding: 0 10px; border: 0;">Operations</span>
 <div class="operation-list">
     <a class="operation-list-item drag-handle"
-       ng-repeat="op in operationKeys"
-       ng-bind="op | capfirst"
+       ng-repeat="op in operations"
+       ng-bind="op.name"
        tx-protocol-draggable="draggableOptions"
        tx-inspector-select
        select-trigger="mouseenter"
-       select-title="op"
+       select-title="op.name"
        select-type="'operation'"
-       select-description="operations[op].description"></a>
+       select-description="op.description"></a>
 </div>

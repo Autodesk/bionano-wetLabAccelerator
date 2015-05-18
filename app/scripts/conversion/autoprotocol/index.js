@@ -337,6 +337,8 @@ converterInstruction.gel_separate = simpleMapOperation;
 
 converterInstruction.spin = simpleMapOperation;
 
+converterInstruction.image_plate = simpleMapOperation;
+
 /* SPECIAL */
 
 converterInstruction.autoprotocol = function (op) {
