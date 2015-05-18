@@ -21,6 +21,7 @@ class Page:
 
     URL_POSTFIX = config['url_postfix']
     URL_PREFIX = os.environ.get('URL_PREFIX')
+    print URL_PREFIX
 
     if URL_PREFIX != None and URL_PREFIX != "''":
         BASE_URL = "http://" + URL_PREFIX + "." + URL_POSTFIX

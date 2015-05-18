@@ -20,7 +20,7 @@ class TestBasicInteractions(TestBase):
         self.page.clickBuild()
         build = self.build
         time.sleep(10)
-        expectedOperationNames = ["Transfer", "Distribute", "Consolidate", "Mix", "Dispense", "Thermocycle", "Incubate", "Seal", "Unseal", "Cover", "Uncover", "Spin", "Absorbance", "Fluorescence", "Luminescence", "Gel_separate", "Autoprotocol"]
+        expectedOperationNames = [u"Transfer", u"Distribute", u"Consolidate", u"Mix", u"Dispense", u"Thermocycle", u"Incubate", u"Seal", u"Unseal", u"Cover", u"Uncover", u"Spin", u"Image Plate", u"Absorbance", u"Fluorescence", u"Luminescence", u"Gel Separate", u"Autoprotocol (JSON)"]
 
         self.verifyIsDisplayed(build.getSidePanel(), "side column")
         self.verifyEqual(build.getOperationNames(), expectedOperationNames, "verify operation names")
@@ -71,3 +71,6 @@ class TestBasicInteractions(TestBase):
         if actual == expect:
             passFail = "PASS"
         print("  " + passFail + " - " + verifyString)
+        if actual != expect:
+            print("expect: " + str(expect))
+            print("actual: " + str(actual))
