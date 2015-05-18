@@ -18,8 +18,7 @@ angular.module('tx.protocolEditor')
       templateUrl: 'views/tx-operation-list.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        scope.operations = Omniprotocol.operations;
-        scope.operationKeys = _.keys(Omniprotocol.operations);
+        scope.operations = _.values(Omniprotocol.operations);
 
         /*
         var currentOpCancelled = false;
@@ -91,7 +90,7 @@ angular.module('tx.protocolEditor')
           start: function (e, ui) {
             //angular.element(ui.helper).addClass('operation-list-item active');
 
-            var opKey = angular.element(e.target).scope().op,
+            var opKey = angular.element(e.target).scope().op.operation,
                 opScaffold = Omniprotocol.utils.scaffoldOperationWithValues(opKey);
 
             _.assign(DragDropManager, {
