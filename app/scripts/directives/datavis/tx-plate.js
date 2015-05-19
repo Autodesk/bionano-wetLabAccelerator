@@ -215,7 +215,11 @@ angular.module('tx.datavis')
 
         //need to use shouldPlateUpdate flag instead of another function to accomodate transitions properly
         function rerender (shouldPlateUpdate) {
-          if (!scope.container) return;
+          element.toggleClass('plate-empty', !scope.container);
+
+          if (!scope.container) {
+            return;
+          }
 
           var container = ContainerOptions[scope.container];
 
