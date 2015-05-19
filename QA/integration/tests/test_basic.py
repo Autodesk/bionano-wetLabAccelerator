@@ -49,28 +49,8 @@ class TestBasicInteractions(TestBase):
         # self.verifyIsDisplayed(build.getToggleStepVisibilityButton(), "toggle step visibility button")
         # self.verifyIsDisplayed(build.getSaveProtocolButton(), "clear protocol button")
 
-    def verifyIsDisplayed(self, element, description):
-        verifyString =  "verify " + description + " is displayed"
-        self.verifyTrue(element.is_displayed(), verifyString)
+    def test_executeScript(self):
+        self.page.clickBuild()
+        build = self.build
 
-    def verifyTrue(self, actual, description):
-        self.verifyString(actual, True, description)
-        self.assertTrue(actual, description)
-
-    def verifyFalse(self, actual, description):
-        self.verifyString(actual, False, description)
-        self.assertFalse(actual, description)
-
-    def verifyEqual(self, actual, expected, description):
-        verifyString = "verify " + description + " is equal"
-        self.verifyString(actual, expected, verifyString)
-        self.assertEqual(actual, expected, verifyString)
-
-    def verifyString(self, actual, expect, verifyString):
-        passFail = "FAIL"
-        if actual == expect:
-            passFail = "PASS"
-        print("  " + passFail + " - " + verifyString)
-        if actual != expect:
-            print("expect: " + str(expect))
-            print("actual: " + str(actual))
+        self.DRIVER.execute_script("angular.element($('.setup-variable')[0]).scope()")
