@@ -13,7 +13,7 @@ angular.module('transcripticApp')
   .controller('fieldAliquotCtrl', function ($scope, Omniprotocol, ProtocolHelper) {
     var self = this;
 
-    self.handleAliquotSelection = function (wells) {
+    self.handleAliquotSelection = function (wells, transpose) {
       //view guarantees that containerName is set given a change in wells (tx-plate)
 
       var mapped = _.map(wells, function (well) {
@@ -32,8 +32,8 @@ angular.module('transcripticApp')
         assignModel(mapped);
       }
 
-      // todo - perf - check if triggers new digest
       self.wellsIn = wells;
+      self.field.transpose = transpose;
     };
 
     self.init = function () {

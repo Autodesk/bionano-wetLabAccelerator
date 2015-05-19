@@ -18,8 +18,9 @@
               group-data="{'name' : aliquotCtrl.containerName, wells: 'all', color: aliquotCtrl.containerColor}"
               no-brush="!aliquotCtrl.aliquotMultiple"
               select-persist="aliquotCtrl.aliquotMultiple"
-              on-select="aliquotCtrl.handleAliquotSelection($wells)"
+              on-select="aliquotCtrl.handleAliquotSelection($wells, $transpose)"
               show-transpose="true"
+              transpose-input="aliquotCtrl.field.transpose"
               wells-input="aliquotCtrl.wellsIn">
     </tx-plate>
   </div>
