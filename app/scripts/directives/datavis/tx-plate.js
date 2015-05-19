@@ -112,7 +112,6 @@ angular.module('tx.datavis')
           }
 
           if (shouldPropagate) {
-            debugger;
             //timeout to ensure that well circles are drawn
             $timeout(function () {
               safeClearBrush();
