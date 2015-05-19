@@ -384,7 +384,7 @@ angular.module('tx.datavis')
         tooltipEl.classed('wellTooltip hidden', true);
 
         function wellOnMouseover (d) {
-          if (scope.noBrush && !scope.hideTooltip) {
+          if (!scope.hideTooltip) {
             //Get this well's values
             var d3El      = d3.select(this),
                 radius    = parseFloat(d3El.attr("r"), 10),
@@ -406,20 +406,20 @@ angular.module('tx.datavis')
             tooltipInner.text(d + (wellValue ? ' : ' + wellValue : ''));
             tooltipEl.classed("hidden", false);
 
-            wellMousemoveListener();
-            d3.select(element[0]).on('mousemove', wellMousemoveListener);
+            tooltipPositionListener();
+            d3.select(element[0]).on('mousemove', tooltipPositionListener);
           }
         }
 
         function wellOnMouseleave () {
           //hide the tooltip
-          tooltipEl.classed("hidden", true);
+          !brushIsDrawn && tooltipEl.classed("hidden", true);
           if (!scope.hideTooltip) {
             d3.select(element[0]).on('mousemove', null);
           }
         }
 
-        var wellMousemoveListener = function () {
+        var tooltipPositionListener = function () {
           var pos = d3.mouse(element[0]);
           tooltipEl.style({
             left: (pos[0] + 4) + 'px',
@@ -549,6 +549,7 @@ angular.module('tx.datavis')
           propagateWellSelection();
 
           element.removeClass('brushing');
+          tooltipEl.classed("hidden", true);
         }
 
         function setAndPropagateTranspose (forceTranspose) {
