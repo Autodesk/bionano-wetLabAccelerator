@@ -283,7 +283,7 @@ module.exports = {
           "name"    : "dataref",
           "type"    : "string",
           "optional": true,
-          "default" : "thermocycle_${index}"
+          "default" : "thermocycle_${unfolded}"
         },
         {
           "name": "object",
@@ -520,7 +520,7 @@ module.exports = {
         {
           "name"   : "dataref",
           "type"   : "string",
-          "default": "imagePlate_${step}"
+          "default": "imagePlate_${unfolded}"
         },
         {
           "name": "object",
@@ -558,7 +558,7 @@ module.exports = {
         {
           "name"   : "dataref",
           "type"   : "string",
-          "default": "absorbance_${index}"
+          "default": "absorbance_${unfolded}"
         },
         {
           "name"           : "wells",
@@ -603,7 +603,7 @@ module.exports = {
         {
           "name"   : "dataref",
           "type"   : "string",
-          "default": "fluorescence_${index}"
+          "default": "fluorescence_${unfolded}"
         },
         {
           "name"           : "wells",
@@ -659,7 +659,7 @@ module.exports = {
         {
           "name"   : "dataref",
           "type"   : "string",
-          "default": "luminescence_${index}"
+          "default": "luminescence_${unfolded}"
         },
         {
           "name"           : "wells",
@@ -696,7 +696,7 @@ module.exports = {
         {
           "name"   : "dataref",
           "type"   : "string",
-          "default": "gelSeparate_${step}"
+          "default": "gelSeparate_${unfolded}"
         },
         {
           "name"           : "objects",
