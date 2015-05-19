@@ -44,7 +44,7 @@ angular.module('tx.datavis')
     return {
       restrict: 'E',
       scope   : {
-        container: '=',  //shortname (key of ContainerOptions)
+        container: '=',  //shortname (key of ContainerOptions). REQUIRED (or empty plate shown)
 
         //data
 
@@ -60,12 +60,13 @@ angular.module('tx.datavis')
 
         //bindings
 
-        onHover      : '&?',  //returns array of selected wells
-        onSelect     : '&?',  //returns array of selected wells
-        onReset      : '&?',
-        selectedWells: '=?', //out-binding for selected wells. use wellsInput for changes in. todo - deprecate
-        wellsInput   : '=?', //in-binding for selected wells. use selectedWells for changes out.
-        focusWells   : '=?', //focus wells by shrinking others,
+        onHover       : '&?',  //returns array of selected wells
+        onSelect      : '&?',  //returns array of selected wells
+        onReset       : '&?',
+
+        wellsInput    : '=?', //in-binding for selected wells. use onSelect() for changes out.
+        transposeInput: '=?', //in-binding for transpose position
+        focusWells    : '=?', //focus wells by shrinking others
 
         // UI
 
@@ -92,18 +93,40 @@ angular.module('tx.datavis')
         scope.$watch('plateData', _.partial(rerender, false));
         scope.$watch('groupData', _.partial(rerender, false), true);
 
-        scope.$watch('wellsInput', function (newWells, oldWells) {
-          if (_.isArray(newWells)) {
-            //prevent infinite looping
-            if (!_.isEqual(newWells, internalSelectedWells)) {
-              //timeout to ensure that well circles are drawn
-              $timeout(function () {
-                safeClearBrush();
-                toggleWellsFromMap(createWellMap(newWells, true), classSelected, true);
-                propagateWellSelection(newWells);
-                refreshTransposeArrow(false);
-              });
-            }
+        //these are grouped because need to timeout for wellsInput, but transposeInput will propagate empty selection if runs before wellsInput
+        scope.$watchGroup(['wellsInput', 'transposeInput'], function (newStuff) {
+          var newWells = newStuff[0],
+              newTrans = newStuff[1],
+              shouldPropagate = false;
+
+          if (_.isNumber(newTrans) && newTrans != transposePosition) {
+            shouldPropagate = true;
+            transposePosition = newTrans;
+          }
+
+          //prevent infinite looping
+          if (_.isArray(newWells) && !_.isEqual(newWells, internalSelectedWells)) {
+            shouldPropagate = true;
+          } else {
+            newWells = internalSelectedWells;
+          }
+
+          if (shouldPropagate) {
+            //timeout to ensure that well circles are drawn
+            $timeout(function () {
+              safeClearBrush();
+              toggleWellsFromMap(createWellMap(newWells, true), classSelected, true);
+              propagateWellSelection(newWells);
+            });
+          }
+
+          refreshTransposeArrow(false);
+        });
+
+        //will compete with wellsInput
+        scope.$watch('transposeInput', function (newTrans) {
+          if (_.isNumber(newTrans) && newTrans != transposePosition) {
+            setAndPropagateTranspose(newTrans);
           }
         });
 
@@ -127,8 +150,7 @@ angular.module('tx.datavis')
           internalSelectedWells = !!dontSort ? wells : orderWellsWithTranspose(wells);
 
           scope.$applyAsync(function () {
-            scope.selectedWells = internalSelectedWells;
-            scope.onSelect({$wells: internalSelectedWells});
+            scope.onSelect({$wells: internalSelectedWells, $transpose: transposePosition});
           });
         }
 
@@ -202,7 +224,7 @@ angular.module('tx.datavis')
         var resetButton     = footerEl.append('span').text('reset').on('click', resetButtonClick);
 
         if (scope.showTranspose) {
-          transposeButton.on('click', transposeButtonClick);
+          transposeButton.on('click', setAndPropagateTranspose);
         } else {
           transposeButton.classed('hidden', true);
         }
@@ -529,8 +551,8 @@ angular.module('tx.datavis')
           element.removeClass('brushing');
         }
 
-        function transposeButtonClick () {
-          transposePosition = (transposePosition + 1) % 8;
+        function setAndPropagateTranspose (forceTranspose) {
+          transposePosition = _.isUndefined(forceTranspose) ? ( (transposePosition + 1) % 8 ) : forceTranspose;
           transposeBrush();
           propagateWellSelection();
         }
@@ -540,9 +562,9 @@ angular.module('tx.datavis')
             if (!!reset) {
               transposePosition = 0;
             }
-            transposeBrush();
             transposeArrow.classed('hidden', false);
             transposeButton.classed('disabled', false);
+            transposeBrush();
           }
         }
 
@@ -558,9 +580,13 @@ angular.module('tx.datavis')
         function transposeBrush () {
           var wells = getSelectedWells();
           if (_.isEmpty(wells)) {
+            transposeArrow.classed('hidden', true);
             return;
           }
+
+          transposeArrow.classed('hidden', false);
           var wellBounds = getWellExtent(wells);
+
           transposeArrow.attr('transform', function () {
             var rotation   = (Math.floor((transposePosition + 1) / 2) * 90),
                 firstPos   = getPositionWell(wellBounds[0]),
