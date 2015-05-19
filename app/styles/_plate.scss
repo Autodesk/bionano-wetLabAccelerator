@@ -13,6 +13,7 @@ tx-plate-columns {
   display: block;
   position: relative;
   width: 600px;
+  max-width: 100%;
   height: auto; //425, but handled dynamically by directive
   line-height: 0; //weird hack to prevent bottom black border
 
@@ -21,6 +22,7 @@ tx-plate-columns {
     overflow: visible;
   }
 
+  //todo - deprecate
   .plate {
     background: $white;
     box-shadow: $box-shadow-popover;

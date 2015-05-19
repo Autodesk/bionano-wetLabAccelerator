@@ -1,0 +1,77 @@
+.tx-popover {
+
+  $popover-arrow-width: 12px;
+
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $zindex-popover;
+
+  padding:0;
+  border: 0;
+  white-space: normal;
+
+  background: $white;
+  box-shadow: $box-shadow-popover;
+
+  max-width: 600px;
+
+  &.open {
+    display: block;
+  }
+
+  .close {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+  }
+
+  .tx-popover-title {
+    font-size: $font-size-md;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tx-popover-content {
+    padding: $layout-spacing-md $layout-spacing-md 0;
+  }
+
+  .tx-popover-transclude {
+    width: inherit;
+  }
+
+  //todo - move this to variables, make consistent
+  // Offset the popover to account for the popover arrow
+  &.top     {
+    left: 50%;
+    top: -$popover-arrow-width;
+    transform: translate(-50%, -100%);
+  }
+  &.bottom  {
+    left: 50%;
+    bottom: -$popover-arrow-width;
+    transform: translate(-50%, 0);
+  }
+
+  > .arrow {
+    pointer-events: none;
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: $popover-arrow-width;
+    content: " ";
+  }
+
+  &.top > .arrow {
+    left: 50%;
+    border-top-color: $white;
+    top: 100%;
+    margin-left: -$popover-arrow-width;
+  }
+}
+
+//todo - include arrows
