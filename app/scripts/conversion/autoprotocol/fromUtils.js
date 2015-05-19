@@ -16,29 +16,7 @@ function convertInstruction (inst, localParams) {
     return null;
   }
 
-  _.assign(localParams, {
-    operation: inst.operation
-  });
-
   return converter(inst, localParams);
-}
-
-// todo - would be great to abstract this out of requiring conversion inline
-// need to handle way of defining dictionary per step, so that loop index doesn't need to be fed directly to function,
-// but can be part of data object instead
-function unwrapGroup (group) {
-  var unwrapped = [];
-
-  _.times(group.loop || 1, function (loopIndex) {
-    _.forEach(group.steps, function (step, stepIndex) {
-      var stepCalc = (loopIndex * group.steps.length) + stepIndex;
-      unwrapped.push(convertInstruction(step, {
-        index: loopIndex,
-        step : stepCalc
-      }));
-    });
-  });
-  return unwrapped;
 }
 
 function makeReference (ref) {
@@ -77,6 +55,5 @@ function makeReference (ref) {
 
 module.exports = {
   convertInstruction: convertInstruction,
-  unwrapGroup       : unwrapGroup,
   makeReference     : makeReference
 };

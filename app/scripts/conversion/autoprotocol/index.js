@@ -47,20 +47,19 @@ function fromAbstraction (abst) {
     _.assign(references, fromUtils.makeReference(abstRef));
   });
 
-  //each group gives an array, need to concat (_.flatten)
-  var instructions = _.flatten(_.map(abst.groups, fromUtils.unwrapGroup));
-
-  //todo - handle interpolation of containers properly
-  var paramKeyvals = _.zipObject(
-      _.pluck(abst.parameters, 'name'),
-      _.pluck(abst.parameters, 'value')
-  );
-
-  var interpolatedInstructions = omniUtils.interpolateObject(instructions, paramKeyvals);
+  var instructions = _(omniUtils.unfoldProtocol(abst))
+    .map(function (operation) {
+      var dictionary = _.assign({}, operation.$index, {operation: operation.operation});
+      var converted = fromUtils.convertInstruction(operation);
+      var interpolated = omniUtils.interpolateObject(converted, dictionary);
+      console.log(dictionary, converted, interpolated);
+      return interpolated;
+    })
+    .value();
 
   return {
     refs        : references,
-    instructions: interpolatedInstructions
+    instructions: instructions
   };
 }
 
@@ -376,29 +375,7 @@ function convertInstruction (inst, localParams) {
     return null;
   }
 
-  _.assign(localParams, {
-    operation: inst.operation
-  });
-
   return converter(inst, localParams);
-}
-
-// todo - would be great to abstract this out of requiring conversion inline
-// need to handle way of defining dictionary per step, so that loop index doesn't need to be fed directly to function,
-// but can be part of data object instead
-function unwrapGroup (group) {
-  var unwrapped = [];
-
-  _.times(group.loop || 1, function (loopIndex) {
-    _.forEach(group.steps, function (step, stepIndex) {
-      var stepCalc = (loopIndex * group.steps.length) + stepIndex;
-      unwrapped.push(convertInstruction(step, {
-        index: loopIndex,
-        step : stepCalc
-      }));
-    });
-  });
-  return unwrapped;
 }
 
 function makeReference (ref) {
@@ -437,7 +414,6 @@ function makeReference (ref) {
 
 module.exports = {
   convertInstruction: convertInstruction,
-  unwrapGroup       : unwrapGroup,
   makeReference     : makeReference
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})

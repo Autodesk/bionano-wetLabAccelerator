@@ -48,12 +48,14 @@ function interpolateValue (value, params) {
 // ${you}", "myObj" : {"greet" : "hi ${me}"} }, {you: "bobby", me: "max"}) -> { myObj: { greet: "hi max"} myVal: "hey
 // bobby" }
 function interpolateObject (obj, params) {
-  if (_.isString(obj))
-    return interpolateValue(obj, params);
-  else {
-    _.mapValues(obj, _.partial(interpolateObject, _, params));
+  //todo - clarify array handling
+  if (_.isNumber(obj) || _.isArray(obj)) {
+    return obj;
   }
-  return obj;
+  if (_.isString(obj)) {
+    return interpolateValue(obj, params);
+  }
+  return _.mapValues(obj, _.partial(interpolateObject, _, params));
 }
 
 /*****
@@ -169,12 +171,12 @@ function unfoldGroup (group, groupIndex) {
   _.times(group.loop || 1, function (loopIndex) {
     _.forEach(group.steps, function (step, stepIndex) {
       var indices = {
-        index: loopIndex,
+        loop: loopIndex,
         step : (loopIndex * group.steps.length) + stepIndex
       };
       _.isNumber(groupIndex) && _.assign(indices, {group: groupIndex});
 
-      unwrapped.push(_.assign(step, {$index: indices}));
+      unwrapped.push(_.assign({}, step, {$index: indices}));
     });
   });
   return unwrapped;

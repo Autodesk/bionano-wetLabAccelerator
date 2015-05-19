@@ -16,20 +16,19 @@ function fromAbstraction (abst) {
     _.assign(references, fromUtils.makeReference(abstRef));
   });
 
-  //each group gives an array, need to concat (_.flatten)
-  var instructions = _.flatten(_.map(abst.groups, fromUtils.unwrapGroup));
-
-  //todo - handle interpolation of containers properly
-  var paramKeyvals = _.zipObject(
-      _.pluck(abst.parameters, 'name'),
-      _.pluck(abst.parameters, 'value')
-  );
-
-  var interpolatedInstructions = omniUtils.interpolateObject(instructions, paramKeyvals);
+  var instructions = _(omniUtils.unfoldProtocol(abst))
+    .map(function (operation) {
+      var dictionary = _.assign({}, operation.$index, {operation: operation.operation});
+      var converted = fromUtils.convertInstruction(operation);
+      var interpolated = omniUtils.interpolateObject(converted, dictionary);
+      console.log(dictionary, converted, interpolated);
+      return interpolated;
+    })
+    .value();
 
   return {
     refs        : references,
-    instructions: interpolatedInstructions
+    instructions: instructions
   };
 }
 
