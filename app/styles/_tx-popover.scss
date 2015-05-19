@@ -41,18 +41,7 @@
     width: inherit;
   }
 
-  //todo - move this to variables, make consistent
-  // Offset the popover to account for the popover arrow
-  &.top     {
-    left: 50%;
-    top: -$popover-arrow-width;
-    transform: translate(-50%, -100%);
-  }
-  &.bottom  {
-    left: 50%;
-    bottom: -$popover-arrow-width;
-    transform: translate(-50%, 0);
-  }
+  //todo - move this to variables, make consistent across all popovers
 
   > .arrow {
     pointer-events: none;
@@ -66,11 +55,28 @@
     content: " ";
   }
 
-  &.top > .arrow {
+  &.top     {
     left: 50%;
-    border-top-color: $white;
+    top: -$popover-arrow-width;
+
+    > .arrow {
+      left: 50%;
+      border-top-color: $white;
+      top: 100%;
+      margin-left: -$popover-arrow-width;
+    }
+  }
+
+  &.bottom  {
+    left: 50%;
     top: 100%;
-    margin-left: -$popover-arrow-width;
+
+    > .arrow {
+      left: 50%;
+      border-bottom-color: $white;
+      bottom: 100%;
+      margin-left: -$popover-arrow-width;
+    }
   }
 }
 
