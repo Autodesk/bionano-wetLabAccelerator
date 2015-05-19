@@ -25,7 +25,7 @@ class IndexPage(Page):
         self.click(self.getDesignLink(), "design link")
 
     def clickBuild(self):
-        self.click(self.getBuildLink(), "build link")
+        self.click(self.getProtocolLink(), "protocol link")
 
     def clickTest(self):
         self.click(self.getTestLink(), "test link")
@@ -33,8 +33,8 @@ class IndexPage(Page):
     def getDesignLink(self):
         return self.DRIVER.find_element_by_xpath("//a[text()='DESIGN']")
 
-    def getBuildLink(self):
-        return self.DRIVER.find_element_by_xpath("//a[text()='BUILD']")
+    def getProtocolLink(self):
+        return self.DRIVER.find_element_by_xpath("//a[text()='PROTOCOL']")
 
     def getTestLink(self):
         return self.DRIVER.find_element_by_xpath("//a[text()='TEST']")
