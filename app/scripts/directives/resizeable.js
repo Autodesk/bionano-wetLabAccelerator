@@ -11,7 +11,14 @@
  * @attr resizePosition
  *
  * Recommended you use a min/max-height/width for setting constraints
- * todo - inspect min/max-height/width as constraints
+ * future - inspect min/max-height/width as constraints. Currently, because using width, browser won't pass them
+ *
+ * @example
+ *
+ <div style="min-width: 200px; width: 300px;" resizeable
+ resize-property="width"
+ resize-position="right"
+ resize-direction="horizontal"></div>
  *
  */
 angular.module('transcripticApp')

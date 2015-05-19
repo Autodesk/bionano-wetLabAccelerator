@@ -70,7 +70,7 @@ function wrapFieldsAsStep (fieldsArray) {
 }
 
 function scaffoldOperationWithValues (operationName, fieldVals) {
-  var clone    = _.clone(_.result(operations, operationName, null)),
+  var clone    = _.cloneDeep(_.result(operations, operationName, null)),
       scaffold = _.result(clone, 'scaffold', null);
 
   if (_.isEmpty(scaffold)) {

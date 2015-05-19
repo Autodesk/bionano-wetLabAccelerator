@@ -6,6 +6,7 @@ module.exports = {
     operation    : "transfer",
     "description": "Transfer contents from one container to another, either 1-to-n or n-to-n",
     "name"       : "Transfer",
+    "type"       : "pipette",
     "scaffold"   : {
       "operation"   : "transfer",
       "requirements": {},
@@ -78,6 +79,7 @@ module.exports = {
     "operation"  : "distribute",
     "description": "Distribute liquid from source well(s) to destination wells(s), either 1-to-n, n-to-1, or n-to-n",
     "name"       : "Distribute",
+    "type"       : "pipette",
     "scaffold"   : {
       "operation"   : "distribute",
       "requirements": {},
@@ -133,6 +135,7 @@ module.exports = {
     "operation"  : "consolidate",
     "description": "Consolidate contents from multiple wells into one single well.",
     "name"       : "Consolidate",
+    "type"       : "pipette",
     "scaffold"   : {
       "operation"   : "consolidate",
       "requirements": {},
@@ -189,6 +192,7 @@ module.exports = {
     "operation"  : "mix",
     "description": "Mix specified well using a new pipette tip",
     "name"       : "Mix",
+    "type"       : "pipette",
     "scaffold"   : {
       "operation"   : "mix",
       "requirements": {},
@@ -228,6 +232,7 @@ module.exports = {
     "operation"  : "dispense",
     "description": "Dispense a reagent into columns of a container",
     "name"       : "Dispense",
+    "type"       : "pipette",
     "scaffold"   : {
       "operation"   : "dispense",
       "requirements": {},
@@ -264,6 +269,7 @@ module.exports = {
     "operation"  : "thermocycle",
     "description": "Thermocycle a container, putting through several temperature cycles, e.g. to run a PCR",
     "name"       : "Thermocycle",
+    "type"       : "heating",
     "scaffold"   : {
       "operation"   : "thermocycle",
       "requirements": {},
@@ -310,6 +316,7 @@ module.exports = {
     "operation"  : "incubate",
     "description": "",
     "name"       : "Incubate",
+    "type"       : "heating",
     "scaffold"   : {
       "operation"   : "incubate",
       "requirements": {},
@@ -363,6 +370,7 @@ module.exports = {
     "operation"  : "seal",
     "description": "Seal a container",
     "name"       : "Seal",
+    "type"       : "seal",
     "scaffold"   : {
       "operation"   : "seal",
       "requirements": {},
@@ -394,6 +402,7 @@ module.exports = {
     "operation"  : "unseal",
     "description": "Unseal a container",
     "name"       : "Unseal",
+    "type"       : "seal",
     "scaffold"   : {
       "operation"   : "unseal",
       "requirements": {},
@@ -415,6 +424,7 @@ module.exports = {
     "operation"  : "cover",
     "description": "Cover a plate with a specified lid",
     "name"       : "Cover",
+    "type"       : "seal",
     "scaffold"   : {
 
       "operation"   : "cover",
@@ -444,6 +454,7 @@ module.exports = {
     "operation"  : "uncover",
     "description": "Uncover a container",
     "name"       : "Uncover",
+    "type"       : "seal",
     "scaffold"   : {
       "operation"   : "uncover",
       "requirements": {},
@@ -465,6 +476,7 @@ module.exports = {
     "operation"  : "spin",
     "description": "Centrifuge a plate",
     "name"       : "Spin",
+    "type"       : "container",
     "scaffold"   : {
       "operation"   : "spin",
       "requirements": {},
@@ -491,6 +503,40 @@ module.exports = {
     }
   },
 
+  "image_plate": {
+    "operation"  : "image_plate",
+    "description": "Scan an image of a plate",
+    "name"       : "Image Plate",
+    "type"       : "container",
+    "scaffold"   : {
+      "operation"   : "image_plate",
+      "requirements": {},
+      "transforms"  : [
+        {
+          "container": "object"
+        }
+      ],
+      "fields"      : [
+        {
+          "name"   : "dataref",
+          "type"   : "string",
+          "default": "imagePlate_${step}"
+        },
+        {
+          "name": "object",
+          "type": "container"
+        },
+        {
+          "name"   : "mode",
+          "type"   : "option",
+          "options": ["top", "bottom"],
+          "default": "top"
+        }
+      ]
+    }
+  },
+
+
 
   //spectrometry
 
@@ -499,6 +545,7 @@ module.exports = {
     "operation"  : "absorbance",
     "description": "Measure absorbance of a specified wavelength (between 300 nm - 1000 nm)",
     "name"       : "Absorbance",
+    "type" : "spectrophotometry",
     "scaffold"   : {
       "operation"      : "absorbance",
       "requirements"   : {},
@@ -509,9 +556,9 @@ module.exports = {
       ],
       "fields"         : [
         {
-          "name"    : "dataref",
-          "type"    : "string",
-          "default" : "absorbance_${index}"
+          "name"   : "dataref",
+          "type"   : "string",
+          "default": "absorbance_${index}"
         },
         {
           "name"           : "wells",
@@ -543,6 +590,7 @@ module.exports = {
     "operation"  : "fluorescence",
     "description": "Measure fluorescence given an excitation wavelength (300 nm - 1000 nm) and emission (250 nm - 900 nm)",
     "name"       : "Fluorescence",
+    "type" : "spectrophotometry",
     "scaffold"   : {
       "operation"      : "fluorescence",
       "requirements"   : {},
@@ -553,9 +601,9 @@ module.exports = {
       ],
       "fields"         : [
         {
-          "name"    : "dataref",
-          "type"    : "string",
-          "default" : "fluorescence_${index}"
+          "name"   : "dataref",
+          "type"   : "string",
+          "default": "fluorescence_${index}"
         },
         {
           "name"           : "wells",
@@ -598,6 +646,7 @@ module.exports = {
     "operation"  : "luminescence",
     "description": "Measure luminescence in wells of a plate between 380nm - 600 nm",
     "name"       : "Luminescence",
+    "type" : "spectrophotometry",
     "scaffold"   : {
       "operation"      : "luminescence",
       "requirements"   : {},
@@ -634,6 +683,7 @@ module.exports = {
     "operation"  : "gel_separate",
     "description": "Perform a dry gel electrophoresis",
     "name"       : "Gel Separate",
+    "type"       : "DNA",
     "scaffold"   : {
       "operation"   : "gel_separate",
       "requirements": {},
@@ -673,65 +723,13 @@ module.exports = {
     }
   },
 
-
-  //containers
-
-  /*
-    "store": {
-      "operation"  : "store",
-      "description": "Deliver a plate to a storage location specified by the where parameter.",
-      "name"       : "Store",
-      "scaffold"   : {
-        "operation"   : "store",
-        "requirements": {},
-        "transforms"  : [
-          {
-            "container": "container"
-          }
-        ],
-        "fields"      : [
-          {
-            "name": "object",
-            "type": "container"
-          },
-          {
-            "name"   : "where",
-            "type"   : "option",
-            "options": optionEnums.storage.storage,
-            "default": "ambient"
-          }
-        ]
-      }
-    },
-
-    "discard": {
-      "operation"  : "discard",
-      "description": "Discard a container. The container will be removed from your inventory and no longer accessible.",
-      "name"       : "Discard",
-      "scaffold"   : {
-        "operation"   : "discard",
-        "requirements": {},
-        "transforms"  : [
-          {
-            "container": "container"
-          }
-        ],
-        "fields"      : [
-          {
-            "name": "object",
-            "type": "container"
-          }
-        ]
-      }
-    }
-    */
-
   //special
 
   "autoprotocol": {
     "operation"  : "autoprotocol",
     "description": "Type the JSON of an autoprotocol operation manually",
     "name"       : "Autoprotocol (JSON)",
+    "type"       : "special",
     "scaffold"   : {
       "operation"   : "autoprotocol",
       "requirements": {},

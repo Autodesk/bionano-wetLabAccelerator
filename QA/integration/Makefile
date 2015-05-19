@@ -6,6 +6,10 @@ ifndef TEST_BROWSER
     TEST_BROWSER='firefox'
 endif
 
+ifndef URL_PREFIX
+    URL_PREFIX=''
+endif
+
 VENVDIR := venv
 ASSET_DIR := assets
 AWS_ACCESS_KEY := $(strip $(shell grep aws_access_key environment.yaml|cut -d ':' -f 2))

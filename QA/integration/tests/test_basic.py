@@ -19,16 +19,14 @@ class TestBasicInteractions(TestBase):
     def test_build_ui(self):
         self.page.clickBuild()
         build = self.build
-        expectedOperationNames = ["Transfer", "Distribute", "Consolidate", "Mix", "Dispense", "Thermocycle", "Incubate", "Seal", "Unseal", "Cover", "Uncover", "Spin", "Absorbance", "Fluorescence", "Luminescence", "Gel_separate", "Autoprotocol"]
+        time.sleep(10)
+        expectedOperationNames = ["Transfer", "Distribute", "Consolidate", "Mix", "Dispense", "Thermocycle", "Incubate", "Seal", "Unseal", "Cover", "Uncover", "Spin", "Image Plate", "Absorbance", "Fluorescence", "Luminescence", "Gel Separate", "Autoprotocol (JSON)"]
 
         self.verifyIsDisplayed(build.getSidePanel(), "side column")
-        self.assertEqual(build.getOperationNames(), expectedOperationNames, "verify operation names")
+        self.verifyEqual(build.getOperationNames(), expectedOperationNames, "verify operation names")
         self.verifyIsDisplayed(build.getMainColumn(), "main column")
 
         protocolSetup = build.getProtocolSetup()
-
-        self.verifyFalse(protocolSetup.isExpanded(), "verify protocol setup is closed")
-
 
         protocolSetup.expand()
         self.verifyTrue(protocolSetup.isExpanded(), "verify protocol setup is expanded")
@@ -63,8 +61,16 @@ class TestBasicInteractions(TestBase):
         self.verifyString(actual, False, description)
         self.assertFalse(actual, description)
 
+    def verifyEqual(self, actual, expected, description):
+        verifyString = "verify " + description + " is equal"
+        self.verifyString(actual, expected, verifyString)
+        self.assertEqual(actual, expected, verifyString)
+
     def verifyString(self, actual, expect, verifyString):
         passFail = "FAIL"
         if actual == expect:
             passFail = "PASS"
         print("  " + passFail + " - " + verifyString)
+        if actual != expect:
+            print("expect: " + str(expect))
+            print("actual: " + str(actual))

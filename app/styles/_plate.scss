@@ -13,8 +13,8 @@ tx-plate-columns {
   display: block;
   position: relative;
   width: 600px;
-  height: auto;
-  //height: 425px;
+  height: auto; //425, but handled dynamically by directive
+  line-height: 0; //weird hack to prevent bottom black border
 
   svg {
     display: inline-block;
@@ -24,6 +24,15 @@ tx-plate-columns {
   .plate {
     background: $white;
     box-shadow: $box-shadow-popover;
+  }
+
+  &.plate-empty {
+    border: 1px solid lighten($light-grey, 5);
+    box-shadow: 0 0 3px $light-grey;
+
+    svg {
+      background: transparentize($light-grey, 0.75);
+    }
   }
 
   .axis {

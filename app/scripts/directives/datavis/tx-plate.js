@@ -62,6 +62,7 @@ angular.module('tx.datavis')
 
         onHover      : '&?',  //returns array of selected wells
         onSelect     : '&?',  //returns array of selected wells
+        onReset      : '&?',
         selectedWells: '=?', //out-binding for selected wells. use wellsInput for changes in. todo - deprecate
         wellsInput   : '=?', //in-binding for selected wells. use selectedWells for changes out.
         focusWells   : '=?', //focus wells by shrinking others,
@@ -121,7 +122,7 @@ angular.module('tx.datavis')
         });
 
         function propagateWellSelection (wellsInput, dontSort) {
-          var wells  = (_.isNull(wellsInput) || _.isUndefined(wellsInput)) ? getSelectedWells() : wellsInput;
+          var wells = (_.isNull(wellsInput) || _.isUndefined(wellsInput)) ? getSelectedWells() : wellsInput;
 
           internalSelectedWells = !!dontSort ? wells : orderWellsWithTranspose(wells);
 
@@ -198,7 +199,7 @@ angular.module('tx.datavis')
               });
 
         var transposeButton = footerEl.append('span').text('transpose');
-        var resetButton     = footerEl.append('span').text('reset').on('click', clearWellsAndSelection);
+        var resetButton     = footerEl.append('span').text('reset').on('click', resetButtonClick);
 
         if (scope.showTranspose) {
           transposeButton.on('click', transposeButtonClick);
@@ -214,7 +215,11 @@ angular.module('tx.datavis')
 
         //need to use shouldPlateUpdate flag instead of another function to accomodate transitions properly
         function rerender (shouldPlateUpdate) {
-          if (!scope.container) return;
+          element.toggleClass('plate-empty', !scope.container);
+
+          if (!scope.container) {
+            return;
+          }
 
           var container = ContainerOptions[scope.container];
 
@@ -420,11 +425,14 @@ angular.module('tx.datavis')
           }
         }
 
-        function clearWellsAndSelection () {
+        function resetButtonClick () {
           safeClearBrush();
           toggleWellsFromMap({}, classSelected, true);
           propagateWellSelection();
           hideTransposeArrow();
+          scope.$applyAsync(function () {
+            scope.onReset();
+          })
         }
 
         /***** BRUSHING *****/
