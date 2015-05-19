@@ -19,8 +19,8 @@
 
     <div class="dropdown group-items"
          ng-show="hovering"
-         ng-click="$event.stopPropagation();"
-         ng-class="{'open' :showActions}">
+         dropdown
+         is-open="showActions">
       <img src="/images/zero_iterations.png"
            ng-show="!opCtrl.op.loop || opCtrl.op.loop <= 1">
       <div class="group-repeat"
@@ -31,9 +31,9 @@
                ng-model="opCtrl.op.loop"/>
       </div>
       <span class="glyphicon glyphicon-cog"
-            ng-click="opCtrl.toggleActionsMenu($event)"></span>
-      <ul class="dropdown-menu dropdown-menu-right"
-          ng-mouseleave="opCtrl.toggleActionsMenu($event)">
+            squelch-event="click"
+            dropdown-toggle></span>
+      <ul class="dropdown-menu dropdown-menu-right">
         <li>
           <a ng-click="opCtrl.toggleModal($event)">
             Verify Protocol
