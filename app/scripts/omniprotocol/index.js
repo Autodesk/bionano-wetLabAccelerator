@@ -187,14 +187,14 @@ module.exports = {
 
   "aliquot"  : {
     type               : "container",
-    canParameterize    : true,
+    canParameterize    : false,
     description        : "A single aliquot",
     "autoprotocol-type": "Well",
     verification       : _.constant(true)
   },
   "aliquot+" : {
     type               : "container",
-    canParameterize    : true,
+    canParameterize    : false,
     description        : "Several aliquot",
     "autoprotocol-type": "WellGroup",
     verification       : _.constant(true)
@@ -966,7 +966,6 @@ module.exports = {
         {
           "name"   : "dataref",
           "type"   : "string",
-          "optional": true,
           "default": "gelSeparate_${step}"
         },
         {
@@ -988,7 +987,7 @@ module.exports = {
         {
           "name"   : "duration",
           "type"   : "duration",
-          "default": {"value": 60, "unit": "minute"}
+          "default": {"value": 20, "unit": "minute"}
         }
       ]
     }
@@ -1207,7 +1206,7 @@ module.exports = {
 };
 },{}],9:[function(require,module,exports){
 module.exports = {
-  matrix: ["agarose(96,2.0%)", "agarose(48,4.0%)", "agarose(48,2.0%)", "agarose(12,1.2%)", "agarose(8,0.8%)"],
+  matrix: ["agarose(10,2%)", "agarose(10,1.2%)", "agarose(8,0.8%)", "agarose(48,2%)"],
   ladder: ["ladder1", "ladder2"]
 };
 },{}],10:[function(require,module,exports){
@@ -1268,7 +1267,7 @@ function pluckFieldValueRaw (fields, fieldName) {
 }
 
 function getContainerFromName (parameters, containerName) {
-  return _.find(parameters, {name : containerName});
+  return _.find(parameters, {name: containerName});
 }
 
 function getContainerTypeFromName (parameters, containerName) {
@@ -1381,7 +1380,9 @@ function getScaffoldProtocol () {
       "id"         : "",
       "type"       : "protocol",
       "author"     : {},
-      "description": ""
+      "description": "",
+      "tags"       : [],
+      "db"         : []
     },
     "parameters": [],
     "groups"    : []
@@ -1402,7 +1403,9 @@ function getScaffoldRun () {
       "type"       : "run",
       "date"       : "",
       "author"     : {},
-      "description": ""
+      "description": "",
+      "tags"       : [],
+      "db"         : []
     },
     "protocol": {},
     "data"    : {}
@@ -1513,7 +1516,7 @@ function getFoldedStepNumber (protocol, groupIndex, stepIndex) {
 function getFoldedStepInfo (protocol, unfoldNum) {
   var result        = {},
       unfoldedIndex = 0,
-      foldedIndex = 0;
+      foldedIndex   = 0;
 
   _.forEach(protocol.groups, function (group, groupIndex) {
     var loopNum = _.result(group, 'loop', 1);
@@ -1524,7 +1527,7 @@ function getFoldedStepInfo (protocol, unfoldNum) {
             group   : groupIndex,
             step    : stepIndex,
             loop    : groupLoopIndex,
-            folded : foldedIndex,
+            folded  : foldedIndex,
             unfolded: unfoldNum
           });
         }
@@ -1627,8 +1630,8 @@ module.exports = {
   pluckField        : pluckField,
   pluckFieldValueRaw: pluckFieldValueRaw,
 
-  getContainerFromName : getContainerFromName,
-  getContainerTypeFromName : getContainerTypeFromName,
+  getContainerFromName    : getContainerFromName,
+  getContainerTypeFromName: getContainerTypeFromName,
 
   interpolateValue : interpolateValue,
   interpolateObject: interpolateObject,

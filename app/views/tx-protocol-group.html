@@ -2,7 +2,9 @@
      tx-protocol-droppable="groupCtrl.optsDroppableGroupTop">
 </div>
 <div class="protocol-group-wrap"
-     tx-protocol-droppable="groupCtrl.optsDroppableGroup">
+     tx-protocol-droppable="groupCtrl.optsDroppableGroup"
+     ng-mouseenter="hovering = true"
+     ng-mouseleave="hovering = false">
   <div class="protocol-group-inner"
        ng-class="{'show-group': (groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1),
                   'multichild' : groupCtrl.group.steps.length > 1 }"
@@ -15,14 +17,20 @@
              auto-grow
              placeholder="Group Name"
              ng-model="groupCtrl.group.name">
-
-      <div class="group-repeat">
-        <input class="input-unstyled"
-               type="number" min="1" max="100"
-               ng-model-options="{updateOn: 'blur'}"
-               ng-model="groupCtrl.group.loop"/>
+      <div class="dropdown group-items"
+           ng-show="hovering">
+        <img src="/images/zero_iterations.png"
+             ng-show="!groupCtrl.group.loop || groupCtrl.group.loop <= 1"
+             >
+        <div class="group-repeat"
+             ng-show="groupCtrl.group.loop && groupCtrl.group.loop >= 2">
+          <input class="input-unstyled"
+                 type="number" min="1" max="100"
+                 ng-model-options="{updateOn: 'blur'}"
+                 ng-model="groupCtrl.group.loop"/>
+        </div>
+        <span class="glyphicon glyphicon-cog"></span>
       </div>
-
     </div>
     <div class="protocol-group-main">
       <tx-protocol-op ng-repeat="step in groupCtrl.group.steps"

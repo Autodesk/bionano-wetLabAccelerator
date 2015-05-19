@@ -1,8 +1,9 @@
 <div class="button dropdown"
-     ng-click="showOptions = !showOptions"
-     ng-class="{'open' : showOptions}"
+     squelch-event="click"
+     dropdown dropdown-toggle
+     is-open="showOptions"
      ng-mouseenter="showCaret = true"
-     ng-mouseleave="showCaret = false; showOptions = false">
+     ng-mouseleave="showCaret = false">
   <span>
   {{fieldCtrl.model || fieldCtrl.field.default || 'select...'}}
   </span>

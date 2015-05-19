@@ -3,21 +3,21 @@
        ng-required="fieldCtrl.model.unit"
        type="number" auto-grow="10"
        placeholder="value">
-<div class="button dropdown"
-     ng-click="showOptions = !showOptions"
-     ng-class="{'open' : showOptions}"
+<div class="dropdown button"
+     ng-class="{'open' : showingOptions}"
+     ng-click="showingOptions = !showingOptions"
      ng-mouseenter="showCaret = true"
-     ng-mouseleave="showCaret = false">
-    <span>
-    {{fieldCtrl.model.unit ? fieldCtrl.model.unit : (fieldCtrl.field.default.unit ? fieldCtrl.field.default.unit : unitOptions[0])}}
-    </span>
-    <span class="glyphicon glyphicon-menu-down"
-          ng-class="{'visible': showCaret,'invisible': !showCaret}">
-    </span>
-    <ul class="dropdown-menu dropdown-menu-right">
+     ng-mouseleave="showCaret = false; showingOptions = false">
+    <a class="button-label">
+      {{fieldCtrl.model.unit ? fieldCtrl.model.unit : (fieldCtrl.field.default.unit ? fieldCtrl.field.default.unit : unitOptions[0])}}
+      <span class="glyphicon glyphicon-menu-down"
+            ng-class="{'visible': showCaret,'invisible': !showCaret}">
+      </span>
+    </a>
+    <ul class="dropdown-menu">
       <li ng-repeat="unit in unitOptions"
           ng-click="fieldCtrl.model.unit = unit">
-        <a>{{unit}}</a>
+        <a ng-bind="unit"></a>
       </li>
     </ul>
 </div>

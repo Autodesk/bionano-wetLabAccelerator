@@ -39,33 +39,6 @@ tx-protocol-group {
       border-bottom: $drop-hover-border;
     }
 
-    .group-repeat {
-
-      background: $white;
-      color: $grey;
-      border-radius: 10px;
-      input {
-        text-align: right;
-        width: 25px;
-      }
-      &:after {
-        content: 'x';
-        font-size: 11px;
-        cursor: none;
-        position: relative;
-        left: -5px;
-      }
-
-      &:hover {
-        background: $primary;
-        color: $white;
-      }
-      &.selected {
-        background: $primary;
-        color: $white;
-      }
-    }
-
   }
 
   .protocol-group-main {

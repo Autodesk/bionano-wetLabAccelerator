@@ -14,17 +14,7 @@ angular.module('transcripticApp')
         var paddingLeft = element.css('paddingLeft'),
             paddingRight = element.css('paddingRight');
 
-        var minWidth = parseInt(attr.autoGrow, 10) || parseInt(element.css('minWidth'), 10) || 100;
-
-        var $shadow = angular.element('<span></span>').css({
-          'position': 'absolute',
-          'top': '-10000px',
-          'left': '-10000px',
-          'fontSize': element.css('fontSize'),
-          'fontFamily': element.css('fontFamily'),
-          'white-space': 'pre'
-        });
-        angular.element(document.body).after($shadow);
+        var minWidth = parseInt(attr.autoGrow, 10) || parseInt(element.css('minWidth'), 10) || 50;
 
         var update = function() {
           var val = element.val()
@@ -32,18 +22,23 @@ angular.module('transcripticApp')
                 .replace(/>/g, '&gt;')
                 .replace(/&/g, '&amp;')
             ;
+          var calcWidth;
 
           // If empty calculate by placeholder
           if (val !== "") {
-            $shadow.html(val);
+            calcWidth = val.length * 7 + 15;
           } else {
-            $shadow.html(element[0].placeholder);
+            calcWidth = element[0].placeholder.length * 7 + 5;
           }
 
-          //extra to handle new letter before next $digest
-          var calcWidth = $shadow[0].offsetWidth + 16;
+          //extra to handle new letter before next $digest $shadow[0].offsetWidth
           var newWidth = Math.max(calcWidth, minWidth) + "px";
-          element.css('width', newWidth);
+          if (val.length < 26) {
+            element.css('width', newWidth);
+          }
+          else {
+            //Todo: pop over to accomodate larger text area
+          }
         };
 
         if (ngModelCtrl) {
@@ -58,10 +53,6 @@ angular.module('transcripticApp')
         // $timeout is needed because the value of element is updated only after the $digest cycle
         // TODO: Maybe on compile time if we call update we won't need $timeout
         $timeout(update);
-
-        scope.$on('$destroy', function () {
-          $shadow.remove();
-        })
       }
     }
   });
