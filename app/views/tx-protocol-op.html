@@ -16,12 +16,13 @@
     <span ng-bind="opCtrl.op.operation"></span>
 
     <div class="dropdown pull-right"
-         ng-class="{'open' :showActions}">
+         dropdown
+         is-open="showActions">
     <span class="glyphicon glyphicon-cog"
           ng-show="opCtrl.isVisible"
-          ng-click="opCtrl.toggleActionsMenu($event)"></span>
-      <ul class="dropdown-menu dropdown-menu-right"
-          ng-mouseleave="opCtrl.toggleActionsMenu($event)">
+          squelch-event="click"
+          dropdown-toggle></span>
+      <ul class="dropdown-menu dropdown-menu-right">
         <li><a ng-click="opCtrl.toggleModal($event)">
           Verify Protocol
         </a></li>
