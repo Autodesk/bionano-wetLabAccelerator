@@ -21,6 +21,7 @@ angular.module('tx.protocolEditor')
         var self = this;
 
         self.clearProtocol = _.partial(ProtocolHelper.clearProtocol, self.protocol);
+
         self.saveProtocol = function () {
           ProtocolHelper.saveProtocol(self.protocol)
             .then(self.protocolForm.$setPristine);
@@ -37,11 +38,6 @@ angular.module('tx.protocolEditor')
 
         self.autoprotocolConvertFunction = ProtocolHelper.convertToAutoprotocol;
 
-        self.allStepsOpen = false;
-        self.toggleAllSteps = function () {
-          self.allStepsOpen = !self.allStepsOpen;
-          $rootScope.$broadcast('editor:toggleGroupVisibility', self.allStepsOpen);
-        };
       },
       link: function postLink(scope, element, attrs) {
 

@@ -56,6 +56,12 @@ angular.module('tx.protocolEditor')
           }
         };
 
+        self.allStepsOpen = false;
+        self.toggleAllSteps = function () {
+          self.allStepsOpen = !self.allStepsOpen;
+          $rootScope.$broadcast('editor:toggleGroupVisibility', self.allStepsOpen);
+        };
+
         //todo - deprecate
         self.optsDroppableEditor = {
           drop     : function (e, ui) {

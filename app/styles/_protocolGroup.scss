@@ -21,6 +21,17 @@ tx-protocol-group {
     &.show-group {
       background: transparent;
       border: 2px solid $white;
+      &:hover{
+        .group-items {
+          display: flex;
+        }
+        .group-repeat {
+          display: block;
+        }
+        .glyphicon-cog {
+          display: inline-block;
+        }
+      }
     }
   }
 

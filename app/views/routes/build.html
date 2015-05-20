@@ -1,12 +1,15 @@
 <div ng-show="restyleCtrl.currentProtocol.metadata"
      class="build-wrap flex-grower flex-vertical">
 
-  <div>
-    <span ng-bind="restyleCtrl.currentProtocol.metadata.name"></span>
-
-    <div class="glyphicon-ellipse" ng-click='toggleModal()'>
-      <span class="glyphicon glyphicon-option-horizontal"></span>
+  <div class="protocol-header">
+    <div class="protocol-info">
+      <span ng-bind="restyleCtrl.currentProtocol.metadata.name"></span>
+      <div class="glyphicon-ellipse" ng-click='toggleModal()'>
+        <span class="glyphicon glyphicon-option-horizontal"></span>
+      </div>
     </div>
+    <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
+                         protocol-form="ProtocolForm"></tx-protocol-actions>
     <tx-modal ng-show='modalShown'>
       <table>
         <thead>
@@ -51,8 +54,6 @@
 
     <div class="maincolumn flex-vertical maxout-scroll-vertical protocol-steps">
 
-      <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
-                           protocol-form="ProtocolForm"></tx-protocol-actions>
       <tx-protocol-editor class="flex-grower flex-vertical"
                           ng-form="ProtocolForm"
                           protocol="restyleCtrl.currentProtocol">
