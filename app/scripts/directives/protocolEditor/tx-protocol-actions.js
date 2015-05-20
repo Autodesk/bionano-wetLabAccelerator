@@ -40,7 +40,9 @@ angular.module('tx.protocolEditor')
 
       },
       link: function postLink(scope, element, attrs) {
-
+        scope.$on('editor:toggleRunModal', function () {
+          scope.modalShown = !scope.modalShown;
+        });
       }
     };
   });

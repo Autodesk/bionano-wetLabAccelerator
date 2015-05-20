@@ -8,7 +8,7 @@
  *
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolOp', function (DragDropManager) {
+  .directive('txProtocolOp', function ($rootScope, DragDropManager) {
     return {
       templateUrl: 'views/tx-protocol-op.html',
       restrict: 'E',
@@ -27,6 +27,12 @@ angular.module('tx.protocolEditor')
           $scope.showActions = angular.isDefined(force) ?
             force :
             !( $scope.showActions );
+        };
+
+        self.toggleRun = function ($event) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          $rootScope.$broadcast('editor:toggleRunModal');
         };
 
         self.optsDroppableOpTop = {
