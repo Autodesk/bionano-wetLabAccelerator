@@ -8,7 +8,9 @@
  * Service in the transcripticApp.
  */
 angular.module('tx.communication')
-  .service('Communication', function (Auth) {
+  .service('Communication', function (Auth, $http) {
+
+    var self = this;
 
     this.transcripticRoot = "https://secure.transcriptic.com/";
 
@@ -22,13 +24,24 @@ angular.module('tx.communication')
     //pass in overrides as Object
     //use a function to recreate Auth each time
     this.defaultResourceActions = function (params) {
+      var headers = _.assign({}, Auth.headers(), params.headers);
+      delete params.headers;
+
       return angular.extend({
-        headers: Auth.headers(),
+        headers: headers,
         withCredentials: true,
         cache: false,
         timeout: 7000,
         responseType: "json"
       }, params)
+    };
+
+    this.request = function (url, method, params) {
+      return $http[method || 'get'](self.root + url, self.defaultResourceActions(params));
+    };
+
+    this.requestUrl = function(url) {
+      return self.root + url;
     };
 
   });
