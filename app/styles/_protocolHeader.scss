@@ -1,16 +1,17 @@
-.protocol-editor-header {
-
-  .protocol-name {
-    display: inline-block;
-    margin: 5px 3px;
-  }
+.protocol-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0 0 0;
 }
 
 tx-protocol-actions {
-  display: flex;
-  position: relative;
-  justify-content: space-between;
-  align-items: center;
+  display: inline-block;
+
+  > a {
+    margin: 0 5px;
+  }
 }
 
 .protocol-metadata-field {
@@ -18,3 +19,9 @@ tx-protocol-actions {
   border-bottom: 1px solid $grey;
 }
 
+.protocol-editor-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

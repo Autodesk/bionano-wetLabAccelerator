@@ -9,7 +9,21 @@ tx-protocol-op {
 
   box-sizing: border-box;
 
-  .protocol-op-wrap {}
+  .protocol-op-wrap {
+    &:only-child {
+      &:hover{
+        .group-repeat {
+          display: inline-block;
+        }
+        .iteration-none {
+          display: block;
+        }
+        .glyphicon-cog {
+          display: inline-block;
+        }
+      }
+    }
+  }
 
   @include arrow-bottom($step-background-inactive, $step-background-active, $includeBackground: true, $activeClass: 'open');
 
@@ -31,21 +45,6 @@ tx-protocol-op {
 
   .operation-fields {
     width: 100%;
-  }
-
-  table {
-    border-spacing: 5px 10px;
-    margin: 0;
-    tr {
-      td {
-        &:first-child {
-          text-align: right;
-        }
-        &:last-child {
-          text-align: left;
-        }
-      }
-    }
   }
 
   &:first-child {

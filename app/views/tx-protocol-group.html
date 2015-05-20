@@ -2,9 +2,7 @@
      tx-protocol-droppable="groupCtrl.optsDroppableGroupTop">
 </div>
 <div class="protocol-group-wrap"
-     tx-protocol-droppable="groupCtrl.optsDroppableGroup"
-     ng-mouseenter="hovering = true"
-     ng-mouseleave="hovering = false">
+     tx-protocol-droppable="groupCtrl.optsDroppableGroup">
   <div class="protocol-group-inner"
        ng-class="{'show-group': (groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1),
                   'multichild' : groupCtrl.group.steps.length > 1 }"
@@ -18,10 +16,9 @@
              placeholder="Group Name"
              ng-model="groupCtrl.group.name">
       <div class="dropdown group-items"
-           ng-show="hovering">
-        <img src="/images/zero_iterations.png"
-             ng-show="!groupCtrl.group.loop || groupCtrl.group.loop <= 1"
-             >
+           dropdown>
+        <span class="iteration-none"
+              ng-show="!groupCtrl.group.loop || groupCtrl.group.loop <= 1"></span>
         <div class="group-repeat"
              ng-show="groupCtrl.group.loop && groupCtrl.group.loop >= 2">
           <input class="input-unstyled"
@@ -29,7 +26,16 @@
                  ng-model-options="{updateOn: 'blur'}"
                  ng-model="groupCtrl.group.loop"/>
         </div>
-        <span class="glyphicon glyphicon-cog"></span>
+        <span class="glyphicon glyphicon-cog"
+              squelch-event="click"
+              dropdown-toggle></span>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li>
+            <a ng-click="">
+              Edit Description
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="protocol-group-main">

@@ -1,70 +1,16 @@
-<span>Protocol</span>
-<div>
-  <div class="btn-group">
-    <button class="btn btn-default btn-sm"
-            fake-note="!!!!!this is temporary. you can delete this"
-            tooltip="Clear Protocol"
-            tooltip-append-to-body="true"
-            ng-click="actionCtrl.clearProtocol()">
-      <span class="glyphicon glyphicon-fire"></span>
-    </button>
-    <button class="btn btn-default btn-sm"
-            tooltip="Toggle step visiblity"
-            tooltip-append-to-body="true"
-            ng-click="actionCtrl.toggleAllSteps()">
-            <span class="glyphicon"
-                  ng-class="{'glyphicon-eye-open' : !actionCtrl.allStepsOpen,
-                             'glyphicon-eye-close' : actionCtrl.allStepsOpen}"></span>
-    </button>
-    <button class="btn btn-default btn-sm"
-            ng-disabled="actionCtrl.protocolForm.$error.json"
-            ng-click="actionCtrl.saveProtocol()"
-            tooltip="Save Protocol"
-            tooltip-append-to-body="true">
-      <span class="glyphicon glyphicon-cloud-upload"></span>
-    </button>
-  </div>
-  <div class="btn-group">
-    <button class="btn btn-default btn-sm"
-            ng-click="showJSON = true"
-            tooltip="View Protocol JSON"
-            tooltip-append-to-body="true">
-      <span class="glyphicon glyphicon-console"></span>
-    </button>
-    <pre class="pre-scrollable"
-         ng-class="{'open' : showJSON}"
-         ng-mouseleave="showJSON = false"
-         ng-bind="actionCtrl.protocol | json"></pre>
-    <div class="btn btn-default btn-sm"
-         tooltip="Download Protocol"
-         tooltip-append-to-body="true"
-         ng-class="{'open' : downloadOptionsVisible}"
-         ng-mouseenter="downloadOptionsVisible = true"
-         ng-mouseleave="downloadOptionsVisible = false">
-      <span class="glyphicon glyphicon-save-file"></span>
-      <span class="caret"></span>
-      <ul class="dropdown-menu dropdown-menu-right">
-        <li><a tx-downloadjson
-               filename="{{(actionCtrl.protocol.metadata.name ? actionCtrl.protocol.metadata.name : 'protocol') + '_omniprotocol.json'}}"
-               download-model="actionCtrl.protocol">
-          Omniprotocol
-        </a></li>
-        <li><a tx-downloadjson
-               filename="{{(actionCtrl.protocol.metadata.name ? actionCtrl.protocol.metadata.name : 'protocol') + '_autoprotocol.json'}}"
-               download-model="actionCtrl.protocol"
-               download-formatter="actionCtrl.autoprotocolConvertFunction">
-          Autoprotocol
-        </a></li>
-      </ul>
-    </div>
-    <button class="btn btn-default btn-sm"
-            ng-click="toggleModal()"
-            tooltip="Run Protocol"
-            tooltip-append-to-body="true">
-      <span class="glyphicon glyphicon-check"></span>
-    </button>
-  </div>
-  <tx-modal ng-show='modalShown'>
-    <tx-run></tx-run>
-  </tx-modal>
-</div>
+<a ng-disabled="actionCtrl.protocolForm.$error.json"
+   ng-click="actionCtrl.saveProtocol()">
+  Save
+</a>
+<a tx-downloadjson
+   filename="{{(actionCtrl.protocol.metadata.name ? actionCtrl.protocol.metadata.name : 'protocol') + '_omniprotocol.json'}}"
+   download-model="actionCtrl.protocol">
+  Download
+</a>
+<a ng-click="toggleModal()">
+  Run
+</a>
+
+<tx-modal ng-show='modalShown'>
+  <tx-run></tx-run>
+</tx-modal>
