@@ -58,6 +58,66 @@ tx-protocol-group {
     align-items: center;
   }
 
+  .group-items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .iteration-none {
+      display: none;
+      margin: 0 5px;
+      width: 22px;
+      height: 17px;
+      cursor: default;
+      background: url('/images/zero_iterations.png');
+
+      &:hover {
+        background: $primary;
+        color: $white;
+        &:after {
+          content: '1x';
+          position: relative;
+          left: 3px;
+          bottom: 1px;
+        }
+      }
+    }
+
+    .group-repeat {
+
+      display: none;
+      background: transparent;
+      color: $grey;
+      margin: 0 5px;
+      height: 17px;
+      input {
+        text-align: right;
+        width: 25px;
+      }
+
+      &:after {
+        content: 'x';
+        font-size: 11px;
+        cursor: none;
+        position: relative;
+        left: -5px;
+      }
+
+      &:hover {
+        background: $primary;
+        color: $white;
+      }
+      &.selected {
+        background: $primary;
+        color: $white;
+      }
+    }
+
+    .glyphicon-cog {
+      display: none;
+      cursor: pointer;
+    }
+  }
 
   /*
   //all ops have arrows, not groups
