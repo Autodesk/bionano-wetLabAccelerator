@@ -28,6 +28,7 @@ tx-operation-popover {
   box-shadow: $box-shadow-popover;
 
   &:after {
+    //maintain pointer events so can hover back into it
     right: 100%;
     top: 50%;
     border: solid transparent;
@@ -35,7 +36,6 @@ tx-operation-popover {
     height: 0;
     width: 0;
     position: absolute;
-    pointer-events: none;
     border-color: transparent;
     border-right-color: $white;
     border-width: $oppop-arrow-width;

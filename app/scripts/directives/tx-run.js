@@ -28,9 +28,15 @@ angular.module('transcripticApp')
           self.projects = Project.list();
         });
 
+        self.selectProject = function (proj) {
+          $scope.creatingNewProject = false;
+          self.project = proj;
+        };
+
         self.findProjectByname = function (projectName) {
           return _.find(self.projects, _.matches({name: projectName}));
         };
+
 
         // SUBMIT / ANALYZE RUNS
 
@@ -42,6 +48,7 @@ angular.module('transcripticApp')
 
           var projectIdPromise;
 
+          //runCtrl.project can be a string (if creating new) or an object (selected one)
           if (_.isObject(self.project) && _.has(self.project, 'id')) {
             projectIdPromise = $q.when(self.project.id);
           }

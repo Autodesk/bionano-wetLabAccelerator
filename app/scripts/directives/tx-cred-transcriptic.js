@@ -24,7 +24,10 @@ angular.module('transcripticApp')
       },
       controller: function ($scope, $element, $attrs) {
 
-        var self = this;
+        var self = this,
+            authIsValid = false;
+
+        $scope.$watch('auth', checkAuthIsValid);
 
         //don't actually bind to Auth here, Auth listens to 'txAuth' from firebase directly
         //will need to refactor to pull via REST or something, and shuold update DB automatically
@@ -41,6 +44,19 @@ angular.module('transcripticApp')
               });
           }
         });
+
+        function checkAuthIsValid () {
+          //todo - ping transcriptic?
+          authIsValid = true;
+        }
+
+        self.forgetCreds = function () {
+          //todo
+        };
+
+        self.authValid = function () {
+          return authIsValid;
+        };
 
         //note that temporarily we will get errors in the console for invalid credentials (and you have to be signed into firebase), but once move DB that will go away.
       },
