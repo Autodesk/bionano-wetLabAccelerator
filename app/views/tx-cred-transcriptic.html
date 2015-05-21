@@ -8,8 +8,12 @@
     </p>
   </div>
 
+  <div ng-show="!authCtrl.authValid() || authCtrl.showAuth">
+    <p class="text-sm">Protocols are verified and Run at Transcriptic. Creating a Transcriptic account is free. An estimate of costs will be displayed prior to running a protocol.
+    <a class="action-text" href="https://secure.transcriptic.com" target="_blank">I don't have a Transcriptic Account.</a>
+    </p>
+
   <form name="authForm"
-        ng-show="!authCtrl.authValid() || authCtrl.showAuth"
         class="panel-body form-horizontal">
     <div class="alert alert-warning"
          ng-show="!authCtrl.loggedIn">You must log into Firebase (for now)
@@ -26,7 +30,7 @@
                  name="authEmail"
                  class="form-control"
                  id="inputEmail"
-                 placeholder="Email">
+                 placeholder="Email address associated with your Transcriptic account">
         </div>
       </div>
 
@@ -41,7 +45,7 @@
                  name="authKey"
                  class="form-control"
                  id="inputKey"
-                 placeholder="Transcriptic Key">
+                 placeholder="Transcriptic API Key, found at Transcriptic > Manage">
         </div>
       </div>
 
@@ -56,9 +60,25 @@
                  name="authOrg"
                  class="form-control"
                  id="inputOrg"
-                 placeholder="Organization">
+                 placeholder="Transcriptic account organization">
         </div>
       </div>
     </fieldset>
   </form>
+
+    <div class="pull-right">
+      <button class="btn action-button"
+              ng-disabled="!authForm.$valid"
+              ng-click="authCtrl.verifyCreds()">Verify
+      </button>
+    </div>
+
+    <p class="text-sm">
+      <a class="action-text" href="https://secure.transcriptic.com/users/edit" target="_blank">Help me fetch my Transcriptic credentials...</a>
+    </p>
+
+
+
+  </div>
+
 </div>

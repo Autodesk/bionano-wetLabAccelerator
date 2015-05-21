@@ -429,7 +429,9 @@ pre {
   margin: 0;
 }
 
-*:focus {
+*:focus,
+a:focus,
+button:focus {
   outline: none;
 }
 

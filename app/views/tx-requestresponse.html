@@ -26,7 +26,7 @@
         <p><strong ng-bind="config.textSuccess"></strong></p>
 
         <!-- todo - show on run only -->
-        <div ng-show="response.quote">
+        <div ng-show="runCtrl.runWasInitiated && response.quote">
           <table>
             <tr>
               <td>Run Title</td>

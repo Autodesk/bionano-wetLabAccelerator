@@ -1,7 +1,10 @@
 //buttons
 
 .action-text {
-  color: $primary;
+  &,
+  &:visited {
+    color: $primary;
+  }
 
   &:hover {
     color: $primary-active;

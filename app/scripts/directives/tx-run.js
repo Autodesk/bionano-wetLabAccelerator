@@ -107,7 +107,7 @@ angular.module('transcripticApp')
 
         self.analysisResponse = {
           config  : {
-            type          : "Verification",
+            type          : "Verify",
             textProcessing: "Processing Verification...",
             textSuccess   : "Protocol valid",
             textError     : "Problems with Protocol listed below"
@@ -127,6 +127,11 @@ angular.module('transcripticApp')
         self.analyze = angular.bind(self, resourceWrap, RunHelper.verifyRun, self.analysisResponse);
         self.submit  = angular.bind(self, resourceWrap, RunHelper.createRun, self.runResponse);
 
+        self.startRun = function () {
+          self.analyze();
+          //todo - need to revert this on close
+          self.runWasInitiated = true;
+        };
 
       },
       link            : function (scope, element, attrs) {

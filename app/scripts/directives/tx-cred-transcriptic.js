@@ -45,7 +45,7 @@ angular.module('transcripticApp')
           }
         });
 
-        function checkAuthIsValid () {
+        function checkAuthIsValid (creds) {
           //todo - ping transcriptic?
           authIsValid = true;
         }
@@ -57,6 +57,8 @@ angular.module('transcripticApp')
         self.authValid = function () {
           return authIsValid;
         };
+
+        self.verifyCreds = checkAuthIsValid;
 
         //note that temporarily we will get errors in the console for invalid credentials (and you have to be signed into firebase), but once move DB that will go away.
       },
