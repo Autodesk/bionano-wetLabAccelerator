@@ -9,22 +9,6 @@ tx-protocol-op {
 
   box-sizing: border-box;
 
-  .protocol-op-wrap {
-    &:only-child {
-      &:hover{
-        .group-repeat {
-          display: inline-block;
-        }
-        .iteration-none {
-          display: block;
-        }
-        .glyphicon-cog {
-          display: inline-block;
-        }
-      }
-    }
-  }
-
   @include arrow-bottom($step-background-inactive, $step-background-active, $includeBackground: true, $activeClass: 'open');
 
   .operation-name {
@@ -66,6 +50,12 @@ tx-protocol-op {
     .show-group & {
       background-color: $step-background-inactive;
       border-bottom: $drop-hover-border;
+    }
+  }
+
+  &:only-child .group-items {
+    &:hover {
+      opacity: 1;
     }
   }
 }

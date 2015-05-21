@@ -21,17 +21,6 @@ tx-protocol-group {
     &.show-group {
       background: transparent;
       border: 2px solid $white;
-      &:hover{
-        .group-items {
-          display: flex;
-        }
-        .group-repeat {
-          display: block;
-        }
-        .glyphicon-cog {
-          display: inline-block;
-        }
-      }
     }
   }
 
@@ -49,7 +38,11 @@ tx-protocol-group {
     &.drop-hover {
       border-bottom: $drop-hover-border;
     }
-
+    &:hover{
+      .group-items {
+        opacity: 1;
+      }
+    }
   }
 
   .protocol-group-main {
@@ -62,9 +55,9 @@ tx-protocol-group {
     display: flex;
     flex-direction: row;
     align-items: center;
+    opacity: 0;
 
     .iteration-none {
-      display: none;
       margin: 0 5px;
       width: 22px;
       height: 17px;
@@ -84,8 +77,6 @@ tx-protocol-group {
     }
 
     .group-repeat {
-
-      display: none;
       background: transparent;
       color: $grey;
       margin: 0 5px;
@@ -111,11 +102,6 @@ tx-protocol-group {
         background: $primary;
         color: $white;
       }
-    }
-
-    .glyphicon-cog {
-      display: none;
-      cursor: pointer;
     }
   }
 
