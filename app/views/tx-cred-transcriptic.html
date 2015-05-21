@@ -1,14 +1,14 @@
 <div>
   <h4 class="thin">Transcriptic Account</h4>
 
-  <div ng-show="authCtrl.authValid()">
+  <div ng-show="authForm.$valid">
     <p class="text-sm">
       <span ng-click="authCtrl.showAuth = !authCtrl.showAuth">Your Transcriptic credentials are valid.</span>
       <a class="action-text" ng-click="authCtrl.forgetCreds()">Forget my Transcriptic account information</a>
     </p>
   </div>
 
-  <div ng-show="!authCtrl.authValid() || authCtrl.showAuth">
+  <div ng-show="authForm.$invalid || authCtrl.showAuth">
     <p class="text-sm">Protocols are verified and Run at Transcriptic. Creating a Transcriptic account is free. An estimate of costs will be displayed prior to running a protocol.
     <a class="action-text" href="https://secure.transcriptic.com" target="_blank">I don't have a Transcriptic Account.</a>
     </p>
