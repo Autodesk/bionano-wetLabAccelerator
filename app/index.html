@@ -1,227 +1,232 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Wet Lab Accelerator</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+<head>
+  <meta charset="utf-8">
+  <title>Wet Lab Accelerator</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
 
-    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/images/favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/images/favicon/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/images/favicon/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/images/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/images/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
 
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/build.css">
-    <!-- endbuild -->
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/build.css">
+  <!-- endbuild -->
 
-    <script src="scripts/omniprotocol/index.js"></script>
-    <script src="scripts/conversion/autoprotocol/index.js"></script>
-  </head>
-  <body ng-app="transcripticApp">
+  <script src="scripts/omniprotocol/index.js"></script>
+  <script src="scripts/conversion/autoprotocol/index.js"></script>
+</head>
+<body ng-app="transcripticApp">
 
-    <header class="site-header">
-      <div class="container">
-        <div class="logo">
-          <a href="#/">
-            <img src="images/logo-cx1.png">
-            <span>Wet Lab Accelerator</span>
-          </a>
-        </div>
-        <nav>
-          <ul>
-            <li><a ng-href="#/build">PROTOCOL</a></li>
-            <li><a ng-href="#/results">RESULTS</a></li>
-          </ul>
-        </nav>
-        <div class="user" ng-cloak>
-          <a href="#/auth">
-            <span class="glyphicon glyphicon-user"></span>
-            <span ng-hide-auth>Sign In</span>
-            <span ng-show-auth>Sign Out</span>
-          </a>
-        </div>
+<header class="site-header">
+  <div class="logo">
+    <a href="#/">
+      <img src="images/logo-cx1.png">
+      <span>Wet Lab Accelerator</span>
+    </a>
+  </div>
+  <nav>
+    <ul>
+      <li><a ng-href="#/build">PROTOCOL</a></li>
+      <li><a ng-href="#/results">RESULTS</a></li>
+    </ul>
+  </nav>
+  <div class="user" ng-cloak>
+    <a href="#/auth">
+      <span class="glyphicon glyphicon-user"></span>
+      <span ng-hide-auth>Sign In</span>
+      <span ng-show-auth>Sign Out</span>
+    </a>
+  </div>
+</header>
 
-      </div>
+<tx-content-menu></tx-content-menu>
 
-    </header>
+<main>
+  <div ng-view class="flex-vertical container"></div>
+</main>
 
-    <tx-content-menu></tx-content-menu>
-
-    <main ng-view
-          class="container flex-vertical"></main>
-
-    <footer>
-      <div class="status">
-        <tx-inspector></tx-inspector>
-      </div>
-      <div class="logo-company">
-        <img src="images/logo-text.png">
-      </div>
-    </footer>
+<footer>
+  <div class="status">
+    <tx-inspector></tx-inspector>
+  </div>
+  <div class="logo-company">
+    <img src="images/logo-text.png">
+  </div>
+</footer>
 
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
+  ga('create', 'UA-XXXXX-X');
+  ga('send', 'pageview');
+</script>
 
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/es5-shim/es5-shim.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/json3/lib/json3.js"></script>
-    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-aria/angular-aria.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/d3/d3.js"></script>
-    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
-    <script src="bower_components/firebase/firebase.js"></script>
-    <script src="bower_components/angularfire/dist/angularfire.js"></script>
-    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
-    <!-- endbower -->
-    <script src="bower_components/lodash/lodash.js"></script>
-    <!-- endbuild -->
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/es5-shim/es5-shim.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/json3/lib/json3.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/d3/d3.js"></script>
+<script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
+<script src="bower_components/firebase/firebase.js"></script>
+<script src="bower_components/angularfire/dist/angularfire.js"></script>
+<script src="bower_components/jquery-ui/jquery-ui.js"></script>
+<!-- endbower -->
+<script src="bower_components/lodash/lodash.js"></script>
+<!-- endbuild -->
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/app.js"></script>
 
-    <!-- CONTROLLERS -->
-    <script src="scripts/controllers/firebaselogin.js"></script>
-    <script src="scripts/controllers/build.js"></script>
-    <script src="scripts/controllers/results.js"></script>
-    <script src="scripts/controllers/gallery.js"></script>
-    <!--fields-->
-    <script src="scripts/controllers/thermocycledyes.js"></script>
-    <!-- results page -->
-    <script src="scripts/controllers/results/resultsspectrophotometry.js"></script>
-    <script src="scripts/controllers/results/resultsThermoCtrl.js"></script>
-    <!--testing-->
-    <script src="scripts/controllers/testing/plate.js"></script>
+<!-- CONTROLLERS -->
+<script src="scripts/controllers/firebaselogin.js"></script>
+<script src="scripts/controllers/build.js"></script>
+<script src="scripts/controllers/results.js"></script>
+<script src="scripts/controllers/gallery.js"></script>
+<!--fields-->
+<script src="scripts/controllers/thermocycledyes.js"></script>
+<!-- results page -->
+<script src="scripts/controllers/results/resultsspectrophotometry.js"></script>
+<script src="scripts/controllers/results/resultsThermoCtrl.js"></script>
+<!--testing-->
+<script src="scripts/controllers/testing/plate.js"></script>
 
-    <!-- VALUES -->
-    <!-- todo - cleanup -->
-    <script src="scripts/values/instructions.js"></script>
-    <script src="scripts/values/dimensionOptions.js"></script>
-    <script src="scripts/values/storageOptions.js"></script>
-    <script src="scripts/values/containerOptions.js"></script>
-    <script src="scripts/values/orderingoptions.js"></script>
-    <script src="scripts/values/dyeoptions.js"></script>
-    <script src="scripts/values/geloptions.js"></script>
-    <script src="scripts/values/oligoOptions.js"></script>
+<!-- VALUES -->
+<!-- todo - cleanup -->
+<script src="scripts/values/instructions.js"></script>
+<script src="scripts/values/dimensionOptions.js"></script>
+<script src="scripts/values/storageOptions.js"></script>
+<script src="scripts/values/containerOptions.js"></script>
+<script src="scripts/values/orderingoptions.js"></script>
+<script src="scripts/values/dyeoptions.js"></script>
+<script src="scripts/values/geloptions.js"></script>
+<script src="scripts/values/oligoOptions.js"></script>
 
-    <!-- SERVICES -->
-    <script src="scripts/services/simplelogin.js"></script>
-    <script src="scripts/services/omniprotocolService.js"></script>
-    <script src="scripts/services/autoprotocolService.js"></script>
-    <script src="scripts/services/wellconv.js"></script>
-    <script src="scripts/services/dataconv.js"></script>
-    <script src="scripts/services/dragdropmanager.js"></script>
-    <script src="scripts/services/containerhelper.js"></script>
-    <script src="scripts/services/protocolhelper.js"></script>
-    <script src="scripts/services/runhelper.js"></script>
-    <script src="scripts/services/notify.js"></script>
-    <script src="scripts/services/uuidgen.js"></script>
-    <script src="scripts/services/authentication.js"></script>
-    <!-- transcriptic communication -->
-    <script src="scripts/services/comm/_kickoff.js"></script>
-    <script src="scripts/services/comm/auth.js"></script>
-    <script src="scripts/services/comm/communication.js"></script>
-    <script src="scripts/services/comm/run.js"></script>
-    <script src="scripts/services/comm/project.js"></script>
-    <script src="scripts/services/comm/container.js"></script>
-    <script src="scripts/services/comm/data.js"></script>
-    <script src="scripts/services/comm/order.js"></script>
-    <script src="scripts/services/comm/mailing.js"></script>
+<!-- SERVICES -->
+<script src="scripts/services/simplelogin.js"></script>
+<script src="scripts/services/omniprotocolService.js"></script>
+<script src="scripts/services/autoprotocolService.js"></script>
+<script src="scripts/services/wellconv.js"></script>
+<script src="scripts/services/dataconv.js"></script>
+<script src="scripts/services/dragdropmanager.js"></script>
+<script src="scripts/services/containerhelper.js"></script>
+<script src="scripts/services/protocolhelper.js"></script>
+<script src="scripts/services/runhelper.js"></script>
+<script src="scripts/services/notify.js"></script>
+<script src="scripts/services/uuidgen.js"></script>
+<script src="scripts/services/authentication.js"></script>
+<!-- transcriptic communication -->
+<script src="scripts/services/comm/_kickoff.js"></script>
+<script src="scripts/services/comm/auth.js"></script>
+<script src="scripts/services/comm/communication.js"></script>
+<script src="scripts/services/comm/run.js"></script>
+<script src="scripts/services/comm/project.js"></script>
+<script src="scripts/services/comm/container.js"></script>
+<script src="scripts/services/comm/data.js"></script>
+<script src="scripts/services/comm/order.js"></script>
+<script src="scripts/services/comm/mailing.js"></script>
 
-    <!-- FILTERS -->
-    <script src="scripts/filters/capfirst.js"></script>
-    <script src="scripts/filters/arrayify.js"></script>
+<!-- FILTERS -->
+<script src="scripts/filters/capfirst.js"></script>
+<script src="scripts/filters/arrayify.js"></script>
 
-    <!-- DIRECTIVES -->
-    <!-- results / datavis -->
-    <script src="scripts/directives/datavis/_kickoff.js"></script>
-    <script src="scripts/directives/datavis/tx-wellplate.js"></script>
-    <script src="scripts/directives/datavis/tx-plate.js"></script>
-    <script src="scripts/directives/datavis/tx-timepointgraph.js"></script>
-    <script src="scripts/directives/datavis/tx-welltip.js"></script>
-    <script src="scripts/directives/datavis/tx-protocol-mini.js"></script>
-    <!-- editor -->
-    <script src="scripts/directives/formHelpers/contenteditable.js"></script>
-    <script src="scripts/directives/formHelpers/jsoneditor.js"></script>
-    <script src="scripts/directives/formHelpers/autogrow.js"></script>
-    <script src="scripts/directives/protocolEditor/_kickoff.js"></script>
-    <script src="scripts/directives/protocolEditor/tx-requestresponse.js"></script>
-    <script src="scripts/directives/protocolEditor/tx-operation-list.js"></script>
-    <script src="scripts/directives/protocolEditor/tx-protocol-editor.js"></script>
-    <script src="scripts/directives/protocolEditor/tx-protocol-op.js"></script>
-    <script src="scripts/directives/protocolEditor/tx-protocol-group.js"></script>
-    <script src="scripts/directives/protocolEditor/tx-protocol-actions.js"></script>
-    <script src="scripts/directives/protocolEditor/tx-protocol-field.js"></script>
-    <script src="scripts/directives/protocolEditor/tx-container-select.js"></script>
-    <script src="scripts/directives/protocolEditor/tx-protocol-setup.js"></script>
-    <script src="scripts/directives/protocolEditor/tx-protocol-field-variable.js"></script>
-    <!--various-->
-    <script src="scripts/directives/simple-sticky.js"></script>
-    <script src="scripts/directives/resizeable.js"></script>
-    <script src="scripts/directives/btn-delete.js"></script>
-    <script src="scripts/directives/tx-modal.js"></script>
-    <script src="scripts/directives/tx-run.js"></script> <!--todo - rename to rundialog -->
-    <script src="scripts/directives/tx-content-menu.js"></script>
-    <script src="scripts/directives/tx-downloadjson.js"></script>
-    <script src="scripts/directives/tx-inspector.js"></script>
-    <script src="scripts/directives/tx-inspector-select.js"></script>
-    <script src="scripts/directives/tx-operation-summary.js"></script>
-    <script src="scripts/directives/tx-protocol-draggable.js"></script>
-    <script src="scripts/directives/tx-protocol-droppable.js"></script>
-    <script src="scripts/directives/tx-change-broadcaster.js"></script>
-    <script src="scripts/directives/tx-cred-transcriptic.js"></script>
+<!-- DIRECTIVES -->
+<!-- results / datavis -->
+<script src="scripts/directives/datavis/_kickoff.js"></script>
+<script src="scripts/directives/datavis/tx-wellplate.js"></script>
+<script src="scripts/directives/datavis/tx-plate.js"></script>
+<script src="scripts/directives/datavis/tx-timepointgraph.js"></script>
+<script src="scripts/directives/datavis/tx-welltip.js"></script>
+<script src="scripts/directives/datavis/tx-protocol-mini.js"></script>
+<!-- editor -->
+<script src="scripts/directives/formHelpers/contenteditable.js"></script>
+<script src="scripts/directives/formHelpers/jsoneditor.js"></script>
+<script src="scripts/directives/formHelpers/autogrow.js"></script>
+<script src="scripts/directives/protocolEditor/_kickoff.js"></script>
+<script src="scripts/directives/protocolEditor/tx-requestresponse.js"></script>
+<script src="scripts/directives/protocolEditor/tx-operation-list.js"></script>
+<script src="scripts/directives/protocolEditor/tx-protocol-editor.js"></script>
+<script src="scripts/directives/protocolEditor/tx-protocol-op.js"></script>
+<script src="scripts/directives/protocolEditor/tx-protocol-group.js"></script>
+<script src="scripts/directives/protocolEditor/tx-protocol-actions.js"></script>
+<script src="scripts/directives/protocolEditor/tx-protocol-field.js"></script>
+<script src="scripts/directives/protocolEditor/tx-container-select.js"></script>
+<script src="scripts/directives/protocolEditor/tx-protocol-setup.js"></script>
+<script src="scripts/directives/protocolEditor/tx-protocol-field-variable.js"></script>
+<!--various-->
+<script src="scripts/directives/simple-sticky.js"></script>
+<script src="scripts/directives/resizeable.js"></script>
+<script src="scripts/directives/btn-delete.js"></script>
+<script src="scripts/directives/tx-modal.js"></script>
+<script src="scripts/directives/tx-run.js"></script>
+<!--todo - rename to rundialog -->
+<script src="scripts/directives/tx-content-menu.js"></script>
+<script src="scripts/directives/tx-downloadjson.js"></script>
+<script src="scripts/directives/tx-inspector.js"></script>
+<script src="scripts/directives/tx-inspector-select.js"></script>
+<script src="scripts/directives/tx-operation-summary.js"></script>
+<script src="scripts/directives/tx-protocol-draggable.js"></script>
+<script src="scripts/directives/tx-protocol-droppable.js"></script>
+<script src="scripts/directives/tx-change-broadcaster.js"></script>
+<script src="scripts/directives/tx-cred-transcriptic.js"></script>
 
-    <!-- uncategorized -->
+<!-- uncategorized -->
 
-    <script src="scripts/controllers/resultsdispense.js"></script>
-    <script src="scripts/directives/tx-column-volumes.js"></script>
-    <script src="scripts/controllers/testing/field.js"></script>
-    <script src="scripts/controllers/columnvolumes.js"></script>
-    <script src="scripts/directives/tx-thermocycle-melting.js"></script>
-    <script src="scripts/directives/tx-thermocycle-group.js"></script>
-    <script src="scripts/controllers/thermocyclegroups.js"></script>
-    <script src="scripts/controllers/fieldaliquot.js"></script>
-    <script src="scripts/directives/tx-operation-popover.js"></script>
-    <script src="scripts/controllers/operationsummary.js"></script>
-    <script src="scripts/directives/squelchEvent.js"></script>
-    <script src="scripts/directives/popover-transclude.js"></script>
-    <!-- endbuild -->
+<script src="scripts/controllers/resultsdispense.js"></script>
+<script src="scripts/directives/tx-column-volumes.js"></script>
+<script src="scripts/controllers/testing/field.js"></script>
+<script src="scripts/controllers/columnvolumes.js"></script>
+<script src="scripts/directives/tx-thermocycle-melting.js"></script>
+<script src="scripts/directives/tx-thermocycle-group.js"></script>
+<script src="scripts/controllers/thermocyclegroups.js"></script>
+<script src="scripts/controllers/fieldaliquot.js"></script>
+<script src="scripts/directives/tx-operation-popover.js"></script>
+<script src="scripts/controllers/operationsummary.js"></script>
+<script src="scripts/directives/squelchEvent.js"></script>
+<script src="scripts/directives/popover-transclude.js"></script>
+<!-- endbuild -->
 </body>
 </html>
