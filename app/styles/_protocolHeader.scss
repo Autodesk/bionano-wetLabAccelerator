@@ -12,6 +12,11 @@ tx-protocol-actions {
   > a {
     margin: 0 5px;
   }
+
+  > div {
+    display: inline-block;
+    cursor: pointer;
+  }
 }
 
 .protocol-metadata-field {

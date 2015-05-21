@@ -471,7 +471,7 @@ module.exports = function (grunt) {
         browserifyOptions: {
           debug: true
         },
-        transform: ['ulgifyify']
+        transform: ['uglifyify']
       },
       omniprotocol: {
         files : {
