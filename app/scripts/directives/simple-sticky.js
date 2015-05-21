@@ -90,8 +90,6 @@ angular.module('transcripticApp')
             shouldAffix = (pageYOffset + fromEdgeAffix) > fromEdgeStart;
           }
 
-          debugger;
-
           if (shouldAffix !== isAffixed) {
             handleAffixing(shouldAffix);
 
