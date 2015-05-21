@@ -11,21 +11,21 @@
     </div>
   </div>
 
-  <div class="operation-name"
+  <div class="operation-name parent-hover-trigger"
        ng-click="opCtrl.isVisible = !opCtrl.isVisible">
     <span ng-bind="opCtrl.op.operation"></span>
 
-    <div class="dropdown group-items"
+    <div class="dropdown group-items visible-parent-hover"
          dropdown
          is-open="showActions">
       <span class="iteration-none"
-            ng-if="!$parent.$parent.groupCtrl.group.loop || $parent.$parent.groupCtrl.group.loop <= 1"></span>
+            ng-if="!groupCtrl.group.loop || groupCtrl.group.loop <= 1"></span>
       <span class="glyphicon glyphicon-cog"
             squelch-event="click"
             dropdown-toggle></span>
       <ul class="dropdown-menu dropdown-menu-right">
-        <li ng-if="$parent.$parent.groupCtrl.group.loop <= 1">
-          <a ng-click="$parent.$parent.groupCtrl.group.loop = 2">
+        <li ng-if="groupCtrl.group.loop <= 1">
+          <a ng-click="groupCtrl.group.loop = 2">
             Add Iteration
           </a>
         </li>

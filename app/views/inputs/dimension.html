@@ -3,16 +3,12 @@
        ng-required="fieldCtrl.model.unit"
        type="number" auto-grow="10"
        placeholder="value">
-<div class="dropdown button"
-     ng-class="{'open' : showingOptions}"
-     ng-click="showingOptions = !showingOptions"
-     ng-mouseenter="showCaret = true"
-     ng-mouseleave="showCaret = false; showingOptions = false">
-    <a class="button-label">
+<div class="button"
+     dropdown>
+    <a class="button-label"
+       dropdown-toggle>
       {{fieldCtrl.model.unit ? fieldCtrl.model.unit : (fieldCtrl.field.default.unit ? fieldCtrl.field.default.unit : unitOptions[0])}}
-      <span class="glyphicon glyphicon-menu-down"
-            ng-class="{'visible': showCaret,'invisible': !showCaret}">
-      </span>
+      <span class="glyphicon glyphicon-menu-down visible-parent-hover"></span>
     </a>
     <ul class="dropdown-menu">
       <li ng-repeat="unit in unitOptions"
