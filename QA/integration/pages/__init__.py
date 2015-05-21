@@ -22,9 +22,8 @@ class Page:
     URL_POSTFIX = config['url_postfix']
     URL_PREFIX = os.environ.get('URL_PREFIX')
 
-    if URL_PREFIX != None and URL_PREFIX != "''":
+    if URL_PREFIX != None:
         BASE_URL = "http://" + URL_PREFIX + "." + URL_POSTFIX
-        print("URL_PREFIX != None and URL_PREFIX != ""''""")
     else:
         BASE_URL = ENVIRONMENTS
 
@@ -33,6 +32,13 @@ class Page:
     def __init__(self, driver):
         self.DRIVER = driver
         print(self.BASE_URL)
+
+    def action(self, actionDescription):
+        print("  Action -- " + actionDescription)
+
+    def click(self, element, description):
+        self.action("click on " + description)
+        element.click()
 
     def toggle_visibility_by_class(self, classname):
         """Toggle the visibility of the object by a classname selector.

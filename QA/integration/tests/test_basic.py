@@ -6,14 +6,18 @@ from tests import TestBase
 class TestBasicInteractions(TestBase):
     """Some tests of basic interactions with the model"""
 
-    # def test_basic(self):
-    #     """
-    #     test the main cx1 page
-    #     """
-    #     self.verifyIsDisplayed(self.page.getDesignLink(), "design link")
-    #     self.verifyIsDisplayed(self.page.getBuildLink(), "build link ")
-    #     self.verifyIsDisplayed(self.page.getTestLink(), "test link")
-    #     self.verifyIsDisplayed(self.page.getSignInLink(), "sign in link")
+    def test_basic(self):
+        """
+        test the main wet lab accelerator page
+        """
+        print("welcome text: " + str(self.page.getPageTitleText()))
+
+        self.verifyEqual(self.page.getPageTitleText(), "Wet Lab Accelerator", "page title")
+        self.verifyIsDisplayed(self.page.getProtocolLink(), "protocol link ")
+        self.verifyIsDisplayed(self.page.getResultsLink(), "results link")
+        self.verifyIsDisplayed(self.page.getSignInLink(), "sign in link")
+
+        #self.page.signIn("max.bates@autodesk.com", "yaycyborg!")
 
 
     def test_build_ui(self):
@@ -30,21 +34,19 @@ class TestBasicInteractions(TestBase):
 
         protocolSetup.expand()
         self.verifyTrue(protocolSetup.isExpanded(), "verify protocol setup is expanded")
-        parameters = protocolSetup.getParameters()
-        print("getting setup parameters")
-        #print(parameters)
-        for parameter in parameters:
-            print(parameter.getParameterType() + ": " + parameter.getVariableName())
+        protocolSetup.listParameters()
+
+        protocolSetup.getAddParameterElements()
 
 
         volumeSetupParameter = protocolSetup.addParameter("Volume")
-
+        protocolSetup.listParameters()
         self.verifyTrue(volumeSetupParameter.getParameterType() == "volume", "verify parameter type is volume")
 
         time.sleep(10)
 
-        # protocolSetup.collapse()
-        # self.assertFalse(protocolSetup.isExpanded(), "verify protocol setup is closed")
+        protocolSetup.collapse()
+        self.assertFalse(protocolSetup.isExpanded(), "verify protocol setup is closed")
         # self.verifyIsDisplayed(build.getClearProtocolButton(), "clear protocol button")
         # self.verifyIsDisplayed(build.getToggleStepVisibilityButton(), "toggle step visibility button")
         # self.verifyIsDisplayed(build.getSaveProtocolButton(), "clear protocol button")
@@ -53,4 +55,5 @@ class TestBasicInteractions(TestBase):
         self.page.clickBuild()
         build = self.build
 
-        self.DRIVER.execute_script("angular.element($('.setup-variable')[0]).scope()")
+        scriptReturn = self.DRIVER.execute_script("return angular.element($('.setup-variable')[0]).scope()")
+        print(scriptReturn)
