@@ -43,21 +43,22 @@ angular.module('transcripticApp')
         function resourceWrap (funcToRun, toModify) {
           angular.extend(toModify.config, {
             initiated : true,
-            processing: true
+            processing: true,
+            runTitle : self.runTitle
           });
 
           var projectIdPromise;
 
           //runCtrl.project can be a string (if creating new) or an object (selected one)
           if (_.isObject(self.project) && _.has(self.project, 'id')) {
-            projectIdPromise = $q.when(self.project.id);
+            projectIdPromise = $q.when(self.project);
           }
           //if edited project from dropdown, and not an object
           else {
             var found = self.findProjectByname(self.project);
             //first check and make sure not in projects
             if (_.isObject(found) && _.has(found, 'id')) {
-              projectIdPromise = $q.when(found.id);
+              projectIdPromise = $q.when(found);
             }
             //create it and then use for posting later
             else {
@@ -68,13 +69,17 @@ angular.module('transcripticApp')
                   self.projects = Project.list();
                 }, 250);
 
-                return project.id;
+                return project;
               });
             }
           }
 
-          projectIdPromise.then(function (projectId) {
-            funcToRun(self.protocol, projectId).
+          projectIdPromise.then(function (project) {
+            angular.extend(toModify.config, {
+              runProject : project
+            });
+
+            funcToRun(self.protocol, project.id).
               then(function runSuccess (d) {
                 console.log(d);
                 angular.extend(toModify.config, {

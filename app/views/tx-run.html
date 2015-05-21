@@ -1,12 +1,13 @@
-<div class="run-responses">
-  <tx-requestresponse config="runCtrl.analysisResponse.config"
-                      response="runCtrl.analysisResponse.response"></tx-requestresponse>
-
-  <tx-requestresponse config="runCtrl.runResponse.config"
-                      response="runCtrl.runResponse.response"></tx-requestresponse>
-</div>
-
 <div class="column-wrap">
+
+  <div class="run-responses column-8 div-centered">
+    <tx-requestresponse config="runCtrl.analysisResponse.config"
+                        response="runCtrl.analysisResponse.response"></tx-requestresponse>
+
+    <tx-requestresponse config="runCtrl.runResponse.config"
+                        response="runCtrl.runResponse.response"></tx-requestresponse>
+  </div>
+
   <form name="protocolRunInfo" class="column-8 div-centered">
     <fieldset ng-disabled="runCtrl.txCredInvalid">
 
@@ -15,7 +16,8 @@
              ng-model="runCtrl.runTitle"
              placeholder="Run Title...">
 
-      <div dropdown dropdown-append-to-body>
+      <div dropdown
+           dropdown-append-to-body>
         <span ng-bind="runCtrl.project.name"></span>
         <input type="text"
                ng-if="creatingNewProject"
@@ -24,7 +26,8 @@
         <a class="field-action-text"
            dropdown-toggle
            ng-bind="runCtrl.project ? 'change...' : 'select...'"></a>
-        <ul class="dropdown-menu" style="z-index: 999999">
+        <ul class="dropdown-menu"
+            style="z-index: 999999">
           <li ng-if="!runCtrl.projects.length">
             <a>Loading...</a>
           </li>
