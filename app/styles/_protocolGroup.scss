@@ -21,11 +21,6 @@ tx-protocol-group {
     &.show-group {
       background: transparent;
       border: 2px solid $white;
-      &:hover{
-        .group-repeat,.iteration-none {
-          opacity: 1;
-        }
-      }
     }
   }
 
@@ -43,7 +38,11 @@ tx-protocol-group {
     &.drop-hover {
       border-bottom: $drop-hover-border;
     }
-
+    &:hover{
+      .group-items {
+        opacity: 1;
+      }
+    }
   }
 
   .protocol-group-main {
@@ -56,6 +55,7 @@ tx-protocol-group {
     display: flex;
     flex-direction: row;
     align-items: center;
+    opacity: 0;
 
     .iteration-none {
       margin: 0 5px;
