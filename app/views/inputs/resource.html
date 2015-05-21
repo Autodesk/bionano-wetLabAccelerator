@@ -1,0 +1,17 @@
+<a class="field-details-button"
+   ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible">
+  select...
+</a>
+
+<tx-modal ng-show="fieldCtrl.detailsVisible"
+          title="Catalog Resource">
+  <div ng-controller="CatalogResourceCtrl as catCtrl"
+       ng-init="catCtrl.init()">
+
+    <p class="text-sm">Supplies are only ordered when the protocol runs.</p>
+
+    <pre ng-bind="fieldCtrl.model | json"></pre>
+
+    <div class="catalog-results"></div>
+  </div>
+</tx-modal>

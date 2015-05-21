@@ -103,6 +103,10 @@ converterField.mixwrap = function (input, fieldObj) {
   return mapSomeDimensionalFields(input, _.result(fieldObj, 'default'), ['speed', 'volume'], ['repetitions']);
 };
 
+converterField.resource = function (input, fieldObj) {
+  return input;
+};
+
 /*******************
  Instruction Conversion
  *******************/
@@ -247,6 +251,27 @@ converterInstruction.mix = function (op) {
 };
 
 converterInstruction.dispense = simpleMapOperation;
+
+converterInstruction.dispense_resource = function (op) {
+  var wells = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'wells')),
+      volume = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
+      resourceId = _.result(omniUtils.pluckFieldValueRaw(op.fields, 'resource'), 'id');
+
+  if (!resourceId) {
+    throw new Error('missing resource id for dispense_resource');
+  }
+
+  return {
+    op: 'dispense_resource',
+    resource_id : resourceId,
+    to: _.map(wells, function (well) {
+      return {
+        well: well,
+        volume : volume
+      }
+    })
+  };
+};
 
 /* TEMPERATURE */
 

@@ -153,6 +153,15 @@ module.exports = {
 
   //custom -- should separate these
 
+  "resource"           : {
+    type           : "custom",
+    canParameterize: true,
+    description    : "Resource from the transcriptic catalog",
+    verification   : function (input) {
+      return _.isString(input);
+    }
+  },
+
   "mixwrap"           : {
     type           : "custom",
     canParameterize: true,
