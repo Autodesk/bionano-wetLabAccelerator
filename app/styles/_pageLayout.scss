@@ -111,3 +111,24 @@ body {
   padding-left: $layout-operations-padding-left;
   padding-right: $layout-operations-padding-right;
 }
+
+//columns
+
+@for $i from (1 + 1) through 16 {
+  .column-#{$i} {
+    width: widthFromColumns($i);
+    position: relative;
+    min-height: 1px;
+    padding-left: $layout-width-column-gutter;
+    padding-right: $layout-width-column-gutter;
+  }
+}
+
+.column-wrap {
+  margin: 0 (-$layout-width-column-gutter);
+  @include clearfix();
+}
+
+.div-centered {
+  margin: 0 auto;
+}

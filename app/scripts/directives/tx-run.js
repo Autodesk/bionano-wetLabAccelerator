@@ -28,29 +28,37 @@ angular.module('transcripticApp')
           self.projects = Project.list();
         });
 
+        self.selectProject = function (proj) {
+          $scope.creatingNewProject = false;
+          self.project = proj;
+        };
+
         self.findProjectByname = function (projectName) {
           return _.find(self.projects, _.matches({name: projectName}));
         };
+
 
         // SUBMIT / ANALYZE RUNS
 
         function resourceWrap (funcToRun, toModify) {
           angular.extend(toModify.config, {
             initiated : true,
-            processing: true
+            processing: true,
+            runTitle : self.runTitle
           });
 
           var projectIdPromise;
 
+          //runCtrl.project can be a string (if creating new) or an object (selected one)
           if (_.isObject(self.project) && _.has(self.project, 'id')) {
-            projectIdPromise = $q.when(self.project.id);
+            projectIdPromise = $q.when(self.project);
           }
           //if edited project from dropdown, and not an object
           else {
             var found = self.findProjectByname(self.project);
             //first check and make sure not in projects
             if (_.isObject(found) && _.has(found, 'id')) {
-              projectIdPromise = $q.when(found.id);
+              projectIdPromise = $q.when(found);
             }
             //create it and then use for posting later
             else {
@@ -61,13 +69,17 @@ angular.module('transcripticApp')
                   self.projects = Project.list();
                 }, 250);
 
-                return project.id;
+                return project;
               });
             }
           }
 
-          projectIdPromise.then(function (projectId) {
-            funcToRun(self.protocol, projectId).
+          projectIdPromise.then(function (project) {
+            angular.extend(toModify.config, {
+              runProject : project
+            });
+
+            funcToRun(self.protocol, project.id).
               then(function runSuccess (d) {
                 console.log(d);
                 angular.extend(toModify.config, {
@@ -95,7 +107,7 @@ angular.module('transcripticApp')
 
         self.analysisResponse = {
           config  : {
-            type          : "Verification",
+            type          : "Verify",
             textProcessing: "Processing Verification...",
             textSuccess   : "Protocol valid",
             textError     : "Problems with Protocol listed below"
@@ -115,6 +127,11 @@ angular.module('transcripticApp')
         self.analyze = angular.bind(self, resourceWrap, RunHelper.verifyRun, self.analysisResponse);
         self.submit  = angular.bind(self, resourceWrap, RunHelper.createRun, self.runResponse);
 
+        self.startRun = function () {
+          self.analyze();
+          //todo - need to revert this on close
+          self.runWasInitiated = true;
+        };
 
       },
       link            : function (scope, element, attrs) {

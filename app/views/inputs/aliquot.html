@@ -1,27 +1,34 @@
 <div ng-controller="fieldAliquotCtrl as aliquotCtrl"
      ng-init="aliquotCtrl.init()">
   <tx-container-select container-type="aliquotCtrl.containerType"
+                       style="display: inline-block"
                        ng-model="aliquotCtrl.containerName">
   </tx-container-select>
 
   <div ng-show="aliquotCtrl.containerType"
-       style="display: inline-block;">
-    <a class="field-details-button"
-       ng-click="showingPlates = !showingPlates"
-       ng-init="showingPlates=false;">
-      {{showingPlates ? 'hide' : 'edit...'}}
-    </a>
-  </div>
-  <div ng-if="showingPlates">
-    <tx-plate ng-show="aliquotCtrl.containerType"
-              container="aliquotCtrl.containerType"
-              group-data="{'name' : aliquotCtrl.containerName, wells: 'all', color: aliquotCtrl.containerColor}"
-              no-brush="!aliquotCtrl.aliquotMultiple"
-              select-persist="aliquotCtrl.aliquotMultiple"
-              on-select="aliquotCtrl.handleAliquotSelection($wells, $transpose)"
-              show-transpose="true"
-              transpose-input="aliquotCtrl.field.transpose"
-              wells-input="aliquotCtrl.wellsIn">
-    </tx-plate>
+       style="display: inline-block; position: relative;">
+    <div ng-click="aliquotCtrl.showingPlates = !aliquotCtrl.showingPlates"
+         ng-init="aliquotCtrl.showingPlates=false;">
+      <a class="field-details-button">
+        {{aliquotCtrl.showingPlates ? 'hide' : 'edit...'}}
+      </a>
+
+      <div popover-transclude
+           is-open="aliquotCtrl.showingPlates"
+           title="Select one or more wells"
+           ng-if="aliquotCtrl.showingPlates">
+        <tx-plate ng-show="aliquotCtrl.containerType"
+                  style="width: 500px;"
+                  container="aliquotCtrl.containerType"
+                  group-data="{'name' : aliquotCtrl.containerName, wells: 'all', color: aliquotCtrl.containerColor}"
+                  no-brush="!aliquotCtrl.aliquotMultiple"
+                  select-persist="aliquotCtrl.aliquotMultiple"
+                  on-select="aliquotCtrl.handleAliquotSelection($wells, $transpose)"
+                  show-transpose="true"
+                  transpose-input="aliquotCtrl.field.transpose"
+                  wells-input="aliquotCtrl.wellsIn">
+        </tx-plate>
+      </div>
+    </div>
   </div>
 </div>

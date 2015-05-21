@@ -43,6 +43,14 @@ angular.module('tx.protocolEditor')
         scope.$on('editor:toggleRunModal', function () {
           scope.modalShown = !scope.modalShown;
         });
+        
+        scope.$on('editor:verificationSuccess', function () {
+          scope.modalShown = false;
+          Notify({
+            message: 'Protocol Valid!',
+            error: false
+          });
+        });
       }
     };
   });
