@@ -8,7 +8,7 @@
  *
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolOp', function (DragDropManager) {
+  .directive('txProtocolOp', function ($rootScope, DragDropManager) {
     return {
       templateUrl: 'views/tx-protocol-op.html',
       restrict: 'E',
@@ -29,12 +29,10 @@ angular.module('tx.protocolEditor')
             !( $scope.showActions );
         };
 
-        self.toggleJsonEditing = function ($event, force) {
+        self.toggleRun = function ($event) {
           $event.preventDefault();
           $event.stopPropagation();
-          $scope.jsonEditing = angular.isDefined(force) ?
-            force :
-            !( $scope.jsonEditing );
+          $rootScope.$broadcast('editor:toggleRunModal');
         };
 
         self.optsDroppableOpTop = {
@@ -45,13 +43,6 @@ angular.module('tx.protocolEditor')
               DragDropManager.clear();
             });
           }
-        };
-
-        $scope.modalShown = false;
-        self.toggleModal = function($event) {
-          $event.preventDefault();
-          $event.stopPropagation();
-          $scope.modalShown = !$scope.modalShown;
         };
 
         //note - called by protocol-editor

@@ -326,6 +326,7 @@ module.exports = {
     operation    : "transfer",
     "description": "Transfer contents from one container to another, either 1-to-n or n-to-n",
     "name"       : "Transfer",
+    "type"       : "pipette",
     "scaffold"   : {
       "operation"   : "transfer",
       "requirements": {},
@@ -398,6 +399,7 @@ module.exports = {
     "operation"  : "distribute",
     "description": "Distribute liquid from source well(s) to destination wells(s), either 1-to-n, n-to-1, or n-to-n",
     "name"       : "Distribute",
+    "type"       : "pipette",
     "scaffold"   : {
       "operation"   : "distribute",
       "requirements": {},
@@ -453,6 +455,7 @@ module.exports = {
     "operation"  : "consolidate",
     "description": "Consolidate contents from multiple wells into one single well.",
     "name"       : "Consolidate",
+    "type"       : "pipette",
     "scaffold"   : {
       "operation"   : "consolidate",
       "requirements": {},
@@ -509,6 +512,7 @@ module.exports = {
     "operation"  : "mix",
     "description": "Mix specified well using a new pipette tip",
     "name"       : "Mix",
+    "type"       : "pipette",
     "scaffold"   : {
       "operation"   : "mix",
       "requirements": {},
@@ -548,6 +552,7 @@ module.exports = {
     "operation"  : "dispense",
     "description": "Dispense a reagent into columns of a container",
     "name"       : "Dispense",
+    "type"       : "pipette",
     "scaffold"   : {
       "operation"   : "dispense",
       "requirements": {},
@@ -584,6 +589,7 @@ module.exports = {
     "operation"  : "thermocycle",
     "description": "Thermocycle a container, putting through several temperature cycles, e.g. to run a PCR",
     "name"       : "Thermocycle",
+    "type"       : "heating",
     "scaffold"   : {
       "operation"   : "thermocycle",
       "requirements": {},
@@ -597,7 +603,7 @@ module.exports = {
           "name"    : "dataref",
           "type"    : "string",
           "optional": true,
-          "default" : "thermocycle_${index}"
+          "default" : "thermocycle_${unfolded}"
         },
         {
           "name": "object",
@@ -630,6 +636,7 @@ module.exports = {
     "operation"  : "incubate",
     "description": "",
     "name"       : "Incubate",
+    "type"       : "heating",
     "scaffold"   : {
       "operation"   : "incubate",
       "requirements": {},
@@ -683,6 +690,7 @@ module.exports = {
     "operation"  : "seal",
     "description": "Seal a container",
     "name"       : "Seal",
+    "type"       : "seal",
     "scaffold"   : {
       "operation"   : "seal",
       "requirements": {},
@@ -714,6 +722,7 @@ module.exports = {
     "operation"  : "unseal",
     "description": "Unseal a container",
     "name"       : "Unseal",
+    "type"       : "seal",
     "scaffold"   : {
       "operation"   : "unseal",
       "requirements": {},
@@ -735,6 +744,7 @@ module.exports = {
     "operation"  : "cover",
     "description": "Cover a plate with a specified lid",
     "name"       : "Cover",
+    "type"       : "seal",
     "scaffold"   : {
 
       "operation"   : "cover",
@@ -764,6 +774,7 @@ module.exports = {
     "operation"  : "uncover",
     "description": "Uncover a container",
     "name"       : "Uncover",
+    "type"       : "seal",
     "scaffold"   : {
       "operation"   : "uncover",
       "requirements": {},
@@ -785,6 +796,7 @@ module.exports = {
     "operation"  : "spin",
     "description": "Centrifuge a plate",
     "name"       : "Spin",
+    "type"       : "container",
     "scaffold"   : {
       "operation"   : "spin",
       "requirements": {},
@@ -811,6 +823,40 @@ module.exports = {
     }
   },
 
+  "image_plate": {
+    "operation"  : "image_plate",
+    "description": "Scan an image of a plate",
+    "name"       : "Image Plate",
+    "type"       : "container",
+    "scaffold"   : {
+      "operation"   : "image_plate",
+      "requirements": {},
+      "transforms"  : [
+        {
+          "container": "object"
+        }
+      ],
+      "fields"      : [
+        {
+          "name"   : "dataref",
+          "type"   : "string",
+          "default": "imagePlate_${unfolded}"
+        },
+        {
+          "name": "object",
+          "type": "container"
+        },
+        {
+          "name"   : "mode",
+          "type"   : "option",
+          "options": ["top", "bottom"],
+          "default": "top"
+        }
+      ]
+    }
+  },
+
+
 
   //spectrometry
 
@@ -819,6 +865,7 @@ module.exports = {
     "operation"  : "absorbance",
     "description": "Measure absorbance of a specified wavelength (between 300 nm - 1000 nm)",
     "name"       : "Absorbance",
+    "type" : "spectrophotometry",
     "scaffold"   : {
       "operation"      : "absorbance",
       "requirements"   : {},
@@ -829,9 +876,9 @@ module.exports = {
       ],
       "fields"         : [
         {
-          "name"    : "dataref",
-          "type"    : "string",
-          "default" : "absorbance_${index}"
+          "name"   : "dataref",
+          "type"   : "string",
+          "default": "absorbance_${unfolded}"
         },
         {
           "name"           : "wells",
@@ -863,6 +910,7 @@ module.exports = {
     "operation"  : "fluorescence",
     "description": "Measure fluorescence given an excitation wavelength (300 nm - 1000 nm) and emission (250 nm - 900 nm)",
     "name"       : "Fluorescence",
+    "type" : "spectrophotometry",
     "scaffold"   : {
       "operation"      : "fluorescence",
       "requirements"   : {},
@@ -873,9 +921,9 @@ module.exports = {
       ],
       "fields"         : [
         {
-          "name"    : "dataref",
-          "type"    : "string",
-          "default" : "fluorescence_${index}"
+          "name"   : "dataref",
+          "type"   : "string",
+          "default": "fluorescence_${unfolded}"
         },
         {
           "name"           : "wells",
@@ -918,6 +966,7 @@ module.exports = {
     "operation"  : "luminescence",
     "description": "Measure luminescence in wells of a plate between 380nm - 600 nm",
     "name"       : "Luminescence",
+    "type" : "spectrophotometry",
     "scaffold"   : {
       "operation"      : "luminescence",
       "requirements"   : {},
@@ -930,7 +979,7 @@ module.exports = {
         {
           "name"   : "dataref",
           "type"   : "string",
-          "default": "luminescence_${index}"
+          "default": "luminescence_${unfolded}"
         },
         {
           "name"           : "wells",
@@ -954,6 +1003,7 @@ module.exports = {
     "operation"  : "gel_separate",
     "description": "Perform a dry gel electrophoresis",
     "name"       : "Gel Separate",
+    "type"       : "DNA",
     "scaffold"   : {
       "operation"   : "gel_separate",
       "requirements": {},
@@ -966,7 +1016,7 @@ module.exports = {
         {
           "name"   : "dataref",
           "type"   : "string",
-          "default": "gelSeparate_${step}"
+          "default": "gelSeparate_${unfolded}"
         },
         {
           "name"           : "objects",
@@ -993,65 +1043,13 @@ module.exports = {
     }
   },
 
-
-  //containers
-
-  /*
-    "store": {
-      "operation"  : "store",
-      "description": "Deliver a plate to a storage location specified by the where parameter.",
-      "name"       : "Store",
-      "scaffold"   : {
-        "operation"   : "store",
-        "requirements": {},
-        "transforms"  : [
-          {
-            "container": "container"
-          }
-        ],
-        "fields"      : [
-          {
-            "name": "object",
-            "type": "container"
-          },
-          {
-            "name"   : "where",
-            "type"   : "option",
-            "options": optionEnums.storage.storage,
-            "default": "ambient"
-          }
-        ]
-      }
-    },
-
-    "discard": {
-      "operation"  : "discard",
-      "description": "Discard a container. The container will be removed from your inventory and no longer accessible.",
-      "name"       : "Discard",
-      "scaffold"   : {
-        "operation"   : "discard",
-        "requirements": {},
-        "transforms"  : [
-          {
-            "container": "container"
-          }
-        ],
-        "fields"      : [
-          {
-            "name": "object",
-            "type": "container"
-          }
-        ]
-      }
-    }
-    */
-
   //special
 
   "autoprotocol": {
     "operation"  : "autoprotocol",
     "description": "Type the JSON of an autoprotocol operation manually",
     "name"       : "Autoprotocol (JSON)",
+    "type"       : "special",
     "scaffold"   : {
       "operation"   : "autoprotocol",
       "requirements": {},
@@ -1088,7 +1086,7 @@ module.exports = {
 };
 },{"./optionEnums/containers.js":6,"./optionEnums/dimensional.js":7,"./optionEnums/dyes.js":8,"./optionEnums/gel.js":9,"./optionEnums/lid.js":10,"./optionEnums/reagents.js":11,"./optionEnums/storage.js":12}],6:[function(require,module,exports){
 module.exports = {
-  "384-flat" : {
+  "384-flat"   : {
     name          : "384-well UV flat-bottom plate",
     well_count    : 384,
     well_type     : null,
@@ -1102,7 +1100,7 @@ module.exports = {
     col_count     : 24,
     dead_volume   : 12
   },
-  "384-pcr"  : {
+  "384-pcr"    : {
     name          : "384-well PCR plate",
     well_count    : 384,
     well_type     : null,
@@ -1116,7 +1114,7 @@ module.exports = {
     col_count     : 24,
     dead_volume   : 8
   },
-  "96-flat"  : {
+  "96-flat"    : {
     name          : "96-well flat-bottom plate",
     well_count    : 96,
     well_type     : null,
@@ -1130,7 +1128,7 @@ module.exports = {
     col_count     : 12,
     dead_volume   : 20
   },
-  "96-pcr"   : {
+  "96-pcr"     : {
     name          : "96-well PCR plate",
     well_count    : 96,
     well_type     : null,
@@ -1144,7 +1142,15 @@ module.exports = {
     col_count     : 12,
     dead_volume   : 15
   },
-  "96-deep"  : {
+  //this is a hack - need to actually reserve this one
+  "6-flat-agar": {
+    name       : "Pre-poured 6-well LB Agar plate",
+    shortname  : "6-flat-agar",
+    well_count : 6,
+    col_count  : 3,
+    reservation: "kit17reefwqd6we"
+  },
+  "96-deep"    : {
     name          : "96-well extended capacity plate",
     well_count    : 96,
     well_type     : null,
@@ -1158,7 +1164,7 @@ module.exports = {
     col_count     : 12,
     dead_volume   : 15
   },
-  "micro-2.0": {
+  "micro-2.0"  : {
     name          : "2mL Microcentrifuge tube",
     well_count    : 1,
     well_type     : null,
@@ -1172,7 +1178,7 @@ module.exports = {
     col_count     : 1,
     dead_volume   : 15
   },
-  "micro-1.5": {
+  "micro-1.5"  : {
     name          : "1.5mL Microcentrifuge tube",
     well_count    : 1,
     well_type     : null,
@@ -1300,12 +1306,14 @@ function interpolateValue (value, params) {
 // ${you}", "myObj" : {"greet" : "hi ${me}"} }, {you: "bobby", me: "max"}) -> { myObj: { greet: "hi max"} myVal: "hey
 // bobby" }
 function interpolateObject (obj, params) {
-  if (_.isString(obj))
-    return interpolateValue(obj, params);
-  else {
-    _.mapValues(obj, _.partial(interpolateObject, _, params));
+  //todo - clarify array handling
+  if (_.isNumber(obj) || _.isArray(obj)) {
+    return obj;
   }
-  return obj;
+  if (_.isString(obj)) {
+    return interpolateValue(obj, params);
+  }
+  return _.mapValues(obj, _.partial(interpolateObject, _, params));
 }
 
 /*****
@@ -1322,7 +1330,7 @@ function wrapFieldsAsStep (fieldsArray) {
 }
 
 function scaffoldOperationWithValues (operationName, fieldVals) {
-  var clone    = _.clone(_.result(operations, operationName, null)),
+  var clone    = _.cloneDeep(_.result(operations, operationName, null)),
       scaffold = _.result(clone, 'scaffold', null);
 
   if (_.isEmpty(scaffold)) {
@@ -1382,7 +1390,7 @@ function getScaffoldProtocol () {
       "author"     : {},
       "description": "",
       "tags"       : [],
-      "db"         : []
+      "db"         : {}
     },
     "parameters": [],
     "groups"    : []
@@ -1405,7 +1413,7 @@ function getScaffoldRun () {
       "author"     : {},
       "description": "",
       "tags"       : [],
-      "db"         : []
+      "db"         : {}
     },
     "protocol": {},
     "data"    : {}
@@ -1421,12 +1429,12 @@ function unfoldGroup (group, groupIndex) {
   _.times(group.loop || 1, function (loopIndex) {
     _.forEach(group.steps, function (step, stepIndex) {
       var indices = {
-        index: loopIndex,
+        loop: loopIndex,
         step : (loopIndex * group.steps.length) + stepIndex
       };
       _.isNumber(groupIndex) && _.assign(indices, {group: groupIndex});
 
-      unwrapped.push(_.assign(step, {$index: indices}));
+      unwrapped.push(_.assign({}, step, {$index: indices}));
     });
   });
   return unwrapped;
