@@ -44,7 +44,7 @@
   </div>
 
   <div class="operation-fields"
-       ng-show="opCtrl.isVisible">
+       ng-if="opCtrl.isVisible">
     <tx-protocol-field ng-model="opCtrl.op.description"
                        field="{name: 'description', type: 'string'}">
     </tx-protocol-field>

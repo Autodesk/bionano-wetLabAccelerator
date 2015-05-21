@@ -57,6 +57,36 @@
     </fieldset>
   </form>
 
+  <div class="column-8 div-centered"
+       ng-show="runCtrl.runResponse.response.quote">
+    <table>
+      <tr>
+        <td>Run Title</td>
+        <td ng-bind="config.runTitle"></td>
+      </tr>
+      <tr>
+        <td>Project Name</td>
+        <td ng-bind="config.runProject.name"></td>
+      </tr>
+      <tr ng-repeat="item in response.quote.items">
+        <td ng-bind="item.title"></td>
+        <td ng-bind="item.cost"></td>
+      </tr>
+      <tr>
+        <td>Tax Rate</td>
+        <td ng-bind="response.quote.tax_rate"></td>
+      </tr>
+      <tr>
+        <td>Total Cost</td>
+        <td ng-bind="response.total_cost"></td>
+      </tr>
+    </table>
+
+    <button class="btn action-button"
+            ng-click="runCtrl.submit()">Run it!
+    </button>
+  </div>
+
   <div class="column-8 div-centered">
     <tx-cred-transcriptic ng-form="transcripticCred"></tx-cred-transcriptic>
   </div>

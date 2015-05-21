@@ -2,102 +2,93 @@ header.site-header {
 
   $header-logo-spacing: ($layout-width-padding-side / 2);
   $header-logo-dim: $layout-height-header - ($header-logo-spacing * 2);
-  $nav-height : $layout-height-header;
+  $nav-height: $layout-height-header;
   $logo-user-width: 165px;
 
   line-height: 1;
-  height: $layout-height-header;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
 
-  .container {
+  background-color: $bg-white-barelytransparent;
 
+  .logo {
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: $bg-white-semitransparent;
+    width: $logo-user-width;
 
-    .logo {
-      display: flex;
-      width: $logo-user-width;
-
-      img {
-        width: $header-logo-dim;
-        height: $header-logo-dim;
-        margin: $header-logo-spacing;
-        background-position: center center;
-        background-size: $header-logo-dim $header-logo-dim;
-      }
-
-      span {
-        font-size: $header-nav-font-size;
-        font-weight: $font-weight-bold;
-        color: #c2c2c2;
-        &:hover {
-          color: #222;
-        }
-      }
+    img {
+      width: $header-logo-dim;
+      height: $header-logo-dim;
+      margin: $header-logo-spacing;
+      background-position: center center;
+      background-size: $header-logo-dim $header-logo-dim;
     }
 
-    nav {
-      display: flex;
-      flex-flow: row wrap;
-      flex-grow: 1;
-      justify-content: center;
-      align-items: center;
-      height: $nav-height;
-      line-height: $header-logo-dim;
+    span {
       font-size: $header-nav-font-size;
       font-weight: $font-weight-bold;
-
-      ul {
-        margin: 0;
-        padding: 0;
+      color: #c2c2c2;
+      &:hover {
+        color: #222;
       }
+    }
+  }
 
-      li {
-        display: inline-block;
-        flex-grow: 1;
-        margin: 0 15px;
-        padding: 0;
-        background: 0;
+  nav {
+    display: flex;
+    flex-flow: row wrap;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    height: $nav-height;
+    line-height: $header-logo-dim;
+    font-size: $header-nav-font-size;
+    font-weight: $font-weight-bold;
 
-        a {
-          color: #c2c2c2;
-          text-decoration: none;
+    ul {
+      margin: 0;
+      padding: 0;
+    }
 
-          &:hover {
-            color: #222;
-          }
+    li {
+      display: inline-block;
+      flex-grow: 1;
+      margin: 0 15px;
+      padding: 0;
+      background: 0;
+
+      a {
+        color: #c2c2c2;
+        text-decoration: none;
+
+        &:hover {
+          color: #222;
         }
       }
     }
+  }
 
-    .user {
-      display: flex;
-      flex-flow: row wrap;
-      height: $nav-height;
-      align-items: center;
-      width: $logo-user-width;
-      justify-content: flex-end;
+  .user {
+    display: flex;
+    flex-flow: row wrap;
+    height: $nav-height;
+    align-items: center;
+    width: $logo-user-width;
+    justify-content: flex-end;
 
-      a {
-        display: inline-block;
-        margin: 0 15px;
-        font-size: $header-nav-font-size;
-        color: #c2c2c2;
-        opacity: 0.6;
-        transition: opacity $transition-in-time $transition-in-ease;
+    a {
+      display: inline-block;
+      margin: 0 15px;
+      font-size: $header-nav-font-size;
+      color: #c2c2c2;
+      opacity: 0.6;
+      transition: opacity $transition-in-time $transition-in-ease;
 
-        &:hover {
-          opacity: 0.5;
-          color: #222;
-          transition: opacity $transition-out-time $transition-out-ease;
-        }
-
+      &:hover {
+        opacity: 0.5;
+        color: #222;
+        transition: opacity $transition-out-time $transition-out-ease;
       }
-
     }
   }
 
