@@ -134,3 +134,46 @@
     visibility: hidden;
   }
 }
+
+.group-items {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  img {
+    margin: 0 5px;
+    cursor: default;
+  }
+
+  .group-repeat {
+
+    background: transparent;
+    color: $grey;
+    margin: 0 5px;
+    height: 17px;
+    input {
+      text-align: right;
+      width: 25px;
+    }
+    &:after {
+      content: 'x';
+      font-size: 11px;
+      cursor: none;
+      position: relative;
+      left: -5px;
+    }
+
+    &:hover {
+      background: $primary;
+      color: $white;
+    }
+    &.selected {
+      background: $primary;
+      color: $white;
+    }
+  }
+}
+
+.blurred {
+  filter: blur(5px);
+}

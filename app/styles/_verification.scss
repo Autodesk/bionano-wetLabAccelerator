@@ -20,7 +20,7 @@
     text-align: center;
 
     .glyphicon {
-      color: $warning;
+      color: $notify;
       font-size: 0.75em;
       top: 0;
     }
@@ -29,7 +29,7 @@
   &-flag {
 
     $clip-arrow-width: 15px;
-    $flag-color: lighten($warning, 40);
+    $flag-color: lighten($notify, 10);
 
     position: absolute;
     display: block;

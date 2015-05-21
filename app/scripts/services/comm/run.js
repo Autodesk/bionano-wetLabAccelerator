@@ -96,8 +96,8 @@ angular.module('tx.communication')
         }),
 
         /**
-         * @name view
-         * @description Monitor the status of a run
+         * @name data
+         * @description Get the data of a run
          * @param parameters {Object} with keys:
          * project {String} Project ID
          * run {String} Run ID
@@ -105,6 +105,17 @@ angular.module('tx.communication')
         data: Communication.defaultResourceActions({
           method: "GET",
           url: Communication.root + ":organization/:project/runs/:run/data.json"
+        }),
+
+        /**
+         * @name attachment
+         * @description get uploaded material for an attachment of a run
+         * @param parameters {Object} with keys:
+         * key {String} key of resource
+         */
+        attachment: Communication.defaultResourceActions({
+          method: "GET",
+          url: Communication.root + "upload/url_for"
         })
       });
 

@@ -1,0 +1,54 @@
+//buttons
+
+.action-text {
+  color: $primary;
+
+  &:hover {
+    color: $primary-active;
+  }
+}
+
+.field-action-text,
+.field-details-button {
+  padding: 3px 8px;
+  border-radius: 1em;
+  font-size: 12px;
+  font-weight: bold;
+
+  &:hover {
+    color: $white;
+    background-color: $primary;
+  }
+}
+
+//use with .btn
+.action-button {
+  border: 0;
+  border-radius: 1em;
+  padding: 0.35em 1.25em;
+  margin: 0.25em 0.25em;
+  color: $white;
+  font-size: $font-size-md;
+  background-color: $primary;
+
+  &:focus,
+  &:hover {
+    outline: none;
+    color: $white;
+    background-color: $primary-active;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    background-color: $primary-disabled;
+  }
+}
+
+.field-details-button {
+  background-color: $light-grey;
+}
+
+.field-action-text {
+  color: $warning;
+  font-weight: normal;
+}

@@ -6,7 +6,7 @@
  * @description
  * # txCredTranscriptic
  *
- * usage: <tx-cred-transcriptic ng-form="transcripticCred"></tx-cred-transcriptic>
+ * usage: <tx-cred-transcriptic cred-valid="ctrl.model" ng-form="transcripticCred"></tx-cred-transcriptic>
  * !!! do not use 'form' instead of 'ng-form'
  *
  * and will expose to formController
@@ -19,9 +19,15 @@ angular.module('transcripticApp')
       require: 'form',
       bindToController: true,
       controllerAs: 'authCtrl',
+      scope: {
+        credValid: '='
+      },
       controller: function ($scope, $element, $attrs) {
 
-        var self = this;
+        var self = this,
+            authIsValid = false;
+
+        $scope.$watch('auth', checkAuthIsValid);
 
         //don't actually bind to Auth here, Auth listens to 'txAuth' from firebase directly
         //will need to refactor to pull via REST or something, and shuold update DB automatically
@@ -39,7 +45,25 @@ angular.module('transcripticApp')
           }
         });
 
+        function checkAuthIsValid () {
+          //todo - ping transcriptic?
+          authIsValid = true;
+        }
+
+        self.forgetCreds = function () {
+          //todo
+        };
+
+        self.authValid = function () {
+          return authIsValid;
+        };
+
         //note that temporarily we will get errors in the console for invalid credentials (and you have to be signed into firebase), but once move DB that will go away.
+      },
+      link: function (scope, element, attrs, formCtrl) {
+        scope.$watch(_.result(formCtrl, '$valid', false), function (isValid) {
+          scope.credValid = isValid;
+        });
       }
     };
   });

@@ -9,6 +9,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import 'mixins';
 @import 'utilities';
 @import 'foundation';
+@import 'typography';
 
 //layout
 
@@ -28,6 +29,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 //components
 
+@import 'buttons';
 @import 'angularStyles';
 @import 'jsonEditor';
 @import 'dropDown';
