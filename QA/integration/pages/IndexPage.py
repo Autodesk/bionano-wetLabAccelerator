@@ -21,116 +21,61 @@ class IndexPage(Page):
         self.DRIVER.get(uri)
         time.sleep(10)
 
-    def clickDesign(self):
-        self.click(self.getDesignLink(), "design link")
 
     def clickBuild(self):
         self.click(self.getProtocolLink(), "protocol link")
 
     def clickTest(self):
-        self.click(self.getTestLink(), "test link")
+        self.click(self.getResultsLink(), "results link")
 
-    def getDesignLink(self):
-        return self.DRIVER.find_element_by_xpath("//a[text()='DESIGN']")
+    def clickSignIn(self):
+        self.click(self.getSignInLink(), "sign in link")
+
+    def signIn(self, email, password):
+        self.clickSignIn()
+        self.setEmail(email)
+        self.setPassword(password)
+        self.click(self.getLoginButton(), "Log In Button")
+        if self.getLogoutButton().is_displayed():
+            print("successfully logged in")
+
+    def getPageTitleText(self):
+        return self.DRIVER.find_element_by_xpath("//div[@class='logo']").text
+
+    def getWelcomeText(self):
+        return self.DRIVER.find_element_by_xpath("//p[@class='ng-scope']").text
 
     def getProtocolLink(self):
         return self.DRIVER.find_element_by_xpath("//a[text()='PROTOCOL']")
 
-    def getTestLink(self):
-        return self.DRIVER.find_element_by_xpath("//a[text()='TEST']")
+    def getResultsLink(self):
+        return self.DRIVER.find_element_by_xpath("//a[text()='RESULTS']")
 
     def getSignInLink(self):
         return self.DRIVER.find_element_by_xpath("//a[@href='#/auth']")
 
+    def getEmailField(self):
+        return self.DRIVER.find_element_by_id("fbEmail")
+
+    def setEmail(self, email):
+        self.action("set email field to: " + email)
+        self.getEmailField().send_keys(email)
+        self.getEmailField().send_keys(Keys.ENTER)
+
+    def getPasswordField(self):
+        return self.DRIVER.find_element_by_id("fbPassword")
+
+    def setPassword(self, password):
+        self.action("set password")
+        self.getPasswordField().send_keys(password)
+        self.getPasswordField().send_keys(Keys.ENTER)
+
+    def getLoginButton(self):
+        return self.DRIVER.find_element_by_xpath("//button[text()='Log In']")
+
+    def getLogoutButton(self):
+        return self.DRIVER.find_element_by_xpath("//button(text()='Logout']")
 
 
 
-    def click(self, element, description):
-        print("click on " + description)
-        element.click()
 
-
-
-
-
-
-
-
-
-    def getCanvas(self):
-        canvas = self.DRIVER.find_elements_by_tag_name('canvas')
-        for i in canvas:
-            if i.get_attribute('tabindex'):
-                return i
-
-    def getPanToolTip(self):
-        return self.DRIVER.find_element_by_id('toolbar-panToolTip')
-
-    def getPanTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-panTool')
-
-    def getZoomToolTip(self):
-        return self.DRIVER.find_element_by_id('toolbar-zoomToolTip')
-
-    def getZoomTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-zoomTool')
-
-    def getOrbitTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-orbitTool')
-
-    def getResetTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-resetTool')
-
-    def getOrbitToolTip(self):
-        return self.DRIVER.find_element_by_id('toolbar-orbitToolTip')
-
-    def getWalkTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-beelineTool')
-
-    def getWalkToolTip(self):
-        return self.DRIVER.find_element_by_id('toolbar-beelineToolTip')
-
-    def getCameraMenu(self):
-        return self.DRIVER.find_element_by_id('toolbar-cameraSubmenuTool')
-
-    def getCameraMenuTip(self):
-        return self.DRIVER.find_element_by_id('toolbar-cameraSubmenuToolTip')
-
-    def getFitToViewTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-fitToViewTool')
-
-    def getRollTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-rollTool')
-
-    def getFocalLengthTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-focalLengthTool')
-
-    def getModelStructureTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-modelStructureTool')
-
-    def getInspectMenu(self):
-        return self.DRIVER.find_element_by_id('toolbar-inspectTools')
-
-    def getMeasureTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-measureTool')
-
-    def getExplodeTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-explodeTool')
-
-    def getPropertyTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-propertiesTool')
-
-    def getSettingsTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-settingsTool')
-
-    def getSettingsMenu(self):
-        return self.DRIVER.find_element_by_id('toolbar-settingsToolSubmenu')
-
-    def getRenderOptionsTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-renderOptionsTool')
-
-    def getFullscreenTool(self):
-        return self.DRIVER.find_element_by_id('toolbar-fullscreenTool')
-
-    def getBackgroundandLightingMenu(self):
-            return self.DRIVER.find_element_by_id('selectMenu_Background and lighting')

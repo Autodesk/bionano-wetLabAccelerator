@@ -82,28 +82,39 @@ class ProtocolSetup(Page):
         return self.containsClass(self.getSetupHeaderElement().find_element_by_xpath('..'), "open")
 
     def collapse(self):
-        print("collapse protocol setup")
+        self.action("collapse protocol setup")
         if self.isExpanded():
             self.getSetupHeaderElement().click()
 
     def expand(self):
-        print("expand protocol setup")
+        self.action("expand protocol setup")
         if self.isExpanded() == False:
             self.getSetupHeaderElement().click()
 
     def getSetupHeaderElement(self):
         return self.DRIVER.find_element_by_class_name("protocol-setup-header")
 
+
     def addParameter(self, parameterType):
-        print("add parameter: " + parameterType)
+        self.action("add parameter: " + parameterType)
         self.getAddParameterElement().click()
         self.getAddParameterElement().find_element_by_xpath("//a[text()='" + parameterType + "']").click()
         newParam = self.getParameters()[-1]
         print(newParam.getParameterType())
         return newParam
 
+    def getAddParameterElements(self):
+        parameters = self.getAddParameterElement().find_elements_by_xpath("/a")
+        for parameter in parameters:
+            print(parameter.text)
+
     def getAddParameterElement(self):
         return self.DRIVER.find_element_by_class_name("add-parameter")
+
+    def listParameters(self):
+        print("getting setup parameters")
+        for parameter in self.getParameters():
+            print(parameter.getParameterType() + ": " + parameter.getVariableName())
 
 
 
