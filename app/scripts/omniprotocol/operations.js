@@ -228,6 +228,7 @@ module.exports = {
       ]
     }
   },
+
   "dispense": {
     "operation"  : "dispense",
     "description": "Dispense a reagent into columns of a container",
@@ -261,6 +262,37 @@ module.exports = {
     }
   },
 
+  "dispense_resource": {
+    "operation"  : "dispense_resource",
+    "description": "Dispense a Transcriptic catalog resource into specified wells",
+    "name"       : "Dispense Resource",
+    "type"       : "pipette",
+    "scaffold"   : {
+      "operation"   : "dispense_resource",
+      "requirements": {},
+      "transforms"  : [
+        {
+          "wells": "wells"
+        }
+      ],
+      "fields"      : [
+        {
+          "name"           : "wells",
+          "type"           : "aliquot+",
+          "singleContainer": false
+        },
+        {
+          "name"    : "volume",
+          "type"    : "volume",
+          "default" : {"value": 50, "unit": "microliter"}
+        },
+        {
+          "name"   : "resource",
+          "type"   : "resource"
+        }
+      ]
+    }
+  },
 
   //heating
 
