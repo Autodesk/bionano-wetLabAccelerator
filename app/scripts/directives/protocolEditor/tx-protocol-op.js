@@ -62,6 +62,10 @@ angular.module('tx.protocolEditor')
           groupCtrl.deleteStep(scope.opCtrl.op);
         };
 
+        scope.duplicateStep = function () {
+          groupCtrl.duplicateStep(scope.opCtrl.op);
+        };
+
         scope.insertBeforeStep = function (newSteps) {
           groupCtrl.insertBeforeStep(scope.opCtrl.op, newSteps);
         };
