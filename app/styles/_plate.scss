@@ -97,6 +97,16 @@ tx-plate-columns {
     //stroke: #fff;
   }
 
+  .brush {}
+
+  &.no-select,
+  &.no-brush {
+    .brush {
+      pointer-events: none;
+      display: none;
+    }
+  }
+
   .wellTooltip {
     position: absolute;
     display: inline-block;
