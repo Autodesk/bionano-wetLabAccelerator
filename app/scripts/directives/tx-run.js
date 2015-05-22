@@ -30,7 +30,7 @@ angular.module('transcripticApp')
 
         self.selectProject = function (proj) {
           $scope.creatingNewProject = false;
-          self.project = proj;
+          self.project              = proj;
         };
 
         self.findProjectByname = function (projectName) {
@@ -38,14 +38,30 @@ angular.module('transcripticApp')
         };
 
 
-        // SUBMIT / ANALYZE RUNS
+        self.analyze = _.partial(submitHelper, false);
+        self.submit  = _.partial(submitHelper, true);
 
-        function resourceWrap (funcToRun, toModify) {
-          angular.extend(toModify.config, {
-            initiated : true,
-            processing: true,
-            runTitle : self.runTitle
-          });
+        self.startRun = function () {
+          self.analyze();
+          self.runWasInitiated = true;
+        };
+
+        //requires a project object and response
+        self.transcripticLink = function () {
+          if (_.isEmpty(self.response) || !self.response.id) { return null; }
+
+          return Communication.transcripticRoot +
+            Auth.organization() +
+            '/' + self.project.url +
+            '/runs/' + self.response.id;
+        };
+
+
+        function submitHelper (isRun) {
+
+          var funcToRun = isRun ? RunHelper.createRun : RunHelper.verifyRun;
+
+          self.processing = true;
 
           var projectIdPromise;
 
@@ -75,63 +91,40 @@ angular.module('transcripticApp')
           }
 
           projectIdPromise.then(function (project) {
-            angular.extend(toModify.config, {
-              runProject : project
-            });
+            self.project = project;
 
             funcToRun(self.protocol, project.id).
               then(function runSuccess (d) {
                 console.log(d);
-                angular.extend(toModify.config, {
-                  processing: false,
-                  error     : false
-                });
-                toModify.response = d;
-                $rootScope.$broadcast('editor:verificationSuccess', d);
+                self.response = d;
+                self.error    = false;
+
+                if (isRun) {
+                  $rootScope.$broadcast('editor:runSubmitted', d);
+                } else {
+                  $rootScope.$broadcast('editor:verificationSuccess', d);
+                }
+
               }, function runFailure (e) {
                 console.log(e);
-                angular.extend(toModify.config, {
-                  processing: false,
-                  error     : true
-                });
+
+                self.error = true;
+
                 //use as simple check for something like a 404 error - i.e. not protocol error but $http error
                 if (angular.isUndefined(e.data) || _.isUndefined(e.data.protocol)) {
-                  toModify.response = {"error": "Request did not go through... check the console"};
+                  self.response = {"error": "Request did not go through... check the console"};
                 } else {
                   $rootScope.$broadcast('editor:verificationFailure', e.data.protocol);
-                  toModify.response = e.data.protocol;
+                  self.response = e.data.protocol;
                 }
+              })
+              .then(function () {
+                self.processing = false;
+                //todo - close the modal?
+                $rootScope.$broadcast('editor:toggleRunModal', false);
               });
           });
         }
-
-        self.analysisResponse = {
-          config  : {
-            type          : "Verify",
-            textProcessing: "Processing Verification...",
-            textSuccess   : "Protocol valid",
-            textError     : "Problems with Protocol listed below"
-          },
-          response: {}
-        };
-        self.runResponse      = {
-          config  : {
-            type          : "Run",
-            textProcessing: "Processing Run...",
-            textSuccess   : "Protocol initiated",
-            textError     : "There was an error running your protocol"
-          },
-          response: {}
-        };
-
-        self.analyze = angular.bind(self, resourceWrap, RunHelper.verifyRun, self.analysisResponse);
-        self.submit  = angular.bind(self, resourceWrap, RunHelper.createRun, self.runResponse);
-
-        self.startRun = function () {
-          self.analyze();
-          //todo - need to revert this on close
-          self.runWasInitiated = true;
-        };
 
       },
       link            : function (scope, element, attrs) {
