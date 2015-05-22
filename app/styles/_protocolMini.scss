@@ -39,6 +39,7 @@
     position: relative;
     border-radius: 10px;
     z-index: $z-instruction;
+    margin-top: $margin-bottom;
 
     &:first-child {
       margin-top: 0;

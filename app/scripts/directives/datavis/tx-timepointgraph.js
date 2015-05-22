@@ -25,20 +25,21 @@
  *
  //todo - need to handle key not being present for given ordinal - shouldn't display line? or just interpolate?
 
- // if makes sense, may want to extrapolate filter out of this directive
+ // if makes sense, may want to extrapolate line selection filter out of this directive
  */
 angular.module('tx.datavis')
   .directive('txTimepointgraph', function () {
     return {
       restrict: 'E',
-      replace : false,
       scope   : {
         data          : '=',
         graphMeta     : '=', //accepts xlabel, ylabel, title
         seriesSelected: '=',
         onHover       : '&',
         interpolation : '=?', //interpolation function to use (e.g. linear, default cardinal)
-        isLinear      : '='
+        isLinear      : '=',
+
+        extentData    : '=?' //outward binding of extent of data (i.e. y axis domain)
       },
       link    : function postLink (scope, element, attrs) {
 
@@ -260,8 +261,6 @@ angular.module('tx.datavis')
         function handleLineSelection (nativeEl) {
           d3.select(nativeEl).classed('selected', true);
           nativeEl.parentNode.appendChild(nativeEl);
-
-          //todo - highlight the line - with a filter???
         }
 
         //save for later....
@@ -281,7 +280,8 @@ angular.module('tx.datavis')
 
           seriesData = _.flatten(_.map(data, _.values));
 
-          y.domain([0, d3.max(_.pluck(seriesData, 'value'))]).nice();
+          var extent = [0, d3.max(_.pluck(seriesData, 'value'))];
+          y.domain(extent).nice();
 
           //handle the x axis linear / ordinal
           if (scope.isLinear) {
@@ -329,7 +329,10 @@ angular.module('tx.datavis')
           //EXIT
           series.exit().remove();
 
-          drawVoronoi()
+          drawVoronoi();
+
+          //outward bind the extent of the data (e.g. for the plate)
+          scope.extentData = y.domain();
         }
 
         function updateMeta (newval) {
