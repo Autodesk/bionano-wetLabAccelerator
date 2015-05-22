@@ -36,7 +36,12 @@ angular.module('transcripticApp')
           self.toggleGalleryVisible(false);
           $location.path('/results');
           RunHelper.assignCurrentRun(run);
-        }
+        };
+
+        self.createNewProtocol = function () {
+          ProtocolHelper.addProtocol()
+            .then(self.openProtocol);
+        };
       },
       link            : function postLink (scope, element, attrs) {
 
