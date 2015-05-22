@@ -7,6 +7,34 @@ tx-content-menu {
   .menu-trigger {
     position: absolute;
     clip: rect(0, 0, 0, 0);
+
+    &:checked {
+      ~ label[for="menu-trigger"] span {
+        background-color: transparent;
+      }
+      ~ label[for="menu-trigger"] span:before,
+      ~ label[for="menu-trigger"] span:after {
+        top: 0;
+      }
+      ~ label[for="menu-trigger"] span:before {
+        transform: rotate(45deg);
+        background-color: $white;
+      }
+      ~ label[for="menu-trigger"] span:after {
+        transform: rotate(-45deg);
+        background-color: $white;
+      }
+
+      + label {
+        left: 260px;
+        transition: left $transition-in-time;
+      }
+
+      ~ .menu {
+        transform: translate3d(0, 0, 0);
+        transition: transform $transition-in-time $transition-ease;
+      }
+    }
   }
 
   //todo - clean this up!
@@ -15,12 +43,14 @@ tx-content-menu {
     position: fixed;
     left: 10px;
     top: 65px;
-    z-index: 1002;
+    z-index: $z-sidepanel + 1;
     height: 15px;
     width: 20px;
     cursor: pointer;
 
-    span, span:before, span:after {
+    span,
+    span:before,
+    span:after {
       cursor: pointer;
       border-radius: 1px;
       height: 3px;
@@ -35,7 +65,6 @@ tx-content-menu {
     span:before {
       top: -6px;
     }
-
     span:after {
       top: 6px;
     }
@@ -43,35 +72,6 @@ tx-content-menu {
     span, span:before, span:after {
       transition: all 500ms ease-in-out;
     }
-  }
-
-  .menu-trigger:checked ~ label[for="menu-trigger"] span {
-    background-color: transparent;
-  }
-  .menu-trigger:checked ~ label[for="menu-trigger"] span:before, .menu-trigger:checked ~ label[for="menu-trigger"] span:after {
-    top: 0;
-  }
-  .menu-trigger:checked ~ label[for="menu-trigger"] span:before {
-    transform: rotate(45deg);
-    background-color: $white;
-  }
-  .menu-trigger:checked ~ label[for="menu-trigger"] span:after {
-    transform: rotate(-45deg);
-    background-color: $white;
-  }
-
-  .menu-trigger + label {
-    transition: left $transition-in-time;
-  }
-
-  .menu-trigger:checked ~ .menu {
-    transform: translate3d(0, 0, 0);
-    transition: transform $transition-in-time $transition-ease;
-    z-index: 1001;
-  }
-
-  .menu-trigger:checked + label {
-    left: 260px;
   }
 
   .menu {
@@ -84,21 +84,34 @@ tx-content-menu {
     right: 0;
     z-index: $z-sidepanel;
     background-color: $content-menu-bg;
+    padding: $layout-spacing-md;
     margin: 50px 0;
     display: block;
     transform: translate3d(-100%, 0, 0);
     transition: transform $transition-in-time $transition-in-ease;
 
-    .gallery-header {
+    .new-protocol-button {
+      color: $warning;
+    }
 
-      .gallery-filter {
-        width: 225px;
-        padding: 0 15px;
-        margin: 8px 15px;
-      }
+    .contentMenu-header {
 
-      .gallery-group {
+    }
 
+    .contentMenu-group {
+      padding: 10px 0 0;
+    }
+
+    .contentMenu-heading {
+      color: $light-grey;
+    }
+
+    .contentMenu-item {
+      color: $white;
+
+      &:hover,
+      &.active {
+        color: $primary;
       }
     }
   }

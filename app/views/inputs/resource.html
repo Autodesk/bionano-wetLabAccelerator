@@ -1,0 +1,52 @@
+<a class="field-details-button"
+   ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible">
+  {{fieldCtrl.model.name || 'select...'}}
+</a>
+
+<tx-modal ng-show="fieldCtrl.detailsVisible"
+          title="Catalog Resource">
+  <div class="catalog-browser"
+       ng-controller="CatalogResourceCtrl as catCtrl"
+       ng-init="catCtrl.init()">
+
+    <p class="text-sm">Supplies are only ordered when the protocol runs.</p>
+
+    <div class="column-8 div-centered">
+      <input class="form-control"
+             type="text"
+             ng-model="searchQuery">
+    </div>
+
+    <div class="column-16 div-centered">
+      <h4 class="thin">Search Results</h4>
+
+      <div class="catalog-results">
+        <div class="catalog-results-header">
+          <div class="catalog-item-field"
+               ng-repeat="field in catCtrl.itemFields"
+               ng-bind="field.name"></div>
+          <div class="catalog-item-field">Action</div>
+        </div>
+        <div class="catalog-item"
+             ng-repeat="item in catCtrl.catalogResults">
+          <div class="catalog-item-field"
+               ng-repeat="field in catCtrl.itemFields"
+               ng-bind="item[field.key] || '-'"></div>
+          <div dropdown
+               class="catalog-item-field">
+            <span dropdown-toggle>select</span>
+            <ul class="dropdown-menu">
+              <li>
+                <a ng-click="catCtrl.selectItem(item)">Select this item</a>
+              </li>
+              <li ng-if="item.url">
+                <a target="_blank"
+                   ng-href="{{item.url}}">Catalog Item details...</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</tx-modal>

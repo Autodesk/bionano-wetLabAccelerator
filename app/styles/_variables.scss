@@ -18,6 +18,9 @@ $error: #FF0000;
 $notify: #FFFF7F;
 $success: #50c050;
 
+$primary-disabled : transparentize($primary, 0.25);
+$primary-active : lighten($primary, 5);
+
 // fonts
 
 $font-family: Helvetica Neue, Helvetica, 'Myriad Pro', Arial, sans-serif;
@@ -52,6 +55,7 @@ $bg-transparency-factor-default: 0.5;
 $bg-body: $white;
 $bg-dark: $dark;
 $bg-white: $white;
+$bg-white-barelytransparent: transparentize($bg-white, 0.1);
 $bg-white-semitransparent: transparentize($bg-white, $bg-transparency-factor-default);
 
 //borders
@@ -88,6 +92,7 @@ $transition-out-ease: ease-out;
 ////////////////////
 $layout-width-column: 40px;
 $layout-width-columnspace: 20px;
+$layout-width-column-gutter: ($layout-width-columnspace / 2);
 $layout-width-padding-side: 10px;
 
 //spacing

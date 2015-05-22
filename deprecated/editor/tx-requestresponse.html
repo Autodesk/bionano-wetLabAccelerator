@@ -16,14 +16,14 @@
     </a>
     <span class="disabled" ng-bind="config.type"></span>
   </div>
+
   <div ng-hide="hideResponse">
     <div ng-show="config.processing">
       {{config.textProcessing}}
     </div>
     <div ng-hide="config.processing">
       <div ng-hide="config.error">
-        <p><strong>{{config.textSuccess}}</strong></p>
-        <p>Cost: {{response['has_quote?'] ? response.total_cost : 'pending'}}</p>
+        <p><strong ng-bind="config.textSuccess"></strong></p>
       </div>
       <div ng-show="config.error">
         <p>{{config.textError}}</p>

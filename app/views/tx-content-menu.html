@@ -2,24 +2,29 @@
 <label for="menu-trigger"><span></span></label>
 
 <div class="menu">
-  <div class="gallery-header">
-    <input class="gallery-filter" type="text" ng-model="contentCtrl.searchText" placeholder="Filter">
+  <div class="contentMenu-header">
+    <a class="new-protocol-button" ng-click="contentCtrl.createNewProtocol()">
+      <span class="glyphicon glyphicon-plus"></span>
+      New Protocol
+    </a>
   </div>
 
-  <div class="gallery-group">
-    <h3>Protocols</h3>
+  <div class="contentMenu-group">
+    <h5 class="contentMenu-heading">Protocols</h5>
 
     <div ng-repeat="protocol in contentCtrl.protocols | orderBy:'metadata.name'">
       <a ng-click="contentCtrl.openProtocol(protocol)"
+         class="contentMenu-item"
          ng-bind="protocol.metadata.name"></a>
     </div>
   </div>
 
-  <div class="gallery-group">
-    <h3>Runs</h3>
+  <div class="contentMenu-group">
+    <h5 class="contentMenu-heading">Runs</h5>
 
     <div ng-repeat="run in contentCtrl.runs | orderBy:'metadata.date'">
       <a ng-click="contentCtrl.openRun(run)"
+         class="contentMenu-item"
          ng-bind="run.metadata.name"></a>
     </div>
   </div>

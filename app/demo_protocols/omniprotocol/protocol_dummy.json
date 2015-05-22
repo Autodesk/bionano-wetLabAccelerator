@@ -40,15 +40,6 @@
         "storage": "cold_4"
       },
       "name": "container_uno"
-    },
-    {
-      "type": "container",
-      "value": {
-        "isNew": true,
-        "type": "96-pcr",
-        "storage": "warm_37"
-      },
-      "name": "dfdfd"
     }
   ],
   "groups": [
@@ -125,85 +116,11 @@
                     "5"
                   ],
                   "volume": {
-                    "unit": "nanoliter",
+                    "unit": "microliter",
                     "value": 90
                   }
                 }
               ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "",
-      "inputs": {},
-      "metadata": {
-        "description": ""
-      },
-      "loop": 1,
-      "steps": [
-        {
-          "operation": "thermocycle",
-          "description" : "Thermocycle a container, as in for PCR",
-          "requirements": {},
-          "transforms": [
-            {
-              "container": "container"
-            }
-          ],
-          "fields": [
-            {
-              "name": "dataref",
-              "type": "string",
-              "optional": true,
-              "default": "thermocycle_${index}"
-            },
-            {
-              "name": "object",
-              "type": "container"
-            },
-            {
-              "name": "volume",
-              "type": "volume",
-              "default": {
-                "value": 10,
-                "unit": "microliter"
-              }
-            },
-            {
-              "name": "groups",
-              "type": "thermocycleGroups",
-              "value": []
-            },
-            {
-              "name": "dyes",
-              "type": "thermocycleDyes",
-              "optional": true,
-              "value": {
-                "0": {
-                  "dye": "FAM",
-                  "wells": [
-                    "A1",
-                    "A2",
-                    "A3",
-                    "A4",
-                    "B1",
-                    "B2",
-                    "B3",
-                    "B4",
-                    "C1",
-                    "C2",
-                    "C3",
-                    "C4"
-                  ]
-                }
-              }
-            },
-            {
-              "name": "melting",
-              "type": "thermocycleMelting",
-              "optional": true
             }
           ]
         }

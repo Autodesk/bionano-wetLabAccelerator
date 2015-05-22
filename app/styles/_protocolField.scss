@@ -1,3 +1,9 @@
+/*
+
+
+*/
+
+
 tx-protocol-field {
   display: flex;
   flex-direction: row;
@@ -51,31 +57,6 @@ tx-protocol-field {
       }
     }
   }
-
-  //buttons
-
-  .field-action-button,
-  .field-details-button {
-    padding: 3px 8px;
-    border-radius: 1em;
-    font-size: 12px;
-    font-weight: bold;
-
-    &:hover {
-      color: $white;
-      background-color: $primary;
-    }
-  }
-
-  .field-details-button {
-    background-color: $light-grey;
-  }
-
-  .field-action-button {
-    color: $warning;
-    font-weight: normal;
-  }
-
 
   //PARAMETER
 

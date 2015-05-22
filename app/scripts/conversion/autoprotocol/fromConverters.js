@@ -87,7 +87,7 @@ converterField.thermocycleGroup = function (input, fieldObj) {
 
 converterField.thermocycleDyes = function (input) {
   var filtered = _.filter(input, function (item) {
-    return item.wells.length;
+    return _.result(item, 'wells', []).length;
   });
   console.log(filtered);
   //todo
@@ -101,6 +101,10 @@ converterField.thermocycleMelting = function (input, fieldObj) {
 
 converterField.mixwrap = function (input, fieldObj) {
   return mapSomeDimensionalFields(input, _.result(fieldObj, 'default'), ['speed', 'volume'], ['repetitions']);
+};
+
+converterField.resource = function (input, fieldObj) {
+  return _.result(input, 'id');
 };
 
 /*******************
@@ -247,6 +251,27 @@ converterInstruction.mix = function (op) {
 };
 
 converterInstruction.dispense = simpleMapOperation;
+
+converterInstruction.dispense_resource = function (op) {
+  var wells = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'wells')),
+      volume = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),
+      resourceId = _.result(omniUtils.pluckFieldValueRaw(op.fields, 'resource'), 'id');
+
+  if (!resourceId) {
+    throw new Error('missing resource id for dispense_resource');
+  }
+
+  return {
+    op: 'dispense_resource',
+    resource_id : resourceId,
+    to: _.map(wells, function (well) {
+      return {
+        well: well,
+        volume : volume
+      }
+    })
+  };
+};
 
 /* TEMPERATURE */
 

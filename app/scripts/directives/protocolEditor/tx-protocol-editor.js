@@ -6,9 +6,8 @@
  * @description
  * # txProtocolEditor
  */
-  //todo - listen for parameters changing, propagate variable name throughout
 angular.module('tx.protocolEditor')
-  .directive('txProtocolEditor', function ($window, $rootScope, $timeout, DragDropManager, ProtocolHelper, Omniprotocol) {
+  .directive('txProtocolEditor', function ($window, $rootScope, $timeout, Notify, DragDropManager, ProtocolHelper, Omniprotocol) {
     return {
       templateUrl     : 'views/tx-protocol-editor.html',
       restrict        : 'E',
@@ -56,6 +55,12 @@ angular.module('tx.protocolEditor')
           }
         };
 
+        self.allStepsOpen = false;
+        self.toggleAllSteps = function () {
+          self.allStepsOpen = !self.allStepsOpen;
+          $rootScope.$broadcast('editor:toggleGroupVisibility', self.allStepsOpen);
+        };
+
         //todo - deprecate
         self.optsDroppableEditor = {
           drop     : function (e, ui) {
@@ -99,6 +104,27 @@ angular.module('tx.protocolEditor')
         }
       },
       link            : function postLink (scope, element, attrs) {
+
+        scope.$on('editor:verificationSuccess', function () {
+          Notify({
+            message: 'Protocol Valid!',
+            error: false
+          });
+        });
+
+        scope.$on('editor:verificationFailure', function (event, verifications) {
+          Notify({
+            message: 'Verification resulted in ' + verifications.length + ' errors, highlighted below',
+            error: true
+          });
+        });
+
+        scope.$on('editor:runSubmitted', function () {
+          Notify({
+            message: 'Protocol successfully submitted to Transcriptic.',
+            error: false
+          });
+        });
 
         scope.$on('editor:verificationFailure', function (event, verifications) {
 

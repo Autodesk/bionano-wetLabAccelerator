@@ -9,8 +9,6 @@ tx-protocol-op {
 
   box-sizing: border-box;
 
-  .protocol-op-wrap {}
-
   @include arrow-bottom($step-background-inactive, $step-background-active, $includeBackground: true, $activeClass: 'open');
 
   .operation-name {
@@ -33,21 +31,6 @@ tx-protocol-op {
     width: 100%;
   }
 
-  table {
-    border-spacing: 5px 10px;
-    margin: 0;
-    tr {
-      td {
-        &:first-child {
-          text-align: right;
-        }
-        &:last-child {
-          text-align: left;
-        }
-      }
-    }
-  }
-
   &:first-child {
     margin-top: 0;
   }
@@ -67,6 +50,12 @@ tx-protocol-op {
     .show-group & {
       background-color: $step-background-inactive;
       border-bottom: $drop-hover-border;
+    }
+  }
+
+  &:only-child .group-items {
+    &:hover {
+      opacity: 1;
     }
   }
 }

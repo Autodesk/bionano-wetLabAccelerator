@@ -17,7 +17,7 @@
  */
 //todo - attr.alignWith to give element to match?
 angular.module('transcripticApp')
-  .directive('simpleSticky', function ($window) {
+  .directive('simpleSticky', function ($window, $timeout) {
 
     var windowEl = angular.element($window);
 
@@ -37,7 +37,7 @@ angular.module('transcripticApp')
 
       }
 
-      return nativeElement.getBoundingClientRect().top + getYOffset()
+      return nativeElement.getBoundingClientRect().top + getYOffset();
     }
 
     //the function will be run
@@ -69,8 +69,15 @@ angular.module('transcripticApp')
             fromEdgeAffix = parseInt(attrs.simpleSticky, 10) || 20,
             positionNormal = element.css('position'),
             fromEdgeNormal = element.css(affixToBottom ? 'bottom' : 'top'),
-            fromEdgeStart = calcStartFromEdge(element[0], affixToBottom),
+            fromEdgeStart = calcStartFromEdge(element[0], affixToBottom),//this doesn't work great with flexbox layouts...
             isAffixed = false;
+
+        //hack to handle flexbox layout...
+        if (fromEdgeStart == 0) {
+          $timeout(function () {
+            fromEdgeStart = calcStartFromEdge(element[0], affixToBottom);
+          });
+        }
 
         //check if affix state has changed
         function checkPosition(pageYOffset) {

@@ -1,6 +1,7 @@
 //todo - move to variables
 
 // The dropdown menu
+[dropdown],
 .dropdown {
   position: relative;
 }
@@ -19,6 +20,7 @@
   text-align: left;
   background-color: $white;
   border: none;
+  border-radius: 0;
   box-shadow: 0 0 15px $light-grey;
 
   .divider {

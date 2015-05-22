@@ -28,6 +28,8 @@ tx-operation-popover {
   box-shadow: $box-shadow-popover;
 
   &:after {
+    //maintain pointer events so can hover back into it
+    z-index: -1; //but z-index backward so doesn't compete with header actions
     right: 100%;
     top: 50%;
     border: solid transparent;
@@ -35,7 +37,6 @@ tx-operation-popover {
     height: 0;
     width: 0;
     position: absolute;
-    pointer-events: none;
     border-color: transparent;
     border-right-color: $white;
     border-width: $oppop-arrow-width;
@@ -61,6 +62,17 @@ tx-operation-popover {
 
   .oppop-wrap {
     padding: $oppop-padding;
+
+    .op-description {
+      padding: 0 0 $oppop-padding;
+      border-bottom: 1px solid $light-grey;
+      margin: 0 0 $oppop-padding;
+
+      &:empty {
+        display: none;
+        border: 0;
+      }
+    }
 
     tx-plate {
       width: 100%;

@@ -19,7 +19,7 @@
   }
 
   &.notification {
-    background: $warning;
+    background: $notify;
     color: $black;
   }
 
@@ -38,7 +38,6 @@
     border: 0;
     font-size: 21px;
     font-weight: 700;
-    color: $white;
 
     position: absolute;
     top: 3px;

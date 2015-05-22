@@ -1,0 +1,13 @@
+<div class="tx-popover {{placement || 'top'}}"
+     ng-class="{ 'open': isOpen }">
+  <div class="arrow"></div>
+  <div class="close" ng-click="$close()">&times;</div>
+  <div class="tx-popover-content">
+    <p class="tx-popover-title"
+        ng-bind="title"
+        ng-show="title"></p>
+
+    <div class="tx-popover-transclude"
+         ng-transclude></div>
+  </div>
+</div>

@@ -15,6 +15,7 @@ angular.module('transcripticApp')
       'distribute' : 'pipette',
 
       'mix': 'mix',
+      'dispense_resource': 'dispense_resource',
 
       'dispense': 'dispense',
 
@@ -52,7 +53,7 @@ angular.module('transcripticApp')
           var opName       = _.result(operation, 'operation'),
               templateName = _.result(templateMap, opName, opName);
 
-          angular.isDefined(templateName) && $http.get('views/datavis/' + templateName + '.html', {cache: true}).
+          $http.get('views/datavis/' + templateName + '.html', {cache: true}).
             success(function (data) {
               var $el = angular.element(data);
               element.html($compile($el)(scope));

@@ -1,3 +1,9 @@
+<div class="protocol-editor-header">
+  <span>Protocol</span>
+  <a ng-click="editorCtrl.toggleAllSteps()">
+    Expand All
+  </a>
+</div>
 <tx-protocol-setup parameters="editorCtrl.protocol.parameters"
                    tx-protocol-droppable="editorCtrl.optsDroppableSetup"
                    class="protocol-setup"
@@ -25,4 +31,5 @@
   </tx-protocol-group>
 </div>
 <div class="editor-bottom-space flex-grower"
+     style="min-height: 100px;"
      tx-protocol-droppable="editorCtrl.optsDroppableEditorBottom"></div>

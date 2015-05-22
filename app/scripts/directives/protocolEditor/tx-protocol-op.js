@@ -8,7 +8,7 @@
  *
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolOp', function (DragDropManager) {
+  .directive('txProtocolOp', function ($rootScope, DragDropManager) {
     return {
       templateUrl: 'views/tx-protocol-op.html',
       restrict: 'E',
@@ -21,20 +21,8 @@ angular.module('tx.protocolEditor')
       controller: function ($scope, $element, $attrs) {
         var self = this;
 
-        self.toggleActionsMenu = function ($event, force) {
-          $event.preventDefault();
-          $event.stopPropagation();
-          $scope.showActions = angular.isDefined(force) ?
-            force :
-            !( $scope.showActions );
-        };
-
-        self.toggleJsonEditing = function ($event, force) {
-          $event.preventDefault();
-          $event.stopPropagation();
-          $scope.jsonEditing = angular.isDefined(force) ?
-            force :
-            !( $scope.jsonEditing );
+        self.verifyProtocol = function () {
+          $rootScope.$broadcast('editor:initiateVerification');
         };
 
         self.optsDroppableOpTop = {
@@ -47,13 +35,6 @@ angular.module('tx.protocolEditor')
           }
         };
 
-        $scope.modalShown = false;
-        self.toggleModal = function($event) {
-          $event.preventDefault();
-          $event.stopPropagation();
-          $scope.modalShown = !$scope.modalShown;
-        };
-
         //note - called by protocol-editor
         $scope.receiveVerification = function (ver) {
           console.log(ver);
@@ -62,6 +43,8 @@ angular.module('tx.protocolEditor')
 
       },
       link: function (scope, element, attrs, groupCtrl) {
+
+        scope.groupCtrl = groupCtrl;
 
         scope.$watch('opCtrl.isVisible', function (viz) {
           element.toggleClass('open', !!viz);

@@ -31,7 +31,7 @@ angular.module('transcripticApp')
       var protocol = _.assign(Omniprotocol.utils.getScaffoldProtocol(), inputProtocol);
 
       //note - firebase
-      self.firebaseProtocols.$add(protocol)
+      return self.firebaseProtocols.$add(protocol)
         .then(updateProtocolsExposed)
         .then(function () {
           return protocol;

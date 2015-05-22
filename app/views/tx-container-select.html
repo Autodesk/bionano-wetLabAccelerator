@@ -1,6 +1,5 @@
-<div class="dropdown"
-     ng-class="{'open' : showingContainers}">
-  <a ng-click="showingContainers = !showingContainers"
+<div dropdown>
+  <a dropdown-toggle
      ng-bind="containerSelectCtrl.model || 'select...'"></a>
   <ul class="dropdown-menu">
     <li ng-repeat="c in containerSelectCtrl.localContainers">

@@ -1,6 +1,4 @@
-<div class="protocol-op-wrap"
-     ng-mouseenter="hovering = true"
-     ng-mouseleave="hovering = false">
+<div class="protocol-op-wrap">
   <div class="verification"
        ng-class="{'expanded' : opCtrl.isVisible}"
        ng-if="opCtrl.verification">
@@ -13,40 +11,33 @@
     </div>
   </div>
 
-  <div class="operation-name"
+  <div class="operation-name parent-hover-trigger"
        ng-click="opCtrl.isVisible = !opCtrl.isVisible">
     <span ng-bind="opCtrl.op.operation"></span>
 
-    <div class="dropdown group-items"
-         ng-show="hovering"
+    <div class="dropdown group-items visible-parent-hover"
          dropdown
          is-open="showActions">
-      <img src="/images/zero_iterations.png"
-           ng-show="!opCtrl.op.loop || opCtrl.op.loop <= 1">
-      <div class="group-repeat"
-           ng-show="opCtrl.op.loop && opCtrl.op.loop >= 2">
-        <input class="input-unstyled"
-               type="number" min="1" max="100"
-               ng-model-options="{updateOn: 'blur'}"
-               ng-model="opCtrl.op.loop"/>
-      </div>
+      <span class="iteration-none"
+            ng-if="!groupCtrl.group.loop || groupCtrl.group.loop <= 1"></span>
       <span class="glyphicon glyphicon-cog"
             squelch-event="click"
             dropdown-toggle></span>
       <ul class="dropdown-menu dropdown-menu-right">
+        <li ng-if="groupCtrl.group.loop <= 1">
+          <a ng-click="groupCtrl.group.loop = 2">
+            Add Iteration
+          </a>
+        </li>
         <li>
-          <a ng-click="opCtrl.toggleModal($event)">
+          <a squelch-event="click"
+             ng-click="opCtrl.verifyProtocol()">
             Verify Protocol
           </a>
         </li>
         <li>
-          <a ng-click="opCtrl.toggleJsonEditing($event)">
-          Show JSON
-          </a>
-        </li>
-        <li>
           <a ng-click="deleteStep()">
-          Delete Step
+            Delete Step
           </a>
         </li>
       </ul>
@@ -54,7 +45,7 @@
   </div>
 
   <div class="operation-fields"
-       ng-show="opCtrl.isVisible">
+       ng-if="opCtrl.isVisible">
     <tx-protocol-field ng-model="opCtrl.op.description"
                        field="{name: 'description', type: 'string'}">
     </tx-protocol-field>
@@ -62,24 +53,6 @@
                        ng-model="field.value"
                        field="field">
     </tx-protocol-field>
-  </div>
-
-  <tx-modal ng-show='modalShown'>
-    <tx-run></tx-run>
-  </tx-modal>
-
-  <div class="pre-scrollable modal-background"
-       ng-class="{'open' : jsonEditing}">
-    <span class="modal-close"
-          ng-click="jsonEditing = false">&times</span>
-    <pre json-editor
-         ng-if="jsonEditing"
-         contenteditable
-         json-editor-active="{{jsonEditing}}"
-         name="ProtocolStepEditor"
-         ng-model="opCtrl.op"
-         ng-model-options="{updateOn: 'blur'}">
-    </pre>
   </div>
 
   <tx-operation-popover ng-if="opCtrl.isHovered"
