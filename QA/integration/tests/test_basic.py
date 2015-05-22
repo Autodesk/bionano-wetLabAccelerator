@@ -24,7 +24,7 @@ class TestBasicInteractions(TestBase):
         self.page.clickBuild()
         build = self.build
         time.sleep(10)
-        expectedOperationNames = ["Transfer", "Distribute", "Consolidate", "Mix", "Dispense", "Thermocycle", "Incubate", "Seal", "Unseal", "Cover", "Uncover", "Spin", "Image Plate", "Absorbance", "Fluorescence", "Luminescence", "Gel Separate", "Autoprotocol (JSON)"]
+        expectedOperationNames = ["Transfer", "Distribute", "Consolidate", "Mix", "Dispense", "Dispense Resource", "Thermocycle", "Incubate", "Seal", "Unseal", "Cover", "Uncover", "Spin", "Image Plate", "Absorbance", "Fluorescence", "Luminescence", "Gel Separate", "Autoprotocol (JSON)"]
 
         self.verifyIsDisplayed(build.getSidePanel(), "side column")
         self.verifyEqual(build.getOperationNames(), expectedOperationNames, "verify operation names")
