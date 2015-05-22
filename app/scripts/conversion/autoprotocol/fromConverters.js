@@ -104,7 +104,7 @@ converterField.mixwrap = function (input, fieldObj) {
 };
 
 converterField.resource = function (input, fieldObj) {
-  return input;
+  return _.result(input, 'id');
 };
 
 /*******************
