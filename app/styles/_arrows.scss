@@ -1,4 +1,4 @@
-@mixin arrow-bottom ($default, $active, $includeBackground: true, $activeClass: 'open') {
+@mixin arrow-bottom ($default, $active, $arrowSize: 10px, $includeBackground: true, $activeClass: 'open') {
 
   @if $includeBackground {
     background: $default;
@@ -14,8 +14,8 @@
     position: absolute;
     pointer-events: none;
     border-top-color: $default;
-    border-width: 10px;
-    margin-left: -15px;
+    border-width: $arrowSize;
+    margin-left: -$arrowSize;
   }
 
   &.#{$activeClass} {
