@@ -20,12 +20,11 @@
     </div>
 
     <div class="col-md-8">
+      <!--todo container should be dynamic -->
       <tx-plate container="'96-flat'"
                 group-data="fieldCtrl.model"
                 select-persist="true"
-                wells-input="dyeCtrl.dyeWells"
                 on-select="dyeCtrl.handleWellSelection($wells)"></tx-plate>
-
     </div>
 
     <pre ng-bind="fieldCtrl.model | json"></pre>
