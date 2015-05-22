@@ -89,7 +89,7 @@ converterField.thermocycleDyes = function (input) {
   var filtered = _.filter(input, function (item) {
     return _.result(item, 'wells', []).length;
   });
-  //todo -verify a dye was selected
+  //todo -verify a dye was selected, or use defualt. currently view is reponsible for guarantee
   return _.zipObject(_.pluck(filtered, 'dye'), _.pluck(filtered, 'wells'));
 };
 

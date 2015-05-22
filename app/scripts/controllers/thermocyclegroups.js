@@ -15,7 +15,8 @@ angular.module('transcripticApp')
       self.groups.push({
         type : 'thermocycleGroup',
         value: {
-          steps: []
+          cycles : 1,
+          steps: [{}]
         }
       });
     };
