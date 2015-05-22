@@ -2,7 +2,7 @@ tx-operation-popover {
 
   $oppop-fromTop: 15px;
 
-  $oppop-arrow-width: 12px;
+  $oppop-arrow-width: 15px;
   $oppop-arrow-top: $oppop-arrow-width + $oppop-fromTop;
 
   $oppop-padding: $layout-spacing-md;
@@ -24,7 +24,7 @@ tx-operation-popover {
   background-color: $white;
   font-size: $font-size-sm;
   font-weight: $font-weight-light;
-  width: $layout-opSummary-width;
+  width: $layout-opSummary-width + ($layout-width-columnspace - $oppop-arrow-width);
   box-shadow: $box-shadow-popover;
 
   &:after {

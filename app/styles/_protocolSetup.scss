@@ -105,19 +105,6 @@ tx-protocol-setup {
     color: $white;
   }
 
-  &:after {
-    height: 0;
-    width: 0;
-    position: absolute;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    pointer-events: none;
-    border-top-color: rgba(255, 255, 255, 0.5);
-    border-width: 10px;
-    margin-left: -15px;
-  }
-
   &.drop-hover {
     border-bottom: $drop-hover-border;
   }
