@@ -5,6 +5,7 @@
  * @name transcripticApp.directive:txRun
  * @description
  * # txRun
+ * //todo - maybe should move verifications / submissions outside of here entirely. also maybe the remote verification listener
  */
 angular.module('transcripticApp')
   .directive('txRun', function ($q, $timeout, $rootScope, Auth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, RunHelper) {
@@ -57,28 +58,29 @@ angular.module('transcripticApp')
         };
 
 
-        function submitHelper (isRun) {
+        function submitHelper (isRun, forceProject) {
 
-          var funcToRun = isRun ? RunHelper.createRun : RunHelper.verifyRun;
+          var funcToRun = isRun ? RunHelper.createRun : RunHelper.verifyRun,
+              project = _.isUndefined(forceProject) ? self.project : forceProject;
 
           self.processing = true;
 
           var projectIdPromise;
 
           //runCtrl.project can be a string (if creating new) or an object (selected one)
-          if (_.isObject(self.project) && _.has(self.project, 'id')) {
-            projectIdPromise = $q.when(self.project);
+          if (_.isObject(project) && _.has(project, 'id')) {
+            projectIdPromise = $q.when(project);
           }
           //if edited project from dropdown, and not an object
           else {
-            var found = self.findProjectByname(self.project);
+            var found = self.findProjectByname(project);
             //first check and make sure not in projects
             if (_.isObject(found) && _.has(found, 'id')) {
               projectIdPromise = $q.when(found);
             }
             //create it and then use for posting later
             else {
-              projectIdPromise = Project.create({name: self.project}).$promise.then(function (project) {
+              projectIdPromise = Project.create({name: project}).$promise.then(function (project) {
 
                 //hack - force an update (maybe move to service? use this so rarely...)
                 $timeout(function () {
@@ -129,6 +131,12 @@ angular.module('transcripticApp')
       },
       link            : function (scope, element, attrs) {
 
+        //allow running of a verification from wherever without opening up the modal...
+        scope.$on('editor:initiateVerification', function (event) {
+          var project = _.result(scope.runCtrl, 'projects[0]', 'Wet Lab Accelerator');
+
+          scope.runCtrl.analyze(project);
+        });
 
       }
     };

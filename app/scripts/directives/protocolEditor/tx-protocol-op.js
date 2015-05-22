@@ -21,18 +21,8 @@ angular.module('tx.protocolEditor')
       controller: function ($scope, $element, $attrs) {
         var self = this;
 
-        self.toggleActionsMenu = function ($event, force) {
-          $event.preventDefault();
-          $event.stopPropagation();
-          $scope.showActions = angular.isDefined(force) ?
-            force :
-            !( $scope.showActions );
-        };
-
-        self.toggleRun = function ($event) {
-          $event.preventDefault();
-          $event.stopPropagation();
-          $rootScope.$broadcast('editor:toggleRunModal');
+        self.verifyProtocol = function () {
+          $rootScope.$broadcast('editor:initiateVerification');
         };
 
         self.optsDroppableOpTop = {
