@@ -22,7 +22,7 @@ angular.module('tx.protocolEditor')
 
         self.duplicateGroup = function (group) {
           var index = _.indexOf(self.protocol.groups, group);
-          self.protocol.groups.splice(index, 0, _.clone(group, true));
+          self.protocol.groups.splice(index, 0, angular.copy(group));
         };
 
         self.deleteGroup = function (group) {
