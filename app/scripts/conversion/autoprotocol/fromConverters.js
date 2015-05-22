@@ -87,7 +87,7 @@ converterField.thermocycleGroup = function (input, fieldObj) {
 
 converterField.thermocycleDyes = function (input) {
   var filtered = _.filter(input, function (item) {
-    return item.wells.length;
+    return _.result(item, 'wells', []).length;
   });
   console.log(filtered);
   //todo

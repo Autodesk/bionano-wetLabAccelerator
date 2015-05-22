@@ -19,6 +19,13 @@ angular.module('transcripticApp')
       return Omniprotocol.utils.pluckFieldValueRaw(self.operation.fields, fieldName);
     };
 
+    self.readableDimensional = function (dimObj) {
+      if (_.isUndefined(dimObj)) {
+        return 'unspecified amount';
+      }
+      return _.result(dimObj, 'value') + ' ' + _.result(dimObj, 'unit') + 's';
+    };
+
     //wells - pipette (mostly)
 
     self.pluckWellsFromContainer = function (fieldName, container) {
@@ -58,6 +65,8 @@ angular.module('transcripticApp')
       var containerName = self.getFieldValueByName(fieldName);
       return self.getContainerColorFromContainerName(containerName);
     };
+
+    // RESOURCE - might be moot with server handling
 
     self.trustResource = function (url) {
       return $sce.trustAsResourceUrl(url);

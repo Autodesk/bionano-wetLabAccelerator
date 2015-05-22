@@ -27,10 +27,6 @@ angular.module('transcripticApp')
         key : ''
       },
       {
-        name: 'Category',
-        key : ''
-      },
-      {
         name: 'Item',
         key : 'name'
       },
@@ -50,8 +46,8 @@ angular.module('transcripticApp')
       }
     ];
 
-    $scope.$watch('searchQuery', function (newQuery) {
-      newQuery && Catalog.byQuery(newQuery).then(function (data) {
+    $scope.$watch('searchQuery', function (newQuery, oldQuery) {
+      (!!newQuery && newQuery != oldQuery) && Catalog.byQuery(newQuery).then(function (data) {
         console.log(data.data);
         self.catalogResults = data.data;
       });

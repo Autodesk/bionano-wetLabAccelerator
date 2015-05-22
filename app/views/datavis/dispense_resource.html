@@ -1,0 +1,10 @@
+<div ng-init="volume = summaryCtrl.getFieldValueByName('volume');
+              resource = summaryCtrl.getFieldValueByName('resource')">
+  <tx-plate container="summaryCtrl.getContainerTypeFromWellField('wells')"
+            no-brush="true"
+            no-select="true"
+            group-data="{name : '', wells : summaryCtrl.pluckWellsFromContainer('wells') , color: summaryCtrl.getContainerColorFromWellField('wells')}">
+  </tx-plate>
+
+  <p>Dispense <span ng-bind="summaryCtrl.readableDimensional(volume)"></span> of <span ng-bind="resource.name || 'unspecified unreagent'"></span></p>
+</div>
