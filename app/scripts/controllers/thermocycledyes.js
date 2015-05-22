@@ -30,7 +30,19 @@ angular.module('transcripticApp')
     };
 
     this.handleWellSelection = function (wells) {
-      $scope.fieldCtrl.model[self.activeChannelIndex].wells = _.xor($scope.fieldCtrl.model[self.activeChannelIndex].wells, wells);
+      var modelForDye = $scope.fieldCtrl.model[self.activeChannelIndex];
+
+      modelForDye.wells = _.xor(modelForDye.wells, wells);
+
+      //if didn't have a dye selected, make sure one is chosen
+      //don't do in ng-init because dont want to override
+      //so hack to get the dye
+      if (_.isUndefined(modelForDye.dye)) {
+        modelForDye.dye = _.first(self.dyeOptions['channel' + (self.activeChannelIndex + 1)]);
+      }
+
+      //update our input just in case
+      self.dyeWells = modelForDye.wells;
     };
 
     //init

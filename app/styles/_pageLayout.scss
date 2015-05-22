@@ -41,6 +41,8 @@ body {
     padding-top: $layout-height-header;
     flex-grow: 1;
     align-self: center;
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   footer {

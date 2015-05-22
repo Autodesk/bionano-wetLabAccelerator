@@ -65,7 +65,7 @@ angular.module('tx.datavis')
         onSelect: '&?',  //returns array of selected wells
         onReset : '&?',
 
-        wellsInput    : '=?', //in-binding for selected wells. use onSelect() for changes out.
+        wellsInput    : '=?', //in-binding for selected wells. use onSelect() for changes out. Note that when using just groupData, this isn't necessary and might interfere with the model.
         transposeInput: '=?', //in-binding for transpose position
         focusWells    : '=?', //focus wells by shrinking others
 

@@ -5,6 +5,8 @@
  * @name transcripticApp.directive:txModal
  * @description
  * # txModal
+ *
+ * can use function scope.$close to close the modal, or you can add a function scope.$onClose() to run when closing the modal
  */
 angular.module('transcripticApp')
   .directive('txModal', function () {

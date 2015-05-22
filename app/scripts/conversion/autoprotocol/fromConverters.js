@@ -54,8 +54,8 @@ converterField.columnVolumes = function (input) {
 };
 
 converterField.thermocycleGroups = function (input, fieldObj) {
-  var inputDefault = _.result(fieldObj, 'default', {});
-  return _.map(input.value, function (group) {
+  var inputDefault = _.result(fieldObj, 'default', {}); //right now, this isn't anything
+  return _.map(input, function (group) {
     return converterField.thermocycleGroup(group.value, _.assign({}, inputDefault, group));
   });
 };
@@ -89,8 +89,8 @@ converterField.thermocycleDyes = function (input) {
   var filtered = _.filter(input, function (item) {
     return _.result(item, 'wells', []).length;
   });
-  console.log(filtered);
-  //todo
+  //todo -verify a dye was selected, or use defualt. currently view is reponsible for guarantee
+  return _.zipObject(_.pluck(filtered, 'dye'), _.pluck(filtered, 'wells'));
 };
 
 converterField.thermocycleMelting = function (input, fieldObj) {
