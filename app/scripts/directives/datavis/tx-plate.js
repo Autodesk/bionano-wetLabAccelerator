@@ -56,7 +56,7 @@ angular.module('tx.datavis')
         //interation
 
         noSelect     : '=?', //prevent selection of wells
-        noBrush      : '=',  //boolean - prevent brush for selection, use clicks instead
+        noBrush      : '=?',  //boolean - prevent brush for selection, use clicks instead
         selectPersist: '=?',  //boolean - allow selections to persist across one brush / click
 
         //bindings
@@ -88,6 +88,10 @@ angular.module('tx.datavis')
 
         scope.$watch('noSelect', function (hiding) {
           element.toggleClass('no-select', !!hiding);
+        });
+
+        scope.$watch('noBrush', function (hiding) {
+          element.toggleClass('no-brush', !!hiding);
         });
 
         scope.$watch('container', _.partial(rerender, true));
@@ -475,19 +479,19 @@ angular.module('tx.datavis')
               })
               .classed('hidden', true);
 
-        if (!scope.noBrush && !scope.noSelect) {
-          var brush = d3.svg.brush()
-            .x(xScale)
-            .y(yScale)
-            .on("brushstart", brushstart)
-            .on("brush", brushmove)
-            .on("brushend", brushend);
+        var brush = d3.svg.brush()
+          .x(xScale)
+          .y(yScale)
+          .on("brushstart", brushstart)
+          .on("brush", brushmove)
+          .on("brushend", brushend);
 
-          var brushg = svg.append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        var brushg = svg.append("g")
+          .classed('brush', true)
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-          brushg.call(brush);
-        }
+        brushg.call(brush);
+
 
         var brushIsDrawn = false;       //helper for new brush / drag old brush
 
@@ -788,7 +792,7 @@ angular.module('tx.datavis')
         }
 
         function safeClearBrush () {
-          if (!_.isEmpty(brush) && _.isFunction(brush.clear)) {
+          if (!_.isEmpty(brush) && _.isFunction(brush.clear) && _.isFunction(brushg.call)) {
             //clear the brush and update the DOM
             brushg.call(brush.clear());
             //trigger event to propagate data flow that it has been emptied
