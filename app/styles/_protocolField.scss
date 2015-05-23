@@ -25,8 +25,13 @@ tx-protocol-field {
   .field-value {
     display: inline-block;
     width: 50%;
-    padding-left: 10px;
+    padding-left: $layout-spacing-md;
     text-align: left;
+
+    &:only-child {
+      width: 100%;
+      padding-left: 0;
+    }
   }
 
   .field-value-inner {
@@ -76,7 +81,7 @@ tx-protocol-field {
     width: 20px;
     height: 20px;
     opacity: 0;
-    transition: opacity 0.15s ease-out;
+    transition: opacity $transition-out-time $transition-out-ease;
 
     &.active {
       opacity: 1;
@@ -92,11 +97,11 @@ tx-protocol-field {
     color: $black;
   }
 
-  &:hover {
-    .field-parameter-toggler {
+  .field-value:hover {
+    > .field-parameter-toggler {
       opacity: 1;
       background-color: $light-grey;
-      transition: opacity $transition-out-time ease-in;
+      transition: opacity $transition-out-time $transition-out-ease;
     }
   }
 }

@@ -30,7 +30,7 @@ angular.module('tx.datavis')
         r: 240, g: 240, b: 240, a: 1
       },
       disabled: {
-        r: 0, g: 0, b: 0, a: 0.1
+        r: 130, g: 130, b: 130, a: 0.5
       },
       data    : {
         r: 150, g: 150, b: 200, a: 1
@@ -49,22 +49,23 @@ angular.module('tx.datavis')
         //data
 
         plateData   : '=?',  //data as defined above
+        extentData  : '=?', //override the extent of the data, e.g. for calculating well radius, in form [min , max]
         groupData   : '=?', //array of groups with fields name, wells (alphanums) array or 'all', color (as string). if omitted, default to plateData, and preferGroups is ignored. Can be single object
         preferGroups: '=?', //if both plateData and groups are defined, true gives group coloring priority
 
         //interation
 
         noSelect     : '=?', //prevent selection of wells
-        noBrush      : '=',  //boolean - prevent brush for selection, use clicks instead
+        noBrush      : '=?',  //boolean - prevent brush for selection, use clicks instead
         selectPersist: '=?',  //boolean - allow selections to persist across one brush / click
 
         //bindings
 
-        onHover       : '&?',  //returns array of selected wells
-        onSelect      : '&?',  //returns array of selected wells
-        onReset       : '&?',
+        onHover : '&?',  //returns array of selected wells
+        onSelect: '&?',  //returns array of selected wells
+        onReset : '&?',
 
-        wellsInput    : '=?', //in-binding for selected wells. use onSelect() for changes out.
+        wellsInput    : '=?', //in-binding for selected wells. use onSelect() for changes out. Note that when using just groupData, this isn't necessary and might interfere with the model.
         transposeInput: '=?', //in-binding for transpose position
         focusWells    : '=?', //focus wells by shrinking others
 
@@ -89,18 +90,22 @@ angular.module('tx.datavis')
           element.toggleClass('no-select', !!hiding);
         });
 
+        scope.$watch('noBrush', function (hiding) {
+          element.toggleClass('no-brush', !!hiding);
+        });
+
         scope.$watch('container', _.partial(rerender, true));
-        scope.$watch('plateData', _.partial(rerender, false));
+        scope.$watchGroup(['plateData', 'extentData'] , _.partial(rerender, false));
         scope.$watch('groupData', _.partial(rerender, false), true);
 
         //these are grouped because need to timeout for wellsInput, but transposeInput will propagate empty selection if runs before wellsInput
         scope.$watchGroup(['wellsInput', 'transposeInput'], function (newStuff) {
-          var newWells = newStuff[0],
-              newTrans = newStuff[1],
+          var newWells        = newStuff[0],
+              newTrans        = newStuff[1],
               shouldPropagate = false;
 
           if (_.isNumber(newTrans) && newTrans != transposePosition) {
-            shouldPropagate = true;
+            shouldPropagate   = true;
             transposePosition = newTrans;
           }
 
@@ -347,9 +352,9 @@ angular.module('tx.datavis')
           } else if (!_.isEmpty(scope.plateData)) {
             //for changing radius of well
             var mapped     = _.mapValues(scope.plateData, 'value'),
-                extent     = d3.extent(_.values(mapped)),
-                min        = extent[0],
-                max        = extent[1],
+                extent     = (_.isArray(scope.extentData) && scope.extentData.length == 2) ?
+                  scope.extentData :
+                  d3.extent(_.values(mapped)),
                 normalizer = d3.scale.linear().domain(extent).range([0, 1]).nice(),
                 normalized = _.mapValues(mapped, normalizer);
 
@@ -474,19 +479,19 @@ angular.module('tx.datavis')
               })
               .classed('hidden', true);
 
-        if (!scope.noBrush && !scope.noSelect) {
-          var brush = d3.svg.brush()
-            .x(xScale)
-            .y(yScale)
-            .on("brushstart", brushstart)
-            .on("brush", brushmove)
-            .on("brushend", brushend);
+        var brush = d3.svg.brush()
+          .x(xScale)
+          .y(yScale)
+          .on("brushstart", brushstart)
+          .on("brush", brushmove)
+          .on("brushend", brushend);
 
-          var brushg = svg.append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        var brushg = svg.append("g")
+          .classed('brush', true)
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-          brushg.call(brush);
-        }
+        brushg.call(brush);
+
 
         var brushIsDrawn = false;       //helper for new brush / drag old brush
 
@@ -579,7 +584,7 @@ angular.module('tx.datavis')
             6     5
          */
         function transposeBrush () {
-          var wells = getSelectedWells();
+          var wells      = getSelectedWells();
           if (_.isEmpty(wells)) {
             transposeArrow.classed('hidden', true);
             return;
@@ -787,7 +792,7 @@ angular.module('tx.datavis')
         }
 
         function safeClearBrush () {
-          if (!_.isEmpty(brush) && _.isFunction(brush.clear)) {
+          if (!_.isEmpty(brush) && _.isFunction(brush.clear) && _.isFunction(brushg.call)) {
             //clear the brush and update the DOM
             brushg.call(brush.clear());
             //trigger event to propagate data flow that it has been emptied

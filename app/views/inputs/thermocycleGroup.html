@@ -4,67 +4,82 @@
 </a>
 <tx-modal ng-show="fieldCtrl.detailsVisible"
           title="Thermocycle Group">
-  <div ng-controller="thermocycleGroupsCtrl as thermoCtrl">
-    <tx-thermocycle-group group="fieldCtrl.model"></tx-thermocycle-group>
+  <div ng-controller="thermocycleGroupsCtrl as thermoCtrl"
+       class="row">
 
-    <table>
-      <tr>
-        <td class="operation-label">cycles</td>
-        <td>
-          <input type="number"
-                 ng-model="fieldCtrl.model.cycles">
-        </td>
-      </tr>
-    </table>
-
-    <div ng-repeat="step in fieldCtrl.model.steps">
+    <div class="col-sm-4">
       <table>
         <tr>
-          <td class="operation-label">duration</td>
+          <td class="operation-label">cycles</td>
           <td>
-            <tx-protocol-field ng-model="step.duration"
-                               field="{type: 'duration'}">
-            </tx-protocol-field>
-          </td>
-        </tr>
-        <tr>
-          <td class="operation-label">gradient</td>
-          <td>
-            <input type="checkbox"
-                   ng-model="step.isGradient">
-          </td>
-        </tr>
-        <tr ng-hide="step.isGradient">
-          <td class="operation-label">temperature</td>
-          <td>
-            <tx-protocol-field ng-model="step.temperature"
-                               field="{type: 'temperature'}">
-            </tx-protocol-field>
-          </td>
-        </tr>
-        <tr ng-show="step.isGradient">
-          <td class="operation-label">start</td>
-          <td>
-            <tx-protocol-field ng-model="step.gradientStart"
-                               field="{type: 'temperature'}">
-            </tx-protocol-field>
-          </td>
-          <td class="operation-label">end</td>
-          <td>
-            <tx-protocol-field ng-model="step.gradientEnd"
-                               field="{type: 'temperature'}">
-            </tx-protocol-field>
-          </td>
-        </tr>
-        <tr>
-          <td class="operation-label">read</td>
-          <td>
-            <input type="checkbox"
-                   ng-model="step.read">
+            <input type="number"
+                   ng-model="fieldCtrl.model.cycles">
           </td>
         </tr>
       </table>
+
+      <div ng-repeat="step in fieldCtrl.model.steps">
+        <table style="width: 100%;">
+          <tr>
+            <td class="operation-label">duration</td>
+            <td>
+              <tx-protocol-field ng-model="step.duration"
+                                 hide-title="true"
+                                 field="{type: 'duration'}">
+              </tx-protocol-field>
+            </td>
+          </tr>
+          <tr>
+            <td class="operation-label">gradient</td>
+            <td>
+              <input type="checkbox"
+                     ng-model="step.isGradient">
+            </td>
+          </tr>
+          <tr ng-hide="step.isGradient">
+            <td class="operation-label">temperature</td>
+            <td>
+              <tx-protocol-field ng-model="step.temperature"
+                                 hide-title="true"
+                                 field="{type: 'temperature'}">
+              </tx-protocol-field>
+            </td>
+          </tr>
+          <tr ng-show="step.isGradient">
+            <td class="operation-label">start</td>
+            <td>
+              <tx-protocol-field ng-model="step.gradientStart"
+                                 hide-title="true"
+                                 field="{type: 'temperature'}">
+              </tx-protocol-field>
+            </td>
+            <td class="operation-label">end</td>
+            <td>
+              <tx-protocol-field ng-model="step.gradientEnd"
+                                 hide-title="true"
+                                 field="{type: 'temperature'}">
+              </tx-protocol-field>
+            </td>
+          </tr>
+          <tr>
+            <td class="operation-label">read</td>
+            <td>
+              <input type="checkbox"
+                     ng-model="step.read">
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <a class="field-action-text"
+         ng-click="thermoCtrl.addStep(fieldCtrl.model)">
+        + Add Step
+      </a>
     </div>
-    <button ng-click="thermoCtrl.addStep(fieldCtrl.model)">+ step</button>
+
+    <div class="col-sm-8">
+      <tx-thermocycle-group group="fieldCtrl.model"></tx-thermocycle-group>
+    </div>
+
   </div>
 </tx-modal>

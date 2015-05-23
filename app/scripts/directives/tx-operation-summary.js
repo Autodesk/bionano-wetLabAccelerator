@@ -59,7 +59,7 @@ angular.module('transcripticApp')
               element.html($compile($el)(scope));
             }).
             error(function () {
-              element.html('<div class="alert alert-warning">template not found</div>')
+              //element.html('<div class="alert alert-warning">template not found</div>')
             });
         }
 

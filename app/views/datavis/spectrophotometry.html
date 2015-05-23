@@ -13,6 +13,7 @@
 
   <tx-timepointgraph ng-if="spectroCtrl.graphData"
                      data="spectroCtrl.graphData"
+                     extent-data="spectroCtrl.dataExtent"
                      series-selected="spectroCtrl.currentWells"
                      is-linear="true"
                      on-hover="spectroCtrl.onGraphHover($well)">
@@ -28,6 +29,7 @@
   <tx-plate container="spectroCtrl.currentContainer || initialContainer"
             no-select="!spectroCtrl.graphData"
             plate-data="spectroCtrl.graphData[spectroCtrl.currentTimepoint]"
+            extent-data="spectroCtrl.dataExtent"
             group-data="{name: 'spectrowells', wells: initialWells, color: initialContainerColor}"
             on-hover="spectroCtrl.hoverPlateWells($wells)"
             focus-wells="spectroCtrl.focusedWells"

@@ -1,5 +1,5 @@
 <div class="field-label"
-     ng-hide="fieldCtrl.hideTitle"
+     ng-if="!fieldCtrl.hideTitle"
      ng-class="{optional: fieldCtrl.field.optional == true}"
      ng-bind="fieldCtrl.field.name">
 </div>
@@ -16,7 +16,8 @@
       <li ng-repeat="p in fieldCtrl.parameters | filter:{type: fieldCtrl.field.type}"
           ng-click="fieldCtrl.selectParameter(p, $event)"><a ng-bind="p.name"></a></li>
       <li class="divider" ng-if="!fieldCtrl.field.parameter || !fieldCtrl.parameters[fieldCtrl.field.type]"></li>
-      <li ng-if="!fieldCtrl.field.parameter" ng-click="fieldCtrl.createNewParameter()"><a>create new parameter...</a></li>
+      <li ng-if="!fieldCtrl.field.parameter" ng-click="fieldCtrl.createNewParameter()"><a>create new parameter...</a>
+      </li>
     </ul>
   </div>
   <div ng-show="fieldCtrl.field.parameter" class="field-value-inner field-parameter">

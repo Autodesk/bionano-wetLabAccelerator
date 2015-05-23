@@ -4,7 +4,7 @@
 
 // colors
 
-$white: #fdfdfd;
+$white: #ffffff;
 $light-grey: #CCCCCC;
 $grey: #a1a1a1;
 $dark-grey: #666666;
@@ -104,7 +104,7 @@ $layout-spacing-sm: 5px;
 
 //containers + columns
 
-$layout-container-width: 960px;
+$layout-container-width: 940px;
 $layout-container-padding-side: 10px;
 $layout-container-padding-left: $layout-width-column + $layout-width-columnspace + $layout-container-padding-side;
 $layout-width-page: $layout-container-width + (2 * $layout-container-padding-side);
