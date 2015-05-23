@@ -1,5 +1,4 @@
-from selenium.webdriver import ActionChains
-from selenium.webdriver.common.keys import Keys
+
 import time
 from tests import TestBase
 
@@ -17,7 +16,8 @@ class TestBasicInteractions(TestBase):
         self.verifyIsDisplayed(self.page.getResultsLink(), "results link")
         self.verifyIsDisplayed(self.page.getSignInLink(), "sign in link")
 
-        #self.page.signIn("max.bates@autodesk.com", "yaycyborg!")
+        success = self.page.signIn("max.bates@autodesk.com", "yaycyborg!")
+        self.verifyTrue(success, "is signed in")
 
 
     def test_build_ui(self):
@@ -36,24 +36,26 @@ class TestBasicInteractions(TestBase):
         self.verifyTrue(protocolSetup.isExpanded(), "verify protocol setup is expanded")
         protocolSetup.listParameters()
 
-        protocolSetup.getAddParameterElements()
+        #protocolSetup.getAddParameterElements()
 
 
         volumeSetupParameter = protocolSetup.addParameter("Volume")
-        protocolSetup.listParameters()
-        self.verifyTrue(volumeSetupParameter.getParameterType() == "volume", "verify parameter type is volume")
+        volumeSetupParameter.setVariableName("volumeOne")
 
-        time.sleep(10)
+        protocolSetup.listParameters()
+        self.verifyEqual(volumeSetupParameter.getParameterType(), "volume", "parameter type")
+        self.verifyEqual(volumeSetupParameter.getVariableName(), "volumeOne", "parameter name")
+        time.sleep(5)
 
         protocolSetup.collapse()
-        self.assertFalse(protocolSetup.isExpanded(), "verify protocol setup is closed")
+        self.verifyFalse(protocolSetup.isExpanded(), "verify protocol setup is closed")
         # self.verifyIsDisplayed(build.getClearProtocolButton(), "clear protocol button")
         # self.verifyIsDisplayed(build.getToggleStepVisibilityButton(), "toggle step visibility button")
         # self.verifyIsDisplayed(build.getSaveProtocolButton(), "clear protocol button")
 
-    def test_executeScript(self):
-        self.page.clickBuild()
-        build = self.build
-
-        scriptReturn = self.DRIVER.execute_script("return angular.element($('.setup-variable')[0]).scope()")
-        print(scriptReturn)
+    # def test_executeScript(self):
+    #     self.page.clickBuild()
+    #     build = self.build
+    #
+    #     scriptReturn = self.DRIVER.execute_script("return angular.element($('.setup-variable')[0]).scope()")
+    #     print(scriptReturn)

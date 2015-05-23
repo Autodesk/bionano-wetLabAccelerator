@@ -7,7 +7,11 @@ from testconfig import config
 from helpers import environment
 
 from PIL import Image
-
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.keys import Keys
 
 class Page:
     """This is a generic page class. It makes certain methods accessible
@@ -21,6 +25,7 @@ class Page:
 
     URL_POSTFIX = config['url_postfix']
     URL_PREFIX = os.environ.get('URL_PREFIX')
+    TIMEOUT = 15
 
     if URL_PREFIX != None:
         BASE_URL = "http://" + URL_PREFIX + "." + URL_POSTFIX
@@ -36,9 +41,43 @@ class Page:
     def action(self, actionDescription):
         print("  Action -- " + actionDescription)
 
+    def findElement(self, locator):
+
+        return self.DRIVER.find_element(*locator)
+
+    def findElementByXpath(self, xpath):
+        return self.findElement(By.XPATH, xpath)
+
+    def findElementById(self, id):
+        return self.findElement(By.ID, id)
+
     def click(self, element, description):
         self.action("click on " + description)
         element.click()
+
+    def waitForElementByClassName(self, className):
+        return self.waitForElement((By.CLASS_NAME, className))
+
+    def waitForElementById(self, id):
+        return self.waitForElement((By.ID, id))
+
+    def waitForElementByXpath(self, xpath):
+        return self.waitForElement((By.XPATH, xpath))
+
+    def waitForElement(self, locator):
+        try:
+            print("waiting for element: " + str(locator))
+            WebDriverWait(self.DRIVER, self.TIMEOUT).until(
+                expected_conditions.presence_of_element_located(locator))
+            return True
+        except TimeoutException:
+            print("time out waiting for element: " + str(locator))
+            return False
+
+    def setField(self, element, value, description = "textfield"):
+        self.action("set " + description + " to " + value)
+        element.send_keys(value)
+        element.send_keys(Keys.ENTER)
 
     def toggle_visibility_by_class(self, classname):
         """Toggle the visibility of the object by a classname selector.
@@ -176,3 +215,10 @@ class Page:
         ed = sum((_d[0] - _d2[0]) ** 2 + (_d[0] - _d2[0]) ** 2 + (_d[0] - _d2[0]) ** 2 for _d, _d2 in zip(d_i, d_i2))
         comparison = ed / len(d_i)
         return comparison
+
+class Locator():
+    def __init__(self, locatorType, locatorValue, description):
+        self.locatorType = locatorType
+        self.locatorValue = locatorValue
+        self.description = description
+

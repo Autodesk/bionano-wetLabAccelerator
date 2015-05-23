@@ -98,13 +98,14 @@ class ProtocolSetup(Page):
     def addParameter(self, parameterType):
         self.action("add parameter: " + parameterType)
         self.getAddParameterElement().click()
-        self.getAddParameterElement().find_element_by_xpath("//a[text()='" + parameterType + "']").click()
+        self.getAddParameterElement().find_element_by_xpath(".//a[text()='" + parameterType + "']").click()
         newParam = self.getParameters()[-1]
         print(newParam.getParameterType())
         return newParam
 
     def getAddParameterElements(self):
-        parameters = self.getAddParameterElement().find_elements_by_xpath("/a")
+        self.getAddParameterElement().click()
+        parameters = self.getAddParameterElement().find_elements_by_xpath(".//a")
         for parameter in parameters:
             print(parameter.text)
 
@@ -130,11 +131,12 @@ class SetupParameter(Page):
 
     def setVariableName(self, variableName):
         self.getVariableNameInputField().click()
-        self.getVariableNameInputField().send_keys(variableName)
-        self.getVariableNameInputField().send_keys(Keys.ENTER)
+        self.setField(self.getVariableNameInputField(), variableName)
+        # self.getVariableNameInputField().send_keys(variableName)
+        # self.getVariableNameInputField().send_keys(Keys.ENTER)
 
     def getVariableNameInputField(self):
-        return self.parameterElement.find_element_by_class_name("input-styled")
+        return self.parameterElement.find_element_by_xpath("./input[@ng-model='param.name']")
 
 
 class ProtocolInstructions(Page):

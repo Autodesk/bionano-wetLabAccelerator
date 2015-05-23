@@ -1,0 +1,10 @@
+{
+  "protocolLink" : {
+    "locator type" : "xpath",
+    "value" : "//a[text()='PROTOCOL']",
+    "description" : "protocol link"
+  },
+  "resultsLink" : {}
+
+
+}
