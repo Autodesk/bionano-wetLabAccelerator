@@ -47,7 +47,7 @@ class TestBase(Base._BaseTest):
         self.assertFalse(actual, description)
 
     def verifyEqual(self, actual, expected, description):
-        verifyString = "verify " + description + " is equal"
+        verifyString = "verify " + description + " is equal to " + str(expected)
         self.verifyString(actual, expected, verifyString)
         self.assertEqual(actual, expected, verifyString)
 
