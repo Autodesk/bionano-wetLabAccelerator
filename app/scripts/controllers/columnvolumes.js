@@ -49,6 +49,10 @@ angular.module('transcripticApp')
       self.colvolActive = self.groups.length - 1;
     };
 
+    self.deleteGroup = function (group) {
+      _.remove(self.groups, group);
+    };
+
     self.handleColumnSelection = function (column) {
       if (self.colvolActive < 0) return;
 

@@ -30,7 +30,7 @@ angular.module('tx.datavis')
         r: 240, g: 240, b: 240, a: 1
       },
       disabled: {
-        r: 0, g: 0, b: 0, a: 0.1
+        r: 130, g: 130, b: 130, a: 0.5
       },
       data    : {
         r: 150, g: 150, b: 200, a: 1

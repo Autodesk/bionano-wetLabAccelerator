@@ -20,20 +20,20 @@
     <div class="column-16 div-centered">
       <h4 class="thin">Search Results</h4>
 
-      <div class="catalog-results">
-        <div class="catalog-results-header">
-          <div class="catalog-item-field"
+      <div class="tx-table dark">
+        <div class="tx-table-header">
+          <div class="tx-table-item-field"
                ng-repeat="field in catCtrl.itemFields"
                ng-bind="field.name"></div>
-          <div class="catalog-item-field">Action</div>
+          <div class="tx-table-item-field">Action</div>
         </div>
-        <div class="catalog-item"
+        <div class="tx-table-item"
              ng-repeat="item in catCtrl.catalogResults">
-          <div class="catalog-item-field"
+          <div class="tx-table-item-field"
                ng-repeat="field in catCtrl.itemFields"
                ng-bind="item[field.key] || '-'"></div>
           <div dropdown
-               class="catalog-item-field">
+               class="tx-table-item-field">
             <span dropdown-toggle>select</span>
             <ul class="dropdown-menu">
               <li>
