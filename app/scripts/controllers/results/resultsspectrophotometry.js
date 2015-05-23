@@ -24,9 +24,19 @@ angular.module('transcripticApp')
 
       self.containers = _.keys(self.opData);
       self.selectContainer(self.containers[0]);
+
+      //todo - perf... maybe look at the autoprotocol or something?
+      var unfolded  = Omniprotocol.utils.unfoldProtocol($scope.summaryCtrl.protocol),
+          timepoint = _.reduce(unfolded, function (opIndexOfType, operation, flatIndex) {
+            if (operation.operation == self.opName && flatIndex < newIndices.unfolded) {
+              opIndexOfType++;
+            }
+            return opIndexOfType;
+          }, 0);
+
+      self.selectTimepoint(timepoint);
     });
 
-    //todo - watch operation index and update plate + graph accordingly
     /*
     var unfolded     = Omniprotocol.utils.unfoldProtocol($scope.summaryCtrl.protocol),
         timepoint = _.reduce(unfolded, function (opIndexOfType, operation) {
@@ -44,7 +54,6 @@ angular.module('transcripticApp')
       self.currentContainer = _.result(_.sample(self.rundataFiltered), 'container_type.shortname');
 
       self.timepointValues = _.sortBy(_.keys(self.graphData));
-      self.selectTimepoint(0);
     };
 
     self.selectTimepoint = function (idx) {
