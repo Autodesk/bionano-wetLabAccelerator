@@ -1,0 +1,32 @@
+.tx-table {
+  display: table;
+  width: 100%;
+
+  &.dark {
+    background: $black;
+  }
+
+  &-header {
+    display: table-row;
+    color: $light-grey;
+  }
+
+  &-item {
+    display: table-row;
+    color: $white;
+
+    &.active,
+    &:hover {
+      background-color: $primary;
+    }
+
+    &.selected {
+      background-color: $black;
+    }
+  }
+
+  &-item-field {
+    display: table-cell;
+    padding: 0 0.25em;
+  }
+}

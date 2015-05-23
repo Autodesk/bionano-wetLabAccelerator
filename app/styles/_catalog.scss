@@ -1,28 +1,3 @@
 .catalog-browser {
 
-
-  .catalog-results {
-    display: table;
-    background: $black;
-    width: 100%;
-  }
-
-  .catalog-results-header {
-    display: table-row;
-    color: $light-grey;
-  }
-
-  .catalog-item {
-    display: table-row;
-    color: $white;
-
-    &:hover {
-      background-color: $primary;
-    }
-  }
-
-  .catalog-item-field {
-    display: table-cell;
-    padding: 0 0.25em;
-  }
 }
