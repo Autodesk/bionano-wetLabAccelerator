@@ -33,6 +33,11 @@ angular.module('transcripticApp')
               blob = new Blob([angular.toJson(formatted, true)], {type: "application/json"}),
               url = $window.URL.createObjectURL(blob);
 
+          if (_.isEmpty(formatted)) {
+            console.warn('file empty! not triggering download...');
+            return;
+          }
+
           a.style.display = "none";
           a.href = url;
           a.download = scope.filename || 'saved_json.json';

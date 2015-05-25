@@ -14,7 +14,7 @@ angular.module('transcripticApp')
       'consolidate': 'pipette',
       'distribute' : 'pipette',
 
-      'mix': 'mix',
+      'mix'              : 'mix',
       'dispense_resource': 'dispense_resource',
 
       'dispense': 'dispense',
@@ -29,7 +29,8 @@ angular.module('transcripticApp')
       'cover'   : 'container',
       'uncover' : 'container',
 
-      'gel_separate' : 'gel_separate'
+      'image_plate' : 'attachment',
+      'gel_separate': 'attachment'
     };
 
     return {

@@ -9,7 +9,7 @@
  * todo - move away from firebase
  */
 angular.module('transcripticApp')
-  .service('ProtocolHelper', function ($q, $rootScope, $timeout, UUIDGen, simpleLogin, FBProfile, Omniprotocol, Autoprotocol, Authentication) {
+  .service('ProtocolHelper', function ($q, $rootScope, $timeout, UUIDGen, simpleLogin, FBProfile, Omniprotocol, Autoprotocol, Authentication, Notify) {
 
     var self = this;
 
@@ -21,7 +21,10 @@ angular.module('transcripticApp')
 
     self.assignCurrentProtocol = function (newProtocol) {
       //second object is hack for firebase
-      _.assign(self.currentProtocol, {$id : null, $priority: null}, Omniprotocol.utils.getScaffoldProtocol(), newProtocol);
+      _.assign(self.currentProtocol, {
+        $id      : null,
+        $priority: null
+      }, Omniprotocol.utils.getScaffoldProtocol(), newProtocol);
       $timeout(function () {
         $rootScope.$broadcast('editor:newprotocol');
       })
@@ -96,7 +99,27 @@ angular.module('transcripticApp')
       return $q.when(_.assign(protocol, Omniprotocol.utils.getScaffoldProtocol()));
     };
 
-    self.convertToAutoprotocol = Autoprotocol.fromAbstraction;
+    self.convertToAutoprotocol = function (protocol) {
+      try {
+        return Autoprotocol.fromAbstraction(protocol);
+      } catch (e) {
+        if (e instanceof ConversionError) {
+          $rootScope.$broadcast('editor:verificationFailureLocal', [{
+            $index   : e.$index,
+            message  : e.message,
+            field    : e.field,
+            fieldName: e.fieldName
+          }]);
+        } else {
+          //how to handle?
+          console.error(e);
+          Notify({
+            message: 'Unknown error converting protocol to Autoprotocol. Check browser console.',
+            error  : true
+          });
+        }
+      }
+    };
 
     // watchers //
 

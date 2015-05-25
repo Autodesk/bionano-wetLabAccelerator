@@ -2,6 +2,7 @@
 
   &-spin,
   &-incubate,
+  &-image_plate,
   &-seal,
   &-cover,
   &-uncover,
@@ -33,6 +34,10 @@
 
   &-incubate {
     background-image: url('../images/incubate.png');
+  }
+
+  &-incubate {
+    background-image: url('../images/image_plate.png');
   }
 
   &-seal {

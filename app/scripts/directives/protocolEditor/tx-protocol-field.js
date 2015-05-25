@@ -6,14 +6,13 @@
  * @description
  * # txProtocolInput
  *
- * todo - can probably clean this up a lot using ProtocolHelper - containerType + containerName stuff is weird
  */
 angular.module('tx.protocolEditor')
   .directive('txProtocolField', function ($http, $compile, $timeout, Omniprotocol, Autoprotocol, ProtocolHelper) {
     return {
       templateUrl     : 'views/tx-protocol-field.html',
       restrict        : 'E',
-      require         : 'ngModel',
+      require         : ['ngModel', '^?txProtocolOp'], // won't have opCtrl if setup, or standalone, etc.
       scope           : {
         model          : '=ngModel',
         field          : '=',
@@ -133,7 +132,13 @@ angular.module('tx.protocolEditor')
               iElement.find('tx-protocol-field-inner').html($compile($el)(scope));
             });
           },
-          post: function postLink (scope, iElement, iAttrs, ngModel) {
+          post: function postLink (scope, iElement, iAttrs, controllers) {
+
+            var ngModel = controllers[0],
+                opCtrl = controllers[1];
+
+            scope.hasOpCtrl = !_.isUndefined(opCtrl);
+            scope.opCtrl = opCtrl;
 
             //have dimensional here instead of own conroller because needs ngModel controller
             //if dimensional, ensure that unit is defined when changed
