@@ -6,6 +6,8 @@
  * @description
  * # OperationsummaryctrlCtrl
  * Controller of the transcripticApp
+ *
+ * todo - rename to match names in protocolUtils
  */
 angular.module('transcripticApp')
   .controller('operationSummaryCtrl', function ($scope, $sce, Communication, ProtocolHelper, Omniprotocol, ProtocolUtils) {

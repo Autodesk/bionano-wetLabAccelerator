@@ -39,15 +39,15 @@ angular.module('tx.protocolEditor')
 
         //wells - pipette (mostly)
 
-        self.getContainerFromWellField = applyOpToFn(ProtocolUtils.getFirstContainerFromAliquots);
+        self.getContainerFromAliquots = applyOpToFn(ProtocolUtils.getFirstContainerFromAliquots);
 
-        self.getContainerTypeFromWellField = applyOpToFn(ProtocolUtils.getContainerTypeFromAliquots);
+        self.getContainerTypeFromAliquots = applyOpToFn(ProtocolUtils.getContainerTypeFromAliquots);
 
-        self.getContainerColorFromWellField = applyOpToFn(ProtocolUtils.getContainerColorFromAliquots);
+        self.getContainerColorFromAliquots = applyOpToFn(ProtocolUtils.getContainerColorFromAliquots);
 
         //functions for fields with type container
 
-        self.getContainerTypeFromAliquots = applyOpToFn(ProtocolUtils.getContainerTypeFromAliquots);
+        self.getContainerTypeFromFieldName = applyOpToFn(ProtocolUtils.getContainerTypeFromFieldName);
 
         self.getContainerColorFromFieldName = applyOpToFn(ProtocolUtils.getContainerColorFromFieldName);
 
