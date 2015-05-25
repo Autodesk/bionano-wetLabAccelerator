@@ -10,7 +10,7 @@ var _                    = require('lodash'),
  Field Conversion
  *******************/
 
-//todo - need to get dimensional value + unit defaults
+//todo - need to get dimensional value + unit defaults, use a default unit
 
 function convertDimensionalWithDefault (omnidim, omnidef) {
   return autoUtils.convertDimensionalToAuto(_.assign({}, omnidef, omnidim));
@@ -23,7 +23,7 @@ _.forEach(autoUtils.dimensionalFields, function (dimensional) {
   };
 });
 
-//todo - handle undefined!!!!!
+//todo - handle undefined
 function mapSomeDimensionalFields (input, defaults, dimensional, nondimensional) {
   return _.assign({},
     _.zipObject(dimensional, _.map(dimensional, function (dim) {
@@ -111,6 +111,8 @@ converterField.resource = function (input, fieldObj) {
  Instruction Conversion
  *******************/
 
+//todo - following refactor of OmniConv, update all these to pass in the operation rather than just fields so indices can be propagated
+
 function simpleMapOperation (op, localParams) {
   return _.assign({
     op: op.operation
@@ -150,8 +152,7 @@ converterInstruction.transfer = function (op) {
       optionalObj    = omniConv.getFieldsIfSet(op.fields, optionalFields, true, converterField),
       transfers      = [];
 
-  //todo - eventually, we want to put some of this in 'requirements' for the operation (pending them all written to
-  // know what is consistent)
+  //todo - eventually, fold the pipette operations into one, and delegate based on 1-n, n-1, n-n
   if (fromWells.length != toWells.length) {
 
     if (fromWells.length == 1) {
@@ -211,7 +212,6 @@ converterInstruction.consolidate = function (op) {
 };
 
 converterInstruction.distribute = function (op) {
-  //todo - pass converters to transformer
   var fromWell          = omniConv.pluckFieldValueTransformed(op.fields, 'from', converterField),
       toWells           = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'to')),
       volume            = omniConv.pluckFieldValueTransformed(op.fields, 'volume', converterField),

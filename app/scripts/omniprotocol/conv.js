@@ -10,7 +10,7 @@ var _      = require('lodash'),
 
 //given a field object (with type and value), and an map of converters with keys of fieldType, transform a field, or just return the value
 //if allowDefault is false, do not allow using default if value is undefined
-//todo - maybe makes sense to error if fieldConverters is missing the field type
+//todo - pass in the field / op indices
 function transformField (fieldObj, fieldConverters, allowDefault) {
   var fieldVal  = _.result(fieldObj, 'value'),
       fieldType = _.result(fieldObj, 'type'),
@@ -37,6 +37,7 @@ function transformField (fieldObj, fieldConverters, allowDefault) {
 }
 
 //get field value, and run through converterKey (default 'toAutoprotocol')
+//todo - pass in whole op (including indices)
 function pluckFieldValueTransformed (fields, fieldName, fieldConverters) {
   var field = utils.pluckField(fields, fieldName);
   return transformField(field, fieldConverters);
@@ -44,6 +45,7 @@ function pluckFieldValueTransformed (fields, fieldName, fieldConverters) {
 
 //Given list of fields, and array of desired field keys, returns object where desired key is present only if value is
 // defined, or uses default value if allowDefault is defined
+//todo - pass in whole op (including indices)
 function getFieldsIfSet (fields, desired, allowDefault, fieldConverters) {
   var obj = {};
   _.forEach(desired, function (desiredKey) {
@@ -63,6 +65,7 @@ function getFieldsIfSet (fields, desired, allowDefault, fieldConverters) {
 
 //given array of abstraction fields, convert to keyvals where field.name is key and field.value is value. Does not
 // handle interpolation.
+//todo - pass in whole op (including indices)
 function simpleKeyvalFields (fields, localParams, fieldConverters) {
   var obj = {};
   _.forEach(fields, function (field) {

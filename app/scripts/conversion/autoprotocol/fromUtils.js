@@ -19,6 +19,7 @@ function convertInstruction (inst, localParams) {
   return converter(inst, localParams);
 }
 
+//todo - pass error information to tie back to parameters
 function makeReference (ref) {
   var obj      = {},
       internal = {};
