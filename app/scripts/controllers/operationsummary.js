@@ -6,18 +6,18 @@
  * @description
  * # OperationsummaryctrlCtrl
  * Controller of the transcripticApp
+ *
+ * todo - rename to match names in protocolUtils
  */
 angular.module('transcripticApp')
-  .controller('operationSummaryCtrl', function ($scope, $sce, Communication, ProtocolHelper, Omniprotocol) {
+  .controller('operationSummaryCtrl', function ($scope, $sce, Communication, ProtocolHelper, Omniprotocol, ProtocolUtils) {
     var self = this;
 
     self.protocol = ProtocolHelper.currentProtocol;
 
     //general helper functions
 
-    self.getFieldValueByName = function (fieldName) {
-      return Omniprotocol.utils.pluckFieldValueRaw(self.operation.fields, fieldName);
-    };
+    self.getFieldValueByName = applyOpToFn(ProtocolUtils.getFieldValFromOpByName);
 
     self.readableDimensional = function (dimObj) {
       if (_.isUndefined(dimObj)) {
@@ -28,43 +28,25 @@ angular.module('transcripticApp')
 
     //wells - pipette (mostly)
 
-    self.pluckWellsFromContainer = function (fieldName, container) {
-      var fieldVal = Omniprotocol.utils.pluckFieldValueRaw(self.operation.fields, fieldName),
-          filterFunction = _.isUndefined(container) ? _.constant(true) : _.matches({container: container});
-      return _.pluck(_.filter(fieldVal, filterFunction), 'well');
-    };
+    self.pluckWellsFromContainer = applyOpToFn(ProtocolUtils.pluckWellsFromAliquots);
 
-    self.getContainerFromWellField = function (fieldName) {
-      var fieldVal = Omniprotocol.utils.pluckFieldValueRaw(self.operation.fields, fieldName);
-      return _.result(fieldVal, '[0].container');
-    };
+    self.getContainerFromWellField = applyOpToFn(ProtocolUtils.getFirstContainerFromAliquots);
 
-    self.getContainerTypeFromWellField = function (fieldName) {
-      var containerName = self.getContainerFromWellField(fieldName);
-      return Omniprotocol.utils.getContainerTypeFromName(self.protocol.parameters, containerName);
-    };
-    
-    self.getContainerColorFromWellField = function (fieldName) {
-      var containerName = self.getContainerFromWellField(fieldName);
-      return self.getContainerColorFromContainerName(containerName);
-    };
+    self.getContainerTypeFromWellField = applyOpToFn(ProtocolUtils.getContainerTypeFromAliquots);
+
+    self.getContainerColorFromWellField = applyOpToFn(ProtocolUtils.getContainerColorFromAliquots);
 
     //functions for fields with type container
 
-    self.getContainerTypeFromFieldName = function (fieldName) {
-      var containerName = self.getFieldValueByName(fieldName);
-      return Omniprotocol.utils.getContainerTypeFromName(self.protocol.parameters, containerName);
-    };
+    self.getContainerTypeFromFieldName = applyOpToFn(ProtocolUtils.getContainerTypeFromFieldName);
 
-    self.getContainerColorFromContainerName = function (containerName) {
-      var cont = Omniprotocol.utils.getContainerFromName(self.protocol.parameters, containerName);
-      return _.result(cont, 'value.color');
-    };
+    self.getContainerColorFromFieldName = applyOpToFn(ProtocolUtils.getContainerColorFromFieldName);
 
-    self.getContainerColorFromFieldName = function (fieldName) {
-      var containerName = self.getFieldValueByName(fieldName);
-      return self.getContainerColorFromContainerName(containerName);
-    };
+    self.getContainerColorFromContainerName = ProtocolUtils.getContainerColorFromContainerName;
+
+    function applyOpToFn (utilFn) {
+      return _.partial(utilFn, self.operation);
+    }
 
     // RESOURCE - might be moot with server handling
 
@@ -77,10 +59,10 @@ angular.module('transcripticApp')
     };
 
     self.getResource = function (resourceKey) {
-      return Communication.request( self.getResourceUrl(resourceKey) , 'get', {
-        responseType : 'blob',
-        headers : {
-          'Accept' : 'image/jpeg',
+      return Communication.request(self.getResourceUrl(resourceKey), 'get', {
+        responseType: 'blob',
+        headers     : {
+          'Accept'      : 'image/jpeg',
           'Content-Type': 'image/jpeg'
         }
       })
@@ -91,11 +73,11 @@ angular.module('transcripticApp')
 
           //expects a blob
           // encode data to base 64 url
-          var fr = new FileReader();
-          fr.onload = function(){
+          var fr    = new FileReader();
+          fr.onload = function () {
             // this variable holds your base64 image data URI (string)
             // use readAsBinary() or readAsBinaryString() below to obtain other data types
-            console.log( fr.result );
+            console.log(fr.result);
             self.imageUrl = fr.result;
           };
           fr.readAsDataURL(data);

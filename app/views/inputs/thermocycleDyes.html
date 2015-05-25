@@ -20,8 +20,7 @@
     </div>
 
     <div class="col-md-8">
-      <!--todo container should be dynamic -->
-      <tx-plate container="'96-flat'"
+      <tx-plate container="opCtrl.getContainerTypeFromFieldName('object') || '384-flat'"
                 group-data="fieldCtrl.model"
                 select-persist="true"
                 on-select="dyeCtrl.handleWellSelection($wells)"></tx-plate>

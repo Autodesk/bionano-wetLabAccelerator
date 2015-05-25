@@ -8,17 +8,17 @@
  *
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolOp', function ($rootScope, DragDropManager) {
+  .directive('txProtocolOp', function ($rootScope, ProtocolUtils, DragDropManager) {
     return {
-      templateUrl: 'views/tx-protocol-op.html',
-      restrict: 'E',
-      require: '^txProtocolGroup',
-      scope: {
+      templateUrl     : 'views/tx-protocol-op.html',
+      restrict        : 'E',
+      require         : '^txProtocolGroup',
+      scope           : {
         op: '=protocolStep'
       },
       bindToController: true,
-      controllerAs: 'opCtrl',
-      controller: function ($scope, $element, $attrs) {
+      controllerAs    : 'opCtrl',
+      controller      : function ($scope, $element, $attrs) {
         var self = this;
 
         self.verifyProtocol = function () {
@@ -35,14 +35,28 @@ angular.module('tx.protocolEditor')
           }
         };
 
-        //note - called by protocol-editor
-        $scope.receiveVerification = function (ver) {
-          console.log(ver);
-          _.assign(self, {verification : ver});
-        };
+        //todo - functions below are same as in operationSummary (but with different op binding)... maybe make a factory and pass in op?
 
+        //wells - pipette (mostly)
+
+        self.getContainerFromAliquots = applyOpToFn(ProtocolUtils.getFirstContainerFromAliquots);
+
+        self.getContainerTypeFromAliquots = applyOpToFn(ProtocolUtils.getContainerTypeFromAliquots);
+
+        self.getContainerColorFromAliquots = applyOpToFn(ProtocolUtils.getContainerColorFromAliquots);
+
+        //functions for fields with type container
+
+        self.getContainerTypeFromFieldName = applyOpToFn(ProtocolUtils.getContainerTypeFromFieldName);
+
+        self.getContainerColorFromFieldName = applyOpToFn(ProtocolUtils.getContainerColorFromFieldName);
+
+
+        function applyOpToFn (utilFn) {
+          return _.partial(utilFn, self.op);
+        }
       },
-      link: function (scope, element, attrs, groupCtrl) {
+      link            : function (scope, element, attrs, groupCtrl) {
 
         scope.groupCtrl = groupCtrl;
 
@@ -77,6 +91,12 @@ angular.module('tx.protocolEditor')
         scope.$on('editor:verificationSuccess', function (e, val) {
           delete scope.opCtrl.verification;
         });
+
+        //note - called by protocol-editor
+        scope.receiveVerification = function (ver) {
+          console.log(ver);
+          _.assign(scope.opCtrl, {verification: ver});
+        };
       }
     };
   });
