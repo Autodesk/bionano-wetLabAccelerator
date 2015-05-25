@@ -8,6 +8,18 @@ var _      = require('lodash'),
  Field Selection + Conversion
  ******/
 
+function ConversionError(message, fieldObj, fieldName, indices) {
+  this.name = 'ConversionError';
+  this.message = message || 'Default Message';
+  this.field = fieldObj;
+  this.fieldName = fieldName;
+  this.$index = indices;
+}
+ConversionError.prototype = Object.create(Error.prototype);
+ConversionError.prototype.constructor = ConversionError;
+
+global.ConversionError = ConversionError;
+
 //given a field object (with type and value), and an map of converters with keys of fieldType, transform a field, or just return the value
 //if allowDefault is false, do not allow using default if value is undefined
 function transformField (fieldObj, fieldConverters, allowDefault, indices) {
@@ -23,13 +35,13 @@ function transformField (fieldObj, fieldConverters, allowDefault, indices) {
         console.log('using default for field ' + fieldObj.name, fieldObj);
         fieldVal = _.result(fieldObj, 'default');
       } else {
-        throw new Error('missing value for non-optional field ' + fieldObj.name, fieldObj, indices);
+        throw new ConversionError('missing value for non-optional field ' + fieldObj.name, fieldObj, fieldObj.name, indices);
       }
     }
   }
 
   if (!_.isFunction(converter)) {
-    throw new Error('converter is invalid for field type ' + fieldObj.type, fieldObj, indices);
+    throw new ConversionError('converter is invalid for field type ' + fieldObj.type, fieldObj, fieldObj.name, indices);
   }
 
   return converter(fieldVal, fieldObj);

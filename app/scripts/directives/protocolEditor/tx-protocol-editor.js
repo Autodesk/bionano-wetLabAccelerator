@@ -55,7 +55,7 @@ angular.module('tx.protocolEditor')
           }
         };
 
-        self.allStepsOpen = false;
+        self.allStepsOpen   = false;
         self.toggleAllSteps = function () {
           self.allStepsOpen = !self.allStepsOpen;
           $rootScope.$broadcast('editor:toggleGroupVisibility', self.allStepsOpen);
@@ -63,7 +63,7 @@ angular.module('tx.protocolEditor')
 
         //todo - deprecate
         self.optsDroppableEditor = {
-          drop     : function (e, ui) {
+          drop: function (e, ui) {
             console.log('dropped on editor', e);
             var draggableTop = e.pageY,
                 neighborTops = DragDropManager.getNeighborTops('tx-protocol-group', $element),
@@ -84,7 +84,7 @@ angular.module('tx.protocolEditor')
         };
 
         self.optsDroppableSetup = {
-          drop: function(e, ui) {
+          drop: function (e, ui) {
             $scope.$apply(function () {
               DragDropManager.onDrop();
               self.protocol.groups.unshift(DragDropManager.groupFromModel());
@@ -94,7 +94,7 @@ angular.module('tx.protocolEditor')
         };
 
         self.optsDroppableEditorBottom = {
-          drop: function(e, ui) {
+          drop: function (e, ui) {
             $scope.$apply(function () {
               DragDropManager.onDrop();
               self.protocol.groups.push(DragDropManager.groupFromModel());
@@ -108,25 +108,49 @@ angular.module('tx.protocolEditor')
         scope.$on('editor:verificationSuccess', function () {
           Notify({
             message: 'Protocol Valid!',
-            error: false
-          });
-        });
-
-        scope.$on('editor:verificationFailure', function (event, verifications) {
-          Notify({
-            message: 'Verification resulted in ' + verifications.length + ' errors, highlighted below',
-            error: true
+            error  : false
           });
         });
 
         scope.$on('editor:runSubmitted', function () {
           Notify({
             message: 'Protocol successfully submitted to Transcriptic.',
-            error: false
+            error  : false
           });
         });
 
+        //verifications come in the form { message : '', $index { step, group, loop, unfolded }, field: {}, fieldName : '' }
+        scope.$on('editor:verificationFailureLocal', function (event, localVer) {
+
+          Notify({
+            message: 'Conversion prevented due to errors, highlighted below',
+            error  : true
+          });
+
+          _(localVer).
+            map(function (ver, verIndex) {
+              console.log(ver);
+
+              //todo - tie to field when can
+
+              return _.assign({}, {
+                message : ver.message,
+                source  : 'local',
+                target  : 'field',
+                indices : ver.$index,
+                original: ver
+              });
+            }).
+            tap(handleMassagedOpVerifications).
+            value();
+        });
+
         scope.$on('editor:verificationFailure', function (event, verifications) {
+
+          Notify({
+            message: 'Verification resulted in ' + verifications.length + ' errors, highlighted below',
+            error  : true
+          });
 
           //verifications come in the form { message : '', context : { instruction : # } } }
           //we add indicies in form {group : #, step: #, loop : #, folded : #, unfolded : # } where unfolded matches instruction
@@ -140,12 +164,37 @@ angular.module('tx.protocolEditor')
               return _.assign({}, {
                 indices: Omniprotocol.utils.getFoldedStepInfo(scope.editorCtrl.protocol, targetInstruction)
               }, {
-                message     : ver.message,
-                source      : 'transcriptic',
-                target      : 'group',
-                verification: ver
+                message : ver.message,
+                source  : 'transcriptic',
+                target  : 'group', //todo - should be operation
+                original: ver
               });
             }).
+            tap(handleMassagedOpVerifications).
+            value();
+
+          var refs = _(verifications).
+            filter(function (ver) {
+              return _.has(ver, 'context.ref');
+            }).
+            map(function (ver, verIndex) {
+              return {
+                message  : ver.message,
+                source   : 'transcriptic',
+                target   : 'parameter',
+                container: _.result(ver, 'context.ref'),
+                original : ver
+              };
+            }).
+            tap(function (verifications) {
+              //todo - merge for same container?
+              element.find('tx-protocol-setup').children().scope().receiveVerifications(verifications);
+            }).
+            value();
+        });
+
+        function handleMassagedOpVerifications (verifications) {
+          return _(verifications).
             filter(function (ver) {
               return _.result(ver, 'indices.loop', -1) == 0;
             }).
@@ -155,7 +204,10 @@ angular.module('tx.protocolEditor')
             }).
             forEach(function (ver) {
               var foldedIndex = ver.indices.folded,
-                  $el         = element.find('tx-protocol-op')[foldedIndex];
+                  groupIndex  = ver.indices.group,
+                  stepIndex   = ver.indices.step,
+                  $groupEl    = element.find('tx-protocol-group')[groupIndex],
+                  $el         = angular.element($groupEl).find('tx-protocol-op')[stepIndex];
 
               //todo - merge different messages for same instruction
               //(e.g. try bad dispense, get two errors - one for range, one increments)
@@ -166,26 +218,7 @@ angular.module('tx.protocolEditor')
               angular.element($el).children().scope().receiveVerification(ver);
             }).
             value();
-
-          var refs = _(verifications).
-            filter(function (ver) {
-              return _.has(ver, 'context.ref');
-            }).
-            map(function (ver, verIndex) {
-              return {
-                message     : ver.message,
-                source      : 'transcriptic',
-                target      : 'parameter',
-                container   : _.result(ver, 'context.ref'),
-                verification: ver
-              };
-            }).
-            tap(function (verifications) {
-              //todo - merge for same container?
-              element.find('tx-protocol-setup').children().scope().receiveVerifications(verifications);
-            }).
-            value();
-        });
+        }
 
       }
     };

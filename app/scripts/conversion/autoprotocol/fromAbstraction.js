@@ -19,7 +19,10 @@ function fromAbstraction (abst) {
   var instructions = _(omniUtils.unfoldProtocol(abst))
     .map(function (operation) {
       var dictionary = _.assign({}, operation.$index, {operation: operation.operation});
+
+      //this function will error with a ConversionError (see omniConv) which should be caught upstream, and use indices to tie to protocol. Use error.$index with keys group, loop, step, unfolded
       var converted = fromUtils.convertInstruction(operation);
+
       var interpolated = omniUtils.interpolateObject(converted, dictionary);
       console.log(dictionary, converted, interpolated);
       return interpolated;
