@@ -17,6 +17,12 @@ tx-protocol-group {
     margin-bottom: 0;
   }
 
+  .protocol-group-wrap {
+    &.drop-hover .protocol-group-main {
+      background-color: $bg-primary-semitransparent;
+    }
+  }
+
   .protocol-group-inner {
     &.show-group {
       background: transparent;
@@ -38,6 +44,7 @@ tx-protocol-group {
     &.drop-hover {
       border-bottom: $drop-hover-border;
     }
+
     &:hover{
       .group-items {
         opacity: 1;
