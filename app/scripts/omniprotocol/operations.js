@@ -769,7 +769,7 @@ module.exports = {
       "fields"      : [
         {
           "name"   : "json",
-          "type"   : "string",
+          "type"   : "json",
           "default": "{}"
         }
       ]

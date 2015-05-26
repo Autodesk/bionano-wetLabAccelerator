@@ -63,11 +63,14 @@ tx-operation-popover {
   .oppop-wrap {
     padding: $oppop-padding;
 
-    .op-description {
-      padding: 0 0 $oppop-padding;
-      border-bottom: 1px solid $light-grey;
-      margin: 0 0 $oppop-padding;
+    tx-operation-summary {
+      padding: $oppop-padding 0 0;
+      border-top: 1px solid $light-grey;
+      margin: $oppop-padding 0 0;
+    }
 
+    tx-operation-summary,
+    .op-description {
       &:empty {
         display: none;
         border: 0;

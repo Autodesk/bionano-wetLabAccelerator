@@ -1,0 +1,19 @@
+<div style="display: inline-block; position: relative;"
+     ng-click="fieldCtrl.showingJSON = !fieldCtrl.showingJSON"
+     ng-init="fieldCtrl.showingJSON = false;">
+  <a class="field-details-button">
+    {{fieldCtrl.showingJSON ? 'hide' : 'edit...'}}
+  </a>
+
+  <div popover-transclude
+       is-open="fieldCtrl.showingJSON"
+       title="Edit JSON"
+       ng-if="fieldCtrl.showingJSON">
+    <textarea json-editor
+              ng-model="fieldCtrl.model"
+              rows="8"
+              name="myFormElement"
+              class="form-control"></textarea>
+  </div>
+
+</div>
