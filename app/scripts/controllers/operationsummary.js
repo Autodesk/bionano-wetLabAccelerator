@@ -45,7 +45,10 @@ angular.module('transcripticApp')
     self.getContainerColorFromContainerName = ProtocolUtils.getContainerColorFromContainerName;
 
     function applyOpToFn (utilFn) {
-      return _.partial(utilFn, self.operation);
+      return function () {
+        var args = _.slice(arguments);
+        return utilFn.apply(self, [self.operation].concat(args));
+      }
     }
 
     // RESOURCE - might be moot with server handling
