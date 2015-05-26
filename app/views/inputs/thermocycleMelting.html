@@ -5,42 +5,49 @@
 
 <tx-modal ng-show="fieldCtrl.detailsVisible"
           title="Thermocycle Melting">
+  <div class="row">
 
-  <tx-thermocycle-melting melting="fieldCtrl.model"></tx-thermocycle-melting>
+    <div class="col-sm-4">
+      <table style="width: 100%;">
+        <tr>
+          <td class="operation-label">start</td>
+          <td>
+            <tx-protocol-field ng-model="fieldCtrl.model.start"
+                               field="{type: 'temperature'}">
+            </tx-protocol-field>
+          </td>
+        </tr>
+        <tr>
+          <td class="operation-label">end</td>
+          <td>
+            <tx-protocol-field ng-model="fieldCtrl.model.end"
+                               field="{type: 'temperature'}">
+            </tx-protocol-field>
+          </td>
+        </tr>
+        <tr>
+          <td class="operation-label">increment</td>
+          <td>
+            <tx-protocol-field ng-model="fieldCtrl.model.increment"
+                               field="{type: 'temperature'}">
+            </tx-protocol-field>
+          </td>
+        </tr>
+        <tr>
+          <td class="operation-label">rate</td>
+          <td>
+            <tx-protocol-field ng-model="fieldCtrl.model.rate"
+                               field="{type: 'duration'}">
+            </tx-protocol-field>
+          </td>
+        </tr>
+      </table>
+    </div>
 
-  <table>
-    <tr>
-      <td class="operation-label">start</td>
-      <td>
-        <tx-protocol-field ng-model="fieldCtrl.model.start"
-                           field="{type: 'temperature'}">
-        </tx-protocol-field>
-      </td>
-    </tr>
-    <tr>
-      <td class="operation-label">end</td>
-      <td>
-        <tx-protocol-field ng-model="fieldCtrl.model.end"
-                           field="{type: 'temperature'}">
-        </tx-protocol-field>
-      </td>
-    </tr>
-    <tr>
-      <td class="operation-label">increment</td>
-      <td>
-        <tx-protocol-field ng-model="fieldCtrl.model.increment"
-                           field="{type: 'temperature'}">
-        </tx-protocol-field>
-      </td>
-    </tr>
-    <tr>
-      <td class="operation-label">rate</td>
-      <td>
-        <tx-protocol-field ng-model="fieldCtrl.model.rate"
-                           field="{type: 'duration'}">
-        </tx-protocol-field>
-      </td>
-    </tr>
-  </table>
+    <div class="col-sm-8">
+      <tx-thermocycle-melting melting="fieldCtrl.model"></tx-thermocycle-melting>
+    </div>
+
+  </div>
 
 </tx-modal>
