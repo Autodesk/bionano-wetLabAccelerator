@@ -25,10 +25,12 @@ angular.module('transcripticApp')
       self.containers = _.keys(self.opData);
       self.selectContainer(self.containers[0]);
 
+      var unfoldedIndex = _.result(newIndices, 'unfolded');
+      if (_.isNumber(unfoldedIndex))
       //todo - perf... maybe look at the autoprotocol or something?
       var unfolded  = Omniprotocol.utils.unfoldProtocol($scope.summaryCtrl.protocol),
           timepoint = _.reduce(unfolded, function (opIndexOfType, operation, flatIndex) {
-            if (operation.operation == self.opName && flatIndex < newIndices.unfolded) {
+            if (operation.operation == self.opName && flatIndex < unfoldedIndex) {
               opIndexOfType++;
             }
             return opIndexOfType;

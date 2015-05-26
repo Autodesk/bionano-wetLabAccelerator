@@ -25,6 +25,10 @@ angular.module('transcripticApp')
       return _.result(dimObj, 'value') + ' ' + _.result(dimObj, 'unit') + 's';
     };
 
+    self.paramById = function (id) {
+      return _.find(self.protocol.parameters, {id : id});
+    };
+
 
     //wells - pipette operations
 

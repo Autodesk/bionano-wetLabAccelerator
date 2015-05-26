@@ -8,7 +8,7 @@
  *
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolField', function ($http, $compile, $timeout, Omniprotocol, Autoprotocol, ProtocolHelper) {
+  .directive('txProtocolField', function ($http, $compile, $timeout, Omniprotocol, Autoprotocol, ProtocolHelper, ProtocolUtils, UUIDGen) {
     return {
       templateUrl     : 'views/tx-protocol-field.html',
       restrict        : 'E',
@@ -26,35 +26,37 @@ angular.module('tx.protocolEditor')
 
         //limit toggling of parameters to fields which support it
         var parameterizables = _.keys(_.pick(Omniprotocol.inputTypes, _.matches({canParameterize: true})));
-        
+
         self.parameterAllowed = function parameterAllowed (fieldType) {
           return _.indexOf(parameterizables, fieldType) >= 0;
         };
 
+        //todo - should use utils for this, binding will be broken on new protocol
         self.parameters = ProtocolHelper.currentProtocol.parameters;
 
         var parameterListeners = [];
 
         self.selectParameter = function (param, event) {
-          self.field.parameter = param.name;
-          self.model           = _.cloneDeep(param.value);
+          self.field.parameter     = param.id;
+          self.field.parameterName = param.name;
+          self.model               = _.cloneDeep(param.value);
 
           var parameterChangeListener = $scope.$on('editor:parameterChange', function (e, params) {
-            var relevantParam = _.find(params, {name: self.field.parameter}),
+            var relevantParam = ProtocolUtils.paramById(self.field.parameter),
                 paramVal      = _.result(relevantParam, 'value');
 
-            //check undefined in case name changed, then let other listener handle
-            if (!_.isUndefined(paramVal)) {
-              self.model = _.cloneDeep(paramVal);
-            }
+            self.model = _.cloneDeep(paramVal);
           });
 
           parameterListeners.push(parameterChangeListener);
 
+          //todo - handle differently
+          //note - this is run before value is set on model, so timeout
           var parameterNameChangeListener = $scope.$on('editor:parameterNameChange', function (e, oldName, newName) {
-            if (oldName == self.field.parameter) {
-              self.field.parameter = newName;
-            }
+            $timeout(function () {
+              var relevantParam = ProtocolUtils.paramById(self.field.parameter);
+              self.field.parameterName = relevantParam.name;
+            });
           });
 
           parameterListeners.push(parameterNameChangeListener);
@@ -63,6 +65,7 @@ angular.module('tx.protocolEditor')
         self.createNewParameter = function () {
           var paramName = 'my_' + self.field.type,
               param     = {
+                id   : UUIDGen(),
                 name : paramName,
                 type : self.field.type,
                 value: _.isUndefined(self.model) ? _.cloneDeep(self.field.default) : _.cloneDeep(self.model)
@@ -73,6 +76,7 @@ angular.module('tx.protocolEditor')
 
         self.clearParameter = function () {
           delete self.field.parameter;
+          delete self.field.parameterName;
           _.forEach(parameterListeners, function (listener) {
             _.isFunction(listener) && listener();
           });
@@ -81,9 +85,9 @@ angular.module('tx.protocolEditor')
         var hideDropDown;
 
         self.closeDropdown = function () {
-          hideDropDown = $timeout(function(){
-              self.paramListVisible = false;
-            }, 1500);
+          hideDropDown = $timeout(function () {
+            self.paramListVisible = false;
+          }, 1500);
         };
 
         self.cancelDropdown = function () {
@@ -135,10 +139,10 @@ angular.module('tx.protocolEditor')
           post: function postLink (scope, iElement, iAttrs, controllers) {
 
             var ngModel = controllers[0],
-                opCtrl = controllers[1];
+                opCtrl  = controllers[1];
 
             scope.hasOpCtrl = !_.isUndefined(opCtrl);
-            scope.opCtrl = opCtrl;
+            scope.opCtrl    = opCtrl;
 
             //have dimensional here instead of own conroller because needs ngModel controller
             //if dimensional, ensure that unit is defined when changed
@@ -158,7 +162,7 @@ angular.module('tx.protocolEditor')
 
             //handle parameter as input
             if (scope.fieldCtrl.field.parameter) {
-              var relevantParam = _.find(ProtocolHelper.currentProtocol.parameters, {name: scope.fieldCtrl.field.parameter});
+              var relevantParam = ProtocolUtils.paramById(scope.fieldCtrl.field.parameter);
               scope.fieldCtrl.selectParameter(relevantParam);
             }
 

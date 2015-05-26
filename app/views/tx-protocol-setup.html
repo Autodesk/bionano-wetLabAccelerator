@@ -41,7 +41,8 @@
            ng-click="containerDetailsVisible = !containerDetailsVisible">
           details...
         </a>
-        <tx-modal ng-if="containerDetailsVisible" ng-show="containerDetailsVisible">
+        <tx-modal ng-if="containerDetailsVisible"
+                  ng-show="containerDetailsVisible">
           <div class="row">
             <div class="col-md-5">
               <div class="form-horizontal">
@@ -50,8 +51,10 @@
                     use
                   </label>
 
-                  <div class="col-sm-7" dropdown>
-                    <a ng-bind="param.readable || 'new container'" dropdown-toggle></a>
+                  <div class="col-sm-7"
+                       dropdown>
+                    <a ng-bind="param.readable || 'new container'"
+                       dropdown-toggle></a>
                     <ul class="dropdown-menu">
                       <li>
                         <a ng-click="setupCtrl.selectNewContainer(param)">New Container</a>
@@ -70,8 +73,7 @@
                   </label>
 
                   <div class="col-sm-7"
-                       dropdown
-                       is-open="showContainerTypes">
+                       dropdown>
                     <a ng-bind="param.value.type || 'select...'"
                        dropdown-toggle
                        ng-disabled="!param.value.isNew"></a>

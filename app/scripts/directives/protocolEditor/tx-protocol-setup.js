@@ -7,7 +7,7 @@
  * # txProtocolSetup
  */
 angular.module('transcripticApp')
-  .directive('txProtocolSetup', function ($rootScope, Auth, Container, Omniprotocol, ContainerHelper) {
+  .directive('txProtocolSetup', function ($rootScope, Auth, UUIDGen, Container, Omniprotocol, ContainerHelper) {
     return {
       templateUrl     : 'views/tx-protocol-setup.html',
       restrict        : 'E',
@@ -34,12 +34,16 @@ angular.module('transcripticApp')
 
 
         self.addParam = function (type) {
-          self.parameters.push({type: type});
+          self.parameters.push({
+            id : UUIDGen(),
+            type: type
+          });
           $scope.showParameters = false;
         };
 
         self.addContainer = function (param) {
           var parameter = {
+            id : UUIDGen(),
             type : 'container',
             value: {
               color: ContainerHelper.randomColor(),
