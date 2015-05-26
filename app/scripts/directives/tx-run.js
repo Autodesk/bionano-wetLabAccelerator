@@ -10,14 +10,11 @@
 angular.module('transcripticApp')
   .directive('txRun', function ($q, $timeout, $rootScope, Auth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, RunHelper) {
     return {
-      templateUrl     : 'views/tx-run.html',
-      restrict        : 'E',
-      scope           : {
-        protocolForm: '='
-      },
-      bindToController: true,
-      controllerAs    : 'runCtrl',
-      controller      : function ($scope, $element, $attrs) {
+      templateUrl : 'views/tx-run.html',
+      restrict    : 'E',
+      scope       : true,
+      controllerAs: 'runCtrl',
+      controller  : function ($scope, $element, $attrs) {
 
         var self = this;
 
@@ -43,13 +40,14 @@ angular.module('transcripticApp')
         self.submit  = _.partial(submitHelper, true);
 
         self.startRun = function () {
-          self.analyze();
-          self.runWasInitiated = true;
+          self.analyze(null, false);
         };
 
         //requires a project object and response
         self.transcripticLink = function () {
-          if (_.isEmpty(self.response) || !self.response.id) { return null; }
+          if (_.isEmpty(self.response) || !self.response.id) {
+            return null;
+          }
 
           return Communication.transcripticRoot +
             Auth.organization() +
@@ -57,11 +55,10 @@ angular.module('transcripticApp')
             '/runs/' + self.response.id;
         };
 
-
-        function submitHelper (isRun, forceProject) {
+        function submitHelper (isRun, forceProject, closeModal) {
 
           var funcToRun = isRun ? RunHelper.createRun : RunHelper.verifyRun,
-              project = _.isUndefined(forceProject) ? self.project : forceProject;
+              project   = _.isEmpty(forceProject) ? self.project : forceProject;
 
           self.processing = true;
 
@@ -113,7 +110,7 @@ angular.module('transcripticApp')
                 self.error = true;
 
                 //use as simple check for something like a 404 error - i.e. not protocol error but $http error
-                if (angular.isUndefined(e.data) || _.isUndefined(e.data.protocol)) {
+                if (_.isEmpty(e.data) || _.isEmpty(e.data.protocol)) {
                   self.response = {"error": "Request did not go through... check the console"};
                 } else {
                   $rootScope.$broadcast('editor:verificationFailure', e.data.protocol);
@@ -122,14 +119,13 @@ angular.module('transcripticApp')
               })
               .then(function () {
                 self.processing = false;
-                //todo - close the modal?
-                $rootScope.$broadcast('editor:toggleRunModal', false);
+                (closeModal !== false) && $rootScope.$broadcast('editor:toggleRunModal', false);
               });
           });
         }
 
       },
-      link            : function (scope, element, attrs) {
+      link        : function (scope, element, attrs) {
 
         //allow running of a verification from wherever without opening up the modal...
         scope.$on('editor:initiateVerification', function (event) {
@@ -137,6 +133,16 @@ angular.module('transcripticApp')
 
           scope.runCtrl.analyze(project);
         });
+
+        //hack - shouldn't be expecting this to exist
+        scope.$parent.$onClose = function () {
+          scope.$applyAsync(_.assign(scope.runCtrl, {
+            processing: false,
+            response  : '',
+            runTitle  : '',
+            project   : ''
+          }));
+        };
 
       }
     };
