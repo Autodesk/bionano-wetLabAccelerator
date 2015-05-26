@@ -95,7 +95,7 @@ angular.module('tx.protocolEditor')
           }
         };
 
-        //todo - deprecate
+        //todo - deprecate when possible (currently, rely on this for spacing between operations)
         self.optsDroppableGroup = {
           drop: handleDrop
         };

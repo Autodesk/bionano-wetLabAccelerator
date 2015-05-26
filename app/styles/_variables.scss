@@ -57,6 +57,7 @@ $bg-dark: $dark;
 $bg-white: $white;
 $bg-white-barelytransparent: transparentize($bg-white, 0.1);
 $bg-white-semitransparent: transparentize($bg-white, $bg-transparency-factor-default);
+$bg-primary-semitransparent: transparentize($primary, 0.75);
 
 //borders
 
