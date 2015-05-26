@@ -30,16 +30,16 @@ angular.module('transcripticApp')
         }
 
         scope.hideModal = function () {
-          angular.isFunction(scope.onClose) && scope.onClose();
+          _.attempt(scope.onClose);
           scope.ngShow = false;
 
-          transcludeFn(function (clone, scope) {
-            _.attempt(scope.$onClose);
+          transcludeFn(function (clone, transcludeScope) {
+            _.attempt(transcludeScope.$onClose);
           });
         };
 
         //can't use ng-transclude and update the scope, so add the element manually
-        transcludeFn(function (clone, transcludeScope) {
+        transcludeFn(scope.$parent, function (clone, transcludeScope) {
           var transcludeEl       = element.find('modal-transclude');
           transcludeEl.empty();
           transcludeEl.append(clone);

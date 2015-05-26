@@ -1,10 +1,14 @@
 <div class="column-wrap">
 
   <div class="column-8 div-centered">
-    <h4 class="thin" ng-show="!!runCtrl.processing">Processing...</h4>
+    <h4 class="thin"
+        style="text-align: center;"
+        ng-show="!!runCtrl.processing">Processing...</h4>
   </div>
 
-  <form name="protocolRunInfo" class="column-8 div-centered">
+  <form name="protocolRunInfo"
+        ng-hide="runCtrl.response.quote"
+        class="column-8 div-centered">
     <fieldset ng-disabled="runCtrl.txCredInvalid">
 
       <input type="text"
@@ -53,32 +57,32 @@
     </fieldset>
   </form>
 
-  <div class="column-8 div-centered"
+  <div class="column-8 div-centered clearfix"
        ng-show="runCtrl.response.quote">
-    <table>
+    <table class="run-response-table">
       <tr>
         <td>Run Title</td>
-        <td ng-bind="config.runTitle"></td>
+        <td ng-bind="runCtrl.runTitle"></td>
       </tr>
       <tr>
         <td>Project Name</td>
-        <td ng-bind="config.runProject.name"></td>
+        <td ng-bind="runCtrl.project.name"></td>
       </tr>
-      <tr ng-repeat="item in response.quote.items">
+      <tr ng-repeat="item in runCtrl.response.quote.items">
         <td ng-bind="item.title"></td>
-        <td ng-bind="item.cost"></td>
+        <td ng-bind="item.cost | currency"></td>
       </tr>
       <tr>
         <td>Tax Rate</td>
-        <td ng-bind="response.quote.tax_rate"></td>
+        <td ng-bind="runCtrl.response.quote.tax_rate + '%'"></td>
       </tr>
       <tr>
         <td>Total Cost</td>
-        <td ng-bind="response.total_cost"></td>
+        <td ng-bind="runCtrl.response.total_cost  | currency"></td>
       </tr>
     </table>
 
-    <button class="btn action-button"
+    <button class="btn action-button pull-right"
             ng-click="runCtrl.submit()">Run it!
     </button>
   </div>
