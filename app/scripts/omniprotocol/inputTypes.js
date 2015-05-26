@@ -162,6 +162,20 @@ module.exports = {
     }
   },
 
+  "json"           : {
+    type           : "custom",
+    canParameterize: false,
+    description    : "Arbitrary JSON, e.g. for passing directly to autoprotocol",
+    verification   : function (input) {
+      try {
+        JSON.stringify(input);
+      } catch (e) {
+       return false;
+      }
+      return true;
+    }
+  },
+
   "mixwrap"           : {
     type           : "custom",
     canParameterize: true,
