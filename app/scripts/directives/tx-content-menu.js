@@ -28,7 +28,7 @@ angular.module('transcripticApp')
 
         self.openProtocol = function (protocol) {
           self.toggleGalleryVisible(false);
-          $location.path('/build');
+          $location.path('/protocol');
           ProtocolHelper.assignCurrentProtocol(protocol);
         };
 

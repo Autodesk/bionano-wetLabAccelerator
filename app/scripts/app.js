@@ -38,10 +38,10 @@ angular
         controller  : 'GalleryCtrl',
         controllerAs: 'galleryCtrl'
       })
-      .when('/build', {
+      .when('/protocol', {
         templateUrl : 'views/routes/build.html',
         controller  : 'BuildCtrl',
-        controllerAs: 'restyleCtrl' //todo - rename to buildCtrl, make sure not passed down and breaking
+        controllerAs: 'restyleCtrl' //todo - rename to ProtocolCtrl, make sure not passed down and breaking
       })
       .when('/results', {
         templateUrl : 'views/routes/results.html',
@@ -92,4 +92,8 @@ angular
         redirectTo: '/'
       });
   })
-  .run(function (simpleLogin) {});
+  .run(function (simpleLogin, $rootScope, $location) {
+    $rootScope.$on('$locationChangeSuccess', function () {
+      $rootScope.currentPath = $location.path();
+    })
+  });
