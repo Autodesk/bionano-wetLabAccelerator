@@ -56,9 +56,9 @@ module.exports = {
     dead_volume   : 15
   },
   //this is a hack - need to actually reserve this one
-  "6-flat-agar": {
+  "6-flat": {
     name       : "Pre-poured 6-well LB Agar plate",
-    shortname  : "6-flat-agar",
+    shortname  : "6-flat",
     well_count : 6,
     col_count  : 3,
     reservation: "kit17reefwqd6we"
