@@ -97,7 +97,6 @@
   }
 
   .has-arrow {
-    padding-top: 5px;
 
     &:after {
       top: 100%;
@@ -149,7 +148,10 @@
     transition: transform 0.25s ease-out, opacity 0.25s linear;
   }
 
-  &.arrow-visible .mini-arrow {
-    opacity: 1;
+  &.arrow-visible {
+    padding-top: 5px;
+    .mini-arrow {
+      opacity: 1;
+    }
   }
 }
