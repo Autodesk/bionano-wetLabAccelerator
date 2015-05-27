@@ -7,8 +7,6 @@
     <div class="maincolumn flex-grower">
       <div class="pull-right"
            style="position: relative;"
-           tooltip="Download Data"
-           tooltip-append-to-body="true"
            ng-class="{'open' : downloadOptionsVisible}"
            ng-mouseenter="downloadOptionsVisible = true"
            ng-mouseleave="downloadOptionsVisible = false">
@@ -40,7 +38,7 @@
         <tx-modal class="centered"
                   title="Run Metadata"
                   ng-show='modalShown'
-                on-close="resultsCtrl.onModalClose()">
+                  on-close="resultsCtrl.onModalClose()">
           <table>
             <thead>
             <tr>
@@ -82,6 +80,7 @@
 
     <div class="sidepanel flex-vertical">
       <tx-protocol-mini protocol="resultsCtrl.run.protocol"
+                        status="resultsCtrl.run.transcripticRunInfo"
                         current-operation="resultsCtrl.currentInfo"
                         show-timelines="true"
                         show-arrow="true"
@@ -93,25 +92,38 @@
         Select a step in the protocol
       </div>
 
-      <div ng-show="resultsCtrl.currentInfo">
-        <div>
-          <span class="pull-right">Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</span>
-          <p>
-            <span><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></span>
-          </p>
+      <div ng-show="resultsCtrl.currentInfo"
+           ng-switch="resultsCtrl.currentInfo">
+
+        <div ng-switch-when="status">
+          <h4 class="status-heading"
+              ng-bind="resultsCtrl.run.transcripticRunInfo.status | capfirst"></h4>
+          <p>This run is {{resultsCtrl.run.transcripticRunInfo.status}}.</p>
+          <a target="_blank"
+             class="action-text"
+             ng-href="{{resultsCtrl.generateRunUrl(resultsCtrl.run)}}">Manage run at Transcriptic...</a>
         </div>
-        <p ng-bind="resultsCtrl.currentGroup.description"></p>
+
+        <div ng-switch-default>
+          <div>
+            <span class="pull-right">Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</span>
+
+            <p><span><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></span></p>
+
+            <p ng-bind="resultsCtrl.currentGroup.description"></p>
+
+            <tx-operation-summary protocol="resultsCtrl.run.protocol"
+                                  indices="resultsCtrl.currentInfo"
+                                  run-data="resultsCtrl.run.data"
+                                  operation="resultsCtrl.currentOperation">
+            </tx-operation-summary>
+          </div>
+        </div>
+
       </div>
-
-      <tx-operation-summary protocol="resultsCtrl.run.protocol"
-                            indices="resultsCtrl.currentInfo"
-                            run-data="resultsCtrl.run.data"
-                            operation="resultsCtrl.currentOperation">
-      </tx-operation-summary>
-
     </div>
-
   </div>
+
   <div ng-hide="resultsCtrl.run.protocol">
     Select a protocol... (you must be logged in and initiated a run from this app)
   </div>

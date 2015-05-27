@@ -1,10 +1,19 @@
 .results {
 
+  p {
+    margin: 0;
+  }
+
   .sidepanel {
-    width: 400px;
+    width: 350px;
+    min-width: 350px;
   }
 
   .maincolumn {
 
+  }
+
+  .status-heading {
+    margin-top: 0;
   }
 }

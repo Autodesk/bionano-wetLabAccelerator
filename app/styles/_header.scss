@@ -5,6 +5,7 @@ header.site-header {
   $nav-height: $layout-height-header;
   $logo-user-width: 165px;
 
+  z-index: $z-header;
   line-height: 1;
   display: flex;
   flex-flow: row nowrap;

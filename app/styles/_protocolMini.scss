@@ -27,9 +27,32 @@
   line-height: $mini-font-line-height;
   position: relative;
 
+  .mini-protocol-status,
   .mini-protocol-wrap {
     width: 280px;
     margin: 0 $clip-arrow-width 0 $internal-padding-hori;
+  }
+
+  .mini-protocol-status {
+    padding-right: (2 * $timelines-spacing) + $timelines-width;
+    margin-bottom: $margin-bottom
+  }
+
+  .status-instruction,
+  .protocol-instruction {
+    border-radius: 10px;
+    background: $white;
+    text-align: center;
+    padding: $internal-padding-vert $internal-padding-hori;
+    margin-bottom: $margin-bottom;
+
+    &:last-child {
+      margin-bottom: 0;
+
+      &:after {
+        display: none;
+      }
+    }
   }
 
   .protocol-group {
@@ -51,27 +74,6 @@
       font-size: $font-size-loop-number
     }
 
-    .protocol-instruction {
-      border-radius: 10px;
-      background: $white;
-      text-align: center;
-      padding: $internal-padding-vert $internal-padding-hori;
-      margin-bottom: $margin-bottom;
-
-      //ahmad should deal with arrows
-      &:first-child {
-
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-
-        &:after {
-          display: none;
-        }
-      }
-    }
-
     &.multichild,
     &.looping {
 
@@ -83,31 +85,6 @@
         padding-bottom: $internal-padding-vert;
       }
 
-      .protocol-instruction {
-
-      }
-    }
-
-    &.multichild {
-
-      .protocol-instruction {
-
-      }
-
-      &.expanded {
-
-      }
-    }
-
-    &.looping {
-
-      .protocol-instruction {
-
-      }
-
-      &.expanded {
-
-      }
     }
 
     .mini-group-repeater {
@@ -120,7 +97,7 @@
   }
 
   .has-arrow {
-    position: relative;
+    padding-top: 5px;
 
     &:after {
       top: 100%;

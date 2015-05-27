@@ -46,7 +46,11 @@ angular.module('transcripticApp')
       });
 
     self.generateRunCsvUrl = function (run) {
-      return 'http://secure.transcriptic.com/' + Auth.organization() + '/' + run.transcripticProjectId + '/runs/' + run.transcripticRunId + '/data.zip';
+      return self.generateRunUrl(run) + '/data.zip';
+    };
+
+    self.generateRunUrl = function (run) {
+      return 'http://secure.transcriptic.com/' + Auth.organization() + '/' + run.transcripticProjectId + '/runs/' + run.transcripticRunId;
     };
 
     $scope.modalShown = false;

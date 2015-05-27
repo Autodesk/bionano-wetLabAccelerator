@@ -1,5 +1,15 @@
 <div class="protocol-mini" ng-class="{'arrow-visible' : miniCtrl.showArrow}">
-  <div class="mini-protocol-wrap" ng-class="{'has-timelines' : miniCtrl.showTimelines}">
+  <div class="mini-protocol-status">
+    <div class="protocol-group"
+         ng-if="miniCtrl.status">
+      <div class="status-instruction"
+           ng-bind="miniCtrl.status.status"
+           ng-mouseenter="handleStatusMouseover($event)">
+      </div>
+    </div>
+  </div>
+  <div class="mini-protocol-wrap"
+       ng-class="{'has-timelines' : miniCtrl.showTimelines}">
     <div class="protocol-group"
          ng-repeat="group in miniCtrl.protocol.groups"
          ng-init="groupIndex = $index;
