@@ -34,7 +34,7 @@ angular.module('transcripticApp')
 
         /* CONSTRUCTING THE SVG */
 
-        var full   = {height: 70, width: 600},
+        var full   = {height: 150, width: 600},
             margin = {top: 30, right: 15, bottom: 15, left: 15},
             width  = full.width - margin.left - margin.right,
             height = full.height - margin.top - margin.bottom;
