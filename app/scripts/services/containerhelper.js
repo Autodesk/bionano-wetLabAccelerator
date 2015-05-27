@@ -21,19 +21,20 @@ angular.module('transcripticApp')
     self.containerOptions = ContainerOptions;
 
     Auth.watch(function (info) {
-      !!info && Container.list().$promise.then(self.setRemote);
+      !!info && Container.list({per_page: 100}).$promise.then(self.setRemote);
     });
 
-    //todo - need to get remote and local into same format
+    self.setRemote = function (remote, noReset) {
+      if (noReset !== false ) {
+        self.remote.length = 0;
+      }
 
-    self.setRemote = function (remote) {
-      self.remote.length = 0;
       _.forEach(remote, function (cont) {
         cont = _.isObject(cont.container) ? cont.container : cont; //test mode is different
         self.remote.push({
           id   : _.result(cont, 'id'),
           isNew: false,
-          type : _.result(_.result(cont, 'container_type'), 'shortname'),
+          type : _.result(cont, 'container_type.shortname'),
           name : _.result(cont, 'label')
         });
       });
