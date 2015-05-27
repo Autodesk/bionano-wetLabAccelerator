@@ -2,8 +2,8 @@
               gel_info = summaryCtrl.runData[gel_prefix + summaryCtrl.indices.step]">
 
   <img ng-repeat="attach in gel_info.attachments"
-       ng-init="summaryCtrl.getResource(attach.key)"
-       ng-src="{{summaryCtrl.getResourceUrl(attach.key)}}">
+       ng-init="summaryCtrl.getResource(attach.key, attach)"
+       ng-src="{{attach.resourceUrl}}">
 
   <pre ng-bind="gel_info | json"></pre>
 
