@@ -24,6 +24,10 @@ angular.module('transcripticApp')
     self.verifyRun = function (protocol, transcripticProject, testMode) {
       var run = createNewRunObject(protocol);
 
+      if (_.isEmpty(run.autoprotocol)) {
+        return $q.reject(null);
+      }
+
       return Run.analyze({project: transcripticProject}, {
         title    : 'Verification of ' + protocol.metadata.name + ' - ' + Date.now(),
         protocol : run.autoprotocol,
@@ -33,6 +37,10 @@ angular.module('transcripticApp')
 
     self.createRun = function (protocol, transcripticProject, testMode) {
       var run = createNewRunObject(protocol);
+
+      if (_.isEmpty(run.autoprotocol)) {
+        return $q.reject(null);
+      }
 
       return Run.submit({project: transcripticProject}, {
         title    : 'Run of ' + protocol.metadata.name,

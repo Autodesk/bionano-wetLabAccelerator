@@ -106,6 +106,7 @@ angular.module('tx.protocolEditor')
       link            : function postLink (scope, element, attrs) {
 
         scope.$on('editor:verificationSuccess', function () {
+          $rootScope.$broadcast('editor:clearVerifications'); //just in case
           Notify({
             message: 'Protocol Valid!',
             error  : false

@@ -8,11 +8,11 @@
  * //todo - maybe should move verifications / submissions outside of here entirely. also maybe the remote verification listener
  */
 angular.module('transcripticApp')
-  .directive('txRun', function ($q, $timeout, $rootScope, Auth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, RunHelper) {
+  .directive('txRun', function ($q, $timeout, $rootScope, Auth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, Communication, RunHelper) {
     return {
       templateUrl : 'views/tx-run.html',
       restrict    : 'E',
-      scope       : true,
+      scope       : false,
       controllerAs: 'runCtrl',
       controller  : function ($scope, $element, $attrs) {
 
@@ -89,6 +89,8 @@ angular.module('transcripticApp')
             }
           }
 
+          $rootScope.$broadcast('editor:clearVerifications');
+
           projectIdPromise.then(function (project) {
             self.project = project;
 
@@ -106,6 +108,11 @@ angular.module('transcripticApp')
 
               }, function runFailure (e) {
                 console.log(e);
+
+                //check for our own handling... pas null if conversion didn't work, and will handle local errors upstream
+                if (_.isNull(e)) {
+                  return;
+                }
 
                 self.error = true;
 
@@ -127,8 +134,11 @@ angular.module('transcripticApp')
       },
       link        : function (scope, element, attrs) {
 
+        //fixme - element is linking twice
+        //fixme - this is running more than once for weird scope reasons...
         //allow running of a verification from wherever without opening up the modal...
         scope.$on('editor:initiateVerification', function (event) {
+          debugger;
           var project = _.result(scope.runCtrl, 'projects[0]', 'Wet Lab Accelerator');
 
           scope.runCtrl.analyze(project);
