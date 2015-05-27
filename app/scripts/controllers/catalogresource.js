@@ -13,7 +13,6 @@ angular.module('transcripticApp')
 
     self.init = function () {
       Catalog.query().then(function (data) {
-        console.log(data.data);
         self.catalogResults    = data.data.results;
         self.catalogVendors    = _.result(data.data, 'facets.vendors');
         self.catalogCategories = _.result(data.data, 'facets.categories');

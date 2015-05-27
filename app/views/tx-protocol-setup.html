@@ -70,8 +70,7 @@
                   </label>
 
                   <div class="col-sm-7"
-                       dropdown
-                       is-open="showContainerTypes">
+                       dropdown>
                     <a ng-bind="param.value.type || 'select...'"
                        dropdown-toggle
                        ng-disabled="!param.value.isNew"></a>
@@ -169,17 +168,17 @@
                ng-click="setupCtrl.addContainer()">{{'container' | capfirst}}</a>
           </li>
           <li class="divider"></li>
-          <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'dimensional'}">
+          <li ng-repeat="item in setupCtrl.paramTypes['dimensional']">
             <a class="parameter-option"
                ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
           </li>
           <li class="divider"></li>
-          <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'primitive'}">
+          <li ng-repeat="item in setupCtrl.paramTypes['primitive']">
             <a class="parameter-option"
                ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
           </li>
           <li class="divider"></li>
-          <li ng-repeat="item in setupCtrl.paramTypes | filter:{type:'custom'}">
+          <li ng-repeat="item in setupCtrl.paramTypes['custom']">
             <a class="parameter-option"
                ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
           </li>

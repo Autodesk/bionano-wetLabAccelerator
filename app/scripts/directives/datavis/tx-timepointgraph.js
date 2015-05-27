@@ -59,10 +59,11 @@ angular.module('tx.datavis')
 
         var chart = d3.select(element[0])
           .append('svg')
-          .attr('width', full.width)
-          .attr('height', full.height)
-          .style('overflow', 'visible')
-          .attr('id', 'chart');
+          .attr('id', 'chart')
+          .attr("width", "100%")
+          .attr("height", "100%")
+          .attr("viewBox", "0 0 " + full.width + " " + full.height)
+          .attr("preserveAspectRatio", "xMidYMid meet");
 
         var labelHeight = 15,
             margin      = {top: 15 + labelHeight, right: 15, bottom: 30 + labelHeight, left: 40 + labelHeight},
