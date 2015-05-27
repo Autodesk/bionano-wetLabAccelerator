@@ -29,7 +29,7 @@ angular.module('transcripticApp')
         //expose changes to container-type
         self.handleChange = function () {
           var index   = _.findIndex(self.localContainers, function (container) {
-                return container.name == self.model;
+                return container.name == self.model && (_.isString(container.name) && container.name.length);
               }),
               contVal = _.result(self.localContainers[index], 'value');
 
@@ -39,7 +39,7 @@ angular.module('transcripticApp')
         };
 
         self.handleNameChange = function (e, oldName, newName) {
-          if (self.model == oldName) {
+          if (_.isString(oldName) && oldName.length && self.model == oldName) {
             self.model = newName;
           }
         };
