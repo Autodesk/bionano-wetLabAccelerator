@@ -1,3 +1,15 @@
+function ConversionError(message, fieldObj, fieldName, indices) {
+    this.name = 'ConversionError';
+    this.message = message || 'Default Message';
+    this.field = fieldObj;
+    this.fieldName = fieldName;
+    this.$index = indices;
+}
+ConversionError.prototype = Object.create(Error.prototype);
+ConversionError.prototype.constructor = ConversionError;
+
+global.ConversionError = ConversionError;
+
 var _ = require('lodash'),
     optionEnums = require('./optionEnums.js'),
     inputTypes = require('./inputTypes.js'),
