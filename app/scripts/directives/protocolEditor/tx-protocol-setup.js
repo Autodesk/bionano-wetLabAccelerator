@@ -25,6 +25,7 @@ angular.module('transcripticApp')
             _.assign(param, {name: name});
           }).
           filter(_.matches({canParameterize: true})).
+          groupBy('type').
           value();
 
         //containers
