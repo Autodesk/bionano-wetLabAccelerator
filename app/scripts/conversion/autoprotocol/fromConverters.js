@@ -74,7 +74,7 @@ converterField.thermocycleGroup = function (input, fieldObj) {
     steps : _.map(input.steps, function (step) {
       return _.assign({
           duration: convertDimensionalWithDefault(step.duration, inputDefault.duration),
-          read    : _.result(step, 'read', true)
+          read    : _.result(step, 'read', false)
         }, (!!step.isGradient ?
         {
           gradient: {
