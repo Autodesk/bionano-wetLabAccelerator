@@ -32,6 +32,8 @@ angular.module('transcripticApp')
         self.containerOptions      = ContainerHelper.containerOptions;
         self.storageOptions        = Omniprotocol.optionEnums.storage.storage;
 
+        //this is set dynamically, reference should never be broken
+        self.remoteContainers = ContainerHelper.remote;
 
         self.addParam = function (type) {
           self.parameters.push({
@@ -67,6 +69,7 @@ angular.module('transcripticApp')
 
         self.deleteParam = function (param) {
           _.remove(self.parameters, param);
+          $scope.checkContainerChange();
         };
 
         /* containers */
@@ -83,9 +86,6 @@ angular.module('transcripticApp')
           _.assign(param.value, remote);
           $scope.notifyContainerChange();
         };
-
-        //this is set dynamically, reference should never be broken
-        self.remoteContainers = ContainerHelper.remote;
 
         self.handleChangeParamType = function (param) {
           self.clearParamValue(param);
@@ -126,7 +126,10 @@ angular.module('transcripticApp')
           scope.isVisible = true;
         });
 
-        scope.$on('editor:newprotocol', scope.checkContainerChange);
+        scope.$on('editor:newprotocol', function () {
+          $rootScope.$broadcast('editor:parameterChange', scope.setupCtrl.parameters);
+          scope.checkContainerChange()
+        });
 
         //VERIFICATIONS
 

@@ -1,6 +1,6 @@
-<div ng-controller="fieldAliquotCtrl as aliquotCtrl"
-     ng-init="aliquotCtrl.init()">
+<div ng-controller="fieldAliquotCtrl as aliquotCtrl">
   <tx-container-select container-type="aliquotCtrl.containerType"
+                       param-id="aliquotCtrl.field.containerParamId"
                        style="display: inline-block"
                        ng-model="aliquotCtrl.containerName">
   </tx-container-select>

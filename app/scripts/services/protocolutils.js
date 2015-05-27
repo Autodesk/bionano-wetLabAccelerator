@@ -29,6 +29,11 @@ angular.module('transcripticApp')
       return _.find(self.protocol.parameters, {id : id});
     };
 
+    //NOT RECOMMENDED! should by tied by ID
+    self.paramByName = function (name) {
+      return _.find(self.protocol.parameters, {name : name});
+    };
+
 
     //wells - pipette operations
 
