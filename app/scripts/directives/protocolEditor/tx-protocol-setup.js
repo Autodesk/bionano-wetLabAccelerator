@@ -63,6 +63,7 @@ angular.module('transcripticApp')
 
         self.deleteParam = function (param) {
           _.remove(self.parameters, param);
+          $scope.checkContainerChange();
         };
 
         /* containers */
@@ -71,7 +72,7 @@ angular.module('transcripticApp')
           _.merge(param, {value: {
             isNew: true
           }});
-          $scope.notifyContainerChange()
+          $scope.notifyContainerChange();
         };
 
         self.selectRemoteContainer = function (param, remote) {

@@ -1,10 +1,20 @@
-tx-plategraph,
 tx-timepointgraph {
 
   $line-default: $primary;
   $line-backdrop: $white;
 
+  //defaults
   display: block;
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+  height: auto; //425, but handled dynamically by directive
+  line-height: 0; //weird hack to prevent bottom black border
+
+  svg {
+    display: inline-block;
+    overflow: visible;
+  }
 
   .axis path,
   .axis line {

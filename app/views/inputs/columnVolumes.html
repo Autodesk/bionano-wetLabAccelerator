@@ -9,6 +9,7 @@
 
     <div class="column-12 div-centered">
       <tx-plate-columns group-data="fieldCtrl.model"
+                        container-type="opCtrl.getContainerTypeFromFieldName('object') || '384-flat'"
                         on-click="colvolCtrl.handleColumnSelection($column)"></tx-plate-columns>
 
       <div class="tx-table">
