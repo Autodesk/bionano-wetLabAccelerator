@@ -13,6 +13,7 @@ angular.module('transcripticApp')
       templateUrl     : 'views/tx-protocol-mini.html',
       restrict        : 'E',
       scope           : {
+        status          : '=?', //status instruction visibility (provide as object in form {status, message}
         protocol        : '=',
         currentOperation: '=?',
         showTimelines   : '=',
@@ -41,6 +42,14 @@ angular.module('transcripticApp')
           activateStep(groupIndex, stepIndex, loopIndex);
         };
 
+        scope.handleStatusMouseover = function ($event) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          hasInteracted = true;
+          attractArrow($event.target);
+          activateStatus();
+        };
+
         function activateStep (groupIndex, stepIndex, loopIndex) {
           groupIndex = groupIndex || 0;
           stepIndex  = stepIndex || 0;
@@ -50,9 +59,6 @@ angular.module('transcripticApp')
               unfolded            = Omniprotocol.utils.getUnfoldedStepNumber(protocol, groupIndex, stepIndex, loopIndex),
               instructionElements = element.find('.protocol-instruction'),
               el                  = instructionElements[unfolded];
-
-
-          //todo - inform results, or just use data binding (set up watch)
 
           scope.miniCtrl.currentOperation = {
             group   : groupIndex,
@@ -67,7 +73,7 @@ angular.module('transcripticApp')
         function attractArrow (targetEl) {
           var topFromPage  = $(targetEl).offset().top,
               miniFromPage = element.offset().top,
-              paddingTop = parseInt(element.css('padding-top'), 10),
+              paddingTop   = parseInt(element.css('padding-top'), 10),
               diff         = topFromPage - miniFromPage - paddingTop;
 
           scope.arrowTranslate = diff;
@@ -78,6 +84,11 @@ angular.module('transcripticApp')
           activateStep(info.group, info.step, info.loop);
         }
 
+        function activateStatus () {
+          scope.miniCtrl.currentOperation = 'status';
+        }
+
+        /*
         //init
         //fixme - is updating indices even when cancel $timeout.. increases once with each mouseenter
         if (angular.isDefined(attrs['autoScroll']) && angular.isDefined(scope.miniCtrl.protocol)) {
@@ -92,6 +103,7 @@ angular.module('transcripticApp')
             }, $q.when());
           }, 200);
         }
+        */
       }
     };
   });

@@ -5,6 +5,7 @@ header.site-header {
   $nav-height: $layout-height-header;
   $logo-user-width: 165px;
 
+  z-index: $z-header;
   line-height: 1;
   display: flex;
   flex-flow: row nowrap;
@@ -35,35 +36,32 @@ header.site-header {
   }
 
   nav {
-    display: flex;
-    flex-flow: row wrap;
-    flex-grow: 1;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
     height: $nav-height;
-    line-height: $header-logo-dim;
+    line-height: $nav-height;
     font-size: $header-nav-font-size;
     font-weight: $font-weight-bold;
 
-    ul {
-      margin: 0;
-      padding: 0;
-    }
-
-    li {
+    a {
+      height: 100%;
       display: inline-block;
-      flex-grow: 1;
-      margin: 0 15px;
-      padding: 0;
-      background: 0;
+      margin: 0 $layout-spacing-lg;
+      color: $light-grey;
+      text-decoration: none;
 
-      a {
-        color: #c2c2c2;
-        text-decoration: none;
+      &:hover {
+        color: $dark-grey;
+      }
 
+      &.disabled {
+        cursor: default;
         &:hover {
-          color: #222;
+          color: $light-grey;
         }
+      }
+
+      &.active {
+        border-bottom: 2px solid $primary;
       }
     }
   }
@@ -91,5 +89,4 @@ header.site-header {
       }
     }
   }
-
 }

@@ -46,6 +46,7 @@ $font-line-height: 1.5;
 // z-index
 
 $z-sidepanel: 1000;
+$z-header: 2000;
 $z-notification: 9000;
 $z-overlay: 10000;
 
@@ -55,7 +56,7 @@ $bg-transparency-factor-default: 0.5;
 $bg-body: $white;
 $bg-dark: $dark;
 $bg-white: $white;
-$bg-white-barelytransparent: transparentize($bg-white, 0.1);
+$bg-white-barelytransparent: transparentize($bg-white, 0.05);
 $bg-white-semitransparent: transparentize($bg-white, $bg-transparency-factor-default);
 $bg-primary-semitransparent: transparentize($primary, 0.75);
 

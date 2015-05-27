@@ -46,13 +46,11 @@
     </a>
   </div>
   <nav>
-    <ul>
-      <li><a ng-href="#/build">PROTOCOL</a></li>
-      <li><a ng-href="#/results">RESULTS</a></li>
-    </ul>
+    <a ng-href="#/protocol" ng-class="{'active' : currentPath == '/protocol'}">PROTOCOL</a>
+    <a class="disabled" ng-class="{'active' : currentPath == '/results'}">RESULTS</a>
   </nav>
-  <div class="user" ng-cloak>
-    <a href="#/auth">
+  <div class="user">
+    <a href="#/auth" ng-cloak>
       <span class="glyphicon glyphicon-user"></span>
       <span ng-hide-auth>Sign In</span>
       <span ng-show-auth>Sign Out</span>
