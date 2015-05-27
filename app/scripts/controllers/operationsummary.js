@@ -61,7 +61,7 @@ angular.module('transcripticApp')
       return 'upload/url_for?key=' + encodeURIComponent(resourceKey);
     };
 
-    self.getResource = function (resourceKey) {
+    self.getResource = function (resourceKey, attachTo) {
       return Communication.request(self.getResourceUrl(resourceKey), 'get', {
         responseType: 'blob',
         headers     : {
@@ -80,8 +80,18 @@ angular.module('transcripticApp')
           fr.onload = function () {
             // this variable holds your base64 image data URI (string)
             // use readAsBinary() or readAsBinaryString() below to obtain other data types
-            console.log(fr.result);
-            self.imageUrl = fr.result;
+            //console.log(fr.result);
+            var imageUrl = fr.result.replace(/^data:binary\/octet-stream/, 'data:image/jpeg');
+            //console.log(imageUrl);
+
+            $scope.$applyAsync(function () {
+              //default attach to ourself, otherwise use attachTo
+              self.resourceUrl = imageUrl;
+
+              if (_.isObject(attachTo)) {
+                attachTo.resourceUrl = imageUrl;
+              }
+            })
           };
           fr.readAsDataURL(data);
 
