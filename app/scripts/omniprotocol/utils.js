@@ -49,7 +49,7 @@ function interpolateValue (value, params) {
 // bobby" }
 function interpolateObject (obj, params) {
   //todo - clarify array handling
-  if (_.isNumber(obj) || _.isArray(obj)) {
+  if (_.isNumber(obj) || _.isArray(obj) || _.isBoolean(obj)) {
     return obj;
   }
   if (_.isString(obj)) {
