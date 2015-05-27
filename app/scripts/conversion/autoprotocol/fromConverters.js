@@ -97,7 +97,11 @@ converterField.thermocycleDyes = function (input) {
     return _.result(item, 'wells', []).length;
   });
   //todo -verify a dye was selected, or use defualt. currently view is reponsible for guarantee
-  return _.zipObject(_.pluck(filtered, 'dye'), _.pluck(filtered, 'wells'));
+  var zipped = _.zipObject(_.pluck(filtered, 'dye'), _.pluck(filtered, 'wells'));
+  if (_.keys(zipped).length == 0) {
+    return null;
+  }
+  return zipped;
 };
 
 converterField.thermocycleMelting = function (input, fieldObj) {
