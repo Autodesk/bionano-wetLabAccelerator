@@ -6,6 +6,13 @@ var _                    = require('lodash'),
     omniUtils            = omniprotocol.utils,
     omniConv             = omniprotocol.conv;
 
+/*** Error helper ***/
+
+function throwFieldError (message, op, fieldName) {
+  var fieldObj = omniUtils.pluckField(op.fields, fieldName);
+  throw new ConversionError(message, fieldObj, fieldName, op.$index);
+}
+
 /*******************
  Field Conversion
  *******************/
@@ -159,7 +166,7 @@ converterInstruction.transfer = function (op) {
       _.fill(fromWells, fromWells[0], 0, toWells.length);
     } else {
       console.warn('transfer wells dont match up', toWells, fromWells);
-      throw new Error('transfer wells dont match up');
+      throwFieldError('transfer wells dont match up', op, 'to');
     }
   }
 
@@ -258,7 +265,7 @@ converterInstruction.dispense_resource = function (op) {
       resourceId = _.result(omniUtils.pluckFieldValueRaw(op.fields, 'resource'), 'id');
 
   if (!resourceId) {
-    throw new Error('missing resource id for dispense_resource');
+    throwFieldError('missing resource id', op, 'id');
   }
 
   return {
@@ -301,8 +308,7 @@ converterInstruction.autoprotocol = function (op) {
   try {
     return JSON.parse(jsonString);
   } catch (e) {
-    console.warn('JSON was invalid', jsonString);
-    return null
+    throwFieldError('JSON was invalid', op, 'json');
   }
 };
 
