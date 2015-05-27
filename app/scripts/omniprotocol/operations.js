@@ -475,7 +475,6 @@ module.exports = {
           "name"    : "lid",
           "type"    : "option",
           "options" : optionEnums.lid.cover,
-          "optional": true,
           "default" : "standard"
         }
       ]
