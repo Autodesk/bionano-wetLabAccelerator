@@ -21,17 +21,16 @@ angular.module('transcripticApp')
       return self.currentRun;
     };
 
-    self.verifyRun = function (protocol, transcripticProject, testMode) {
+    self.verifyRun = function (protocol, transcripticProject) {
       var run = createNewRunObject(protocol);
 
       if (_.isEmpty(run.autoprotocol)) {
         return $q.reject(null);
       }
-
-      return Run.analyze({project: transcripticProject}, {
+      
+      return Run.verify({
         title    : 'Verification of ' + protocol.metadata.name + ' - ' + Date.now(),
-        protocol : run.autoprotocol,
-        test_mode: !!testMode
+        protocol : run.autoprotocol
       }).$promise
     };
 

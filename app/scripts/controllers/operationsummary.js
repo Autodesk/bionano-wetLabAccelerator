@@ -51,6 +51,22 @@ angular.module('transcripticApp')
       }
     }
 
+    self.getResourcesForOp = function () {
+      var datarefRaw  = self.getFieldValueByName('dataref'),
+          //hack - interpolate, assuming that needed index is available here...
+          datarefName = Omniprotocol.utils.interpolateValue(datarefRaw, self.indices);
+
+      return _(self.runData)
+        .filter(function (data, dataref) {
+          return dataref == datarefName;
+        })
+        .map(function (data, index) {
+          return _.result(data, 'attachments', []);
+        })
+        .flatten()
+        .value()
+    };
+
     // RESOURCE - might be moot with server handling
 
     self.trustResource = function (url) {
@@ -62,6 +78,8 @@ angular.module('transcripticApp')
     };
 
     self.getResource = function (resourceKey, attachTo) {
+      console.log(resourceKey, attachTo);
+
       return Communication.request(self.getResourceUrl(resourceKey), 'get', {
         responseType: 'blob',
         headers     : {
