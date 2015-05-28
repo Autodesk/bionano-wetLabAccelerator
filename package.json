@@ -51,7 +51,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "docker.prepare": "cd etc ; docker build -t autovirology etc/Dockerfile>",
+    "docker.prepare": "cd etc ; docker build -t autovirology .",
     "predocker.npm": "rm -rf node_modules",
     "predocker.bower": "rm -rf bower_components",
     "docker.npm": "npm run docker.prepare ; docker run -v `pwd`:/app -w /app autovirology npm install",
