@@ -12,7 +12,7 @@ angular.module('transcripticApp')
     return {
       templateUrl : 'views/tx-run.html',
       restrict    : 'E',
-      scope       : false,
+      scope       : true,
       controllerAs: 'runCtrl',
       controller  : function ($scope, $element, $attrs) {
 
@@ -134,11 +134,8 @@ angular.module('transcripticApp')
       },
       link        : function (scope, element, attrs) {
 
-        //fixme - element is linking twice
-        //fixme - this is running more than once for weird scope reasons...
         //allow running of a verification from wherever without opening up the modal...
         scope.$on('editor:initiateVerification', function (event) {
-          debugger;
           var project = _.result(scope.runCtrl, 'projects[0]', 'Wet Lab Accelerator');
 
           scope.runCtrl.analyze(project);
