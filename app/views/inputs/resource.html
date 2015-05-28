@@ -25,6 +25,7 @@
           <div class="tx-table-item-field"
                ng-repeat="field in catCtrl.itemFields"
                ng-bind="field.name"></div>
+          <div class="tx-table-item-field">Kit Name</div>
           <div class="tx-table-item-field">Action</div>
         </div>
         <div class="tx-table-item"
@@ -32,6 +33,8 @@
           <div class="tx-table-item-field"
                ng-repeat="field in catCtrl.itemFields"
                ng-bind="item[field.key] || '-'"></div>
+          <div class="tx-table-item-field"
+               ng-bind="item.kit_item.kit.name || '-'"></div>
           <div dropdown
                class="tx-table-item-field">
             <span dropdown-toggle>select</span>
