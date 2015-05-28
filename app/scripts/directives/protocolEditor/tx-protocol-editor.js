@@ -121,6 +121,7 @@ angular.module('tx.protocolEditor')
         });
 
         //verifications come in the form { message : '', $index { step, group, loop, unfolded }, field: {}, fieldName : '' }
+        //exception, $index may be 'parameters' and apply to aprameters, not operation
         scope.$on('editor:verificationFailureLocal', function (event, localVer) {
 
           Notify({
@@ -128,11 +129,12 @@ angular.module('tx.protocolEditor')
             error  : true
           });
 
-          _(localVer).
+          var instructions = _(localVer).
+            filter(function (ver) {
+              return ver.$index != 'parameter';
+            }).
             map(function (ver, verIndex) {
               console.log(ver);
-
-              //todo - tie to field when can
 
               return _.assign({}, {
                 message : ver.message,
@@ -144,6 +146,25 @@ angular.module('tx.protocolEditor')
             }).
             tap(handleMassagedOpVerifications).
             value();
+
+          var refs = _(localVer).
+            filter(function (ver) {
+              return ver.$index == 'parameter';
+            }).
+            map(function (ver, verIndex) {
+              console.log(ver);
+
+              return _.assign({}, {
+                message : ver.message,
+                source  : 'local',
+                target  : 'parameter',
+                container : ver.fieldName,
+                original: ver
+              });
+            }).
+            tap(handleMassagedParamVerifications).
+            value();
+
         });
 
         scope.$on('editor:verificationFailure', function (event, verifications) {
@@ -187,10 +208,7 @@ angular.module('tx.protocolEditor')
                 original : ver
               };
             }).
-            tap(function (verifications) {
-              //todo - merge for same container?
-              element.find('tx-protocol-setup').children().scope().receiveVerifications(verifications);
-            }).
+            tap(handleMassagedParamVerifications).
             value();
         });
 
@@ -219,6 +237,11 @@ angular.module('tx.protocolEditor')
               angular.element($el).children().scope().receiveVerification(ver);
             }).
             value();
+        }
+
+        function handleMassagedParamVerifications (verifications) {
+          //todo - merge for same container?
+          element.find('tx-protocol-setup').children().scope().receiveVerifications(verifications);
         }
 
       }

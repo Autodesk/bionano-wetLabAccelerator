@@ -135,7 +135,8 @@ angular.module('transcripticApp')
         });
 
         scope.receiveVerifications = function (vers) {
-          //todo - need to show verification for whole setup
+          //todo - shouldn't bind to the parameter itself...
+          //todo - search by ID, not name (in case name doesnt exist)
           _.forEach(vers, function (ver) {
             _.assign(_.find(scope.setupCtrl.parameters, {name: ver.container}), {verification: ver});
           });
