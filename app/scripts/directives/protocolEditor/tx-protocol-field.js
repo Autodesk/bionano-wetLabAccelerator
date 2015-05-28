@@ -147,7 +147,7 @@ angular.module('tx.protocolEditor')
               if (_.isUndefined(_.result(scope.fieldCtrl.model, 'unit'))) {
                 var listener = scope.$watch('fieldCtrl.model', function (newval) {
 
-                  if (_.isObject(newval) && (newval.value || newval.unit)) {
+                  if (_.isObject(newval) && (_.isNumber(newval.value) || newval.unit)) {
                     var defaultUnit = _.result(_.result(scope.fieldCtrl.field, 'default'), 'unit') || scope.unitOptions[0];
                     ngModel.$setViewValue(_.assign({unit: defaultUnit}, scope.fieldCtrl.model));
                     listener();

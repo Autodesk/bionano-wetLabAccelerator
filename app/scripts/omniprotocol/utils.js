@@ -11,7 +11,7 @@ function pluckField (fields, fieldName) {
 
 //get the raw field value. Only use if going to handle transformation later.
 function pluckFieldValueRaw (fields, fieldName) {
-  return _.result(pluckField(fields, fieldName), 'value');
+  return _.result(pluckField(fields, fieldName), 'value', _.result(pluckField(fields, fieldName), 'default'));
 }
 
 function getContainerFromName (parameters, containerName) {
@@ -49,7 +49,7 @@ function interpolateValue (value, params) {
 // bobby" }
 function interpolateObject (obj, params) {
   //todo - clarify array handling
-  if (_.isNumber(obj) || _.isArray(obj)) {
+  if (_.isNumber(obj) || _.isArray(obj) || _.isBoolean(obj)) {
     return obj;
   }
   if (_.isString(obj)) {

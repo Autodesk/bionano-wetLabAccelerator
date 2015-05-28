@@ -97,7 +97,7 @@ angular.module('transcripticApp')
           var transitionDuration = 200,
               tempMin            = 0,
               tempMax            = 100,
-              tempRange          = _.range(tempMax+1, tempMin, -1),
+              tempRange          = _.range(tempMax, tempMin - 1, -1),
               rampPerSecond      = 3.5,
               graphData          = graphDataFromGroup(scope.group),
               withSpacings       = _(graphData)
@@ -135,8 +135,6 @@ angular.module('transcripticApp')
                 return timeAfter;
               }, 0);
 
-
-          console.log(withSpacings);
 
           xScale.domain(_.range(combinedLength + 1));
           yScale.domain(tempRange);

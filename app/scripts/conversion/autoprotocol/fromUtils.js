@@ -25,7 +25,7 @@ function makeReference (ref) {
       internal = {};
 
   if (_.isUndefined(ref.type) || ref.type != 'container' || _.isUndefined(ref.value)) {
-    throw Error('invalid reference', ref);
+    throw new Error('invalid reference', ref);
   }
 
   if (!!ref.value.isNew || _.isUndefined(ref.value.id)) {
@@ -43,12 +43,20 @@ function makeReference (ref) {
   }
 
   //hack - special handling for reservations, which currently is only the 6-well pre-poured plate (5/20)
-  var resId = _.result(_.result(omniContainers, ref.value.type), 'reservation');
+  var resId = !internal.id && _.result(_.result(omniContainers, ref.value.type), 'reservation');
   if (resId) {
     delete internal.new;
     delete internal.id;
     internal.reserve = resId
   }
+
+  /*
+  //deal with unnamed containers, changing the name of it itself
+  //todo - how to update the protocol?
+  if (!ref.name) {
+    ref.name = 'container_' + Math.floor(Math.random() * 1000);
+  }
+  */
 
   obj[ref.name] = internal;
   return obj;
