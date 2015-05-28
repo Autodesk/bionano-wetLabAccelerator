@@ -20,7 +20,7 @@ angular.module('tx.communication')
           q : query
         },
         cache: true
-      }));
+      }, true));
     };
 
     /**
@@ -37,7 +37,7 @@ angular.module('tx.communication')
         transformResponse: function (data, headers, status) {
           return (angular.isArray(data.results)) ? data.results : data;
         }
-      }));
+      }, true));
     };
 
     /**
@@ -54,7 +54,7 @@ angular.module('tx.communication')
         transformResponse: function (data, headers, status) {
           return angular.isArray(data.results) ? data.results : data;
         }
-      }));
+      }, true));
     };
 
   });

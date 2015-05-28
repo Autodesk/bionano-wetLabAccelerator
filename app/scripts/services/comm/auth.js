@@ -12,6 +12,8 @@ angular.module('tx.communication')
 
   var self = this;
 
+  var requiredKeys = ['email', 'key', 'organization'];
+
   var email = "",
       key = "",
       organization = "";
@@ -111,6 +113,8 @@ angular.module('tx.communication')
         key : self.key
       });
     }
+
+    //todo - should debounce this, or prevent if not all keys set
     function triggerWatchers () {
       angular.forEach(watchers, triggerWatcher);
     }
