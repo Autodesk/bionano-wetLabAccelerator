@@ -25,7 +25,7 @@ function makeReference (ref) {
       internal = {};
 
   if (_.isUndefined(ref.type) || ref.type != 'container' || _.isUndefined(ref.value)) {
-    throw Error('invalid reference', ref);
+    throw new Error('invalid reference', ref);
   }
 
   if (!!ref.value.isNew || _.isUndefined(ref.value.id)) {
@@ -49,6 +49,14 @@ function makeReference (ref) {
     delete internal.id;
     internal.reserve = resId
   }
+
+  /*
+  //deal with unnamed containers, changing the name of it itself
+  //todo - how to update the protocol?
+  if (!ref.name) {
+    ref.name = 'container_' + Math.floor(Math.random() * 1000);
+  }
+  */
 
   obj[ref.name] = internal;
   return obj;
