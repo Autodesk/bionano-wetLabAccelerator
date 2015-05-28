@@ -12,7 +12,7 @@ angular.module('tx.communication')
 
    var self = this;
 
-    var defaultUrl = Communication.root + '_commercial/kits';
+    var defaultUrl = Communication.root + '_commercial/resources';
 
     self.query = function (query) {
       return $http.get(defaultUrl, Communication.defaultResourceActions({

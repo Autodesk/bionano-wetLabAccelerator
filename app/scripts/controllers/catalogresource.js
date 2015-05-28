@@ -23,25 +23,11 @@ angular.module('transcripticApp')
     self.itemFields = [
       {
         name: 'Type',
-        key : ''
+        key : 'kind'
       },
       {
         name: 'Item',
         key : 'name'
-      },
-      /*
-      {
-        name: 'Aliquot Size',
-        key : ''
-      },
-      {
-        name: 'Concentration',
-        key : ''
-      },
-      */
-      {
-        name: 'Item Cost',
-        key : 'cost'
       }
     ];
 
