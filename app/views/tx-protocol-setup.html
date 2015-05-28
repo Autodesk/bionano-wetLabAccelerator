@@ -3,7 +3,19 @@
      ng-class="{'open' : isVisible}">
   <div class="protocol-setup-header"
        ng-click="isVisible = !isVisible">
-    setup
+
+    <div class="verification"
+         ng-class="{'expanded' : false}"
+         ng-if="hasVerifications && !isVisible">
+      <div class="verification-alert">
+        <span class="glyphicon glyphicon-alert"></span>
+      </div>
+      <div class="verification-flag">
+        <span>Expand to see verifications</span>
+      </div>
+    </div>
+
+    <span>setup</span>
   </div>
   <div class="protocol-setup-main"
        ng-show="isVisible">

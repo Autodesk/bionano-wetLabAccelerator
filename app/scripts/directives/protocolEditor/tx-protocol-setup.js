@@ -129,14 +129,14 @@ angular.module('transcripticApp')
         //VERIFICATIONS
 
         scope.$on('editor:verificationSuccess', function (event) {
+          scope.hasVerifications = false;
           _.forEach(scope.setupCtrl.parameters, function (param) {
             delete param.verification;
           });
         });
 
         scope.receiveVerifications = function (vers) {
-          //todo - shouldn't bind to the parameter itself...
-          //todo - search by ID, not name (in case name doesnt exist)
+          scope.hasVerifications = !!vers.length;
           _.forEach(vers, function (ver) {
             _.assign(_.find(scope.setupCtrl.parameters, {name: ver.container}), {verification: ver});
           });
