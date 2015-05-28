@@ -10,14 +10,9 @@
 angular.module('transcripticApp')
   .service('Platform', function ($q, $window) {
     var self = this,
-        pc = $window.PlatformClient;
+        pc   = $window.PlatformClient;
 
     _.assign(self, pc);
-
-    //temporary
-    self.ready = pc.authenticate('testuser@autodesk.com').then(function (playerData) {
-      //console.log(playerData);
-    });
 
     self.setTranscripticCredentials = function (creds) {
       var requiredKeys = ['email', 'key', 'organization'];
