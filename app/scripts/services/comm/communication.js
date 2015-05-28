@@ -12,13 +12,15 @@ angular.module('tx.communication')
 
     var self = this;
 
+    this.localRoot        = '/transcriptic/';
     this.transcripticRoot = "https://secure.transcriptic.com/";
+    this.platformRoot     = "https://platform.bionano.autodesk.com/transcriptic/";
 
     //default
     //this.root = this.transcripticRoot;
 
     //proxy
-    this.root = "/transcriptic/";
+    this.root = this.platformRoot;
 
 
     //pass in overrides as Object
@@ -28,11 +30,11 @@ angular.module('tx.communication')
       delete params.headers;
 
       return angular.extend({
-        headers: headers,
+        headers        : headers,
         withCredentials: true,
-        cache: false,
-        timeout: 7000,
-        responseType: "json"
+        cache          : false,
+        timeout        : 7000,
+        responseType   : "json"
       }, params)
     };
 
@@ -40,7 +42,7 @@ angular.module('tx.communication')
       return $http[method || 'get'](self.root + url, self.defaultResourceActions(params));
     };
 
-    this.requestUrl = function(url) {
+    this.requestUrl = function (url) {
       return self.root + url;
     };
 

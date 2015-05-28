@@ -55,8 +55,19 @@ angular.module('tx.communication')
         }),
 
         /**
-         * @name submit
+         * @name verify
          * @description Submit a run
+         * @param postData {Object} consisting of:
+         * protocol {Protocol} autoprotocol to verify
+         */
+        verify: Communication.defaultResourceActions({
+          method: "POST",
+          url: Communication.root + ':organization/analyze_run'
+        }),
+
+        /**
+         * @name analyze
+         * @description analyze a run
          * @param parameters {Object} with keys:
          * project {String} Project ID
          * @param postData {Object} consisting of:
