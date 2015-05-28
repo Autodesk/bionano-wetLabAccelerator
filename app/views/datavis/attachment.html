@@ -1,14 +1,7 @@
-<div ng-init="gel_prefix = 'gelSeparate_';
-              gel_info = summaryCtrl.runData[gel_prefix + summaryCtrl.indices.step]">
-
-  <img ng-repeat="attach in gel_info.attachments"
-       ng-init="summaryCtrl.getResource(attach.key, attach)"
-       ng-src="{{attach.resourceUrl}}">
-
-  <pre ng-bind="gel_info | json"></pre>
-
-  <pre ng-bind="summaryCtrl.indices | json"></pre>
-  <pre ng-bind="summaryCtrl.runData | json"></pre>
-  <pre ng-bind="summaryCtrl.operation | json"></pre>
-
+<div ng-init="resources = summaryCtrl.getResourcesForOp()">
+  <div ng-repeat="attach in resources">
+    <img ng-init="!attach.resourceUrl && summaryCtrl.getResource(attach.key, attach)"
+         ng-src="{{attach.resourceUrl}}">
+    <p ng-hide="attach.resourceUrl">loading...</p>
+  </div>
 </div>
