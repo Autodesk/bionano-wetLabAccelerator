@@ -142,7 +142,7 @@ $layout-opList-width: widthFromColumns(3) - $layout-operations-spacing-correctio
 ////////////////////
 
 $box-shadow-black-inner: inset 0 0 20px 0px transparentize($black, 0.25);
-$box-shadow-popover: 0 0 10px transparentize($white, 0.2);
+$box-shadow-popover: 0 0 20px transparentize($light-grey, 0.2);
 
 
 //interactions

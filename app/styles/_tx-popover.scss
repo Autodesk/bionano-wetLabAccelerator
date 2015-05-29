@@ -13,7 +13,7 @@
   white-space: normal;
 
   background: $white;
-  box-shadow: 0 0 20px transparentize($light-grey, 0.2);
+  box-shadow: $box-shadow-popover;
 
   max-width: 600px;
 
