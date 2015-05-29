@@ -18,12 +18,21 @@ angular.module('transcripticApp')
 
     //testing
     Platform.authenticate('testuser@autodesk.com').
+      then(Platform.transcripticCredentials).
+      then(console.log.bind(console)).
       then(Platform.get_all_project_ids).
       then(function (rpc) {
-        console.log(rpc);
         return $q.all(_.map(rpc.result, Platform.getProjectMetadata));
       }).
-      then(console.log.bind(console));
+      then(function (projects) {
+        var protocols = _.filter(projects, function (proj) {
+          return !!_.result(proj, 'description', false);
+        });
+        console.log(protocols);
+      }).
+      catch(function (err) {
+        console.log(err);
+      });
 
     //note - firebase
     simpleLogin.watch(function (user) {

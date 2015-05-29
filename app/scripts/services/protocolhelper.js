@@ -9,7 +9,7 @@
  * todo - move away from firebase
  */
 angular.module('transcripticApp')
-  .service('ProtocolHelper', function ($q, $rootScope, $timeout, UUIDGen, simpleLogin, FBProfile, Omniprotocol, Autoprotocol, Authentication, Notify) {
+  .service('ProtocolHelper', function ($q, $rootScope, $timeout, UUIDGen, simpleLogin, FBProfile, Omniprotocol, Autoprotocol, Authentication, Notify, Platform) {
 
     var self = this;
 
@@ -130,7 +130,17 @@ angular.module('transcripticApp')
         self.firebaseProtocols    = self.firebaseProtocolSync.$asArray();
 
         self.firebaseProtocols.$loaded()
-          .then(updateProtocolsExposed);
+          .then(updateProtocolsExposed)
+          .then(function () {
+            Platform.authenticate('testuser@autodesk.com')
+          })
+          .then(function () {
+            _.forEach(self.firebaseProtocols, function (protocol) {
+
+              //Platform.saveProject(protocol);
+
+            });
+          })
       }
     });
 

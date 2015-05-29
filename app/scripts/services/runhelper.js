@@ -8,7 +8,7 @@
  * Service in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .service('RunHelper', function ($q, Authentication, Run, ProtocolHelper, simpleLogin, FBProfile, Omniprotocol, UUIDGen) {
+  .service('RunHelper', function ($q, Authentication, Run, ProtocolHelper, simpleLogin, FBProfile, Omniprotocol, UUIDGen, Platform) {
 
     var self = this;
 
@@ -139,7 +139,23 @@ angular.module('transcripticApp')
         self.firebaseRuns    = self.firebaseRunSync.$asArray();
 
         self.firebaseRuns.$loaded()
-          .then(updateRunsExposed);
+          .then(updateRunsExposed)
+          .then(function () {
+            _.forEach(self.firebaseRuns, function (run) {
+
+              /*
+              if (!Platform.isCompliantId(run.metadata.id)) {
+                run.metadata.oldId = run.metadata.id;
+                run.metadata.id = UUIDGen();
+                self.firebaseRuns.$save(run);
+              }
+              */
+
+
+              //todo - update protocol ids? shouldn't be necessary
+
+            });
+          })
       }
     });
 
