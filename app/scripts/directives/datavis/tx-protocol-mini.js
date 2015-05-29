@@ -35,18 +35,15 @@ angular.module('transcripticApp')
 
         var hasInteracted = false;
 
-        scope.handleMouseover = function ($event, groupIndex, stepIndex, loopIndex) {
-          $event.preventDefault();
-          $event.stopPropagation();
+        scope.handleStepSelect = function ($event, groupIndex, stepIndex, loopIndex) {
           hasInteracted = true;
           activateStep(groupIndex, stepIndex, loopIndex);
         };
 
-        scope.handleStatusMouseover = function ($event) {
-          $event.preventDefault();
-          $event.stopPropagation();
+        scope.handleStatusSelect = function ($event) {
           hasInteracted = true;
-          attractArrow($event.target);
+          var target = $('.status-instruction');
+          attractArrow(target);
           activateStatus();
         };
 
@@ -71,6 +68,10 @@ angular.module('transcripticApp')
         }
 
         function attractArrow (targetEl) {
+          if (_.isUndefined(targetEl)) {
+            return;
+          }
+
           var topFromPage  = $(targetEl).offset().top,
               miniFromPage = element.offset().top,
               paddingTop   = parseInt(element.css('padding-top'), 10),

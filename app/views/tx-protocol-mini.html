@@ -1,10 +1,11 @@
-<div class="protocol-mini" ng-class="{'arrow-visible' : miniCtrl.showArrow}">
-  <div class="mini-protocol-status">
-    <div class="protocol-group"
-         ng-if="miniCtrl.status">
+<div class="protocol-mini"
+     ng-class="{'arrow-visible' : miniCtrl.showArrow}">
+  <div class="mini-protocol-status"
+       ng-if="miniCtrl.status">
+    <div class="protocol-group">
       <div class="status-instruction"
            ng-bind="miniCtrl.status.status"
-           ng-mouseenter="handleStatusMouseover($event)">
+           ng-click="handleStatusSelect($event)">
       </div>
     </div>
   </div>
@@ -36,7 +37,7 @@
                ng-repeat="step in group.steps"
                ng-init="stepIndex = $index"
                ng-class="{'has-arrow' : !$last}"
-               ng-mouseenter="handleMouseover($event, groupIndex, stepIndex, loopIndex)">
+               ng-click="handleStepSelect($event, groupIndex, stepIndex, loopIndex)">
             {{step.operation | capfirst}}
           </div>
         </div>
