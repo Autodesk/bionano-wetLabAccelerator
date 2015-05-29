@@ -116,21 +116,33 @@ angular.module('tx.communication')
 
       /* set up handling for watchers when auth changes */
 
-      var watchers = [];
+      var watchers = [],
+          lastPayload = {
+            organization: self.organization,
+            email       : self.email,
+            key         : self.key
+          };
 
-      function triggerWatcher (fn) {
-
-        var payload = allKeysDefined() ? {
+      function makePayload () {
+        return allKeysDefined() ? {
           organization: self.organization,
           email       : self.email,
           key         : self.key
         } : null;
+      }
 
-        fn(payload);
+      function triggerWatcher (fn) {
+        fn(lastPayload);
       }
 
       function triggerWatchers () {
-        !ignoreWatchers && angular.forEach(watchers, triggerWatcher);
+        if (!ignoreWatchers) {
+          var newPayload = makePayload();
+          if (!angular.equals(newPayload, lastPayload)) {
+            lastPayload = newPayload;
+            angular.forEach(watchers, triggerWatcher);
+          }
+        }
       }
 
       var watch = function (cb, $scope) {
