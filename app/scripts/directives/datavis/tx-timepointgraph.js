@@ -285,7 +285,7 @@ angular.module('tx.datavis')
 
           seriesData = _.flatten(_.map(data, _.values));
 
-          var extent = [0, d3.max(_.pluck(seriesData, 'value'))];
+          var extent = d3.extent(_.pluck(seriesData, 'value'));
           y.domain(extent).nice();
 
           //handle the x axis linear / ordinal
