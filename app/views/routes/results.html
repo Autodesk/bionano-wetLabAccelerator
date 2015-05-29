@@ -87,24 +87,19 @@
                         auto-scroll></tx-protocol-mini>
     </div>
 
-    <div class="maincolumn flex-grower maxout-scroll-vertical">
-      <div ng-hide="resultsCtrl.currentInfo">
-        Select a step in the protocol
-      </div>
-
-      <div ng-show="resultsCtrl.currentInfo"
-           ng-switch="resultsCtrl.currentInfo">
-
-        <div ng-switch-when="status">
+    <div class="maincolumn flex-grower maxout-scroll-vertical results-summary">
+      <div class="results-summary-wrap" simple-sticky="75">
+        <div ng-show="!resultsCtrl.currentInfo || resultsCtrl.currentInfo == 'status'">
           <h4 class="status-heading"
               ng-bind="resultsCtrl.run.transcripticRunInfo.status | capfirst"></h4>
+
           <p>This run is {{resultsCtrl.run.transcripticRunInfo.status}}.</p>
           <a target="_blank"
              class="action-text"
              ng-href="{{resultsCtrl.generateRunUrl(resultsCtrl.run)}}">Manage run at Transcriptic...</a>
         </div>
 
-        <div ng-switch-default>
+        <div ng-if="resultsCtrl.currentInfo && resultsCtrl.currentInfo != 'status'">
           <div>
             <span class="pull-right">Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</span>
 
@@ -119,7 +114,6 @@
             </tx-operation-summary>
           </div>
         </div>
-
       </div>
     </div>
   </div>

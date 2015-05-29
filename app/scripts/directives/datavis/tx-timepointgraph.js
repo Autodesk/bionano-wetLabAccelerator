@@ -39,7 +39,8 @@ angular.module('tx.datavis')
         interpolation : '=?', //interpolation function to use (e.g. linear, default cardinal)
         isLinear      : '=',
 
-        extentData    : '=?' //outward binding of extent of data (i.e. y axis domain)
+        timepointSelected: '=?', //outward binding for current timepoint
+        extentData       : '=?' //outward binding of extent of data (i.e. y axis domain)
       },
       link    : function postLink (scope, element, attrs) {
 
@@ -247,7 +248,8 @@ angular.module('tx.datavis')
           loupeText.text(point.key + ' - ' + parseFloat(point.value, 10).toFixed(3));
 
           scope.$applyAsync(function () {
-            scope.onHover({$well: point.key});
+            scope.timepointSelected = point.ordinal;
+            scope.onHover({$well: point.key, $ordinal : '' + point.ordinal, $value: parseFloat(point.value, 10)});
           });
         }
 
@@ -256,6 +258,7 @@ angular.module('tx.datavis')
           loupe.attr("visibility", "hidden");
           scope.$applyAsync(function () {
             scope.onHover();
+            scope.timepointSelected = null;
           });
         }
 
@@ -268,6 +271,7 @@ angular.module('tx.datavis')
         var series;
         var voronoiSeries;
         var seriesData;
+        var timepoints;
 
         /****
          Graph Updates
@@ -277,11 +281,11 @@ angular.module('tx.datavis')
 
           if (!data) return;
 
-          var timepoints = _.sortBy(_.keys(data), _.identity);
+          timepoints = _.sortBy(_.keys(data), _.identity);
 
           seriesData = _.flatten(_.map(data, _.values));
 
-          var extent = [0, d3.max(_.pluck(seriesData, 'value'))];
+          var extent = d3.extent(_.pluck(seriesData, 'value'));
           y.domain(extent).nice();
 
           //handle the x axis linear / ordinal

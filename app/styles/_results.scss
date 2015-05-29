@@ -16,4 +16,16 @@
   .status-heading {
     margin-top: 0;
   }
+
+
+  //if this is position-fixed, we need this
+
+  .results-summary {
+    max-width: 530px;
+  }
+
+  .results-summary-wrap {
+    width: 100%;
+    max-width: inherit;
+  }
 }
