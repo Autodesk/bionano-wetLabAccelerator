@@ -9,59 +9,66 @@
  */
 angular.module('tx.communication')
   .factory('Project', function ($resource, Communication, Auth) {
-   return $resource(Communication.root + ':organization',
-     //defaults
-     {
-       organization: Auth.organization
-     },
+    return $resource(Communication.root + ':organization',
+      //defaults
+      {
+        organization: Auth.organization
+      },
 
-     //defaults
-     {
-       /**
-        * @name create
-        * @description Create a new project
-        * @param parameters {null} empty object
-        * @param postData {Object} consisting of:
-        * name {String} name of new project
-        */
-       create: Communication.defaultResourceActions({
-         method: "POST"
-       }),
+      //defaults
+      {
+        /**
+         * @name create
+         * @description Create a new project
+         * @param parameters {null} empty object
+         * @param postData {Object} consisting of:
+         * name {String} name of new project
+         */
+        create: Communication.defaultResourceActions({
+          method: "POST"
+        }),
 
-       /**
-        * @name view
-        * @description Get data about a project
-        * @param parameters {Object} consisting of:
-        * project {String} Project ID
-        */
-       view: Communication.defaultResourceActions({
-         method: "GET",
-         url: Communication.root + ':organization/:project'
-       }),
+        /**
+         * @name view
+         * @description Get data about a project
+         * @param parameters {Object} consisting of:
+         * project {String} Project ID
+         */
+        view: Communication.defaultResourceActions({
+          method: "GET",
+          url   : Communication.root + ':organization/:project'
+        }),
 
-       /**
-        * @name list
-        * @description Get list of projects
-        */
-       list: Communication.defaultResourceActions({
-         method: "GET",
-         url: Communication.root + ':organization/projects',
-         isArray: true,
-         transformResponse: function (data, headers) {
-           //todo - check for more than 1 page / pass param for more than 10
-           return angular.isArray(data.results) ? data.results : data;
-         }
-       }),
+        /**
+         * @name list
+         * @description Get list of projects
+         */
+        list: Communication.defaultResourceActions({
+          method           : "GET",
+          url              : Communication.root + ':organization/projects',
+          isArray          : true,
+          /*
+          //debug
+          transformRequest : function (data, headers) {
+            console.log(data);
+            console.log(headers());
+          },
+          */
+          transformResponse: function (data, headers) {
+            //todo - check for more than 1 page / pass param for more than 10
+            return angular.isArray(data.results) ? data.results : data;
+          }
+        }),
 
-       /**
-        * @name remove
-        * @description Delete a project
-        * @param parameters {Object} consisting of:
-        * project {String} Project ID
-        */
-       remove: Communication.defaultResourceActions({
-         method: "DELETE",
-         url: Communication.root + ':organization/:project'
-       })
-     });
+        /**
+         * @name remove
+         * @description Delete a project
+         * @param parameters {Object} consisting of:
+         * project {String} Project ID
+         */
+        remove: Communication.defaultResourceActions({
+          method: "DELETE",
+          url   : Communication.root + ':organization/:project'
+        })
+      });
   });

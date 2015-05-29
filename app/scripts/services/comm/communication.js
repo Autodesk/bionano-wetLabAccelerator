@@ -32,11 +32,17 @@ angular.module('tx.communication')
       var timeoutPromise = $q.defer(),
           timeoutCancel = 7000;
 
+      /*
+      //fixme - these are only set once, and so never valid - should be setting timeout on each request
       //prevent requests when organization is not set
       if (_.isEmpty(Auth.organization()) && !orgUnrequired) {
+        console.debug('empty org');
         timeoutCancel = timeoutPromise.promise;
         timeoutPromise.resolve();
+      } else {
+        console.debug('submitting request');
       }
+      */
 
       return angular.extend({
         headers        : headers,
