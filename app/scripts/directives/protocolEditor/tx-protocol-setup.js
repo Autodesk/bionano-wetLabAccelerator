@@ -101,6 +101,7 @@ angular.module('transcripticApp')
 
         //CHANGE CHECKING / CONTAINERS
 
+        //todo - this will be problematic when handling verifications on the parameter b/c deep equality
         scope.$watch('setupCtrl.parameters', function (newval, oldval) {
           $rootScope.$broadcast('editor:parameterChange', newval);
         }, true);
@@ -137,8 +138,11 @@ angular.module('transcripticApp')
 
         scope.receiveVerifications = function (vers) {
           scope.hasVerifications = !!vers.length;
-          _.forEach(vers, function (ver) {
-            _.assign(_.find(scope.setupCtrl.parameters, {name: ver.container}), {verification: ver});
+          scope.verifications = vers;
+          //todo - shouldn't be binding to the parameter directly...
+          //fixme - using index is a hack, should be using whole verification (can refactor once can remove the $watch on all parameters)
+          _.forEach(vers, function (ver, verIndex) {
+            _.assign(_.find(scope.setupCtrl.parameters, {name: ver.container}), {verification: verIndex});
           });
         };
 
