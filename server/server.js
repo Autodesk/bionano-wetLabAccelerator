@@ -21,7 +21,6 @@ proxy.on('proxyReq', function(proxyReq, req, res, options) {
 // app.use(require('express-bunyan-logger')());
 app.use(require('express-bunyan-logger').errorLogger());
 
-
 app.get("/transcriptic*", function(req, res) {
 	res.oldWriteHead = res.writeHead;
 	req.url = req.url.replace('/transcriptic', '');
@@ -29,14 +28,15 @@ app.get("/transcriptic*", function(req, res) {
 	res.writeHead = function(statusCode, headers) {
 		/* add logic to change headers here */
 		res.setHeader('Access-Control-Accept-Origin', '*');
-		res.setHeader('Host', 'https://secure.transcriptic.com');
+		res.setHeader('Host', 'secure.transcriptic.com');
+		res.setHeader('Accept', 'application/json');
 		res.oldWriteHead(statusCode, headers);
 	}
 	proxy.web(req, res, options);
 });
 
 log.info('process.env.APP=' + process.env.APP);
-var appFolder = process.env.APP + '/dist' || path.dirname(__dirname) + '/dist';
+var appFolder = (process.env.APP || path.dirname(__dirname)) + '/dist';
 log.warn('appFolder=' + appFolder);
 app.use(express.static(appFolder));
 

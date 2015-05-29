@@ -38,6 +38,8 @@ angular.module('transcripticApp')
           });
         };
 
+        /*
+        //todo - this causes double linking... for some reason, we dont need this and it just happens magically...
         //can't use ng-transclude and update the scope, so add the element manually
         transcludeFn(scope.$parent, function (clone, transcludeScope) {
           var transcludeEl       = element.find('modal-transclude');
@@ -45,6 +47,7 @@ angular.module('transcripticApp')
           transcludeEl.append(clone);
           transcludeScope.$close = scope.hideModal;
         });
+        */
       }
     };
 

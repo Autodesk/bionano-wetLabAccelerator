@@ -28,6 +28,7 @@ angular.module('transcripticApp')
       'unseal'  : 'container',
       'cover'   : 'container',
       'uncover' : 'container',
+      'spin'    : 'container',
 
       'image_plate' : 'attachment',
       'gel_separate': 'attachment'

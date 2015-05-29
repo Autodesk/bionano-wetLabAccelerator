@@ -3,7 +3,19 @@
      ng-class="{'open' : isVisible}">
   <div class="protocol-setup-header"
        ng-click="isVisible = !isVisible">
-    setup
+
+    <div class="verification"
+         ng-class="{'expanded' : false}"
+         ng-if="hasVerifications && !isVisible">
+      <div class="verification-alert">
+        <span class="glyphicon glyphicon-alert"></span>
+      </div>
+      <div class="verification-flag">
+        <span>Expand to see verifications</span>
+      </div>
+    </div>
+
+    <span>setup</span>
   </div>
   <div class="protocol-setup-main"
        ng-show="isVisible">
@@ -13,12 +25,12 @@
          ng-mouseleave="hovering = false"
          ng-class="{'highlight' : deleteRow}"
          ng-switch="param.type">
-      <div class="verification" ng-if="param.verification">
+      <div class="verification" ng-if="param.verification > -1">
         <div class="verification-alert">
           <span class="glyphicon glyphicon-alert"></span>
         </div>
         <div class="verification-flag">
-          <span ng-bind="param.verification.message"></span>
+          <span ng-bind="verifications[param.verification].message"></span>
         </div>
       </div>
       <div class="parameter-type">{{param.type}}</div>

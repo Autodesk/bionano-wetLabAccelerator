@@ -6,26 +6,30 @@ var _                    = require('lodash'),
     omniContainers       = global.omniprotocol.optionEnums.containers,
     omniConv             = global.omniprotocol.conv;
 
+function throwFieldError (message, op, fieldName) {
+  var fieldObj = omniUtils.pluckField(op.fields, fieldName);
+  throw new ConversionError(message, fieldObj, fieldName, op.$index);
+}
+
 function convertInstruction (inst, localParams) {
   //todo - handle validation of each field too?
 
   var converter = converterInstruction[inst.operation];
 
   if (!_.isFunction(converter)) {
-    console.error('converter doesn\'t exist for ' + inst.operation);
-    return null;
+    throw new ConversionError('converter doesn\'t exist for ' + inst.operation, null, null, inst.$index);
   }
 
   return converter(inst, localParams);
 }
 
 //todo - pass error information to tie back to parameters
-function makeReference (ref) {
+function makeReference (ref, index) {
   var obj      = {},
       internal = {};
 
-  if (_.isUndefined(ref.type) || ref.type != 'container' || _.isUndefined(ref.value)) {
-    throw new Error('invalid reference', ref);
+  if (_.isUndefined(ref.name) || !_.has(ref, 'value.type')) {
+    throw new ConversionError('Reference must have a name, type, and storage', ref, ref.name, 'parameter');
   }
 
   if (!!ref.value.isNew || _.isUndefined(ref.value.id)) {
