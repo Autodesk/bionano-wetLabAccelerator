@@ -88,13 +88,13 @@ angular.module('tx.protocolEditor')
           scope.opCtrl.isVisible = !!val;
         });
 
-        scope.$on('editor:verificationSuccess', function (e, val) {
+        scope.$on('editor:clearVerifications', function (e, val) {
           delete scope.opCtrl.verification;
         });
 
         //note - called by protocol-editor
         scope.receiveVerification = function (ver) {
-          console.log(ver);
+          //console.log(ver);
           _.assign(scope.opCtrl, {verification: ver});
         };
       }
