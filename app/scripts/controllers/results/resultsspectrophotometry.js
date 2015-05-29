@@ -71,7 +71,9 @@ angular.module('transcripticApp')
       self.currentWells = wells;
     };
 
-    self.onGraphHover = function (well) {
+    self.onGraphHover = function (well, ordinal) {
       self.focusedWells = _.isUndefined(well) ? [] : [well];
+      var newIndex = _.indexOf(self.timepointValues, ordinal);
+      newIndex >= 0 && self.selectTimepoint(newIndex);
     };
   });
