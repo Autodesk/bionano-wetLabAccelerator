@@ -161,8 +161,9 @@ class _BaseTest(TestCase):
     def setWindowSize(self):
         width = config['viewport']['width']
         height = config['viewport']['height']
-        print("setting browser window size to: " + str(width) + "," + str(height))
-        self.DRIVER.set_window_size(width, height)
+       # print("setting browser window size to: " + str(width) + "," + str(height))
+        self.DRIVER.maximize_window()
+        #self.DRIVER.set_window_size(width, height)
 
 class _BaseFirefoxTest(_BaseTest):
     """For firefox tests, the driver"""
