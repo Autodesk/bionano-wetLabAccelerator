@@ -61,12 +61,14 @@
   background: $light-grey;
   border-radius: 50px;
   position: relative;
+  font-size: 12px;
 
   &:before {
     content: 'TRUE';
     color: $grey;
     position: relative;
-    left: 7px;
+    left: 10px;
+    top: 1px;
     z-index: 0;
   }
 
@@ -74,8 +76,8 @@
     content: 'FALSE';
     color: $grey;
     position: relative;
-    bottom: 20px;
-    left: 50px;
+    left: 4px;
+    top: 1px;
     z-index: 0;
   }
 
@@ -96,7 +98,8 @@
     &:after {
       content: 'FALSE';
       position: relative;
-      left: 3px;
+      left: 6px;
+      top: 2px;
     }
   }
 
@@ -107,7 +110,7 @@
 
     &:after {
       content: 'TRUE';
-      left: 4px;
+      left: 7px;
     }
   }
 
