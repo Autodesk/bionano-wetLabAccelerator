@@ -59,9 +59,6 @@ angular.module('tx.protocolEditor')
         self.toggleAllSteps = function () {
           self.allStepsOpen = !self.allStepsOpen;
           $rootScope.$broadcast('editor:toggleGroupVisibility', self.allStepsOpen);
-          if (self.allStepsOpen) {
-
-          }
         };
 
         //todo - deprecate
