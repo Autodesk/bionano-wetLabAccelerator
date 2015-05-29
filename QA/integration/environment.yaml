@@ -50,7 +50,7 @@ environments:
 
 # window size defaults
 viewport:
-  width: 1600
+  width: 1400
   height: 1024
 
 # until we have a library for fetching images from autodesk prime - here are some

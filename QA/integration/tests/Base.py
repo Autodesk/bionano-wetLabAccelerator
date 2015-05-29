@@ -127,9 +127,7 @@ class _BaseTest(TestCase):
 
     def setupFF(self):
         self.DRIVER = webdriver.Firefox()
-        width = config['viewport']['width']
-        height = config['viewport']['height']
-        self.DRIVER.set_window_size(width, height)
+        self.setWindowSize()
         selenium_logger = logging.getLogger('selenium.webdriver.remote.remote_connection')
         selenium_logger.setLevel(logging.WARNING)
         
@@ -146,9 +144,7 @@ class _BaseTest(TestCase):
         #self.DRIVER = webdriver.Chrome(chromedriver)
         self.DRIVER = webdriver.Chrome()
 
-        width = config['viewport']['width']
-        height = config['viewport']['height']
-        self.DRIVER.set_window_size(width, height)
+        self.setWindowSize()
 
         # shut off the massive debug logging
         # TODO find a way to keep this DRY across browsers
@@ -160,11 +156,13 @@ class _BaseTest(TestCase):
             command_executor=config['remoteWebDriverURL'] + ':4444/wd/hub',
             desired_capabilities=DesiredCapabilities.CHROME
         )
+        self.setWindowSize()
+
+    def setWindowSize(self):
         width = config['viewport']['width']
         height = config['viewport']['height']
+        print("setting browser window size to: " + str(width) + "," + str(height))
         self.DRIVER.set_window_size(width, height)
-
-
 
 class _BaseFirefoxTest(_BaseTest):
     """For firefox tests, the driver"""
