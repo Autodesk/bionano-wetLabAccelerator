@@ -14,8 +14,7 @@ class _BaseTest(TestCase):
     
     def setUp(self, driver):
         env = self.environment()
-        print("setup config['browser']: " + config['browser'])
-        #print("os.environ['TEST_BROWSER']: " + os.environ['TEST_BROWSER'])
+       #print("os.environ['TEST_BROWSER']: " + os.environ['TEST_BROWSER'])
         browser = config['browser']
         if browser == "chrome":
             self.setUpChrome()
@@ -25,7 +24,8 @@ class _BaseTest(TestCase):
             self.setupIE()
         if browser == "remote":
             self.setupRemote()
-            
+        print("browser: " + browser)
+
     def environment(self):
         """Return the environment for this test. This allows us to specify
         from outside the test engine, the test environment (production, staging, etc)"""
@@ -34,7 +34,7 @@ class _BaseTest(TestCase):
         except KeyError:
             env = config['environment']
 
-        print("environment: " + env)
+        # print("environment: " + env)
         return env
 
     def assertSameImage(self, page, prefix=None):
@@ -143,7 +143,8 @@ class _BaseTest(TestCase):
     def setUpChrome(self):
         chromedriver = config['chromedriver']
         os.environ["webdriver.chrome.driver"] = chromedriver
-        self.DRIVER = webdriver.Chrome(chromedriver)
+        #self.DRIVER = webdriver.Chrome(chromedriver)
+        self.DRIVER = webdriver.Chrome()
 
         width = config['viewport']['width']
         height = config['viewport']['height']
