@@ -62,9 +62,10 @@ class Page:
     def click(self, element, description):
         self.action("click on " + description + " element: " + element.tag_name + " class: " + element.get_attribute("class"))
         if isinstance(element, tuple):
-            self.findElement(tuple).click
-        else:
-            element.click()
+            element = self.findElement(element)
+
+        element.location_once_scrolled_into_view
+        element.click()
 
     def waitForElementByClassName(self, className):
         return self.waitForElement((By.CLASS_NAME, className))
