@@ -26,5 +26,5 @@ angular.module('transcripticApp')
       $scope.modalShown = !$scope.modalShown;
     };
 
-    self.loadDemo();
+    //self.loadDemo();
   });
