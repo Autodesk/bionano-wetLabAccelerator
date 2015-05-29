@@ -65,11 +65,15 @@ angular.module('tx.protocolEditor')
         });
 
         element.on('mouseenter', function () {
-          scope.opCtrl.isHovered = true;
+          scope.$applyAsync(function () {
+            scope.opCtrl.isHovered = true;
+          });
         });
 
         element.on('mouseleave', function () {
-          scope.opCtrl.isHovered = false;
+          scope.$applyAsync(function () {
+            scope.opCtrl.isHovered = false;
+          });
         });
 
         scope.deleteStep = function () {
