@@ -36,6 +36,16 @@ angular.module('transcripticApp')
       }));
     };
 
+    //remove angular / firebase fields
+    self.removeExtraneousFields = function removeExtraneousFields (object) {
+      if (_.isObject(object)) {
+        return _.omit(object, function (val, key) {
+          return _.startsWith(key, "$");
+        });
+      }
+      return object;
+    };
+
     /****
      basic CRUD
      *****/
@@ -113,6 +123,13 @@ angular.module('transcripticApp')
     /****
      helpers / utils
      *****/
+
+    self.projectOnlyHasMetadata = function (project) {
+      var keys = _(project).keys().filter(function (key) {
+        return !_.startsWith(key, '$');
+      }).value();
+      return keys.length == 1 && keys[0] == 'metadata';
+    };
 
     /*
     INIT

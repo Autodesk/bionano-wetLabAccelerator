@@ -9,7 +9,7 @@
  * todo - move away from firebase
  */
 angular.module('transcripticApp')
-  .service('ProtocolHelper', function ($q, $rootScope, $timeout, UUIDGen, simpleLogin, FBProfile, Omniprotocol, Autoprotocol, Authentication, Notify, Platform) {
+  .service('ProtocolHelper', function ($q, $rootScope, $timeout, UUIDGen, simpleLogin, FBProfile, Omniprotocol, Autoprotocol, Authentication, Notify, Platform, Database) {
 
     var self = this;
 
@@ -139,7 +139,7 @@ angular.module('transcripticApp')
           .then(function () {
             //use only if uploading to DB
             return $q.all(_.map(self.firebaseProtocols, function (protocol) {
-              var pruned = Platform.removeExtraneousFields(protocol);
+              var pruned = Database.removeExtraneousFields(protocol);
               if (_.has(pruned, 'groups')) {
                 return Platform.saveProject(pruned);
               }
@@ -152,7 +152,7 @@ angular.module('transcripticApp')
             return $q.all(_.map(rpc.result, Platform.getProject));
           })
           .then(function (projects) {
-            return _.map(projects, Platform.removeExtraneousFields);
+            return _.map(projects, Database.removeExtraneousFields);
           })
           .then(updateProtocolsExposed)
           .then(console.log.bind(console));
