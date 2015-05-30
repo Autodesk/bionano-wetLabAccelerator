@@ -44,16 +44,30 @@ angular.module('transcripticApp')
         });
     };
 
-    //todo - cache
-    self.getAllProjectMetadata = function getAllProjectMetadata () {
+    //todo - cache / check for new IDs
+    self.getAllProjects = function getAllProjects () {
       return self.getAllProjectIds().
         then(function (ids) {
           return $q.all(_.map(ids, Platform.getProject));
         });
     };
 
+    //todo - cache / check for new IDs
+    self.getAllProjectMetadata = function getAllProjectMetadata () {
+      return self.getAllProjectIds().
+        then(function (ids) {
+          return $q.all(_.map(ids, Platform.getProjectMetadata));
+        });
+    };
+
     self.getAllProjectMetadataOfType = function getAllProjectMetadataOfType (type) {
       return self.getAllProjectMetadata().then(function (metas) {
+        return _.filter(metas, {type : type});
+      });
+    };
+
+    self.getAllProjectsOfType = function (type) {
+      return self.getAllProjects().then(function (metas) {
         return _.filter(metas, {type : type});
       });
     };
@@ -67,9 +81,17 @@ angular.module('transcripticApp')
       return Platform.saveProject(project)
     };
 
-    self.createProject = function (project) {
+    self.addProject = function (project) {
       //todo - save locally
 
+    };
+
+    self.removeProject = function (project) {
+      var id = _.isString(project) ? project : _.result(project, 'metadata.id');
+      if (id) {
+        //fixme - pending Dion
+        return Platform.deleteProject(id);
+      }
     };
 
     /* INIT
