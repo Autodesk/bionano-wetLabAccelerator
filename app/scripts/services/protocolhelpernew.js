@@ -48,7 +48,7 @@ angular.module('transcripticApp')
       //note - firebase
       //console.log('saving', protocol, protocol.$id, protocol === self.currentProtocol, self.firebaseProtocols);
 
-      if (!hasNecessaryMetadataToSave(protocol)) {
+      if (!protocolHasNecessaryMetadataToSave(protocol)) {
         assignNecessaryMetadataToProtocol(protocol);
       }
 
@@ -119,7 +119,7 @@ angular.module('transcripticApp')
       return _.assign(protocol.metadata, generateNewProtocolMetadata(), protocol.metadata);
     }
 
-    function hasNecessaryMetadataToSave (protocol) {
+    function protocolHasNecessaryMetadataToSave (protocol) {
       return _.every(['id', 'name', 'type', 'author'], function (field) {
         return !_.isEmpty(_.result(protocol.metadata, field));
       });

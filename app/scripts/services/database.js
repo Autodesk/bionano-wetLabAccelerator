@@ -36,6 +36,43 @@ angular.module('transcripticApp')
       }));
     };
 
+    /****
+     basic CRUD
+     *****/
+
+    function getIdFromIdOrProjectInput (project) {
+      return _.isString(project) ? project : _.result(project, 'metadata.id');
+    }
+
+    //can pass in whole project, if object assumes that
+    self.getProject = function (project) {
+      //check exists locally
+      var id = getIdFromIdOrProjectInput(project);
+      return Platform.getProject(id);
+    };
+
+    self.saveProject = function (project) {
+      //todo - check exists, save if not
+      return Platform.saveProject(project)
+    };
+
+    self.addProject = function (project) {
+      //todo - save locally
+
+    };
+
+    self.removeProject = function (project) {
+      var id = getIdFromIdOrProjectInput(project);
+      if (id) {
+        //fixme - pending Dion
+        return Platform.deleteProject(id);
+      }
+    };
+
+    /****
+     large retrievals
+     *****/
+
     //todo - cache
     self.getAllProjectIds = function getAllProjectIds () {
       return Platform.get_all_project_ids().
@@ -72,29 +109,13 @@ angular.module('transcripticApp')
       });
     };
 
-    self.getProjectById = function getProjectById (id) {
-      return Platform.getProject(id);
-    };
 
-    self.saveProject = function (project) {
-      //todo - check exists, save if not
-      return Platform.saveProject(project)
-    };
+    /****
+     helpers / utils
+     *****/
 
-    self.addProject = function (project) {
-      //todo - save locally
-
-    };
-
-    self.removeProject = function (project) {
-      var id = _.isString(project) ? project : _.result(project, 'metadata.id');
-      if (id) {
-        //fixme - pending Dion
-        return Platform.deleteProject(id);
-      }
-    };
-
-    /* INIT
+    /*
+    INIT
     On init, get all IDs and metadata for all objects
      */
     //todo
