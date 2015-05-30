@@ -70,18 +70,22 @@ tx-protocol-field {
   }
 
   .field-parameter-toggler {
-    margin: 0 10px;
-    padding: 4px;
-    border-radius: 4px;
+    margin: 0.25em 10px;
+    padding: 0.25em;
+    border-radius: 3px;
     position: relative;
     cursor: pointer;
     font-size: 12px;
     color: $white;
     text-align: center;
-    width: 20px;
-    height: 20px;
+    width: 1.6em;
+    height: 1.6em;
     opacity: 0;
     transition: opacity $transition-short-time $transition-short-ease;
+
+    .glyphicon {
+      top: 0;
+    }
 
     &.active {
       opacity: 1;

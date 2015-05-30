@@ -47,6 +47,7 @@ $font-line-height: 1.5;
 
 $z-sidepanel: 1000;
 $z-header: 2000;
+$z-dropdown: 4000;
 $z-popup: 5000;
 $z-notification: 9000;
 $z-overlay: 10000;
@@ -143,6 +144,7 @@ $layout-opList-width: widthFromColumns(3) - $layout-operations-spacing-correctio
 
 $box-shadow-black-inner: inset 0 0 20px 0px transparentize($black, 0.25);
 $box-shadow-popover: 0 0 10px transparentize($white, 0.2);
+$box-shadow-dropdown: 0 0 15px transparentize($black, 0.8);
 
 
 //interactions
