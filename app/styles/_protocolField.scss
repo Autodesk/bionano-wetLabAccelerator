@@ -81,7 +81,7 @@ tx-protocol-field {
     width: 20px;
     height: 20px;
     opacity: 0;
-    transition: opacity $transition-out-time $transition-out-ease;
+    transition: opacity $transition-short-time $transition-short-ease;
 
     &.active {
       opacity: 1;
@@ -101,7 +101,7 @@ tx-protocol-field {
     > .field-parameter-toggler {
       opacity: 1;
       background-color: $light-grey;
-      transition: opacity $transition-out-time $transition-out-ease;
+      transition: opacity $transition-short-time $transition-short-ease;
     }
   }
 }

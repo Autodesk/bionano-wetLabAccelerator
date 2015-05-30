@@ -73,8 +73,8 @@ $color-font: $dark-grey;
 $color-font-light: lighten($color-font, 10);
 $color-font-dark: darken($color-font, 10);
 
-$color-link-default: #888888;
-$color-link-default-hover: #555555;
+$color-link-default: $dark-grey;
+$color-link-default-hover: $black;
 
 $color-link-post: $primary;
 $color-link-post-hover: darken($primary, 15);
@@ -85,10 +85,10 @@ $color-link-footer-hover: $color-link-post-hover;
 
 // transitions
 
-$transition-in-time: 0.4s;
-$transition-out-time: 0.2s;
-$transition-in-ease: ease-out;
-$transition-out-ease: ease-out;
+$transition-long-time: 0.4s;
+$transition-short-time: 0.2s;
+$transition-long-ease: ease-out;
+$transition-short-ease: ease-out;
 
 ////////////////////
 // spacing

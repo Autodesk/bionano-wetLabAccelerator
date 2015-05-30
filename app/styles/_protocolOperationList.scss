@@ -19,6 +19,6 @@ tx-operation-list {
   &:hover {
     background-color: white;
     color: $primary;
-    transition: background $transition-out-time $transition-out-ease, color $transition-out-time $transition-out-ease;
+    transition: background $transition-short-time $transition-short-ease, color $transition-short-time $transition-short-ease;
   }
 }
