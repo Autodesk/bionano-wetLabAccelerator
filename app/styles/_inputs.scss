@@ -60,7 +60,7 @@
   background: $light-grey;
   border-radius: 50px;
   position: relative;
-  font-size: 12px;
+  font-size: $font-size-sm;
 
   &:before {
     content: 'TRUE';
@@ -130,5 +130,23 @@
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+}
+
+input[type="color"].color-swatch {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  color: transparent;
+  background-color: transparent;
+  border: 1px solid transparent;
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border: 1px solid transparent;
+  }
+  &::-webkit-color-swatch {
+    border: 1px solid transparent;
+    border-radius: 10px;
   }
 }

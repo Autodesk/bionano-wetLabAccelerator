@@ -1,5 +1,4 @@
 <div class="protocol-setup-wrap"
-     ng-init="isVisible = true"
      ng-class="{'open' : isVisible}">
   <div class="protocol-setup-header"
        ng-click="isVisible = !isVisible">
@@ -25,7 +24,8 @@
          ng-mouseleave="hovering = false"
          ng-class="{'highlight' : deleteRow}"
          ng-switch="param.type">
-      <div class="verification" ng-if="param.verification > -1">
+      <div class="verification"
+           ng-if="param.verification > -1">
         <div class="verification-alert">
           <span class="glyphicon glyphicon-alert"></span>
         </div>
@@ -46,14 +46,16 @@
            ng-class="{'highlight' : deleteRow}">
         <input disabled
                type="color"
+               class="color-swatch"
                ng-required="true"
                ng-model="param.value.color">
         <span ng-bind="param.value.type"></span>
         <a class="field-details-button"
            ng-click="containerDetailsVisible = !containerDetailsVisible">
-          details...
+          edit...
         </a>
-        <tx-modal ng-if="containerDetailsVisible" ng-show="containerDetailsVisible">
+        <tx-modal ng-if="containerDetailsVisible"
+                  ng-show="containerDetailsVisible">
           <div class="row">
             <div class="col-md-5">
               <div class="form-horizontal">
@@ -62,8 +64,10 @@
                     use
                   </label>
 
-                  <div class="col-sm-7" dropdown>
-                    <a ng-bind="param.readable || 'new container'" dropdown-toggle></a>
+                  <div class="col-sm-7"
+                       dropdown>
+                    <a ng-bind="param.readable || 'new container'"
+                       dropdown-toggle></a>
                     <ul class="dropdown-menu">
                       <li>
                         <a ng-click="setupCtrl.selectNewContainer(param)">New Container</a>
@@ -131,8 +135,10 @@
                     color
                   </label>
 
-                  <div class="col-sm-7" dropdown>
-                    <a ng-bind="param.value.color || 'edit...'" dropdown-toggle></a>
+                  <div class="col-sm-7"
+                       dropdown>
+                    <a ng-bind="param.value.color || 'edit...'"
+                       dropdown-toggle></a>
                     <ul class="dropdown-menu">
                       <li ng-repeat="(name, hex) in setupCtrl.containerColorOptions">
                         <a ng-click="param.value.color = hex"
@@ -173,7 +179,7 @@
            ng-class="{'open' : showParameters}">
         <span class="glyphicon glyphicon-plus"></span>
         Add Parameter
-        <ul class="dropdown-menu parameter-list dropdown-menu-right"
+        <ul class="dropdown-menu parameter-list dropdown-menu-center"
             ng-mouseleave="showParameters = false">
           <li>
             <a class="parameter-option"
