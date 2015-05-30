@@ -29,7 +29,7 @@ angular.module('transcripticApp')
 
         $scope.$watch('auth', checkAuthIsValid);
 
-        //don't actually bind to Auth here, Auth listens to 'txAuth' from firebase directly
+        //don't actually bind to TranscripticAuth here, TranscripticAuth listens to 'txAuth' from firebase directly
         //will need to refactor to pull via REST or something, and shuold update DB automatically
         var bindtoWatcher = angular.noop;
         simpleLogin.watch(function(user) {

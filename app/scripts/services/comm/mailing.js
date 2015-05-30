@@ -8,11 +8,11 @@
  * Service in the transcripticApp.
  */
 angular.module('tx.communication')
-  .service('mailing', function ($resource, Communication, Auth) {
+  .service('mailing', function ($resource, Communication, TranscripticAuth) {
     return $resource(Communication.root + ':organization/containers/:id/mail',
       //defaults
       {
-        organization: Auth.organization
+        organization: TranscripticAuth.organization
       },
 
       //actions

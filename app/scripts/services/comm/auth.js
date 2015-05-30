@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.Auth
+ * @name transcripticApp.TranscripticAuth
  * @description
- * # Auth
+ * # TranscripticAuth
  * Service in the transcripticApp.
  */
 angular.module('tx.communication')
-  .provider('Auth', function () {
+  .provider('TranscripticAuth', function () {
 
     var self = this;
 

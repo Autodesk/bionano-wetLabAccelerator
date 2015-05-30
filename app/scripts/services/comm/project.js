@@ -8,11 +8,11 @@
  * Factory in the transcripticApp.
  */
 angular.module('tx.communication')
-  .factory('Project', function ($resource, Communication, Auth) {
+  .factory('Project', function ($resource, Communication, TranscripticAuth) {
     return $resource(Communication.root + ':organization',
       //defaults
       {
-        organization: Auth.organization
+        organization: TranscripticAuth.organization
       },
 
       //defaults

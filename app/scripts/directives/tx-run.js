@@ -8,7 +8,7 @@
  * //todo - maybe should move verifications / submissions outside of here entirely. also maybe the remote verification listener
  */
 angular.module('transcripticApp')
-  .directive('txRun', function ($q, $timeout, $rootScope, Auth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, Communication, RunHelper) {
+  .directive('txRun', function ($q, $timeout, $rootScope, TranscripticAuth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, Communication, RunHelper) {
     return {
       templateUrl : 'views/tx-run.html',
       restrict    : 'E',
@@ -22,7 +22,7 @@ angular.module('transcripticApp')
 
         self.projects = [];
 
-        Auth.watch(function (info) {
+        TranscripticAuth.watch(function (info) {
           if (!!info) {
             self.projects = Project.list();
           }
@@ -52,7 +52,7 @@ angular.module('transcripticApp')
           }
 
           return Communication.transcripticRoot +
-            Auth.organization() +
+            TranscripticAuth.organization() +
             '/' + self.project.url +
             '/runs/' + self.response.id;
         };

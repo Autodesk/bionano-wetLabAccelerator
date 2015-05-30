@@ -8,7 +8,7 @@
  * Service in the transcripticApp.
  */
 angular.module('tx.communication')
-  .service('Communication', function (Auth, $q, $http) {
+  .service('Communication', function (TranscripticAuth, $q, $http) {
 
     var self = this;
 
@@ -24,9 +24,9 @@ angular.module('tx.communication')
 
 
     //pass in overrides as Object
-    //use a function to recreate Auth each time
+    //use a function to recreate TranscripticAuth each time
     this.defaultResourceActions = function (params, orgUnrequired) {
-      var headers = _.assign({}, Auth.headers(), params.headers);
+      var headers = _.assign({}, TranscripticAuth.headers(), params.headers);
       delete params.headers;
 
       var timeoutPromise = $q.defer(),
@@ -35,7 +35,7 @@ angular.module('tx.communication')
       /*
       //fixme - these are only set once, and so never valid - should be setting timeout on each request
       //prevent requests when organization is not set
-      if (_.isEmpty(Auth.organization()) && !orgUnrequired) {
+      if (_.isEmpty(TranscripticAuth.organization()) && !orgUnrequired) {
         console.debug('empty org');
         timeoutCancel = timeoutPromise.promise;
         timeoutPromise.resolve();
