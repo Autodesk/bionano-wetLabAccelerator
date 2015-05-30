@@ -121,6 +121,10 @@ angular.module('transcripticApp')
       }
     };
 
+
+    //temp work for migration
+
+
     // watchers //
 
     simpleLogin.watch(function (user) {
@@ -129,18 +133,30 @@ angular.module('transcripticApp')
         self.firebaseProtocolSync = new FBProfile(user.uid, 'omniprotocols');
         self.firebaseProtocols    = self.firebaseProtocolSync.$asArray();
 
-        self.firebaseProtocols.$loaded()
+
+          Platform.authenticate('maxwell@autodesk.com')
+          /*.then(self.firebaseProtocols.$loaded)
+          .then(function () {
+            //use only if uploading to DB
+            return $q.all(_.map(self.firebaseProtocols, function (protocol) {
+              var pruned = Platform.removeExtraneousFields(protocol);
+              if (_.has(pruned, 'groups')) {
+                return Platform.saveProject(pruned);
+              }
+            }));
+          })
+          */
+          .then(Platform.get_all_project_ids)
+          .then(function (rpc) {
+            console.log(rpc);
+            return $q.all(_.map(rpc.result, Platform.getProject));
+          })
+          .then(function (projects) {
+            return _.map(projects, Platform.removeExtraneousFields);
+          })
           .then(updateProtocolsExposed)
-          .then(function () {
-            Platform.authenticate('testuser@autodesk.com')
-          })
-          .then(function () {
-            _.forEach(self.firebaseProtocols, function (protocol) {
+          .then(console.log.bind(console));
 
-              //Platform.saveProject(protocol);
-
-            });
-          })
       }
     });
 
@@ -169,8 +185,9 @@ angular.module('transcripticApp')
       });
     }
 
-    function updateProtocolsExposed () {
-      return $q.when(self.protocols = setProtocolList(self.firebaseProtocols));
+    function updateProtocolsExposed (protocols) {
+      //return $q.when(self.protocols = setProtocolList(self.firebaseProtocols));
+      return $q.when(self.protocols = setProtocolList(protocols));
     }
 
     function setProtocolList (protocols) {

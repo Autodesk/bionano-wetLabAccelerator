@@ -146,24 +146,45 @@ angular.module('transcripticApp')
         self.firebaseRunSync = new FBProfile(user.uid, 'runs');
         self.firebaseRuns    = self.firebaseRunSync.$asArray();
 
+
+        /*
         self.firebaseRuns.$loaded()
           .then(updateRunsExposed)
           .then(function () {
             _.forEach(self.firebaseRuns, function (run) {
 
-              /*
               if (!Platform.isCompliantId(run.metadata.id)) {
                 run.metadata.oldId = run.metadata.id;
                 run.metadata.id = UUIDGen();
                 self.firebaseRuns.$save(run);
               }
-              */
 
 
               //todo - update protocol ids? shouldn't be necessary
 
             });
+          });
+        */
+
+        Platform.authenticate('maxwell@autodesk.com')
+          .then(self.firebaseRuns.$loaded)
+          .then(function () {
+            //use only if uploading to DB
+            return $q.all(_.map(self.firebaseRuns, function (protocol) {
+              var pruned = Platform.removeExtraneousFields(protocol);
+              return Platform.saveProject(pruned);
+            }));
           })
+          .then(Platform.get_all_project_ids)
+          .then(function (rpc) {
+            console.log(rpc);
+            return $q.all(_.map(rpc.result, Platform.getProject));
+          })
+          .then(function (projects) {
+            return _.map(projects, Platform.removeExtraneousFields);
+          })
+          .then(updateRunsExposed)
+          .then(console.log.bind(console));
       }
     });
 
