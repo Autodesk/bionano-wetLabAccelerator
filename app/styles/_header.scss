@@ -3,7 +3,7 @@ header.site-header {
   $header-logo-spacing: ($layout-width-padding-side / 2);
   $header-logo-dim: $layout-height-header - ($header-logo-spacing * 2);
   $nav-height: $layout-height-header;
-  $logo-user-width: 165px;
+  $logo-user-width: 210px;
 
   z-index: $z-header;
   line-height: 1;
@@ -16,6 +16,7 @@ header.site-header {
   .logo {
     display: flex;
     width: $logo-user-width;
+    align-items: center;
 
     img {
       width: $header-logo-dim;
@@ -28,10 +29,15 @@ header.site-header {
     span {
       font-size: $header-nav-font-size;
       font-weight: $font-weight-bold;
-      color: #c2c2c2;
-      &:hover {
-        color: #222;
-      }
+    }
+
+    .version {
+      display: inline-block;
+      background-color: $warning;
+      color: $white;
+      margin-left: 10px;
+      padding: 5px;
+      border-radius: 5px;
     }
   }
 

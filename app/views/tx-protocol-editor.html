@@ -1,7 +1,7 @@
 <div class="protocol-editor-header">
   <span>Protocol</span>
   <a ng-click="editorCtrl.toggleAllSteps()">
-    Expand All
+    {{ editorCtrl.allStepsOpen ? "Collapse All" : "Expand All" }}
   </a>
 </div>
 <tx-protocol-setup parameters="editorCtrl.protocol.parameters"

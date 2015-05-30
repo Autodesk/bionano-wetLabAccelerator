@@ -1,13 +1,13 @@
 ifndef TEST_ENVIRONMENT
-    TEST_ENVIRONMENT='develop'
+    TEST_ENVIRONMENT=develop
 endif
 
 ifndef TEST_BROWSER
-    TEST_BROWSER='firefox'
+    TEST_BROWSER=chrome
 endif
 
 ifndef URL_PREFIX
-    URL_PREFIX=''
+    URL_PREFIX=
 endif
 
 VENVDIR := venv
