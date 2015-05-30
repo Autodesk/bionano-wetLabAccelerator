@@ -29,6 +29,11 @@
                      select-description="group.metadata.description"
                      protocol-group="group">
   </tx-protocol-group>
+  <div ng-if="!editorCtrl.protocol.groups.length"
+       class="protocol-group protocol-group-placeholder"
+       tx-protocol-droppable="editorCtrl.optsDroppableEditorBottom">
+    Drag and Drop operations here from the list at left.
+  </div>
 </div>
 <div class="editor-bottom-space flex-grower"
      style="min-height: 100px;"

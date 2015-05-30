@@ -157,6 +157,17 @@ $drop-hover-border-phantom: $drop-hover-border-width solid transparent;
 // Component specific variables should just go in the component, but where relevant put here
 // namespace by component, not type
 
+
+//protocol page
+
+$oplist-padding-left: 10px;
+
+
+//results page
+
+
+
+
 //header
 $header-bg: $bg-white-semitransparent;
 $header-nav-font-size: 11px;
@@ -167,7 +178,7 @@ $footer-color: $grey;
 $footer-font-size: 14px;
 
 //content-menu
-$content-menu-bg: $bg-dark;
+$content-menu-bg: transparentize($bg-dark, 0.1);
 
 //steps (operations + setup)
 
