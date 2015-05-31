@@ -19,6 +19,13 @@ angular.module('transcripticApp')
 
     //todo - init -> get all protocols
 
+
+    //watch for auth changes
+    Authentication.watch(function (creds) {
+      self.assignCurrentProtocol({});
+      updateProtocolsExposed();
+    });
+
     self.assignCurrentProtocol = function (newProtocol) {
       _.assign(self.currentProtocol,
         Omniprotocol.utils.getScaffoldProtocol(),
@@ -27,6 +34,10 @@ angular.module('transcripticApp')
       $timeout(function () {
         $rootScope.$broadcast('editor:newprotocol');
       })
+    };
+
+    self.getProtocol = function (id) {
+      return Database.getProject(id);
     };
 
     self.addProtocol = function (inputProtocol) {
@@ -111,7 +122,9 @@ angular.module('transcripticApp')
         author: {
           name: Authentication.getUsername(),
           id  : Authentication.getUserId()
-        }
+        },
+        "tags": [],
+        "db"  : {}
       }
     }
 

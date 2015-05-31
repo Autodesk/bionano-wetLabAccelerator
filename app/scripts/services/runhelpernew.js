@@ -15,11 +15,20 @@ angular.module('transcripticApp')
     self.runs       = [];
     self.currentRun = {};
 
+    //todo - init - get all runs
+
+    //watch for auth changes
+    Authentication.watch(function (creds) {
+      self.assignCurrentRun({});
+      updateRunsExposed();
+    });
+
     self.assignCurrentRun = function (inputRun) {
       _.assign(self.currentRun, Omniprotocol.utils.getScaffoldRun(), inputRun);
       ProtocolHelper.assignCurrentProtocol(self.currentRun.protocol);
       return self.currentRun;
     };
+
 
     // DB interaction
 
@@ -51,8 +60,8 @@ angular.module('transcripticApp')
       }
 
       return Run.verify({
-        title    : 'Verification of ' + protocol.metadata.name + ' - ' + Date.now(),
-        protocol : run.autoprotocol
+        title   : 'Verification of ' + protocol.metadata.name + ' - ' + Date.now(),
+        protocol: run.autoprotocol
       }).$promise
     };
 
@@ -90,16 +99,16 @@ angular.module('transcripticApp')
     };
 
     self.updateRunInfo = function (runObj) {
-      var runId       = _.result(runObj, 'transcripticRunId'),
-          projectId   = _.result(runObj, 'transcripticProjectId'),
-          runData     = _.result(runObj, 'data'),
-          runInfo     = _.result(runObj, 'transcripticRunInfo'),
-          runStatus   = _.result(runInfo, 'status', ''),
+      var runId        = _.result(runObj, 'transcripticRunId'),
+          projectId    = _.result(runObj, 'transcripticProjectId'),
+          runData      = _.result(runObj, 'data'),
+          runInfo      = _.result(runObj, 'transcripticRunInfo'),
+          runStatus    = _.result(runInfo, 'status', ''),
           runCompleted = (runStatus == 'complete');
 
-      console.log(_.isUndefined(runInfo), _.isEmpty(runData), !runCompleted,  runId, projectId, runData, runObj);
+      console.log(_.isUndefined(runInfo), _.isEmpty(runData), !runCompleted, runId, projectId, runData, runObj);
 
-      if ( (_.isUndefined(runInfo) || _.isEmpty(runData) || !runCompleted) && (runId && projectId)) {
+      if ((_.isUndefined(runInfo) || _.isEmpty(runData) || !runCompleted) && (runId && projectId)) {
         var requestPayload = {project: projectId, run: runId};
         console.log('getting info');
         return Run.view(requestPayload)
@@ -114,8 +123,8 @@ angular.module('transcripticApp')
           })
           .then(self.saveRun)
           .then(function () {
-            var runInfo     = _.result(runObj, 'transcripticRunInfo'),
-                runStatus   = _.result(runInfo, 'status', ''),
+            var runInfo      = _.result(runObj, 'transcripticRunInfo'),
+                runStatus    = _.result(runInfo, 'status', ''),
                 runCompleted = (runStatus == 'complete');
 
             //todo - refine mechanics of this - need to handle incomplete protocols
@@ -175,7 +184,9 @@ angular.module('transcripticApp')
           id    : _.result(protocol, 'metadata.id', null),
           name  : _.result(protocol, 'metadata.name', null),
           author: _.result(protocol, 'metadata.author', null)
-        }
+        },
+        "tags"  : [],
+        "db"    : {}
       }
     }
 

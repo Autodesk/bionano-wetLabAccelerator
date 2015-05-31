@@ -6,6 +6,9 @@
  * @description
  * # Platform
  * Service in the transcripticApp.
+ *
+ * Generally, you should use the database service, and not this directly...
+ *
  */
 angular.module('transcripticApp')
   .service('Platform', function ($q, $window) {
@@ -13,6 +16,7 @@ angular.module('transcripticApp')
         pc   = $window.PlatformClient;
 
     //expose direct functionality if we want it...
+    //todo - deprecate this.
     _.assign(self, pc);
 
     /* Facade */
@@ -23,7 +27,9 @@ angular.module('transcripticApp')
     };
 
     self.getUserInfo = function () {
-      return pc.get_user();
+      return pc.get_user().then(function (result) {
+        return result.data;
+      });
     };
 
     self.userValue = function userValue (key, value) {
@@ -35,6 +41,21 @@ angular.module('transcripticApp')
       }
       return pc.get_user_value(key);
     };
+
+    self.getAllProjectIds = function () {
+      return pc.get_all_project_ids()
+        .then(function (rpc) {
+          return rpc.result;
+        });
+    };
+
+    self.getProject = pc.getProject;
+
+    self.getProjectMetadata = pc.getProjectMetadata;
+
+    self.saveProject = pc.saveProject;
+
+    self.deleteProject = pc.deleteProject;
 
     /* helpers */
 

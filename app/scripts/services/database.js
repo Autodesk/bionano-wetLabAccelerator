@@ -8,11 +8,20 @@
  * Service in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .service('Database', function ($q, UUIDGen, Platform) {
+  .service('Database', function ($q, UUIDGen, Platform, Authentication) {
 
-    var self = this;
+    var self  = this,
+        cache = {};
 
-    //todo - all functions should ensure that have already authenticated
+    //todo - all functions should ensure that have already authenticated - use a facade of platform?
+
+    Authentication.watch(function () {
+      //on user change, clear local cache
+
+      _.forEach(_.keys(cache), function (key) {
+        delete cache.key;
+      });
+    });
 
     /**
      *
@@ -24,15 +33,15 @@ angular.module('transcripticApp')
       if (_.isObject(creds)) {
         if (_.every(requiredKeys, _.partial(_.has, creds))) {
           return $q.all(_.map(creds, function (val, key) {
-            Platform.userValue(key, val);
+            return Platform.userValue(key, val);
           }));
         } else {
           console.warn('missing some credentials - require: ' + requiredKeys.join(' '), creds);
         }
       }
 
-      return $q.all(_.map(requiredKeys, function (val, key) {
-        Platform.userValue(key);
+      return $q.all(_.map(requiredKeys, function (key, index) {
+        return Platform.userValue(key);
       }));
     };
 
@@ -50,32 +59,49 @@ angular.module('transcripticApp')
      basic CRUD
      *****/
 
-    function getIdFromIdOrProjectInput (project) {
-      return _.isString(project) ? project : _.result(project, 'metadata.id');
-    }
-
-    //can pass in whole project, if object assumes that
+      //can pass in whole project, if object assumes that
     self.getProject = function (project) {
       //check exists locally
-      var id = getIdFromIdOrProjectInput(project);
-      return Platform.getProject(id);
+      var id     = getIdFromIdOrProjectInput(project),
+          cached = _.result(cache, id);
+
+      if (cached && !projectOnlyHasMetadata(cached)) {
+        return $q.when(project);
+      } else {
+        return Platform.getProject(id)
+          .then(saveProjectToCache);
+      }
     };
 
+    //accepts id only
+    self.getProjectMetadata = function (project) {
+      var id     = getIdFromIdOrProjectInput(project),
+          cached = _.result(cache, id);
+
+      if (!_.isEmpty(cached)) {
+        return $q.when(cached);
+      } else {
+        return Platform.getProjectMetadata(id)
+          .then(saveProjectToCache);
+      }
+    };
+
+    //check for id, set if unset, and return project
+    //todo - verify return project
     self.saveProject = function (project) {
-      //todo - check exists, save if not
       return Platform.saveProject(project)
+        .then(saveProjectToCache);
     };
 
-    self.addProject = function (project) {
-      //todo - save locally
-
-    };
-
+    //returns ID
     self.removeProject = function (project) {
       var id = getIdFromIdOrProjectInput(project);
       if (id) {
         //fixme - pending Dion
-        return Platform.deleteProject(id);
+        return Platform.deleteProject(id)
+          .then(removeProjectFromCache)
+      } else {
+        return $q.reject('missing id');
       }
     };
 
@@ -83,39 +109,47 @@ angular.module('transcripticApp')
      large retrievals
      *****/
 
-    //todo - cache
-    self.getAllProjectIds = function getAllProjectIds () {
-      return Platform.get_all_project_ids().
-        then(function (rpc) {
-          return rpc.result;
-        });
+    self.getAllProjectIds = function getAllProjectIds (useCache) {
+      var ids     = _.keys(cache),
+          request = Platform.getAllProjectIds()
+            .then(function (ids) {
+              _.forEach(ids, function (id) {
+                //update the cache
+                _.set(cache, id, {});
+                //update the object we send back if not useCache
+                ids.push(id)
+              });
+              return ids
+            });
+
+      return !!useCache ? $q.when(ids) : request;
     };
 
     //todo - cache / check for new IDs
-    self.getAllProjects = function getAllProjects () {
-      return self.getAllProjectIds().
+    self.getAllProjects = function getAllProjects (useCache) {
+      return self.getAllProjectIds(useCache).
         then(function (ids) {
           return $q.all(_.map(ids, Platform.getProject));
         });
     };
 
     //todo - cache / check for new IDs
-    self.getAllProjectMetadata = function getAllProjectMetadata () {
-      return self.getAllProjectIds().
+    self.getAllProjectMetadata = function getAllProjectMetadata (useCache) {
+      return self.getAllProjectIds(useCache).
         then(function (ids) {
           return $q.all(_.map(ids, Platform.getProjectMetadata));
         });
     };
 
-    self.getAllProjectMetadataOfType = function getAllProjectMetadataOfType (type) {
-      return self.getAllProjectMetadata().then(function (metas) {
-        return _.filter(metas, {type : type});
+    self.getAllProjectMetadataOfType = function getAllProjectMetadataOfType (type, useCache) {
+      return self.getAllProjectMetadata(useCache).then(function (metas) {
+        return _.filter(metas, {type: type});
       });
     };
 
-    self.getAllProjectsOfType = function (type) {
-      return self.getAllProjects().then(function (metas) {
-        return _.filter(metas, {type : type});
+    self.getAllProjectsOfType = function (type, useCache) {
+      return self.getAllProjects(useCache).then(function (metas) {
+        return _.filter(metas, {type: type});
       });
     };
 
@@ -124,12 +158,42 @@ angular.module('transcripticApp')
      helpers / utils
      *****/
 
-    self.projectOnlyHasMetadata = function (project) {
+    //given an id, returns function which will assign value to cache under id, creating if necessary
+    function assignToCacheIdPartial (id) {
+      return function (data) {
+        if (!_.has(cache, id)) {
+          cache[id] = {};
+        }
+        return _.assign(cache[id], data);
+      };
+    }
+
+    function saveProjectToCache (project) {
+      var id = getIdFromIdOrProjectInput(project);
+      if (!_.has(cache, id)) {
+        cache[id] = {};
+      }
+      return _.assign(cache[id], project);
+    }
+
+    function removeProjectFromCache (project) {
+      var id = getIdFromIdOrProjectInput(project);
+      if (id) {
+        delete cache[id];
+      }
+      return id;
+    }
+
+    function getIdFromIdOrProjectInput (project) {
+      return _.isString(project) ? project : _.result(project, 'metadata.id');
+    }
+
+    function projectOnlyHasMetadata (project) {
       var keys = _(project).keys().filter(function (key) {
         return !_.startsWith(key, '$');
       }).value();
       return keys.length == 1 && keys[0] == 'metadata';
-    };
+    }
 
     /*
     INIT

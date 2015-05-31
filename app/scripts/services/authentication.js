@@ -11,27 +11,40 @@ angular.module('transcripticApp')
   .service('Authentication', function ($q, Platform, simpleLogin) {
     var self = this;
 
-    var userInfo = {
-          name: '',
-          id  : ''
-        },
+    var userInfo = {},
         watchers = [];
 
     self.authenticate = function (userstring) {
-      //todo
+
+      //todo - store userstring / token as a cookie?
+
       return Platform.authenticate(userstring).
         then(Platform.getUserInfo).
-        then(function (userInfo) {
-          userInfo.id = userInfo.uid;
-          //todo - handle tx credentials?
+        then(function (retrieved) {
+          console.log(retrieved);
+          userInfo.id = retrieved.uid;
+          userInfo.name = retrieved.name;
+
+          //todo - handle tx credentials - how to propagate
+
+        }).
+        then(triggerWatchers).
+        catch(function (err) {
+          //todo - handle error
+          console.log(err);
         });
     };
 
+    self.unauthenticate = function () {
+      //todo
+    };
+
     function triggerWatcher (fn) {
-      fn(userInfo);
+      var toPass = _.isEmpty(userInfo) ? null : _.cloneDeep(userInfo);
+      fn(toPass);
     }
 
-
+    //todo - verify creds are different before triggering
     function triggerWatchers () {
       angular.forEach(watchers, triggerWatcher);
     }
@@ -50,10 +63,6 @@ angular.module('transcripticApp')
       }
       return unbind;
     };
-
-    //todo - shouldn't use simpleLogin anymore
-    //todo - set up a local watch
-    //todo - set up a login function (which for now just takes userstring) -> Platform.authenticate
 
     /*
     //testing
@@ -75,6 +84,7 @@ angular.module('transcripticApp')
       });
       */
 
+    /*
     //todo - update these from Platform
     //note - firebase
     simpleLogin.watch(function (user) {
@@ -85,6 +95,7 @@ angular.module('transcripticApp')
         });
       }
     });
+    */
 
     self.getUsername = function () {
       return userInfo.name;
