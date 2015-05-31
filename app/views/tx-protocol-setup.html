@@ -173,6 +173,10 @@
          ng-mouseenter="deleteRow = true"
          ng-mouseleave="deleteRow = false">&times;</a>
     </div>
+    <div class="setup-variable setup-variable-placeholder"
+         ng-if="!setupCtrl.parameters.length">
+      <span>No parameters created...</span>
+    </div>
     <div class="setup-variable">
       <div class="add-parameter dropdown"
            ng-click="showParameters = !showParameters"
