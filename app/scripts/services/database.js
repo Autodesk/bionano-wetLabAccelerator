@@ -13,6 +13,8 @@ angular.module('transcripticApp')
     var self  = this,
         cache = {};
 
+    //todo - expose cache for binding
+
     //todo - all functions should ensure that have already authenticated - use a facade of platform?
 
     Authentication.watch(function () {
@@ -82,6 +84,10 @@ angular.module('transcripticApp')
         return $q.when(cached);
       } else {
         return Platform.getProjectMetadata(id)
+          .then(function (meta) {
+            //wrap metadata so that has same format as a complete project
+            return {metadata : meta};
+          })
           .then(saveProjectToCache);
       }
     };
@@ -119,7 +125,7 @@ angular.module('transcripticApp')
                 //update the object we send back if not useCache
                 ids.push(id)
               });
-              return ids
+              return ids;
             });
 
       return !!useCache ? $q.when(ids) : request;
@@ -129,7 +135,7 @@ angular.module('transcripticApp')
     self.getAllProjects = function getAllProjects (useCache) {
       return self.getAllProjectIds(useCache).
         then(function (ids) {
-          return $q.all(_.map(ids, Platform.getProject));
+          return $q.all(_.map(ids, self.getProject));
         });
     };
 
@@ -137,7 +143,15 @@ angular.module('transcripticApp')
     self.getAllProjectMetadata = function getAllProjectMetadata (useCache) {
       return self.getAllProjectIds(useCache).
         then(function (ids) {
-          return $q.all(_.map(ids, Platform.getProjectMetadata));
+          var mapped = _.map(ids, self.getProjectMetadata);
+
+          return $q.all(mapped)
+            //in case one rejects, let the rest fall through
+            //hack
+            .catch(function () {
+              console.log(cache);
+              return _.map(ids, retrieveFromCache);
+            });
         });
     };
 
@@ -158,6 +172,11 @@ angular.module('transcripticApp')
      helpers / utils
      *****/
 
+    function retrieveFromCache (project) {
+      var id = getIdFromIdOrProjectInput(project);
+      return _.result(cache, id);
+    }
+
     //given an id, returns function which will assign value to cache under id, creating if necessary
     function assignToCacheIdPartial (id) {
       return function (data) {
@@ -170,6 +189,8 @@ angular.module('transcripticApp')
 
     function saveProjectToCache (project) {
       var id = getIdFromIdOrProjectInput(project);
+      if (_.isEmpty(id)) {return;}
+
       if (!_.has(cache, id)) {
         cache[id] = {};
       }
@@ -178,6 +199,7 @@ angular.module('transcripticApp')
 
     function removeProjectFromCache (project) {
       var id = getIdFromIdOrProjectInput(project);
+      if (_.isEmpty(id)) {return;}
       if (id) {
         delete cache[id];
       }

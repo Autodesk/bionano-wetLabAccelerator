@@ -26,6 +26,7 @@ angular.module('transcripticApp')
           //todo - verify creds are different before triggering
 
           _.assign(userInfo, retrieved, {
+            token : userstring,
             id  : retrieved.uid,
             name: retrieved.name
           });

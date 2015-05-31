@@ -12,7 +12,6 @@ angular.module('transcripticApp')
 
     var self = this;
 
-    self.runs       = [];
     self.currentRun = {};
 
     //todo - init - get all runs
@@ -20,7 +19,6 @@ angular.module('transcripticApp')
     //watch for auth changes
     Authentication.watch(function (creds) {
       self.assignCurrentRun({});
-      updateRunsExposed();
     });
 
     self.assignCurrentRun = function (inputRun) {
@@ -39,14 +37,12 @@ angular.module('transcripticApp')
       }
 
       return Database.saveProject(protocol).
-        then(self.assignCurrentProtocol).
-        then(updateRunsExposed);
+        then(self.assignCurrentProtocol);
 
     };
 
     self.deleteRun = function saveRun (run) {
-      return Database.removeProject(run)
-        .then(updateRunsExposed);
+      return Database.removeProject(run);
     };
 
 
@@ -88,8 +84,7 @@ angular.module('transcripticApp')
           });
 
           //note - firebase
-          return self.firebaseRuns.$add(run)
-            .then(updateRunsExposed)
+          return self.saveRun(run)
             .then(_.partial($q.when, submissionResult));
 
         }, function (submissionFailure) {
@@ -198,18 +193,6 @@ angular.module('transcripticApp')
       return _.every(['id', 'name', 'type', 'author', 'protocol'], function (field) {
         return !_.isUndefined(_.result(runObj.metadata, field));
       });
-    }
-
-    function setRunList (runs) {
-      self.runs.length = 0;
-      _.forEach(runs, function (run) {
-        self.runs.push(run);
-      });
-      return self.runs;
-    }
-
-    function updateRunsExposed () {
-      return $q.when(self.runs = setRunList(self.firebaseRuns));
     }
 
     return self;

@@ -92,9 +92,13 @@ angular
         redirectTo: '/'
       });
   })
-  .run(function (simpleLogin, Authentication, Platform, $rootScope, $location) {
+  .run(function (simpleLogin, Authentication, $rootScope, $location) {
 
     $rootScope.$on('$locationChangeSuccess', function () {
       $rootScope.currentPath = $location.path();
-    })
+    });
+
+    //testing - importing of runs and protocols
+
+
   });

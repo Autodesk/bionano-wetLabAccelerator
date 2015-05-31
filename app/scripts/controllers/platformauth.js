@@ -18,12 +18,11 @@ angular.module('transcripticApp')
       Authentication.authenticate(userstring || self.userString);
     };
 
-    Authentication.watch(function PlatformAuthCtrl_AuthWatcher(creds) {
+    Authentication.watch(function PlatformAuthCtrl_AuthWatcher (creds) {
       console.log('new user!', creds);
-      //testing
-      creds && Database.getAllProjectMetadataOfType('project').then(function (result) {
-        console.log('results!', result);
-      });
+
+      self.userString = _.result(creds, 'token');
+
     });
 
   });

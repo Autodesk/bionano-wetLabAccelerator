@@ -7,12 +7,12 @@
  *
  */
 angular.module('transcripticApp')
-  .directive('txContentMenu', function (ProtocolHelper, RunHelper, $location) {
+  .directive('txContentMenu', function (ProtocolHelper, RunHelper, Authentication, Database, $location) {
     return {
-      templateUrl     : 'views/tx-content-menu.html',
-      restrict        : 'E',
-      controllerAs    : 'contentCtrl',
-      controller      : function postLink ($scope, $element, $attrs) {
+      templateUrl : 'views/tx-content-menu.html',
+      restrict    : 'E',
+      controllerAs: 'contentCtrl',
+      controller  : function postLink ($scope, $element, $attrs) {
         var self = this;
 
         self.toggleGalleryVisible = function toggleGalleryVisible (forceVal) {
@@ -22,9 +22,29 @@ angular.module('transcripticApp')
           });
         };
 
-        self.protocols = ProtocolHelper.protocols;
+        Authentication.watch(function (creds) {
+          creds && Database.getAllProjectMetadata().then(function (projects) {
+            console.warn('projects received', projects);
 
-        self.runs = RunHelper.runs;
+            console.log(projects[0]);
+
+            //todo - assign to contentmenu to list
+            self.projects = _.uniq(projects);
+
+            self.protocols = _.filter(self.projects, function (proj) {
+              return _.result(proj, 'metadata.type') == 'protocol';
+            });
+
+            self.runs = _.filter(self.projects, function (proj) {
+              return _.result(proj, 'metadata.type') == 'run';
+            });
+
+          })
+            .catch(function (err) {
+              console.warn(err);
+            })
+        });
+
 
         self.openProtocol = function (protocol) {
           self.toggleGalleryVisible(false);
@@ -43,7 +63,7 @@ angular.module('transcripticApp')
             .then(self.openProtocol);
         };
       },
-      link            : function postLink (scope, element, attrs) {
+      link        : function postLink (scope, element, attrs) {
 
         /*scope.$watch('galleryCtrl.galleryRollup', function (newval) {
           scope.galleryCtrl.rolled = _.groupBy(scope.galleryCtrl.galleryItems, newval);

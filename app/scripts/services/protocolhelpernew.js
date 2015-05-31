@@ -11,29 +11,21 @@ angular.module('transcripticApp')
   .service('ProtocolHelperNew', function ($q, $rootScope, $timeout, UUIDGen, Omniprotocol, Autoprotocol, Authentication, Notify, Database) {
     var self = this;
 
-    //make sure reference is preserved
-    //is updated from firebase currently
-    self.protocols = [];
-
     self.currentProtocol = {};
-
-    //todo - init -> get all protocols
-
 
     //watch for auth changes
     Authentication.watch(function (creds) {
       self.assignCurrentProtocol({});
-      updateProtocolsExposed();
     });
 
     self.assignCurrentProtocol = function (newProtocol) {
-      _.assign(self.currentProtocol,
-        Omniprotocol.utils.getScaffoldProtocol(),
-        newProtocol);
-
       $timeout(function () {
         $rootScope.$broadcast('editor:newprotocol');
-      })
+      });
+
+      return _.assign(self.currentProtocol,
+        Omniprotocol.utils.getScaffoldProtocol(),
+        newProtocol);
     };
 
     self.getProtocol = function (id) {
@@ -44,15 +36,13 @@ angular.module('transcripticApp')
       var protocol = _.assign(Omniprotocol.utils.getScaffoldProtocol(), inputProtocol);
 
       return Database.saveProject(protocol)
-        .then(updateProtocolsExposed)
         .then(function () {
           return protocol;
         });
     };
 
     self.deleteProtocol = function (protocol) {
-      return Database.removeProject(protocol)
-        .then(updateProtocolsExposed);
+      return Database.removeProject(protocol);
     };
 
     self.saveProtocol = function (protocol) {
@@ -64,8 +54,7 @@ angular.module('transcripticApp')
       }
 
       return Database.saveProject(protocol).
-        then(self.assignCurrentProtocol).
-        then(updateProtocolsExposed);
+        then(self.assignCurrentProtocol);
     };
 
     self.duplicateProtocol = function (protocol) {
@@ -74,7 +63,6 @@ angular.module('transcripticApp')
       self.clearIdentifyingInfo(dup);
 
       return self.saveProtocol(dup)
-        .then(updateProtocolsExposed)
         .then(function () {
           return dup;
         });
@@ -136,18 +124,6 @@ angular.module('transcripticApp')
       return _.every(['id', 'name', 'type', 'author'], function (field) {
         return !_.isEmpty(_.result(protocol.metadata, field));
       });
-    }
-
-    function updateProtocolsExposed () {
-      return $q.when(self.protocols = setProtocolList(Database.getAllProjectMetadataOfType('project')));
-    }
-
-    function setProtocolList (protocols) {
-      self.protocols.length = 0;
-      _.forEach(protocols, function (protocol) {
-        self.protocols.push(protocol);
-      });
-      return self.protocols;
     }
 
     return self;
