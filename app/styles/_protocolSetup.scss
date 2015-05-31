@@ -14,12 +14,10 @@ tx-protocol-setup {
 
   .protocol-setup-header {
     padding: 3px 10px;
-    background: transparentize($white, .5);
     outline: none;
   }
 
   .protocol-setup-main {
-    background: transparentize($white, .5);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,6 +54,12 @@ tx-protocol-setup {
       &:last-child {
         justify-content: center;
         padding: 5px 0;
+      }
+
+      &-placeholder {
+        span {
+          text-align: center;
+        }
       }
     }
 
