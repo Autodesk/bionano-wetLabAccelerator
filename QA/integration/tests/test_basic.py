@@ -13,7 +13,7 @@ class TestBasicInteractions(TestBase):
         test the main wet lab accelerator page
         """
 
-        self.verifyEqual(self.page.getPageTitleText(), "Wet Lab Accelerator", "page title")
+        self.verifyEqual(self.page.getPageTitleText(), "Wet Lab Accelerator\nalpha", "page title")
         self.verifyIsDisplayed(self.page.getProtocolLink(), "protocol link ")
         self.verifyIsDisplayed(self.page.getResultsLink(), "results link")
         self.verifyIsDisplayed(self.page.getSignInLink(), "sign in link")
@@ -51,7 +51,7 @@ class TestBasicInteractions(TestBase):
         """
         self.signIn()
 
-        self.page.openDemo()
+        self.page.clickProtocol()
         build = self.build
         time.sleep(3)
         expectedOperationNames = ["Transfer", "Distribute", "Consolidate", "Mix", "Dispense", "Dispense Resource", "Thermocycle", "Incubate", "Seal", "Unseal", "Cover", "Uncover", "Spin", "Image Plate", "Absorbance", "Fluorescence", "Luminescence", "Gel Separate", "Autoprotocol (JSON)"]

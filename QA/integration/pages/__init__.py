@@ -45,7 +45,11 @@ class Page:
         print("  Action - " + actionDescription)
 
     def findElement(self, locatorTuple):
-        return self.DRIVER.find_element(*locatorTuple)
+        try:
+            return self.DRIVER.find_element(*locatorTuple)
+        except Exception as e:
+            print("ERROR: could not locate element: " + str(locatorTuple))
+            raise Exception("Could not locate element: " + str(locatorTuple))
 
     def findElements(self, locatorTuple):
         return self.DRIVER.find_elements(*locatorTuple)
@@ -64,8 +68,23 @@ class Page:
         if isinstance(element, tuple):
             element = self.findElement(element)
 
-        element.location_once_scrolled_into_view
-        element.click()
+        self.executeScript("window.scrollTo(0," + str(element.location['y']) + ")")
+        #
+        # print(element.location_once_scrolled_into_view)
+        try:
+            element.click()
+        except Exception as e:
+            message = "could not click on " + description + ", attributes: " + self.getElementAttributes(element) + "\n" + e.message
+            print("FAIL - " + message)
+            raise(message)
+
+    def getElementAttributes(self, element):
+        attributes = self.DRIVER.execute_script('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', element)
+        return attributes
+
+    def executeScript(self, script):
+        self.action("executing script: '" + script + "'")
+        self.DRIVER.execute_script(script)
 
     def waitForElementByClassName(self, className):
         return self.waitForElement((By.CLASS_NAME, className))
