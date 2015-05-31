@@ -48,14 +48,22 @@ angular.module('transcripticApp')
 
         self.openProtocol = function (protocol) {
           self.toggleGalleryVisible(false);
-          $location.path('/protocol');
-          ProtocolHelper.assignCurrentProtocol(protocol);
+
+          ProtocolHelper.getProtocol(protocol)
+            .then(ProtocolHelper.assignCurrentProtocol)
+            .then(function () {
+              $location.path('/protocol');
+            })
         };
 
         self.openRun = function (run) {
           self.toggleGalleryVisible(false);
-          $location.path('/results');
-          RunHelper.assignCurrentRun(run);
+
+          RunHelper.getRun(run)
+            .then(RunHelper.assignCurrentRun(run))
+            .then(function () {
+              $location.path('/results');
+            });
         };
 
         self.createNewProtocol = function () {

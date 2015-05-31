@@ -84,15 +84,15 @@ angular
         controllerAs: 'testCtrl'
       })
       .when('/testing/field', {
-        templateUrl: 'views/testing/field.html',
-        controller: 'TestingFieldCtrl',
+        templateUrl : 'views/testing/field.html',
+        controller  : 'TestingFieldCtrl',
         controllerAs: 'testingFieldCtrl'
       })
       .otherwise({
         redirectTo: '/'
       });
   })
-  .run(function (simpleLogin, Authentication, $rootScope, $location) {
+  .run(function (simpleLogin, Authentication, $rootScope, $location, /* temp */ FBProfile, $q, Platform, Database) {
 
     $rootScope.$on('$locationChangeSuccess', function () {
       $rootScope.currentPath = $location.path();
@@ -100,5 +100,46 @@ angular
 
     //testing - importing of runs and protocols
 
+    simpleLogin.watch(function (user) {
+      if (!!user) {
+        //note - firebase
+        var firebaseRunSync = new FBProfile(user.uid, 'runs');
+        var firebaseRuns    = firebaseRunSync.$asArray();
+
+        var firebaseProtocolSync = new FBProfile(user.uid, 'omniprotocols');
+        var firebaseProtocols    = firebaseProtocolSync.$asArray();
+
+        Platform.authenticate('maxwell@autodesk.com')
+          .then(firebaseProtocols.$loaded)
+          .then(function () {
+            //use only if uploading to DB
+            return $q.all(_.map(firebaseProtocols, function (protocol) {
+              var pruned = Database.removeExtraneousFields(protocol);
+              if (_.has(pruned, 'groups')) {
+                return Platform.saveProject(pruned);
+              }
+            }));
+          });
+
+        Platform.authenticate('maxwell@autodesk.com')
+          .then(firebaseRuns.$loaded)
+          .then(function () {
+            //use only if uploading to DB
+            return $q.all(_.map(firebaseRuns, function (protocol) {
+              var pruned = Database.removeExtraneousFields(protocol);
+              return Platform.saveProject(pruned);
+            }));
+          })
+          .then(Platform.get_all_project_ids)
+          .then(function (rpc) {
+            console.log(rpc);
+            return $q.all(_.map(rpc.result, Platform.getProject));
+          })
+          .then(function (projects) {
+            return _.map(projects, Database.removeExtraneousFields);
+          })
+          .then(console.log.bind(console));
+      }
+    });
 
   });
