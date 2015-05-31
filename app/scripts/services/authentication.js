@@ -8,7 +8,7 @@
  * Service in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .service('Authentication', function ($q, Platform, simpleLogin) {
+  .service('Authentication', function ($q, $cookies, Platform) {
     var self = this;
 
     var userInfo = {},
@@ -22,8 +22,16 @@ angular.module('transcripticApp')
         then(Platform.getUserInfo).
         then(function (retrieved) {
           console.log(retrieved);
-          userInfo.id = retrieved.uid;
-          userInfo.name = retrieved.name;
+
+          //todo - verify creds are different before triggering
+
+          _.assign(userInfo, retrieved, {
+            id  : retrieved.uid,
+            name: retrieved.name
+          });
+
+          $cookies['authToken'] = userstring;
+          $cookies['userInfo'] = userInfo;
 
           //todo - handle tx credentials - how to propagate
 
@@ -36,7 +44,15 @@ angular.module('transcripticApp')
     };
 
     self.unauthenticate = function () {
-      //todo
+      return Platform.unauthenticate()
+        .then(function () {
+          _.forEach(_.keys(userInfo), function (key) {
+            delete userInfo[key];
+          });
+          triggerWatchers();
+          return true;
+        })
+        .catch(_.constant(false));
     };
 
     function triggerWatcher (fn) {
@@ -44,7 +60,7 @@ angular.module('transcripticApp')
       fn(toPass);
     }
 
-    //todo - verify creds are different before triggering
+
     function triggerWatchers () {
       angular.forEach(watchers, triggerWatcher);
     }
@@ -64,39 +80,6 @@ angular.module('transcripticApp')
       return unbind;
     };
 
-    /*
-    //testing
-    Platform.authenticate('maxwell@autodesk.com').
-      then(Platform.transcripticCredentials).
-      then(console.log.bind(console)).
-      then(Platform.get_all_project_ids).
-      then(function (rpc) {
-        return $q.all(_.map(rpc.result, Platform.getProjectMetadata));
-      }).
-      then(function (projects) {
-        var protocols = _.filter(projects, function (proj) {
-          return !!_.result(proj, 'description', false);
-        });
-        console.log(protocols);
-      }).
-      catch(function (err) {
-        console.log(err);
-      });
-      */
-
-    /*
-    //todo - update these from Platform
-    //note - firebase
-    simpleLogin.watch(function (user) {
-      if (!!user) {
-        _.assign(userInfo, {
-          id  : user.uid,
-          name: 'Billy Bob Joe' //todo
-        });
-      }
-    });
-    */
-
     self.getUsername = function () {
       return userInfo.name;
     };
@@ -105,6 +88,12 @@ angular.module('transcripticApp')
       return userInfo.id;
     };
 
-    return self;
-  })
-;
+
+    //init - check for cookie, authenticate if present
+
+    var initialAuthToken = $cookies['authToken'];
+    if (initialAuthToken) {
+      self.authenticate(initialAuthToken);
+    }
+
+  });

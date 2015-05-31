@@ -58,7 +58,7 @@ angular.module('tx.communication')
       }
     });
 
-    this.$get = function ($rootScope, simpleLogin, FBProfile) {
+    this.$get = function ($rootScope, Authentication, simpleLogin, FBProfile) {
 
       var ignoreWatchers = false;
 
@@ -111,7 +111,18 @@ angular.module('tx.communication')
             ignoreWatchers = false;
             triggerWatchers();
           });
+        } else {
+          ignoreWatchers = true;
+          angular.forEach(requiredKeys, function (key) {
+            self[key] = '';
+          });
+          ignoreWatchers = false;
+          triggerWatchers();
         }
+      });
+
+      Authentication.watch(function (userinfo) {
+        console.log('auth watch in tx auth', userinfo);
       });
 
       /* set up handling for watchers when auth changes */
@@ -158,6 +169,10 @@ angular.module('tx.communication')
           $scope.$on('$destroy', unbind);
         }
         return unbind;
+      };
+
+      var verify = function verifyCreds (creds) {
+        //todo
       };
 
       return {
