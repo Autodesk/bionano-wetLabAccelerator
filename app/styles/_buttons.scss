@@ -11,19 +11,6 @@
   }
 }
 
-.field-action-text,
-.field-details-button {
-  padding: 3px 8px;
-  border-radius: 1em;
-  font-size: 12px;
-  font-weight: bold;
-
-  &:hover {
-    color: $white;
-    background-color: $primary;
-  }
-}
-
 //use with .btn
 .action-button {
   border: 0;
@@ -32,7 +19,9 @@
   margin: 0.25em 0.25em;
   color: $white;
   font-size: $font-size-md;
+  font-weight: $font-weight-light;
   background-color: $primary;
+  transition: color $transition-short-time $transition-short-ease, background-color $transition-short-time $transition-short-ease;
 
   &:focus,
   &:hover {
@@ -47,11 +36,24 @@
   }
 }
 
+.field-action-text,
 .field-details-button {
-  background-color: $light-grey;
+  padding: 2px 8px;
+  border-radius: 1em;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  background-color: transparent;
+  transition: color $transition-short-time $transition-short-ease, background-color $transition-short-time $transition-short-ease;
+
+  &:hover {
+    background-color: $primary;
+    color: $white;
+  }
 }
+
+.field-details-button {}
 
 .field-action-text {
   color: $warning;
-  font-weight: normal;
+  font-weight: $font-weight-medium;
 }

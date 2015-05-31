@@ -3,7 +3,7 @@ tx-protocol-setup {
   position: relative;
   padding-top: $layout-spacing-md;
   padding-bottom: $layout-spacing-md;
-  font-size: 14px;
+  font-size: $font-size-md;
   border-bottom: $drop-hover-border-phantom;
 
   //div to aid drag and drop (padding outside wrap)
@@ -14,12 +14,10 @@ tx-protocol-setup {
 
   .protocol-setup-header {
     padding: 3px 10px;
-    background: transparentize($white, .5);
     outline: none;
   }
 
   .protocol-setup-main {
-    background: transparentize($white, .5);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,24 +46,6 @@ tx-protocol-setup {
           width: 100%;
           padding: 0;
         }
-
-        input[type="color"] {
-          -webkit-appearance: none;
-          width: 20px;
-          height: 20px;
-          padding: 0;
-          color: transparent;
-          background-color: transparent;
-          border: 1px solid transparent;
-          &::-webkit-color-swatch-wrapper {
-            padding: 0;
-            border: 1px solid transparent;
-          }
-          &::-webkit-color-swatch {
-            border: 1px solid transparent;
-            border-radius: 10px;
-          }
-        }
       }
       > .close {
         width: 15px;
@@ -74,6 +54,12 @@ tx-protocol-setup {
       &:last-child {
         justify-content: center;
         padding: 5px 0;
+      }
+
+      &-placeholder {
+        span {
+          text-align: center;
+        }
       }
     }
 

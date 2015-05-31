@@ -30,8 +30,12 @@ angular.module('transcripticApp')
       })
     };
 
+    self.createNewProtocol = function (inputProtocol) {
+      return _.assign(Omniprotocol.utils.getScaffoldProtocol(), inputProtocol);
+    };
+
     self.addProtocol = function (inputProtocol) {
-      var protocol = _.assign(Omniprotocol.utils.getScaffoldProtocol(), inputProtocol);
+      var protocol = self.createNewProtocol(inputProtocol);
 
       //note - firebase
       return self.firebaseProtocols.$add(protocol)

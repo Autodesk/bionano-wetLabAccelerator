@@ -47,6 +47,7 @@ $font-line-height: 1.5;
 
 $z-sidepanel: 1000;
 $z-header: 2000;
+$z-dropdown: 4000;
 $z-popup: 5000;
 $z-notification: 9000;
 $z-overlay: 10000;
@@ -73,8 +74,8 @@ $color-font: $dark-grey;
 $color-font-light: lighten($color-font, 10);
 $color-font-dark: darken($color-font, 10);
 
-$color-link-default: #888888;
-$color-link-default-hover: #555555;
+$color-link-default: $dark-grey;
+$color-link-default-hover: $black;
 
 $color-link-post: $primary;
 $color-link-post-hover: darken($primary, 15);
@@ -85,10 +86,10 @@ $color-link-footer-hover: $color-link-post-hover;
 
 // transitions
 
-$transition-in-time: 0.4s;
-$transition-out-time: 0.2s;
-$transition-in-ease: ease-out;
-$transition-out-ease: ease-out;
+$transition-long-time: 0.4s;
+$transition-short-time: 0.2s;
+$transition-long-ease: ease-out;
+$transition-short-ease: ease-out;
 
 ////////////////////
 // spacing
@@ -142,7 +143,8 @@ $layout-opList-width: widthFromColumns(3) - $layout-operations-spacing-correctio
 ////////////////////
 
 $box-shadow-black-inner: inset 0 0 20px 0px transparentize($black, 0.25);
-$box-shadow-popover: 0 0 10px transparentize($white, 0.2);
+$box-shadow-popover: 0 0 10px transparentize($black, 0.8);
+$box-shadow-dropdown: 0 0 15px transparentize($black, 0.8);
 
 
 //interactions
@@ -155,6 +157,17 @@ $drop-hover-border-phantom: $drop-hover-border-width solid transparent;
 // Component specific variables should just go in the component, but where relevant put here
 // namespace by component, not type
 
+
+//protocol page
+
+$oplist-padding-left: 10px;
+
+
+//results page
+
+
+
+
 //header
 $header-bg: $bg-white-semitransparent;
 $header-nav-font-size: 11px;
@@ -165,7 +178,7 @@ $footer-color: $grey;
 $footer-font-size: 14px;
 
 //content-menu
-$content-menu-bg: $bg-dark;
+$content-menu-bg: transparentize($bg-dark, 0.1);
 
 //steps (operations + setup)
 

@@ -75,6 +75,7 @@ angular.module('transcripticApp')
         //hack to handle flexbox layout...
         if (fromEdgeStart == 0) {
           $timeout(function () {
+            fromEdgeNormal = element.css(affixToBottom ? 'bottom' : 'top');
             fromEdgeStart = calcStartFromEdge(element[0], affixToBottom);
           });
         }

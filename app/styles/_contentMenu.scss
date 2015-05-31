@@ -29,12 +29,12 @@ tx-content-menu {
 
       + label {
         left: 260px;
-        transition: left $transition-in-time;
+        transition: left $transition-long-time;
       }
 
       ~ .menu {
         transform: translate3d(0, 0, 0);
-        transition: transform $transition-in-time $transition-ease;
+        transition: transform $transition-long-time $transition-ease;
       }
     }
   }
@@ -90,7 +90,7 @@ tx-content-menu {
     margin: 50px 0;
     display: block;
     transform: translate3d(-100%, 0, 0);
-    transition: transform $transition-in-time $transition-in-ease;
+    transition: transform $transition-long-time $transition-long-ease;
 
     .new-protocol-button {
       color: $warning;

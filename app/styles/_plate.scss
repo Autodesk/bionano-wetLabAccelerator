@@ -26,12 +26,10 @@ tx-plate-columns {
   //todo - deprecate
   .plate {
     background: $white;
-    box-shadow: $box-shadow-popover;
   }
 
   &.plate-empty {
     border: 1px solid lighten($light-grey, 5);
-    box-shadow: 0 0 3px $light-grey;
 
     svg {
       background: transparentize($light-grey, 0.75);

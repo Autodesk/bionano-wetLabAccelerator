@@ -39,12 +39,11 @@
 <body ng-app="transcripticApp">
 
 <header class="site-header">
-  <div class="logo">
-    <a href="#/">
+  <a class="logo" href="#/">
       <img src="images/logo-cx1.png">
       <span>Wet Lab Accelerator</span>
-    </a>
-  </div>
+      <span class="version">alpha</span>
+  </a>
   <nav>
     <a ng-href="#/protocol" ng-class="{'active' : currentPath == '/protocol'}">PROTOCOL</a>
     <a class="disabled" ng-class="{'active' : currentPath == '/results'}">RESULTS</a>
@@ -121,7 +120,7 @@
 
 <!-- CONTROLLERS -->
 <script src="scripts/controllers/firebaselogin.js"></script>
-<script src="scripts/controllers/build.js"></script>
+<script src="scripts/controllers/protocol.js"></script>
 <script src="scripts/controllers/results.js"></script>
 <script src="scripts/controllers/gallery.js"></script>
 <!--fields-->
