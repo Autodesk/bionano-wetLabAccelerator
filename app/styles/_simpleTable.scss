@@ -1,0 +1,16 @@
+.simple-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  td {
+    padding: 3px 0.5em;
+    width: 50%;
+
+    &:first-child {
+      text-align: right;
+    }
+    &:last-child {
+      text-align: left;
+    }
+  }
+}
