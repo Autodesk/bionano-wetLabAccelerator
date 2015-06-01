@@ -40,7 +40,7 @@ angular.module('transcripticApp')
 
     self.selectItem = function (item) {
       $scope.fieldCtrl.model = item;
-      $scope.$close();
+      _.attempt($scope.$close);
     };
 
   });
