@@ -65,6 +65,7 @@ class Page:
 
     def click(self, element, description):
         self.action("click on " + description + " element: " + element.tag_name + " class: " + element.get_attribute("class"))
+        attributes = self.getElementAttributes(element)
         if isinstance(element, tuple):
             element = self.findElement(element)
 
@@ -74,15 +75,15 @@ class Page:
         try:
             element.click()
         except Exception as e:
-            message = "could not click on " + description + ", attributes: " + self.getElementAttributes(element) + "\n" + e.message
+            message = "could not click on " + description + ", attributes: " + attributes + "\n" + e.message
             print("FAIL - " + message)
             raise(message)
 
     def getElementAttributes(self, element):
         attributes = self.DRIVER.execute_script('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', element)
         strAttributes = ""
-        for key, value in attributes:
-            strAttributes = strAttributes + + element.tag_name + " " + key + "='" + value + "'"
+        for key, value in attributes.iteritems():
+            strAttributes = strAttributes + element.tag_name + " " + key + "='" + value + "'"
 
         return strAttributes
 
