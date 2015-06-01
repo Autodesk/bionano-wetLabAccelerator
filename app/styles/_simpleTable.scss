@@ -16,16 +16,30 @@
 }
 
 .metadata-table {
+  @extend .column-14;
+  @extend .div-centered;
+  display: table;
+  margin-bottom: $layout-spacing-md;
+
+  .table-row {
+    display: table-row;
+  }
+
+  .metadata-label,
+  .metadata-field,
+  .metadata-spacer {
+    display: table-cell;
+  }
 
   .metadata-label {
-    @extend .column-2;
+    @extend .column-3;
     text-align: right;
   }
 
   .metadata-field {
     @extend .column-8;
 
-    > input {
+    input {
       background-color: $white;
       color: $black;
       width: 100%;
@@ -35,6 +49,6 @@
   }
 
   .metadata-spacer {
-    @extend .column-2;
+    @extend .column-3;
   }
 }
