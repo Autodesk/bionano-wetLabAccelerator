@@ -13,37 +13,37 @@
     <tx-modal ng-show='modalShown'
             title="Protocol Metadata">
       <div class="column-wrap">
-        <table class="column-12 div-centered">
+        <table class="column-12 div-centered metadata-table">
           <tr>
-            <td class="column-2 protocol-metadata-label">Name</td>
-            <td class="column-8">
+            <td class="metadata-label">Name</td>
+            <td class="metadata-field">
               <input type="text"
-                     class="input-unstyled protocol-metadata-field"
+                     class="input-unstyled"
                      placeholder="name of protocol"
                      ng-model="restyleCtrl.currentProtocol.metadata.name">
             </td>
-            <td class="column-2"></td>
+            <td class="metadata-spacer"></td>
           </tr>
           <tr>
-            <td class="column-2 protocol-metadata-label">Description</td>
-            <td class="column-8">
+            <td class="metadata-label">Description</td>
+            <td class="metadata-field">
               <input type="text"
-                     class="input-unstyled protocol-metadata-field"
+                     class="input-unstyled"
                      placeholder="enter notes for this protocol"
                      ng-model="restyleCtrl.currentProtocol.metadata.description">
             </td>
-            <td class="column-2"></td>
+            <td class="metadata-spacer"></td>
           </tr>
           <tr>
-            <td class="column-2 protocol-metadata-label">Tags</td>
-            <td class="column-8">
+            <td class="metadata-label">Tags</td>
+            <td class="metadata-field">
               <input type="text"
-                     class="input-unstyled protocol-metadata-field"
+                     class="input-unstyled"
                      ng-list
                      placeholder="enter tags associated with this protocol"
                      ng-model="restyleCtrl.currentProtocol.metadata.tags">
             </td>
-            <td class="column-2"></td>
+            <td class="metadata-spacer"></td>
           </tr>
         </table>
       </div>
