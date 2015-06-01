@@ -100,4 +100,8 @@ tx-protocol-setup {
   &.drop-hover {
     border-bottom: $drop-hover-border;
   }
+
+  .field-parameter-toggler {
+    display: none;
+  }
 }
