@@ -28,6 +28,8 @@ angular
 
     $routeProvider
       .when('/', {
+        controller  : 'HomeCtrl',
+        controllerAs: 'homeCtrl',
         templateUrl: 'views/routes/home.html'
       })
 
@@ -39,9 +41,16 @@ angular
         controllerAs: 'galleryCtrl'
       })
       .when('/protocol', {
-        templateUrl : 'views/routes/build.html',
-        controller  : 'BuildCtrl',
-        controllerAs: 'restyleCtrl' //todo - rename to ProtocolCtrl, make sure not passed down and breaking
+        templateUrl : 'views/routes/protocol.html',
+        controller  : 'ProtocolCtrl',
+        controllerAs: 'restyleCtrl', //todo - rename to ProtocolCtrl, make sure not passed down and breaking
+        resolve: {
+          protocol: ['ProtocolHelper', function (ProtocolHelper) {
+            if (_.isEmpty(ProtocolHelper.currentProtocol)) {
+              ProtocolHelper.assignCurrentProtocol(ProtocolHelper.createNewProtocol());
+            }
+          }]
+        }
       })
       .when('/results', {
         templateUrl : 'views/routes/results.html',

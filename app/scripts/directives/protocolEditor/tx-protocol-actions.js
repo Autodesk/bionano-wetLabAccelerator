@@ -24,11 +24,13 @@ angular.module('tx.protocolEditor')
 
         self.saveProtocol = function () {
           ProtocolHelper.saveProtocol(self.protocol)
-            .then(self.protocolForm.$setPristine);
-          Notify({
-            message: 'Protocol Saved',
-            error: false
-          });
+            .then(self.protocolForm.$setPristine)
+            .then(function () {
+              Notify({
+                message: 'Protocol Saved',
+                error: false
+              });
+            });
         };
 
         $scope.modalShown = false;

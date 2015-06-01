@@ -13,6 +13,9 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 
+from selenium.webdriver import ActionChains
+
+
 class Page:
     """This is a generic page class. It makes certain methods accessible
     across pages, so that they can all compare images, toggle visibility, etc.
@@ -27,7 +30,7 @@ class Page:
     URL_PREFIX = os.environ.get('URL_PREFIX')
     TIMEOUT = 15
 
-    if URL_PREFIX != None:
+    if URL_PREFIX != None and URL_PREFIX != "":
         BASE_URL = "http://" + URL_PREFIX + "." + URL_POSTFIX
     else:
         BASE_URL = ENVIRONMENTS
@@ -39,21 +42,53 @@ class Page:
         print(self.BASE_URL)
 
     def action(self, actionDescription):
-        print("  Action -- " + actionDescription)
+        print("  Action - " + actionDescription)
 
-    def findElement(self, locator):
+    def findElement(self, locatorTuple):
+        try:
+            return self.DRIVER.find_element(*locatorTuple)
+        except Exception as e:
+            print("ERROR: could not locate element: " + str(locatorTuple))
+            raise Exception("Could not locate element: " + str(locatorTuple))
 
-        return self.DRIVER.find_element(*locator)
+    def findElements(self, locatorTuple):
+        return self.DRIVER.find_elements(*locatorTuple)
 
     def findElementByXpath(self, xpath):
-        return self.findElement(By.XPATH, xpath)
+        return self.findElement((By.XPATH, xpath))
 
     def findElementById(self, id):
-        return self.findElement(By.ID, id)
+        return self.findElement((By.ID, id))
+
+    def findElementByAttributeValue(self, elementType, attribute, value):
+        return self.DRIVER.find_element_by_xpath("//" + elementType + "[@" + attribute + "='" + value + "']")
 
     def click(self, element, description):
-        self.action("click on " + description)
-        element.click()
+        self.action("click on " + description + " element: " + element.tag_name + " class: " + element.get_attribute("class"))
+        if isinstance(element, tuple):
+            element = self.findElement(element)
+
+        self.executeScript("window.scrollTo(0," + str(element.location['y']) + ")")
+        #
+        # print(element.location_once_scrolled_into_view)
+        try:
+            element.click()
+        except Exception as e:
+            message = "could not click on " + description + ", attributes: " + self.getElementAttributes(element) + "\n" + e.message
+            print("FAIL - " + message)
+            raise(message)
+
+    def getElementAttributes(self, element):
+        attributes = self.DRIVER.execute_script('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', element)
+        strAttributes = ""
+        for key, value in attributes:
+            strAttributes = strAttributes + + element.tag_name + " " + key + "='" + value + "'"
+
+        return strAttributes
+
+    def executeScript(self, script):
+        self.action("executing script: '" + script + "'")
+        self.DRIVER.execute_script(script)
 
     def waitForElementByClassName(self, className):
         return self.waitForElement((By.CLASS_NAME, className))
@@ -64,20 +99,36 @@ class Page:
     def waitForElementByXpath(self, xpath):
         return self.waitForElement((By.XPATH, xpath))
 
-    def waitForElement(self, locator):
+    def waitForElement(self, locatorTuple):
         try:
-            print("waiting for element: " + str(locator))
+            # print("    waiting for element: " + str(locatorTuple))
             WebDriverWait(self.DRIVER, self.TIMEOUT).until(
-                expected_conditions.presence_of_element_located(locator))
+                expected_conditions.presence_of_element_located(locatorTuple))
             return True
         except TimeoutException:
-            print("time out waiting for element: " + str(locator))
+            print("time out waiting for element: " + str(locatorTuple))
+            return False
+
+    def waitForElementVisible(self, locatorTuple):
+        element = self.findElement(locatorTuple)
+        try:
+            # print("    waiting for element: " + str(locatorTuple) + " to be visible")
+            WebDriverWait(self.DRIVER, self.TIMEOUT).until(
+                expected_conditions.visibility_of(element))
+            return True
+        except TimeoutException:
+            print("time out waiting for element: " + str(locatorTuple))
             return False
 
     def setField(self, element, value, description = "textfield"):
         self.action("set " + description + " to " + value)
         element.send_keys(value)
         element.send_keys(Keys.ENTER)
+
+    def dragAndDrop(self, source, target, descriptionSource, descriptionTarget):
+        self.action("drag " + descriptionSource + " to " + descriptionTarget)
+        actionChains = ActionChains(self.DRIVER)
+        actionChains.drag_and_drop(source, target).perform()
 
     def toggle_visibility_by_class(self, classname):
         """Toggle the visibility of the object by a classname selector.
@@ -216,9 +267,4 @@ class Page:
         comparison = ed / len(d_i)
         return comparison
 
-class Locator():
-    def __init__(self, locatorType, locatorValue, description):
-        self.locatorType = locatorType
-        self.locatorValue = locatorValue
-        self.description = description
 

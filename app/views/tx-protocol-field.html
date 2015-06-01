@@ -1,7 +1,7 @@
 <div class="field-label"
      ng-if="!fieldCtrl.hideTitle"
      ng-class="{optional: fieldCtrl.field.optional == true}"
-     ng-bind="fieldCtrl.field.name">
+     ng-bind="(fieldCtrl.field.readable || fieldCtrl.field.name) | fieldReadable">
 </div>
 <div class="field-value"
      ng-mouseleave="fieldCtrl.closeDropdown()"

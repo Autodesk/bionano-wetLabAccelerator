@@ -7,7 +7,7 @@
   line-height: 1em;
   vertical-align: text-bottom;
   background-color: rgba(100,100,100, 0);
-  transition: background-color $transition-in-time;
+  transition: background-color $transition-long-time;
 
   &:hover {
     background-color: rgba(100,100,100, 0.15);
@@ -35,7 +35,7 @@
   line-height: 1em;
   vertical-align: text-bottom;
   background-color: rgba(100,100,100, 0);
-  transition: background-color $transition-in-time;
+  transition: background-color $transition-long-time;
 
   &:hover {
     background-color: rgba(117, 137, 208, 1);

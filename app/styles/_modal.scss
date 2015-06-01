@@ -10,7 +10,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: transparentize($white, .25);
+  background: $bg-overlay;
 }
 
 .modal-dialog {
@@ -83,13 +83,13 @@
     }
   }
 
-  //todo - defualt only
-  input {
-    color: $black;
+  input,
+  .input-unstyled {
+    color: $white;
+  }
 
-    &.input-unstyled {
-      color: $white;
-    }
+  .form-control {
+    color: $black;
   }
 
 }

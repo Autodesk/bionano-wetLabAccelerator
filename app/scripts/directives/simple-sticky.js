@@ -57,7 +57,7 @@ angular.module('transcripticApp')
       angular.forEach(checks, function (fn) {
         fn.apply(null, [pageYOffset]);
       });
-    }, 50);
+    }, 25);
 
     windowEl.on('scroll resize', throttleRunChecks);
 
@@ -70,17 +70,25 @@ angular.module('transcripticApp')
             positionNormal = element.css('position'),
             fromEdgeNormal = element.css(affixToBottom ? 'bottom' : 'top'),
             fromEdgeStart = calcStartFromEdge(element[0], affixToBottom),//this doesn't work great with flexbox layouts...
-            isAffixed = false;
+            isAffixed = false,
+            shouldCheck = false;
 
-        //hack to handle flexbox layout...
+        //hack to handle flexbox layout... timeout to run after initial check
         if (fromEdgeStart == 0) {
           $timeout(function () {
-            fromEdgeStart = calcStartFromEdge(element[0], affixToBottom);
+            shouldCheck = true;
           });
         }
 
         //check if affix state has changed
-        function checkPosition(pageYOffset) {
+        function checkPosition(pageYOffset, forceCheck) {
+
+          if (shouldCheck || !!forceCheck) {
+            fromEdgeStart = calcStartFromEdge(element[0], affixToBottom);
+            shouldCheck = false;
+          }
+
+          //console.log(fromEdgeStart, element[0].getBoundingClientRect().top, getYOffset(), element[0].getBoundingClientRect().top  + getYOffset(), pageYOffset, fromEdgeAffix, pageYOffset + fromEdgeAffix, (pageYOffset + fromEdgeAffix) > fromEdgeStart);
 
           var shouldAffix;
 
@@ -96,7 +104,7 @@ angular.module('transcripticApp')
             //run a check in case elements have changed in page, don't wanna run too often
             //todo - time this better
             if (!shouldAffix && !isAffixed) {
-              fromEdgeStart = calcStartFromEdge(element[0], affixToBottom);
+              shouldCheck = true;
             }
           }
         }

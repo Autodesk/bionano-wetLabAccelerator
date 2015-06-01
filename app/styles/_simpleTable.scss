@@ -1,0 +1,54 @@
+.simple-twocol-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  td {
+    padding: 3px 0.5em;
+    width: 50%;
+
+    &:first-child {
+      text-align: right;
+    }
+    &:last-child {
+      text-align: left;
+    }
+  }
+}
+
+.metadata-table {
+  @extend .column-14;
+  @extend .div-centered;
+  display: table;
+  margin-bottom: $layout-spacing-md;
+
+  .table-row {
+    display: table-row;
+  }
+
+  .metadata-label,
+  .metadata-field,
+  .metadata-spacer {
+    display: table-cell;
+  }
+
+  .metadata-label {
+    @extend .column-3;
+    text-align: right;
+  }
+
+  .metadata-field {
+    @extend .column-8;
+
+    input {
+      background-color: $white;
+      color: $black;
+      width: 100%;
+      margin: 0.25em 0;
+      padding: 0.25em 0.5em;
+    }
+  }
+
+  .metadata-spacer {
+    @extend .column-3;
+  }
+}

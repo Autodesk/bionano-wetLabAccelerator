@@ -20,7 +20,7 @@ angular.module('tx.communication')
     //this.root = this.transcripticRoot;
 
     //proxy
-    this.root = this.localRoot;
+    this.root = this.platformRoot;
 
 
     //pass in overrides as Object

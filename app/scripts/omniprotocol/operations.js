@@ -188,7 +188,7 @@ module.exports = {
     }
   },
 
-  "mix"     : {
+  "mix": {
     "operation"  : "mix",
     "description": "Mix specified well using a new pipette tip",
     "name"       : "Mix",
@@ -282,13 +282,13 @@ module.exports = {
           "singleContainer": false
         },
         {
-          "name"    : "volume",
-          "type"    : "volume",
-          "default" : {"value": 50, "unit": "microliter"}
+          "name"   : "volume",
+          "type"   : "volume",
+          "default": {"value": 50, "unit": "microliter"}
         },
         {
-          "name"   : "resource",
-          "type"   : "resource"
+          "name": "resource",
+          "type": "resource"
         }
       ]
     }
@@ -346,7 +346,7 @@ module.exports = {
 
   "incubate": {
     "operation"  : "incubate",
-    "description": "",
+    "description": "keep (cells, bacteria, etc.) at a suitable temperature so that they develop",
     "name"       : "Incubate",
     "type"       : "heating",
     "scaffold"   : {
@@ -472,10 +472,10 @@ module.exports = {
           "type": "container"
         },
         {
-          "name"    : "lid",
-          "type"    : "option",
-          "options" : optionEnums.lid.cover,
-          "default" : "standard"
+          "name"   : "lid",
+          "type"   : "option",
+          "options": optionEnums.lid.cover,
+          "default": "standard"
         }
       ]
     }
@@ -568,7 +568,6 @@ module.exports = {
   },
 
 
-
   //spectrometry
 
 
@@ -576,7 +575,7 @@ module.exports = {
     "operation"  : "absorbance",
     "description": "Measure absorbance of a specified wavelength (between 300 nm - 1000 nm)",
     "name"       : "Absorbance",
-    "type" : "spectrophotometry",
+    "type"       : "spectrophotometry",
     "scaffold"   : {
       "operation"      : "absorbance",
       "requirements"   : {},
@@ -609,6 +608,7 @@ module.exports = {
         },
         {
           "name"    : "num_flashes",
+          "readable": "number flashes",
           "type"    : "integer",
           "optional": true,
           "default" : 25
@@ -621,7 +621,7 @@ module.exports = {
     "operation"  : "fluorescence",
     "description": "Measure fluorescence given an excitation wavelength (300 nm - 1000 nm) and emission (250 nm - 900 nm)",
     "name"       : "Fluorescence",
-    "type" : "spectrophotometry",
+    "type"       : "spectrophotometry",
     "scaffold"   : {
       "operation"      : "fluorescence",
       "requirements"   : {},
@@ -665,6 +665,7 @@ module.exports = {
         },
         {
           "name"    : "num_flashes",
+          "readable": "number flashes",
           "type"    : "integer",
           "optional": true,
           "default" : 25
@@ -677,7 +678,7 @@ module.exports = {
     "operation"  : "luminescence",
     "description": "Measure luminescence in wells of a plate between 380nm - 600 nm",
     "name"       : "Luminescence",
-    "type" : "spectrophotometry",
+    "type"       : "spectrophotometry",
     "scaffold"   : {
       "operation"      : "luminescence",
       "requirements"   : {},

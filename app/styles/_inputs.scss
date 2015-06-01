@@ -12,7 +12,7 @@
   display: inline-block;
   height: 25px;
   border: 2px solid transparent;
-  padding:0;
+  padding:0 4px;
   margin:0;
   outline: 0;
   background: transparent;
@@ -24,8 +24,7 @@
     -webkit-appearance: none;
     background: $primary;
     color: $white;
-    text-align: center;
-    padding: 0 1px;
+    text-align: left;
     &::-webkit-input-placeholder {
       color: $white;
     }
@@ -37,7 +36,7 @@
     background: transparent;
     color: $black;
     text-align: left;
-    padding:0;
+    padding:0 4px;
     &::-webkit-input-placeholder {
       color: transparent;
     }
@@ -61,12 +60,14 @@
   background: $light-grey;
   border-radius: 50px;
   position: relative;
+  font-size: $font-size-sm;
 
   &:before {
     content: 'TRUE';
     color: $grey;
     position: relative;
-    left: 7px;
+    left: 10px;
+    top: 1px;
     z-index: 0;
   }
 
@@ -74,7 +75,8 @@
     content: 'FALSE';
     color: $grey;
     position: relative;
-    right: 3px;
+    left: 4px;
+    top: 1px;
     z-index: 0;
   }
 
@@ -95,7 +97,8 @@
     &:after {
       content: 'FALSE';
       position: relative;
-      left: 3px;
+      left: 6px;
+      top: 2px;
     }
   }
 
@@ -106,7 +109,7 @@
 
     &:after {
       content: 'TRUE';
-      left: 4px;
+      left: 7px;
     }
   }
 
@@ -127,5 +130,23 @@
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+}
+
+input[type="color"].color-swatch {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  color: transparent;
+  background-color: transparent;
+  border: 1px solid transparent;
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border: 1px solid transparent;
+  }
+  &::-webkit-color-swatch {
+    border: 1px solid transparent;
+    border-radius: 10px;
   }
 }

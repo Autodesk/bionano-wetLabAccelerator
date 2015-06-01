@@ -1,11 +1,12 @@
 body {
   display: flex;
   min-height: 100vh;
-  min-width: 1024px;
+  min-width: $layout-width-page;
   flex-direction: column;
   align-items: stretch;
   justify-content:center;
   background-image: radial-gradient(at bottom right,#CCCCCC,#FFFFFF);
+  background-attachment: fixed;
 
   &:before {
     content: " ";
@@ -30,6 +31,7 @@ body {
   header {
     align-self: flex-start;
     height: $layout-height-header;
+    min-width: $layout-width-page;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -127,6 +129,7 @@ body {
 @for $i from (1 + 1) through 16 {
   .column-#{$i} {
     width: widthFromColumns($i);
+    display: inline-block;
     position: relative;
     min-height: 1px;
     padding-left: $layout-width-column-gutter;
@@ -141,4 +144,5 @@ body {
 
 .div-centered {
   margin: 0 auto;
+  display: block;
 }
