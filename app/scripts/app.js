@@ -92,7 +92,7 @@ angular
         redirectTo: '/'
       });
   })
-  .run(function (simpleLogin, Authentication, $rootScope, $location, /* temp */ FBProfile, $q, Platform, Database) {
+  .run(function (simpleLogin, Authentication, $rootScope, $location, FBProfile, $q, Platform, Database) {
 
     $rootScope.$on('$locationChangeSuccess', function () {
       $rootScope.currentPath = $location.path();

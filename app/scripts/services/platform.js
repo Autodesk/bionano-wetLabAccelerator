@@ -27,7 +27,7 @@ angular.module('transcripticApp')
     };
 
     self.unauthenticate = function () {
-      //fixme - pending dion
+      return pc.unauthenticate();
     };
 
     self.getUserInfo = function () {

@@ -23,23 +23,20 @@ angular.module('transcripticApp')
         };
 
         Authentication.watch(function (creds) {
-          creds && Database.getAllProjectMetadata().then(function (projects) {
-            console.warn('projects received', projects);
+          creds && Database.getAllProjectMetadata()
+            .then(function (projects) {
 
-            console.log(projects[0]);
+              self.projects = _(projects).uniq().value();
 
-            //todo - assign to contentmenu to list
-            self.projects = _.uniq(projects);
+              self.protocols = _.filter(self.projects, function (proj) {
+                return _.result(proj, 'metadata.type') == 'protocol';
+              });
 
-            self.protocols = _.filter(self.projects, function (proj) {
-              return _.result(proj, 'metadata.type') == 'protocol';
-            });
+              self.runs = _.filter(self.projects, function (proj) {
+                return _.result(proj, 'metadata.type') == 'run';
+              });
 
-            self.runs = _.filter(self.projects, function (proj) {
-              return _.result(proj, 'metadata.type') == 'run';
-            });
-
-          })
+            })
             .catch(function (err) {
               console.warn(err);
             })
@@ -73,9 +70,7 @@ angular.module('transcripticApp')
       },
       link        : function postLink (scope, element, attrs) {
 
-        /*scope.$watch('galleryCtrl.galleryRollup', function (newval) {
-          scope.galleryCtrl.rolled = _.groupBy(scope.galleryCtrl.galleryItems, newval);
-        });*/
+
       }
     };
   });

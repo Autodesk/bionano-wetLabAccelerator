@@ -96,7 +96,7 @@ angular.module('transcripticApp')
 
     // helpers //
 
-    //todo - handle tags (substitute for parent child relationships)
+    //todo - handle tags + versioning
     function generateNewProtocolMetadata () {
       return {
         id    : UUIDGen(),

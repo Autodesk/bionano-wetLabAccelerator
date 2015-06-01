@@ -159,7 +159,7 @@ angular.module('transcripticApp')
       return run;
     }
 
-    //todo - handle tags
+    //todo - handle tags + versioning
     //note - does not handle protocol, need to attach that separately (not in metadata)
     function generateNewRunMetadata (protocol) {
       return {
