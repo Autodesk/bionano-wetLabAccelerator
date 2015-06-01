@@ -67,4 +67,15 @@ tx-protocol-op {
       opacity: 1;
     }
   }
+
+
+  .operation-dropdown-toggle {
+    display: none;
+  }
+
+  &:hover {
+    .operation-dropdown-toggle {
+      display: block;
+    }
+  }
 }
