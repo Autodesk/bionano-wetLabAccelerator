@@ -294,6 +294,75 @@ module.exports = {
     }
   },
 
+  "spread": {
+    "operation"  : "spread",
+    "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+    "name"       : "Spread",
+    "type"       : "picking",
+    "scaffold"   : {
+      "operation"   : "spread",
+      "requirements": {},
+      "transforms"  : [
+        {
+          "wells": "source"
+        },
+        {
+          "wells": "destination"
+        }
+      ],
+      "fields"      : [
+        {
+          "name": "source",
+          "type": "aliquot"
+        },
+        {
+          "name": "destination",
+          "type": "aliquot"
+        },
+        {
+          "name"   : "volume",
+          "type"   : "volume",
+          "default": {"value": 50, "unit": "microliter"}
+        }
+      ]
+    }
+  },
+
+  "autopick": {
+    "operation"  : "autopick",
+    "description": "Pick at least min_count colonies from 'source' to 'destination' wells, until there are no more colonies available, failing if there are fewer than min_count colonies detected",
+    "name"       : "Autopick",
+    "type"       : "picking",
+    "scaffold"   : {
+      "operation"   : "autopick",
+      "requirements": {},
+      "transforms"  : [
+        {
+          "wells": "source"
+        },
+        {
+          "wells": "destination"
+        }
+      ],
+      "fields"      : [
+        {
+          "name": "source",
+          "type": "aliquot"
+        },
+        {
+          "name": "destination",
+          "type": "aliquot+"
+        },
+        {
+          "name"    : "min_count",
+          "readable": "minimum count",
+          "type"    : "integer",
+          "optional": true
+        }
+      ]
+    }
+  },
+
   //heating
 
 
