@@ -54,6 +54,10 @@ angular.module('transcripticApp')
           self.validateAuth();
         });
 
+        self.forgetCreds = function () {
+          TranscripticAuth.forgetCreds();
+        };
+
       },
       link            : function (scope, element, attrs, formCtrl) {
 

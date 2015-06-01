@@ -131,7 +131,8 @@ angular.module('tx.communication')
           organization: '',
           email       : '',
           key         : ''
-        })
+        });
+        persistCreds();
       };
 
       function batchUpdate (creds, skipUpdate) {
