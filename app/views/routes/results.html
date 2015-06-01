@@ -41,39 +41,39 @@
                   on-close="resultsCtrl.onModalClose()">
 
           <div class="column-wrap">
-            <table class="column-12 div-centered metadata-table">
-              <tr>
-                <td class="metadata-label">Name</td>
-                <td class="metadata-field">
+            <div class="metadata-table">
+              <div class="table-row">
+                <div class="metadata-label">Name</div>
+                <div class="metadata-field">
                   <input type="text"
                          class="input-unstyled"
                          placeholder="name of run"
                          ng-model="resultsCtrl.run.metadata.name">
-                </td>
-                <td class="metadata-spacer"></td>
-              </tr>
-              <tr>
-                <td class="metadata-label">Description</td>
-                <td class="metadata-field">
+                </div>
+                <div class="metadata-spacer"></div>
+              </div>
+              <div class="table-row">
+                <div class="metadata-label">Description</div>
+                <div class="metadata-field">
                   <input type="text"
                          class="input-unstyled metadata-field"
                          placeholder="enter notes for this run"
                          ng-model="resultsCtrl.run.metadata.description">
-                </td>
-                <td class="metadata-spacer"></td>
-              </tr>
-              <tr>
-                <td class="metadata-label">Tags</td>
-                <td class="metadata-field">
+                </div>
+                <div class="metadata-spacer"></div>
+              </div>
+              <div class="table-row">
+                <div class="metadata-label">Tags</div>
+                <div class="metadata-field">
                   <input type="text"
                          class="input-unstyled"
                          ng-list
                          placeholder="enter tags associated with this run"
                          ng-model="resultsCtrl.run.metadata.tags">
-                </td>
-                <td class="metadata-spacer"></td>
-              </tr>
-            </table>
+                </div>
+                <div class="metadata-spacer"></div>
+              </div>
+            </div>
           </div>
         </tx-modal>
       </div>
