@@ -1,4 +1,4 @@
-tx-protocol-group {
+.protocol-group {
 
   $border-color-inactive: $light-grey;
   $border-inner: 1px solid $border-color-inactive;
@@ -17,20 +17,20 @@ tx-protocol-group {
     margin-bottom: 0;
   }
 
-  .protocol-group-wrap {
+  &-wrap {
     &.drop-hover .protocol-group-main {
       background-color: $bg-primary-semitransparent;
     }
   }
 
-  .protocol-group-inner {
+  &-inner {
     &.show-group {
       background: transparent;
       border: 2px solid $white;
     }
   }
 
-  .protocol-group-header {
+  &-header {
     position: relative;
     line-height: 1em;
     cursor: row-resize;
@@ -52,7 +52,7 @@ tx-protocol-group {
     }
   }
 
-  .protocol-group-main {
+  &-main {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -112,12 +112,20 @@ tx-protocol-group {
     }
   }
 
+  .group-name {
+    min-height: 1em;
+    min-width: 85px;
+    cursor: text;
+  }
+
   /*
   //all ops have arrows, not groups
   &:not(:last-child) {
     @include arrow-bottom($step-background-inactive, $step-background-active, $includeBackground: false);
   }
   */
+
+  //op stuff
 
   tx-protocol-op:after {
     margin-top: $drop-hover-border-width;
@@ -133,13 +141,22 @@ tx-protocol-group {
     margin-top: $drop-hover-border-width * 2;
   }
 
-  //internals
+  //variations
 
-  .group-name {
-    min-height: 1em;
-    min-width: 85px;
-    cursor: text;
+  &-placeholder {
+    border: 3px dashed $white;
+    padding: 1em;
+    text-align: center;
+    font-weight: $font-weight-bold;
+    color: $white;
+    text-shadow: 0 0 3px transparentize($black, 0.85);
+
+    &.drop-hover {
+      border-color: $primary;
+      background-color: $bg-primary-semitransparent;
+    }
   }
+
 }
 
 //todo - move so more explicit that protocol-op uses this too

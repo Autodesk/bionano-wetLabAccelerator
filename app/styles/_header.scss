@@ -86,10 +86,12 @@ header.site-header {
       font-size: $header-nav-font-size;
       color: #c2c2c2;
       opacity: 0.6;
+      transition: opacity $transition-long-time $transition-long-ease;
 
       &:hover {
         opacity: 0.5;
         color: #222;
+        transition: opacity $transition-short-time $transition-short-ease;
       }
     }
   }
