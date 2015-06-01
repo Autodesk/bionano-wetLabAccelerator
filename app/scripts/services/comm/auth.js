@@ -40,7 +40,8 @@ angular.module('tx.communication')
     },
     organization: {
       get: function () {
-        return organization;
+        //transcriptic expects snake case if there is a space
+        return organization.toLowerCase().replace(' ', '-');
       },
       set: function (val) {
         if (angular.isString(val)) {
@@ -53,7 +54,7 @@ angular.module('tx.communication')
   this.$get = function ($rootScope, simpleLogin, FBProfile) {
 
     var organization = function (newval) {
-      if (newval) {
+      if (_.isString(newval)) {
         self.organization = newval;
         triggerWatchers();
       }
@@ -61,7 +62,7 @@ angular.module('tx.communication')
     };
 
     var email = function (newval) {
-      if (newval) {
+      if (_.isString(newval)) {
         self.email = newval;
         triggerWatchers();
       }
@@ -69,7 +70,7 @@ angular.module('tx.communication')
     };
 
     var key = function (newval) {
-      if (newval) {
+      if (_.isString(newval)) {
         self.key = newval;
         triggerWatchers();
       }
