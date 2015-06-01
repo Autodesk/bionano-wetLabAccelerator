@@ -346,7 +346,7 @@ module.exports = {
 
   "incubate": {
     "operation"  : "incubate",
-    "description": "",
+    "description": "keep (cells, bacteria, etc.) at a suitable temperature so that they develop",
     "name"       : "Incubate",
     "type"       : "heating",
     "scaffold"   : {
