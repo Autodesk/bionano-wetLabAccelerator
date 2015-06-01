@@ -26,11 +26,14 @@ angular.module('tx.communication')
     //pass in overrides as Object
     //use a function to recreate TranscripticAuth each time
     this.defaultResourceActions = function (params, orgUnrequired) {
-      var headers = _.assign({}, TranscripticAuth.headers(), params.headers);
-      delete params.headers;
+      var headers = _.assign({}, TranscripticAuth.headers(), _.result(params, headers));
+
+      if (_.isObject(params)) {
+        delete params.headers;
+      }
 
       var timeoutPromise = $q.defer(),
-          timeoutCancel = 7000;
+          timeoutCancel  = 7000;
 
       /*
       //fixme - these are only set once, and so never valid - should be setting timeout on each request
@@ -51,6 +54,11 @@ angular.module('tx.communication')
         timeout        : timeoutCancel,
         responseType   : "json"
       }, params)
+    };
+
+    //returns promise which will resolve with organizations if valid, fail if not
+    this.validate = function validateCreds () {
+      return self.request('organizations');
     };
 
     this.request = function (url, method, params) {

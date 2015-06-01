@@ -58,7 +58,7 @@ angular.module('tx.communication')
       }
     });
 
-    this.$get = function ($rootScope, Authentication, simpleLogin, FBProfile) {
+    this.$get = function ($rootScope, Authentication, simpleLogin, FBProfile, $http) {
 
       var ignoreWatchers = false;
 
@@ -86,17 +86,17 @@ angular.module('tx.communication')
         return self.key;
       };
 
-      //todo - closure issues / security?
       var headers = function () {
         return {
-          "X-User-Email": this.email,
-          "X-User-Token": this.key,
+          "X-User-Email": email,
+          "X-User-Token": key,
           "Content-Type": "application/json",
           "Accept"      : "application/json"
         };
       };
 
-      //listen to firebase for changes to auth and assign directly (don't trigger watchers twice)
+      /*
+      //listen to fi rebase for changes to auth and assign directly (don't trigger watchers twice)
       simpleLogin.watch(function (user) {
         if (!!user) {
           var txAuth = new FBProfile(user.uid, 'txAuth').$asObject();
@@ -120,7 +120,9 @@ angular.module('tx.communication')
           triggerWatchers();
         }
       });
+      */
 
+      //todo - should update watchers
       Authentication.watch(function (userinfo) {
         console.log('auth watch in tx auth', userinfo);
       });
@@ -169,10 +171,6 @@ angular.module('tx.communication')
           $scope.$on('$destroy', unbind);
         }
         return unbind;
-      };
-
-      var verify = function verifyCreds (creds) {
-        //todo
       };
 
       return {

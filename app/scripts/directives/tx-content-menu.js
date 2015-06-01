@@ -7,7 +7,7 @@
  *
  */
 angular.module('transcripticApp')
-  .directive('txContentMenu', function (ProtocolHelper, RunHelper, Authentication, Database, $timeout, $location) {
+  .directive('txContentMenu', function (ProtocolHelper, RunHelper, Authentication, Database, $document, $timeout, $location) {
     return {
       templateUrl : 'views/tx-content-menu.html',
       restrict    : 'E',
