@@ -1,0 +1,40 @@
+.simple-twocol-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  td {
+    padding: 3px 0.5em;
+    width: 50%;
+
+    &:first-child {
+      text-align: right;
+    }
+    &:last-child {
+      text-align: left;
+    }
+  }
+}
+
+.metadata-table {
+
+  .metadata-label {
+    @extend .column-2;
+    text-align: right;
+  }
+
+  .metadata-field {
+    @extend .column-8;
+
+    > input {
+      background-color: $white;
+      color: $black;
+      width: 100%;
+      margin: 0.25em 0;
+      padding: 0.25em 0.5em;
+    }
+  }
+
+  .metadata-spacer {
+    @extend .column-2;
+  }
+}

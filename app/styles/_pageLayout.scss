@@ -129,6 +129,7 @@ body {
 @for $i from (1 + 1) through 16 {
   .column-#{$i} {
     width: widthFromColumns($i);
+    display: inline-block;
     position: relative;
     min-height: 1px;
     padding-left: $layout-width-column-gutter;
@@ -143,4 +144,5 @@ body {
 
 .div-centered {
   margin: 0 auto;
+  display: block;
 }

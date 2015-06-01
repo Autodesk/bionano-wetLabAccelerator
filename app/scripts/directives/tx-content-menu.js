@@ -7,33 +7,39 @@
  *
  */
 angular.module('transcripticApp')
-  .directive('txContentMenu', function (ProtocolHelper, RunHelper, $location) {
+  .directive('txContentMenu', function (ProtocolHelper, RunHelper, $document, $timeout, $location) {
     return {
-      templateUrl     : 'views/tx-content-menu.html',
-      restrict        : 'E',
-      controllerAs    : 'contentCtrl',
-      controller      : function postLink ($scope, $element, $attrs) {
+      templateUrl : 'views/tx-content-menu.html',
+      restrict    : 'E',
+      controllerAs: 'contentCtrl',
+      controller  : function postLink ($scope, $element, $attrs) {
         var self = this;
 
-        self.toggleGalleryVisible = function toggleGalleryVisible (forceVal) {
+        self.toggleMenuVisible = function toggleGalleryVisible (forceVal) {
           $scope.$applyAsync(function () {
             self.isVisible = _.isBoolean(forceVal) ? forceVal : !self.isVisible;
-            $element.toggleClass('visible', self.isVisible);
           });
         };
+
+        $scope.$watch('contentCtrl.isVisible', function (newval) {
+          $element.toggleClass('visible', newval);
+          $timeout(function () {
+            $document[newval ? 'on' : 'off']('click', outsideClickListener);
+          });
+        });
 
         self.protocols = ProtocolHelper.protocols;
 
         self.runs = RunHelper.runs;
 
         self.openProtocol = function (protocol) {
-          self.toggleGalleryVisible(false);
+          self.toggleMenuVisible(false);
           $location.path('/protocol');
           ProtocolHelper.assignCurrentProtocol(protocol);
         };
 
         self.openRun = function (run) {
-          self.toggleGalleryVisible(false);
+          self.toggleMenuVisible(false);
           $location.path('/results');
           RunHelper.assignCurrentRun(run);
         };
@@ -42,8 +48,15 @@ angular.module('transcripticApp')
           ProtocolHelper.addProtocol()
             .then(self.openProtocol);
         };
+
+        function outsideClickListener (event) {
+          if (!$element[0].contains(event.target)) {
+            event.preventDefault();
+            self.toggleMenuVisible(false);
+          }
+        }
       },
-      link            : function postLink (scope, element, attrs) {
+      link        : function postLink (scope, element, attrs) {
 
         /*scope.$watch('galleryCtrl.galleryRollup', function (newval) {
           scope.galleryCtrl.rolled = _.groupBy(scope.galleryCtrl.galleryItems, newval);

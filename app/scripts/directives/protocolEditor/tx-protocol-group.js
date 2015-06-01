@@ -40,7 +40,7 @@ angular.module('tx.protocolEditor')
         //drag and drop interaction
 
         self.optsDraggableInstruction = {
-          handle: '.operation-name',
+          handle: '.operation-header',
           axis  : 'y',
           revert: true,
           start : function (e, ui) {
