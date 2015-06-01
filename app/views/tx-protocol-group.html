@@ -4,29 +4,30 @@
 <div class="protocol-group-wrap"
      tx-protocol-droppable="groupCtrl.optsDroppableGroup">
   <div class="protocol-group-inner"
-       ng-class="{'show-group': (groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1),
+       ng-class="{'is-looping' : groupCtrl.group.loop > 1,
                   'multichild' : groupCtrl.group.steps.length > 1 }"
        tx-protocol-draggable="groupCtrl.optsDraggableGroup">
+    <div class="group-repeat">
+      <span class="iteration-none"></span>
+      <div class="group-repeat-input-wrap">
+        <input class="input-unstyled group-repeat-input"
+               min="1" max="100"
+               type="number"
+               auto-grow="10"
+               ng-model-options="{updateOn: 'blur'}"
+               ng-model="groupCtrl.group.loop">
+      </div>
+    </div>
     <div class="protocol-group-header"
-         tx-protocol-droppable="groupCtrl.optsDroppableGroupHeader"
-         ng-show="groupCtrl.group.steps.length > 1 || groupCtrl.group.loop > 1;">
+         tx-protocol-droppable="groupCtrl.optsDroppableGroupHeader">
       <input class="group-name input-unstyled"
              type="text"
              auto-grow
              placeholder="Group Name"
              ng-model="groupCtrl.group.name">
-      <div class="dropdown group-items"
+      <div class="dropdown group-dropdown-items"
            dropdown>
-        <span class="iteration-none"
-              ng-show="!groupCtrl.group.loop || groupCtrl.group.loop <= 1"></span>
-        <div class="group-repeat"
-             ng-show="groupCtrl.group.loop && groupCtrl.group.loop >= 2">
-          <input class="input-unstyled"
-                 type="number" min="1" max="100"
-                 ng-model-options="{updateOn: 'blur'}"
-                 ng-model="groupCtrl.group.loop"/>
-        </div>
-        <span class="glyphicon glyphicon-cog"
+        <span class="group-dropdown-toggle glyphicon glyphicon-cog"
               squelch-event="click"
               dropdown-toggle></span>
         <ul class="dropdown-menu dropdown-menu-right">

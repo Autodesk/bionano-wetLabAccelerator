@@ -19,17 +19,10 @@
     <div class="dropdown group-items visible-parent-hover"
          dropdown
          is-open="showActions">
-      <span class="iteration-none"
-            ng-if="!groupCtrl.group.loop || groupCtrl.group.loop <= 1"></span>
-      <span class="glyphicon glyphicon-cog"
+      <span class="operation-dropdown-toggle glyphicon glyphicon-cog"
             squelch-event="click"
             dropdown-toggle></span>
       <ul class="dropdown-menu dropdown-menu-right">
-        <li ng-if="groupCtrl.group.loop <= 1">
-          <a ng-click="groupCtrl.group.loop = 2">
-            Add Iteration
-          </a>
-        </li>
         <li>
           <a ng-click="opCtrl.verifyProtocol()">
             Verify Protocol

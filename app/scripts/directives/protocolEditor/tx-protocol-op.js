@@ -58,8 +58,6 @@ angular.module('tx.protocolEditor')
       },
       link            : function (scope, element, attrs, groupCtrl) {
 
-        scope.groupCtrl = groupCtrl;
-
         scope.$watch('opCtrl.isVisible', function (viz) {
           element.toggleClass('open', !!viz);
         });
