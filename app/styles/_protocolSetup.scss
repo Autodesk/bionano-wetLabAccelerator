@@ -15,6 +15,10 @@ tx-protocol-setup {
   .protocol-setup-header {
     padding: 3px 10px;
     outline: none;
+
+    .setup-heading {
+      font-weight: $font-weight-light;
+    }
   }
 
   .protocol-setup-main {
@@ -56,9 +60,10 @@ tx-protocol-setup {
         padding: 5px 0;
       }
 
-      &-placeholder {
+      &.setup-variable-placeholder {
         span {
           text-align: center;
+          width: 100%;
         }
       }
     }

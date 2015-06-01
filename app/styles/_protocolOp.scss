@@ -11,13 +11,17 @@ tx-protocol-op {
 
   @include arrow-bottom($step-background-inactive, $step-background-active, $includeBackground: true, $activeClass: 'open');
 
-  .operation-name {
+  .operation-header {
     color: $black;
     cursor: all-scroll;
     width: 100%;
     padding: 3px 5px;
     display: flex;
     justify-content: space-between;
+
+    .operation-name {
+      font-weight: $font-weight-light;
+    }
   }
 
   .operation-label {
