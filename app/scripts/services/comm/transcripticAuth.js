@@ -48,7 +48,7 @@ angular.module('tx.communication')
       },
       organization: {
         get: function () {
-          return organization;
+          return organization.toLowerCase().replace(' ', '-');
         },
         set: function (val) {
           if (angular.isString(val)) {
