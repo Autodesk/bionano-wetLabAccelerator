@@ -59,6 +59,7 @@ $bg-body: $white;
 $bg-dark: $dark;
 $bg-white: $white;
 $bg-overlay: transparentize($black, .75);
+$bg-dark-barelytransparent: transparentize($bg-dark, 0.1);
 $bg-white-barelytransparent: transparentize($bg-white, 0.05);
 $bg-white-semitransparent: transparentize($bg-white, $bg-transparency-factor-default);
 $bg-primary-semitransparent: transparentize($primary, 0.75);
@@ -180,7 +181,7 @@ $footer-color: $grey;
 $footer-font-size: 14px;
 
 //content-menu
-$content-menu-bg: transparentize($bg-dark, 0.1);
+$content-menu-bg: $bg-dark-barelytransparent;
 
 //steps (operations + setup)
 
@@ -190,7 +191,7 @@ $step-header-space: 5px;
 
 //modal
 
-$modal-bg: $bg-dark;
+$modal-bg: $bg-dark-barelytransparent;
 $modal-z: $z-overlay;
 
 //gallery

@@ -83,13 +83,12 @@
     }
   }
 
-  //todo - defualt only
   input {
     color: $black;
+  }
 
-    &.input-unstyled {
-      color: $white;
-    }
+  .input-unstyled {
+    color: $white;
   }
 
 }

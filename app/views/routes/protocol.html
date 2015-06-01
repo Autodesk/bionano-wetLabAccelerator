@@ -8,40 +8,45 @@
       </div>
     </div>
     <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
+                         class="pull-right"
                          protocol-form="ProtocolForm"></tx-protocol-actions>
-    <tx-modal ng-show='modalShown'>
-      <table>
-        <thead>
-        <tr>
-          <td colspan="2">Edit protocol metadata</td>
-        </tr>
-        </thead>
-        <tr>
-          <td>Name</td>
-          <td>
-            <input type="text"
-                   class="input-unstyled protocol-metadata-field"
-                   ng-model="restyleCtrl.currentProtocol.metadata.name">
-          </td>
-        </tr>
-        <tr>
-          <td>Description</td>
-          <td>
-            <input type="text"
-                   class="input-unstyled protocol-metadata-field"
-                   ng-model="restyleCtrl.currentProtocol.metadata.description">
-          </td>
-        </tr>
-        <tr>
-          <td>Tags</td>
-          <td>
-            <input type="text"
-                   class="input-unstyled protocol-metadata-field"
-                   ng-list
-                   ng-model="restyleCtrl.currentProtocol.metadata.tags">
-          </td>
-        </tr>
-      </table>
+    <tx-modal ng-show='modalShown'
+            title="Protocol Metadata">
+      <div class="column-wrap">
+        <table class="column-12 div-centered">
+          <tr>
+            <td class="column-2 protocol-metadata-label">Name</td>
+            <td class="column-8">
+              <input type="text"
+                     class="input-unstyled protocol-metadata-field"
+                     placeholder="name of protocol"
+                     ng-model="restyleCtrl.currentProtocol.metadata.name">
+            </td>
+            <td class="column-2"></td>
+          </tr>
+          <tr>
+            <td class="column-2 protocol-metadata-label">Description</td>
+            <td class="column-8">
+              <input type="text"
+                     class="input-unstyled protocol-metadata-field"
+                     placeholder="enter notes for this protocol"
+                     ng-model="restyleCtrl.currentProtocol.metadata.description">
+            </td>
+            <td class="column-2"></td>
+          </tr>
+          <tr>
+            <td class="column-2 protocol-metadata-label">Tags</td>
+            <td class="column-8">
+              <input type="text"
+                     class="input-unstyled protocol-metadata-field"
+                     ng-list
+                     placeholder="enter tags associated with this protocol"
+                     ng-model="restyleCtrl.currentProtocol.metadata.tags">
+            </td>
+            <td class="column-2"></td>
+          </tr>
+        </table>
+      </div>
     </tx-modal>
   </div>
 

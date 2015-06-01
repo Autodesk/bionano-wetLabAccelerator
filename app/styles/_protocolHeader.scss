@@ -1,28 +1,35 @@
 .protocol-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 0 0 0;
-}
+  padding: 5px 0 0;
+  font-weight: $font-weight-light;
 
-tx-protocol-actions {
-  display: inline-block;
-
-  a {
-    margin: 0 0.5em;
-    font-weight: $font-weight-light;
-  }
-
-  > div {
+  .protocol-info {
     display: inline-block;
-    cursor: pointer;
   }
-}
 
-.protocol-metadata-field {
-  min-width: 300px;
-  border-bottom: 1px solid $grey;
+  tx-protocol-actions {
+    display: inline-block;
+
+    a {
+      margin: 0 0.5em;
+    }
+
+    > div {
+      display: inline-block;
+      cursor: pointer;
+    }
+  }
+
+  .protocol-metadata-label {
+    text-align: right;
+  }
+
+  .protocol-metadata-field {
+    background-color: $white;
+    color: $black;
+    width: 100%;
+    margin: 0.25em 0;
+    padding: 0.25em 0.5em;
+  }
 }
 
 .protocol-editor-header {
