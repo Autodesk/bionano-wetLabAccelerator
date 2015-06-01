@@ -23,7 +23,7 @@ environments:
     consumersecret: a2846bd3-1c24-40e8-abd1-00eaf1f26e74
     login: 
     password: 
-    uri_root: http://localhost:9000/#/
+    uri_root: https://localhost:9000/#/
     token: "MJeTXKeSnDz8dr3khIqA9vJD+Hg="
 
     # assets are specific to the environment, whereas images of those assets are not

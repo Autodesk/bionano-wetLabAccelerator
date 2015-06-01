@@ -30,11 +30,12 @@ class _BaseTest(TestCase):
         """Return the environment for this test. This allows us to specify
         from outside the test engine, the test environment (production, staging, etc)"""
         try:
-            env = config[os.environ['TEST_ENVIRONMENT']]
+            env = os.environ['TEST_ENVIRONMENT']
         except KeyError:
+            print("environ except")
             env = config['environment']
 
-        # print("environment: " + env)
+        print("environment: " + env)
         return env
 
     def assertSameImage(self, page, prefix=None):

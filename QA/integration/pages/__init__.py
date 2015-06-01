@@ -30,7 +30,7 @@ class Page:
     URL_PREFIX = os.environ.get('URL_PREFIX')
     TIMEOUT = 15
 
-    if URL_PREFIX != None:
+    if URL_PREFIX != None and URL_PREFIX != "":
         BASE_URL = "http://" + URL_PREFIX + "." + URL_POSTFIX
     else:
         BASE_URL = ENVIRONMENTS
@@ -80,7 +80,11 @@ class Page:
 
     def getElementAttributes(self, element):
         attributes = self.DRIVER.execute_script('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', element)
-        return attributes
+        strAttributes = ""
+        for key, value in attributes:
+            strAttributes = strAttributes + + element.tag_name + " " + key + "='" + value + "'"
+
+        return strAttributes
 
     def executeScript(self, script):
         self.action("executing script: '" + script + "'")
