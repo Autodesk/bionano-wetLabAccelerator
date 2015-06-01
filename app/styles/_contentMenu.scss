@@ -86,11 +86,12 @@ tx-content-menu {
     right: 0;
     z-index: $z-sidepanel + 1;
     background-color: $content-menu-bg;
-    padding: $layout-spacing-md;
+    padding: $layout-spacing-md $layout-spacing-md $layout-height-header;
     margin: 50px 0;
     display: block;
     transform: translate3d(-100%, 0, 0);
     transition: transform $transition-long-time $transition-long-ease;
+    overflow-y: scroll;
 
     .new-protocol-button {
       color: $warning;

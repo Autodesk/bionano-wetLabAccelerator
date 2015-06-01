@@ -1,31 +1,32 @@
 <div>
   <h4 class="thin">Transcriptic Account</h4>
 
-  <div ng-show="authForm.$valid">
+  <div ng-show="authForm.$valid && authCtrl.credValid">
     <p class="text-sm">
       <span ng-click="authCtrl.showAuth = !authCtrl.showAuth">Your Transcriptic credentials are valid.</span>
       <a class="action-text" ng-click="authCtrl.forgetCreds()">Forget my Transcriptic account information</a>
     </p>
   </div>
 
-  <div ng-show="authForm.$invalid || authCtrl.showAuth">
+  <div ng-show="authCtrl.credValid === false && authForm.$valid">
+    <p class="text-sm text-warning">Your credentials are not validating with transcriptic. Be sure you have entered them correctly.</p>
+  </div>
+
+  <div ng-show="authForm.$invalid || authCtrl.credValid === false || authCtrl.showAuth">
     <p class="text-sm">Protocols are verified and Run at Transcriptic. Creating a Transcriptic account is free. An estimate of costs will be displayed prior to running a protocol.
     <a class="action-text" href="https://secure.transcriptic.com" target="_blank">I don't have a Transcriptic Account.</a>
     </p>
 
   <form name="authForm"
         class="panel-body form-horizontal">
-    <div class="alert alert-warning"
-         ng-show="!authCtrl.loggedIn">You must log into Firebase (for now)
-    </div>
-    <fieldset ng-disabled="!authCtrl.loggedIn">
+    <fieldset>
       <div class="form-group">
         <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
         <div class="col-sm-10">
           <input type="email"
-                 ng-model="auth.email"
-                 ng-model-options="{updateOn: 'blur'}"
+                 ng-model="authCtrl.credentials.email"
+                 ng-model-options="{updateOn: 'blur', getterSetter : true}"
                  required
                  name="authEmail"
                  class="form-control"
@@ -39,8 +40,8 @@
 
         <div class="col-sm-10">
           <input type="text"
-                 ng-model="auth.key"
-                 ng-model-options="{updateOn: 'blur'}"
+                 ng-model="authCtrl.credentials.key"
+                 ng-model-options="{updateOn: 'blur', getterSetter : true}"
                  required
                  name="authKey"
                  class="form-control"
@@ -54,8 +55,8 @@
 
         <div class="col-sm-10">
           <input type="text"
-                 ng-model="auth.organization"
-                 ng-model-options="{updateOn: 'blur'}"
+                 ng-model="authCtrl.credentials.organization"
+                 ng-model-options="{updateOn: 'blur', getterSetter : true}"
                  required
                  name="authOrg"
                  class="form-control"
@@ -69,15 +70,15 @@
     <div class="pull-right">
       <button class="btn action-button"
               ng-disabled="!authForm.$valid"
-              ng-click="authCtrl.verifyCreds()">Verify
+              ng-click="authCtrl.validateAuth()">Verify
       </button>
     </div>
 
     <p class="text-sm">
-      <a class="action-text" href="https://secure.transcriptic.com/users/edit" target="_blank">Help me fetch my Transcriptic credentials...</a>
+      <a class="action-text"
+         href="https://secure.transcriptic.com/users/edit"
+         target="_blank">Help me fetch my Transcriptic credentials...</a>
     </p>
-
-
 
   </div>
 

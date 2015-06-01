@@ -34,8 +34,6 @@ angular.module('transcripticApp')
           $cookies['authToken'] = userstring;
           $cookies['userInfo'] = userInfo;
 
-          //todo - handle tx credentials - how to propagate
-
         }).
         then(triggerWatchers).
         catch(function (err) {

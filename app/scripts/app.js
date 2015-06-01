@@ -30,21 +30,16 @@ angular
       .when('/', {
         controller  : 'HomeCtrl',
         controllerAs: 'homeCtrl',
-        templateUrl: 'views/routes/home.html'
+        templateUrl : 'views/routes/home.html'
       })
 
       //main routes
 
-      .when('/gallery', {
-        templateUrl : 'views/routes/gallery.html',
-        controller  : 'GalleryCtrl',
-        controllerAs: 'galleryCtrl'
-      })
       .when('/protocol', {
         templateUrl : 'views/routes/protocol.html',
         controller  : 'ProtocolCtrl',
         controllerAs: 'restyleCtrl', //todo - rename to ProtocolCtrl, make sure not passed down and breaking
-        resolve: {
+        resolve     : {
           protocol: ['ProtocolHelper', function (ProtocolHelper) {
             if (_.isEmpty(ProtocolHelper.currentProtocol)) {
               ProtocolHelper.assignCurrentProtocol(ProtocolHelper.createNewProtocol());
@@ -61,29 +56,14 @@ angular
         templateUrl: 'views/routes/auth.html'
       })
 
-      /*
-      //old routes
-
-      .when('/protocol', {
-        templateUrl : 'views/protocol.html',
-        controller  : 'ProtocolCtrl',
-        controllerAs: 'mainCtrl'
-      })
-      .when('/data', {
-        templateUrl : 'views/data.html',
-        controller  : 'DataCtrl',
-        controllerAs: 'dataCtrl'
-      })
-      .when('/ordering', {
-        templateUrl : 'views/ordering.html',
-        controller  : 'OrderingCtrl',
-        controllerAs: 'orderCtrl'
-      })
-
-      */
-
       //testing routes
 
+      /*
+      .when('/gallery', {
+        templateUrl : 'views/routes/gallery.html',
+        controller  : 'GalleryCtrl',
+        controllerAs: 'galleryCtrl'
+      })
       .when('/testing', {
         redirectTo: '/testing/plate'
       })
@@ -97,6 +77,7 @@ angular
         controller  : 'TestingFieldCtrl',
         controllerAs: 'testingFieldCtrl'
       })
+      */
       .otherwise({
         redirectTo: '/'
       });
@@ -109,9 +90,41 @@ angular
 
     //testing - importing of runs and protocols
 
+    /*
     simpleLogin.watch(function (user) {
       if (!!user) {
-        //note - firebase
+
+        var txAuthSync = new FBProfile(user.uid, 'txAuth');
+        var txAuth = txAuthSync.$asObject();
+
+        Platform.authenticate('maxwell@autodesk.com')
+          .then(function () {
+
+            var txAuth = new FBProfile(user.uid, 'txAuth').$asObject();
+            txAuth.$watch(function () {
+              console.log(txAuth);
+
+              var keymap = {
+                'email'       : 'transcripticEmail',
+                'key'         : 'transcripticKey',
+                'organization': 'transcripticOrg'
+              };
+
+              return $q.all(_.map(keymap, function (dbkey, txkey) {
+                Platform.userValue(dbkey, txAuth[txkey]);
+              }));
+            });
+          });
+      }
+    });
+    */
+
+    /*
+    simpleLogin.watch(function (user) {
+      if (!!user) {
+
+        var txAuth = new FBProfile(user.uid, 'txAuth').$asObject();
+
         var firebaseRunSync = new FBProfile(user.uid, 'runs');
         var firebaseRuns    = firebaseRunSync.$asArray();
 
@@ -128,9 +141,7 @@ angular
                 return Platform.saveProject(pruned);
               }
             }));
-          });
-
-        Platform.authenticate('maxwell@autodesk.com')
+          })
           .then(firebaseRuns.$loaded)
           .then(function () {
             //use only if uploading to DB
@@ -150,5 +161,6 @@ angular
           .then(console.log.bind(console));
       }
     });
+    */
 
   });

@@ -20,58 +20,25 @@ angular.module('tx.communication')
       });
     }
 
-    var email        = "",
-        key          = "",
-        organization = "";
+    self.email        = "";
+    self.key          = "";
+    self.organization = "";
 
-    //todo - more validation + security
-    Object.defineProperties(this, {
-      email       : {
-        get: function () {
-          return email;
-        },
-        set: function (val) {
-          if (angular.isString(val)) {
-            email = val
-          }
-        }
-      },
-      key         : {
-        get: function () {
-          return key;
-        },
-        set: function (val) {
-          if (angular.isString(val)) {
-            key = val
-          }
-        }
-      },
-      organization: {
-        get: function () {
-          return organization.toLowerCase().replace(' ', '-');
-        },
-        set: function (val) {
-          if (angular.isString(val)) {
-            organization = val;
-          }
-        }
-      }
-    });
 
-    this.$get = function ($rootScope, Authentication, simpleLogin, FBProfile, $http) {
+    this.$get = function ($rootScope, Platform, Authentication, $q) {
 
       var ignoreWatchers = false;
 
       var organization = function (newval) {
-        if (newval) {
+        if (_.isString(newval)) {
           self.organization = newval;
           triggerWatchers();
         }
-        return self.organization;
+        return self.organization.toLowerCase().replace(' ', '-');
       };
 
       var email = function (newval) {
-        if (newval) {
+        if (_.isString(newval)) {
           self.email = newval;
           triggerWatchers();
         }
@@ -79,7 +46,7 @@ angular.module('tx.communication')
       };
 
       var key = function (newval) {
-        if (newval) {
+        if (_.isString(newval)) {
           self.key = newval;
           triggerWatchers();
         }
@@ -95,41 +62,18 @@ angular.module('tx.communication')
         };
       };
 
-      /*
-      //listen to fi rebase for changes to auth and assign directly (don't trigger watchers twice)
-      simpleLogin.watch(function (user) {
-        if (!!user) {
-          var txAuth = new FBProfile(user.uid, 'txAuth').$asObject();
-          txAuth.$watch(function () {
-            ignoreWatchers = true;
-            angular.forEach(txAuth, function (val, key) {
-              if (angular.isDefined(self[key])) {
-                console.debug('setting ' + key);
-                self[key] = val;
-              }
-            });
-            ignoreWatchers = false;
-            triggerWatchers();
-          });
-        } else {
-          ignoreWatchers = true;
-          angular.forEach(requiredKeys, function (key) {
-            self[key] = '';
-          });
-          ignoreWatchers = false;
-          triggerWatchers();
-        }
-      });
-      */
-
-      //todo - should update watchers
       Authentication.watch(function (userinfo) {
         console.log('auth watch in tx auth', userinfo);
+        batchUpdate({
+          organization: _.result(userinfo, 'transcripticOrg', ''),
+          email       : _.result(userinfo, 'transcripticEmail', ''),
+          key         : _.result(userinfo, 'transcripticKey', '')
+        });
       });
 
       /* set up handling for watchers when auth changes */
 
-      var watchers = [],
+      var watchers    = [],
           lastPayload = {
             organization: self.organization,
             email       : self.email,
@@ -137,11 +81,20 @@ angular.module('tx.communication')
           };
 
       function makePayload () {
+        /*
+        //only return if all keys are defined.
         return allKeysDefined() ? {
           organization: self.organization,
           email       : self.email,
           key         : self.key
         } : null;
+        */
+        //return even if not all keys defined
+        return {
+          organization: self.organization,
+          email       : self.email,
+          key         : self.key
+        }
       }
 
       function triggerWatcher (fn) {
@@ -173,12 +126,48 @@ angular.module('tx.communication')
         return unbind;
       };
 
+      var forgetCreds = function forgetCreds () {
+        batchUpdate({
+          organization: '',
+          email       : '',
+          key         : ''
+        })
+      };
+
+      function batchUpdate (creds, skipUpdate) {
+        ignoreWatchers = true;
+        angular.forEach(creds, function (val, key) {
+          if (angular.isDefined(self[key])) {
+            self[key] = val;
+          }
+        });
+        ignoreWatchers = false;
+
+        (skipUpdate !== true) && triggerWatchers();
+      }
+
+      //save creds to the database
+      var persistCreds = function persistCreds () {
+        var keymap = {
+          'email'       : 'transcripticEmail',
+          'key'         : 'transcripticKey',
+          'organization': 'transcripticOrg'
+        };
+
+        return $q.all(_.map(keymap, function (dbkey, txkey) {
+          Platform.userValue(dbkey, self[txkey]);
+        }));
+      };
+
       return {
         organization: organization,
         key         : key,
         email       : email,
         headers     : headers,
-        watch       : watch
+        watch       : watch,
+        batchUpdate : batchUpdate,
+        forgetCreds : forgetCreds,
+        persistCreds : persistCreds
       };
     }
   });
