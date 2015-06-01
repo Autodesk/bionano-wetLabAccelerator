@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 
 PROTOCOL_LINK_XPATH   = (By.XPATH, "//a[text()='PROTOCOL']")
 RESULTS_LINK_XPATH    = (By.XPATH, "//a[text()='RESULTS']")
-LOGO_XPATH            = (By.XPATH, "//div[@class='logo']")
+LOGO_XPATH            = (By.XPATH, "//a[@class='logo']")
 SIGN_IN_LINK_XPATH    = (By.XPATH, "//a[@href='#/auth']")
 LOGIN_BUTTON_XPATH    = (By.XPATH, "//button[text()='Log In']")
 LOGOUT_BUTTON_XPATH   = (By.XPATH, "//button[text()='Logout']")
