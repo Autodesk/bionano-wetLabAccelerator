@@ -58,6 +58,7 @@ $bg-transparency-factor-default: 0.5;
 $bg-body: $white;
 $bg-dark: $dark;
 $bg-white: $white;
+$bg-overlay: transparentize($black, .75);
 $bg-white-barelytransparent: transparentize($bg-white, 0.05);
 $bg-white-semitransparent: transparentize($bg-white, $bg-transparency-factor-default);
 $bg-primary-semitransparent: transparentize($primary, 0.75);
@@ -145,6 +146,7 @@ $layout-opList-width: widthFromColumns(3) - $layout-operations-spacing-correctio
 $box-shadow-black-inner: inset 0 0 20px 0px transparentize($black, 0.25);
 $box-shadow-popover: 0 0 10px transparentize($black, 0.8);
 $box-shadow-dropdown: 0 0 15px transparentize($black, 0.8);
+$box-shadow-accent: 0 0 10px transparentize($black, 0.8);
 
 
 //interactions

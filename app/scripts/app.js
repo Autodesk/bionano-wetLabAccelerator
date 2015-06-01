@@ -28,6 +28,8 @@ angular
 
     $routeProvider
       .when('/', {
+        controller  : 'HomeCtrl',
+        controllerAs: 'homeCtrl',
         templateUrl: 'views/routes/home.html'
       })
 
