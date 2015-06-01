@@ -1,11 +1,12 @@
 body {
   display: flex;
   min-height: 100vh;
-  min-width: 1024px;
+  min-width: $layout-width-page;
   flex-direction: column;
   align-items: stretch;
   justify-content:center;
   background-image: radial-gradient(at bottom right,#CCCCCC,#FFFFFF);
+  background-attachment: fixed;
 
   &:before {
     content: " ";
@@ -30,6 +31,7 @@ body {
   header {
     align-self: flex-start;
     height: $layout-height-header;
+    min-width: $layout-width-page;
     position: fixed;
     z-index: 1;
     top: 0;
