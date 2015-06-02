@@ -24,6 +24,7 @@
   }
 
   &-inner {
+
   }
 
   &-header {
@@ -41,12 +42,6 @@
       border-bottom: $drop-hover-border;
     }
 
-    &:hover {
-      .group-dropdown-items {
-        opacity: 1;
-      }
-    }
-
     .group-name {
       min-height: 1em;
       min-width: 85px;
@@ -57,7 +52,16 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+    }
+
+    .oppop {
       opacity: 0;
+    }
+
+    &:hover {
+      .oppop {
+        opacity: 1;
+      }
     }
   }
 
@@ -166,6 +170,8 @@
       }
     }
   }
+
+
 
   &:hover {
     .group-repeat {
