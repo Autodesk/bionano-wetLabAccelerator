@@ -2,7 +2,7 @@
 import time
 from tests import TestBase
 
-EXPECTED_OPERATION_NAMES = ["Transfer", "Distribute", "Consolidate", "Mix", "Dispense", "Dispense Resource", "Thermocycle", "Incubate", "Seal", "Unseal", "Cover", "Uncover", "Spin", "Image Plate", "Absorbance", "Fluorescence", "Luminescence", "Gel Separate", "Autoprotocol (JSON)"]
+EXPECTED_OPERATION_NAMES = ["Transfer", "Distribute", "Consolidate", "Mix", "Dispense", "Dispense Resource", "Spread", "Autopick", "Thermocycle", "Incubate", "Seal", "Unseal", "Cover", "Uncover", "Spin", "Image Plate", "Absorbance", "Fluorescence", "Luminescence", "Gel Separate", "Arbitrary Autoprotocol"]
 
 
 class TestBasicInteractions(TestBase):
@@ -12,8 +12,11 @@ class TestBasicInteractions(TestBase):
         """
         test the main wet lab accelerator page
         """
+        # isSplashDisplayed = self.verifyIsDisplayed(self.page.getWelcomeSplashScreen(), "welcome splash screen")
+        # if isSplashDisplayed:
+        #     self.page.clickReadyToStartLink()
 
-        self.verifyEqual(self.page.getPageTitleText(), "Wet Lab Accelerator\nalpha", "page title")
+        self.verifyEqual(self.page.getPageTitleText(), "Wet Lab Accelerator\ntech preview", "page title")
         self.verifyIsDisplayed(self.page.getProtocolLink(), "protocol link ")
         self.verifyIsDisplayed(self.page.getResultsLink(), "results link")
         self.verifyIsDisplayed(self.page.getSignInLink(), "sign in link")
@@ -54,16 +57,15 @@ class TestBasicInteractions(TestBase):
         self.page.clickProtocol()
         build = self.build
         time.sleep(3)
-        expectedOperationNames = ["Transfer", "Distribute", "Consolidate", "Mix", "Dispense", "Dispense Resource", "Thermocycle", "Incubate", "Seal", "Unseal", "Cover", "Uncover", "Spin", "Image Plate", "Absorbance", "Fluorescence", "Luminescence", "Gel Separate", "Autoprotocol (JSON)"]
 
         self.verifyIsDisplayed(build.getSidePanel(), "side column")
-        self.verifyEqual(build.getOperationNames(), EXPECTED_OPERATION_NAMES, "verify operation names")
+        self.verifyEqual(build.getOperationNames(), EXPECTED_OPERATION_NAMES, "operation names")
         self.verifyIsDisplayed(build.getMainColumn(), "main column")
 
         protocolSetup = build.getProtocolSetup()
 
         protocolSetup.expand()
-        self.verifyTrue(protocolSetup.isExpanded(), "verify protocol setup is expanded")
+        self.verifyTrue(protocolSetup.isExpanded(), "protocol setup is expanded")
         parameterCount = len(protocolSetup.getParameters())
 
         #protocolSetup.getAddParameterElements()
@@ -115,5 +117,6 @@ class TestBasicInteractions(TestBase):
     #     print(scriptReturn)
 
     def signIn(self):
+
         success = self.page.signIn("max.bates@autodesk.com", "yaycyborg!")
         self.verifyTrue(success, "is signed in")
