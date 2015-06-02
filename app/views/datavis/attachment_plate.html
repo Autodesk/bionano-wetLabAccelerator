@@ -1,0 +1,16 @@
+<div class="plate-wrap-image_plate">
+  <tx-plate container="summaryCtrl.getContainerTypeFromFieldName('object')"
+            no-brush="true"
+            no-select="true"
+            group-data="{name : '', wells : 'all', color: summaryCtrl.getContainerColorFromFieldName('object')}">
+  </tx-plate>
+</div>
+
+<div ng-init="resources = summaryCtrl.getResourcesForOp()">
+  <div ng-repeat="attach in resources">
+    <img ng-init="!attach.resourceUrl && summaryCtrl.getResource(attach.key, attach)"
+         ng-src="{{attach.resourceUrl}}">
+
+    <p ng-hide="attach.resourceUrl">loading...</p>
+  </div>
+</div>
