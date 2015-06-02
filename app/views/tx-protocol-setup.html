@@ -14,16 +14,14 @@
       </div>
     </div>
 
-    <span class="setup-heading">setup</span>
+    <span class="setup-heading">Setup</span>
   </div>
   <div class="protocol-setup-main"
        ng-show="isVisible">
-    <div class="setup-variable"
+    <div class="setup-row"
          ng-repeat="param in setupCtrl.parameters"
-         ng-mouseenter="hovering = true"
-         ng-mouseleave="hovering = false"
-         ng-class="{'highlight' : deleteRow}"
          ng-switch="param.type">
+
       <div class="verification"
            ng-if="param.verification > -1">
         <div class="verification-alert">
@@ -33,151 +31,158 @@
           <span ng-bind="verifications[param.verification].message"></span>
         </div>
       </div>
-      <div class="parameter-type">{{param.type}}</div>
-      <input class="input-styled"
-             ng-class="{'highlight' : deleteRow}"
-             type="text"
-             placeholder="name"
-             ng-model="param.name"
-             tx-change-broadcaster="editor:parameterNameChange">
+      <div class="parameter-inner">
 
-      <div class="setup-container"
-           ng-switch-when="container"
-           ng-class="{'highlight' : deleteRow}">
-        <input disabled
-               type="color"
-               class="color-swatch"
-               ng-required="true"
-               ng-model="param.value.color">
-        <span ng-bind="param.value.type"></span>
-        <a class="field-details-button"
-           ng-click="containerDetailsVisible = !containerDetailsVisible">
-          edit...
-        </a>
-        <tx-modal ng-if="containerDetailsVisible"
-                  ng-show="containerDetailsVisible">
-          <div class="row">
-            <div class="col-md-5">
-              <div class="form-horizontal">
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">
-                    use
-                  </label>
+        <div class="parameter-info">
+          <div class="parameter-type">{{param.type}}</div>
+          <input class="parameter-name input-styled"
+                 type="text"
+                 placeholder="name"
+                 ng-model="param.name"
+                 tx-change-broadcaster="editor:parameterNameChange">
+        </div>
 
-                  <div class="col-sm-7"
-                       dropdown>
-                    <a ng-bind="param.readable || 'new container'"
-                       dropdown-toggle></a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a ng-click="setupCtrl.selectNewContainer(param)">New Container</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li ng-repeat="c in setupCtrl.remoteContainers">
-                        <a ng-click="setupCtrl.selectRemoteContainer(param, c)"
-                           ng-bind="c.name || c.id"></a>
-                      </li>
-                    </ul>
+        <div class="parameter-value">
+          <div class="setup-container"
+               ng-switch-when="container">
+            <input disabled
+                   type="color"
+                   class="color-swatch"
+                   ng-required="true"
+                   ng-model="param.value.color">
+            <span ng-bind="param.value.type"></span>
+            <a class="field-details-button"
+               ng-click="containerDetailsVisible = !containerDetailsVisible">
+              edit...
+            </a>
+            <tx-modal ng-if="containerDetailsVisible"
+                      ng-show="containerDetailsVisible">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-horizontal">
+                    <div class="form-group">
+                      <label class="col-sm-5 control-label">
+                        use
+                      </label>
+
+                      <div class="col-sm-7"
+                           dropdown>
+                        <a ng-bind="param.readable || 'new container'"
+                           dropdown-toggle></a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a ng-click="setupCtrl.selectNewContainer(param)">New Container</a>
+                          </li>
+                          <li class="divider"></li>
+                          <li ng-repeat="c in setupCtrl.remoteContainers">
+                            <a ng-click="setupCtrl.selectRemoteContainer(param, c)"
+                               ng-bind="c.name || c.id"></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-5 control-label">
+                        type
+                      </label>
+
+                      <div class="col-sm-7"
+                           dropdown>
+                        <a ng-bind="param.value.type || 'select...'"
+                           dropdown-toggle
+                           ng-disabled="!param.value.isNew"></a>
+                        <ul class="dropdown-menu">
+                          <li ng-repeat="(cont, details) in setupCtrl.containerOptions">
+                            <a ng-click="param.value.type = cont; notifyContainerChange();"
+                               ng-bind="cont"></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-5 control-label">
+                        storage
+                      </label>
+
+                      <div class="col-sm-7"
+                           dropdown>
+                        <a ng-bind="((param.value.storage === false) ? 'discard' : param.value.storage) || 'select...'"
+                           dropdown-toggle></a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a ng-click="param.value.storage = false">discard</a>
+                          </li>
+                          <li class="divider"></li>
+                          <li ng-repeat="opt in setupCtrl.storageOptions">
+                            <a ng-click="param.value.storage = opt"
+                               ng-bind="opt"></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-5 control-label">
+                        parameter name
+                      </label>
+
+                      <div class="col-sm-7">
+                        <input class="input-unstyled"
+                               placeholder="container name"
+                               ng-model="param.name">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-5 control-label">
+                        color
+                      </label>
+
+                      <div class="col-sm-7"
+                           dropdown>
+                        <a ng-bind="param.value.color || 'edit...'"
+                           dropdown-toggle></a>
+                        <ul class="dropdown-menu">
+                          <li ng-repeat="(name, hex) in setupCtrl.containerColorOptions">
+                            <a ng-click="param.value.color = hex"
+                               ng-style="{'color' : hex}"
+                               ng-bind="name"></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">
-                    type
-                  </label>
-
-                  <div class="col-sm-7"
-                       dropdown>
-                    <a ng-bind="param.value.type || 'select...'"
-                       dropdown-toggle
-                       ng-disabled="!param.value.isNew"></a>
-                    <ul class="dropdown-menu">
-                      <li ng-repeat="(cont, details) in setupCtrl.containerOptions">
-                        <a ng-click="param.value.type = cont; notifyContainerChange();"
-                           ng-bind="cont"></a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">
-                    storage
-                  </label>
-
-                  <div class="col-sm-7"
-                       dropdown>
-                    <a ng-bind="((param.value.storage === false) ? 'discard' : param.value.storage) || 'select...'"
-                       dropdown-toggle></a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a ng-click="param.value.storage = false">discard</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li ng-repeat="opt in setupCtrl.storageOptions">
-                        <a ng-click="param.value.storage = opt"
-                           ng-bind="opt"></a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">
-                    parameter name
-                  </label>
-
-                  <div class="col-sm-7">
-                    <input class="input-unstyled"
-                           placeholder="container name"
-                           ng-model="param.name">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">
-                    color
-                  </label>
-
-                  <div class="col-sm-7"
-                       dropdown>
-                    <a ng-bind="param.value.color || 'edit...'"
-                       dropdown-toggle></a>
-                    <ul class="dropdown-menu">
-                      <li ng-repeat="(name, hex) in setupCtrl.containerColorOptions">
-                        <a ng-click="param.value.color = hex"
-                           ng-style="{'color' : hex}"
-                           ng-bind="name"></a>
-                      </li>
-                    </ul>
-                  </div>
+                <div class="col-md-7">
+                  <tx-plate container="param.value.type || '384-flat'"
+                            no-select="true"
+                            hide-tooltip="true"
+                            group-data="{name: param.name, color: param.value.color, wells : 'all'}"></tx-plate>
                 </div>
               </div>
-            </div>
-            <div class="col-md-7">
-              <tx-plate container="param.value.type || '384-flat'"
-                        no-select="true"
-                        hide-tooltip="true"
-                        group-data="{name: param.name, color: param.value.color, wells : 'all'}"></tx-plate>
-            </div>
-          </div>
 
-        </tx-modal>
+            </tx-modal>
+          </div>
+          <tx-protocol-field ng-switch-default
+                             field="param"
+                             ng-model="param.value"
+                             hide-title="true"
+                             prevent-variable="true">
+          </tx-protocol-field>
+
+        </div>
       </div>
-      <tx-protocol-field ng-switch-default
-                         field="param"
-                         ng-model="param.value"
-                         hide-title="true"
-                         prevent-variable="true"
-                         ng-class="{'highlight' : deleteRow}">
-      </tx-protocol-field>
-      <a class="close"
-         ng-show="hovering"
-         ng-click="setupCtrl.deleteParam(param)"
-         ng-mouseenter="deleteRow = true"
-         ng-mouseleave="deleteRow = false">&times;</a>
+
+      <a class="setup-parameter-delete close"
+         ng-click="setupCtrl.deleteParam(param)">&times;</a>
+
     </div>
-    <div class="setup-variable setup-variable-placeholder"
+
+
+    <div class="setup-row setup-variable-placeholder"
          ng-if="!setupCtrl.parameters.length">
       <span>No parameters created...</span>
     </div>
-    <div class="setup-variable">
+
+    <div class="setup-row">
       <div class="add-parameter dropdown"
            ng-click="showParameters = !showParameters"
            ng-class="{'open' : showParameters}">

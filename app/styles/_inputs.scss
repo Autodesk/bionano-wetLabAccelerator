@@ -17,13 +17,11 @@
   background: transparent;
   color: $black;
   cursor: text;
-  text-align: left;
 
   &:hover {
     -webkit-appearance: none;
     background: $primary;
     color: $white;
-    text-align: left;
     &::-webkit-input-placeholder {
       color: $white;
     }
@@ -34,7 +32,6 @@
     border: 2px solid $primary;
     background: transparent;
     color: $black;
-    text-align: left;
     padding:0 4px;
     min-width: 30px;
 
@@ -44,8 +41,7 @@
   }
 
   &::-webkit-input-placeholder {
-    color: $warning;
-    text-align: center;
+    color: $light-grey;
   }
 
   &::-webkit-outer-spin-button,
