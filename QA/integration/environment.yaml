@@ -10,7 +10,7 @@ chromedriver: /usr/bin/chromedriver
 default_tolerance: 8
 browser: firefox
 
-url_postfix: dokku.bionano.autodesk.com
+url_postfix: bionano.autodesk.com
 
 remoteWebDriverURL: http://sfoush302a0L4
 
@@ -38,7 +38,7 @@ environments:
     consumersecret: a2846bd3-1c24-40e8-abd1-00eaf1f26e74
     login:
     password:
-    uri_root: http://wla.dokku.bionano.autodesk.com
+    uri_root: https://wla.bionano.autodesk.com
     token: "MJeTXKeSnDz8dr3khIqA9vJD+Hg="
 
     # assets are specific to the environment, whereas images of those assets are not

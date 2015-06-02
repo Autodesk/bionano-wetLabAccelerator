@@ -7,11 +7,12 @@ from testconfig import config
 from helpers import environment
 
 from PIL import Image
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
+
 
 from selenium.webdriver import ActionChains
 
@@ -31,7 +32,7 @@ class Page:
     TIMEOUT = 15
 
     if URL_PREFIX != None and URL_PREFIX != "":
-        BASE_URL = "http://" + URL_PREFIX + "." + URL_POSTFIX
+        BASE_URL = "https://" + URL_PREFIX + "." + URL_POSTFIX
     else:
         BASE_URL = ENVIRONMENTS
 
@@ -44,12 +45,17 @@ class Page:
     def action(self, actionDescription):
         print("  Action - " + actionDescription)
 
+    def exception(self, message):
+        print("  EXCEPTION - " + message)
+        raise Exception(message)
+
     def findElement(self, locatorTuple):
         try:
-            return self.DRIVER.find_element(*locatorTuple)
-        except Exception as e:
-            print("ERROR: could not locate element: " + str(locatorTuple))
-            raise Exception("Could not locate element: " + str(locatorTuple))
+            element = self.DRIVER.find_element(*locatorTuple)
+            #print(self.getElementAttributes(element))
+            return element
+        except WebDriverException as e:
+            self.exception("could not locate element: " + str(locatorTuple) + e.message)
 
     def findElements(self, locatorTuple):
         return self.DRIVER.find_elements(*locatorTuple)
@@ -64,31 +70,33 @@ class Page:
         return self.DRIVER.find_element_by_xpath("//" + elementType + "[@" + attribute + "='" + value + "']")
 
     def click(self, element, description):
-        self.action("click on " + description + " element: " + element.tag_name + " class: " + element.get_attribute("class"))
         attributes = self.getElementAttributes(element)
+        self.action("click on " + description + " element: " + attributes)
         if isinstance(element, tuple):
             element = self.findElement(element)
 
         self.executeScript("window.scrollTo(0," + str(element.location['y']) + ")")
         #
         # print(element.location_once_scrolled_into_view)
-        try:
-            element.click()
-        except Exception as e:
-            message = "could not click on " + description + ", attributes: " + attributes + "\n" + e.message
-            print("FAIL - " + message)
-            raise(message)
+        element.click()
+        # try:
+        #     element.click()
+        # except WebDriverException as e:
+        #     message = "could not click on " + description + ", element: " + attributes + "\n" + e.message
+        #     print("FAIL - " + message)
+        #     raise Exception(message)
 
     def getElementAttributes(self, element):
         attributes = self.DRIVER.execute_script('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', element)
-        strAttributes = ""
+        strAttributes = "<" + element.tag_name + " "
         for key, value in attributes.iteritems():
-            strAttributes = strAttributes + element.tag_name + " " + key + "='" + value + "'"
+            strAttributes = strAttributes + " " + key + "='" + value + "'" + " "
 
+        strAttributes = strAttributes + ">"
         return strAttributes
 
     def executeScript(self, script):
-        self.action("executing script: '" + script + "'")
+        #self.action("executing script: '" + script + "'")
         self.DRIVER.execute_script(script)
 
     def waitForElementByClassName(self, className):
@@ -106,7 +114,7 @@ class Page:
             WebDriverWait(self.DRIVER, self.TIMEOUT).until(
                 expected_conditions.presence_of_element_located(locatorTuple))
             return True
-        except TimeoutException:
+        except WebDriverException:
             print("time out waiting for element: " + str(locatorTuple))
             return False
 
@@ -117,7 +125,7 @@ class Page:
             WebDriverWait(self.DRIVER, self.TIMEOUT).until(
                 expected_conditions.visibility_of(element))
             return True
-        except TimeoutException:
+        except WebDriverException:
             print("time out waiting for element: " + str(locatorTuple))
             return False
 

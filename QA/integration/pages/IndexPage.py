@@ -4,7 +4,8 @@ import helpers
 from pages import Page
 from selenium.webdriver.common.by import By
 
-
+WELCOME_SPLASH_SCREEN_XPATH = (By.XPATH, "//h3[text()=\"Welcome! Let's get started.\"]")
+READY_TO_START_XPATH = (By.XPATH, "//div[@class='welcome-call']/a")
 PROTOCOL_LINK_XPATH   = (By.XPATH, "//a[text()='PROTOCOL']")
 RESULTS_LINK_XPATH    = (By.XPATH, "//a[text()='RESULTS']")
 LOGO_XPATH            = (By.XPATH, "//a[@class='logo']")
@@ -33,7 +34,17 @@ class IndexPage(Page):
         print("opening url: " + uri)
         self.DRIVER.get(uri)
 
+    def clickWelcome(self):
+        self.click(self.getWelcomeSplashScreen(), "welcome splash screen")
 
+    def getWelcomeSplashScreen(self):
+        return self.findElement(WELCOME_SPLASH_SCREEN_XPATH)
+
+    def clickReadyToStartLink(self):
+        self.click(self.getReadyToStartLink(), "ready to start link")
+
+    def getReadyToStartLink(self):
+        return self.findElement(READY_TO_START_XPATH)
 
     def clickProtocol(self):
         self.click(self.getProtocolLink(), "protocol link")
@@ -47,6 +58,13 @@ class IndexPage(Page):
         self.click(self.getResultsLink(), "results link")
 
     def clickSignIn(self):
+        try:
+            if self.getReadyToStartLink().is_displayed():
+                self.clickReadyToStartLink()
+        except:
+            self.action("splash screen not present, continuing into sign in")
+
+        time.sleep(2)
         self.click(self.getSignInLink(), "sign in link")
         self.waitForElementById("fbEmail")
 
@@ -119,6 +137,7 @@ class ContentMenu(Page):
         self.waitForElementVisible(NEW_PROTOCOL_XPATH)
 
     def addProtocol(self):
+        time.sleep(2)
         self.click(self.findElement(NEW_PROTOCOL_XPATH), "add protocol")
         self.waitForElement((By.CLASS_NAME, "sidepanel"))
 
