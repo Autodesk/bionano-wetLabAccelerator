@@ -10,7 +10,6 @@
 .input-styled {
   -webkit-appearance: none;
   display: inline-block;
-  height: 25px;
   border: 0;
   margin:0;
   outline: 0;
@@ -22,6 +21,7 @@
     -webkit-appearance: none;
     background: $primary;
     color: $white;
+    font-weight: $font-weight-medium;
     &::-webkit-input-placeholder {
       color: $white;
     }
@@ -41,7 +41,7 @@
   }
 
   &::-webkit-input-placeholder {
-    color: $light-grey;
+    color: $warning;
   }
 
   &::-webkit-outer-spin-button,
