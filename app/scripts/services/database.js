@@ -188,7 +188,6 @@ angular.module('transcripticApp')
     }
 
     function saveProjectToCache (project) {
-      debugger;
       var id = getIdFromIdOrProjectInput(project);
       if (_.isEmpty(id)) {
         console.warn('project has no id');

@@ -132,13 +132,23 @@
 <script src="scripts/controllers/protocol.js"></script>
 <script src="scripts/controllers/results.js"></script>
 <script src="scripts/controllers/gallery.js"></script>
+<script src="scripts/controllers/platformauth.js"></script>
+<script src="scripts/controllers/home.js"></script>
+<script src="scripts/controllers/header.js"></script>
+<script src="scripts/controllers/resultsdispense.js"></script>
 <!--fields-->
+<script src="scripts/controllers/columnvolumes.js"></script>
+<script src="scripts/controllers/thermocyclegroups.js"></script>
+<script src="scripts/controllers/fieldaliquot.js"></script>
+<script src="scripts/controllers/catalogresource.js"></script>
 <script src="scripts/controllers/thermocycledyes.js"></script>
 <!-- results page -->
+<script src="scripts/controllers/operationsummary.js"></script>
 <script src="scripts/controllers/results/resultsspectrophotometry.js"></script>
 <script src="scripts/controllers/results/resultsThermoCtrl.js"></script>
 <!--testing-->
 <script src="scripts/controllers/testing/plate.js"></script>
+<script src="scripts/controllers/testing/field.js"></script>
 
 <!-- VALUES -->
 <!-- todo - cleanup -->
@@ -158,11 +168,14 @@
 <script src="scripts/services/dataconv.js"></script>
 <script src="scripts/services/dragdropmanager.js"></script>
 <script src="scripts/services/containerhelper.js"></script>
-<script src="scripts/services/protocolhelper-old.js"></script>
-<script src="scripts/services/runhelper-old.js"></script>
 <script src="scripts/services/notify.js"></script>
 <script src="scripts/services/uuidgen.js"></script>
 <script src="scripts/services/authentication.js"></script>
+<script src="scripts/services/protocolutils.js"></script>
+<script src="scripts/services/platform.js"></script>
+<script src="scripts/services/database.js"></script>
+<script src="scripts/services/runhelper.js"></script>
+<script src="scripts/services/protocolhelper.js"></script>
 <!-- transcriptic communication -->
 <script src="scripts/services/comm/_kickoff.js"></script>
 <script src="scripts/services/comm/transcripticAuth.js"></script>
@@ -178,6 +191,7 @@
 <!-- FILTERS -->
 <script src="scripts/filters/capfirst.js"></script>
 <script src="scripts/filters/arrayify.js"></script>
+<script src="scripts/filters/fieldreadable.js"></script>
 
 <!-- DIRECTIVES -->
 <!-- results / datavis -->
@@ -187,6 +201,9 @@
 <script src="scripts/directives/datavis/tx-timepointgraph.js"></script>
 <script src="scripts/directives/datavis/tx-welltip.js"></script>
 <script src="scripts/directives/datavis/tx-protocol-mini.js"></script>
+<script src="scripts/directives/tx-column-volumes.js"></script>
+<script src="scripts/directives/tx-thermocycle-melting.js"></script>
+<script src="scripts/directives/tx-thermocycle-group.js"></script>
 <!-- editor -->
 <script src="scripts/directives/formHelpers/contenteditable.js"></script>
 <script src="scripts/directives/formHelpers/jsoneditor.js"></script>
@@ -216,39 +233,13 @@
 <script src="scripts/directives/tx-protocol-droppable.js"></script>
 <script src="scripts/directives/tx-change-broadcaster.js"></script>
 <script src="scripts/directives/tx-cred-transcriptic.js"></script>
+<script src="scripts/directives/tx-operation-popover.js"></script>
+<script src="scripts/directives/squelchEvent.js"></script>
+<script src="scripts/directives/popover-transclude.js"></script>
 
 <!-- uncategorized -->
 
-<script src="scripts/controllers/resultsdispense.js"></script>
-<script src="scripts/directives/tx-column-volumes.js"></script>
-<script src="scripts/controllers/testing/field.js"></script>
-<script src="scripts/controllers/columnvolumes.js"></script>
-<script src="scripts/directives/tx-thermocycle-melting.js"></script>
-<script src="scripts/directives/tx-thermocycle-group.js"></script>
-<script src="scripts/controllers/thermocyclegroups.js"></script>
-<script src="scripts/controllers/fieldaliquot.js"></script>
-<script src="scripts/directives/tx-operation-popover.js"></script>
-<script src="scripts/controllers/operationsummary.js"></script>
-<script src="scripts/directives/squelchEvent.js"></script>
-<script src="scripts/directives/popover-transclude.js"></script>
-<script src="scripts/controllers/catalogresource.js"></script>
-<script src="scripts/services/protocolutils.js"></script>
-<script src="scripts/services/platform.js"></script>
-<script src="scripts/services/database.js"></script>
-<script src="scripts/services/runhelper.js"></script>
-<script src="scripts/services/protocolhelper.js"></script>
-<script src="scripts/controllers/platformauth.js"></script>
-<script src="scripts/controllers/home.js"></script>
-<script src="scripts/filters/fieldreadable.js"></script>
 
-
-<!-- firebase -->
-<script src="scripts/services/simplelogin.js"></script>
-<script src="bower_components/firebase/firebase.js"></script>
-<script src="bower_components/angularfire/dist/angularfire.js"></script>
-<script src="scripts/controllers/firebaselogin.js"></script>
-
-<script src="scripts/controllers/header.js"></script>
 <!-- endbuild -->
 </body>
 </html>

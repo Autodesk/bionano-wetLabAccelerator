@@ -56,8 +56,6 @@ angular.module('transcripticApp')
         assignNecessaryMetadataToProtocol(protocol);
       }
 
-      debugger;
-
       return Database.saveProject(protocol).
         then(self.assignCurrentProtocol);
     };

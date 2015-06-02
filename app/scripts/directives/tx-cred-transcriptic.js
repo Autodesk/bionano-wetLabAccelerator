@@ -12,7 +12,7 @@
  * and will expose to formController
  */
 angular.module('transcripticApp')
-  .directive('txCredTranscriptic', function (TranscripticAuth, Communication, simpleLogin, FBProfile) {
+  .directive('txCredTranscriptic', function (TranscripticAuth, Communication) {
     return {
       templateUrl     : 'views/tx-cred-transcriptic.html',
       restrict        : 'E',
