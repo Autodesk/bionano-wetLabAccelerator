@@ -8,7 +8,7 @@
  * //todo - maybe should move verifications / submissions outside of here entirely. also maybe the remote verification listener
  */
 angular.module('transcripticApp')
-  .directive('txRun', function ($q, $timeout, $rootScope, TranscripticAuth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, Communication, RunHelper) {
+  .directive('txRun', function ($q, $timeout, $rootScope, TranscripticAuth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, Communication, RunHelper, Notify) {
     return {
       templateUrl : 'views/tx-run.html',
       restrict    : 'E',
@@ -23,6 +23,8 @@ angular.module('transcripticApp')
         self.projects = [];
 
         TranscripticAuth.watch(function (info) {
+          console.log(info);
+          self.transcripticAuth = info;
           if (!!info) {
             self.projects = Project.list();
           }
@@ -93,44 +95,55 @@ angular.module('transcripticApp')
 
           $rootScope.$broadcast('editor:clearVerifications');
 
-          projectIdPromise.then(function (project) {
-            self.project = project;
+          return projectIdPromise
+            .then(function (project) {
+              self.project = project;
 
-            funcToRun(self.protocol, project.id).
-              then(function runSuccess (d) {
-                console.log(d);
-                self.response = d;
-                self.error    = false;
+              return funcToRun(self.protocol, project.id)
+                .then(function runSuccess (d) {
+                  console.log(d);
+                  self.response = d;
+                  self.error    = false;
 
-                if (isRun) {
-                  $rootScope.$broadcast('editor:runSubmitted', d);
-                } else {
-                  $rootScope.$broadcast('editor:verificationSuccess', d);
-                }
+                  if (isRun) {
+                    $rootScope.$broadcast('editor:runSubmitted', d);
+                  } else {
+                    $rootScope.$broadcast('editor:verificationSuccess', d);
+                  }
 
-              }, function runFailure (e) {
-                console.log(e);
+                }, function runFailure (e) {
+                  console.log(e);
 
-                //check for our own handling... pas null if conversion didn't work, and will handle local errors upstream
-                if (_.isNull(e)) {
-                  return;
-                }
+                  //check for our own handling... pas null if conversion didn't work, and will handle local errors upstream
+                  if (_.isNull(e)) {
+                    return;
+                  }
 
-                self.error = true;
+                  self.error = true;
 
-                //use as simple check for something like a 404 error - i.e. not protocol error but $http error
-                if (_.isEmpty(e.data) || _.isEmpty(e.data.protocol)) {
-                  self.response = {"error": "Request did not go through... check the console"};
-                } else {
-                  $rootScope.$broadcast('editor:verificationFailure', e.data.protocol);
-                  self.response = e.data.protocol;
-                }
-              })
-              .then(function () {
-                self.processing = false;
-                (closeModal !== false) && $rootScope.$broadcast('editor:toggleRunModal', false);
-              });
-          });
+                  //use as simple check for something like a 404 error - i.e. not protocol error but $http error
+                  if (_.isEmpty(e.data) || _.isEmpty(e.data.protocol)) {
+                    self.response = {"error": "Request did not go through... check the console"};
+                  } else {
+                    $rootScope.$broadcast('editor:verificationFailure', e.data.protocol);
+                    self.response = e.data.protocol;
+                  }
+                });
+            })
+            .catch(function (err) {
+              console.warn('error sending run', err);
+              //todo - should catch this better...
+              if (err.status == 401) {
+                Notify({
+                  message: 'You must provide your Transcriptic credentials to verify your protocol',
+                  error  : true
+                });
+              }
+            })
+            .then(function () {
+              self.processing = false;
+              (closeModal !== false) && $rootScope.$broadcast('editor:toggleRunModal', false);
+            });
         }
 
       },

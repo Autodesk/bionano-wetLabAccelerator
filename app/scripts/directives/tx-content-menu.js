@@ -45,8 +45,6 @@ angular.module('transcripticApp')
 
         function setProjects (projects) {
 
-          console.warn('setting projects');
-
           self.projects = _(projects).uniq().value();
 
           self.protocols = _.filter(self.projects, function (proj) {

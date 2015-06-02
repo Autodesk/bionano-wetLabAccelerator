@@ -33,7 +33,7 @@ angular.module('tx.communication')
       }
 
       var timeoutPromise = $q.defer(),
-          timeoutCancel  = 7000;
+          timeoutCancel  = 10000;
 
       /*
       //fixme - these are only set once, and so never valid - should be setting timeout on each request
@@ -58,6 +58,11 @@ angular.module('tx.communication')
 
     //returns promise which will resolve with organizations if valid, fail if not
     this.validate = function validateCreds () {
+
+      if (!_.every(['organization', 'email', 'key'], _.partial(_.has, TranscripticAuth.headers(), _))) {
+        return $q.reject(false);
+      }
+
       return self.request('organizations');
     };
 

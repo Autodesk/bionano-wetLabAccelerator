@@ -41,7 +41,7 @@ angular.module('transcripticApp')
             then(function () {
               self.validating = false;
               return self.credValid;
-            })
+            });
         };
 
         TranscripticAuth.watch(function (creds) {
