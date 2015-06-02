@@ -40,22 +40,33 @@
 </head>
 <body ng-app="transcripticApp">
 
-<header class="site-header">
-  <a class="logo" href="#/">
+<header class="site-header" ng-controller="HeaderCtrl as headerCtrl">
+  <a class="logo">
       <img src="images/logo-cx1.png">
       <span>Wet Lab Accelerator</span>
       <span class="version">alpha</span>
   </a>
   <nav>
-    <a ng-href="#/protocol" ng-class="{'active' : currentPath == '/protocol'}">PROTOCOL</a>
-    <a class="disabled" ng-class="{'active' : currentPath == '/results'}">RESULTS</a>
+    <a ng-href="#/protocol"
+       class="nav-link"
+       ng-class="{'active' : headerCtrl.currentPath == '/protocol'}">PROTOCOL</a>
+    <a class="nav-link disabled"
+       ng-class="{'active' : headerCtrl.currentPath == '/results'}">RESULTS</a>
   </nav>
-  <div class="user">
-    <a href="#/auth" ng-cloak>
+  <div class="user"
+       dropdown>
+    <a href="#/auth"
+       ng-cloak>
       <span class="glyphicon glyphicon-user"></span>
-      <span ng-hide-auth>Sign In</span>
-      <span ng-show-auth>Sign Out</span>
+      <span ng-hide="headerCtrl.currentAuth">Sign In</span>
+      <span dropdown-toggle
+            ng-show="headerCtrl.currentAuth"
+            ng-bind="headerCtrl.currentAuth.name || headerCtrl.currentAuth.userstring || 'Sign Out'"></span>
     </a>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li><a>Help</a></li>
+      <li><a>Feedback</a></li>
+    </ul>
   </div>
 </header>
 
@@ -110,8 +121,6 @@
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/d3/d3.js"></script>
 <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
-<script src="bower_components/firebase/firebase.js"></script>
-<script src="bower_components/angularfire/dist/angularfire.js"></script>
 <script src="bower_components/jquery-ui/jquery-ui.js"></script>
 <!-- endbower -->
 <script src="bower_components/lodash/lodash.js"></script>
@@ -121,7 +130,6 @@
 <script src="scripts/app.js"></script>
 
 <!-- CONTROLLERS -->
-<script src="scripts/controllers/firebaselogin.js"></script>
 <script src="scripts/controllers/protocol.js"></script>
 <script src="scripts/controllers/results.js"></script>
 <script src="scripts/controllers/gallery.js"></script>
@@ -145,7 +153,6 @@
 <script src="scripts/values/oligoOptions.js"></script>
 
 <!-- SERVICES -->
-<script src="scripts/services/simplelogin.js"></script>
 <script src="scripts/services/omniprotocolService.js"></script>
 <script src="scripts/services/autoprotocolService.js"></script>
 <script src="scripts/services/wellconv.js"></script>
@@ -201,7 +208,6 @@
 <script src="scripts/directives/btn-delete.js"></script>
 <script src="scripts/directives/tx-modal.js"></script>
 <script src="scripts/directives/tx-run.js"></script>
-<!--todo - rename to rundialog -->
 <script src="scripts/directives/tx-content-menu.js"></script>
 <script src="scripts/directives/tx-downloadjson.js"></script>
 <script src="scripts/directives/tx-inspector.js"></script>
@@ -235,6 +241,15 @@
 <script src="scripts/controllers/platformauth.js"></script>
 <script src="scripts/controllers/home.js"></script>
 <script src="scripts/filters/fieldreadable.js"></script>
+
+
+<!-- firebase -->
+<script src="scripts/services/simplelogin.js"></script>
+<script src="bower_components/firebase/firebase.js"></script>
+<script src="bower_components/angularfire/dist/angularfire.js"></script>
+<script src="scripts/controllers/firebaselogin.js"></script>
+
+<script src="scripts/controllers/header.js"></script>
 <!-- endbuild -->
 </body>
 </html>
