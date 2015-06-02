@@ -32,7 +32,7 @@ angular.module('transcripticApp')
       'uncover' : 'container',
       'spin'    : 'container',
 
-      'image_plate' : 'attachment',
+      'image_plate' : 'attachment_plate',
       'gel_separate': 'attachment'
     };
 
