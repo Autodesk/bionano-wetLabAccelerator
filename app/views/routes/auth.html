@@ -14,98 +14,10 @@
   <button class="action-button"
           ng-show="platformCtrl.isAuthenticated"
           ng-click="platformCtrl.unauthenticate()">Unauthenticate</button>
-
 </div>
-
 
 <div class="panel panel-info">
   <div class="panel-heading">Transcriptic</div>
   <tx-cred-transcriptic ng-form="transcripticCred"
                         class="panel-body form-horizontal"></tx-cred-transcriptic>
-</div>
-
-<div class="panel panel-info"
-
-     ng-controller="FirebaseLoginCtrl">
-  <div class="panel-heading">Firebase</div>
-  <form name="loginForm"
-        class="panel-body form-horizontal">
-
-    <div class="form-group">
-      <label for="fbEmail" class="col-sm-2 control-label">Email</label>
-
-      <div class="col-sm-10">
-        <input type="email"
-               class="form-control"
-               ng-model="email"
-               name="fbEmail"
-               id="fbEmail"
-               required
-               placeholder="Email">
-      </div>
-    </div>
-
-    <div class="form-group" ng-hide="isLoggedIn">
-      <label for="fbPassword" class="col-sm-2 control-label">Password</label>
-
-      <div class="col-sm-10">
-        <input type="password"
-               class="form-control"
-               ng-model="pass"
-               name="fbPassword"
-               id="fbPassword"
-               ng-required="!isLoggedIn"
-               placeholder="Password">
-      </div>
-    </div>
-
-    <div class="form-group"
-         ng-show="createMode && !isLoggedIn">
-      <label for="fbPassword" class="col-sm-2 control-label">Confirm</label>
-
-      <div class="col-sm-10">
-        <input type="password"
-               class="form-control"
-               ng-model="confirm"
-               name="fbConfirm"
-               id="fbConfirm"
-               placeholder="Confirm">
-      </div>
-    </div>
-
-    <div class="alert alert-danger"
-         ng-show="err"
-         ng-bind="err"></div>
-
-    <div class="col-sm-offset-2">
-      <div ng-show-auth>
-        <button class="btn btn-danger"
-                ng-click="logout()">Logout
-        </button>
-      </div>
-      <div ng-hide-auth>
-        <button class="btn btn-primary"
-                ng-click="login(email, pass)"
-                ng-disabled="loginForm.$invalid"
-                ng-hide="createMode">Log In
-        </button>
-        <button class="btn btn-default"
-                ng-click="createMode = true"
-                ng-hide="createMode">Register
-        </button>
-        <button class="btn btn-primary"
-                ng-cloak
-                ng-show="createMode"
-                ng-disabled="loginForm.$invalid"
-                ng-click="createAccount()">Create Account
-        </button>
-        <button class="btn btn-warning"
-                ng-cloak
-                ng-show="createMode"
-                ng-click="createMode = false">Cancel
-        </button>
-      </div>
-    </div>
-
-  </form>
 </div>

@@ -17,7 +17,6 @@
     "lodash": "~3.7.0",
     "d3": "~3.5.3",
     "ng-file-upload": "~2.1.1",
-    "angularfire": "~0.9.1",
     "jquery-ui": "~1.11.4"
   },
   "devDependencies": {
