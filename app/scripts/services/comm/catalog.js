@@ -31,7 +31,7 @@ angular.module('tx.communication')
     self.byQuery = function (query) {
       return $http.get(defaultUrl, Communication.defaultResourceActions({
         params: {
-          q : query
+          q : ((_.isString(query) && query.length) ? query : null)
         },
         cache: true,
         transformResponse: function (data, headers, status) {
