@@ -33,8 +33,8 @@ angular.module('transcripticApp')
         assignNecessaryMetadataToRun(run);
       }
 
-      return Database.saveProject(protocol).
-        then(self.assignCurrentProtocol);
+      return Database.saveProject(run).
+        then(self.assignCurrentRun);
     };
 
     self.deleteRun = function saveRun (run) {
@@ -95,11 +95,12 @@ angular.module('transcripticApp')
           runData      = _.result(runObj, 'data'),
           runInfo      = _.result(runObj, 'transcripticRunInfo'),
           runStatus    = _.result(runInfo, 'status', ''),
-          runCompleted = (runStatus == 'complete');
+          runCompleted = (runStatus == 'complete'),
+          runCancelled = (runStatus == 'cancelled');
 
       console.log(_.isUndefined(runInfo), _.isEmpty(runData), !runCompleted, runId, projectId, runData, runObj);
 
-      if ((_.isUndefined(runInfo) || _.isEmpty(runData) || !runCompleted) && (runId && projectId)) {
+      if ((_.isUndefined(runInfo) || _.isEmpty(runData) || !runCompleted) && !runCancelled && (runId && projectId)) {
         var requestPayload = {project: projectId, run: runId};
         console.log('getting info');
         return Run.view(requestPayload)

@@ -72,7 +72,7 @@ angular.module('transcripticApp')
           self.toggleMenuVisible(false);
 
           RunHelper.getRun(run)
-            .then(RunHelper.assignCurrentRun(run))
+            .then(RunHelper.assignCurrentRun)
             .then(function () {
               $location.path('/results');
             });
