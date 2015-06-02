@@ -63,7 +63,6 @@ angular.module('tx.communication')
       };
 
       Authentication.watch(function (userinfo) {
-        console.log('auth watch in tx auth', userinfo);
         batchUpdate({
           organization: _.result(userinfo, 'transcripticOrg', ''),
           email       : _.result(userinfo, 'transcripticEmail', ''),

@@ -19,29 +19,28 @@ angular.module('transcripticApp')
       //todo - store userstring / token as a cookie?
 
       return Platform.authenticate(userstring).
+        then(function () {
+          return Platform.userValue('userstring', userstring);
+        }).
         then(Platform.getUserInfo).
         then(function (retrieved) {
-          console.log(retrieved);
-
-          //todo - verify creds are different before triggering
-
           _.assign(userInfo, retrieved, {
             token : userstring,
-            id  : retrieved.uid,
             name: retrieved.name
           });
 
           $cookies['authToken'] = userstring;
-          $cookies['userInfo'] = userInfo;
 
+          //todo - verify creds are different before triggering
+          triggerWatchers();
         }).
-        then(triggerWatchers).
         catch(function (err) {
           //todo - handle error
           console.log(err);
         });
     };
 
+    //returns promise, resolving to whether successful or not
     self.unauthenticate = function () {
       return Platform.unauthenticate()
         .then(function () {
@@ -92,6 +91,7 @@ angular.module('transcripticApp')
 
     var initialAuthToken = $cookies['authToken'];
     if (initialAuthToken) {
+      console.warn('found initial auth token', initialAuthToken);
       self.authenticate(initialAuthToken);
     }
 

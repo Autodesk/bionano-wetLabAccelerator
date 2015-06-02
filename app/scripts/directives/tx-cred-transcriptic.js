@@ -50,7 +50,6 @@ angular.module('transcripticApp')
             email       : _.result(creds, 'email'),
             key         : _.result(creds, 'key')
           });
-          console.log(self.credentials);
           self.validateAuth();
         });
 

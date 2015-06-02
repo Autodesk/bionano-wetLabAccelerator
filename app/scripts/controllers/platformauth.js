@@ -19,10 +19,12 @@ angular.module('transcripticApp')
     };
 
     Authentication.watch(function PlatformAuthCtrl_AuthWatcher (creds) {
-      console.log('new user!', creds);
-
+      self.isAuthenticated = !_.isEmpty(creds);
       self.userString = _.result(creds, 'token');
-
     });
+
+    self.unauthenticate = function () {
+      Authentication.unauthenticate();
+    };
 
   });
