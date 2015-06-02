@@ -57,7 +57,12 @@ angular.module('transcripticApp')
 
     self.getProjectMetadata = pc.getProjectMetadata;
 
-    self.saveProject = pc.saveProject;
+    self.saveProject = function (project) {
+      return pc.saveProject(project)
+        .then(function (id) {
+          return project;
+        });
+    };
 
     self.deleteProject = pc.deleteProject;
 

@@ -17,6 +17,8 @@ angular.module('transcripticApp')
       $timeout(function () {
         $rootScope.$broadcast('editor:newprotocol');
       });
+      
+      console.log('new protocol', newProtocol);
 
       return _.assign(self.currentProtocol,
         Omniprotocol.utils.getScaffoldProtocol(),
@@ -28,7 +30,9 @@ angular.module('transcripticApp')
     };
 
     self.createNewProtocol = function (inputProtocol) {
-      return _.assign(Omniprotocol.utils.getScaffoldProtocol(), inputProtocol);
+      return _.assign(Omniprotocol.utils.getScaffoldProtocol(), {
+        metadata: generateNewProtocolMetadata()
+      }, inputProtocol);
     };
 
     self.addProtocol = function (inputProtocol) {
@@ -51,6 +55,8 @@ angular.module('transcripticApp')
       if (!protocolHasNecessaryMetadataToSave(protocol)) {
         assignNecessaryMetadataToProtocol(protocol);
       }
+
+      debugger;
 
       return Database.saveProject(protocol).
         then(self.assignCurrentProtocol);
@@ -116,7 +122,8 @@ angular.module('transcripticApp')
     }
 
     function assignNecessaryMetadataToProtocol (protocol) {
-      return _.assign(protocol.metadata, generateNewProtocolMetadata(), protocol.metadata);
+      var oldMetadata = _.cloneDeep(protocol.metadata);
+      return _.assign(protocol.metadata, generateNewProtocolMetadata(), oldMetadata);
     }
 
     function protocolHasNecessaryMetadataToSave (protocol) {

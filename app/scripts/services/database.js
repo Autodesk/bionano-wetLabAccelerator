@@ -95,7 +95,7 @@ angular.module('transcripticApp')
     //check for id, set if unset, and return project
     //todo - verify return project
     self.saveProject = function (project) {
-      return Platform.saveProject(project)
+      return Platform.saveProject(self.removeExtraneousFields(project))
         .then(saveProjectToCache);
     };
 
@@ -188,8 +188,12 @@ angular.module('transcripticApp')
     }
 
     function saveProjectToCache (project) {
+      debugger;
       var id = getIdFromIdOrProjectInput(project);
-      if (_.isEmpty(id)) {return;}
+      if (_.isEmpty(id)) {
+        console.warn('project has no id');
+        return project;
+      }
 
       if (!_.has(cache, id)) {
         cache[id] = {};
