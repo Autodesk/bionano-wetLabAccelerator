@@ -10,20 +10,18 @@
 .input-styled {
   -webkit-appearance: none;
   display: inline-block;
-  height: 25px;
   border: 0;
   margin:0;
   outline: 0;
   background: transparent;
   color: $black;
   cursor: text;
-  text-align: left;
 
   &:hover {
     -webkit-appearance: none;
     background: $primary;
     color: $white;
-    text-align: left;
+    font-weight: $font-weight-medium;
     &::-webkit-input-placeholder {
       color: $white;
     }
@@ -34,7 +32,6 @@
     border: 2px solid $primary;
     background: transparent;
     color: $black;
-    text-align: left;
     padding:0 4px;
     min-width: 30px;
 
@@ -45,7 +42,6 @@
 
   &::-webkit-input-placeholder {
     color: $warning;
-    text-align: center;
   }
 
   &::-webkit-outer-spin-button,

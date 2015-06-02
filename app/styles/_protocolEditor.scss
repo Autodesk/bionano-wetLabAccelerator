@@ -6,6 +6,8 @@ tx-protocol-editor {
   }
 
   .editor-bottom-space{
+    min-height: 100px;
+
     &.drop-hover {
       border-top: $drop-hover-border;
     }
