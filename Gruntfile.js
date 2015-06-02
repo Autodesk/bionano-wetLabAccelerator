@@ -513,6 +513,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'wiredep',
     'browserify',
+    'uglify:browserified',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
