@@ -34,9 +34,8 @@
   <!-- endbuild -->
 
   <script src="https://platform.bionano.autodesk.com/client/api.js"></script>
-
-  <script src="scripts/omniprotocol/index.js"></script>
-  <script src="scripts/conversion/autoprotocol/index.js"></script>
+  
+  <script src="scripts/omniprotocol.js"></script>
 </head>
 <body ng-app="transcripticApp">
 
@@ -44,7 +43,7 @@
   <a class="logo">
       <img src="images/logo-cx1.png">
       <span>Wet Lab Accelerator</span>
-      <span class="version">alpha</span>
+      <span class="version">tech preview</span>
   </a>
   <nav>
     <a ng-href="#/protocol"
@@ -73,7 +72,7 @@
 <tx-content-menu></tx-content-menu>
 
 <main>
-  <div ng-view class="flex-vertical flex-grower container"></div>
+  <div ng-view class="flex-vertical flex-grower page-container"></div>
 </main>
 
 <footer>

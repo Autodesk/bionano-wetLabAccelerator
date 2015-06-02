@@ -24,7 +24,7 @@ angular.module('transcripticApp').service('Notify', function($timeout,$http,$com
       args = {message: args};
     }
 
-    args.duration = args.error ? 0 : 60000;
+    args.duration = args.error ? 0 : 30000;
     args.templateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
     args.container = args.container ? args.container : container;
     args.error = args.error ? args.error : false;
@@ -148,6 +148,8 @@ angular.module('transcripticApp').service('Notify', function($timeout,$http,$com
       element.css('opacity', 0);
     }
   };
+
+  $rootScope.$on('$routeChangeSuccess', notify.closeAll);
 
   return notify;
 });

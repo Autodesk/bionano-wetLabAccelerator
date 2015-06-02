@@ -1,3 +1,4 @@
+.oppop,
 tx-operation-popover {
 
   $oppop-fromTop: 15px;
@@ -77,6 +78,10 @@ tx-operation-popover {
         display: none;
         border: 0;
       }
+    }
+
+    .op-description {
+      margin-bottom: 0;
     }
 
     tx-plate {

@@ -294,6 +294,75 @@ module.exports = {
     }
   },
 
+  "spread": {
+    "operation"  : "spread",
+    "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
+    "name"       : "Spread",
+    "type"       : "picking",
+    "scaffold"   : {
+      "operation"   : "spread",
+      "requirements": {},
+      "transforms"  : [
+        {
+          "wells": "source"
+        },
+        {
+          "wells": "destination"
+        }
+      ],
+      "fields"      : [
+        {
+          "name": "from",
+          "type": "aliquot"
+        },
+        {
+          "name"    : "to",
+          "type"    : "aliquot"
+        },
+        {
+          "name"   : "volume",
+          "type"   : "volume",
+          "default": {"value": 50, "unit": "microliter"}
+        }
+      ]
+    }
+  },
+
+  "autopick": {
+    "operation"  : "autopick",
+    "description": "Pick at least min_count colonies from 'source' to 'destination' wells, until there are no more colonies available, failing if there are fewer than min_count colonies detected",
+    "name"       : "Autopick",
+    "type"       : "picking",
+    "scaffold"   : {
+      "operation"   : "autopick",
+      "requirements": {},
+      "transforms"  : [
+        {
+          "wells": "source"
+        },
+        {
+          "wells": "destination"
+        }
+      ],
+      "fields"      : [
+        {
+          "name": "from",
+          "type": "aliquot"
+        },
+        {
+          "name"    : "to",
+          "type"    : "aliquot+"
+        },
+        {
+          "name"    : "min_colony_count",
+          "readable": "minimum count",
+          "type"    : "integer",
+          "optional": true
+        }
+      ]
+    }
+  },
+
   //heating
 
 
@@ -760,7 +829,7 @@ module.exports = {
   "autoprotocol": {
     "operation"  : "autoprotocol",
     "description": "Type the JSON of an autoprotocol operation manually",
-    "name"       : "Autoprotocol (JSON)",
+    "name"       : "Arbitrary Autoprotocol",
     "type"       : "special",
     "scaffold"   : {
       "operation"   : "autoprotocol",

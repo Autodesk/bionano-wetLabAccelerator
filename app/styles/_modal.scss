@@ -27,9 +27,6 @@
   transform: translate(-50%, -50%);
 
   width: 100%;
-  min-height: 300px;
-  max-height: 80vh;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,6 +61,8 @@
 
   .modal-transclude {
     display: block; //necessary for custom element
+    min-height: 250px;
+    max-height: 80vh;
     overflow-y: scroll;
     margin: ($modal-padding-top + $modal-size-heading) auto;
 

@@ -1,0 +1,22 @@
+<div class="clearfix">
+  <p ng-style="{color: summaryCtrl.getContainerColorFromWellField('source')}"
+     ng-bind="summaryCtrl.getContainerFromWellField('source')"></p>
+  <div class="clearfix">
+    <tx-plate container="summaryCtrl.getContainerTypeFromWellField('source')"
+              no-brush="true"
+              no-select="true"
+              group-data="{name : 'from', wells : summaryCtrl.pluckWellsFromContainer('source'), color: summaryCtrl.getContainerColorFromWellField('source')}"
+              style="display: inline-block; width: 49%">
+    </tx-plate>
+
+    <tx-plate container="summaryCtrl.getContainerTypeFromWellField('dest')"
+              no-brush="true"
+              no-select="true"
+              group-data="{name : 'to', wells : summaryCtrl.pluckWellsFromContainer('dest') , color: summaryCtrl.getContainerColorFromWellField('dest')}"
+              style="display: inline-block; width: 49%">
+    </tx-plate>
+  </div>
+  <p class="pull-right"
+     ng-style="{color: summaryCtrl.getContainerColorFromWellField('dest')}"
+     ng-bind="summaryCtrl.getContainerFromWellField('dest')"></p>
+</div>

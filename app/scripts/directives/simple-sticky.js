@@ -43,11 +43,12 @@ angular.module('transcripticApp')
     //the function will be run
     function addCheck(fn, $scope) {
       checks.push(fn);
-      $scope.$on('$destroy', removeCheck);
+      $scope.$on('$destroy', _.partial(removeCheck, fn));
     }
 
     function removeCheck(fn) {
-      _.remove(checks, fn);
+      //_.remove will run function if passed, not find the function
+      checks.splice(_.indexOf(checks, fn), 1);
     }
 
     //ideally, throttle to rAF (try angular service?)
@@ -74,14 +75,13 @@ angular.module('transcripticApp')
             shouldCheck = false;
 
         //hack to handle flexbox layout... timeout to run after initial check
-        if (fromEdgeStart == 0) {
-          $timeout(function () {
-            shouldCheck = true;
-          });
-        }
+        //especially should run if fromEdgeStart == 0
+        $timeout(function () {
+          shouldCheck = true;
+        }, 50);
 
         //check if affix state has changed
-        function checkPosition(pageYOffset, forceCheck) {
+        var positionChecker = function checkPosition(pageYOffset, forceCheck) {
 
           if (shouldCheck || !!forceCheck) {
             fromEdgeStart = calcStartFromEdge(element[0], affixToBottom);
@@ -107,7 +107,7 @@ angular.module('transcripticApp')
               shouldCheck = true;
             }
           }
-        }
+        };
 
         //handle class changes, CSS changes
         function handleAffixing(shouldAffix) {
@@ -124,12 +124,10 @@ angular.module('transcripticApp')
         }
 
         //register a callback, handles deregistration when pass in scope
-        addCheck(function (pageYOffset) {
-          checkPosition(pageYOffset);
-        }, scope);
+        addCheck(positionChecker, scope);
 
         //init
-        checkPosition();
+        positionChecker(null);
       }
     };
   });
