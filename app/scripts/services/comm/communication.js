@@ -59,8 +59,7 @@ angular.module('tx.communication')
     //returns promise which will resolve with organizations if valid, fail if not
     this.validate = function validateCreds () {
 
-      var headers = TranscripticAuth.headers();
-      if (!_.every(['organization', 'email', 'key'], _.partial(_.has, headers, _))) {
+      if (!_.every(['organization', 'email', 'key'], _.partial(_.result, TranscripticAuth, _))) {
         return $q.reject(false);
       }
 
