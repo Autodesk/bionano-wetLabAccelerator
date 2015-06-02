@@ -1,8 +1,8 @@
 <div class="plate-wrap-image_plate">
-  <tx-plate container="summaryCtrl.getContainerTypeFromWellField('objects')"
+  <tx-plate container="summaryCtrl.getContainerTypeFromFieldName('object')"
             no-brush="true"
             no-select="true"
-            group-data="{name : '', wells : summaryCtrl.pluckWellsFromContainer('objects') , color: summaryCtrl.getContainerColorFromWellField('objects')}">
+            group-data="{name : '', wells : 'all', color: summaryCtrl.getContainerColorFromFieldName('object')}">
   </tx-plate>
 </div>
 
