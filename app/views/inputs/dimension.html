@@ -1,8 +1,9 @@
 <input class="input-styled"
        ng-model="fieldCtrl.model.value"
        ng-required="fieldCtrl.model.unit"
-       type="number" auto-grow="10"
-       placeholder="value">
+       type="number"
+       auto-grow="30"
+       placeholder="{{fieldCtrl.field.default.value || '-'}}">
 <div class="button parent-hover-trigger"
      dropdown>
     <a class="button-label"

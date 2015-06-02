@@ -32,15 +32,14 @@ angular.module('transcripticApp')
     ];
 
     $scope.$watch('searchQuery', function (newQuery, oldQuery) {
-      (!!newQuery && newQuery != oldQuery) && Catalog.byQuery(newQuery).then(function (data) {
-        console.log(data.data);
+      Catalog.byQuery(newQuery).then(function (data) {
         self.catalogResults = data.data;
       });
     });
 
     self.selectItem = function (item) {
       $scope.fieldCtrl.model = item;
-      $scope.$close();
+      _.attempt($scope.$close);
     };
 
   });

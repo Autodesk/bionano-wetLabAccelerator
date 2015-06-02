@@ -52,9 +52,13 @@ angular.module('transcripticApp')
     }
 
     self.getResourcesForOp = function () {
+      if (_.isEmpty(self.indices)) {
+        return [];
+      }
+
       var datarefRaw  = self.getFieldValueByName('dataref'),
           //hack - interpolate, assuming that needed index is available here...
-          datarefName = Omniprotocol.utils.interpolateValue(datarefRaw, self.indices);
+          datarefName = Omniprotocol.utils.interpolateObject(datarefRaw, self.indices);
 
       return _(self.runData)
         .filter(function (data, dataref) {

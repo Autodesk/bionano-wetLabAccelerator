@@ -1,3 +1,9 @@
+<tx-plate container="summaryCtrl.getContainerTypeFromWellField('objects')"
+          no-brush="true"
+          no-select="true"
+          group-data="{name : '', wells : summaryCtrl.pluckWellsFromContainer('objects') , color: summaryCtrl.getContainerColorFromWellField('objects')}">
+</tx-plate>
+
 <div ng-init="resources = summaryCtrl.getResourcesForOp()">
   <div ng-repeat="attach in resources">
     <img ng-init="!attach.resourceUrl && summaryCtrl.getResource(attach.key, attach)"

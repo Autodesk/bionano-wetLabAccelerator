@@ -19,6 +19,7 @@ tx-operation-list {
   width: $layout-opList-width;
   margin: 0;
   border: 0;
+  font-weight: $font-weight-medium;
 
   &.active,
   &:hover {

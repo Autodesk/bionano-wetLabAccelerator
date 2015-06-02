@@ -13,13 +13,13 @@ angular.module('transcripticApp')
 
     //todo - support more colors
     self.colors = [
-      'red',
-      'blue',
-      'green',
-      'yellow',
-      'magenta',
-      'cyan',
-      'white'
+      '#FF0000',
+      '#0000FF',
+      '#00FF00',
+      '#FFFF00',
+      '#FF00FF',
+      '#00FFFF',
+      '#FFFFFF'
     ];
 
     self.activateGroup = function (index) {

@@ -16,8 +16,10 @@ angular.module('transcripticApp')
 
       'mix'              : 'mix',
       'dispense_resource': 'dispense_resource',
+      'dispense'         : 'dispense',
 
-      'dispense': 'dispense',
+      'spread'  : 'pipette',
+      'autopick': 'pipette',
 
       'absorbance'  : 'spectrophotometry',
       'fluorescence': 'spectrophotometry',
@@ -30,7 +32,7 @@ angular.module('transcripticApp')
       'uncover' : 'container',
       'spin'    : 'container',
 
-      'image_plate' : 'attachment',
+      'image_plate' : 'attachment_plate',
       'gel_separate': 'attachment'
     };
 

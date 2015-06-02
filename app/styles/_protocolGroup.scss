@@ -24,17 +24,13 @@
   }
 
   &-inner {
-    &.show-group {
-      background: transparent;
-      border: 2px solid $white;
-    }
   }
 
   &-header {
+    display: none;
     position: relative;
     line-height: 1em;
     cursor: row-resize;
-    display: flex;
     flex-direction: row;
     justify-content: space-between;
     background: transparent;
@@ -45,10 +41,23 @@
       border-bottom: $drop-hover-border;
     }
 
-    &:hover{
-      .group-items {
+    &:hover {
+      .group-dropdown-items {
         opacity: 1;
       }
+    }
+
+    .group-name {
+      min-height: 1em;
+      min-width: 85px;
+      cursor: text;
+    }
+
+    .group-dropdown-items {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      opacity: 0;
     }
   }
 
@@ -58,72 +67,111 @@
     align-items: center;
   }
 
-  .group-items {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    opacity: 0;
+  .group-repeat {
+    background: transparent;
+    position: absolute;
+    right: 24px;
+    top: 3px;
+    color: $grey;
+    margin: 0 5px;
+    height: 17px;
+    z-index: 10;
 
     .iteration-none {
-      margin: 0 5px;
+      display: inline-block;
+      margin: 3px 0 0;
       width: 22px;
       height: 17px;
       cursor: default;
       background: url('/images/zero_iterations.png');
-
-      &:hover {
-        background: $primary;
-        color: $white;
-        &:after {
-          content: '1x';
-          position: relative;
-          left: 3px;
-          bottom: 1px;
-        }
-      }
     }
 
-    .group-repeat {
-      background: transparent;
-      color: $grey;
-      margin: 0 5px;
-      height: 17px;
-      input {
-        text-align: right;
-        width: 25px;
-      }
+    .group-repeat-input-wrap {
+      display: inline-block;
+      position: relative;
 
-      &:after {
-        content: 'x';
-        font-size: 11px;
-        cursor: none;
-        position: relative;
-        left: -5px;
-      }
-
-      &:hover {
-        background: $primary;
-        color: $white;
-      }
+      &:hover,
       &.selected {
         background: $primary;
         color: $white;
       }
+
+      &:after {
+        pointer-events: none;
+        content: 'x';
+        font-size: 12px;
+        cursor: none;
+        position: absolute;
+        bottom: 2px;
+        right: 0;
+      }
+    }
+
+    .group-repeat-input {
+      text-align: right;
+      padding-right: 7px;
+    }
+
+    &:hover {
+      .iteration-none {
+        display: none;
+      }
     }
   }
 
-  .group-name {
-    min-height: 1em;
-    min-width: 85px;
-    cursor: text;
+  //handle states here
+
+  &-inner {
+    &:not(.is-looping) {
+      .group-repeat-input-wrap {
+        display: none;
+      }
+
+      .group-repeat:hover {
+        .iteration-none {
+          display: none;
+        }
+        .group-repeat-input-wrap {
+          display: inline-block;
+        }
+      }
+    }
+
+    &.multichild {
+      background: transparent;
+      border: 2px solid $white;
+
+      .protocol-group-header {
+        display: flex;
+      }
+    }
+
+    &:not(.multichild) {
+      .group-repeat {
+        display: none;
+      }
+      *:hover > & {
+        .group-repeat {
+          display: block;
+        }
+      }
+    }
+
+    &.is-looping {
+      .iteration-none {
+        display: none;
+      }
+      .group-repeat {
+        display: block;
+      }
+    }
   }
 
-  /*
-  //all ops have arrows, not groups
-  &:not(:last-child) {
-    @include arrow-bottom($step-background-inactive, $step-background-active, $includeBackground: false);
+  &:hover {
+    .group-repeat {
+      display: block;
+    }
   }
-  */
 
   //op stuff
 
@@ -137,7 +185,7 @@
     }
   }
 
-  .show-group tx-protocol-op:last-child:after {
+  .multichild tx-protocol-op:last-child:after {
     margin-top: $drop-hover-border-width * 2;
   }
 
@@ -156,7 +204,18 @@
       background-color: $bg-primary-semitransparent;
     }
   }
+}
 
+// stuff shared by op and group
+
+.group-dropdown-toggle,
+.operation-dropdown-toggle {
+  color: $grey;
+  cursor: pointer;
+
+  &:hover {
+    color: $primary;
+  }
 }
 
 //todo - move so more explicit that protocol-op uses this too
