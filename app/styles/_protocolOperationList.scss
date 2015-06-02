@@ -1,3 +1,10 @@
+.operation-list {
+  width: $layout-opList-width;
+  float: left;
+  display: block;
+  max-height: calc(100vh - 80px);
+}
+
 tx-operation-list {
   display: block;
   margin-left: -$oplist-padding-left;
@@ -8,9 +15,7 @@ tx-operation-list {
     margin: 0 0 0.25em;
     border: 0;
   }
-
 }
-
 
 //outside so that styling can apply when dragging
 .operation-list-item {
