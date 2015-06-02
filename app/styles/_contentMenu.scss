@@ -97,6 +97,12 @@ tx-content-menu {
       color: $warning;
     }
 
+    .contentMenu-loading {
+      color: $white;
+      text-align: center;
+      padding: $layout-spacing-lg;
+    }
+
     .contentMenu-header {
 
     }

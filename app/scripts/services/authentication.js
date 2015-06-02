@@ -44,9 +44,8 @@ angular.module('transcripticApp')
     self.unauthenticate = function () {
       return Platform.unauthenticate()
         .then(function () {
-          _.forEach(_.keys(userInfo), function (key) {
-            delete userInfo[key];
-          });
+          userInfo = {};
+          $cookies['authToken'] = '';
           triggerWatchers();
           return true;
         })
@@ -90,7 +89,7 @@ angular.module('transcripticApp')
     //init - check for cookie, authenticate if present
 
     var initialAuthToken = $cookies['authToken'];
-    if (initialAuthToken) {
+    if (!!initialAuthToken) {
       console.warn('found initial auth token', initialAuthToken);
       self.authenticate(initialAuthToken);
     }

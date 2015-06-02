@@ -91,6 +91,7 @@ angular
     //testing - importing of runs and protocols
 
     /*
+    //todo - be sure to update authentication string here
     simpleLogin.watch(function (user) {
       if (!!user) {
 
@@ -117,9 +118,8 @@ angular
           });
       }
     });
-    */
 
-    /*
+    //todo - be sure to update authentication string here
     simpleLogin.watch(function (user) {
       if (!!user) {
 
@@ -147,7 +147,9 @@ angular
             //use only if uploading to DB
             return $q.all(_.map(firebaseRuns, function (protocol) {
               var pruned = Database.removeExtraneousFields(protocol);
-              return Platform.saveProject(pruned);
+              if (_.has(pruned, 'autoprotocol')) {
+                return Platform.saveProject(pruned);
+              }
             }));
           })
           .then(Platform.get_all_project_ids)

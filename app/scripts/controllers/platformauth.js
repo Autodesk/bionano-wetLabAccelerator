@@ -19,8 +19,10 @@ angular.module('transcripticApp')
     };
 
     Authentication.watch(function PlatformAuthCtrl_AuthWatcher (creds) {
-      self.isAuthenticated = !_.isEmpty(creds);
-      self.userString = _.result(creds, 'token');
+      $scope.$applyAsync(function () {
+        self.isAuthenticated = !_.isEmpty(creds);
+        self.userString = _.result(creds, 'token');
+      });
     });
 
     self.unauthenticate = function () {

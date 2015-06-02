@@ -5,6 +5,7 @@
 <label for="menu-trigger"><span></span></label>
 
 <div class="menu">
+
   <div class="contentMenu-header">
     <a class="new-protocol-button" ng-click="contentCtrl.createNewProtocol()">
       <span class="glyphicon glyphicon-plus"></span>
@@ -12,23 +13,30 @@
     </a>
   </div>
 
-  <div class="contentMenu-group">
-    <h5 class="contentMenu-heading">Protocols</h5>
-
-    <div ng-repeat="protocol in contentCtrl.protocols | orderBy:'metadata.name'">
-      <a ng-click="contentCtrl.openProtocol(protocol)"
-         class="contentMenu-item"
-         ng-bind="protocol.metadata.name"></a>
-    </div>
+  <div class="contentMenu-loading"
+       ng-show="contentCtrl.loadingContent">
+    <p>Loading content...</p>
   </div>
 
-  <div class="contentMenu-group">
-    <h5 class="contentMenu-heading">Runs</h5>
+  <div ng-hide="contentCtrl.loadingContent">
+    <div class="contentMenu-group">
+      <h5 class="contentMenu-heading">Protocols</h5>
 
-    <div ng-repeat="run in contentCtrl.runs | orderBy:'metadata.date'">
-      <a ng-click="contentCtrl.openRun(run)"
-         class="contentMenu-item"
-         ng-bind="run.metadata.name"></a>
+      <div ng-repeat="protocol in contentCtrl.protocols | orderBy:'metadata.name'">
+        <a ng-click="contentCtrl.openProtocol(protocol)"
+           class="contentMenu-item"
+           ng-bind="protocol.metadata.name"></a>
+      </div>
+    </div>
+
+    <div class="contentMenu-group">
+      <h5 class="contentMenu-heading">Runs</h5>
+
+      <div ng-repeat="run in contentCtrl.runs | orderBy:'metadata.date'">
+        <a ng-click="contentCtrl.openRun(run)"
+           class="contentMenu-item"
+           ng-bind="run.metadata.name"></a>
+      </div>
     </div>
   </div>
 </div>

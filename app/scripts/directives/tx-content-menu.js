@@ -29,28 +29,40 @@ angular.module('transcripticApp')
         });
 
         Authentication.watch(function (creds) {
-          creds && Database.getAllProjectMetadata()
-            .then(function (projects) {
-
-              self.projects = _(projects).uniq().value();
-
-              self.protocols = _.filter(self.projects, function (proj) {
-                return _.result(proj, 'metadata.type') == 'protocol';
-              });
-
-              self.runs = _.filter(self.projects, function (proj) {
-                return _.result(proj, 'metadata.type') == 'run';
-              });
-
-            })
-            .catch(function (err) {
-              console.warn(err);
-            })
+          self.loadingContent = true;
+          if (creds) {
+            Database.getAllProjectMetadata()
+              .then(function (metadatas) {
+                $scope.$applyAsync(_.partial(setProjects, metadatas));
+              })
+              .catch(function (err) {
+                console.warn(err);
+              })
+          } else {
+            setProjects([])
+          }
         });
+
+        function setProjects (projects) {
+
+          console.warn('setting projects');
+
+          self.projects = _(projects).uniq().value();
+
+          self.protocols = _.filter(self.projects, function (proj) {
+            return _.result(proj, 'metadata.type') == 'protocol';
+          });
+
+          self.runs = _.filter(self.projects, function (proj) {
+            return _.result(proj, 'metadata.type') == 'run';
+          });
+
+          self.loadingContent = false;
+        }
 
         self.openProtocol = function (protocol) {
           self.toggleMenuVisible(false);
-          
+
           ProtocolHelper.getProtocol(protocol)
             .then(ProtocolHelper.assignCurrentProtocol)
             .then(function () {
@@ -60,7 +72,7 @@ angular.module('transcripticApp')
 
         self.openRun = function (run) {
           self.toggleMenuVisible(false);
-          
+
           RunHelper.getRun(run)
             .then(RunHelper.assignCurrentRun(run))
             .then(function () {
