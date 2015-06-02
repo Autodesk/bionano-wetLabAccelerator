@@ -263,7 +263,7 @@ converterInstruction.mix = function (op) {
 
 converterInstruction.dispense = simpleMapOperation;
 
-converterInstruction.dispense_resource = function (op) {
+converterInstruction.provision = function (op) {
   var wells = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'wells')),
       volume = omniConv.pluckFieldValueTransformed(op, 'volume', converterField),
       resourceId = _.result(omniUtils.pluckFieldValueRaw(op.fields, 'resource'), 'id');
@@ -273,13 +273,13 @@ converterInstruction.dispense_resource = function (op) {
   }
 
   return {
-    op: 'dispense_resource',
+    op: 'provision',
     resource_id : resourceId,
     to: _.map(wells, function (well) {
       return {
         well: well,
         volume : volume
-      }
+      };
     })
   };
 };
