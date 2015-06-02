@@ -296,7 +296,7 @@ module.exports = {
 
   "spread": {
     "operation"  : "spread",
-    "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+    "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
     "name"       : "Spread",
     "type"       : "picking",
     "scaffold"   : {
@@ -312,12 +312,12 @@ module.exports = {
       ],
       "fields"      : [
         {
-          "name": "source",
+          "name": "from",
           "type": "aliquot"
         },
         {
-          "name": "destination",
-          "type": "aliquot"
+          "name"    : "to",
+          "type"    : "aliquot"
         },
         {
           "name"   : "volume",
@@ -346,15 +346,15 @@ module.exports = {
       ],
       "fields"      : [
         {
-          "name": "source",
+          "name": "from",
           "type": "aliquot"
         },
         {
-          "name": "destination",
-          "type": "aliquot+"
+          "name"    : "to",
+          "type"    : "aliquot+"
         },
         {
-          "name"    : "min_count",
+          "name"    : "min_colony_count",
           "readable": "minimum count",
           "type"    : "integer",
           "optional": true
@@ -829,7 +829,7 @@ module.exports = {
   "autoprotocol": {
     "operation"  : "autoprotocol",
     "description": "Type the JSON of an autoprotocol operation manually",
-    "name"       : "Autoprotocol (JSON)",
+    "name"       : "Arbitrary Autoprotocol",
     "type"       : "special",
     "scaffold"   : {
       "operation"   : "autoprotocol",

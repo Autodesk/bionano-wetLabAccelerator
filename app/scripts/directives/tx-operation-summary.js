@@ -16,8 +16,10 @@ angular.module('transcripticApp')
 
       'mix'              : 'mix',
       'dispense_resource': 'dispense_resource',
+      'dispense'         : 'dispense',
 
-      'dispense': 'dispense',
+      'spread'  : 'pipette',
+      'autopick': 'pipette',
 
       'absorbance'  : 'spectrophotometry',
       'fluorescence': 'spectrophotometry',

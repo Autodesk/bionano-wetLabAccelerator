@@ -284,6 +284,10 @@ converterInstruction.dispense_resource = function (op) {
   };
 };
 
+converterInstruction.spread = simpleMapOperation;
+
+converterInstruction.autopick = simpleMapOperation;
+
 /* TEMPERATURE */
 
 converterInstruction.incubate = simpleMapOperation;
