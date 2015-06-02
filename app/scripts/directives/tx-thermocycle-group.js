@@ -176,6 +176,10 @@ angular.module('transcripticApp')
         //helpers
 
         function graphDataFromGroup (thermocycleGroup) {
+          if (! _.result(thermocycleGroup, 'steps', []).length) {
+            return;
+          }
+
           return _.map(thermocycleGroup.steps, function (step) {
             return {
               time   : timeToSeconds(step.duration),

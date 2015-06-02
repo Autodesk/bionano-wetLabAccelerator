@@ -6,6 +6,10 @@ tx-protocol-setup {
   font-size: $font-size-md;
   border-bottom: $drop-hover-border-phantom;
 
+  &.drop-hover {
+    border-bottom: $drop-hover-border;
+  }
+
   //div to aid drag and drop (padding outside wrap)
   .protocol-setup-wrap {
     position: relative;
@@ -18,87 +22,136 @@ tx-protocol-setup {
 
     .setup-heading {
       font-weight: $font-weight-light;
+      color: $black;
     }
   }
 
   .protocol-setup-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .setup-variable {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      justify-content: flex-start;
-      align-items: center;
-      position: relative;
-
-      .parameter-type {
-        width: 100px;
-        padding-right: 10px;
-        text-align: right;
-      }
-      > input {
-        width: 110px;
-        margin: 0 10px;
-      }
-      > .setup-container, tx-protocol-field {
-        width: 205px;
-        margin: 0;
-        .field-value {
-          width: 100%;
-          padding: 0;
-        }
-      }
-      > .close {
-        width: 15px;
-      }
-
-      &:last-child {
-        justify-content: center;
-        padding: 5px 0;
-      }
-
-      &.setup-variable-placeholder {
-        span {
-          text-align: center;
-          width: 100%;
-        }
-      }
-    }
-
-    .add-parameter {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      background: transparent;
-      color: $warning;
-      text-align: center;
-      width: 130px;
-      height: 30px;
-      border: none;
-      position: relative;
-
-      &:hover {
-        color: $white;
-        background: $primary;
-      }
-    }
-
-    .parameter-list {}
-
-    .parameter-option {}
+    display: block;
+    width: 100%;
   }
 
+  .setup-row {
+    display: block;
+    position: relative;
+
+    .setup-parameter-delete {
+      opacity: 0;
+      position: absolute;
+      right: $layout-spacing-md;
+      top: 3px;
+
+      &:hover ~ .parameter-inner {
+        background-color: $primary;
+      }
+    }
+
+    &:hover {
+      .setup-parameter-delete {
+        opacity: 1;
+      }
+    }
+
+    //shown when no parameters exist
+    &.setup-variable-placeholder {
+      padding: 3px 0 8px;
+
+      span {
+        display: block;
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
+
+  .parameter-inner {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .parameter-info,
+  .parameter-value,
+  .parameter-type,
+  .parameter-name {
+    width: 50%;
+    display: inline-block;
+  }
+
+  .parameter-info,
+  .parameter-type {
+    text-align: right;
+    padding-right: $layout-spacing-md;
+  }
+
+  .parameter-name,
+  .parameter-value {
+    text-align: left;
+    padding-left: $layout-spacing-md;
+  }
+
+  .parameter-info {
+    font-weight: $font-weight-light;
+    display: flex;
+    flex-direction: row;
+
+    .parameter-type {
+      color: $grey;
+      white-space: nowrap;
+    }
+
+    .parameter-name {
+      color: $dark-grey;
+    }
+  }
+
+  .parameter-value {
+    text-align: left;
+    color: $black;
+
+    .field-value {
+      width: 100%;
+      padding: 0;
+    }
+  }
+
+  &:last-child {
+    justify-content: center;
+    padding: 5px 0;
+  }
+
+  /*
+  //todo - make this a class for setup-variable
   .highlight {
     background: $primary;
     color: $white;
   }
+  */
 
-  &.drop-hover {
-    border-bottom: $drop-hover-border;
+  .add-parameter {
+    background: transparent;
+    color: $warning;
+    text-align: center;
+    width: 130px;
+    margin: 0 auto;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    position: relative;
+
+    &:hover {
+      color: $white;
+      background: $primary;
+    }
+  }
+
+  .parameter-list {
+  }
+
+  .parameter-option {
   }
 
   .field-parameter-toggler {

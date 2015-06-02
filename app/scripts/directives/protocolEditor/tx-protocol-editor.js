@@ -38,17 +38,18 @@ angular.module('tx.protocolEditor')
           if ($window.FileReader) {
 
             var fileReader = new FileReader();
+            var protocol;
 
-            fileReader.onload = function (e) {
-              $scope.$apply(function () {
-                try {
-                  var protocol = angular.fromJson(e.target.result);
+            fileReader.onload = function (loadEvent) {
+              try {
+                protocol = angular.fromJson(loadEvent.target.result);
+                $scope.$apply(function () {
                   ProtocolHelper.clearIdentifyingInfo(protocol);
                   ProtocolHelper.assignCurrentProtocol(protocol);
-                } catch (e) {
-                  console.log('couldnt parse dropped JSON', e);
-                }
-              });
+                });
+              } catch (err) {
+                console.log('couldnt parse dropped JSON', e);
+              }
             };
 
             fileReader.readAsText(files[0]);
@@ -155,11 +156,11 @@ angular.module('tx.protocolEditor')
               console.log(ver);
 
               return _.assign({}, {
-                message : ver.message,
-                source  : 'local',
-                target  : 'parameter',
-                container : ver.fieldName,
-                original: ver
+                message  : ver.message,
+                source   : 'local',
+                target   : 'parameter',
+                container: ver.fieldName,
+                original : ver
               });
             }).
             tap(handleMassagedParamVerifications).

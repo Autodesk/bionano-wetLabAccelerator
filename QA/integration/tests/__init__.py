@@ -10,7 +10,8 @@ from pages.Build import SetupParameter
 from pages.Build import ProtocolInstructions
 import helpers
 
-WELCOME_TEXT_XPATH = (By.XPATH, "//p[text()='Welcome to CX1']")
+WELCOME_TEXT_XPATH = (By.XPATH, "//a[@class='logo']/span")
+WELCOME_SPLASH_SCREEN_XPATH = (By.XPATH, "//h3[text()=\"Welcome! Let's get started.\"]")
 
 class TestBase(Base._BaseTest):
     """Base test class. Make sure you set MODEL_NAME in your model to fetch it from
@@ -32,16 +33,18 @@ class TestBase(Base._BaseTest):
         # self.protocolSetup = ProtocolSetup(self.DRIVER)
 
         try:
-            print("waiting for welcome text on page")
+            print("waiting for welcome text")
             WebDriverWait(self.DRIVER, self.TIMEOUT).until(
                 expected_conditions.presence_of_element_located(WELCOME_TEXT_XPATH))
         except:
-            self.fail("Error rendering page")
+            self.fail("could not find welcome text " + WELCOME_TEXT_XPATH[1])
 
 
     def verifyIsDisplayed(self, element, description):
         verifyString =  description + " is displayed"
-        self.verifyTrue(element.is_displayed(), verifyString)
+        isDisplayed = element.is_displayed()
+        self.verifyTrue(isDisplayed, verifyString)
+        return isDisplayed
 
     def verifyTrue(self, actual, description):
         self.verifyString(actual, True, description)

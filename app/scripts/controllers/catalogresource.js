@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('CatalogResourceCtrl', function ($scope, Catalog) {
+  .controller('CatalogResourceCtrl', function ($scope, $rootScope, Catalog) {
     var self = this;
 
     self.init = function () {
@@ -39,7 +39,7 @@ angular.module('transcripticApp')
 
     self.selectItem = function (item) {
       $scope.fieldCtrl.model = item;
-      _.attempt($scope.$close);
+      $rootScope.$broadcast('$modalClose');
     };
 
   });

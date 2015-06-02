@@ -5,7 +5,7 @@
 
 
 <tx-modal ng-show="fieldCtrl.detailsVisible"
-          title="{{(fieldCtrl.field.readable || fieldCtrl.field.name) | fieldReadable}}">
+          title="{{(fieldCtrl.field.readable || fieldCtrl.field.name || 'mixwrap') | fieldReadable }}">
   <div class="column-wrap">
     <div class="column-10 div-centered">
       <table class="simple-twocol-table">

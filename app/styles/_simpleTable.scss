@@ -3,7 +3,7 @@
   border-collapse: collapse;
 
   td {
-    padding: 3px 0.5em;
+    padding: 3px $layout-spacing-md;
     width: 50%;
 
     &:first-child {
