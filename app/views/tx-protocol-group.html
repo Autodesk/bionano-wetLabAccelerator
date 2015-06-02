@@ -9,6 +9,7 @@
        tx-protocol-draggable="groupCtrl.optsDraggableGroup">
     <div class="group-repeat">
       <span class="iteration-none"></span>
+
       <div class="group-repeat-input-wrap">
         <input class="input-unstyled group-repeat-input"
                min="1" max="100"
@@ -25,14 +26,24 @@
              auto-grow
              placeholder="Group Name"
              ng-model="groupCtrl.group.name">
-      <div class="dropdown group-dropdown-items"
-           dropdown>
+
+      <div dropdown>
         <span class="group-dropdown-toggle glyphicon glyphicon-cog"
               squelch-event="click"
               dropdown-toggle></span>
         <ul class="dropdown-menu dropdown-menu-right">
           <li>
-            <a ng-click="">
+            <a squelch-event="click"
+               ng-click="groupCtrl.showingJSON = !groupCtrl.showingJSON">
+              <div popover-transclude
+                   is-open="groupCtrl.showingJSON"
+                   title="Edit Group Description"
+                   ng-if="groupCtrl.showingJSON">
+                <textarea ng-model="groupCtrl.group.metadata.description"
+                          class="input-unstyled"
+                          style="width: 300px; background: #f9f9f9"
+                          rows="8"></textarea>
+              </div>
               Edit Description
             </a>
           </li>
@@ -47,6 +58,14 @@
             </a>
           </li>
         </ul>
+      </div>
+
+      <div class="oppop"
+           ng-if="groupCtrl.group.metadata.description">
+        <div class="oppop-wrap">
+          <p class="op-description"
+             ng-bind="groupCtrl.group.metadata.description"></p>
+        </div>
       </div>
     </div>
     <div class="protocol-group-main">
