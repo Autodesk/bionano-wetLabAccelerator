@@ -21,7 +21,7 @@ angular.module('transcripticApp')
     self.containerOptions = ContainerOptions;
 
     Auth.watch(function (info) {
-      !!info && Container.list({per_page: 100}).$promise.then(self.setRemote);
+      _.result(info, 'organization', false) && Container.list({per_page: 100}).$promise.then(self.setRemote);
     });
 
     self.setRemote = function (remote, noReset) {

@@ -22,8 +22,10 @@ angular.module('transcripticApp')
 
         self.projects = [];
 
-        Auth.watch(function () {
-          self.projects = Project.list();
+        Auth.watch(function (info) {
+          if (_.result(info, 'organization', false)) {
+            self.projects = Project.list();
+          }
         });
 
         self.selectProject = function (proj) {
