@@ -144,19 +144,21 @@ $input-hover-padding-hori: 0.6em;
 
 input[type="color"].color-swatch {
   -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 1.25em;
+  height: 1.25em;
+  border-radius: 100%;
   padding: 0;
   color: transparent;
   background-color: transparent;
-  border: 1px solid transparent;
+  border: 0;
+
   &::-webkit-color-swatch-wrapper {
     padding: 0;
     border: 1px solid transparent;
   }
   &::-webkit-color-swatch {
     border: 1px solid transparent;
-    border-radius: 10px;
+    border-radius: 100%;
   }
 }
 

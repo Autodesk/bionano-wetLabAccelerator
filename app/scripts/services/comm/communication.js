@@ -17,10 +17,10 @@ angular.module('tx.communication')
     this.platformRoot     = "https://platform.bionano.autodesk.com/transcriptic/";
 
     //default
-    //this.root = this.transcripticRoot;
+    this.root = this.transcripticRoot;
 
     //proxy
-    this.root = this.platformRoot;
+    //this.root = this.platformRoot;
 
 
     //pass in overrides as Object
@@ -49,7 +49,7 @@ angular.module('tx.communication')
 
       return angular.extend({
         headers        : headers,
-        withCredentials: true, //send cookies with response
+        //withCredentials: true, //send cookies with response
         cache          : false,
         timeout        : timeoutCancel,
         responseType   : "json"
