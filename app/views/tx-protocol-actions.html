@@ -1,5 +1,5 @@
-<a ng-disabled="actionCtrl.protocolForm.$error.json"
-   ng-click="actionCtrl.saveProtocol()">
+<a ng-disabled="actionCtrl.protocolForm.$error.json || !actionCtrl.protocol.groups.length"
+   ng-click="actionCtrl.protocol.groups.length && actionCtrl.saveProtocol()">
   Save
 </a>
 <div dropdown>

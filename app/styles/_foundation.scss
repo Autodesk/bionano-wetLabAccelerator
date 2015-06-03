@@ -68,6 +68,11 @@ a {
     text-decoration: none;
     transition: color $transition-short-ease $transition-short-time;
   }
+
+  &[disabled],
+  &.disabled {
+    color: $color-link-disabled;
+  }
 }
 
 // Blockquote
