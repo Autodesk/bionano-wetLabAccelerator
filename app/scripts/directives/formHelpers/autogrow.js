@@ -36,9 +36,6 @@ angular.module('transcripticApp')
           if (val.length < 26) {
             element.css('width', newWidth);
           }
-          else {
-            //Todo: pop over to accomodate larger text area
-          }
         };
 
         if (ngModelCtrl) {

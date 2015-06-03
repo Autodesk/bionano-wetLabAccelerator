@@ -34,12 +34,12 @@ angular.module('transcripticApp')
           removePopover();
         });
 
-        scope.$watch('isOpen', function (open) {
-          if (open) {
+        scope.$watch('isOpen', function (open, wasOpen) {
+          if (open && !wasOpen) {
             positionPopover(target);
             $timeout(registerTriggers);
             $timeout(_.partial(positionPopover,target));//account for model changing or something
-          } else {
+          } else if (!open) {
             //'open' class will be handled in template by internalOpen
             unregisterTriggers();
           }
@@ -77,6 +77,18 @@ angular.module('transcripticApp')
 
           // Now set the calculated positioning.
           element.css(pos);
+        }
+
+        function hide () {
+          element.css({
+            opacity: 0
+          });
+        }
+
+        function show () {
+          element.css({
+            opacity: 1
+          });
         }
 
         function outsideClickListener ($event) {
