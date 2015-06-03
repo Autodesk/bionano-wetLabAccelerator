@@ -86,14 +86,13 @@ angular.module('transcripticApp')
         return Platform.getProjectMetadata(id)
           .then(function (meta) {
             //wrap metadata so that has same format as a complete project
-            return {metadata : meta};
+            return {metadata: meta};
           })
           .then(saveProjectToCache);
       }
     };
 
     //check for id, set if unset, and return project
-    //todo - verify return project
     self.saveProject = function (project) {
       return Platform.saveProject(self.removeExtraneousFields(project))
         .then(saveProjectToCache);
@@ -103,7 +102,6 @@ angular.module('transcripticApp')
     self.removeProject = function (project) {
       var id = getIdFromIdOrProjectInput(project);
       if (id) {
-        //fixme - pending Dion
         return Platform.deleteProject(id)
           .then(removeProjectFromCache)
       } else {
@@ -131,25 +129,27 @@ angular.module('transcripticApp')
       return !!useCache ? $q.when(ids) : request;
     };
 
-    //todo - cache / check for new IDs
     self.getAllProjects = function getAllProjects (useCache) {
       return self.getAllProjectIds(useCache).
         then(function (ids) {
-          return $q.all(_.map(ids, self.getProject));
+          return $q.all(_.map(ids, self.getProject))
+            //in case one rejects, let the retrieved ones fall through
+            //hack
+            .catch(function () {
+              console.error('error loading all projects', cache);
+              return _.map(ids, retrieveFromCache);
+            });
         });
     };
 
-    //todo - cache / check for new IDs
     self.getAllProjectMetadata = function getAllProjectMetadata (useCache) {
       return self.getAllProjectIds(useCache).
         then(function (ids) {
-          var mapped = _.map(ids, self.getProjectMetadata);
-
-          return $q.all(mapped)
+          return $q.all(_.map(ids, self.getProjectMetadata))
             //in case one rejects, let the rest fall through
             //hack
             .catch(function () {
-              console.log(cache);
+              console.error('error loading all project metadata', cache);
               return _.map(ids, retrieveFromCache);
             });
         });
@@ -202,7 +202,9 @@ angular.module('transcripticApp')
 
     function removeProjectFromCache (project) {
       var id = getIdFromIdOrProjectInput(project);
-      if (_.isEmpty(id)) {return;}
+      if (_.isEmpty(id)) {
+        return;
+      }
       if (id) {
         delete cache[id];
       }
@@ -219,11 +221,4 @@ angular.module('transcripticApp')
       }).value();
       return keys.length == 1 && keys[0] == 'metadata';
     }
-
-    /*
-    INIT
-    On init, get all IDs and metadata for all objects
-     */
-    //todo
-
   });

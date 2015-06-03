@@ -45,15 +45,16 @@ angular.module('transcripticApp')
     };
 
     self.getUserInfo = function () {
-      return pc.get_user().then(function (result) {
-        return result.data;
-      });
+      return pc.get_user()
+        .then(function (result) {
+          return result.data;
+        });
     };
 
     self.userValue = function userValue (key, value) {
       if (!_.isUndefined(value)) {
-        return pc.set_user_value(key, value).
-          then(function () {
+        return pc.set_user_value(key, value)
+          .then(function () {
             return value;
           });
       }
