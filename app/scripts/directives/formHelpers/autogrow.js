@@ -26,9 +26,9 @@ angular.module('transcripticApp')
 
           // If empty calculate by placeholder
           if (val !== "") {
-            calcWidth = val.length * 7 + 15;
+            calcWidth = val.length * 7 + 25;
           } else {
-            calcWidth = element[0].placeholder.length * 7 + 5;
+            calcWidth = element[0].placeholder.length * 7 + 15;
           }
 
           //extra to handle new letter before next $digest $shadow[0].offsetWidth

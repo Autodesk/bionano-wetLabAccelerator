@@ -58,7 +58,7 @@ angular.module('transcripticApp')
       angular.forEach(checks, function (fn) {
         fn.apply(null, [pageYOffset]);
       });
-    }, 25);
+    }, 16);
 
     windowEl.on('scroll resize', throttleRunChecks);
 

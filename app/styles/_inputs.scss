@@ -1,3 +1,6 @@
+$input-hover-padding-vert: 1px;
+$input-hover-padding-hori: 0.6em;
+
 .form-control {
   &.ng-invalid,
   &.ng-error {
@@ -10,30 +13,36 @@
 .input-styled {
   -webkit-appearance: none;
   display: inline-block;
-  border: 0;
+  border: 2px solid transparent;
   margin:0;
+  padding: 0;
   outline: 0;
   background: transparent;
+  line-height: 1.2em;
   color: $black;
   cursor: text;
 
-  &:hover {
+  &:hover,
+  &:focus {
     -webkit-appearance: none;
+    box-sizing: content-box;
+    border-radius: 1em;
+    padding: $input-hover-padding-vert 0 $input-hover-padding-vert $input-hover-padding-hori;
+    margin: (-$input-hover-padding-vert) $input-hover-padding-hori (-$input-hover-padding-vert) (-$input-hover-padding-hori);
+  }
+
+  &:hover {
     background: $primary;
     color: $white;
-    font-weight: $font-weight-medium;
     &::-webkit-input-placeholder {
       color: $white;
     }
   }
 
   &:focus {
-    -webkit-appearance: none;
     border: 2px solid $primary;
     background: transparent;
     color: $black;
-    padding:0 4px;
-    min-width: 30px;
 
     &::-webkit-input-placeholder {
       color: transparent;
@@ -50,6 +59,8 @@
     margin: 0;
   }
 }
+
+.dimensional-unit {}
 
 .true-false-button {
   width: 100px;
@@ -158,5 +169,44 @@ input[type="color"].color-swatch {
 
   &.ng-invalid-json {
     background-color: transparentize($error, 0.85);
+  }
+}
+
+.option-button {
+
+  justify-content: center;
+  align-items: baseline;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  padding: 0;
+  outline: 0;
+  line-height: 1.2em;
+  white-space: nowrap;
+
+  .option-toggle {}
+
+  .option-button-label {}
+
+  .option-button-caret {
+    opacity: 0;
+    font-size: $font-size-sm;
+  }
+
+  &:hover {
+    background: $primary;
+    color: $white;
+    border-radius: 1em;
+    padding: $input-hover-padding-vert $input-hover-padding-hori;
+    margin: (-$input-hover-padding-vert) (-$input-hover-padding-hori);
+
+    .option-button-label {
+      color: $white;
+    }
+
+    .option-button-caret {
+      opacity: 1;
+    }
   }
 }
