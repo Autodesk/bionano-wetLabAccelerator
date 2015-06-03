@@ -12,6 +12,24 @@ angular.module('transcripticApp')
 
     var self = this;
 
+    self.graphLabels = {
+      "absorbance"  : {
+        xlabel: "timepoint",
+        ylabel: "absorbance",
+        title : "Absorbance Readings"
+      },
+      "fluorescence": {
+        xlabel: "timepoint",
+        ylabel: "fluorescence",
+        title : "Fluorescence Readings"
+      },
+      "luminescence": {
+        xlabel: "timepoint",
+        ylabel: "luminescence",
+        title : "Luminescence Readings"
+      }
+    };
+
     //hack - relying on summaryCtrl like this
     $scope.$watch('summaryCtrl.indices', function (newIndices) {
       self.opName = $scope.summaryCtrl.operation.operation;
@@ -28,13 +46,13 @@ angular.module('transcripticApp')
       var unfoldedIndex = _.result(newIndices, 'unfolded');
       if (_.isNumber(unfoldedIndex))
       //todo - perf... maybe look at the autoprotocol or something?
-      var unfolded  = Omniprotocol.utils.unfoldProtocol($scope.summaryCtrl.protocol),
-          timepoint = _.reduce(unfolded, function (opIndexOfType, operation, flatIndex) {
-            if (operation.operation == self.opName && flatIndex < unfoldedIndex) {
-              opIndexOfType++;
-            }
-            return opIndexOfType;
-          }, 0);
+        var unfolded  = Omniprotocol.utils.unfoldProtocol($scope.summaryCtrl.protocol),
+            timepoint = _.reduce(unfolded, function (opIndexOfType, operation, flatIndex) {
+              if (operation.operation == self.opName && flatIndex < unfoldedIndex) {
+                opIndexOfType++;
+              }
+              return opIndexOfType;
+            }, 0);
 
       self.selectTimepoint(timepoint);
     });
@@ -73,7 +91,7 @@ angular.module('transcripticApp')
 
     self.onGraphHover = function (well, ordinal) {
       self.focusedWells = _.isUndefined(well) ? [] : [well];
-      var newIndex = _.indexOf(self.timepointValues, ordinal);
+      var newIndex      = _.indexOf(self.timepointValues, ordinal);
       newIndex >= 0 && self.selectTimepoint(newIndex);
     };
   });

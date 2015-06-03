@@ -14,6 +14,7 @@
   <tx-timepointgraph ng-if="spectroCtrl.graphData"
                      data="spectroCtrl.graphData"
                      extent-data="spectroCtrl.dataExtent"
+                     graph-meta="spectroCtrl.graphLabels[spectroCtrl.opName]"
                      series-selected="spectroCtrl.currentWells"
                      is-linear="true"
                      on-hover="spectroCtrl.onGraphHover($well, $ordinal, $value)">
