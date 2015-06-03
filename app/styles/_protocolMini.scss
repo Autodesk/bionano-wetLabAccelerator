@@ -40,6 +40,7 @@
 
   .status-instruction,
   .protocol-instruction {
+    position: relative;
     border-radius: 10px;
     background: $white;
     text-align: center;
@@ -111,6 +112,12 @@
       border-top-color: $white;
       border-width: 10px;
       margin-left: -$clip-arrow-width;
+    }
+
+    &.protocol-group {
+      &:after {
+        margin-top: 2px;
+      }
     }
   }
 
