@@ -132,6 +132,7 @@ body {
 }
 
 .column-wrap {
+  padding: 0;
   margin: 0 (-$layout-width-column-gutter);
   @include clearfix();
 }
