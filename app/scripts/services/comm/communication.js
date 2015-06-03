@@ -66,8 +66,14 @@ angular.module('tx.communication')
       return self.request('organizations');
     };
 
+    //request, using our proxy
     this.request = function (url, method, params) {
       return $http[method || 'get'](self.root + url, self.defaultResourceActions(params));
+    };
+
+    //request directly, avoiding our proxy
+    this.requestDirect = function (url, method, params) {
+      return $http[method || 'get'](self.transcripticRoot + url, self.defaultResourceActions(params));
     };
 
     this.requestUrl = function (url) {

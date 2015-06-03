@@ -8,6 +8,10 @@
     </p>
   </div>
 
+  <div ng-show="authCtrl.validating && authCtrl.credValid !== false">
+    <p class="text-sm" ng-click="authCtrl.showAuth = !authCtrl.showAuth">Validating your credentials...</p>
+  </div>
+
   <div ng-show="authCtrl.credValid === false && authForm.$valid">
     <p class="text-sm text-warning">Your credentials are not validating with transcriptic. Be sure you have entered them correctly.</p>
   </div>

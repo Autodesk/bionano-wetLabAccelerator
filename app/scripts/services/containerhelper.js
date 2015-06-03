@@ -38,6 +38,8 @@ angular.module('transcripticApp')
           name : _.result(cont, 'label')
         });
       });
+
+      console.log(self.remote);
     };
 
     self.setLocal = function (local) {
@@ -89,6 +91,4 @@ angular.module('transcripticApp')
       });
       return self.containers;
     }
-
-    return self;
   });

@@ -26,6 +26,9 @@ angular.module('transcripticApp')
         self.containerOptions      = ContainerHelper.containerOptions;
         self.storageOptions        = Omniprotocol.optionEnums.storage.storage;
 
+        //this is set dynamically, reference should never be broken
+        self.remoteContainers = ContainerHelper.remote;
+
         self.selectNewContainer = function (param) {
           _.merge(param, {value: {
             isNew: true
@@ -38,9 +41,6 @@ angular.module('transcripticApp')
           _.assign(param.value, remote);
           $scope.notifyContainerChange();
         };
-
-        //this is set dynamically, reference should never be broken
-        self.remoteContainers = ContainerHelper.remote;
 
         self.handleSelectRemoteContainer = function (param, remote) {
           _.assign(param.value, remote);

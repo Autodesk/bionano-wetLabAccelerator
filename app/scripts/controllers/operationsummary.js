@@ -98,7 +98,7 @@ angular.module('transcripticApp')
     self.getResource = function (resource) {
       console.log(resource);
 
-      return Communication.request(self.getResourceUrl(resource), 'get', {
+      return Communication.requestDirect(self.getResourceUrl(resource), 'get', {
         responseType: 'blob',
         headers     : {
           'Accept'      : 'image/jpeg',
