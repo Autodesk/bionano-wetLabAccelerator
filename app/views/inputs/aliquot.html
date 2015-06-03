@@ -5,6 +5,10 @@
                        ng-model="aliquotCtrl.containerName">
   </tx-container-select>
 
+  <div ng-show="!!aliquotCtrl.containerName && !aliquotCtrl.containerType"
+       class="text-danger"
+       style="display: inline-block;">(missing container type)</div>
+
   <div ng-show="aliquotCtrl.containerType"
        style="display: inline-block; position: relative;">
     <div ng-click="aliquotCtrl.showingPlates = !aliquotCtrl.showingPlates"
