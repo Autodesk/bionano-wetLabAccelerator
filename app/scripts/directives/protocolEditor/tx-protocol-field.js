@@ -102,7 +102,7 @@ angular.module('tx.protocolEditor')
             //Special handling before we get the appropriate template
 
             // handle all dimensional values the same way
-            if (Omniprotocol.inputTypes[type].type == 'dimensional') {
+            if (Omniprotocol.inputTypes[type].category == 'dimensional') {
 
               var inputType     = Omniprotocol.inputTypes[type];
               partial           = 'dimension';
