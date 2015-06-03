@@ -81,7 +81,6 @@ angular
         redirectTo: '/'
       });
   })
-  .run(function (Authentication, $rootScope, $location, $q, Platform, Database) {
-
+  .run(function (Authentication, Platform, Database, $http, $timeout) {
 
   });

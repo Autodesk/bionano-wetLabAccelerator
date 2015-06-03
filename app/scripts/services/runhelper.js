@@ -119,15 +119,10 @@ angular.module('transcripticApp')
                 runStatus    = _.result(runInfo, 'status', ''),
                 runCompleted = (runStatus == 'complete');
 
-            //todo - refine mechanics of this - need to handle incomplete protocols
-            if (!runCompleted) {
-              return $q.when(runObj);
-            }
-
             return Run.data(requestPayload)
               .$promise
               .then(function (runData) {
-                return _.assign(runObj, {
+                return _.merge(runObj, {
                   data: runData
                 });
               })
