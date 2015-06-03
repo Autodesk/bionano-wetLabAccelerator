@@ -22,11 +22,11 @@
                  dropdown-toggle></a>
               <ul class="dropdown-menu">
                 <li>
-                  <a ng-click="contCtrl.selectNewContainer(contCtrl.model)">New Container</a>
+                  <a ng-click="contCtrl.selectNewContainer()">New Container</a>
                 </li>
                 <li class="divider"></li>
                 <li ng-repeat="c in contCtrl.remoteContainers">
-                  <a ng-click="contCtrl.selectRemoteContainer(param, c)"
+                  <a ng-click="contCtrl.selectRemoteContainer(c)"
                      ng-bind="c.name || c.id"></a>
                 </li>
                 <li ng-if="!contCtrl.remoteContainers.length"

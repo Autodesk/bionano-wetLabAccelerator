@@ -29,21 +29,16 @@ angular.module('transcripticApp')
         //this is set dynamically, reference should never be broken
         self.remoteContainers = ContainerHelper.remote;
 
-        self.selectNewContainer = function (param) {
-          _.merge(param, {value: {
+        self.selectNewContainer = function () {
+          _.merge(self.model, {value: {
             isNew: true
           }});
           $scope.notifyContainerChange();
         };
 
-        self.selectRemoteContainer = function (param, remote) {
-          param.readable = remote.name || remote.id;
-          _.assign(param.value, remote);
-          $scope.notifyContainerChange();
-        };
-
-        self.handleSelectRemoteContainer = function (param, remote) {
-          _.assign(param.value, remote);
+        self.selectRemoteContainer = function (remote) {
+          self.name = remote.name || remote.id;
+          _.assign(self.model, remote);
           $scope.notifyContainerChange();
         };
       },
