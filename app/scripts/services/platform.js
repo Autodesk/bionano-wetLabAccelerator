@@ -15,9 +15,23 @@ angular.module('transcripticApp')
     var self = this,
         pc   = $window.PlatformClient;
 
-    //expose direct functionality if we want it...
-    //todo - deprecate this.
-    _.assign(self, pc);
+    if (_.isUndefined(pc)) {
+      //todo - should use ES6 proxies when available
+      //hack - shitty proxy requests
+      _.forEach([
+        'authenticate',
+        'unauthenticate',
+        'get_user',
+        'set_user_value',
+        'get_user_value',
+        'get_all_project_ids',
+        'getProject,',
+        'getProjectMetadata,',
+        'saveProject,,',
+        'deleteProject,'
+      ], _.partial(_.set, pc, _, $q.reject));
+
+    }
 
     /* Facade */
 
@@ -53,9 +67,13 @@ angular.module('transcripticApp')
         });
     };
 
-    self.getProject = pc.getProject;
+    self.getProject = function (id) {
+      return pc.getProject(id);
+    };
 
-    self.getProjectMetadata = pc.getProjectMetadata;
+    self.getProjectMetadata = function (id) {
+      return pc.getProjectMetadata(id);
+    };
 
     self.saveProject = function (project) {
       return pc.saveProject(project)
@@ -64,7 +82,9 @@ angular.module('transcripticApp')
         });
     };
 
-    self.deleteProject = pc.deleteProject;
+    self.deleteProject = function (id) {
+      return pc.deleteProject(id);
+    };
 
     /* helpers */
 
