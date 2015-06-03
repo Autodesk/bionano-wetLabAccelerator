@@ -41,7 +41,7 @@ angular.module('transcripticApp')
     };
 
     self.unauthenticate = function () {
-      return pc.unauthenticate();
+      return $q.when(pc.unauthenticate());
     };
 
     self.getUserInfo = function () {
