@@ -65,6 +65,9 @@ angular.module('transcripticApp')
 
           self.processing = true;
 
+          //close any existing notifications
+          Notify.closeAll();
+
           var projectIdPromise;
 
           //runCtrl.project can be a string (if creating new) or an object (selected one)
