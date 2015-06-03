@@ -114,7 +114,7 @@
       margin-left: -$clip-arrow-width;
     }
 
-    &.protocol-group {
+    &.protocol-group.multichild {
       &:after {
         margin-top: 2px;
       }

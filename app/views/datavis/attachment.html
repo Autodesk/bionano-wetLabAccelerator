@@ -5,9 +5,10 @@
 </tx-plate>
 
 <div ng-init="resources = summaryCtrl.getResourcesForOp()">
-  <div ng-repeat="attach in resources">
-    <img ng-init="!attach.resourceUrl && summaryCtrl.getResource(attach.key, attach)"
-         ng-src="{{attach.resourceUrl}}">
-    <p ng-hide="attach.resourceUrl">loading...</p>
+  <div ng-repeat="resource in resources">
+    <img ng-init="!resource.resourceUrl && summaryCtrl.getResource(resource)"
+         ng-src="{{resource.resourceUrl}}">
+
+    <p ng-hide="resource.resourceUrl">loading...</p>
   </div>
 </div>

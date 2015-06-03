@@ -10,7 +10,7 @@
  * todo - rename to match names in protocolUtils
  */
 angular.module('transcripticApp')
-  .controller('operationSummaryCtrl', function ($scope, $sce, Communication, ProtocolHelper, Omniprotocol, ProtocolUtils) {
+  .controller('operationSummaryCtrl', function ($scope, $sce, Communication, ProtocolHelper, Omniprotocol, ProtocolUtils, TranscripticAuth, RunHelper, $window) {
     var self = this;
 
     self.protocol = ProtocolHelper.currentProtocol;
@@ -65,7 +65,12 @@ angular.module('transcripticApp')
           return dataref == datarefName;
         })
         .map(function (data, index) {
-          return _.result(data, 'attachments', []);
+          return {
+            projectId: _.result(RunHelper.currentRun, 'transcripticProjectId'),
+            runId    : _.result(data, 'instruction.run.id'),
+            dataref  : datarefName,
+            id       : _.result(data, 'id', '')
+          };
         })
         .flatten()
         .value()
@@ -77,14 +82,23 @@ angular.module('transcripticApp')
       return $sce.trustAsResourceUrl(url);
     };
 
-    self.getResourceUrl = function (resourceKey) {
-      return 'upload/url_for?key=' + encodeURIComponent(resourceKey);
+    self.getResourceUrl = function (resource) {
+      // return 'upload/url_for?key=' + encodeURIComponent(resourceKey); //old way
+      //return '-/' + resourceId + '.raw'; //CORS
+
+      //hack - relying on currentRun in generating resources above
+
+      //link in form
+      //https://secure.transcriptic.com/:organization/:project/datasets/:dataId
+      return TranscripticAuth.organization() + '/' +
+        resource.projectId + '/datasets/' +
+        resource.id + '?format=raw';
     };
 
-    self.getResource = function (resourceKey, attachTo) {
-      console.log(resourceKey, attachTo);
+    self.getResource = function (resource) {
+      console.log(resource);
 
-      return Communication.request(self.getResourceUrl(resourceKey), 'get', {
+      return Communication.request(self.getResourceUrl(resource), 'get', {
         responseType: 'blob',
         headers     : {
           'Accept'      : 'image/jpeg',
@@ -94,7 +108,12 @@ angular.module('transcripticApp')
         .success(function (data, headers) {
           console.log(data);
 
-          //make this work!
+          var blob             = new $window.Blob([data], {type: 'image/png'});
+          var blobUrl          = $window.URL.createObjectURL(blob);
+          resource.resourceUrl = blobUrl;
+
+          /*
+          //todo - try reading as blob
 
           //expects a blob
           // encode data to base 64 url
@@ -110,14 +129,15 @@ angular.module('transcripticApp')
               //default attach to ourself, otherwise use attachTo
               self.resourceUrl = imageUrl;
 
-              if (_.isObject(attachTo)) {
-                attachTo.resourceUrl = imageUrl;
+              if (_.isObject(resource)) {
+                resource.resourceUrl = imageUrl;
               }
             })
           };
+
           fr.readAsDataURL(data);
 
-
+*/
           /*
           var binary = '';
           var bytes = new Uint8Array( data );
