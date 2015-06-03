@@ -20,6 +20,8 @@ angular.module('transcripticApp')
     Authentication.watch(function () {
       //on user change, clear local cache
 
+      //todo should also clear all outstanding requests
+
       _.forEach(_.keys(cache), function (key) {
         delete cache.key;
       });

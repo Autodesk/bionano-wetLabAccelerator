@@ -15,14 +15,17 @@ angular.module('transcripticApp')
 
     self.assignCurrentProtocol = function (newProtocol) {
       $timeout(function () {
+        console.log('new protocol', newProtocol);
         $rootScope.$broadcast('editor:newprotocol');
       });
-      
-      console.log('new protocol', newProtocol);
 
-      return _.assign(self.currentProtocol,
+      _.assign(self.currentProtocol,
         Omniprotocol.utils.getScaffoldProtocol(),
         newProtocol);
+
+      $rootScope.$applyAsync();
+
+      return self.currentProtocol;
     };
 
     self.getProtocol = function (id) {

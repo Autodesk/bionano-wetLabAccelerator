@@ -39,6 +39,8 @@ angular.module('transcripticApp')
         });
       });
 
+      $rootScope.$applyAsync();
+
       console.log(self.remote);
     };
 

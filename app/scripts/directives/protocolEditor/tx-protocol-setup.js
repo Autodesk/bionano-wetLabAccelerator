@@ -7,7 +7,7 @@
  * # txProtocolSetup
  */
 angular.module('transcripticApp')
-  .directive('txProtocolSetup', function ($rootScope, TranscripticAuth, Container, Omniprotocol, ContainerHelper) {
+  .directive('txProtocolSetup', function ($rootScope, TranscripticAuth, Container, Omniprotocol, ContainerHelper, ProtocolHelper) {
     return {
       templateUrl     : 'views/tx-protocol-setup.html',
       restrict        : 'E',
@@ -105,7 +105,13 @@ angular.module('transcripticApp')
           scope.isVisible = true;
         });
 
-        scope.$on('editor:newprotocol', scope.checkContainerChange);
+        scope.$on('editor:newprotocol', function () {
+          //use protocolhelper to ensure parameters are defined properly (model may not have propagated)
+          var containerList = _.filter(ProtocolHelper.currentProtocol.parameters, {type: 'container'});
+          ContainerHelper.setLocal(containerList);
+          scope.notifyContainerChange();
+          oldContainerLength = containerList.length;
+        });
 
         //VERIFICATIONS
 
