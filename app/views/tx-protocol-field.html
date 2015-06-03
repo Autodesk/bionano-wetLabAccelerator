@@ -26,11 +26,8 @@
           ng-click="fieldCtrl.selectParameter(p, $event)">
         <a ng-bind="p.name"></a>
       </li>
-      <li class="disabled" ng-show="filteredParams.length == 0">
-        <a>no relevant parameters</a>
-      </li>
       <li class="divider"
-          ng-if="!fieldCtrl.field.parameter || !fieldCtrl.parameters[fieldCtrl.field.type]"></li>
+          ng-if="filteredParams.length &&  !fieldCtrl.field.parameter"></li>
       <li ng-if="!fieldCtrl.field.parameter"
           ng-click="fieldCtrl.createNewParameter()">
         <a>create new parameter...</a>
