@@ -32,8 +32,10 @@
         </div>
       </div>
 
-      <div class="parameter-inner">
+      <a class="setup-parameter-delete close"
+         ng-click="setupCtrl.deleteParam(param)">&times;</a>
 
+      <div class="parameter-inner">
         <div class="parameter-info">
           <div class="parameter-type">{{param.type}}</div>
           <input class="parameter-name input-styled"
@@ -55,13 +57,8 @@
                              hide-title="true"
                              prevent-variable="true">
           </tx-protocol-field>
-
         </div>
       </div>
-
-      <a class="setup-parameter-delete close"
-         ng-click="setupCtrl.deleteParam(param)">&times;</a>
-
     </div>
 
 
