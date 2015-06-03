@@ -24,6 +24,7 @@
   transition: color $transition-short-time $transition-short-ease, background-color $transition-short-time $transition-short-ease;
 
   &:focus,
+  &:active,
   &:hover {
     outline: none;
     color: $white;
@@ -45,6 +46,8 @@
   background-color: transparent;
   transition: color $transition-short-time $transition-short-ease, background-color $transition-short-time $transition-short-ease;
 
+  &:focus,
+  &:active,
   &:hover {
     background-color: $primary;
     color: $white;
