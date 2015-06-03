@@ -27,14 +27,15 @@
     right: 4px;
   }
 
-  .tx-popover-title {
-    font-size: $font-size-md;
-    padding: 0;
-    margin: 0;
+  .tx-popover-content {
+    padding: $layout-spacing-sm $layout-spacing-md 0;
   }
 
-  .tx-popover-content {
-    padding: $layout-spacing-md $layout-spacing-md 0;
+  .tx-popover-title {
+    font-size: $font-size-md;
+    font-weight: $font-weight-light;
+    padding: 0;
+    margin: 0 0 $layout-spacing-sm;
   }
 
   .tx-popover-transclude {
