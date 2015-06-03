@@ -131,12 +131,17 @@ angular.module('transcripticApp')
             })
             .catch(function (err) {
               console.warn('error sending run', err);
-              //todo - should catch this better...
               if (err.status == 401) {
                 Notify({
                   message: 'You must provide your Transcriptic credentials to verify your protocol',
                   error  : true
                 });
+              } else if (err.status == 0) {
+                Notify({
+                  message: 'Request timed out. Please try it again.',
+                  error  : true
+                });
+                closeModal = false;
               }
             })
             .then(function () {

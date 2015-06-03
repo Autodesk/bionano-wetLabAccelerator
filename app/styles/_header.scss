@@ -81,7 +81,7 @@ header.site-header {
     width: $logo-user-width;
     justify-content: flex-end;
 
-    > a {
+    .user-toggle {
       display: inline-block;
       margin: 0 15px;
       font-size: $header-nav-font-size;

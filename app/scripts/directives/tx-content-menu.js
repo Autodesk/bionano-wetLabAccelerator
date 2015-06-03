@@ -62,6 +62,7 @@ angular.module('transcripticApp')
           self.toggleMenuVisible(false);
 
           ProtocolHelper.getProtocol(protocol)
+            .then(_.cloneDeep)
             .then(ProtocolHelper.assignCurrentProtocol)
             .then(function () {
               $location.path('/protocol');
@@ -72,6 +73,7 @@ angular.module('transcripticApp')
           self.toggleMenuVisible(false);
 
           RunHelper.getRun(run)
+            //don't need to clone run, since not really editable... (except metadata, which saves automatically)
             .then(RunHelper.assignCurrentRun)
             .then(function () {
               $location.path('/results');
