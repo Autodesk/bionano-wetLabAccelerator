@@ -37,7 +37,7 @@
 
       <div class="parameter-inner">
         <div class="parameter-info">
-          <div class="parameter-type">{{param.type}}</div>
+          <div class="parameter-type">{{param.readable || param.type}}</div>
           <input class="parameter-name input-styled"
                  type="text"
                  placeholder="name"
@@ -82,17 +82,17 @@
           <li class="divider"></li>
           <li ng-repeat="item in setupCtrl.paramTypes['dimensional']">
             <a class="parameter-option"
-               ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
+               ng-click="setupCtrl.addParam(item)">{{item.type | capfirst}}</a>
           </li>
           <li class="divider"></li>
           <li ng-repeat="item in setupCtrl.paramTypes['primitive']">
             <a class="parameter-option"
-               ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
+               ng-click="setupCtrl.addParam(item)">{{item.type | capfirst}}</a>
           </li>
           <li class="divider"></li>
           <li ng-repeat="item in setupCtrl.paramTypes['custom']">
             <a class="parameter-option"
-               ng-click="setupCtrl.addParam(item.name)">{{item.name | capfirst}}</a>
+               ng-click="setupCtrl.addParam(item)">{{(item.readable || item.type) | capfirst}}</a>
           </li>
         </ul>
       </div>

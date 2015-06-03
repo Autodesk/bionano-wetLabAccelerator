@@ -22,10 +22,10 @@ angular.module('transcripticApp')
         //parameters
         this.paramTypes = _(Omniprotocol.inputTypes).
           forEach(function (param, name) {
-            _.assign(param, {name: name});
+            _.assign(param, {type: name});
           }).
           filter(_.matches({canParameterize: true})).
-          groupBy('type').
+          groupBy('category').
           value();
 
         //containers
@@ -34,8 +34,11 @@ angular.module('transcripticApp')
         self.storageOptions        = Omniprotocol.optionEnums.storage.storage;
 
 
-        self.addParam = function (type) {
-          self.parameters.push({type: type});
+        self.addParam = function (param) {
+          self.parameters.push({
+            type    : param.type,
+            readable: param.readable
+          });
           $scope.showParameters = false;
         };
 
@@ -115,7 +118,7 @@ angular.module('transcripticApp')
 
         scope.receiveVerifications = function (vers) {
           scope.hasVerifications = !!vers.length;
-          scope.verifications = vers;
+          scope.verifications    = vers;
           //todo - shouldn't be binding to the parameter directly...
           //fixme - using index is a hack, should be using whole verification (can refactor once can remove the $watch on all parameters)
           _.forEach(vers, function (ver, verIndex) {
