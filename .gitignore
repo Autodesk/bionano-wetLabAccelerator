@@ -5,6 +5,8 @@ dist
 bower_components/
 .idea/
 .DS_Store
-app/scripts/**/index.js
 .vagrant
 QA/integration/nosetests.xml
+app/scripts/omniprotocol.js
+app/scripts/omniprotocol/index.js
+app/scripts/conversion/autoprotocol/index.js

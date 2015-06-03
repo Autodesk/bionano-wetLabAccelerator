@@ -21,7 +21,7 @@ angular.module('transcripticApp')
     self.containerOptions = ContainerOptions;
 
     TranscripticAuth.watch(function (info) {
-      !!info && Container.list({per_page: 100}).$promise.then(self.setRemote);
+      _.result(info, 'organization', false) && Container.list({per_page: 100}).$promise.then(self.setRemote);
     });
 
     self.setRemote = function (remote, noReset) {
@@ -64,8 +64,10 @@ angular.module('transcripticApp')
       'plum'      : '#DDA0DD'
     };
 
+    var calls = 0;
     self.randomColor = function () {
-      return '#' + ('000000' + (Math.random() * 0xFFFFFF << 0).toString(16)).slice(-6);
+      calls = (calls + 1) % _.keys(self.definedColors).length;
+      return _.values(self.definedColors)[calls];
     };
 
     // helpers

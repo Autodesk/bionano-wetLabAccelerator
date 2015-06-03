@@ -262,13 +262,13 @@ module.exports = {
     }
   },
 
-  "dispense_resource": {
-    "operation"  : "dispense_resource",
+  "provision": {
+    "operation"  : "provision",
     "description": "Dispense a Transcriptic catalog resource into specified wells",
-    "name"       : "Dispense Resource",
+    "name"       : "Provision",
     "type"       : "pipette",
     "scaffold"   : {
-      "operation"   : "dispense_resource",
+      "operation"   : "provision",
       "requirements": {},
       "transforms"  : [
         {

@@ -75,15 +75,13 @@
     background: transparent;
     position: absolute;
     right: 24px;
-    top: 3px;
+    top: 2px;
     color: $grey;
-    margin: 0 5px;
-    height: 17px;
     z-index: 10;
 
     .iteration-none {
       display: inline-block;
-      margin: 3px 0 0;
+      margin: 3px 2px 0;
       width: 22px;
       height: 17px;
       cursor: default;

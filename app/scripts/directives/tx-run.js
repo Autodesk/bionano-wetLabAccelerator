@@ -23,9 +23,8 @@ angular.module('transcripticApp')
         self.projects = [];
 
         TranscripticAuth.watch(function (info) {
-          console.log(info);
           self.transcripticAuth = info;
-          if (!!info) {
+          if (_.result(info, 'organization', false)) {
             self.projects = Project.list();
           }
         });

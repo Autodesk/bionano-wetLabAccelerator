@@ -14,9 +14,9 @@ angular.module('transcripticApp')
       'consolidate': 'pipette',
       'distribute' : 'pipette',
 
-      'mix'              : 'mix',
-      'dispense_resource': 'dispense_resource',
-      'dispense'         : 'dispense',
+      'mix'      : 'mix',
+      'provision': 'provision',
+      'dispense' : 'dispense',
 
       'spread'  : 'pipette',
       'autopick': 'pipette',

@@ -493,6 +493,7 @@ module.exports = function (grunt) {
       'clean:server',
       //'wiredep', // doesn't work without internet
       'browserify',
+      'uglify:browserified',
       'configureProxies:livereload',
       'concurrent:server',
       'autoprefixer',

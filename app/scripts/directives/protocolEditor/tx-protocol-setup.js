@@ -67,32 +67,9 @@ angular.module('transcripticApp')
           $scope.checkContainerChange();
         };
 
-        /* containers */
-
-        self.selectNewContainer = function (param) {
-          _.merge(param, {value: {
-            isNew: true
-          }});
-          $scope.notifyContainerChange();
-        };
-
-        self.selectRemoteContainer = function (param, remote) {
-          param.readable = remote.name || remote.id;
-          _.assign(param.value, remote);
-          $scope.notifyContainerChange();
-        };
-
-        //this is set dynamically, reference should never be broken
-        self.remoteContainers = ContainerHelper.remote;
-
         self.handleChangeParamType = function (param) {
           self.clearParamValue(param);
           $scope.checkContainerChange();
-        };
-
-        self.handleSelectRemoteContainer = function (param, remote) {
-          _.assign(param.value, remote);
-          $scope.notifyContainerChange();
         };
 
       },
