@@ -80,7 +80,7 @@ function scaffoldOperationWithValues (operationName, fieldVals) {
   }
 
   _.assign(scaffold, {
-    description: clone.description
+    op_description: clone.description
   });
 
   _.forEach(fieldVals, function (fieldVal, fieldName) {
