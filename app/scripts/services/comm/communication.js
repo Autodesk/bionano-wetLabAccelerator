@@ -49,7 +49,7 @@ angular.module('tx.communication')
 
       return angular.extend({
         headers        : headers,
-        withCredentials: true,
+        withCredentials: true, //send cookies with response
         cache          : false,
         timeout        : timeoutCancel,
         responseType   : "json"
@@ -74,6 +74,11 @@ angular.module('tx.communication')
     //request directly, avoiding our proxy
     this.requestDirect = function (url, method, params) {
       return $http[method || 'get'](self.transcripticRoot + url, self.defaultResourceActions(params));
+    };
+
+    //request directly, avoiding our proxy
+    this.requestLocalProxy = function (url, method, params) {
+      return $http[method || 'get'](self.localRoot + url, self.defaultResourceActions(params));
     };
 
     this.requestUrl = function (url) {
