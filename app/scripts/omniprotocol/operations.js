@@ -829,7 +829,7 @@ module.exports = {
   "autoprotocol": {
     "operation"  : "autoprotocol",
     "description": "Type the JSON of an autoprotocol operation manually",
-    "name"       : "Arbitrary Autoprotocol",
+    "name"       : "Autoprotocol",
     "type"       : "special",
     "scaffold"   : {
       "operation"   : "autoprotocol",
