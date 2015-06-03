@@ -33,6 +33,10 @@ tx-protocol-op {
 
   .operation-fields {
     width: 100%;
+
+    tx-protocol-field {
+      margin: 3px 0;
+    }
   }
 
   &:first-child {
@@ -67,7 +71,6 @@ tx-protocol-op {
       opacity: 1;
     }
   }
-
 
   .operation-dropdown-toggle {
     display: none;

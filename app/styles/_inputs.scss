@@ -122,7 +122,6 @@
   border: 0;
   background: transparent;
   cursor: text;
-  resize: none;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -146,5 +145,18 @@ input[type="color"].color-swatch {
   &::-webkit-color-swatch {
     border: 1px solid transparent;
     border-radius: 10px;
+  }
+}
+
+//to be used with json-editor directive and .input-unstyled
+.json-editor {
+
+  min-width: 300px;
+  min-height: 150px;
+  background-color: #f9f9f9;
+  transition: background-color $transition-short-time;
+
+  &.ng-invalid-json {
+    background-color: transparentize($error, 0.85);
   }
 }

@@ -128,10 +128,12 @@ body {
     min-height: 1px;
     padding-left: $layout-width-column-gutter;
     padding-right: $layout-width-column-gutter;
+    vertical-align: top;
   }
 }
 
 .column-wrap {
+  padding: 0;
   margin: 0 (-$layout-width-column-gutter);
   @include clearfix();
 }
