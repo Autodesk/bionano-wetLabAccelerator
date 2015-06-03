@@ -19,7 +19,6 @@ angular
     'ngSanitize',
     'ui.bootstrap',
     'angularFileUpload',
-    'firebase',
     'tx.communication',
     'tx.datavis',
     'tx.protocolEditor'
@@ -30,21 +29,16 @@ angular
       .when('/', {
         controller  : 'HomeCtrl',
         controllerAs: 'homeCtrl',
-        templateUrl: 'views/routes/home.html'
+        templateUrl : 'views/routes/home.html'
       })
 
       //main routes
 
-      .when('/gallery', {
-        templateUrl : 'views/routes/gallery.html',
-        controller  : 'GalleryCtrl',
-        controllerAs: 'galleryCtrl'
-      })
       .when('/protocol', {
         templateUrl : 'views/routes/protocol.html',
         controller  : 'ProtocolCtrl',
         controllerAs: 'restyleCtrl', //todo - rename to ProtocolCtrl, make sure not passed down and breaking
-        resolve: {
+        resolve     : {
           protocol: ['ProtocolHelper', function (ProtocolHelper) {
             if (_.isEmpty(ProtocolHelper.currentProtocol)) {
               ProtocolHelper.assignCurrentProtocol(ProtocolHelper.createNewProtocol());
@@ -61,29 +55,14 @@ angular
         templateUrl: 'views/routes/auth.html'
       })
 
-      /*
-      //old routes
-
-      .when('/protocol', {
-        templateUrl : 'views/protocol.html',
-        controller  : 'ProtocolCtrl',
-        controllerAs: 'mainCtrl'
-      })
-      .when('/data', {
-        templateUrl : 'views/data.html',
-        controller  : 'DataCtrl',
-        controllerAs: 'dataCtrl'
-      })
-      .when('/ordering', {
-        templateUrl : 'views/ordering.html',
-        controller  : 'OrderingCtrl',
-        controllerAs: 'orderCtrl'
-      })
-
-      */
-
       //testing routes
 
+      /*
+      .when('/gallery', {
+        templateUrl : 'views/routes/gallery.html',
+        controller  : 'GalleryCtrl',
+        controllerAs: 'galleryCtrl'
+      })
       .when('/testing', {
         redirectTo: '/testing/plate'
       })
@@ -93,16 +72,15 @@ angular
         controllerAs: 'testCtrl'
       })
       .when('/testing/field', {
-        templateUrl: 'views/testing/field.html',
-        controller: 'TestingFieldCtrl',
+        templateUrl : 'views/testing/field.html',
+        controller  : 'TestingFieldCtrl',
         controllerAs: 'testingFieldCtrl'
       })
+      */
       .otherwise({
         redirectTo: '/'
       });
   })
-  .run(function (simpleLogin, $rootScope, $location) {
-    $rootScope.$on('$locationChangeSuccess', function () {
-      $rootScope.currentPath = $location.path();
-    })
+  .run(function (Authentication, Platform, Database, $http, $timeout) {
+
   });

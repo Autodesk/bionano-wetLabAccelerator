@@ -10,7 +10,7 @@
  * //todo - merge in containerOptions, and expose functionality here
  */
 angular.module('transcripticApp')
-  .service('ContainerHelper', function ($rootScope, Auth, Container, ContainerOptions) {
+  .service('ContainerHelper', function ($rootScope, TranscripticAuth, Container, ContainerOptions) {
     var self = this;
 
     self.local  = [];
@@ -20,7 +20,7 @@ angular.module('transcripticApp')
 
     self.containerOptions = ContainerOptions;
 
-    Auth.watch(function (info) {
+    TranscripticAuth.watch(function (info) {
       _.result(info, 'organization', false) && Container.list({per_page: 100}).$promise.then(self.setRemote);
     });
 

@@ -7,7 +7,7 @@
  *
  */
 angular.module('transcripticApp')
-  .directive('txContentMenu', function (ProtocolHelper, RunHelper, $document, $timeout, $location) {
+  .directive('txContentMenu', function (ProtocolHelper, RunHelper, Authentication, Database, $document, $timeout, $location) {
     return {
       templateUrl : 'views/tx-content-menu.html',
       restrict    : 'E',
@@ -28,20 +28,54 @@ angular.module('transcripticApp')
           });
         });
 
-        self.protocols = ProtocolHelper.protocols;
+        Authentication.watch(function (creds) {
+          self.loadingContent = true;
+          if (creds) {
+            Database.getAllProjectMetadata()
+              .then(function (metadatas) {
+                $scope.$applyAsync(_.partial(setProjects, metadatas));
+              })
+              .catch(function (err) {
+                console.warn(err);
+              })
+          } else {
+            setProjects([])
+          }
+        });
 
-        self.runs = RunHelper.runs;
+        function setProjects (projects) {
+
+          self.projects = _(projects).uniq().value();
+
+          self.protocols = _.filter(self.projects, function (proj) {
+            return _.result(proj, 'metadata.type') == 'protocol';
+          });
+
+          self.runs = _.filter(self.projects, function (proj) {
+            return _.result(proj, 'metadata.type') == 'run';
+          });
+
+          self.loadingContent = false;
+        }
 
         self.openProtocol = function (protocol) {
           self.toggleMenuVisible(false);
-          $location.path('/protocol');
-          ProtocolHelper.assignCurrentProtocol(protocol);
+
+          ProtocolHelper.getProtocol(protocol)
+            .then(ProtocolHelper.assignCurrentProtocol)
+            .then(function () {
+              $location.path('/protocol');
+            });
         };
 
         self.openRun = function (run) {
           self.toggleMenuVisible(false);
-          $location.path('/results');
-          RunHelper.assignCurrentRun(run);
+
+          RunHelper.getRun(run)
+            .then(RunHelper.assignCurrentRun)
+            .then(function () {
+              $location.path('/results');
+            });
         };
 
         self.createNewProtocol = function () {
@@ -58,9 +92,7 @@ angular.module('transcripticApp')
       },
       link        : function postLink (scope, element, attrs) {
 
-        /*scope.$watch('galleryCtrl.galleryRollup', function (newval) {
-          scope.galleryCtrl.rolled = _.groupBy(scope.galleryCtrl.galleryItems, newval);
-        });*/
+
       }
     };
   });

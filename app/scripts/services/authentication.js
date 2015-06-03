@@ -8,23 +8,74 @@
  * Service in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .service('Authentication', function (simpleLogin) {
+  .service('Authentication', function ($q, $cookies, Platform) {
     var self = this;
 
-    var userInfo = {
-      name : '',
-      id : ''
+    var userInfo = {},
+        watchers = [];
+
+    self.authenticate = function (userstring) {
+
+      //todo - store userstring / token as a cookie?
+
+      return Platform.authenticate(userstring).
+        then(function () {
+          return Platform.userValue('userstring', userstring);
+        }).
+        then(Platform.getUserInfo).
+        then(function (retrieved) {
+          _.assign(userInfo, retrieved, {
+            token : userstring,
+            name: retrieved.name
+          });
+
+          $cookies['authToken'] = userstring;
+
+          //todo - verify creds are different before triggering
+          triggerWatchers();
+        }).
+        catch(function (err) {
+          //todo - handle error
+          console.log(err);
+        });
     };
 
-    //note - firebase
-    simpleLogin.watch(function(user) {
-      if (!!user) {
-        _.assign(userInfo, {
-          id : user.uid,
-          name : 'Billy Bob Joe' //todo
-        });
+    //returns promise, resolving to whether successful or not
+    self.unauthenticate = function () {
+      return Platform.unauthenticate()
+        .then(function () {
+          userInfo = {};
+          $cookies['authToken'] = '';
+          triggerWatchers();
+          return true;
+        })
+        .catch(_.constant(false));
+    };
+
+    function triggerWatcher (fn) {
+      var toPass = _.isEmpty(userInfo) ? null : _.cloneDeep(userInfo);
+      fn(toPass);
+    }
+
+
+    function triggerWatchers () {
+      angular.forEach(watchers, triggerWatcher);
+    }
+
+    self.watch = function (cb, $scope) {
+      triggerWatcher(cb);
+      watchers.push(cb);
+      var unbind = function () {
+        var i = watchers.indexOf(cb);
+        if (i > -1) {
+          watchers.splice(i, 1);
+        }
+      };
+      if ($scope) {
+        $scope.$on('$destroy', unbind);
       }
-    });
+      return unbind;
+    };
 
     self.getUsername = function () {
       return userInfo.name;
@@ -34,5 +85,13 @@ angular.module('transcripticApp')
       return userInfo.id;
     };
 
-    return self;
+
+    //init - check for cookie, authenticate if present
+
+    var initialAuthToken = $cookies['authToken'];
+    if (!!initialAuthToken) {
+      console.warn('found initial auth token', initialAuthToken);
+      self.authenticate(initialAuthToken);
+    }
+
   });

@@ -8,13 +8,13 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('DataCtrl', function ($scope, $q, $http, Auth, Project, Container, Run, Data) {
+  .controller('DataCtrl', function ($scope, $q, $http, TranscripticAuth, Project, Container, Run, Data) {
 
     var self = this;
 
     $scope.current = {};
 
-    Auth.watch(function () {
+    TranscripticAuth.watch(function () {
       self.projects = Project.list();
     });
 

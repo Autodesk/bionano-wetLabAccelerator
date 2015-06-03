@@ -49,7 +49,7 @@ header.site-header {
     font-size: $header-nav-font-size;
     font-weight: $font-weight-bold;
 
-    a {
+    a.nav-link {
       height: 100%;
       display: inline-block;
       margin: 0 $layout-spacing-lg;
@@ -81,7 +81,7 @@ header.site-header {
     width: $logo-user-width;
     justify-content: flex-end;
 
-    a {
+    > a {
       display: inline-block;
       margin: 0 15px;
       font-size: $header-nav-font-size;

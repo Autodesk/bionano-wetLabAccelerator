@@ -7,7 +7,7 @@
  * # txProtocolSetup
  */
 angular.module('transcripticApp')
-  .directive('txProtocolSetup', function ($rootScope, Auth, Container, Omniprotocol, ContainerHelper) {
+  .directive('txProtocolSetup', function ($rootScope, TranscripticAuth, Container, Omniprotocol, ContainerHelper) {
     return {
       templateUrl     : 'views/tx-protocol-setup.html',
       restrict        : 'E',

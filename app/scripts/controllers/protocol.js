@@ -11,8 +11,6 @@ angular.module('transcripticApp')
   .controller('ProtocolCtrl', function ($scope, $http, ProtocolHelper) {
     var self = this;
 
-    self.allProtocols = ProtocolHelper.protocols;
-
     self.currentProtocol = ProtocolHelper.currentProtocol;
 
     self.loadDemo = function () {
