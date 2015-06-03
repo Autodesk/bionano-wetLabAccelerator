@@ -14,6 +14,7 @@ $input-hover-padding-hori: 0.6em;
   -webkit-appearance: none;
   display: inline-block;
   border: 2px solid transparent;
+  max-width: 100%;
   margin:0;
   padding: 0;
   outline: 0;
@@ -133,6 +134,7 @@ $input-hover-padding-hori: 0.6em;
   outline: 0;
   border: 0;
   background: transparent;
+  max-width: 100%;
   cursor: text;
 
   &::-webkit-outer-spin-button,

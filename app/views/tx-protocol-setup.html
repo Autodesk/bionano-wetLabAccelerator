@@ -38,11 +38,13 @@
       <div class="parameter-inner">
         <div class="parameter-info">
           <div class="parameter-type">{{param.readable || param.type}}</div>
-          <input class="parameter-name input-styled"
-                 type="text"
-                 placeholder="name"
-                 ng-model="param.name"
-                 tx-change-broadcaster="editor:parameterNameChange">
+          <div class="parameter-name">
+            <input class="input-styled"
+                   type="text"
+                   placeholder="name"
+                   ng-model="param.name"
+                   tx-change-broadcaster="editor:parameterNameChange">
+          </div>
         </div>
 
         <div class="parameter-value">
