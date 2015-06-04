@@ -30,9 +30,12 @@ angular.module('transcripticApp')
         self.remoteContainers = ContainerHelper.remote;
 
         self.selectNewContainer = function () {
-          _.merge(self.model, {value: {
-            isNew: true
-          }});
+          self.name = '';
+          _.assign(self.model, {
+            isNew: true,
+            id : null,
+            name : null
+          });
           $scope.notifyContainerChange();
         };
 

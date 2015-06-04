@@ -25,7 +25,6 @@ angular.module('tx.communication')
         list: Communication.defaultResourceActions({
           method: "GET",
           isArray: true,
-          cache: true,
           transformResponse: function (data, headers) {
             //todo - check for more than 1 page / pass param for more than 10
             return angular.isArray(data.results) ? data.results : data;
