@@ -39,8 +39,6 @@ tx-content-menu {
     }
   }
 
-  //todo - clean this up!
-
   label[for="menu-trigger"] {
     position: fixed;
     left: $layout-width-padding-side;
@@ -75,7 +73,7 @@ tx-content-menu {
 
   .menu {
     width: $layout-width-sidepanel;
-    min-height: 100vh; //todo - fix. this doesn't work when not filling window
+    min-height: 100vh; //make sure have padding at bottom
     position: fixed;
     top: 0;
     bottom: 0;
@@ -84,7 +82,7 @@ tx-content-menu {
     z-index: $z-sidepanel + 1;
     background-color: $content-menu-bg;
     padding: $layout-spacing-md $layout-spacing-md ($layout-spacing-lg + $layout-height-header);
-    margin: 50px 0;
+    margin: $layout-height-header 0;
     display: block;
     transform: translate3d(-100%, 0, 0);
     transition: transform $transition-short-time $transition-short-ease;
@@ -105,7 +103,7 @@ tx-content-menu {
     }
 
     .contentMenu-group {
-      padding: 10px 0 0;
+      padding: $layout-spacing-md 0 0;
     }
 
     .contentMenu-heading {

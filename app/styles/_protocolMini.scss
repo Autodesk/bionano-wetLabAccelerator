@@ -99,6 +99,7 @@
 
   .has-arrow {
 
+    //todo - use arrow include
     &:after {
       top: 100%;
       left: 50%;
@@ -110,8 +111,8 @@
       pointer-events: none;
       border-color: rgba(255, 255, 255, 0);
       border-top-color: $white;
-      border-width: 10px;
-      margin-left: -$clip-arrow-width;
+      border-width: $arrow-height;
+      margin-left: -$arrow-height;
     }
 
     &.protocol-group.multichild {
@@ -148,6 +149,7 @@
     margin-top: -$internal-padding-vert;
     z-index: $z-arrow;
     background: $primary;
+    //autoprefixer does not handle this well
     -webkit-clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
     clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
     opacity: 0; //default hidden
