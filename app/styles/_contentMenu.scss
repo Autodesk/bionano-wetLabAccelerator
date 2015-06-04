@@ -62,6 +62,7 @@ tx-content-menu {
       top: 5px;
       display: block;
       content: '';
+      transition: all $transition-short-time $transition-short-ease;
     }
 
     span:before {
@@ -69,10 +70,6 @@ tx-content-menu {
     }
     span:after {
       top: 6px;
-    }
-
-    span, span:before, span:after {
-      transition: all 500ms ease-in-out;
     }
   }
 
@@ -90,7 +87,7 @@ tx-content-menu {
     margin: 50px 0;
     display: block;
     transform: translate3d(-100%, 0, 0);
-    transition: transform $transition-long-time $transition-long-ease;
+    transition: transform $transition-short-time $transition-short-ease;
     overflow-y: scroll;
 
     .new-protocol-button {
