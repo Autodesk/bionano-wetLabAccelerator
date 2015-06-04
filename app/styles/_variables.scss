@@ -124,6 +124,7 @@ $layout-width-page: $layout-container-width + (2 * $layout-container-padding-sid
 //layout
 
 $layout-height-header: 50px;
+$layout-main-spacing-top: 15px;
 $layout-width-sidepanel: 300px;
 
 //layout - build
@@ -181,6 +182,10 @@ $input-hover-padding-hori: 0.6em;
 //header
 $header-bg: $bg-white-semitransparent;
 $header-nav-font-size: 11px;
+$header-logo-spacing-side: ($layout-width-padding-side / 2);
+$header-logo-dim: $layout-height-header - ($header-logo-spacing-side * 2);
+$nav-height: $layout-height-header;
+$logo-user-width: 300px;
 
 //footer
 $footer-bg: transparent;

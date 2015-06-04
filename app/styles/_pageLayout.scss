@@ -41,7 +41,7 @@ body {
   }
 
   main {
-    padding-top: $layout-height-header;
+    padding-top: $layout-height-header + $layout-main-spacing-top;
     flex-grow: 1;
     align-self: center;
     align-items: flex-start;

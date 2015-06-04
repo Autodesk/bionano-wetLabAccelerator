@@ -1,10 +1,5 @@
 header.site-header {
 
-  $header-logo-spacing: ($layout-width-padding-side / 2);
-  $header-logo-dim: $layout-height-header - ($header-logo-spacing * 2);
-  $nav-height: $layout-height-header;
-  $logo-user-width: 300px;
-
   z-index: $z-header;
   line-height: 1;
   display: flex;
@@ -21,7 +16,7 @@ header.site-header {
     img {
       width: $header-logo-dim;
       height: $header-logo-dim;
-      margin: $header-logo-spacing;
+      margin: $header-logo-spacing-side;
       background-position: center center;
       background-size: $header-logo-dim $header-logo-dim;
     }
@@ -83,7 +78,7 @@ header.site-header {
 
     .user-toggle {
       display: inline-block;
-      margin: 0 15px;
+      margin: 0 $layout-width-padding-side;
       font-size: $header-nav-font-size;
       color: $light-grey;
       opacity: 0.6;

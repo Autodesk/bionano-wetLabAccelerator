@@ -43,8 +43,8 @@ tx-content-menu {
 
   label[for="menu-trigger"] {
     position: fixed;
-    left: 10px;
-    top: 65px;
+    left: $layout-width-padding-side;
+    top: $layout-height-header + $layout-main-spacing-top;
     z-index: $z-sidepanel + 2;
     height: 15px;
     width: 20px;
