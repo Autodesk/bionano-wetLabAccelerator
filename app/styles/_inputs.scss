@@ -10,9 +10,9 @@
 .input-styled {
   -webkit-appearance: none;
   display: inline-block;
-  border: 0; // 2px solid transparent;
+  border: $input-border-width solid transparent;
   max-width: 100%;
-  margin:0;
+  margin: -$input-border-width;
   padding: 0;
   outline: 0;
   background: transparent;
@@ -22,12 +22,13 @@
 
   &:hover,
   &:focus {
+    border-color: $primary;
     -webkit-appearance: none;
     border-radius: 1em;
     //need special values esp. for auto-grow directive because inputs are usually just large enough to show input
     box-sizing: content-box;
     padding: $input-hover-padding-vert 0 $input-hover-padding-vert $input-hover-padding-hori;
-    margin: (-$input-hover-padding-vert) $input-hover-padding-hori (-$input-hover-padding-vert) (-$input-hover-padding-hori);
+    margin: (-$input-hover-padding-vert - $input-border-width) $input-hover-padding-hori (-$input-hover-padding-vert - $input-border-width) (-$input-hover-padding-hori);
   }
 
   &:hover {
@@ -39,9 +40,8 @@
   }
 
   &:focus {
-    border-color: $primary;
     background: transparent;
-    color: $black;
+    color: inherit;
 
     &::-webkit-input-placeholder {
       color: transparent;

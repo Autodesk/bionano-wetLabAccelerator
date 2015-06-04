@@ -34,8 +34,9 @@ tx-protocol-op {
   .operation-fields {
     width: 100%;
 
-    tx-protocol-field {
+    > tx-protocol-field {
       margin: 3px 0;
+      padding: 0 10px;
     }
   }
 

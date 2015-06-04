@@ -29,12 +29,6 @@
     outline: none;
     color: $white;
     background-color: $primary-active;
-
-    border-radius: 1em;
-    //need special values esp. for auto-grow directive because inputs are usually just large enough to show input
-    box-sizing: content-box;
-    padding: $input-hover-padding-vert $input-hover-padding-hori;
-    margin: (-$input-hover-padding-vert) (-$input-hover-padding-hori);
   }
 
   &[disabled] {
