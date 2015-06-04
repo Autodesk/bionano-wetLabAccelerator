@@ -11,7 +11,8 @@ angular.module('transcripticApp')
   .service('Database', function ($q, UUIDGen, Platform, Authentication) {
 
     var self  = this,
-        cache = {};
+        cache = {},
+        pathToId = 'metadata.id';
 
     //todo - expose cache for binding
 
@@ -96,6 +97,7 @@ angular.module('transcripticApp')
 
     //check for id, set if unset, and return project
     self.saveProject = function (project) {
+      ensureProjectId(project);
       return Platform.saveProject(self.removeExtraneousFields(project))
         .then(saveProjectToCache);
     };
@@ -174,6 +176,14 @@ angular.module('transcripticApp')
      helpers / utils
      *****/
 
+    function ensureProjectId (project) {
+      var id = getIdFromIdOrProjectInput(project);
+      if (!id) {
+        _.set(project, pathToId, UUIDGen());
+      }
+      return _.result(project, pathToId);
+    }
+
     function retrieveFromCache (project) {
       var id = getIdFromIdOrProjectInput(project);
       return _.result(cache, id);
@@ -214,7 +224,7 @@ angular.module('transcripticApp')
     }
 
     function getIdFromIdOrProjectInput (project) {
-      return _.isString(project) ? project : _.result(project, 'metadata.id');
+      return _.isString(project) ? project : _.result(project, pathToId);
     }
 
     function projectOnlyHasMetadata (project) {
