@@ -10,7 +10,7 @@
  * todo - rename to match names in protocolUtils
  */
 angular.module('transcripticApp')
-  .controller('operationSummaryCtrl', function ($scope, $sce, Communication, ProtocolHelper, Omniprotocol, ProtocolUtils, TranscripticAuth, RunHelper, $window) {
+  .controller('operationSummaryCtrl', function ($scope, $sce, Communication, ProtocolHelper, Omniprotocol, ProtocolUtils, TranscripticAuth, RunHelper, $window, $timeout) {
     var self = this;
 
     self.protocol = ProtocolHelper.currentProtocol;
@@ -82,7 +82,7 @@ angular.module('transcripticApp')
       return $sce.trustAsResourceUrl(url);
     };
 
-    self.getResourceUrl = function (resource) {
+    self.getResourceUrlPath = function (resource) {
       // return 'upload/url_for?key=' + encodeURIComponent(resourceKey); //old way
       //return '-/' + resourceId + '.raw'; //CORS
 
@@ -95,8 +95,17 @@ angular.module('transcripticApp')
         resource.id + '?format=raw';
     };
 
+    //gives full URL
+    self.getResourceUrl = function (resource) {
+      return Communication.requestUrl(self.getResourceUrlPath(resource));
+    };
+
     self.getResource = function (resource) {
       console.log(resource);
+
+      $timeout(function () {
+        resource.status = 'Still loading...'
+      });
 
       return Communication.request(self.getResourceUrl(resource), 'get', {
         timeout: 60000,
@@ -106,6 +115,10 @@ angular.module('transcripticApp')
           'Content-Type': 'image/jpeg'
         }
       })
+        .error(function (data) {
+          console.log('resource request timed out');
+          resource.status = 'Request timed out. Please Download'
+        })
         .success(function (data, headers) {
           console.log('received!');
           console.log(data);
@@ -115,7 +128,6 @@ angular.module('transcripticApp')
           resource.resourceUrl = blobUrl;
 
           /*
-          //todo - try reading as blob
 
           //expects a blob
           // encode data to base 64 url
@@ -157,10 +169,7 @@ angular.module('transcripticApp')
           var imageUrl = urlCreator.createObjectURL( blob );
 
           console.log(imageUrl);
-          //todo - support multiple
-          self.imageUrl = imageUrl;
           */
-
         });
     };
 

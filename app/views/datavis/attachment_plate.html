@@ -7,9 +7,20 @@
 </div>
 
 <div ng-init="resources = summaryCtrl.getResourcesForOp()">
-  <div ng-repeat="resource in resources">
+  <div ng-repeat="resource in resources"
+       class="summary-resource">
+
+    <div class="pull-right resource-download">
+      <a download="{{resource.dataref}}"
+         ng-href="{{summaryCtrl.getResourceUrl(resource)}}"
+         class="field-action-text">
+        download
+      </a>
+    </div>
+
     <img ng-init="!resource.resourceUrl && summaryCtrl.getResource(resource)"
-         ng-src="{{resource.resourceUrl}}">
+         ng-src="{{resource.resourceUrl}}"
+         class="resource-image">
 
     <p ng-hide="resource.resourceUrl">loading...</p>
   </div>

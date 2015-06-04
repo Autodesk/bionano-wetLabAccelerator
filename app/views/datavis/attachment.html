@@ -5,10 +5,23 @@
 </tx-plate>
 
 <div ng-init="resources = summaryCtrl.getResourcesForOp()">
-  <div ng-repeat="resource in resources">
-    <img ng-init="!resource.resourceUrl && summaryCtrl.getResource(resource)"
-         ng-src="{{resource.resourceUrl}}">
+  <div ng-repeat="resource in resources"
+       class="summary-resource">
 
-    <p ng-hide="resource.resourceUrl">loading...</p>
+    <div class="pull-right resource-download">
+      <a download="{{resource.dataref}}"
+         ng-href="{{summaryCtrl.getResourceUrl(resource)}}"
+         class="field-action-text">
+        download
+      </a>
+    </div>
+
+    <img ng-init="!resource.resourceUrl && summaryCtrl.getResource(resource)"
+         ng-src="{{resource.resourceUrl}}"
+         class="resource-image">
+
+    <p ng-show="resource.status && !resource.resourceUrl"
+       ng-bind="resource.status"></p>
+    <p ng-hide="resource.status || resource.resourceUrl">loading...</p>
   </div>
 </div>

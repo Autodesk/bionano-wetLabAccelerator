@@ -29,3 +29,17 @@
     max-width: inherit;
   }
 }
+
+.summary-resource {
+  position: relative;
+  margin: $layout-spacing-md 0;
+
+  .resource-download {
+    z-index: 2;
+    margin: $layout-spacing-md;
+  }
+
+  .resource-image {
+    max-width: 100%;
+  }
+}
