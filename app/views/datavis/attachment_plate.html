@@ -22,6 +22,8 @@
          ng-src="{{resource.resourceUrl}}"
          class="resource-image">
 
-    <p ng-hide="resource.resourceUrl">loading...</p>
+    <p ng-show="resource.status && !resource.resourceUrl"
+       ng-bind="resource.status"></p>
+    <p ng-hide="resource.status || resource.resourceUrl">loading...</p>
   </div>
 </div>
