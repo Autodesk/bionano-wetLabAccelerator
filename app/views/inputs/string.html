@@ -1,13 +1,11 @@
 <div style="display: inline-block; position: relative;"
-     ng-click="fieldCtrl.showTextarea = !fieldCtrl.showTextarea"
-     ng-init="fieldCtrl.showTextarea = false;">
+     squelch-event="click">
   <input type="text"
          auto-grow="30"
          style="max-width: 180px; border-radius: 0;"
          class="input-styled"
          ng-model="fieldCtrl.model"
-         ng-keydown="fieldCtrl.showTextarea = true;"
-         ng-keyup="fieldCtrl.showTextarea = true;"
+         ng-focus="fieldCtrl.showTextarea = true"
          placeholder="{{fieldCtrl.field.default ? fieldCtrl.field.default :'edit...'}}">
 
   <div popover-transclude
