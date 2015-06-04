@@ -14,9 +14,11 @@ angular.module('transcripticApp')
 
     self.currentRun = {};
 
-    self.assignCurrentRun = function (inputRun) {
+    self.assignCurrentRun = function (inputRun, dontAssignProtocol) {
       _.assign(self.currentRun, Omniprotocol.utils.getScaffoldRun(), inputRun);
-      ProtocolHelper.assignCurrentProtocol(self.currentRun.protocol);
+      if (dontAssignProtocol !== false) {
+        ProtocolHelper.assignCurrentProtocol(self.currentRun.protocol);
+      }
       return self.currentRun;
     };
 
@@ -189,7 +191,7 @@ angular.module('transcripticApp')
 
     //watch for auth changes
     Authentication.watch(function (creds) {
-      self.assignCurrentRun({});
+      self.assignCurrentRun({}, false);
     });
 
   });

@@ -17,11 +17,11 @@ angular.module('transcripticApp')
     this.dyeOptions = DyeOptions;
 
     this.colors = {
-      "channel1" : "purple",
-      "channel2" : "blue",
-      "channel3" : "green",
-      "channel4" : "yellow",
-      "channel5" : "red"
+      "channel1" : "#dd22dd",
+      "channel2" : "#2222dd",
+      "channel3" : "#22dd22",
+      "channel4" : "#dddd22",
+      "channel5" : "#dd2222"
     };
 
     this.activateChannelIndex = function (idx) {

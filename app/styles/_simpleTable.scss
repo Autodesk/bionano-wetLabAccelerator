@@ -2,6 +2,17 @@
   width: 100%;
   border-collapse: collapse;
 
+  tr.selectable {
+    &.selected {
+      background-color: $black;
+    }
+
+    &.active,
+    &:hover {
+      background-color: $primary;
+    }
+  }
+
   td {
     padding: 3px $layout-spacing-md;
     width: 50%;
