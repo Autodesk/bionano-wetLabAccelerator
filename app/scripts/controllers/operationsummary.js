@@ -105,9 +105,9 @@ angular.module('transcripticApp')
 
       $timeout(function () {
         resource.status = 'Still loading...'
-      });
+      }, 10000);
 
-      return Communication.request(self.getResourceUrl(resource), 'get', {
+      return Communication.request(self.getResourceUrlPath(resource), 'get', {
         timeout: 60000,
         responseType: 'blob',
         headers     : {

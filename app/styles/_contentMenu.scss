@@ -1,8 +1,6 @@
 tx-content-menu {
 
   $close-width: 30px;
-  $transition-time: 0.3s;
-  $transition-ease: ease-out;
 
   z-index: $z-sidepanel;
 
@@ -29,12 +27,12 @@ tx-content-menu {
 
       + label {
         left: 260px;
-        transition: left $transition-long-time;
+        transition: left $transition-short-time $transition-short-ease;
       }
 
       ~ .menu {
         transform: translate3d(0, 0, 0);
-        transition: transform $transition-long-time $transition-ease;
+        transition: transform $transition-short-time $transition-short-ease
       }
     }
   }

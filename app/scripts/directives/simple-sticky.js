@@ -95,7 +95,11 @@ angular.module('transcripticApp')
           if (affixToBottom) {
             shouldAffix = ($window.innerHeight + pageYOffset) < fromEdgeStart;
           } else {
-            shouldAffix = (pageYOffset + fromEdgeAffix) > fromEdgeStart;
+            shouldAffix = (
+              //check past threshold
+              (pageYOffset + fromEdgeAffix) > fromEdgeStart) &&
+              //check at page top
+              (pageYOffset > Math.min(10, fromEdgeAffix) );
           }
 
           if (shouldAffix !== isAffixed) {
