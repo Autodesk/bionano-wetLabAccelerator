@@ -25,3 +25,8 @@
 .dragover-err {
   background: $error;
 }
+
+//bootstrap override
+.close {
+  line-height: 0.75em;
+}

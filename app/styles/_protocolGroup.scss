@@ -216,6 +216,7 @@
 .operation-dropdown-toggle {
   color: $grey;
   cursor: pointer;
+  top: 2px;
 
   &:hover {
     color: $primary;
