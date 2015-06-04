@@ -19,9 +19,7 @@ angular.module('transcripticApp')
         $rootScope.$broadcast('editor:newprotocol');
       });
 
-      _.assign(self.currentProtocol,
-        Omniprotocol.utils.getScaffoldProtocol(),
-        newProtocol);
+      _.assign(self.currentProtocol, self.createNewProtocol(newProtocol));
 
       $rootScope.$applyAsync();
 
