@@ -15,17 +15,17 @@ angular.module('transcripticApp')
     self.graphLabels = {
       "absorbance"  : {
         xlabel: "timepoint",
-        ylabel: "absorbance",
+        ylabel: "Absorbance Units (AU)",
         title : "Absorbance Readings"
       },
       "fluorescence": {
         xlabel: "timepoint",
-        ylabel: "fluorescence",
+        ylabel: "Relative Light Units (RLU)",
         title : "Fluorescence Readings"
       },
       "luminescence": {
         xlabel: "timepoint",
-        ylabel: "luminescence",
+        ylabel: "Relative Light Units (RLU)",
         title : "Luminescence Readings"
       }
     };

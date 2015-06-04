@@ -99,6 +99,7 @@ angular.module('transcripticApp')
       console.log(resource);
 
       return Communication.request(self.getResourceUrl(resource), 'get', {
+        timeout: 60000,
         responseType: 'blob',
         headers     : {
           'Accept'      : 'image/jpeg',
