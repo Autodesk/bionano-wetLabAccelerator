@@ -15,7 +15,7 @@ angular.module('transcripticApp')
       scope      : {
         title : '@',
         preferred: '@preferredPlacement',
-        isOpen: '='
+        isOpen: '=?'
       },
       templateUrl: 'views/popover-transclude.html',
       link       : function (scope, element, attrs) {
@@ -35,11 +35,16 @@ angular.module('transcripticApp')
         });
 
         scope.$watch('isOpen', function (open, wasOpen) {
-          if (open && !wasOpen) {
+          hide();
+          if (open) {
             positionPopover(target);
-            $timeout(registerTriggers);
-            $timeout(_.partial(positionPopover,target));//account for model changing or something
-          } else if (!open) {
+            $timeout(function () {
+              //account for model changing or something by timing out and manually showing
+              positionPopover(target);
+              registerTriggers();
+              show();
+            });
+          } else {
             //'open' class will be handled in template by internalOpen
             unregisterTriggers();
           }
