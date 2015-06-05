@@ -38,9 +38,9 @@ function rpc(method, params, callback) {
 		method: 'POST',
 		headers: headers,
 		//Normally node.js needs the cert, which is dumb
-		// rejectUnauthorized: false,
-		// requestCert: true,
-		// agent: false,
+		rejectUnauthorized: false,
+		requestCert: true,
+		agent: false,
 	};
 	console.log(options);
 	var local_callback = function(response) {
