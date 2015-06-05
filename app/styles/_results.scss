@@ -27,6 +27,12 @@
   .results-summary-wrap {
     width: 100%;
     max-width: inherit;
+    overflow-y: scroll;
+    max-height: 100vh;
+
+    &.sticky {
+      padding: 45px 0 40px;
+    }
   }
 }
 
