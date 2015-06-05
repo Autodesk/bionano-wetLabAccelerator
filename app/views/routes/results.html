@@ -1,6 +1,6 @@
 <div class="results">
 
-  <div class="page-labels flex-horizontal" ng-show="resultsCtrl.run.protocol.groups">
+  <div class="page-labels flex-horizontal" ng-show="resultsCtrl.run.protocol.groups.length">
     <div class="sidepanel flex-child">
       <p>Protocol Overview</p>
     </div>
@@ -80,7 +80,7 @@
     </div>
   </div>
 
-  <div class="flex-horizontal flex-grower" ng-show="resultsCtrl.run.protocol.groups">
+  <div class="flex-horizontal flex-grower" ng-show="resultsCtrl.run.protocol.groups.length">
 
     <div class="sidepanel flex-vertical">
       <tx-protocol-mini protocol="resultsCtrl.run.protocol"
@@ -124,7 +124,7 @@
     </div>
   </div>
 
-  <div ng-hide="resultsCtrl.run.protocol.groups">
+  <div ng-hide="resultsCtrl.run.protocol.groups.length">
     Select a protocol... (you must be logged in and initiated a run from this app)
   </div>
 
