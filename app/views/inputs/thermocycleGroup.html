@@ -31,7 +31,7 @@
         <div class="tx-table-header">
           <div class="tx-table-item-field">Step</div>
           <div class="tx-table-item-field">Temp°</div>
-          <div class="tx-table-item-field">Grad°</div>
+          <!--<div class="tx-table-item-field">Grad°</div>-->
           <div class="tx-table-item-field">Time</div>
           <div class="tx-table-item-field">Read</div>
         </div>
@@ -46,6 +46,7 @@
                                field="{type: 'temperature'}">
             </tx-protocol-field>
           </div>
+          <!--
           <div class="tx-table-item-field">
             <tx-protocol-field ng-model="step.gradient"
                                prevent-variable="true"
@@ -55,6 +56,7 @@
                                }">
             </tx-protocol-field>
           </div>
+          -->
           <div class="tx-table-item-field">
             <tx-protocol-field ng-model="step.duration"
                                prevent-variable="true"
@@ -69,19 +71,19 @@
         </div>
       </div>
 
-      <div style="text-align:center; padding-top: 10px;">
       <a class="field-action-text"
          style="display: inline-block"
          ng-click="thermoCtrl.addStep(fieldCtrl.model); fieldCtrl.detailsVisible = true">
         + Add Step
       </a>
-      </div>
     </div>
 
     <div class="column-8">
       <tx-thermocycle-group group="fieldCtrl.model"></tx-thermocycle-group>
+
+      <div style="text-align:center;padding-top: 15px;">
+        <span class="thin text-sm">gradient support forthcoming</span>
+      </div>
     </div>
   </div>
-
-
 </tx-modal>
