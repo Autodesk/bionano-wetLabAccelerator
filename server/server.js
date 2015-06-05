@@ -184,6 +184,9 @@ app.get('/logout', function(req, res){
 	res.redirect('/');
 });
 
+app.get('/checks', function(req, res){
+	res.send('OK');
+});
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If
