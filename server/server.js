@@ -20,6 +20,8 @@ var FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID || '861870727182803';
 var FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET || 'd4d8026adb8f40d795c8f379b8661a69';
 var HOST = process.env.HTTP_HOST || "http://localhost:" + PORT;
 
+var LOCAL = process.env.LOCAL || false; //Local serving
+
 var RPC_HOST = process.env.RPC_HOST || "platform.bionano.autodesk.com";
 var RPC_PORT = parseInt(process.env.RPC_PORT) || 443;
 
@@ -137,8 +139,15 @@ app.use(bodyParser());
 // Initialize Passport!  Also use passport.session() middleware, to support
 app.use(passport.initialize());
 
-//Serve static content
-app.use(express.static(appFolder));
+if (LOCAL) {
+	app.use(express.static('.tmp'));
+	app.use(express.static('bower_components'));
+	app.use(express.static('app'));
+} else {
+	//Serve static content
+	app.use(express.static(appFolder));
+}
+
 
 app.get('/', function(req, res){
 	res.render('index', { user: req.user });
