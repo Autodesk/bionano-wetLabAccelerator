@@ -17,7 +17,8 @@ angular.module('tx.protocolEditor')
         model          : '=ngModel',
         field          : '=',
         preventVariable: '=',
-        hideTitle      : '='
+        hideTitle      : '=',
+        hideUnit       : '=?' //for dimensionals
       },
       bindToController: true,
       controllerAs    : 'fieldCtrl',
@@ -26,7 +27,7 @@ angular.module('tx.protocolEditor')
 
         //limit toggling of parameters to fields which support it
         var parameterizables = _.keys(_.pick(Omniprotocol.inputTypes, _.matches({canParameterize: true})));
-        
+
         self.parameterAllowed = function parameterAllowed (fieldType) {
           return _.indexOf(parameterizables, fieldType) >= 0;
         };
@@ -81,9 +82,9 @@ angular.module('tx.protocolEditor')
         var hideDropDown;
 
         self.closeDropdown = function () {
-          hideDropDown = $timeout(function(){
-              self.paramListVisible = false;
-            }, 1500);
+          hideDropDown = $timeout(function () {
+            self.paramListVisible = false;
+          }, 1500);
         };
 
         self.cancelDropdown = function () {
@@ -135,10 +136,10 @@ angular.module('tx.protocolEditor')
           post: function postLink (scope, iElement, iAttrs, controllers) {
 
             var ngModel = controllers[0],
-                opCtrl = controllers[1];
+                opCtrl  = controllers[1];
 
             scope.hasOpCtrl = !_.isUndefined(opCtrl);
-            scope.opCtrl = opCtrl;
+            scope.opCtrl    = opCtrl;
 
             //have dimensional here instead of own conroller because needs ngModel controller
             //if dimensional, ensure that unit is defined when changed

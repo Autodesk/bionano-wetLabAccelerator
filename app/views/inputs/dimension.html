@@ -5,10 +5,12 @@
        auto-grow="30"
        placeholder="{{fieldCtrl.field.default.value || '-'}}">
 <div class="option-button"
+     ng-hide="fieldCtrl.hideUnit"
      dropdown>
     <div class="option-toggle"
          dropdown-toggle>
-       <span class="option-button-label" ng-bind="fieldCtrl.model.unit ? fieldCtrl.model.unit : (fieldCtrl.field.default.unit ? fieldCtrl.field.default.unit : unitOptions[0])"></span>
+       <span class="option-button-label"
+             ng-bind="fieldCtrl.model.unit ? fieldCtrl.model.unit : (fieldCtrl.field.default.unit ? fieldCtrl.field.default.unit : unitOptions[0])"></span>
       <span class="option-button-caret glyphicon glyphicon-menu-down"></span>
     </div>
     <ul class="dropdown-menu dropdown-menu-center">
