@@ -65,4 +65,10 @@
   .metadata-spacer {
     @extend .column-3;
   }
+
+  &.metadata-invalid {
+    .metadata-label {
+      color: $warning;
+    }
+  }
 }
