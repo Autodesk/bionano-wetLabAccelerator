@@ -22,9 +22,9 @@
           </div>
           <div class="metadata-spacer"></div>
         </div>
-        <div class="table-row">
+        <div class="table-row" style="height: 2em;">
           <div class="metadata-label">Project</div>
-          <div class="metadata-field">
+          <div class="metadata-field" style="vertical-align: middle;">
             <div dropdown
                  dropdown-append-to-body>
               <span ng-bind="runCtrl.project.name"></span>
@@ -97,13 +97,15 @@
       </tr>
     </table>
 
+    <p>Cost estimate is provided by Transcriptic, Inc. Clicking "Run it!" will result in your job being sent to Transcriptic for processing. All costs are billed by Transcriptic. Please visit Transcriptic.com for more information on pricing and to manage jobs.</p>
+
     <button class="btn action-button pull-right"
-            ng-click="runCtrl.submit()">Run it!
+            ng-click="runCtrl.submit()">
+      Run it!
     </button>
   </div>
 
-  <div class="column-8 div-centered">
-    <tx-cred-transcriptic ng-form="transcripticCred"></tx-cred-transcriptic>
-  </div>
+  <tx-cred-transcriptic ng-form="transcripticCred"></tx-cred-transcriptic>
+
 </div>
 

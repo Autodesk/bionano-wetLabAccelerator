@@ -81,6 +81,10 @@ angular.module('transcripticApp')
 
         //CHANGE CHECKING / CONTAINERS
 
+        scope.$on('editor:toggleGroupVisibility', function (e, val) {
+          scope.isVisible = !!val;
+        });
+
         //todo - this will be problematic when handling verifications on the parameter b/c deep equality
         scope.$watch('setupCtrl.parameters', function (newval, oldval) {
           $rootScope.$broadcast('editor:parameterChange', newval);
