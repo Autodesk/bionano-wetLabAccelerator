@@ -37,7 +37,7 @@ angular.module('transcripticApp')
               })
               .catch(function (err) {
                 console.warn(err);
-              })
+              });
           } else {
             setProjects([])
           }

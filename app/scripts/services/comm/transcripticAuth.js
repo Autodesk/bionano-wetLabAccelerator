@@ -73,11 +73,7 @@ angular.module('tx.communication')
       /* set up handling for watchers when auth changes */
 
       var watchers    = [],
-          lastPayload = {
-            organization: self.organization,
-            email       : self.email,
-            key         : self.key
-          };
+          lastPayload = makePayload();
 
       function makePayload () {
         /*
@@ -167,7 +163,38 @@ angular.module('tx.communication')
         watch       : watch,
         batchUpdate : batchUpdate,
         forgetCreds : forgetCreds,
-        persistCreds : persistCreds
+        persistCreds: persistCreds
       };
     }
+  })
+/**
+ * A directive that adds a class when a user is logged in to transcriptic
+ * use attribute tx-unauth for valid on unauth
+ * e.g. use tx-hide-auth="ng-hide" to hide element when authenticated
+ */
+  .directive('txClassAuth', function (TranscripticAuth, Communication, $timeout) {
+    var isLoggedIn;
+    TranscripticAuth.watch(function (user) {
+      isLoggedIn = Communication.validate()
+        .then(function authValid () {
+          return true;
+        }, function authNotValid () {
+          return false;
+        });
+    });
+
+    return {
+      restrict: 'A',
+      link    : function (scope, el, attrs) {
+
+        function update () {
+          isLoggedIn.then(function (isValid) {
+            el.toggleClass(attrs.txClassAuth, (angular.isDefined(attrs.txUnauth) ? !isValid : isValid));
+          });
+        }
+
+        update();
+        TranscripticAuth.watch(update, scope);
+      }
+    };
   });

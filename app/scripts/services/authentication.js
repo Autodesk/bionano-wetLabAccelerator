@@ -96,7 +96,7 @@ angular.module('transcripticApp')
 
   })
 /**
- * A directive that shows elements only when user is logged in.
+ * A directive that shows elements only when user is logged in to the platform
  */
   .directive('ngShowAuth', function (Authentication, $timeout) {
     var isLoggedIn;
@@ -124,7 +124,7 @@ angular.module('transcripticApp')
   })
 
 /**
- * A directive that shows elements only when user is logged out.
+ * A directive that shows elements only when user is logged out of the platform
  */
   .directive('ngHideAuth', function (Authentication, $timeout) {
     var isLoggedIn;

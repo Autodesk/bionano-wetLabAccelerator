@@ -1,7 +1,7 @@
 .results {
 
-  p {
-    margin: 0;
+  .page-labels {
+    margin-bottom: $layout-spacing-md;
   }
 
   .sidepanel,
@@ -18,10 +18,17 @@
 
   }
 
+  p {
+    margin: 0;
+  }
+
   .status-heading {
     margin-top: 0;
   }
 
+  .summary-header {
+    margin-bottom: $layout-spacing-md;
+  }
 
   //if this is position-fixed, we need this
 
@@ -36,7 +43,7 @@
     max-height: 100vh;
 
     &.sticky {
-      padding: 45px 0 40px;
+      padding: 15px 0 65px; //padding-top, 0, sticky + padding-top
     }
   }
 }
