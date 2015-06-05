@@ -19,8 +19,19 @@ tx-timepointgraph {
   .axis path,
   .axis line {
     fill: none;
-    stroke: #000;
+    stroke: $white;
+    stroke-width: 2px;
     shape-rendering: crispEdges;
+  }
+
+  .tick {
+    line {
+      display: none
+    }
+  }
+
+  text {
+    fill: $dark-grey;
   }
 
   .line {
