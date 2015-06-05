@@ -136,7 +136,7 @@ angular.module('transcripticApp')
               console.warn('error sending run', err);
               if (err.status == 401) {
                 Notify({
-                  message: 'You must provide your Transcriptic credentials to verify your protocol',
+                  message: 'You must log in and provide your credentials to verify your protocol with Transcriptic',
                   error  : true
                 });
               } else if (err.status == 0) {
