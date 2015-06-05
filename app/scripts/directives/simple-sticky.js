@@ -10,12 +10,13 @@
  * note - requires lodash for throttle() and remove()
  *
  * @attr simpleSticky {number} number of pixels from edge
+ * @attr sticky-class {string} toggle a class on the element
  *
  * @example
  *
  * <div class="myStickyDiv" simple-sticky="20" sticky-bottom></div>
  */
-//todo - attr.alignWith to give element to match?
+  //todo - attr.alignWith to give element to match?
 angular.module('transcripticApp')
   .directive('simpleSticky', function ($window, $timeout) {
 
@@ -23,7 +24,7 @@ angular.module('transcripticApp')
 
     var checks = [];
 
-    function getYOffset() {
+    function getYOffset () {
       return (angular.isDefined($window.pageYOffset) ?
         $window.pageYOffset :
         $window.document[0].documentElement.scrollTop);
@@ -41,12 +42,12 @@ angular.module('transcripticApp')
     }
 
     //the function will be run
-    function addCheck(fn, $scope) {
+    function addCheck (fn, $scope) {
       checks.push(fn);
       $scope.$on('$destroy', _.partial(removeCheck, fn));
     }
 
-    function removeCheck(fn) {
+    function removeCheck (fn) {
       //_.remove will run function if passed, not find the function
       checks.splice(_.indexOf(checks, fn), 1);
     }
@@ -64,15 +65,15 @@ angular.module('transcripticApp')
 
     return {
       restrict: 'A',
-      link: function (scope, element, attrs) {
+      link    : function (scope, element, attrs) {
 
-        var affixToBottom = angular.isDefined(attrs.stickyBottom),
-            fromEdgeAffix = parseInt(attrs.simpleSticky, 10) || 20,
+        var affixToBottom  = angular.isDefined(attrs.stickyBottom),
+            fromEdgeAffix  = parseInt(attrs.simpleSticky, 10) || 20,
             positionNormal = element.css('position'),
             fromEdgeNormal = element.css(affixToBottom ? 'bottom' : 'top'),
-            fromEdgeStart = calcStartFromEdge(element[0], affixToBottom),//this doesn't work great with flexbox layouts...
-            isAffixed = false,
-            shouldCheck = false;
+            fromEdgeStart  = calcStartFromEdge(element[0], affixToBottom),//this doesn't work great with flexbox layouts...
+            isAffixed      = false,
+            shouldCheck    = false;
 
         //hack to handle flexbox layout... timeout to run after initial check
         //especially should run if fromEdgeStart == 0
@@ -81,11 +82,11 @@ angular.module('transcripticApp')
         }, 50);
 
         //check if affix state has changed
-        var positionChecker = function checkPosition(pageYOffset, forceCheck) {
+        var positionChecker = function checkPosition (pageYOffset, forceCheck) {
 
           if (shouldCheck || !!forceCheck) {
             fromEdgeStart = calcStartFromEdge(element[0], affixToBottom);
-            shouldCheck = false;
+            shouldCheck   = false;
           }
 
           //console.log(fromEdgeStart, element[0].getBoundingClientRect().top, getYOffset(), element[0].getBoundingClientRect().top  + getYOffset(), pageYOffset, fromEdgeAffix, pageYOffset + fromEdgeAffix, (pageYOffset + fromEdgeAffix) > fromEdgeStart);
@@ -96,9 +97,9 @@ angular.module('transcripticApp')
             shouldAffix = ($window.innerHeight + pageYOffset) < fromEdgeStart;
           } else {
             shouldAffix = (
-              //check past threshold
+                //check past threshold
               (pageYOffset + fromEdgeAffix) > fromEdgeStart) &&
-              //check at page top
+                //check at page top
               (pageYOffset > Math.min(10, fromEdgeAffix) );
           }
 
@@ -114,7 +115,7 @@ angular.module('transcripticApp')
         };
 
         //handle class changes, CSS changes
-        function handleAffixing(shouldAffix) {
+        function handleAffixing (shouldAffix) {
           isAffixed = shouldAffix;
 
           var styleObj = {
@@ -125,6 +126,11 @@ angular.module('transcripticApp')
           styleObj[affixToBottom ? 'bottom' : 'top'] = shouldAffix ? fromEdgeAffix + 'px' : fromEdgeNormal;
 
           element.css(styleObj);
+
+          if (angular.isDefined(attrs.stickyClass)) {
+            var stickyClass = !!attrs.stickyClass ? attrs.stickyClass : 'sticky';
+            element.toggleClass(stickyClass, shouldAffix);
+          }
         }
 
         //register a callback, handles deregistration when pass in scope
