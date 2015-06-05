@@ -93,7 +93,7 @@
 
     <div class="maincolumn flex-grower maxout-scroll-vertical results-summary">
       <div class="results-summary-wrap"
-           simple-sticky="20"
+           simple-sticky="50"
            sticky-class="sticky">
         <div ng-show="!resultsCtrl.currentInfo || resultsCtrl.currentInfo == 'status'">
           <h4 class="status-heading"
@@ -107,11 +107,13 @@
 
         <div ng-if="resultsCtrl.currentInfo && resultsCtrl.currentInfo != 'status'">
           <div>
-            <span class="pull-right">Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</span>
+            <div class="summary-header">
+              <span class="pull-right">Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</span>
 
-            <p><span><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></span></p>
+              <p><span><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></span></p>
 
-            <p ng-bind="resultsCtrl.currentGroup.description"></p>
+              <p ng-bind="resultsCtrl.currentGroup.description"></p>
+            </div>
 
             <tx-operation-summary protocol="resultsCtrl.run.protocol"
                                   indices="resultsCtrl.currentInfo"
