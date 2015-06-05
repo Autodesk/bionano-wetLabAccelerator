@@ -95,6 +95,18 @@ angular.module('transcripticApp')
         resource.id + '?format=raw';
     };
 
+    //todo
+    self.getDatarefUrlPath = function () {
+      var resources = self.getResourcesForOp(),
+          first     = resources[0],
+          url       = TranscripticAuth.organization() + '/' +
+            first.projectId + '/runs/' +
+            first.runId + '/data/' +
+            first.dataref;
+
+      return url;
+    };
+
     //gives full URL
     self.getResourceUrl = function (resource) {
       return Communication.requestUrl(self.getResourceUrlPath(resource));
@@ -108,7 +120,7 @@ angular.module('transcripticApp')
       }, 10000);
 
       return Communication.request(self.getResourceUrlPath(resource), 'get', {
-        timeout: 60000,
+        timeout     : 60000,
         responseType: 'blob',
         headers     : {
           'Accept'      : 'image/jpeg',
