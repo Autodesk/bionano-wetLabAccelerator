@@ -30,7 +30,7 @@ var proxyOptions = {
     xfwd   : true,
     secure : false,//<true/false, verify SSL certificate>
     // toProxy: <true/false, explicitly specify if we are proxying to another proxy>
-    prependPath: true,//<true/false, Default: true - specify whether you want to prepend the target's path to the proxy path>
+    // prependPath: true,//<true/false, Default: true - specify whether you want to prepend the target's path to the proxy path>
     // ignorePath: <true/false, Default: false - specify whether you want to ignore the proxy path of the incoming request>
     // localAddress : <Local interface string to bind for outgoing connections>
     // changeOrigin: <true/false, Default: false - changes the origin of the host header to the target URL>
@@ -45,12 +45,12 @@ log.info({port:PORT, appFolder:appFolder, 'process.env.APP': process.env.APP, FA
 /* Create the rpc proxy */
 var httpProxy = require('http-proxy');
 var proxy = httpProxy.createProxyServer(proxyOptions);
-proxy.on('proxyRes', function (proxyRes, req, res) {
-  console.log('RAW Response from the target', req.url, proxyRes.statusCode, proxyRes.url);
-});
-proxy.on('proxyReq', function(proxyReq, req, res, options) {
-  console.log('RAW proxyReq', proxyReq);
-});
+// proxy.on('proxyRes', function (proxyRes, req, res) {
+//   console.log('RAW Response from the target', req.url, proxyRes.statusCode, proxyRes.url);
+// });
+// proxy.on('proxyReq', function(proxyReq, req, res, options) {
+//   console.log('RAW proxyReq', proxyReq);
+// });
 
 
 function rpc(method, params, callback) {
@@ -117,8 +117,10 @@ app.all('/rpc', function(req, res) {
 });
 
 app.get('/client/api.js', function(req, res) {
-	console.log("Proxying api.js request:" + req.url, JSON.stringify(proxyOptions));
-	proxy.web(req, res, proxyOptions);
+	console.log("Proxying api.js request:" + req.url, proxyOptions);
+	proxy.web(req, res, proxyOptions, function(err) {
+		console.error("Error proxying request: ", err);
+	});
 });
 
 /* Passport */
