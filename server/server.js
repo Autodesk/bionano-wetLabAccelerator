@@ -46,7 +46,7 @@ log.info({port:PORT, appFolder:appFolder, 'process.env.APP': process.env.APP, FA
 var httpProxy = require('http-proxy');
 var proxy = httpProxy.createProxyServer(proxyOptions);
 proxy.on('proxyRes', function (proxyRes, req, res) {
-  console.log('RAW Response from the target', JSON.stringify(proxyRes.headers, true, 2), proxyRes.statusCode, proxyRes.url);
+  console.log('RAW Response from the target', req.url, proxyRes.statusCode, proxyRes.url);
 });
 
 
@@ -114,8 +114,8 @@ app.all('/rpc', function(req, res) {
 });
 
 app.get('/client/api.js', function(req, res) {
-	console.log("Proxying api.js request:" + req.url);
-	proxy.web(req, res);
+	console.log("Proxying api.js request:" + req.url, JSON.stringify(proxyOptions));
+	proxy.web(req, res, proxyOptions);
 });
 
 /* Passport */
