@@ -67,6 +67,6 @@
     "start": "npm run docker.server",
     "build.standalone.docker": "docker build -t cx1 .",
     "run.standalone.docker": "docker run -t -i -p 9000:9000 cx1",
-    "local_server": "LOCAL=true RPC_HOST='localhost' RPC_PORT=9000 PORT=8000 node server/server.js"
+    "local_server": "FACEBOOK_APP_ID=861870727182803 FACEBOOK_APP_SECRET=d4d8026adb8f40d795c8f379b8661a69 LOCAL=true RPC_HOST='localhost' RPC_PORT=9000 PORT=8000 node server/server.js"
   }
 }

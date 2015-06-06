@@ -129,6 +129,14 @@ passport.use(new FacebookStrategy({
 	}
 ));
 
+// if (LOCAL) {
+	app.use(express.static(path.dirname(__dirname) + '/.tmp'));
+	app.use('/bower_components', express.static(path.dirname(__dirname) + '/bower_components'));
+	app.use(express.static(path.dirname(__dirname) + '/app'));
+// } else {
+// 	//Serve static content
+// 	app.use(express.static(appFolder));
+// }
 
 // configure Express
 app.set('views', __dirname + '/views');
@@ -138,16 +146,6 @@ app.use(cookieParser());
 app.use(bodyParser());
 // Initialize Passport!  Also use passport.session() middleware, to support
 app.use(passport.initialize());
-
-if (LOCAL) {
-	app.use(express.static('.tmp'));
-	app.use(express.static('bower_components'));
-	app.use(express.static('app'));
-} else {
-	//Serve static content
-	app.use(express.static(appFolder));
-}
-
 
 app.get('/', function(req, res){
 	res.render('index', { user: req.user });
