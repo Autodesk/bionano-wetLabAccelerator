@@ -48,6 +48,9 @@ var proxy = httpProxy.createProxyServer(proxyOptions);
 proxy.on('proxyRes', function (proxyRes, req, res) {
   console.log('RAW Response from the target', req.url, proxyRes.statusCode, proxyRes.url);
 });
+proxy.on('proxyReq', function(proxyReq, req, res, options) {
+  console.log('RAW proxyReq', proxyReq);
+});
 
 
 function rpc(method, params, callback) {
