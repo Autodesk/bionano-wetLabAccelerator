@@ -14,6 +14,36 @@ angular.module('transcripticApp')
 
     self.protocol = ProtocolHelper.currentProtocol;
 
+    //parameters
+
+    self.paramById = function (id) {
+      return _.find(self.protocol.parameters, {id : id});
+    };
+
+    self.paramValueFromParamId = function (id) {
+      return _.result(self.paramById(id), 'value');
+    };
+
+    self.paramNameFromParamId = function (id) {
+      return _.result(self.paramById(id), 'name');
+    };
+
+    self.deleteParameter = function (param) {
+      var paramId = _.result(param, 'id');
+      //todo - need to go through protocol and update all parameterized fields
+    };
+
+
+
+    //NOT RECOMMENDED! should by tied by ID
+    self.paramByName = function (name) {
+      return _.find(self.protocol.parameters, {name : name});
+    };
+
+
+    //todo - refactor these to use protocol and parameters, not just op. should not just rely on pluckFieldValueRaw
+
+
     self.getFieldValFromOpByName = function (op, fieldName) {
       return Omniprotocol.utils.pluckFieldValueRaw(op.fields, fieldName);
     };
@@ -23,15 +53,6 @@ angular.module('transcripticApp')
         return 'unspecified amount';
       }
       return _.result(dimObj, 'value') + ' ' + _.result(dimObj, 'unit') + 's';
-    };
-
-    self.paramById = function (id) {
-      return _.find(self.protocol.parameters, {id : id});
-    };
-
-    //NOT RECOMMENDED! should by tied by ID
-    self.paramByName = function (name) {
-      return _.find(self.protocol.parameters, {name : name});
     };
 
 
