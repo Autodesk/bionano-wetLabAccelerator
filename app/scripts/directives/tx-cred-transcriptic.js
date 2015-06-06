@@ -12,7 +12,7 @@
  * and will expose to formController
  */
 angular.module('transcripticApp')
-  .directive('txCredTranscriptic', function (TranscripticAuth, Communication) {
+  .directive('txCredTranscriptic', function (TranscripticAuth, Communication, $q) {
     return {
       templateUrl     : 'views/tx-cred-transcriptic.html',
       restrict        : 'E',
@@ -29,6 +29,13 @@ angular.module('transcripticApp')
         self.credentials = {};
 
         self.validateAuth = function () {
+
+          TranscripticAuth.batchUpdate(self.credentials);
+
+          if (!self.allowAuthSaved) {
+            return $q.reject(false);
+          }
+
           self.validating = true;
           return Communication.validate()
             .then(function validateSuccess () {
@@ -50,7 +57,7 @@ angular.module('transcripticApp')
             email       : _.result(creds, 'email'),
             key         : _.result(creds, 'key')
           });
-          self.validateAuth();
+          //will check automatically via validateAuth()
         });
 
         self.forgetCreds = function () {
@@ -61,18 +68,21 @@ angular.module('transcripticApp')
       link            : function (scope, element, attrs, formCtrl) {
 
         scope.$watch('authCtrl.credentials', function (newcreds) {
-          TranscripticAuth.batchUpdate(newcreds);
+          console.log(newcreds);
 
-          validateNewCreds()
-            .then(function (isValid) {
-              !!isValid && TranscripticAuth.persistCreds();
-            });
+          if (scope.authCtrl.allowAuthSaved) {
+            validateNewCreds()
+              .then(function (isValid) {
+                if (isValid) {
+                  TranscripticAuth.persistCreds();
+                }
+              });
+          }
         }, true);
 
         function validateNewCreds () {
           return scope.authCtrl.validateAuth()
             .then(function (isValid) {
-              console.log('validation is ', isValid);
               //todo - not working - maybe need to add a control to the form?
               formCtrl.$setValidity('transcriptic', isValid);
               return isValid;

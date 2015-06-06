@@ -126,8 +126,8 @@ angular.module('tx.communication')
           organization: '',
           email       : '',
           key         : ''
-        });
-        persistCreds();
+        }, true);
+        persistCreds(true);
       };
 
       function batchUpdate (creds, skipUpdate) {
@@ -143,16 +143,20 @@ angular.module('tx.communication')
       }
 
       //save creds to the database
-      var persistCreds = function persistCreds () {
+      var persistCreds = function persistCreds (shouldUpdate) {
         var keymap = {
           'email'       : 'transcripticEmail',
           'key'         : 'transcripticKey',
           'organization': 'transcripticOrg'
         };
 
-        return $q.all(_.map(keymap, function (dbkey, txkey) {
+        var promises = $q.all(_.map(keymap, function (dbkey, txkey) {
           Platform.userValue(dbkey, self[txkey]);
         }));
+
+        (shouldUpdate === true) && triggerWatchers();
+
+        return promises;
       };
 
       return {
