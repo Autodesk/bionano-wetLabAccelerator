@@ -37,6 +37,7 @@ angular.module('transcripticApp')
         self.addParam = function (param) {
           self.parameters.push({
             id : UUIDGen(),
+            name: monotonicName(param.type),
             type: param.type,
             readable: param.readable
           });
@@ -46,6 +47,7 @@ angular.module('transcripticApp')
         self.addContainer = function (param) {
           var parameter = {
             id : UUIDGen(),
+            name: monotonicName('container'),
             type : 'container',
             value: {
               color: ContainerHelper.randomColor(),
@@ -76,6 +78,11 @@ angular.module('transcripticApp')
           self.clearParamValue(param);
           $scope.checkContainerChange();
         };
+
+        //todo - better guarantee unique
+        function monotonicName (type) {
+          return '' + type + (_.filter(self.parameters, {type : type}).length + 1);
+        }
 
       },
       link            : function postLink (scope, element, attrs) {
