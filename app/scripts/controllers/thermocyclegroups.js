@@ -29,6 +29,9 @@ angular.module('transcripticApp')
       group.steps.push({});
     };
 
+    self.removeStep = function (group, step) {
+      _.remove(group.steps, step);
+    };
 
     self.onInit = function () {
       //note - hack - expects a fieldCtrl

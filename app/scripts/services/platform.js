@@ -17,9 +17,9 @@ angular.module('transcripticApp')
 
     if (_.isUndefined(pc)) {
       //todo - should use ES6 proxies when available
-      //hack - shitty proxy requests
       _.forEach([
         'authenticate',
+        'isAuthenticated',
         'unauthenticate',
         'get_user',
         'set_user_value',
@@ -30,7 +30,6 @@ angular.module('transcripticApp')
         'saveProject,,',
         'deleteProject,'
       ], _.partial(_.set, pc, _, $q.reject));
-
     }
 
     /* Facade */
@@ -38,6 +37,10 @@ angular.module('transcripticApp')
     //note - should use Authentication service, not this directly
     self.authenticate = function (userstring) {
       return pc.authenticate(userstring);
+    };
+
+    self.isAuthenticated = function () {
+      return $q.when(pc.isAuthenticated());
     };
 
     self.unauthenticate = function () {
