@@ -32,11 +32,13 @@ angular.module('transcripticApp')
           if (relevantParam) {
             self.model = _.result(relevantParam, 'name');
             self.type = _.result(relevantParam, 'value.type');
+            self.color = _.result(relevantParam, 'value.color');
           } else {
             //try getting by name...
             relevantParam = ProtocolUtils.paramByName(self.model);
 
             self.type = _.result(relevantParam, 'value.type');
+            self.color = _.result(relevantParam, 'value.color');
 
             //reset model if parameter was bound, but no longer is (container was deleted)
             if (angular.isDefined(self.paramId) && _.isUndefined(relevantParam)) {
