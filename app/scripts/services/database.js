@@ -50,14 +50,10 @@ angular.module('transcripticApp')
       }));
     };
 
-    //remove angular / firebase fields
+    //todo - may want to make this more explicit... want to move dollar prefixed fields
+    //this will remove $$ prefixed fields, which should prevent circular references
     self.removeExtraneousFields = function removeExtraneousFields (object) {
-      if (_.isObject(object)) {
-        return _.omit(object, function (val, key) {
-          return _.startsWith(key, "$");
-        });
-      }
-      return object;
+      return angular.fromJson(angular.toJson(object));
     };
 
     /****
