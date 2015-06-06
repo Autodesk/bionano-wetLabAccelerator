@@ -35,14 +35,16 @@ angular.module('transcripticApp')
     /* Facade */
 
     //note - should use Authentication service, not this directly
+    //deprecated. You should use platform / facebook instead. this is for debugging.
     self.authenticate = function (userstring) {
       return pc.authenticate(userstring);
     };
 
     self.isAuthenticated = function () {
-      return $q.when(pc.isAuthenticated());
+      return pc.isAuthenticated();
     };
 
+    //deprecated. You should use platform /facebook instead. this is for debugging.
     self.unauthenticate = function () {
       return $q.when(pc.unauthenticate());
     };

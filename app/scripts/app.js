@@ -51,9 +51,12 @@ angular
         controller  : 'ResultsCtrl',
         controllerAs: 'resultsCtrl'
       })
+
+      /*
       .when('/auth', {
         templateUrl: 'views/routes/auth.html'
       })
+      */
 
       //testing routes
 

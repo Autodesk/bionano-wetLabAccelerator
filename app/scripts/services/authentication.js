@@ -16,22 +16,14 @@ angular.module('transcripticApp')
 
     self.authenticate = function (userstring) {
 
-      //todo - store userstring / token as a cookie?
-
       return Platform.authenticate(userstring).
-        then(function () {
-          return Platform.userValue('userstring', userstring);
-        }).
         then(Platform.getUserInfo).
         then(function (retrieved) {
           _.assign(userInfo, retrieved, {
-            token : userstring,
+            email: retrieved.email,
             name: retrieved.name
           });
 
-          $cookies['authToken'] = userstring;
-
-          //todo - verify creds are different before triggering
           triggerWatchers();
         }).
         catch(function (err) {
@@ -40,12 +32,17 @@ angular.module('transcripticApp')
         });
     };
 
+    self.isAuthenticated = Platform.isAuthenticated;
+
+    self.isAuthenticatedLocal = function () {
+      return $cookies['bionano-platform-token'];
+    };
+
     //returns promise, resolving to whether successful or not
     self.unauthenticate = function () {
       return Platform.unauthenticate()
         .then(function () {
           userInfo = {};
-          $cookies['authToken'] = '';
           triggerWatchers();
           return true;
         })
@@ -59,17 +56,14 @@ angular.module('transcripticApp')
 
 
     function triggerWatchers () {
-      angular.forEach(watchers, triggerWatcher);
+      _.forEach(watchers, triggerWatcher);
     }
 
     self.watch = function (cb, $scope) {
       triggerWatcher(cb);
       watchers.push(cb);
       var unbind = function () {
-        var i = watchers.indexOf(cb);
-        if (i > -1) {
-          watchers.splice(i, 1);
-        }
+        _.remove(watchers, cb);
       };
       if ($scope) {
         $scope.$on('$destroy', unbind);
@@ -88,10 +82,10 @@ angular.module('transcripticApp')
 
     //init - check for cookie, authenticate if present
 
-    var initialAuthToken = $cookies['authToken'];
+    var initialAuthToken = $cookies['bionano-platform-token'];
     if (!!initialAuthToken) {
       console.warn('found initial auth token', initialAuthToken);
-      self.authenticate(initialAuthToken);
+      //self.authenticate(initialAuthToken);
     }
 
   })
