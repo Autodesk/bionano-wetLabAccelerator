@@ -1,5 +1,7 @@
 <div dropdown>
   <a dropdown-toggle
+     class="field-action-text"
+     ng-class="{'invalid' : !containerSelectCtrl.model}"
      ng-bind="containerSelectCtrl.model || 'select...'"></a>
   <ul class="dropdown-menu">
     <li ng-repeat="c in containerSelectCtrl.localContainers">

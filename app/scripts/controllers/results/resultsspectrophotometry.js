@@ -57,8 +57,6 @@ angular.module('transcripticApp')
       self.selectTimepoint(timepoint);
     });
 
-    $scope.summaryCtrl.getDatarefUrlPath();
-
     /*
     var unfolded     = Omniprotocol.utils.unfoldProtocol($scope.summaryCtrl.protocol),
         timepoint = _.reduce(unfolded, function (opIndexOfType, operation) {
