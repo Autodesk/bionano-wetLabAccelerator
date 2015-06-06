@@ -45,7 +45,7 @@ angular.module('transcripticApp')
 
         function setProjects (projects) {
 
-          self.projects = _(projects).uniq().value();
+          self.projects = _.uniq(projects);
 
           self.protocols = _.filter(self.projects, function (proj) {
             return _.result(proj, 'metadata.type') == 'protocol';

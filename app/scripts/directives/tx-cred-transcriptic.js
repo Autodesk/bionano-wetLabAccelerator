@@ -68,8 +68,6 @@ angular.module('transcripticApp')
       link            : function (scope, element, attrs, formCtrl) {
 
         scope.$watch('authCtrl.credentials', function (newcreds) {
-          console.log(newcreds);
-
           if (scope.authCtrl.allowAuthSaved) {
             validateNewCreds()
               .then(function (isValid) {
