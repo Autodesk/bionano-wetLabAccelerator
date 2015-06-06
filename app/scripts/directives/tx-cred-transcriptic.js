@@ -12,60 +12,72 @@
  * and will expose to formController
  */
 angular.module('transcripticApp')
-  .directive('txCredTranscriptic', function (simpleLogin, FBProfile) {
+  .directive('txCredTranscriptic', function (TranscripticAuth, Communication) {
     return {
-      templateUrl: 'views/tx-cred-transcriptic.html',
-      restrict: 'E',
-      require: 'form',
-      bindToController: true,
-      controllerAs: 'authCtrl',
-      scope: {
-        credValid: '='
+      templateUrl     : 'views/tx-cred-transcriptic.html',
+      restrict        : 'E',
+      require         : 'form',
+      scope           : {
+        credValid: '=?' //outbinding for whether credentials are valid
       },
-      controller: function ($scope, $element, $attrs) {
+      bindToController: true,
+      controllerAs    : 'authCtrl',
+      controller      : function ($scope, $element, $attrs) {
 
-        var self = this,
-            authIsValid = false;
+        var self = this;
 
-        $scope.$watch('auth', checkAuthIsValid);
+        self.credentials = {};
 
-        //don't actually bind to Auth here, Auth listens to 'txAuth' from firebase directly
-        //will need to refactor to pull via REST or something, and shuold update DB automatically
-        var bindtoWatcher = angular.noop;
-        simpleLogin.watch(function(user) {
-          self.loggedIn = !!user;
-          if (!!user) {
-            bindtoWatcher();
-            new FBProfile(user.uid, 'txAuth')
-              .$asObject()
-              .$bindTo($scope, 'auth')
-              .then(function (unbind) {
-                bindtoWatcher = unbind;
-              });
-          }
+        self.validateAuth = function () {
+          self.validating = true;
+          return Communication.validate()
+            .then(function validateSuccess () {
+              console.debug('credentials valid');
+              self.credValid = true;
+            }, function validateFailure () {
+              console.debug('credentials invalid');
+              self.credValid = false;
+            }).
+            then(function () {
+              self.validating = false;
+              return self.credValid;
+            });
+        };
+
+        TranscripticAuth.watch(function (creds) {
+          _.assign(self.credentials, {
+            organization: _.result(creds, 'organization'),
+            email       : _.result(creds, 'email'),
+            key         : _.result(creds, 'key')
+          });
+          self.validateAuth();
         });
-
-        function checkAuthIsValid (creds) {
-          //todo - ping transcriptic?
-          authIsValid = true;
-        }
 
         self.forgetCreds = function () {
-          //todo
+          TranscripticAuth.forgetCreds();
         };
 
-        self.authValid = function () {
-          return authIsValid;
-        };
-
-        self.verifyCreds = checkAuthIsValid;
-
-        //note that temporarily we will get errors in the console for invalid credentials (and you have to be signed into firebase), but once move DB that will go away.
       },
-      link: function (scope, element, attrs, formCtrl) {
-        scope.$watch(_.result(formCtrl, '$valid', false), function (isValid) {
-          scope.credValid = isValid;
-        });
+      link            : function (scope, element, attrs, formCtrl) {
+
+        scope.$watch('authCtrl.credentials', function (newcreds) {
+          TranscripticAuth.batchUpdate(newcreds);
+
+          validateNewCreds()
+            .then(function (isValid) {
+              !!isValid && TranscripticAuth.persistCreds();
+            });
+        }, true);
+
+        function validateNewCreds () {
+          return scope.authCtrl.validateAuth()
+            .then(function (isValid) {
+              console.log('validation is ', isValid);
+              //todo - not working - maybe need to add a control to the form?
+              formCtrl.$setValidity('transcriptic', isValid);
+              return isValid;
+            });
+        }
       }
     };
   });

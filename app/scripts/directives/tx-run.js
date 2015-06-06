@@ -8,7 +8,7 @@
  * //todo - maybe should move verifications / submissions outside of here entirely. also maybe the remote verification listener
  */
 angular.module('transcripticApp')
-  .directive('txRun', function ($q, $timeout, $rootScope, Auth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, RunHelper) {
+  .directive('txRun', function ($q, $timeout, $rootScope, TranscripticAuth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, Communication, RunHelper, Notify) {
     return {
       templateUrl : 'views/tx-run.html',
       restrict    : 'E',
@@ -22,8 +22,11 @@ angular.module('transcripticApp')
 
         self.projects = [];
 
-        Auth.watch(function () {
-          self.projects = Project.list();
+        TranscripticAuth.watch(function (info) {
+          self.transcripticAuth = info;
+          if (_.result(info, 'organization', false)) {
+            self.projects = Project.list();
+          }
         });
 
         self.selectProject = function (proj) {
@@ -50,7 +53,7 @@ angular.module('transcripticApp')
           }
 
           return Communication.transcripticRoot +
-            Auth.organization() +
+            TranscripticAuth.organization() +
             '/' + self.project.url +
             '/runs/' + self.response.id;
         };
@@ -61,6 +64,9 @@ angular.module('transcripticApp')
               project   = _.isEmpty(forceProject) ? self.project : forceProject;
 
           self.processing = true;
+
+          //close any existing notifications
+          Notify.closeAll();
 
           var projectIdPromise;
 
@@ -89,39 +95,62 @@ angular.module('transcripticApp')
             }
           }
 
-          projectIdPromise.then(function (project) {
-            self.project = project;
+          $rootScope.$broadcast('editor:clearVerifications');
 
-            funcToRun(self.protocol, project.id).
-              then(function runSuccess (d) {
-                console.log(d);
-                self.response = d;
-                self.error    = false;
+          return projectIdPromise
+            .then(function (project) {
+              self.project = project;
 
-                if (isRun) {
-                  $rootScope.$broadcast('editor:runSubmitted', d);
-                } else {
-                  $rootScope.$broadcast('editor:verificationSuccess', d);
-                }
+              return funcToRun(self.protocol, project.id)
+                .then(function runSuccess (d) {
+                  console.log(d);
+                  self.response = d;
+                  self.error    = false;
 
-              }, function runFailure (e) {
-                console.log(e);
+                  if (isRun) {
+                    $rootScope.$broadcast('editor:runSubmitted', d);
+                  } else {
+                    $rootScope.$broadcast('editor:verificationSuccess', d);
+                  }
 
-                self.error = true;
+                }, function runFailure (e) {
+                  console.log(e);
 
-                //use as simple check for something like a 404 error - i.e. not protocol error but $http error
-                if (_.isEmpty(e.data) || _.isEmpty(e.data.protocol)) {
-                  self.response = {"error": "Request did not go through... check the console"};
-                } else {
-                  $rootScope.$broadcast('editor:verificationFailure', e.data.protocol);
-                  self.response = e.data.protocol;
-                }
-              })
-              .then(function () {
-                self.processing = false;
-                (closeModal !== false) && $rootScope.$broadcast('editor:toggleRunModal', false);
-              });
-          });
+                  //check for our own handling... pas null if conversion didn't work, and will handle local errors upstream
+                  if (_.isNull(e)) {
+                    return;
+                  }
+
+                  self.error = true;
+
+                  //use as simple check for something like a 404 error - i.e. not protocol error but $http error
+                  if (_.isEmpty(e.data) || _.isEmpty(e.data.protocol)) {
+                    self.response = {"error": "Request did not go through... check the console"};
+                  } else {
+                    $rootScope.$broadcast('editor:verificationFailure', e.data.protocol);
+                    self.response = e.data.protocol;
+                  }
+                });
+            })
+            .catch(function (err) {
+              console.warn('error sending run', err);
+              if (err.status == 401) {
+                Notify({
+                  message: 'You must log in and provide your credentials to verify your protocol with Transcriptic',
+                  error  : true
+                });
+              } else if (err.status == 0) {
+                Notify({
+                  message: 'Request timed out. Please try it again.',
+                  error  : true
+                });
+                closeModal = false;
+              }
+            })
+            .then(function () {
+              self.processing = false;
+              (closeModal !== false) && $rootScope.$broadcast('editor:toggleRunModal', false);
+            });
         }
 
       },

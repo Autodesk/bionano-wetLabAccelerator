@@ -39,7 +39,8 @@ angular.module('tx.datavis')
         interpolation : '=?', //interpolation function to use (e.g. linear, default cardinal)
         isLinear      : '=',
 
-        extentData    : '=?' //outward binding of extent of data (i.e. y axis domain)
+        timepointSelected: '=?', //outward binding for current timepoint
+        extentData       : '=?' //outward binding of extent of data (i.e. y axis domain)
       },
       link    : function postLink (scope, element, attrs) {
 
@@ -59,13 +60,14 @@ angular.module('tx.datavis')
 
         var chart = d3.select(element[0])
           .append('svg')
-          .attr('width', full.width)
-          .attr('height', full.height)
-          .style('overflow', 'visible')
-          .attr('id', 'chart');
+          .attr('id', 'chart')
+          .attr("width", "100%")
+          .attr("height", "100%")
+          .attr("viewBox", "0 0 " + full.width + " " + full.height)
+          .attr("preserveAspectRatio", "xMidYMid meet");
 
         var labelHeight = 15,
-            margin      = {top: 15 + labelHeight, right: 15, bottom: 30 + labelHeight, left: 40 + labelHeight},
+            margin      = {top: 15 + labelHeight, right: 15, bottom: 30 + labelHeight, left: 55 + labelHeight},
             width       = full.width - margin.left - margin.right,
             height      = full.height - margin.top - margin.bottom;
 
@@ -130,8 +132,15 @@ angular.module('tx.datavis')
 
         // Define the y axis - we'll define the x axis dynamically dep on whether linear
 
+        var exponentialFormatter = d3.format('.2e'),
+            exponentialCutoff = 1000;
+
         var yAxis = d3.svg.axis().scale(y)
-          .orient("left").ticks(5);
+          .orient("left")
+          .ticks(5)
+          .tickFormat(function (d) {
+            return (d >= exponentialCutoff) ? exponentialFormatter(d) : d;
+          });
 
         var xAxisEl = chart.append("g")
           .attr("class", "x axis")
@@ -246,7 +255,8 @@ angular.module('tx.datavis')
           loupeText.text(point.key + ' - ' + parseFloat(point.value, 10).toFixed(3));
 
           scope.$applyAsync(function () {
-            scope.onHover({$well: point.key});
+            scope.timepointSelected = point.ordinal;
+            scope.onHover({$well: point.key, $ordinal : '' + point.ordinal, $value: parseFloat(point.value, 10)});
           });
         }
 
@@ -255,6 +265,7 @@ angular.module('tx.datavis')
           loupe.attr("visibility", "hidden");
           scope.$applyAsync(function () {
             scope.onHover();
+            scope.timepointSelected = null;
           });
         }
 
@@ -267,6 +278,7 @@ angular.module('tx.datavis')
         var series;
         var voronoiSeries;
         var seriesData;
+        var timepoints;
 
         /****
          Graph Updates
@@ -276,24 +288,31 @@ angular.module('tx.datavis')
 
           if (!data) return;
 
-          var timepoints = _.sortBy(_.keys(data), _.identity);
+          timepoints = _.sortBy(_.keys(data), _.identity);
 
           seriesData = _.flatten(_.map(data, _.values));
 
-          var extent = [0, d3.max(_.pluck(seriesData, 'value'))];
+          var extent = d3.extent(_.pluck(seriesData, 'value'));
           y.domain(extent).nice();
 
+          //construct x axis here because scale may change
           //handle the x axis linear / ordinal
           if (scope.isLinear) {
             xScale = xLinear.domain(d3.extent(timepoints));
           } else {
             xScale = xOrdinal.domain(timepoints);
           }
-          var xAxis = d3.svg.axis().scale(xScale)
-            .orient("bottom").ticks(5);
+          var xAxis = d3.svg.axis()
+            .scale(xScale)
+            .orient("bottom")
+            .ticks(5);
 
           xAxisEl.transition().call(xAxis);
-          yAxisEl.transition().call(yAxis);
+          yAxisEl.transition().call(yAxis)
+            .selectAll("text")
+            .attr("transform", function (d) {
+              return (d >= exponentialCutoff) ? "rotate(-45, -20, 0)" : '';
+            });
 
           var rolledData = d3.nest()
             .key(function (d) { return d.key; })

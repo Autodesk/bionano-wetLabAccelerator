@@ -4,6 +4,11 @@
               initialContainerColor = summaryCtrl.getContainerColorFromFieldName('object');
               initialGroupData = summaryCtrl.getFieldValueByName('dyes')">
 
+  <p ng-if="thermoCtrl.graphData" class="thin">
+    qPCR visualization forthcoming...
+    <a ng-href="{{summaryCtrl.getDatarefUrlPath()}}">visit transcriptic for now</a>
+  </p>
+
   <tx-plate container="containerType"
             no-select="!thermoCtrl.graphData"
             plate-data="thermoCtrl.graphData"

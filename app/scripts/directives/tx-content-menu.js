@@ -7,47 +7,94 @@
  *
  */
 angular.module('transcripticApp')
-  .directive('txContentMenu', function (ProtocolHelper, RunHelper, $location) {
+  .directive('txContentMenu', function (ProtocolHelper, RunHelper, Authentication, Database, $document, $timeout, $location) {
     return {
-      templateUrl     : 'views/tx-content-menu.html',
-      restrict        : 'E',
-      controllerAs    : 'contentCtrl',
-      controller      : function postLink ($scope, $element, $attrs) {
+      templateUrl : 'views/tx-content-menu.html',
+      restrict    : 'E',
+      controllerAs: 'contentCtrl',
+      controller  : function postLink ($scope, $element, $attrs) {
         var self = this;
 
-        self.toggleGalleryVisible = function toggleGalleryVisible (forceVal) {
+        self.toggleMenuVisible = function toggleGalleryVisible (forceVal) {
           $scope.$applyAsync(function () {
             self.isVisible = _.isBoolean(forceVal) ? forceVal : !self.isVisible;
-            $element.toggleClass('visible', self.isVisible);
           });
         };
 
-        self.protocols = ProtocolHelper.protocols;
+        $scope.$watch('contentCtrl.isVisible', function (newval) {
+          $element.toggleClass('visible', newval);
+          $timeout(function () {
+            $document[newval ? 'on' : 'off']('click', outsideClickListener);
+          });
+        });
 
-        self.runs = RunHelper.runs;
+        Authentication.watch(function (creds) {
+          self.loadingContent = true;
+          if (creds) {
+            Database.getAllProjectMetadata()
+              .then(function (metadatas) {
+                $scope.$applyAsync(_.partial(setProjects, metadatas));
+              })
+              .catch(function (err) {
+                console.warn(err);
+              });
+          } else {
+            setProjects([])
+          }
+        });
+
+        function setProjects (projects) {
+
+          self.projects = _(projects).uniq().value();
+
+          self.protocols = _.filter(self.projects, function (proj) {
+            return _.result(proj, 'metadata.type') == 'protocol';
+          });
+
+          self.runs = _.filter(self.projects, function (proj) {
+            return _.result(proj, 'metadata.type') == 'run';
+          });
+
+          self.loadingContent = false;
+        }
 
         self.openProtocol = function (protocol) {
-          self.toggleGalleryVisible(false);
-          $location.path('/build');
-          ProtocolHelper.assignCurrentProtocol(protocol);
+          self.toggleMenuVisible(false);
+
+          ProtocolHelper.getProtocol(protocol)
+            .then(_.cloneDeep)
+            .then(ProtocolHelper.assignCurrentProtocol)
+            .then(function () {
+              $location.path('/protocol');
+            });
         };
 
         self.openRun = function (run) {
-          self.toggleGalleryVisible(false);
-          $location.path('/results');
-          RunHelper.assignCurrentRun(run);
+          self.toggleMenuVisible(false);
+
+          RunHelper.getRun(run)
+            //don't need to clone run, since not really editable... (except metadata, which saves automatically)
+            .then(RunHelper.assignCurrentRun)
+            .then(function () {
+              $location.path('/results');
+            });
         };
 
         self.createNewProtocol = function () {
           ProtocolHelper.addProtocol()
             .then(self.openProtocol);
         };
-      },
-      link            : function postLink (scope, element, attrs) {
 
-        /*scope.$watch('galleryCtrl.galleryRollup', function (newval) {
-          scope.galleryCtrl.rolled = _.groupBy(scope.galleryCtrl.galleryItems, newval);
-        });*/
+        function outsideClickListener (event) {
+          if (!$element[0].contains(event.target)) {
+            event.preventDefault();
+            self.toggleMenuVisible(false);
+          }
+        }
+      },
+      link        : function postLink (scope, element, attrs) {
+
+
       }
     };
   });

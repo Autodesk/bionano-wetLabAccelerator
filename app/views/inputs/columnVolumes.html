@@ -9,6 +9,7 @@
 
     <div class="column-12 div-centered">
       <tx-plate-columns group-data="fieldCtrl.model"
+                        container-type="opCtrl.getContainerTypeFromFieldName('object') || '384-flat'"
                         on-click="colvolCtrl.handleColumnSelection($column)"></tx-plate-columns>
 
       <div class="tx-table">
@@ -22,12 +23,11 @@
              ng-class="{'selected' : colvolCtrl.colvolActive == $index}"
              ng-click="colvolCtrl.activateGroup($index)">
           <div class="tx-table-item-field">
-            <span ng-style="{color: group.color}">&block;</span>
+            <input type="color"
+                   class="color-swatch"
+                   disabled
+                   ng-model="group.color">
           </div>
-          <!--<div><input type="text"
-                     class="input-unstyled"
-                     ng-list
-                     ng-model="group.columns"></div>-->
           <div class="tx-table-item-field">
             <span ng-repeat="col in group.columns" ng-bind="col + ($last ? '' : ', ')"></span>
           </div>
@@ -39,12 +39,21 @@
             </tx-protocol-field>
           </div>
           <div class="tx-table-item-field">
-            <span class="close" ng-click="colvolCtrl.deleteGroup(group)">&times;</span>
+            <span class="close"
+                  style="color: white; opacity: 0.75;"
+                  ng-click="colvolCtrl.deleteGroup(group)">&times;</span>
           </div>
         </div>
       </div>
 
-      <a class="field-action-text centered" ng-click="colvolCtrl.addColumn()">Add Column</a>
+      <div style="text-align: center; padding-top: 20px;">
+        <a class="field-action-text div-centered"
+           style="display: inline-block;"
+           ng-click="colvolCtrl.addColumn()">
+          <span class="glyphicon glyphicon-plus"></span>
+          Add Column
+        </a>
+      </div>
     </div>
   </div>
 </tx-modal>

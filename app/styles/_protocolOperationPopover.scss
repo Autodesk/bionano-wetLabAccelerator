@@ -1,3 +1,4 @@
+.oppop,
 tx-operation-popover {
 
   $oppop-fromTop: 15px;
@@ -17,20 +18,20 @@ tx-operation-popover {
   }
   */
 
+  //put padding on popover element, and weird arrow placement, so can maintain pointer events and move mouse into popover
+
   position: absolute;
-  left: calc(100% + #{$oppop-arrow-width});
+  left: 100%;
   top: 50%;
+  padding-left: $oppop-arrow-width;
   transform: translateY(-50%);
-  background-color: $white;
   font-size: $font-size-sm;
   font-weight: $font-weight-light;
   width: $layout-opSummary-width + ($layout-width-columnspace - $oppop-arrow-width);
-  box-shadow: $box-shadow-popover;
 
   &:after {
-    //maintain pointer events so can hover back into it
-    z-index: -1; //but z-index backward so doesn't compete with header actions
-    right: 100%;
+    pointer-events: none;
+    left: -$oppop-arrow-width;
     top: 50%;
     border: solid transparent;
     content: " ";
@@ -61,6 +62,8 @@ tx-operation-popover {
   */
 
   .oppop-wrap {
+    background-color: $white;
+    box-shadow: $box-shadow-popover;
     padding: $oppop-padding;
 
     tx-operation-summary {
@@ -75,6 +78,10 @@ tx-operation-popover {
         display: none;
         border: 0;
       }
+    }
+
+    .op-description {
+      margin-bottom: 0;
     }
 
     tx-plate {

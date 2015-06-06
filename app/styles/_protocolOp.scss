@@ -11,13 +11,17 @@ tx-protocol-op {
 
   @include arrow-bottom($step-background-inactive, $step-background-active, $includeBackground: true, $activeClass: 'open');
 
-  .operation-name {
+  .operation-header {
     color: $black;
     cursor: all-scroll;
     width: 100%;
     padding: 3px 5px;
     display: flex;
     justify-content: space-between;
+
+    .operation-name {
+      font-weight: $font-weight-light;
+    }
   }
 
   .operation-label {
@@ -29,6 +33,11 @@ tx-protocol-op {
 
   .operation-fields {
     width: 100%;
+
+    > tx-protocol-field {
+      margin: 3px 0;
+      padding: 0 10px;
+    }
   }
 
   &:first-child {
@@ -61,6 +70,17 @@ tx-protocol-op {
   &:only-child .group-items {
     &:hover {
       opacity: 1;
+    }
+  }
+
+  .operation-dropdown-toggle {
+    top: 4px;
+    display: none;
+  }
+
+  &:hover {
+    .operation-dropdown-toggle {
+      display: block;
     }
   }
 }

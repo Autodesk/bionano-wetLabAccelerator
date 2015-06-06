@@ -65,8 +65,8 @@ angular.module('transcripticApp')
 
         //scales
         var xScale = d3.scale
-          .ordinal()
-          .rangeBands([0, width]);
+          .linear()
+          .range([0, width]);
 
         var yScale = d3.scale
           .ordinal()
@@ -79,6 +79,7 @@ angular.module('transcripticApp')
 
         var yAxis = d3.svg.axis()
           .scale(yScale)
+          .ticks(2)
           .tickFormat('')
           .orient("left");
 
@@ -97,7 +98,7 @@ angular.module('transcripticApp')
           var transitionDuration = 200,
               tempMin            = 0,
               tempMax            = 100,
-              tempRange          = _.range(tempMax+1, tempMin, -1),
+              tempRange          = _.range(tempMax, tempMin - 1, -1),
               rampPerSecond      = 3.5,
               graphData          = graphDataFromGroup(scope.group),
               withSpacings       = _(graphData)
@@ -106,7 +107,7 @@ angular.module('transcripticApp')
                       spaceStartTemp = _.result(datum, 'temp.end'),
                       spaceEndTemp   = _.result(nextItem, 'temp.start'),
                       difference     = Math.abs(spaceStartTemp - spaceEndTemp),
-                      spaceTime      = _.isUndefined(nextItem) ? 0 : (Math.floor(difference / rampPerSecond) + 1),
+                      spaceTime      = (!_.isNumber(spaceEndTemp) || !_.isNumber(spaceStartTemp) || _.isUndefined(nextItem)) ? 0 : (Math.floor(difference / rampPerSecond) + 1),
                       spacing        = (spaceTime == 0) ? null : {
                         time   : spaceTime,
                         spacing: true,
@@ -122,7 +123,7 @@ angular.module('transcripticApp')
                 .compact()
                 .value(),
               combinedLength     = _.reduce(withSpacings, function (currentTime, datum) {
-                var stepTime  = datum.time,
+                var stepTime  = _.result(datum, 'time', 0),
                     timeAfter = currentTime + stepTime;
 
                 _.assign(datum, {
@@ -135,10 +136,10 @@ angular.module('transcripticApp')
                 return timeAfter;
               }, 0);
 
+          console.log('made variables', combinedLength, withSpacings, graphData);
 
-          console.log(withSpacings);
 
-          xScale.domain(_.range(combinedLength + 1));
+          xScale.domain([0, combinedLength]);
           yScale.domain(tempRange);
 
           xAxisEl.transition().duration(transitionDuration).call(xAxis);
@@ -157,27 +158,37 @@ angular.module('transcripticApp')
             .duration(transitionDuration)
             .attr({
               x1: function (d) {
-                return xScale(d.time.start);
+                return xScale(_.result(d, 'time.start', 0));
               },
               y1: function (d) {
-                return yScale(d.temp.start);
+                return yScale(_.result(d, 'temp.start', 0));
               },
               x2: function (d) {
-                return xScale(d.time.end);
+                return xScale(_.result(d, 'time.end', 0));
               },
               y2: function (d) {
-                return yScale(d.temp.end);
+                return yScale(_.result(d, 'temp.end', 0));
               }
             });
 
+          lines.each(function (d) {
+            console.log(d);
+          });
+
           lines.exit()
-            .remove()
+            .remove();
+
+          console.log('made lines');
         }
 
 
         //helpers
 
         function graphDataFromGroup (thermocycleGroup) {
+          if (! _.result(thermocycleGroup, 'steps', []).length) {
+            return;
+          }
+
           return _.map(thermocycleGroup.steps, function (step) {
             return {
               time   : timeToSeconds(step.duration),

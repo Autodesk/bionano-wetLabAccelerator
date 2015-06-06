@@ -14,7 +14,8 @@ angular.module('transcripticApp')
       transclude : true,
       scope      : {
         title : '@',
-        isOpen: '='
+        preferred: '@preferredPlacement',
+        isOpen: '=?'
       },
       templateUrl: 'views/popover-transclude.html',
       link       : function (scope, element, attrs) {
@@ -33,10 +34,16 @@ angular.module('transcripticApp')
           removePopover();
         });
 
-        scope.$watch('isOpen', function (open) {
+        scope.$watch('isOpen', function (open, wasOpen) {
+          hide();
           if (open) {
             positionPopover(target);
-            $timeout(registerTriggers);
+            $timeout(function () {
+              //account for model changing or something by timing out and manually showing
+              positionPopover(target);
+              registerTriggers();
+              show();
+            });
           } else {
             //'open' class will be handled in template by internalOpen
             unregisterTriggers();
@@ -51,8 +58,12 @@ angular.module('transcripticApp')
 
         //this relies on the popover being in the page... could add transforms to the popover and position before (e.g. for top translate -50%, 100%)
         function positionPopover (targetEl) {
+
+          var preferred = _.includes(['top', 'bottom'], scope.preferred) ? scope.preferred : 'top';
+
           scope.placement = 'top';
-          var pos         = $position.positionElements(targetEl, element, scope.placement || 'top', true),
+
+          var pos         = $position.positionElements(targetEl, element, 'top', true),
               arrowHeight = 12;
 
           pos.top -= arrowHeight;
@@ -60,7 +71,7 @@ angular.module('transcripticApp')
           var elementHeight = _.parseInt(element.css('height'), 10);
 
           //put on bottom if not room (and update styles)
-          if (elementHeight < 0) {
+          if (preferred == 'bottom' || elementHeight < 0 || pos.top < 0) {
             scope.placement = 'bottom';
             pos             = $position.positionElements(targetEl, element, scope.placement, true);
             pos.top += arrowHeight;
@@ -71,6 +82,18 @@ angular.module('transcripticApp')
 
           // Now set the calculated positioning.
           element.css(pos);
+        }
+
+        function hide () {
+          element.css({
+            opacity: 0
+          });
+        }
+
+        function show () {
+          element.css({
+            opacity: 1
+          });
         }
 
         function outsideClickListener ($event) {

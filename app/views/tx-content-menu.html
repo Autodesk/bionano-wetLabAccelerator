@@ -1,7 +1,11 @@
-<input type="checkbox" ng-model="contentCtrl.isVisible" id="menu-trigger" class="menu-trigger"/>
+<input type="checkbox"
+       ng-model="contentCtrl.isVisible"
+       id="menu-trigger"
+       class="menu-trigger"/>
 <label for="menu-trigger"><span></span></label>
 
 <div class="menu">
+
   <div class="contentMenu-header">
     <a class="new-protocol-button" ng-click="contentCtrl.createNewProtocol()">
       <span class="glyphicon glyphicon-plus"></span>
@@ -9,23 +13,42 @@
     </a>
   </div>
 
-  <div class="contentMenu-group">
-    <h5 class="contentMenu-heading">Protocols</h5>
-
-    <div ng-repeat="protocol in contentCtrl.protocols | orderBy:'metadata.name'">
-      <a ng-click="contentCtrl.openProtocol(protocol)"
-         class="contentMenu-item"
-         ng-bind="protocol.metadata.name"></a>
-    </div>
+  <div class="contentMenu-loading"
+       ng-hide-auth>
+    <p>Login or create an account to save protocols and runs</p>
   </div>
 
-  <div class="contentMenu-group">
-    <h5 class="contentMenu-heading">Runs</h5>
+  <div class="contentMenu-loading"
+       ng-show="contentCtrl.loadingContent">
+    <p>Loading content...</p>
+  </div>
 
-    <div ng-repeat="run in contentCtrl.runs | orderBy:'metadata.date'">
-      <a ng-click="contentCtrl.openRun(run)"
-         class="contentMenu-item"
-         ng-bind="run.metadata.name"></a>
+  <div ng-hide="contentCtrl.loadingContent">
+    <div class="contentMenu-group"
+         ng-show="contentCtrl.protocols.length">
+      <h5 class="contentMenu-heading">Protocols</h5>
+
+      <div ng-repeat="protocol in contentCtrl.protocols | orderBy:'metadata.name'">
+        <a ng-click="contentCtrl.openProtocol(protocol)"
+           class="contentMenu-item"
+           ng-bind="protocol.metadata.name"></a>
+      </div>
+    </div>
+
+    <div class="contentMenu-group"
+         ng-show="contentCtrl.runs.length">
+      <h5 class="contentMenu-heading">Runs</h5>
+
+      <div ng-repeat="run in contentCtrl.runs | orderBy:'metadata.date'">
+        <a ng-click="contentCtrl.openRun(run)"
+           class="contentMenu-item"
+           ng-bind="run.metadata.name"></a>
+      </div>
+    </div>
+
+    <div class="contentMenu-loading"
+         ng-show="!contentCtrl.protocols.length">
+      <p>No protocols or runs to display. Select "New Protocol" to continue.</p>
     </div>
   </div>
 </div>

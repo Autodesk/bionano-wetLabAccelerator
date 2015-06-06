@@ -58,18 +58,20 @@ angular.module('tx.protocolEditor')
       },
       link            : function (scope, element, attrs, groupCtrl) {
 
-        scope.groupCtrl = groupCtrl;
-
         scope.$watch('opCtrl.isVisible', function (viz) {
           element.toggleClass('open', !!viz);
         });
 
         element.on('mouseenter', function () {
-          scope.opCtrl.isHovered = true;
+          scope.$applyAsync(function () {
+            scope.opCtrl.isHovered = true;
+          });
         });
 
         element.on('mouseleave', function () {
-          scope.opCtrl.isHovered = false;
+          scope.$applyAsync(function () {
+            scope.opCtrl.isHovered = false;
+          });
         });
 
         scope.deleteStep = function () {
@@ -88,13 +90,13 @@ angular.module('tx.protocolEditor')
           scope.opCtrl.isVisible = !!val;
         });
 
-        scope.$on('editor:verificationSuccess', function (e, val) {
+        scope.$on('editor:clearVerifications', function (e, val) {
           delete scope.opCtrl.verification;
         });
 
         //note - called by protocol-editor
         scope.receiveVerification = function (ver) {
-          console.log(ver);
+          //console.log(ver);
           _.assign(scope.opCtrl, {verification: ver});
         };
       }

@@ -1,12 +1,6 @@
 // Generated on 2015-01-05 using generator-angular 0.10.0
 'use strict';
 
-// # Globbing
-// for performance reasons we're only matching one level down:
-// 'test/spec/{,*/}*.js'
-// use this if you want to recursively match all subfolders:
-// 'test/spec/**/*.js'
-
 module.exports = function (grunt) {
 
   // Load grunt tasks automatically
@@ -38,7 +32,7 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/scripts/omniprotocol/**/*.js',
                 '<%= yeoman.app %>/scripts/conversion/**/*.js',
                 '!<%= yeoman.app %>/scripts/**/index.js'],
-        tasks: ['browserify']
+        tasks: ['browserify', 'uglify:browserified']
       },
       js: {
         files: ['<%= yeoman.app %>/scripts/**/*.js'],
@@ -78,8 +72,9 @@ module.exports = function (grunt) {
     connect: {
       options: {
         port: 9000,
+        protocol: 'https',
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+        hostname: '127.0.0.1',
         livereload: 35729
       },
       livereload: {
@@ -324,15 +319,16 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
+    uglify: {
+      browserified: {
+        files: {
+          '<%= yeoman.app %>/scripts/omniprotocol.js': [
+            '<%= yeoman.app %>/scripts/omniprotocol/index.js',
+            '<%= yeoman.app %>/scripts/conversion/autoprotocol/index.js'
+          ]
+        }
+      }
+    },
     // concat: {
     //   dist: {}
     // },
@@ -415,7 +411,7 @@ module.exports = function (grunt) {
             'demo_runs/**/*.*',
             'demo_viruses/**/*.*',
             'demo_protocols/**/*.*',
-            'scripts/**/index.js' //copy browserified scripts
+            'scripts/omniprotocol.js' //copy browserified scripts
           ]
         }, {
           expand: true,
@@ -497,6 +493,7 @@ module.exports = function (grunt) {
       'clean:server',
       //'wiredep', // doesn't work without internet
       'browserify',
+      'uglify:browserified',
       'configureProxies:livereload',
       'concurrent:server',
       'autoprefixer',
@@ -517,6 +514,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'wiredep',
     'browserify',
+    'uglify:browserified',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',

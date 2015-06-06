@@ -1,10 +1,12 @@
 body {
   display: flex;
   min-height: 100vh;
+  min-width: $layout-width-page;
   flex-direction: column;
   align-items: stretch;
   justify-content:center;
   background-image: radial-gradient(at bottom right,#CCCCCC,#FFFFFF);
+  background-attachment: fixed;
 
   &:before {
     content: " ";
@@ -20,7 +22,7 @@ body {
     z-index: -1;
   }
 
-  .container {
+  .page-container {
     width: $layout-width-page;
     margin: auto auto;
     padding: 0 $layout-container-padding-side 0 $layout-container-padding-left;
@@ -29,6 +31,7 @@ body {
   header {
     align-self: flex-start;
     height: $layout-height-header;
+    min-width: $layout-width-page;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -38,7 +41,7 @@ body {
   }
 
   main {
-    padding-top: $layout-height-header;
+    padding-top: $layout-height-header + $layout-main-spacing-top;
     flex-grow: 1;
     align-self: center;
     align-items: flex-start;
@@ -107,12 +110,6 @@ body {
 
 // build page
 
-.operation-list {
-  width: $layout-opList-width;
-  float: left;
-  display: block;
-}
-
 .protocol-steps {
   float: left;
   width: $layout-operations-width;
@@ -126,18 +123,23 @@ body {
 @for $i from (1 + 1) through 16 {
   .column-#{$i} {
     width: widthFromColumns($i);
+    display: inline-block;
     position: relative;
     min-height: 1px;
     padding-left: $layout-width-column-gutter;
     padding-right: $layout-width-column-gutter;
+    vertical-align: top;
   }
 }
 
 .column-wrap {
+  padding: 0;
   margin: 0 (-$layout-width-column-gutter);
   @include clearfix();
 }
 
 .div-centered {
   margin: 0 auto;
+  display: block;
+  padding: 0;
 }

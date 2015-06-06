@@ -8,33 +8,61 @@
 
 .dropdown-menu {
   position: absolute;
-  z-index: 1000;
+  z-index: $z-dropdown;
   display: none;
   top: 100%;
   float: left;
   min-width: 50px;
   padding: 3px 0;
-  margin: 2px 0;
+  margin:0;
   list-style: none;
   font-size: $font-size-sm;
   text-align: left;
   background-color: $white;
   border: none;
-  border-radius: 0;
-  box-shadow: 0 0 15px $light-grey;
+  border-radius: 1px;
+  box-shadow: $box-shadow-dropdown;
+
+  .open > & {
+    display: block;
+    outline: 0;
+  }
 
   .divider {
-    background: $grey;
+    background: lighten($light-grey, 10);
+    margin: 0.75em 0;
   }
 
   > li > a {
     display: block;
-    padding: 2px 15px;
+    padding: 0.25em 2em;
     clear: both;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
     line-height: $line-height-base;
     color: $black;
     white-space: nowrap;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      background-color: $white;
+      color: $primary;
+    }
+  }
+
+  > .active > a {
+    &,
+    &:hover,
+    &:focus {
+      color: $primary;
+      background-color: $white;
+      text-decoration: none;
+      outline: 0;
+    }
+  }
+
+  > .disabled > a {
+    cursor: default;
   }
 
   &-right {
@@ -46,37 +74,10 @@
     left: 0;
     right: auto;
   }
-}
 
-// Hover/Focus state
-.dropdown-menu > li > a {
-  &:hover,
-  &:focus {
-    text-decoration: none;
-    background-color: $white;
-    color: $primary;
-  }
-}
-
-// Active state
-.dropdown-menu > .active > a {
-  &,
-  &:hover,
-  &:focus {
-    color: $primary;
-    background-color: $white;
-    text-decoration: none;
-    outline: 0;
-  }
-}
-
-
-// Open state for the dropdown
-.open {
-  > .dropdown-menu {
-    display: block;
-  }
-  > a {
-    outline: 0;
+  &-center {
+    right: 50%;
+    left: auto;
+    transform: translateX(50%);
   }
 }

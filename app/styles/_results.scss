@@ -1,10 +1,63 @@
 .results {
 
+  .page-labels {
+    margin-bottom: $layout-spacing-md;
+  }
+
+  .sidepanel,
+  .maincolumn {
+    margin-top: 0;
+  }
+
   .sidepanel {
-    width: 400px;
+    width: 350px;
+    min-width: 350px;
   }
 
   .maincolumn {
 
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .status-heading {
+    margin-top: 0;
+  }
+
+  .summary-header {
+    margin-bottom: $layout-spacing-md;
+  }
+
+  //if this is position-fixed, we need this
+
+  .results-summary {
+    max-width: 530px;
+  }
+
+  .results-summary-wrap {
+    width: 100%;
+    max-width: inherit;
+    overflow-y: scroll;
+    max-height: 100vh;
+
+    &.sticky {
+      padding: 15px 0 65px; //padding-top, 0, sticky + padding-top
+    }
+  }
+}
+
+.summary-resource {
+  position: relative;
+  margin: $layout-spacing-md 0;
+
+  .resource-download {
+    z-index: 2;
+    margin: $layout-spacing-md;
+  }
+
+  .resource-image {
+    max-width: 100%;
   }
 }

@@ -19,7 +19,6 @@ angular
     'ngSanitize',
     'ui.bootstrap',
     'angularFileUpload',
-    'firebase',
     'tx.communication',
     'tx.datavis',
     'tx.protocolEditor'
@@ -28,20 +27,24 @@ angular
 
     $routeProvider
       .when('/', {
-        templateUrl: 'views/routes/home.html'
+        controller  : 'HomeCtrl',
+        controllerAs: 'homeCtrl',
+        templateUrl : 'views/routes/home.html'
       })
 
       //main routes
 
-      .when('/gallery', {
-        templateUrl : 'views/routes/gallery.html',
-        controller  : 'GalleryCtrl',
-        controllerAs: 'galleryCtrl'
-      })
-      .when('/build', {
-        templateUrl : 'views/routes/build.html',
-        controller  : 'BuildCtrl',
-        controllerAs: 'restyleCtrl' //todo - rename to buildCtrl, make sure not passed down and breaking
+      .when('/protocol', {
+        templateUrl : 'views/routes/protocol.html',
+        controller  : 'ProtocolCtrl',
+        controllerAs: 'restyleCtrl', //todo - rename to ProtocolCtrl, make sure not passed down and breaking
+        resolve     : {
+          protocol: ['ProtocolHelper', function (ProtocolHelper) {
+            if (_.isEmpty(ProtocolHelper.currentProtocol)) {
+              ProtocolHelper.assignCurrentProtocol(ProtocolHelper.createNewProtocol());
+            }
+          }]
+        }
       })
       .when('/results', {
         templateUrl : 'views/routes/results.html',
@@ -52,29 +55,14 @@ angular
         templateUrl: 'views/routes/auth.html'
       })
 
-      /*
-      //old routes
-
-      .when('/protocol', {
-        templateUrl : 'views/protocol.html',
-        controller  : 'ProtocolCtrl',
-        controllerAs: 'mainCtrl'
-      })
-      .when('/data', {
-        templateUrl : 'views/data.html',
-        controller  : 'DataCtrl',
-        controllerAs: 'dataCtrl'
-      })
-      .when('/ordering', {
-        templateUrl : 'views/ordering.html',
-        controller  : 'OrderingCtrl',
-        controllerAs: 'orderCtrl'
-      })
-
-      */
-
       //testing routes
 
+      /*
+      .when('/gallery', {
+        templateUrl : 'views/routes/gallery.html',
+        controller  : 'GalleryCtrl',
+        controllerAs: 'galleryCtrl'
+      })
       .when('/testing', {
         redirectTo: '/testing/plate'
       })
@@ -84,12 +72,15 @@ angular
         controllerAs: 'testCtrl'
       })
       .when('/testing/field', {
-        templateUrl: 'views/testing/field.html',
-        controller: 'TestingFieldCtrl',
+        templateUrl : 'views/testing/field.html',
+        controller  : 'TestingFieldCtrl',
         controllerAs: 'testingFieldCtrl'
       })
+      */
       .otherwise({
         redirectTo: '/'
       });
   })
-  .run(function (simpleLogin) {});
+  .run(function (Authentication, Platform, Database, $http, $timeout) {
+
+  });

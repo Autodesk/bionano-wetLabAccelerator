@@ -28,16 +28,13 @@ angular.module('transcripticApp')
           if (val !== "") {
             calcWidth = val.length * 7 + 15;
           } else {
-            calcWidth = element[0].placeholder.length * 7 + 5;
+            calcWidth = element[0].placeholder.length * 7 + 10;
           }
 
           //extra to handle new letter before next $digest $shadow[0].offsetWidth
           var newWidth = Math.max(calcWidth, minWidth) + "px";
           if (val.length < 26) {
             element.css('width', newWidth);
-          }
-          else {
-            //Todo: pop over to accomodate larger text area
           }
         };
 

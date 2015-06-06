@@ -17,6 +17,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import 'header';
 @import 'footer';
 @import 'contentMenu';
+@import 'welcome';
 
 @import 'results';
 @import 'galleryPage';
@@ -29,6 +30,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 //components
 
+@import 'simpleTable';
 @import 'buttons';
 @import 'angularStyles';
 @import 'dropDown';
@@ -42,6 +44,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import 'catalog';
 @import 'tx-table';
 @import 'inputs';
+@import 'runDialog';
 
 //datavis
 

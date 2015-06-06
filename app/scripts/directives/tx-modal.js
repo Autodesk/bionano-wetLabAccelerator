@@ -38,6 +38,17 @@ angular.module('transcripticApp')
           });
         };
 
+        //this is annoying because usually siblings, so can't emit, and have to use $rootScope.$broadcast...
+        scope.$on('$modalClose', function (event) {
+          if (scope.ngShow) {
+            _.attempt(event.stopPropagation); //only exists on emitted events
+            event.preventDefault();
+            scope.hideModal();
+          }
+        });
+
+        /*
+        //todo - this causes double linking... for some reason, we dont need this and it just happens magically...
         //can't use ng-transclude and update the scope, so add the element manually
         transcludeFn(scope.$parent, function (clone, transcludeScope) {
           var transcludeEl       = element.find('modal-transclude');
@@ -45,6 +56,7 @@ angular.module('transcripticApp')
           transcludeEl.append(clone);
           transcludeScope.$close = scope.hideModal;
         });
+        */
       }
     };
 

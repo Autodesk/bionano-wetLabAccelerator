@@ -1,22 +1,7 @@
 .run-response-table {
-  width: 100%;
-  border-collapse: collapse;
-
   tr {
     &:last-child {
       border-top: 1px solid $light-grey;
-    }
-  }
-
-  td {
-    padding: 3px 0.5em;
-    width: 50%;
-
-    &:first-child {
-      text-align: right;
-    }
-    &:last-child {
-      text-align: left;
     }
   }
 }

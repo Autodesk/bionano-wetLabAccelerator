@@ -10,12 +10,13 @@
  * note - requires lodash for throttle() and remove()
  *
  * @attr simpleSticky {number} number of pixels from edge
+ * @attr sticky-class {string} toggle a class on the element
  *
  * @example
  *
  * <div class="myStickyDiv" simple-sticky="20" sticky-bottom></div>
  */
-//todo - attr.alignWith to give element to match?
+  //todo - attr.alignWith to give element to match?
 angular.module('transcripticApp')
   .directive('simpleSticky', function ($window, $timeout) {
 
@@ -23,7 +24,7 @@ angular.module('transcripticApp')
 
     var checks = [];
 
-    function getYOffset() {
+    function getYOffset () {
       return (angular.isDefined($window.pageYOffset) ?
         $window.pageYOffset :
         $window.document[0].documentElement.scrollTop);
@@ -41,13 +42,14 @@ angular.module('transcripticApp')
     }
 
     //the function will be run
-    function addCheck(fn, $scope) {
+    function addCheck (fn, $scope) {
       checks.push(fn);
-      $scope.$on('$destroy', removeCheck);
+      $scope.$on('$destroy', _.partial(removeCheck, fn));
     }
 
-    function removeCheck(fn) {
-      _.remove(checks, fn);
+    function removeCheck (fn) {
+      //_.remove will run function if passed, not find the function
+      checks.splice(_.indexOf(checks, fn), 1);
     }
 
     //ideally, throttle to rAF (try angular service?)
@@ -57,37 +59,48 @@ angular.module('transcripticApp')
       angular.forEach(checks, function (fn) {
         fn.apply(null, [pageYOffset]);
       });
-    }, 50);
+    }, 16);
 
     windowEl.on('scroll resize', throttleRunChecks);
 
     return {
       restrict: 'A',
-      link: function (scope, element, attrs) {
+      link    : function (scope, element, attrs) {
 
-        var affixToBottom = angular.isDefined(attrs.stickyBottom),
-            fromEdgeAffix = parseInt(attrs.simpleSticky, 10) || 20,
+        var affixToBottom  = angular.isDefined(attrs.stickyBottom),
+            fromEdgeAffix  = parseInt(attrs.simpleSticky, 10) || 20,
             positionNormal = element.css('position'),
             fromEdgeNormal = element.css(affixToBottom ? 'bottom' : 'top'),
-            fromEdgeStart = calcStartFromEdge(element[0], affixToBottom),//this doesn't work great with flexbox layouts...
-            isAffixed = false;
+            fromEdgeStart  = calcStartFromEdge(element[0], affixToBottom),//this doesn't work great with flexbox layouts...
+            isAffixed      = false,
+            shouldCheck    = false;
 
-        //hack to handle flexbox layout...
-        if (fromEdgeStart == 0) {
-          $timeout(function () {
-            fromEdgeStart = calcStartFromEdge(element[0], affixToBottom);
-          });
-        }
+        //hack to handle flexbox layout... timeout to run after initial check
+        //especially should run if fromEdgeStart == 0
+        $timeout(function () {
+          shouldCheck = true;
+        }, 50);
 
         //check if affix state has changed
-        function checkPosition(pageYOffset) {
+        var positionChecker = function checkPosition (pageYOffset, forceCheck) {
+
+          if (shouldCheck || !!forceCheck) {
+            fromEdgeStart = calcStartFromEdge(element[0], affixToBottom);
+            shouldCheck   = false;
+          }
+
+          //console.log(fromEdgeStart, element[0].getBoundingClientRect().top, getYOffset(), element[0].getBoundingClientRect().top  + getYOffset(), pageYOffset, fromEdgeAffix, pageYOffset + fromEdgeAffix, (pageYOffset + fromEdgeAffix) > fromEdgeStart);
 
           var shouldAffix;
 
           if (affixToBottom) {
             shouldAffix = ($window.innerHeight + pageYOffset) < fromEdgeStart;
           } else {
-            shouldAffix = (pageYOffset + fromEdgeAffix) > fromEdgeStart;
+            shouldAffix = (
+                //check past threshold
+              (pageYOffset + fromEdgeAffix) > fromEdgeStart) &&
+                //check at page top
+              (pageYOffset > Math.min(10, fromEdgeAffix) );
           }
 
           if (shouldAffix !== isAffixed) {
@@ -96,13 +109,13 @@ angular.module('transcripticApp')
             //run a check in case elements have changed in page, don't wanna run too often
             //todo - time this better
             if (!shouldAffix && !isAffixed) {
-              fromEdgeStart = calcStartFromEdge(element[0], affixToBottom);
+              shouldCheck = true;
             }
           }
-        }
+        };
 
         //handle class changes, CSS changes
-        function handleAffixing(shouldAffix) {
+        function handleAffixing (shouldAffix) {
           isAffixed = shouldAffix;
 
           var styleObj = {
@@ -113,15 +126,18 @@ angular.module('transcripticApp')
           styleObj[affixToBottom ? 'bottom' : 'top'] = shouldAffix ? fromEdgeAffix + 'px' : fromEdgeNormal;
 
           element.css(styleObj);
+
+          if (angular.isDefined(attrs.stickyClass)) {
+            var stickyClass = !!attrs.stickyClass ? attrs.stickyClass : 'sticky';
+            element.toggleClass(stickyClass, shouldAffix);
+          }
         }
 
         //register a callback, handles deregistration when pass in scope
-        addCheck(function (pageYOffset) {
-          checkPosition(pageYOffset);
-        }, scope);
+        addCheck(positionChecker, scope);
 
         //init
-        checkPosition();
+        positionChecker(null);
       }
     };
   });

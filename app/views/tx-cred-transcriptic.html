@@ -1,84 +1,118 @@
-<div>
-  <h4 class="thin">Transcriptic Account</h4>
+<div class="column-wrap column-16 div-centered">
+  <div class="column-8 div-centered">
+    <h4 class="thin">Transcriptic Account</h4>
 
-  <div ng-show="authForm.$valid">
-    <p class="text-sm">
-      <span ng-click="authCtrl.showAuth = !authCtrl.showAuth">Your Transcriptic credentials are valid.</span>
-      <a class="action-text" ng-click="authCtrl.forgetCreds()">Forget my Transcriptic account information</a>
-    </p>
+    <div ng-show="authForm.$valid && authCtrl.credValid">
+      <p class="text-sm">
+        <span ng-hide="authCtrl.validating"
+              ng-click="authCtrl.showAuth = !authCtrl.showAuth">
+          Your Transcriptic credentials are valid.
+        </span>
+        <a class="action-text" ng-click="authCtrl.forgetCreds()">
+          Forget my Transcriptic account information
+        </a>
+      </p>
+    </div>
+
+    <div ng-show="authCtrl.validating && authCtrl.credValid !== false">
+      <p class="text-sm" ng-click="authCtrl.showAuth = !authCtrl.showAuth">Validating your credentials...</p>
+    </div>
+
+    <div ng-show="authCtrl.credValid === false && authForm.$valid">
+      <p class="text-sm text-warning">Your credentials are not validating with transcriptic. Be sure you have entered
+        them correctly.</p>
+    </div>
+
+    <div ng-show="authForm.$invalid || authCtrl.credValid === false || authCtrl.showAuth">
+      <p class="text-sm">Protocols are verified and Run at Transcriptic, Inc. Creating a Transcriptic account is free.
+        An estimate of costs will be displayed prior to running a protocol.
+        <a class="action-text" href="https://secure.transcriptic.com/users/sign_up" target="_blank">I don't have a
+          Transcriptic Account.</a>
+      </p>
+    </div>
   </div>
 
-  <div ng-show="authForm.$invalid || authCtrl.showAuth">
-    <p class="text-sm">Protocols are verified and Run at Transcriptic. Creating a Transcriptic account is free. An estimate of costs will be displayed prior to running a protocol.
-    <a class="action-text" href="https://secure.transcriptic.com" target="_blank">I don't have a Transcriptic Account.</a>
-    </p>
-
-  <form name="authForm"
-        class="panel-body form-horizontal">
-    <div class="alert alert-warning"
-         ng-show="!authCtrl.loggedIn">You must log into Firebase (for now)
-    </div>
-    <fieldset ng-disabled="!authCtrl.loggedIn">
-      <div class="form-group">
-        <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-
-        <div class="col-sm-10">
+  <form name="authForm" ng-show="authForm.$invalid || authCtrl.credValid === false || authCtrl.showAuth">
+    <div class="metadata-table"
+         ng-class="{'metadata-invalid' : authForm.$invalid ||  authCtrl.credValid === false}">
+      <div class="table-row">
+        <div class="metadata-label">Email</div>
+        <div class="metadata-field">
           <input type="email"
-                 ng-model="auth.email"
-                 ng-model-options="{updateOn: 'blur'}"
+                 ng-model="authCtrl.credentials.email"
+                 class="input-unstyled"
+                 ng-model-options="{updateOn: 'blur', getterSetter : true}"
                  required
                  name="authEmail"
-                 class="form-control"
                  id="inputEmail"
                  placeholder="Email address associated with your Transcriptic account">
         </div>
+        <div class="metadata-spacer"></div>
       </div>
-
-      <div class="form-group">
-        <label for="inputKey" class="col-sm-2 control-label">Key</label>
-
-        <div class="col-sm-10">
+      <div class="table-row">
+        <div class="metadata-label">Key</div>
+        <div class="metadata-field">
           <input type="text"
-                 ng-model="auth.key"
-                 ng-model-options="{updateOn: 'blur'}"
+                 ng-model="authCtrl.credentials.key"
+                 class="input-unstyled"
+                 ng-model-options="{updateOn: 'blur', getterSetter : true}"
                  required
                  name="authKey"
-                 class="form-control"
                  id="inputKey"
                  placeholder="Transcriptic API Key, found at Transcriptic > Manage">
         </div>
+        <div class="metadata-spacer"></div>
       </div>
-
-      <div class="form-group">
-        <label for="inputOrg" class="col-sm-2 control-label">Org</label>
-
-        <div class="col-sm-10">
+      <div class="table-row">
+        <div class="metadata-label">Organization</div>
+        <div class="metadata-field">
           <input type="text"
-                 ng-model="auth.organization"
-                 ng-model-options="{updateOn: 'blur'}"
+                 ng-model="authCtrl.credentials.organization"
+                 class="input-unstyled"
+                 ng-model-options="{updateOn: 'blur', getterSetter : true}"
                  required
                  name="authOrg"
-                 class="form-control"
                  id="inputOrg"
                  placeholder="Transcriptic account organization">
         </div>
+        <div class="metadata-spacer"></div>
       </div>
-    </fieldset>
+    </div>
   </form>
 
-    <div class="pull-right">
-      <button class="btn action-button"
-              ng-disabled="!authForm.$valid"
-              ng-click="authCtrl.verifyCreds()">Verify
-      </button>
+  <div class="column-8 div-centered">
+    <div ng-hide="authCtrl.credValid">
+
+      <p class="text-sm">
+        <a class="action-text"
+           href="https://secure.transcriptic.com/users/edit"
+           target="_blank">Help me fetch my Transcriptic credentials...</a>
+      </p>
+
+      <div style="margin: 15px 0">
+        <div class="pull-right">
+          <button class="btn action-button"
+                  ng-disabled="!authForm.$valid || !authCtrl.allowAuthSaved"
+                  ng-click="authCtrl.validateAuth()">Validate
+          </button>
+        </div>
+
+        <input type="checkbox"
+               class="pull-left"
+               ng-model="authCtrl.allowAuthSaved"
+               ng-init="authCtrl.allowAuthSaved = true">
+
+        <p style="margin: 0 100px 0 25px;">
+          Autodesk may use and store my Transcriptic credentials for verifying and running my protocol, subject to the
+          <a class="action-text"
+             href="http://www.autodesk.com/company/legal-notices-trademarks/privacy-statement/autodesk-privacy-statement-2015-english"
+             target="_blank">Autodesk Privacy Statement</a>
+        </p>
+      </div>
     </div>
 
-    <p class="text-sm">
-      <a class="action-text" href="https://secure.transcriptic.com/users/edit" target="_blank">Help me fetch my Transcriptic credentials...</a>
-    </p>
-
-
-
+    <p class="thin"
+       ng-show="authCtrl.credValid">Protocols are verified and run at Transcriptic, Inc. Verification is free. An estimate of costs will be displayed prior to running a protocol.</p>
   </div>
 
 </div>

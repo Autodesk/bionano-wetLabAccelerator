@@ -1,8 +1,10 @@
-<a ng-disabled="actionCtrl.protocolForm.$error.json"
-   ng-click="actionCtrl.saveProtocol()">
+<a class="header-link"
+   ng-disabled="actionCtrl.protocolForm.$error.json || (!actionCtrl.protocol.groups.length && !actionCtrl.protocol.parameters.length)"
+   ng-click="actionCtrl.protocol.groups.length && actionCtrl.saveProtocol()">
   Save
 </a>
-<div dropdown dropdown-append-to-body>
+<div class="header-link"
+     dropdown>
   <a dropdown-toggle>Download</a>
   <ul class="dropdown-menu">
     <li>
@@ -22,7 +24,8 @@
     </li>
   </ul>
 </div>
-<a ng-click="toggleModal()">
+<a class="header-link"
+   ng-click="toggleModal()">
   Run
 </a>
 

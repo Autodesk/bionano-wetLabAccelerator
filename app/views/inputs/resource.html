@@ -9,41 +9,50 @@
        ng-controller="CatalogResourceCtrl as catCtrl"
        ng-init="catCtrl.init()">
 
-    <p class="text-sm">Supplies are only ordered when the protocol runs.</p>
-
-    <div class="column-8 div-centered">
-      <input class="form-control"
-             type="text"
-             ng-model="searchQuery">
+    <div tx-class-auth="ng-hide">
+      <p class="text-sm">You must be logged into Transcriptic to search for resources.</p>
     </div>
 
-    <div class="column-16 div-centered">
-      <h4 class="thin">Search Results</h4>
+    <div ng-show-auth>
+      <p class="text-sm">Supplies are only ordered when the protocol runs.</p>
 
-      <div class="tx-table dark">
-        <div class="tx-table-header">
-          <div class="tx-table-item-field"
-               ng-repeat="field in catCtrl.itemFields"
-               ng-bind="field.name"></div>
-          <div class="tx-table-item-field">Action</div>
-        </div>
-        <div class="tx-table-item"
-             ng-repeat="item in catCtrl.catalogResults">
-          <div class="tx-table-item-field"
-               ng-repeat="field in catCtrl.itemFields"
-               ng-bind="item[field.key] || '-'"></div>
-          <div dropdown
-               class="tx-table-item-field">
-            <span dropdown-toggle>select</span>
-            <ul class="dropdown-menu">
-              <li>
-                <a ng-click="catCtrl.selectItem(item)">Select this item</a>
-              </li>
-              <li ng-if="item.url">
-                <a target="_blank"
-                   ng-href="{{item.url}}">Catalog Item details...</a>
-              </li>
-            </ul>
+      <div class="column-8 div-centered">
+        <input class="form-control"
+               type="text"
+               ng-model="searchQuery">
+      </div>
+
+      <div class="column-16 div-centered">
+        <h4 class="thin">Search Results</h4>
+
+        <div class="tx-table">
+          <div class="tx-table-header">
+            <div class="tx-table-item-field"
+                 ng-repeat="field in catCtrl.itemFields"
+                 ng-bind="field.name"></div>
+            <div class="tx-table-item-field">Kit Name</div>
+            <div class="dimensionaltx-table-item-field">Action</div>
+          </div>
+          <div class="tx-table-item"
+               ng-repeat="item in catCtrl.catalogResults">
+            <div class="tx-table-item-field"
+                 ng-repeat="field in catCtrl.itemFields"
+                 ng-bind="item[field.key] || '-'"></div>
+            <div class="tx-table-item-field"
+                 ng-bind="item.kit_item.kit.name || '-'"></div>
+            <div dropdown
+                 class="tx-table-item-field">
+              <span dropdown-toggle>select</span>
+              <ul class="dropdown-menu">
+                <li>
+                  <a ng-click="catCtrl.selectItem(item)">Select this item</a>
+                </li>
+                <li ng-if="item.url">
+                  <a target="_blank"
+                     ng-href="{{item.url}}">Catalog Item details...</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

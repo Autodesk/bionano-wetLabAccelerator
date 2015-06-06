@@ -15,13 +15,13 @@
     display: table-row;
     color: $white;
 
+    &.selected {
+      background-color: $black;
+    }
+
     &.active,
     &:hover {
       background-color: $primary;
-    }
-
-    &.selected {
-      background-color: $black;
     }
   }
 

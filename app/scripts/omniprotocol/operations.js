@@ -188,7 +188,7 @@ module.exports = {
     }
   },
 
-  "mix"     : {
+  "mix": {
     "operation"  : "mix",
     "description": "Mix specified well using a new pipette tip",
     "name"       : "Mix",
@@ -262,13 +262,13 @@ module.exports = {
     }
   },
 
-  "dispense_resource": {
-    "operation"  : "dispense_resource",
+  "provision": {
+    "operation"  : "provision",
     "description": "Dispense a Transcriptic catalog resource into specified wells",
-    "name"       : "Dispense Resource",
+    "name"       : "Provision",
     "type"       : "pipette",
     "scaffold"   : {
-      "operation"   : "dispense_resource",
+      "operation"   : "provision",
       "requirements": {},
       "transforms"  : [
         {
@@ -282,13 +282,82 @@ module.exports = {
           "singleContainer": false
         },
         {
-          "name"    : "volume",
-          "type"    : "volume",
-          "default" : {"value": 50, "unit": "microliter"}
+          "name"   : "volume",
+          "type"   : "volume",
+          "default": {"value": 50, "unit": "microliter"}
         },
         {
-          "name"   : "resource",
-          "type"   : "resource"
+          "name": "resource",
+          "type": "resource"
+        }
+      ]
+    }
+  },
+
+  "spread": {
+    "operation"  : "spread",
+    "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
+    "name"       : "Spread",
+    "type"       : "picking",
+    "scaffold"   : {
+      "operation"   : "spread",
+      "requirements": {},
+      "transforms"  : [
+        {
+          "wells": "source"
+        },
+        {
+          "wells": "destination"
+        }
+      ],
+      "fields"      : [
+        {
+          "name": "from",
+          "type": "aliquot"
+        },
+        {
+          "name"    : "to",
+          "type"    : "aliquot"
+        },
+        {
+          "name"   : "volume",
+          "type"   : "volume",
+          "default": {"value": 50, "unit": "microliter"}
+        }
+      ]
+    }
+  },
+
+  "autopick": {
+    "operation"  : "autopick",
+    "description": "Pick at least min_count colonies from 'source' to 'destination' wells, until there are no more colonies available, failing if there are fewer than min_count colonies detected",
+    "name"       : "Autopick",
+    "type"       : "picking",
+    "scaffold"   : {
+      "operation"   : "autopick",
+      "requirements": {},
+      "transforms"  : [
+        {
+          "wells": "source"
+        },
+        {
+          "wells": "destination"
+        }
+      ],
+      "fields"      : [
+        {
+          "name": "from",
+          "type": "aliquot"
+        },
+        {
+          "name"    : "to",
+          "type"    : "aliquot+"
+        },
+        {
+          "name"    : "min_colony_count",
+          "readable": "minimum count",
+          "type"    : "integer",
+          "optional": true
         }
       ]
     }
@@ -346,7 +415,7 @@ module.exports = {
 
   "incubate": {
     "operation"  : "incubate",
-    "description": "",
+    "description": "keep (cells, bacteria, etc.) at a suitable temperature so that they develop",
     "name"       : "Incubate",
     "type"       : "heating",
     "scaffold"   : {
@@ -472,11 +541,10 @@ module.exports = {
           "type": "container"
         },
         {
-          "name"    : "lid",
-          "type"    : "option",
-          "options" : optionEnums.lid.cover,
-          "optional": true,
-          "default" : "standard"
+          "name"   : "lid",
+          "type"   : "option",
+          "options": optionEnums.lid.cover,
+          "default": "standard"
         }
       ]
     }
@@ -569,7 +637,6 @@ module.exports = {
   },
 
 
-
   //spectrometry
 
 
@@ -577,7 +644,7 @@ module.exports = {
     "operation"  : "absorbance",
     "description": "Measure absorbance of a specified wavelength (between 300 nm - 1000 nm)",
     "name"       : "Absorbance",
-    "type" : "spectrophotometry",
+    "type"       : "spectrophotometry",
     "scaffold"   : {
       "operation"      : "absorbance",
       "requirements"   : {},
@@ -610,6 +677,7 @@ module.exports = {
         },
         {
           "name"    : "num_flashes",
+          "readable": "number flashes",
           "type"    : "integer",
           "optional": true,
           "default" : 25
@@ -622,7 +690,7 @@ module.exports = {
     "operation"  : "fluorescence",
     "description": "Measure fluorescence given an excitation wavelength (300 nm - 1000 nm) and emission (250 nm - 900 nm)",
     "name"       : "Fluorescence",
-    "type" : "spectrophotometry",
+    "type"       : "spectrophotometry",
     "scaffold"   : {
       "operation"      : "fluorescence",
       "requirements"   : {},
@@ -666,6 +734,7 @@ module.exports = {
         },
         {
           "name"    : "num_flashes",
+          "readable": "number flashes",
           "type"    : "integer",
           "optional": true,
           "default" : 25
@@ -678,7 +747,7 @@ module.exports = {
     "operation"  : "luminescence",
     "description": "Measure luminescence in wells of a plate between 380nm - 600 nm",
     "name"       : "Luminescence",
-    "type" : "spectrophotometry",
+    "type"       : "spectrophotometry",
     "scaffold"   : {
       "operation"      : "luminescence",
       "requirements"   : {},
@@ -760,7 +829,7 @@ module.exports = {
   "autoprotocol": {
     "operation"  : "autoprotocol",
     "description": "Type the JSON of an autoprotocol operation manually",
-    "name"       : "Autoprotocol (JSON)",
+    "name"       : "Autoprotocol",
     "type"       : "special",
     "scaffold"   : {
       "operation"   : "autoprotocol",

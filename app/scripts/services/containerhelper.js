@@ -10,7 +10,7 @@
  * //todo - merge in containerOptions, and expose functionality here
  */
 angular.module('transcripticApp')
-  .service('ContainerHelper', function ($rootScope, Auth, Container, ContainerOptions) {
+  .service('ContainerHelper', function ($rootScope, TranscripticAuth, Container, ContainerOptions) {
     var self = this;
 
     self.local  = [];
@@ -20,23 +20,29 @@ angular.module('transcripticApp')
 
     self.containerOptions = ContainerOptions;
 
-    Auth.watch(function (info) {
-      !!info && Container.list().$promise.then(self.setRemote);
+    TranscripticAuth.watch(function (info) {
+      //hack - should get in pages if possible...
+      _.result(info, 'organization', false) && Container.list({per_page: 200}).$promise.then(self.setRemote);
     });
 
-    //todo - need to get remote and local into same format
+    self.setRemote = function (remote, noReset) {
+      if (noReset !== false ) {
+        self.remote.length = 0;
+      }
 
-    self.setRemote = function (remote) {
-      self.remote.length = 0;
       _.forEach(remote, function (cont) {
         cont = _.isObject(cont.container) ? cont.container : cont; //test mode is different
         self.remote.push({
           id   : _.result(cont, 'id'),
           isNew: false,
-          type : _.result(_.result(cont, 'container_type'), 'shortname'),
+          type : _.result(cont, 'container_type.shortname'),
           name : _.result(cont, 'label')
         });
       });
+
+      $rootScope.$applyAsync();
+
+      console.log(self.remote);
     };
 
     self.setLocal = function (local) {
@@ -63,8 +69,10 @@ angular.module('transcripticApp')
       'plum'      : '#DDA0DD'
     };
 
+    var calls = 0;
     self.randomColor = function () {
-      return '#' + ('000000' + (Math.random() * 0xFFFFFF << 0).toString(16)).slice(-6);
+      calls = (calls + 1) % _.keys(self.definedColors).length;
+      return _.values(self.definedColors)[calls];
     };
 
     // helpers
@@ -86,6 +94,4 @@ angular.module('transcripticApp')
       });
       return self.containers;
     }
-
-    return self;
   });

@@ -1,8 +1,8 @@
 tx-content-menu {
 
   $close-width: 30px;
-  $transition-time: 0.3s;
-  $transition-ease: ease-out;
+
+  z-index: $z-sidepanel;
 
   .menu-trigger {
     position: absolute;
@@ -27,23 +27,21 @@ tx-content-menu {
 
       + label {
         left: 260px;
-        transition: left $transition-in-time;
+        transition: left $transition-short-time $transition-short-ease;
       }
 
       ~ .menu {
         transform: translate3d(0, 0, 0);
-        transition: transform $transition-in-time $transition-ease;
+        transition: transform $transition-short-time $transition-short-ease
       }
     }
   }
 
-  //todo - clean this up!
-
   label[for="menu-trigger"] {
     position: fixed;
-    left: 10px;
-    top: 65px;
-    z-index: $z-sidepanel + 1;
+    left: $layout-width-padding-side;
+    top: $layout-height-header + $layout-main-spacing-top;
+    z-index: $z-sidepanel + 2;
     height: 15px;
     width: 20px;
     cursor: pointer;
@@ -60,6 +58,7 @@ tx-content-menu {
       top: 5px;
       display: block;
       content: '';
+      transition: all $transition-short-time $transition-short-ease;
     }
 
     span:before {
@@ -68,30 +67,33 @@ tx-content-menu {
     span:after {
       top: 6px;
     }
-
-    span, span:before, span:after {
-      transition: all 500ms ease-in-out;
-    }
   }
 
   .menu {
     width: $layout-width-sidepanel;
-    min-height: 100vh; //todo - fix. this doesn't work when not filling window
+    min-height: 100vh; //make sure have padding at bottom
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: $z-sidepanel;
+    z-index: $z-sidepanel + 1;
     background-color: $content-menu-bg;
-    padding: $layout-spacing-md;
-    margin: 50px 0;
+    padding: $layout-spacing-md $layout-spacing-md ($layout-spacing-lg + $layout-height-header);
+    margin: $layout-height-header 0;
     display: block;
     transform: translate3d(-100%, 0, 0);
-    transition: transform $transition-in-time $transition-in-ease;
+    transition: transform $transition-short-time $transition-short-ease;
+    overflow-y: scroll;
 
     .new-protocol-button {
       color: $warning;
+    }
+
+    .contentMenu-loading {
+      color: $white;
+      text-align: center;
+      padding: $layout-spacing-lg;
     }
 
     .contentMenu-header {
@@ -99,7 +101,7 @@ tx-content-menu {
     }
 
     .contentMenu-group {
-      padding: 10px 0 0;
+      padding: $layout-spacing-md 0 0;
     }
 
     .contentMenu-heading {

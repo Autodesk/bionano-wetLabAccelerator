@@ -33,37 +33,45 @@
   <link rel="stylesheet" href="styles/build.css">
   <!-- endbuild -->
 
-  <script src="scripts/omniprotocol/index.js"></script>
-  <script src="scripts/conversion/autoprotocol/index.js"></script>
+  <script src="https://platform.bionano.autodesk.com/client/api.js"></script>
+
+  <script src="scripts/omniprotocol.js"></script>
 </head>
 <body ng-app="transcripticApp">
 
-<header class="site-header">
-  <div class="logo">
-    <a href="#/">
-      <img src="images/logo-cx1.png">
-      <span>Wet Lab Accelerator</span>
-    </a>
-  </div>
+<header class="site-header" ng-controller="HeaderCtrl as headerCtrl">
+  <a class="logo">
+    <img src="images/logo-cx1.png">
+    <span>Wet Lab Accelerator</span>
+    <span class="version">tech preview</span>
+  </a>
   <nav>
-    <ul>
-      <li><a ng-href="#/build">PROTOCOL</a></li>
-      <li><a ng-href="#/results">RESULTS</a></li>
-    </ul>
+    <a ng-href="#/protocol"
+       class="nav-link"
+       ng-class="{'active' : headerCtrl.currentPath == '/protocol'}">PROTOCOL</a>
+    <a class="nav-link disabled"
+       ng-class="{'active' : headerCtrl.currentPath == '/results'}">RESULTS</a>
   </nav>
-  <div class="user" ng-cloak>
-    <a href="#/auth">
+  <div class="user"
+       dropdown>
+    <div class="user-toggle"
+         ng-cloak
+         dropdown-toggle>
       <span class="glyphicon glyphicon-user"></span>
-      <span ng-hide-auth>Sign In</span>
-      <span ng-show-auth>Sign Out</span>
-    </a>
+      <span ng-bind="headerCtrl.currentAuth.name || headerCtrl.currentAuth.userstring || 'Sign In'"></span>
+    </div>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li><a href="#/auth">{{headerCtrl.currentAuth ? 'Account' : 'Sign In'}}</a></li>
+      <li><a target="_blank" href="https://beta.autodesk.com/project/forum/default.html?cap=EBE8FAD9213E432F91C052C218D09B79">Help</a></li>
+      <li><a target="_blank" href="https://beta.autodesk.com/project/forum/topic.html?cap=EBE8FAD9213E432F91C052C218D09B79&forid={E77A72F0-800D-47C9-876C-B22B07F77FB2}">Feedback</a></li>
+    </ul>
   </div>
 </header>
 
 <tx-content-menu></tx-content-menu>
 
 <main>
-  <div ng-view class="flex-vertical flex-grower container"></div>
+  <div ng-view class="flex-vertical flex-grower page-container"></div>
 </main>
 
 <footer>
@@ -76,21 +84,13 @@
 </footer>
 
 
-<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 <script>
-  (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function () {
-      (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-XXXXX-X');
+  ga('create', 'UA-63638898-1', 'auto');
   ga('send', 'pageview');
 </script>
 
@@ -111,8 +111,6 @@
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/d3/d3.js"></script>
 <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
-<script src="bower_components/firebase/firebase.js"></script>
-<script src="bower_components/angularfire/dist/angularfire.js"></script>
 <script src="bower_components/jquery-ui/jquery-ui.js"></script>
 <!-- endbower -->
 <script src="bower_components/lodash/lodash.js"></script>
@@ -122,17 +120,26 @@
 <script src="scripts/app.js"></script>
 
 <!-- CONTROLLERS -->
-<script src="scripts/controllers/firebaselogin.js"></script>
-<script src="scripts/controllers/build.js"></script>
+<script src="scripts/controllers/protocol.js"></script>
 <script src="scripts/controllers/results.js"></script>
 <script src="scripts/controllers/gallery.js"></script>
+<script src="scripts/controllers/platformauth.js"></script>
+<script src="scripts/controllers/home.js"></script>
+<script src="scripts/controllers/header.js"></script>
+<script src="scripts/controllers/resultsdispense.js"></script>
 <!--fields-->
+<script src="scripts/controllers/columnvolumes.js"></script>
+<script src="scripts/controllers/thermocyclegroups.js"></script>
+<script src="scripts/controllers/fieldaliquot.js"></script>
+<script src="scripts/controllers/catalogresource.js"></script>
 <script src="scripts/controllers/thermocycledyes.js"></script>
 <!-- results page -->
+<script src="scripts/controllers/operationsummary.js"></script>
 <script src="scripts/controllers/results/resultsspectrophotometry.js"></script>
 <script src="scripts/controllers/results/resultsThermoCtrl.js"></script>
 <!--testing-->
 <script src="scripts/controllers/testing/plate.js"></script>
+<script src="scripts/controllers/testing/field.js"></script>
 
 <!-- VALUES -->
 <!-- todo - cleanup -->
@@ -146,21 +153,23 @@
 <script src="scripts/values/oligoOptions.js"></script>
 
 <!-- SERVICES -->
-<script src="scripts/services/simplelogin.js"></script>
 <script src="scripts/services/omniprotocolService.js"></script>
 <script src="scripts/services/autoprotocolService.js"></script>
 <script src="scripts/services/wellconv.js"></script>
 <script src="scripts/services/dataconv.js"></script>
 <script src="scripts/services/dragdropmanager.js"></script>
 <script src="scripts/services/containerhelper.js"></script>
-<script src="scripts/services/protocolhelper.js"></script>
-<script src="scripts/services/runhelper.js"></script>
 <script src="scripts/services/notify.js"></script>
 <script src="scripts/services/uuidgen.js"></script>
 <script src="scripts/services/authentication.js"></script>
+<script src="scripts/services/protocolutils.js"></script>
+<script src="scripts/services/platform.js"></script>
+<script src="scripts/services/database.js"></script>
+<script src="scripts/services/runhelper.js"></script>
+<script src="scripts/services/protocolhelper.js"></script>
 <!-- transcriptic communication -->
 <script src="scripts/services/comm/_kickoff.js"></script>
-<script src="scripts/services/comm/auth.js"></script>
+<script src="scripts/services/comm/transcripticAuth.js"></script>
 <script src="scripts/services/comm/communication.js"></script>
 <script src="scripts/services/comm/run.js"></script>
 <script src="scripts/services/comm/project.js"></script>
@@ -173,6 +182,7 @@
 <!-- FILTERS -->
 <script src="scripts/filters/capfirst.js"></script>
 <script src="scripts/filters/arrayify.js"></script>
+<script src="scripts/filters/fieldreadable.js"></script>
 
 <!-- DIRECTIVES -->
 <!-- results / datavis -->
@@ -182,6 +192,9 @@
 <script src="scripts/directives/datavis/tx-timepointgraph.js"></script>
 <script src="scripts/directives/datavis/tx-welltip.js"></script>
 <script src="scripts/directives/datavis/tx-protocol-mini.js"></script>
+<script src="scripts/directives/tx-column-volumes.js"></script>
+<script src="scripts/directives/tx-thermocycle-melting.js"></script>
+<script src="scripts/directives/tx-thermocycle-group.js"></script>
 <!-- editor -->
 <script src="scripts/directives/formHelpers/contenteditable.js"></script>
 <script src="scripts/directives/formHelpers/jsoneditor.js"></script>
@@ -202,7 +215,6 @@
 <script src="scripts/directives/btn-delete.js"></script>
 <script src="scripts/directives/tx-modal.js"></script>
 <script src="scripts/directives/tx-run.js"></script>
-<!--todo - rename to rundialog -->
 <script src="scripts/directives/tx-content-menu.js"></script>
 <script src="scripts/directives/tx-downloadjson.js"></script>
 <script src="scripts/directives/tx-inspector.js"></script>
@@ -212,23 +224,14 @@
 <script src="scripts/directives/tx-protocol-droppable.js"></script>
 <script src="scripts/directives/tx-change-broadcaster.js"></script>
 <script src="scripts/directives/tx-cred-transcriptic.js"></script>
+<script src="scripts/directives/tx-operation-popover.js"></script>
+<script src="scripts/directives/squelchEvent.js"></script>
+<script src="scripts/directives/popover-transclude.js"></script>
+<script src="scripts/directives/tx-container-editor.js"></script>
 
 <!-- uncategorized -->
 
-<script src="scripts/controllers/resultsdispense.js"></script>
-<script src="scripts/directives/tx-column-volumes.js"></script>
-<script src="scripts/controllers/testing/field.js"></script>
-<script src="scripts/controllers/columnvolumes.js"></script>
-<script src="scripts/directives/tx-thermocycle-melting.js"></script>
-<script src="scripts/directives/tx-thermocycle-group.js"></script>
-<script src="scripts/controllers/thermocyclegroups.js"></script>
-<script src="scripts/controllers/fieldaliquot.js"></script>
-<script src="scripts/directives/tx-operation-popover.js"></script>
-<script src="scripts/controllers/operationsummary.js"></script>
-<script src="scripts/directives/squelchEvent.js"></script>
-<script src="scripts/directives/popover-transclude.js"></script>
-<script src="scripts/controllers/catalogresource.js"></script>
-<script src="scripts/services/protocolutils.js"></script>
+
 <!-- endbuild -->
 </body>
 </html>

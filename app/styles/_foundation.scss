@@ -56,7 +56,7 @@ h1, h2, h3, h4 {
 a {
   color: $color-link-default;
   text-decoration: none;
-  transition: color $transition-out-ease $transition-out-time;
+  transition: color $transition-short-ease $transition-short-time;
 
   &:visited {
     color: $color-link-default;
@@ -66,7 +66,13 @@ a {
     color: $color-link-default-hover;
     cursor: pointer;
     text-decoration: none;
-    transition: color $transition-out-ease $transition-out-time;
+    transition: color $transition-short-ease $transition-short-time;
+  }
+
+  &[disabled],
+  &.disabled {
+    color: $color-link-disabled;
+    cursor: not-allowed;
   }
 }
 
@@ -151,4 +157,14 @@ hr {
   margin-bottom: $spacing-paragraph;
   border: 0;
   border-top: 1px solid #eee;
+}
+
+//scroll-bars
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
 }

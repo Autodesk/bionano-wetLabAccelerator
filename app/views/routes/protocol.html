@@ -1,0 +1,70 @@
+<div class="build-wrap flex-grower flex-vertical">
+
+  <div class="protocol-header">
+    <div class="protocol-info" >
+      <span ng-click="toggleModal()"
+            ng-bind="restyleCtrl.currentProtocol.metadata.name || 'Untitled Protocol'"></span>
+      <div class="glyphicon-ellipse"
+           ng-click="toggleModal()">
+        <span class="glyphicon glyphicon-option-horizontal"></span>
+      </div>
+    </div>
+    <tx-protocol-actions protocol="restyleCtrl.currentProtocol"
+                         class="pull-right"
+                         protocol-form="ProtocolForm"></tx-protocol-actions>
+    <tx-modal ng-show='modalShown'
+            title="Protocol Metadata">
+      <div class="column-wrap">
+        <div class="metadata-table">
+          <div class="table-row">
+            <div class="metadata-label">Name</div>
+            <div class="metadata-field">
+              <input type="text"
+                     class="input-unstyled"
+                     placeholder="name of protocol"
+                     ng-model="restyleCtrl.currentProtocol.metadata.name">
+            </div>
+            <div class="metadata-spacer"></div>
+          </div>
+          <div class="table-row">
+            <div class="metadata-label">Description</div>
+            <div class="metadata-field">
+              <input type="text"
+                     class="input-unstyled"
+                     placeholder="enter notes for this protocol"
+                     ng-model="restyleCtrl.currentProtocol.metadata.description">
+            </div>
+            <div class="metadata-spacer"></div>
+          </div>
+          <div class="table-row">
+            <div class="metadata-label">Tags</div>
+            <div class="metadata-field">
+              <input type="text"
+                     class="input-unstyled"
+                     ng-list
+                     placeholder="enter tags associated with this protocol"
+                     ng-model="restyleCtrl.currentProtocol.metadata.tags">
+            </div>
+            <div class="metadata-spacer"></div>
+          </div>
+        </div>
+      </div>
+    </tx-modal>
+  </div>
+
+  <div class="flex-horizontal flex-grower">
+
+    <div class="sidepanel operation-list flex-vertical">
+      <tx-operation-list class="flex-grower scroll-y" simple-sticky="65"></tx-operation-list>
+    </div>
+
+    <div class="maincolumn flex-vertical protocol-steps">
+
+      <tx-protocol-editor class="flex-grower flex-vertical"
+                          ng-form="ProtocolForm"
+                          protocol="restyleCtrl.currentProtocol">
+      </tx-protocol-editor>
+    </div>
+  </div>
+
+</div>

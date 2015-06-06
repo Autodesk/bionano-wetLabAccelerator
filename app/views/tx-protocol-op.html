@@ -11,36 +11,32 @@
     </div>
   </div>
 
-  <div class="operation-name parent-hover-trigger"
+  <div class="operation-header"
        ng-click="opCtrl.isVisible = !opCtrl.isVisible">
-    <span ng-bind="opCtrl.op.operation"></span>
+    <span class="operation-name"
+          ng-bind="opCtrl.op.operation"></span>
 
-    <div class="dropdown group-items visible-parent-hover"
-         dropdown
-         is-open="showActions">
-      <span class="iteration-none"
-            ng-if="!groupCtrl.group.loop || groupCtrl.group.loop <= 1"></span>
-      <span class="glyphicon glyphicon-cog"
-            squelch-event="click"
+    <div class="dropdown group-items"
+         dropdown>
+      <span class="operation-dropdown-toggle glyphicon glyphicon-cog"
+
             dropdown-toggle></span>
       <ul class="dropdown-menu dropdown-menu-right">
-        <li ng-if="groupCtrl.group.loop <= 1">
-          <a ng-click="groupCtrl.group.loop = 2">
-            Add Iteration
-          </a>
-        </li>
         <li>
-          <a ng-click="opCtrl.verifyProtocol()">
+          <a squelch-event="click"
+             ng-click="opCtrl.verifyProtocol()">
             Verify Protocol
           </a>
         </li>
         <li>
-          <a ng-click="duplicateStep()">
+          <a squelch-event="click"
+             ng-click="duplicateStep()">
             Duplicate
           </a>
         </li>
         <li>
-          <a ng-click="deleteStep()">
+          <a squelch-event="click"
+             ng-click="deleteStep()">
             Delete
           </a>
         </li>

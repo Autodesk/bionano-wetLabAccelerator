@@ -12,6 +12,24 @@ angular.module('transcripticApp')
 
     var self = this;
 
+    self.graphLabels = {
+      "absorbance"  : {
+        xlabel: "Timepoint",
+        ylabel: "Absorbance Units (AU)",
+        title : "Absorbance Readings"
+      },
+      "fluorescence": {
+        xlabel: "Timepoint",
+        ylabel: "Relative Light Units (RLU)",
+        title : "Fluorescence Readings"
+      },
+      "luminescence": {
+        xlabel: "Timepoint",
+        ylabel: "Relative Light Units (RLU)",
+        title : "Luminescence Readings"
+      }
+    };
+
     //hack - relying on summaryCtrl like this
     $scope.$watch('summaryCtrl.indices', function (newIndices) {
       self.opName = $scope.summaryCtrl.operation.operation;
@@ -26,17 +44,18 @@ angular.module('transcripticApp')
       self.selectContainer(self.containers[0]);
 
       var unfoldedIndex = _.result(newIndices, 'unfolded');
-      if (_.isNumber(unfoldedIndex))
-      //todo - perf... maybe look at the autoprotocol or something?
-      var unfolded  = Omniprotocol.utils.unfoldProtocol($scope.summaryCtrl.protocol),
-          timepoint = _.reduce(unfolded, function (opIndexOfType, operation, flatIndex) {
-            if (operation.operation == self.opName && flatIndex < unfoldedIndex) {
-              opIndexOfType++;
-            }
-            return opIndexOfType;
-          }, 0);
+      if (_.isNumber(unfoldedIndex)) {
+        //todo - perf... maybe look at the autoprotocol or something?
+        var unfolded  = Omniprotocol.utils.unfoldProtocol($scope.summaryCtrl.protocol),
+            timepoint = _.reduce(unfolded, function (opIndexOfType, operation, flatIndex) {
+              if (operation.operation == self.opName && flatIndex < unfoldedIndex) {
+                opIndexOfType++;
+              }
+              return opIndexOfType;
+            }, 0);
 
-      self.selectTimepoint(timepoint);
+        self.selectTimepoint(timepoint);
+      }
     });
 
     /*
@@ -71,7 +90,9 @@ angular.module('transcripticApp')
       self.currentWells = wells;
     };
 
-    self.onGraphHover = function (well) {
+    self.onGraphHover = function (well, ordinal) {
       self.focusedWells = _.isUndefined(well) ? [] : [well];
+      var newIndex      = _.indexOf(self.timepointValues, ordinal);
+      newIndex >= 0 && self.selectTimepoint(newIndex);
     };
   });

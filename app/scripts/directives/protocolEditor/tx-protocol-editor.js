@@ -38,17 +38,18 @@ angular.module('tx.protocolEditor')
           if ($window.FileReader) {
 
             var fileReader = new FileReader();
+            var protocol;
 
-            fileReader.onload = function (e) {
-              $scope.$apply(function () {
-                try {
-                  var protocol = angular.fromJson(e.target.result);
+            fileReader.onload = function (loadEvent) {
+              try {
+                protocol = angular.fromJson(loadEvent.target.result);
+                $scope.$apply(function () {
                   ProtocolHelper.clearIdentifyingInfo(protocol);
                   ProtocolHelper.assignCurrentProtocol(protocol);
-                } catch (e) {
-                  console.log('couldnt parse dropped JSON', e);
-                }
-              });
+                });
+              } catch (err) {
+                console.log('couldnt parse dropped JSON', e);
+              }
             };
 
             fileReader.readAsText(files[0]);
@@ -106,6 +107,7 @@ angular.module('tx.protocolEditor')
       link            : function postLink (scope, element, attrs) {
 
         scope.$on('editor:verificationSuccess', function () {
+          $rootScope.$broadcast('editor:clearVerifications'); //just in case
           Notify({
             message: 'Protocol Valid!',
             error  : false
@@ -120,6 +122,7 @@ angular.module('tx.protocolEditor')
         });
 
         //verifications come in the form { message : '', $index { step, group, loop, unfolded }, field: {}, fieldName : '' }
+        //exception, $index may be 'parameters' and apply to aprameters, not operation
         scope.$on('editor:verificationFailureLocal', function (event, localVer) {
 
           Notify({
@@ -127,11 +130,12 @@ angular.module('tx.protocolEditor')
             error  : true
           });
 
-          _(localVer).
+          var instructions = _(localVer).
+            filter(function (ver) {
+              return ver.$index != 'parameter';
+            }).
             map(function (ver, verIndex) {
               console.log(ver);
-
-              //todo - tie to field when can
 
               return _.assign({}, {
                 message : ver.message,
@@ -143,6 +147,25 @@ angular.module('tx.protocolEditor')
             }).
             tap(handleMassagedOpVerifications).
             value();
+
+          var refs = _(localVer).
+            filter(function (ver) {
+              return ver.$index == 'parameter';
+            }).
+            map(function (ver, verIndex) {
+              console.log(ver);
+
+              return _.assign({}, {
+                message  : ver.message,
+                source   : 'local',
+                target   : 'parameter',
+                container: ver.fieldName,
+                original : ver
+              });
+            }).
+            tap(handleMassagedParamVerifications).
+            value();
+
         });
 
         scope.$on('editor:verificationFailure', function (event, verifications) {
@@ -186,10 +209,7 @@ angular.module('tx.protocolEditor')
                 original : ver
               };
             }).
-            tap(function (verifications) {
-              //todo - merge for same container?
-              element.find('tx-protocol-setup').children().scope().receiveVerifications(verifications);
-            }).
+            tap(handleMassagedParamVerifications).
             value();
         });
 
@@ -218,6 +238,11 @@ angular.module('tx.protocolEditor')
               angular.element($el).children().scope().receiveVerification(ver);
             }).
             value();
+        }
+
+        function handleMassagedParamVerifications (verifications) {
+          //todo - merge for same container?
+          element.find('tx-protocol-setup').children().scope().receiveVerifications(verifications);
         }
 
       }

@@ -8,11 +8,11 @@
  * Factory in the transcripticApp.
  */
 angular.module('tx.communication')
-  .factory('Run', function ($resource, $q, Communication, Auth, Project) {
+  .factory('Run', function ($resource, $q, Communication, TranscripticAuth, Project) {
     var runResource = $resource(Communication.root + ':organization/:project/runs',
       //defaults
       {
-        organization: Auth.organization
+        organization: TranscripticAuth.organization
       },
 
       //actions
@@ -55,8 +55,19 @@ angular.module('tx.communication')
         }),
 
         /**
-         * @name submit
+         * @name verify
          * @description Submit a run
+         * @param postData {Object} consisting of:
+         * protocol {Protocol} autoprotocol to verify
+         */
+        verify: Communication.defaultResourceActions({
+          method: "POST",
+          url: Communication.root + ':organization/analyze_run'
+        }),
+
+        /**
+         * @name analyze
+         * @description analyze a run
          * @param parameters {Object} with keys:
          * project {String} Project ID
          * @param postData {Object} consisting of:

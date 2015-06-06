@@ -5,34 +5,34 @@ module.exports = {
   //primitives
 
   "boolean": {
-    type               : "primitive",
+    category               : "primitive",
     canParameterize    : true,
     description        : "true or false",
-    "autoprotocol-type": "bool",
+    "autoprotocol-category": "bool",
     verification       : _.isBoolean
   },
   "string" : {
-    type               : "primitive",
+    category               : "primitive",
     canParameterize    : true,
     description        : "A string",
-    "autoprotocol-type": "str",
+    "autoprotocol-category": "str",
     verification       : _.isString
   },
   "integer": {
-    type               : "primitive",
+    category               : "primitive",
     canParameterize    : true,
     description        : "An integer",
-    "autoprotocol-type": "int",
+    "autoprotocol-category": "int",
     verification       : function (input) {
       //todo - do we want this to be a number, or handle string too?
       return _.isNumber(parseInt(input, 10));
     }
   },
   "decimal": {
-    type               : "primitive",
+    category               : "primitive",
     canParameterize    : true,
     description        : "A decimal number",
-    "autoprotocol-type": "float",
+    "autoprotocol-category": "float",
     verification       : function (input) {
       //todo - do we want this to be a number, or handle string too?
       return _.isNumber(parseFloat(input));
@@ -41,8 +41,8 @@ module.exports = {
 
   //psuedo-primitives
 
-  "option"            : {
-    type           : "primitive",
+  "option": {
+    category           : "primitive",
     canParameterize: false,
     description    : "A dropdown with options",
     verification   : function (input, options) {
@@ -50,20 +50,20 @@ module.exports = {
       return _.indexOf(options, input) > -1;
     }
   },
-  "group"  : {
-    type               : "primitive",
+  "group" : {
+    category               : "primitive",
     canParameterize    : false,
     description        : "an object",
-    "autoprotocol-type": "group",
+    "autoprotocol-category": "group",
     verification       : function (input) {
       return _.isObject(input) && !_.isEmpty(input);
     }
   },
-  "group+" : {
-    type               : "primitive",
+  "group+": {
+    category               : "primitive",
     canParameterize    : false,
     description        : "An Array of objects (groups)",
-    "autoprotocol-type": "group+",
+    "autoprotocol-category": "group+",
     verification       : function (input) {
       return _.isArray(input) && _.every(input, _.isObject);
     }
@@ -72,89 +72,89 @@ module.exports = {
   //container / well
 
   "aliquot"  : {
-    type               : "container",
+    category               : "container",
     canParameterize    : false,
     description        : "A single aliquot",
-    "autoprotocol-type": "Well",
+    "autoprotocol-category": "Well",
     verification       : _.constant(true)
   },
   "aliquot+" : {
-    type               : "container",
+    category               : "container",
     canParameterize    : false,
     description        : "Several aliquot",
-    "autoprotocol-type": "WellGroup",
+    "autoprotocol-category": "WellGroup",
     verification       : _.constant(true)
   },
   "aliquot++": {
-    type               : "container",
+    category               : "container",
     canParameterize    : false,
     description        : "Group of multiple aliquots",
-    "autoprotocol-type": "list(WellGroup)",
+    "autoprotocol-category": "list(WellGroup)",
     verification       : _.constant(true)
   },
   "container": {
-    type               : "container",
+    category               : "container",
     canParameterize    : false,
     description        : "A single container",
-    "autoprotocol-type": "Container",
+    "autoprotocol-category": "Container",
     verification       : _.constant(true)
   },
 
   // dimensional
 
   "duration"    : {
-    type               : "dimensional",
+    category               : "dimensional",
     canParameterize    : true,
     description        : "Dimensioned value - duration",
-    "autoprotocol-type": "Unit",
+    "autoprotocol-category": "Unit",
     units              : ["millisecond", "second", "minute", "hour"],
     verification       : _.constant(true)
   },
   "temperature" : {
-    type               : "dimensional",
+    category               : "dimensional",
     canParameterize    : true,
     description        : "Dimensioned value - temperature",
-    "autoprotocol-type": "Unit",
+    "autoprotocol-category": "Unit",
     units              : ["celsius"],
     verification       : _.constant(true)
   },
   "length"      : {
-    type               : "dimensional",
+    category               : "dimensional",
     canParameterize    : true,
     description        : "Dimensioned value - length",
-    "autoprotocol-type": "Unit",
+    "autoprotocol-category": "Unit",
     units              : ["nanometer"],
     verification       : _.constant(true)
   },
   "volume"      : {
-    type               : "dimensional",
+    category               : "dimensional",
     canParameterize    : true,
     description        : "Dimensioned value - volume",
-    "autoprotocol-type": "Unit",
+    "autoprotocol-category": "Unit",
     units              : ["nanoliter", "microliter", "milliliter"],
     verification       : _.constant(true)
   },
   "flowrate"    : {
-    type               : "dimensional",
+    category               : "dimensional",
     canParameterize    : true,
     description        : "Dimensioned value - flow-rate",
-    "autoprotocol-type": "Unit",
+    "autoprotocol-category": "Unit",
     units              : ["microliter/second"],
     verification       : _.constant(true)
   },
   "acceleration": {
-    type               : "dimensional",
+    category               : "dimensional",
     canParameterize    : true,
     description        : "Dimensioned value - acceleration",
-    "autoprotocol-type": "Unit",
+    "autoprotocol-category": "Unit",
     units              : ["g", "meter/second^2"],
     verification       : _.constant(true)
   },
 
   //custom -- should separate these
 
-  "resource"           : {
-    type           : "custom",
+  "resource": {
+    category           : "custom",
     canParameterize: true,
     description    : "Resource from the transcriptic catalog",
     verification   : function (input) {
@@ -162,22 +162,22 @@ module.exports = {
     }
   },
 
-  "json"           : {
-    type           : "custom",
+  "json": {
+    category           : "custom",
     canParameterize: false,
     description    : "Arbitrary JSON, e.g. for passing directly to autoprotocol",
     verification   : function (input) {
       try {
         JSON.stringify(input);
       } catch (e) {
-       return false;
+        return false;
       }
       return true;
     }
   },
 
   "mixwrap"           : {
-    type           : "custom",
+    category           : "custom",
     canParameterize: true,
     description    : "A pre- or post- mixing step, in some liquid handling operations",
     verification   : function (input) {
@@ -185,7 +185,8 @@ module.exports = {
     }
   },
   "columnVolumes"     : {
-    type           : "custom",
+    category           : "custom",
+    readable       : "Column Volumes",
     canParameterize: true,
     description    : "List of columns and volumes",
     verification   : function (input) {
@@ -195,7 +196,7 @@ module.exports = {
     }
   },
   "thermocycleGroups" : {
-    type           : "custom",
+    category           : "custom",
     canParameterize: false,
     description    : "Set of groups in thermocycle",
     verification   : function (input) {
@@ -203,8 +204,9 @@ module.exports = {
     }
   },
   "thermocycleGroup"  : {
-    type           : "custom",
+    category           : "custom",
     canParameterize: true,
+    readable       : "Thermocycle",
     description    : "Set of steps in thermocycle",
     verification   : function (input) {
       return _.isArray(input) && _.every(input, function (item) {
@@ -213,14 +215,16 @@ module.exports = {
     }
   },
   "thermocycleMelting": {
-    type           : "custom",
+    category           : "custom",
     canParameterize: true,
+    readable       : "Melting",
     description    : "Melting temperature / gradient in thermocycle",
     verification   : _.constant(true)
   },
   "thermocycleDyes"   : {
-    type           : "custom",
+    category           : "custom",
     canParameterize: true,
+    readable       : "Dyes",
     description    : "Dyes mapped to wells for thermocycle",
     verification   : _.constant(true)
   }

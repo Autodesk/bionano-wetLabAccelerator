@@ -8,12 +8,11 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('CatalogResourceCtrl', function ($scope, Catalog) {
+  .controller('CatalogResourceCtrl', function ($scope, $rootScope, Catalog) {
     var self = this;
 
     self.init = function () {
       Catalog.query().then(function (data) {
-        console.log(data.data);
         self.catalogResults    = data.data.results;
         self.catalogVendors    = _.result(data.data, 'facets.vendors');
         self.catalogCategories = _.result(data.data, 'facets.categories');
@@ -24,38 +23,23 @@ angular.module('transcripticApp')
     self.itemFields = [
       {
         name: 'Type',
-        key : ''
+        key : 'kind'
       },
       {
         name: 'Item',
         key : 'name'
-      },
-      /*
-      {
-        name: 'Aliquot Size',
-        key : ''
-      },
-      {
-        name: 'Concentration',
-        key : ''
-      },
-      */
-      {
-        name: 'Item Cost',
-        key : 'cost'
       }
     ];
 
     $scope.$watch('searchQuery', function (newQuery, oldQuery) {
-      (!!newQuery && newQuery != oldQuery) && Catalog.byQuery(newQuery).then(function (data) {
-        console.log(data.data);
+      Catalog.byQuery(newQuery).then(function (data) {
         self.catalogResults = data.data;
       });
     });
 
     self.selectItem = function (item) {
       $scope.fieldCtrl.model = item;
-      $scope.$close();
+      $rootScope.$broadcast('$modalClose');
     };
 
   });

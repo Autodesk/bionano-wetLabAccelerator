@@ -1,0 +1,18 @@
+tx-run {
+  a {
+    margin: 0;
+  }
+
+}
+
+tx-cred-transcriptic {
+
+  p {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+  }
+
+  .metadata-label {
+    font-weight: $font-weight-light;
+  }
+}

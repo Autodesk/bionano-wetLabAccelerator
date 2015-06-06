@@ -8,10 +8,8 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('BuildCtrl', function ($scope, $http, ProtocolHelper) {
+  .controller('ProtocolCtrl', function ($scope, $http, ProtocolHelper) {
     var self = this;
-
-    self.allProtocols = ProtocolHelper.protocols;
 
     self.currentProtocol = ProtocolHelper.currentProtocol;
 
@@ -26,5 +24,5 @@ angular.module('transcripticApp')
       $scope.modalShown = !$scope.modalShown;
     };
 
-    self.loadDemo();
+    //self.loadDemo();
   });

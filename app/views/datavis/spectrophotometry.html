@@ -12,19 +12,14 @@
   </div>
 
   <tx-timepointgraph ng-if="spectroCtrl.graphData"
+                     style="padding-bottom: 15px;"
                      data="spectroCtrl.graphData"
                      extent-data="spectroCtrl.dataExtent"
+                     graph-meta="spectroCtrl.graphLabels[spectroCtrl.opName]"
                      series-selected="spectroCtrl.currentWells"
                      is-linear="true"
-                     on-hover="spectroCtrl.onGraphHover($well)">
+                     on-hover="spectroCtrl.onGraphHover($well, $ordinal, $value)">
   </tx-timepointgraph>
-
-  <input ng-if="spectroCtrl.graphData"
-         ng-model="spectroCtrl.timepointSlider"
-         min="0"
-         max="{{spectroCtrl.timepointValues.length - 1}}"
-         ng-change="spectroCtrl.selectTimepoint(spectroCtrl.timepointSlider)"
-         type="range"/>
 
   <tx-plate container="spectroCtrl.currentContainer || initialContainer"
             no-select="!spectroCtrl.graphData"

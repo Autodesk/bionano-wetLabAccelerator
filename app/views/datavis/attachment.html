@@ -1,14 +1,27 @@
-<div ng-init="gel_prefix = 'gelSeparate_';
-              gel_info = summaryCtrl.runData[gel_prefix + summaryCtrl.indices.step]">
+<tx-plate container="summaryCtrl.getContainerTypeFromWellField('objects')"
+          no-brush="true"
+          no-select="true"
+          group-data="{name : '', wells : summaryCtrl.pluckWellsFromContainer('objects') , color: summaryCtrl.getContainerColorFromWellField('objects')}">
+</tx-plate>
 
-  <img ng-repeat="attach in gel_info.attachments"
-       ng-init="summaryCtrl.getResource(attach.key)"
-       ng-src="{{summaryCtrl.getResourceUrl(attach.key)}}">
+<div ng-init="resources = summaryCtrl.getResourcesForOp()">
+  <div ng-repeat="resource in resources"
+       class="summary-resource">
 
-  <pre ng-bind="gel_info | json"></pre>
+    <div class="pull-right resource-download">
+      <a download="{{resource.dataref}}"
+         ng-href="{{summaryCtrl.getResourceUrl(resource)}}"
+         class="field-action-text">
+        download
+      </a>
+    </div>
 
-  <pre ng-bind="summaryCtrl.indices | json"></pre>
-  <pre ng-bind="summaryCtrl.runData | json"></pre>
-  <pre ng-bind="summaryCtrl.operation | json"></pre>
+    <img ng-init="!resource.resourceUrl && summaryCtrl.getResource(resource)"
+         ng-src="{{resource.resourceUrl}}"
+         class="resource-image">
 
+    <p ng-show="resource.status && !resource.resourceUrl"
+       ng-bind="resource.status"></p>
+    <p ng-hide="resource.status || resource.resourceUrl">loading...</p>
+  </div>
 </div>

@@ -11,19 +11,6 @@
   }
 }
 
-.field-action-text,
-.field-details-button {
-  padding: 3px 8px;
-  border-radius: 1em;
-  font-size: 12px;
-  font-weight: bold;
-
-  &:hover {
-    color: $white;
-    background-color: $primary;
-  }
-}
-
 //use with .btn
 .action-button {
   border: 0;
@@ -32,9 +19,12 @@
   margin: 0.25em 0.25em;
   color: $white;
   font-size: $font-size-md;
+  font-weight: $font-weight-light;
   background-color: $primary;
+  //transition: color $transition-short-time $transition-short-ease, background-color $transition-short-time $transition-short-ease;
 
   &:focus,
+  &:active,
   &:hover {
     outline: none;
     color: $white;
@@ -47,11 +37,31 @@
   }
 }
 
+.field-action-text,
 .field-details-button {
-  background-color: $light-grey;
+  display: inline-block;
+  padding: 0;
+  border-radius: 1em;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  background-color: transparent;
+  //transition: color $transition-short-time $transition-short-ease, background-color $transition-short-time $transition-short-ease;
+
+  &:focus,
+  &:active,
+  &:hover {
+    background-color: $primary;
+    color: $white;
+    border-radius: 1em;
+    //need special values esp. for auto-grow directive because inputs are usually just large enough to show input
+    box-sizing: content-box;
+    padding: $input-hover-padding-vert $input-hover-padding-hori;
+    margin: (-$input-hover-padding-vert) (-$input-hover-padding-hori);
+  }
+
+  &.invalid {
+    color: $warning;
+  }
 }
 
-.field-action-text {
-  color: $warning;
-  font-weight: normal;
-}
+.field-details-button {}

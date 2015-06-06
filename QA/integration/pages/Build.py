@@ -1,10 +1,25 @@
 import helpers
+import time
+from selenium.webdriver.common.by import By
+
 from pages import Page
 
+DRIVER = None
+EDIT_METADATA_BUTTON_XPATH = (By.XPATH, "//div[@class='glyphicon-ellipse']")
+OPERATION_LIST_CLASS_NAME = (By.CLASS_NAME, "operation-list-item")
+SIDE_PANEL_CLASS_NAME = (By.CLASS_NAME, "sidepanel")
+MAIN_COLUMN_CLASS_NAME = (By.CLASS_NAME, "maincolumn")
+
+ADD_PARAMETER_BUTTON = (By.CLASS_NAME, "add-parameter")
+PROTOCOL_INSTRUCTIONS_CLASS_NAME = (By.CLASS_NAME, "protocol-instructions")
+EDITOR_BOTTOM_CLASS_NAME = (By.CLASS_NAME, "editor-bottom-space")
+
+OPERATION_DESCRIPTION_FIELD = (By.XPATH, ".//tx-protocol-field[@ng-model='opCtrl.op.description']//div[@class='field-value']//input")
 
 class Build(Page):
     def __init__(self, driver):
         self.DRIVER = driver
+        DRIVER = driver
         # self.protocolSetup = ProtocolSetup(self.DRIVER)
 
     def getOperationNames(self):
@@ -16,16 +31,21 @@ class Build(Page):
         return operationNames
 
     def getOperationByName(self, operationName):
-        return self.DRIVER.find_element_by_xpath("//a[text()='" + operationName + "']")
+        xpath = "//a[@select-title='op.name' and text()='" + operationName + "']"
+        self.waitForElementByXpath(xpath)
+        return self.findElementByXpath(xpath)
 
-    def getOperationsList(self):
+    def getOperationsListOld(self):
         return self.DRIVER.find_elements_by_class_name("operation-list-item")
 
+    def getOperationsList(self):
+        return self.findElements(OPERATION_LIST_CLASS_NAME)
+
     def getSidePanel(self):
-        return self.DRIVER.find_element_by_class_name("sidepanel")
+        return self.findElement(SIDE_PANEL_CLASS_NAME)
 
     def getMainColumn(self):
-        return self.DRIVER.find_element_by_class_name("maincolumn")
+        return self.findElement(MAIN_COLUMN_CLASS_NAME)
 
     def getProtocolSetup(self):
         return ProtocolSetup(self.DRIVER)
@@ -33,8 +53,35 @@ class Build(Page):
     def getProtocolInstructions(self):
         return self.getMainColumn().find_element_by_class_name("protocol-instructions")
 
+    def addOperation2(self, operationName):
+        self.dragAndDrop(self.getOperationByName(operationName), self.findElement(EDITOR_BOTTOM_CLASS_NAME), "operation " + operationName, "protocol editor")
+        self.waitForElement(self.getInstructionLocator(operationName))
+        operationInstructions = self.getOperationInstructionsByName(operationName)
+        try:
+            newOperationInstructionElement = operationInstructions[-1]
+            return OperationInstruction2(newOperationInstructionElement)
+        except Exception as e:
+            message = "operation instruction named: " + operationName + " could not be found"
+            self.exception(message)
+            #raise Exception(message)
+
+        # if len(operationInstructions) > 0:
+        #     newOperationInstructionElement = operationInstructions[-1]
+        #     return OperationInstruction2(newOperationInstructionElement)
+        # else:
+        #     self.exception("operation instruction named: " + operationName + " could not be found")
+        #     return None
 
 
+    def getOperationInstructions(self):
+        opInstructions = self.findElements((By.XPATH, "//span[contains(@class,'operation-name')]/../.."))
+        return opInstructions
+
+    def getOperationInstructionsByName(self, operationName):
+        if operationName.startswith("Arbitrary"):
+            operationName = "Autoprotocol"
+        opInstructions = self.findElements((By.XPATH, "//span[contains(@class,'operation-name') and text()='" + operationName.lower().replace(" ", "_") + "']/../../.."))
+        return opInstructions
 
     def getClearProtocolButton(self):
         return self.getButtonByTooltip("Clear Protocol")
@@ -42,26 +89,21 @@ class Build(Page):
     def getToggleStepVisibilityButton(self):
         return self.getButtonByTooltip("Toggle step visiblity")
 
-    def getSaveProtocolButton(self):
-        return self.getButtonByTooltip("Save Protocol")
+    def getInstructions(self):
+        elements = self.findElements((By.CLASS_NAME, "operation-name"))
+        for element in elements:
+            print(element.text)
 
-    def getSaveProtocolButton(self):
-        return self.getButtonByTooltip("View Protocol Json")
+    def getInstructionLocator(self, operationName):
+        if operationName.startswith("Arbitrary"):
+            operationName = "Autoprotocol"
+        return (By.XPATH, "//span[contains(@class,'operation-name') and text()='" + operationName.lower().replace(" ", "_") + "']/..")
 
-    def getSaveProtocolButton(self):
-        return self.getButtonByTooltip("Download Protocol")
+    def getInstruction(self, operationName):
+        return OperationInstruction2(self.DRIVER, self.findElement(self.getInstructionLocator(operationName)))
 
-    def getSaveProtocolButton(self):
-        return self.getButtonByTooltip("Run Protocol")
-
-
-
-    def findElementByAttributeValue(self, elementType, attribute, value):
-        return self.DRIVER.find_element_by_xpath("//" + elementType + "[@" + attribute + "='" + value + "']")
-
-    def getButtonByTooltip(self, tooltipValue):
-        return self.findElementByAttributeValue("button", "tooltip", tooltipValue)
-
+    def getProtocolInstructionsElement(self):
+        return self.findElement(PROTOCOL_INSTRUCTIONS_CLASS_NAME)
 
 
 class ProtocolSetup(Page):
@@ -72,7 +114,7 @@ class ProtocolSetup(Page):
         parameterElements = self.DRIVER.find_elements_by_class_name("setup-variable")
         parameters = []
         for parameterElement in parameterElements:
-            if self.containsClass(parameterElement, "ng-scope"):
+            if self.containsClass(parameterElement, "ng-scope") and self.containsClass(parameterElement, "setup-variable-placeholder") == False:
                 setupParameter = SetupParameter(parameterElement)
                 parameters.append(setupParameter)
 
@@ -110,10 +152,9 @@ class ProtocolSetup(Page):
             print(parameter.text)
 
     def getAddParameterElement(self):
-        return self.DRIVER.find_element_by_class_name("add-parameter")
+        return self.findElement(ADD_PARAMETER_BUTTON)
 
     def listParameters(self):
-        print("getting setup parameters")
         for parameter in self.getParameters():
             print(parameter.getParameterType() + ": " + parameter.getVariableName())
 
@@ -143,5 +184,55 @@ class ProtocolInstructions(Page):
     def __init__(self, driver):
         self.DRIVER = driver
 
+    def getInstructions(self):
+        elements = self.findElements((By.CLASS_NAME, "operation-name"))
+        for element in elements:
+            print(element.text)
+
+    def getInstruction(self, operationName):
+        return self.findElement((By.XPATH, "//div[contains(@class,'operation-name')]/span[text()='" + operationName.lower().replace(" ", "_") + "']"))
+
     def getProtocolInstructionsElement(self):
-        return self.DRIVER.find_element_by_class_name("protocol-instructions")
+        return self.findElement(PROTOCOL_INSTRUCTIONS_CLASS_NAME)
+
+
+class OperationInstruction2(Page):
+    def __init__(self, element):
+        elemString = "<" + element.tag_name + " class='" + element.get_attribute('class') + "'>"
+        # print(elemString)
+
+        self.element = element
+
+    def getDescription(self):
+        return self.element.find_element(By.XPATH, ".//tx-protocol-field[@ng-model='opCtrl.op.description']//div[@class='field-value']//input").get_attribute("value")
+
+    def getName(self):
+        return self.getOperation().text
+
+    def expand(self):
+        self.action("expanding operation: " + self.getName())
+        if self.isExpanded():
+            print("operation " + self.getName() + " is already expanded")
+        else:
+            self.click()
+        time.sleep(1)
+
+    def collapse(self):
+        self.action("collapsing operation: " + self.getName())
+        if self.isExpanded():
+            self.click()
+        else:
+            print("operation " + self.getName() + " is already collapsed")
+
+
+    def isExpanded(self):
+        return "open" in self.element.get_attribute("class").split(" ")
+
+    def is_displayed(self):
+        return self.element.is_displayed()
+
+    def click(self):
+        self.getOperation().click()
+
+    def getOperation(self):
+        return self.element.find_element(By.XPATH, ".//span[contains(@class, 'operation-name')]")

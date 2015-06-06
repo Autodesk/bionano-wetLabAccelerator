@@ -3,8 +3,12 @@ tx-protocol-setup {
   position: relative;
   padding-top: $layout-spacing-md;
   padding-bottom: $layout-spacing-md;
-  font-size: 14px;
+  font-size: $font-size-md;
   border-bottom: $drop-hover-border-phantom;
+
+  &.drop-hover {
+    border-bottom: $drop-hover-border;
+  }
 
   //div to aid drag and drop (padding outside wrap)
   .protocol-setup-wrap {
@@ -14,98 +18,139 @@ tx-protocol-setup {
 
   .protocol-setup-header {
     padding: 3px 10px;
-    background: transparentize($white, .5);
     outline: none;
+
+    .setup-heading {
+      font-weight: $font-weight-light;
+      color: $black;
+    }
   }
 
   .protocol-setup-main {
-    background: transparentize($white, .5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: block;
+    width: 100%;
+  }
 
-    .setup-variable {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      justify-content: flex-start;
-      align-items: center;
+  .setup-row {
+    display: block;
+    position: relative;
 
-      .parameter-type {
-        width: 100px;
-        padding-right: 10px;
-        text-align: right;
-      }
-      > input {
-        width: 110px;
-        margin: 0 10px;
-      }
-      > .setup-container, tx-protocol-field {
-        width: 205px;
-        margin: 0;
-        .field-value {
-          width: 100%;
-          padding: 0;
-        }
-
-        input[type="color"] {
-          -webkit-appearance: none;
-          width: 20px;
-          height: 20px;
-          padding: 0;
-          color: transparent;
-          background-color: transparent;
-          border: 1px solid transparent;
-          &::-webkit-color-swatch-wrapper {
-            padding: 0;
-            border: 1px solid transparent;
-          }
-          &::-webkit-color-swatch {
-            border: 1px solid transparent;
-            border-radius: 10px;
-          }
-        }
-      }
-      > .close {
-        width: 15px;
-      }
-
-      &:last-child {
-        justify-content: center;
-        padding: 5px 0;
+    &:hover {
+      .setup-parameter-delete {
+        opacity: 1;
       }
     }
 
-    .add-parameter {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      background: transparent;
-      color: $warning;
-      text-align: center;
-      width: 130px;
-      height: 30px;
-      border: none;
-      position: relative;
+    //shown when no parameters exist
+    &.setup-variable-placeholder {
+      padding: 3px 0 8px;
 
-      &:hover {
+      span {
+        display: block;
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
+
+  .setup-parameter-delete {
+    opacity: 0;
+    position: absolute;
+    right: $layout-spacing-md;
+    top: 3px;
+    z-index: 5;
+
+    &:hover + .parameter-inner {
+      background-color: $primary;
+
+      .parameter-info,
+      .parameter-value,
+      .parameter-type,
+      .parameter-name {
         color: $white;
-        background: $primary;
       }
     }
-
-    .parameter-list {}
-
-    .parameter-option {}
   }
 
-  .highlight {
-    background: $primary;
-    color: $white;
+  .parameter-inner {
+    position: relative;
+    width: 100%;
+    padding: 3px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
   }
 
-  &.drop-hover {
-    border-bottom: $drop-hover-border;
+  .parameter-info,
+  .parameter-value,
+  .parameter-type,
+  .parameter-name {
+    width: 50%;
+    display: inline-block;
+  }
+
+  .parameter-info,
+  .parameter-type {
+    text-align: right;
+    padding-right: $layout-spacing-md;
+  }
+
+  .parameter-name,
+  .parameter-value {
+    text-align: left;
+    padding-left: $layout-spacing-md;
+  }
+
+  .parameter-info {
+    font-weight: $font-weight-light;
+    display: flex;
+    flex-direction: row;
+
+    .parameter-type {
+      color: $grey;
+      white-space: nowrap;
+    }
+
+    .parameter-name {
+      color: $dark-grey;
+    }
+  }
+
+  .parameter-value {
+    text-align: left;
+    color: $black;
+
+    .field-value {
+      width: 100%;
+      padding: 0;
+    }
+  }
+
+  .add-parameter {
+    background: transparent;
+    color: $warning;
+    text-align: center;
+    width: 130px;
+    margin: 0 auto;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    position: relative;
+
+    &:hover {
+      color: $white;
+      background: $primary;
+    }
+  }
+
+  .parameter-list {
+  }
+
+  .parameter-option {
+  }
+
+  .field-parameter-toggler {
+    display: none;
   }
 }

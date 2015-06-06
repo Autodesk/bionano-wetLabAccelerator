@@ -14,10 +14,12 @@ angular.module('transcripticApp')
       'consolidate': 'pipette',
       'distribute' : 'pipette',
 
-      'mix'              : 'mix',
-      'dispense_resource': 'dispense_resource',
+      'mix'      : 'mix',
+      'provision': 'provision',
+      'dispense' : 'dispense',
 
-      'dispense': 'dispense',
+      'spread'  : 'pipette',
+      'autopick': 'pipette',
 
       'absorbance'  : 'spectrophotometry',
       'fluorescence': 'spectrophotometry',
@@ -28,8 +30,9 @@ angular.module('transcripticApp')
       'unseal'  : 'container',
       'cover'   : 'container',
       'uncover' : 'container',
+      'spin'    : 'container',
 
-      'image_plate' : 'attachment',
+      'image_plate' : 'attachment_plate',
       'gel_separate': 'attachment'
     };
 

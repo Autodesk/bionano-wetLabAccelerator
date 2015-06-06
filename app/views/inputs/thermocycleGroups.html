@@ -2,9 +2,10 @@
      style="width: 100%;"
      ng-init="thermoCtrl.onInit()">
 
-  <div ng-repeat="group in fieldCtrl.model">
+  <div ng-repeat="group in fieldCtrl.model"
+       style="position: relative;">
     <span class="close"
-          style="position: absolute; right: 40px;"
+          style="position: absolute; z-index: 2; top: 0; right: 25px;"
           ng-click="thermoCtrl.deleteGroup(group)">&times;</span>
     <tx-protocol-field field="group"
                        hide-title="true"
@@ -14,6 +15,7 @@
 
   <div>
     <a class="field-action-text"
+       ng-class="{'invalid' : !fieldCtrl.model.length}"
        ng-click="thermoCtrl.addGroup()">
       add group...
     </a>

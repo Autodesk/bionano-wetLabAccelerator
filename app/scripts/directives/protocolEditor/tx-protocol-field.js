@@ -17,7 +17,8 @@ angular.module('tx.protocolEditor')
         model          : '=ngModel',
         field          : '=',
         preventVariable: '=',
-        hideTitle      : '='
+        hideTitle      : '=',
+        hideUnit       : '=?' //for dimensionals
       },
       bindToController: true,
       controllerAs    : 'fieldCtrl',
@@ -106,7 +107,7 @@ angular.module('tx.protocolEditor')
             //Special handling before we get the appropriate template
 
             // handle all dimensional values the same way
-            if (Omniprotocol.inputTypes[type].type == 'dimensional') {
+            if (Omniprotocol.inputTypes[type].category == 'dimensional') {
 
               var inputType     = Omniprotocol.inputTypes[type];
               partial           = 'dimension';
@@ -151,7 +152,7 @@ angular.module('tx.protocolEditor')
               if (_.isUndefined(_.result(scope.fieldCtrl.model, 'unit'))) {
                 var listener = scope.$watch('fieldCtrl.model', function (newval) {
 
-                  if (_.isObject(newval) && (newval.value || newval.unit)) {
+                  if (_.isObject(newval) && (_.isNumber(newval.value) || newval.unit)) {
                     var defaultUnit = _.result(_.result(scope.fieldCtrl.field, 'default'), 'unit') || scope.unitOptions[0];
                     ngModel.$setViewValue(_.assign({unit: defaultUnit}, scope.fieldCtrl.model));
                     listener();

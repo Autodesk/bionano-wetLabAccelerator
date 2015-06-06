@@ -1,0 +1,62 @@
+.welcome-overlay {
+  @extend .modal-overlay;
+
+  .welcome-call {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+    color: $white;
+
+    h3 {
+      font-size: 2.5em;
+    }
+
+    .action-button {
+      display: inline-block;
+      box-shadow: $box-shadow-accent;
+    }
+  }
+
+  .help-tip {
+    color: white;
+    font-size: $font-size-md;
+    border-left: 1px solid $white;
+    position: absolute;
+
+    &-right {
+      border-left: none;
+      border-right: 1px solid $white;
+    }
+
+    &-text {
+      width: 200px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 1em;
+      margin: 0;
+    }
+
+    &.help-tip-right .help-tip-text {
+      left: auto;
+      right: 0;
+      text-align: right;
+    }
+
+    //specific kinds
+
+    &-hamburger {
+      height: 200px;
+      top: 90px;
+      left: 18px;
+    }
+
+    &-user {
+      height: 200px;
+      top: 40px;
+      right: 45px;
+    }
+  }
+}

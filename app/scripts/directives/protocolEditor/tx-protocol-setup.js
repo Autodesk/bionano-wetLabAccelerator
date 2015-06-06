@@ -7,7 +7,7 @@
  * # txProtocolSetup
  */
 angular.module('transcripticApp')
-  .directive('txProtocolSetup', function ($rootScope, Auth, UUIDGen, Container, Omniprotocol, ContainerHelper) {
+  .directive('txProtocolSetup', function ($rootScope, TranscripticAuth, UUIDGen, Container, Omniprotocol, ContainerHelper, ProtocolHelper) {
     return {
       templateUrl     : 'views/tx-protocol-setup.html',
       restrict        : 'E',
@@ -22,9 +22,10 @@ angular.module('transcripticApp')
         //parameters
         this.paramTypes = _(Omniprotocol.inputTypes).
           forEach(function (param, name) {
-            _.assign(param, {name: name});
+            _.assign(param, {type: name});
           }).
           filter(_.matches({canParameterize: true})).
+          groupBy('category').
           value();
 
         //containers
@@ -32,13 +33,12 @@ angular.module('transcripticApp')
         self.containerOptions      = ContainerHelper.containerOptions;
         self.storageOptions        = Omniprotocol.optionEnums.storage.storage;
 
-        //this is set dynamically, reference should never be broken
-        self.remoteContainers = ContainerHelper.remote;
 
-        self.addParam = function (type) {
+        self.addParam = function (param) {
           self.parameters.push({
             id : UUIDGen(),
-            type: type
+            type: param.type,
+            readable: param.readable
           });
           $scope.showParameters = false;
         };
@@ -72,29 +72,9 @@ angular.module('transcripticApp')
           $scope.checkContainerChange();
         };
 
-        /* containers */
-
-        self.selectNewContainer = function (param) {
-          _.merge(param, {value: {
-            isNew: true
-          }});
-          $scope.notifyContainerChange()
-        };
-
-        self.selectRemoteContainer = function (param, remote) {
-          param.readable = remote.name || remote.id;
-          _.assign(param.value, remote);
-          $scope.notifyContainerChange();
-        };
-
         self.handleChangeParamType = function (param) {
           self.clearParamValue(param);
           $scope.checkContainerChange();
-        };
-
-        self.handleSelectRemoteContainer = function (param, remote) {
-          _.assign(param.value, remote);
-          $scope.notifyContainerChange();
         };
 
       },
@@ -103,6 +83,11 @@ angular.module('transcripticApp')
 
         //CHANGE CHECKING / CONTAINERS
 
+        scope.$on('editor:toggleGroupVisibility', function (e, val) {
+          scope.isVisible = !!val;
+        });
+
+        //todo - this will be problematic when handling verifications on the parameter b/c deep equality
         scope.$watch('setupCtrl.parameters', function (newval, oldval) {
           $rootScope.$broadcast('editor:parameterChange', newval);
         }, true);
@@ -134,15 +119,19 @@ angular.module('transcripticApp')
         //VERIFICATIONS
 
         scope.$on('editor:verificationSuccess', function (event) {
+          scope.hasVerifications = false;
           _.forEach(scope.setupCtrl.parameters, function (param) {
             delete param.verification;
           });
         });
 
         scope.receiveVerifications = function (vers) {
-          //todo - need to show verification for whole setup
-          _.forEach(vers, function (ver) {
-            _.assign(_.find(scope.setupCtrl.parameters, {name: ver.container}), {verification: ver});
+          scope.hasVerifications = !!vers.length;
+          scope.verifications    = vers;
+          //todo - shouldn't be binding to the parameter directly...
+          //fixme - using index is a hack, should be using whole verification (can refactor once can remove the $watch on all parameters)
+          _.forEach(vers, function (ver, verIndex) {
+            _.assign(_.find(scope.setupCtrl.parameters, {name: ver.container}), {verification: verIndex});
           });
         };
 

@@ -6,6 +6,13 @@ var _                    = require('lodash'),
     omniUtils            = omniprotocol.utils,
     omniConv             = omniprotocol.conv;
 
+/*** Error helper ***/
+
+function throwFieldError (message, op, fieldName) {
+  var fieldObj = omniUtils.pluckField(op.fields, fieldName);
+  throw new ConversionError(message, fieldObj, fieldName, op.$index);
+}
+
 /*******************
  Field Conversion
  *******************/
@@ -67,7 +74,7 @@ converterField.thermocycleGroup = function (input, fieldObj) {
     steps : _.map(input.steps, function (step) {
       return _.assign({
           duration: convertDimensionalWithDefault(step.duration, inputDefault.duration),
-          read    : _.result(step, 'read', true)
+          read    : _.result(step, 'read', false)
         }, (!!step.isGradient ?
         {
           gradient: {
@@ -90,7 +97,11 @@ converterField.thermocycleDyes = function (input) {
     return _.result(item, 'wells', []).length;
   });
   //todo -verify a dye was selected, or use defualt. currently view is reponsible for guarantee
-  return _.zipObject(_.pluck(filtered, 'dye'), _.pluck(filtered, 'wells'));
+  var zipped = _.zipObject(_.pluck(filtered, 'dye'), _.pluck(filtered, 'wells'));
+  if (_.keys(zipped).length == 0) {
+    return null;
+  }
+  return zipped;
 };
 
 converterField.thermocycleMelting = function (input, fieldObj) {
@@ -159,7 +170,7 @@ converterInstruction.transfer = function (op) {
       _.fill(fromWells, fromWells[0], 0, toWells.length);
     } else {
       console.warn('transfer wells dont match up', toWells, fromWells);
-      throw new Error('transfer wells dont match up');
+      throwFieldError('transfer wells dont match up', op, 'to');
     }
   }
 
@@ -252,26 +263,30 @@ converterInstruction.mix = function (op) {
 
 converterInstruction.dispense = simpleMapOperation;
 
-converterInstruction.dispense_resource = function (op) {
+converterInstruction.provision = function (op) {
   var wells = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'wells')),
       volume = omniConv.pluckFieldValueTransformed(op, 'volume', converterField),
       resourceId = _.result(omniUtils.pluckFieldValueRaw(op.fields, 'resource'), 'id');
 
   if (!resourceId) {
-    throw new Error('missing resource id for dispense_resource');
+    throwFieldError('missing resource id', op, 'id');
   }
 
   return {
-    op: 'dispense_resource',
+    op: 'provision',
     resource_id : resourceId,
     to: _.map(wells, function (well) {
       return {
         well: well,
         volume : volume
-      }
+      };
     })
   };
 };
+
+converterInstruction.spread = simpleMapOperation;
+
+converterInstruction.autopick = simpleMapOperation;
 
 /* TEMPERATURE */
 
@@ -301,8 +316,7 @@ converterInstruction.autoprotocol = function (op) {
   try {
     return JSON.parse(jsonString);
   } catch (e) {
-    console.warn('JSON was invalid', jsonString);
-    return null
+    throwFieldError('JSON was invalid', op, 'json');
   }
 };
 

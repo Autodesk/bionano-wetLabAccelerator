@@ -5,33 +5,40 @@
 
 
 <tx-modal ng-show="fieldCtrl.detailsVisible"
-          title="{{fieldCtrl.field.name}}">
-  <table>
-    <tr>
-      <td class="operation-label">volume</td>
-      <td>
-        <tx-protocol-field ng-model="fieldCtrl.model.volume"
-                           field="{type: 'volume'}">
-        </tx-protocol-field>
-      </td>
-    </tr>
+          title="{{(fieldCtrl.field.readable || fieldCtrl.field.name || 'mixwrap') | fieldReadable }}">
+  <div class="column-wrap">
+    <div class="column-10 div-centered">
+      <table class="simple-twocol-table">
+        <tr>
+          <td class="operation-label">volume</td>
+          <td>
+            <tx-protocol-field ng-model="fieldCtrl.model.volume"
+                               hide-title="true"
+                               field="{type: 'volume'}">
+            </tx-protocol-field>
+          </td>
+        </tr>
 
-    <tr>
-      <td class="operation-label">speed</td>
-      <td>
-        <tx-protocol-field ng-model="fieldCtrl.model.speed"
-                           field="{type: 'flowrate'}">
-        </tx-protocol-field>
-      </td>
-    </tr>
+        <tr>
+          <td class="operation-label">speed</td>
+          <td>
+            <tx-protocol-field ng-model="fieldCtrl.model.speed"
+                               hide-title="true"
+                               field="{type: 'flowrate'}">
+            </tx-protocol-field>
+          </td>
+        </tr>
 
-    <tr>
-      <td class="operation-label">repetitions</td>
-      <td>
-        <input type="number"
-               ng-model="fieldCtrl.model.repetitions"
-               ng-required="true">
-      </td>
-    </tr>
-  </table>
+        <tr>
+          <td class="operation-label">repetitions</td>
+          <td>
+            <tx-protocol-field ng-model="fieldCtrl.model.repetitions"
+                               hide-title="true"
+                               field="{type: 'integer'}">
+            </tx-protocol-field>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </tx-modal>

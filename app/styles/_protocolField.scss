@@ -1,15 +1,8 @@
-/*
-
-
-*/
-
-
 tx-protocol-field {
   display: flex;
   flex-direction: row;
   align-items: baseline;
   width: 100%;
-  margin: 3px 0;
 
   .field-label {
     display: inline-block;
@@ -17,9 +10,6 @@ tx-protocol-field {
     color: $grey;
     text-align: right;
     padding-right: $layout-spacing-md;
-    &:after {
-      content: ':';
-    }
   }
 
   .field-value {
@@ -41,25 +31,7 @@ tx-protocol-field {
     tx-protocol-field-inner {
       display: flex;
       flex-direction: row;
-
-      .button {
-        justify-content: center;
-        align-items: baseline;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        text-align: center;
-        padding:2px 0;
-        outline: 0;
-        &:hover {
-          background: $primary;
-          color: $white;
-          padding: 2px 5px;
-          .button-label {
-            color: $white;
-          }
-        }
-      }
+      position: relative;
     }
   }
 
@@ -70,18 +42,22 @@ tx-protocol-field {
   }
 
   .field-parameter-toggler {
-    margin: 0 10px;
-    padding: 4px;
-    border-radius: 4px;
+    margin: 0 0 0 10px;
+    padding: 0.25em;
+    border-radius: 3px;
     position: relative;
     cursor: pointer;
     font-size: 12px;
     color: $white;
     text-align: center;
-    width: 20px;
-    height: 20px;
+    width: 1.6em;
+    height: 1.6em;
     opacity: 0;
-    transition: opacity $transition-out-time $transition-out-ease;
+    transition: opacity $transition-short-time $transition-short-ease;
+
+    .glyphicon {
+      top: 0;
+    }
 
     &.active {
       opacity: 1;
@@ -101,7 +77,13 @@ tx-protocol-field {
     > .field-parameter-toggler {
       opacity: 1;
       background-color: $light-grey;
-      transition: opacity $transition-out-time $transition-out-ease;
+      transition: opacity $transition-short-time $transition-short-ease;
     }
+  }
+
+
+  //colors etc. for when in modal
+  tx-modal & {
+
   }
 }

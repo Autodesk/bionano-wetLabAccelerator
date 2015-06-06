@@ -27,9 +27,33 @@
   line-height: $mini-font-line-height;
   position: relative;
 
+  .mini-protocol-status,
   .mini-protocol-wrap {
     width: 280px;
     margin: 0 $clip-arrow-width 0 $internal-padding-hori;
+  }
+
+  .mini-protocol-status {
+    padding-right: (2 * $timelines-spacing) + $timelines-width;
+    margin-bottom: $margin-bottom
+  }
+
+  .status-instruction,
+  .protocol-instruction {
+    position: relative;
+    border-radius: 10px;
+    background: $white;
+    text-align: center;
+    padding: $internal-padding-vert $internal-padding-hori;
+    margin-bottom: $margin-bottom;
+
+    &:last-child {
+      margin-bottom: 0;
+
+      &:after {
+        display: none;
+      }
+    }
   }
 
   .protocol-group {
@@ -51,27 +75,6 @@
       font-size: $font-size-loop-number
     }
 
-    .protocol-instruction {
-      border-radius: 10px;
-      background: $white;
-      text-align: center;
-      padding: $internal-padding-vert $internal-padding-hori;
-      margin-bottom: $margin-bottom;
-
-      //ahmad should deal with arrows
-      &:first-child {
-
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-
-        &:after {
-          display: none;
-        }
-      }
-    }
-
     &.multichild,
     &.looping {
 
@@ -83,31 +86,6 @@
         padding-bottom: $internal-padding-vert;
       }
 
-      .protocol-instruction {
-
-      }
-    }
-
-    &.multichild {
-
-      .protocol-instruction {
-
-      }
-
-      &.expanded {
-
-      }
-    }
-
-    &.looping {
-
-      .protocol-instruction {
-
-      }
-
-      &.expanded {
-
-      }
     }
 
     .mini-group-repeater {
@@ -120,8 +98,8 @@
   }
 
   .has-arrow {
-    position: relative;
 
+    //todo - use arrow include
     &:after {
       top: 100%;
       left: 50%;
@@ -133,8 +111,14 @@
       pointer-events: none;
       border-color: rgba(255, 255, 255, 0);
       border-top-color: $white;
-      border-width: 10px;
-      margin-left: -$clip-arrow-width;
+      border-width: $arrow-height;
+      margin-left: -$arrow-height;
+    }
+
+    &.protocol-group.multichild {
+      &:after {
+        margin-top: 2px;
+      }
     }
   }
 
@@ -165,6 +149,7 @@
     margin-top: -$internal-padding-vert;
     z-index: $z-arrow;
     background: $primary;
+    //autoprefixer does not handle this well
     -webkit-clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
     clip-path: polygon(calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%, 0 50%, 0% 0%);
     opacity: 0; //default hidden
@@ -172,7 +157,9 @@
     transition: transform 0.25s ease-out, opacity 0.25s linear;
   }
 
-  &.arrow-visible .mini-arrow {
-    opacity: 1;
+  &.arrow-visible {
+    .mini-arrow {
+      opacity: 1;
+    }
   }
 }

@@ -10,7 +10,7 @@
  * todo - rename to match names in protocolUtils
  */
 angular.module('transcripticApp')
-  .controller('operationSummaryCtrl', function ($scope, $sce, Communication, ProtocolHelper, Omniprotocol, ProtocolUtils) {
+  .controller('operationSummaryCtrl', function ($scope, $sce, Communication, ProtocolHelper, Omniprotocol, ProtocolUtils, TranscripticAuth, RunHelper, $window, $timeout) {
     var self = this;
 
     self.protocol = ProtocolHelper.currentProtocol;
@@ -51,28 +51,95 @@ angular.module('transcripticApp')
       }
     }
 
+    self.getResourcesForOp = function () {
+      if (_.isEmpty(self.indices)) {
+        return [];
+      }
+
+      var datarefRaw  = self.getFieldValueByName('dataref'),
+          //hack - interpolate, assuming that needed index is available here...
+          datarefName = Omniprotocol.utils.interpolateObject(datarefRaw, self.indices);
+
+      return _(self.runData)
+        .filter(function (data, dataref) {
+          return dataref == datarefName;
+        })
+        .map(function (data, index) {
+          return {
+            projectId: _.result(RunHelper.currentRun, 'transcripticProjectId'),
+            runId    : _.result(data, 'instruction.run.id'),
+            dataref  : datarefName,
+            id       : _.result(data, 'id', '')
+          };
+        })
+        .flatten()
+        .value()
+    };
+
     // RESOURCE - might be moot with server handling
 
     self.trustResource = function (url) {
       return $sce.trustAsResourceUrl(url);
     };
 
-    self.getResourceUrl = function (resourceKey) {
-      return 'upload/url_for?key=' + encodeURIComponent(resourceKey);
+    self.getResourceUrlPath = function (resource) {
+      // return 'upload/url_for?key=' + encodeURIComponent(resourceKey); //old way
+      //return '-/' + resourceId + '.raw'; //CORS
+
+      //hack - relying on currentRun in generating resources above
+
+      //link in form
+      //https://secure.transcriptic.com/:organization/:project/datasets/:dataId
+      return TranscripticAuth.organization() + '/' +
+        resource.projectId + '/datasets/' +
+        resource.id + '?format=raw';
     };
 
-    self.getResource = function (resourceKey) {
-      return Communication.request(self.getResourceUrl(resourceKey), 'get', {
+    //todo
+    self.getDatarefUrlPath = function () {
+      var resources = self.getResourcesForOp(),
+          first     = resources[0],
+          url       = TranscripticAuth.organization() + '/' +
+            first.projectId + '/runs/' +
+            first.runId + '/data/' +
+            first.dataref;
+
+      return url;
+    };
+
+    //gives full URL
+    self.getResourceUrl = function (resource) {
+      return Communication.requestUrl(self.getResourceUrlPath(resource));
+    };
+
+    self.getResource = function (resource) {
+      console.log(resource);
+
+      $timeout(function () {
+        resource.status = 'Still loading...'
+      }, 10000);
+
+      return Communication.request(self.getResourceUrlPath(resource), 'get', {
+        timeout     : 60000,
         responseType: 'blob',
         headers     : {
           'Accept'      : 'image/jpeg',
           'Content-Type': 'image/jpeg'
         }
       })
+        .error(function (data) {
+          console.log('resource request timed out');
+          resource.status = 'Request timed out. Please Download'
+        })
         .success(function (data, headers) {
+          console.log('received!');
           console.log(data);
 
-          //make this work!
+          var blob             = new $window.Blob([data], {type: 'image/jpeg'});
+          var blobUrl          = $window.URL.createObjectURL(blob);
+          resource.resourceUrl = blobUrl;
+
+          /*
 
           //expects a blob
           // encode data to base 64 url
@@ -80,12 +147,23 @@ angular.module('transcripticApp')
           fr.onload = function () {
             // this variable holds your base64 image data URI (string)
             // use readAsBinary() or readAsBinaryString() below to obtain other data types
-            console.log(fr.result);
-            self.imageUrl = fr.result;
+            //console.log(fr.result);
+            var imageUrl = fr.result.replace(/^data:binary\/octet-stream/, 'data:image/jpeg');
+            //console.log(imageUrl);
+
+            $scope.$applyAsync(function () {
+              //default attach to ourself, otherwise use attachTo
+              self.resourceUrl = imageUrl;
+
+              if (_.isObject(resource)) {
+                resource.resourceUrl = imageUrl;
+              }
+            })
           };
+
           fr.readAsDataURL(data);
 
-
+*/
           /*
           var binary = '';
           var bytes = new Uint8Array( data );
@@ -103,10 +181,7 @@ angular.module('transcripticApp')
           var imageUrl = urlCreator.createObjectURL( blob );
 
           console.log(imageUrl);
-          //todo - support multiple
-          self.imageUrl = imageUrl;
           */
-
         });
     };
 
