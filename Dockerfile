@@ -13,9 +13,10 @@ RUN apt-get install -y nodejs
 RUN npm install -g grunt-cli
 RUN npm install -g bower
 RUN npm install -g forever
+RUN npm install -g nodemon@dev
 
-ENV PORT 9000
-EXPOSE 9000
+ENV PORT 8000
+EXPOSE 8000
 ENV APP /app
 
 COPY . $APP/
