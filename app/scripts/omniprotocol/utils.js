@@ -14,22 +14,65 @@ function pluckFieldValueRaw (fields, fieldName) {
   return _.result(pluckField(fields, fieldName), 'value', _.result(pluckField(fields, fieldName), 'default'));
 }
 
+//todo - deprecate. use id
 function getContainerFromName (parameters, containerName) {
   return _.find(parameters, {name: containerName});
 }
 
+//todo - deprecate. use id
 function getContainerTypeFromName (parameters, containerName) {
   return _.result(getContainerFromName(parameters, containerName), 'value.type');
 }
 
+function transformAllFields (protocol, transform) {
+  _.forEach(protocol.groups, function (group, groupIndex) {
+    _.forEach(group.steps, function (step, stepIndex) {
+      _.forEach(step.fields, function (field) {
+        //todo - handle indices - folded and unfolded
+        var indices = {
+          group: groupIndex,
+          op: stepIndex
+        };
+        transform(field, step, group, indices);
+      });
+    });
+  });
+  return protocol;
+}
+
+/******
+ Parameters
+ ********/
+
+//note that this does not handle fields which don't use 'parameter' key, e.g. containers / aliquots
+function assignParametersToAllFields (protocol) {
+  _.forEach(protocol.parameters, function (param) {
+    var paramId = _.result(param, 'id'),
+        paramValue = _.result(param, 'value');
+
+    if (!paramId) {
+      return;
+    }
+
+    transformAllFields(protocol, function (field) {
+      if (field.parameter == paramId) {
+        field.value = paramValue;
+      }
+    });
+  });
+  return protocol;
+}
+
+function assignContainerNamesFromParameters (protocol) {
+  //todo
+
+  return protocol;
+}
+
+
 /*******
  Interpolation
  ******/
-
-//given parameter name, and list of parameters, gives parameter's value
-function interpolateParameter (name, parameters) {
-  return _.result(_.result(parameters, name), 'value');
-}
 
 //interpolates a string using the params passed
 function interpolateValue (value, params) {
@@ -382,6 +425,11 @@ module.exports = {
 
   getContainerFromName    : getContainerFromName,
   getContainerTypeFromName: getContainerTypeFromName,
+
+  transformAllFields : transformAllFields,
+
+  assignContainerNamesFromParameters : assignContainerNamesFromParameters,
+  assignParametersToAllFields : assignParametersToAllFields,
 
   interpolateValue : interpolateValue,
   interpolateObject: interpolateObject,
