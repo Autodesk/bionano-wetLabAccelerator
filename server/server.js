@@ -45,7 +45,9 @@ log.info({port:PORT, appFolder:appFolder, 'process.env.APP': process.env.APP, FA
 /* Create the rpc proxy */
 var httpProxy = require('http-proxy');
 var proxy = httpProxy.createProxyServer(proxyOptions);
-
+proxy.on('proxyRes', function (proxyRes, req, res) {
+  console.log('RAW Response from the target', JSON.stringify(proxyRes.headers, true, 2), proxyRes.statusCode, proxyRes.url);
+});
 
 
 function rpc(method, params, callback) {
