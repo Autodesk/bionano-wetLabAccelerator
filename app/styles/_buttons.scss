@@ -58,11 +58,10 @@
     padding: $input-hover-padding-vert $input-hover-padding-hori;
     margin: (-$input-hover-padding-vert) (-$input-hover-padding-hori);
   }
+
+  &.invalid {
+    color: $warning;
+  }
 }
 
 .field-details-button {}
-
-.field-action-text {
-  color: $warning;
-  font-weight: $font-weight-medium;
-}

@@ -49,7 +49,7 @@
   }
 
   &::-webkit-input-placeholder {
-    color: $warning;
+
   }
 
   &::-webkit-outer-spin-button,
@@ -57,9 +57,15 @@
     -webkit-appearance: none;
     margin: 0;
   }
+
+  &.ng-invalid-required,
+  &.ng-invalid-required::-webkit-input-placeholder {
+    color: $warning;
+  }
 }
 
-.dimensional-unit {}
+.dimensional-unit {
+}
 
 .true-false-button {
   width: 100px;
@@ -91,7 +97,7 @@
     display: block;
     width: 52px;
     height: 21px;
-    top:0;
+    top: 0;
     border-radius: 50px;
     transition: all .4s ease;
     cursor: pointer;
@@ -174,9 +180,11 @@ input[type="color"].color-swatch {
   line-height: 1.2em;
   white-space: nowrap;
 
-  .option-toggle {}
+  .option-toggle {
+  }
 
-  .option-button-label {}
+  .option-button-label {
+  }
 
   .option-button-caret {
     opacity: 0;
@@ -198,8 +206,11 @@ input[type="color"].color-swatch {
       opacity: 1;
     }
   }
-}
 
+  &.invalid {
+    color: $warning;
+  }
+}
 
 // textarea
 
