@@ -150,6 +150,7 @@ tx-protocol-setup {
   .parameter-option {
   }
 
+  //don't allow parameters in setup, because you're making parameters
   .field-parameter-toggler {
     display: none;
   }
