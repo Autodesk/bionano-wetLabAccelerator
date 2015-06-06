@@ -25,7 +25,28 @@ var LOCAL = process.env.LOCAL || false; //Local serving
 var RPC_HOST = process.env.RPC_HOST || "platform.bionano.autodesk.com";
 var RPC_PORT = parseInt(process.env.RPC_PORT) || 443;
 
-log.info({port:PORT, appFolder:appFolder, 'process.env.APP': process.env.APP, FACEBOOK_APP_ID:FACEBOOK_APP_ID, FACEBOOK_APP_SECRET:FACEBOOK_APP_SECRET});
+var proxyOptions = {
+    target : (RPC_HOST == 'platform.bionano.autodesk.com' ? ('https://'  + RPC_HOST + ':' + RPC_PORT) : ('http://'  + RPC_HOST + ':'  + RPC_PORT)),
+    xfwd   : true,
+    secure : false,//<true/false, verify SSL certificate>
+    // toProxy: <true/false, explicitly specify if we are proxying to another proxy>
+    prependPath: true,//<true/false, Default: true - specify whether you want to prepend the target's path to the proxy path>
+    // ignorePath: <true/false, Default: false - specify whether you want to ignore the proxy path of the incoming request>
+    // localAddress : <Local interface string to bind for outgoing connections>
+    // changeOrigin: <true/false, Default: false - changes the origin of the host header to the target URL>
+    // auth   : Basic authentication i.e. 'user:password' to compute an Authorization header.  
+    // hostRewrite: rewrites the location hostname on (301/302/307/308) redirects, Default: null.
+    // autoRewrite: rewrites the location host/port on (301/302/307/308) redirects based on requested host/port. Default: false.
+    // protocolRewrite: rewrites the location protocol on (301/302/307/308) redirects to 'http' or 'https'. Default: null.
+}
+
+log.info({port:PORT, appFolder:appFolder, 'process.env.APP': process.env.APP, FACEBOOK_APP_ID:FACEBOOK_APP_ID, FACEBOOK_APP_SECRET:FACEBOOK_APP_SECRET, proxyOptions:proxyOptions});
+
+/* Create the rpc proxy */
+var httpProxy = require('http-proxy');
+var proxy = httpProxy.createProxyServer(proxyOptions);
+
+
 
 function rpc(method, params, callback) {
 	var requestObj = {"method":method, "params":params || {}, "id":"0", "jsonrpc":"2.0"};
@@ -85,6 +106,16 @@ var app = express();
 app.use(require('express-bunyan-logger').errorLogger());
 
 
+app.all('/rpc', function(req, res) {
+	console.log("Proxying request:" + req.url);
+	proxy.web(req, res);
+});
+
+app.get('/client/api.js', function(req, res) {
+	console.log("Proxying api.js request:" + req.url);
+	proxy.web(req, res);
+});
+
 /* Passport */
 
 // Passport session setup.
@@ -129,14 +160,14 @@ passport.use(new FacebookStrategy({
 	}
 ));
 
-// if (LOCAL) {
+if (LOCAL) {
 	app.use(express.static(path.dirname(__dirname) + '/.tmp'));
 	app.use('/bower_components', express.static(path.dirname(__dirname) + '/bower_components'));
 	app.use(express.static(path.dirname(__dirname) + '/app'));
-// } else {
-// 	//Serve static content
-// 	app.use(express.static(appFolder));
-// }
+} else {
+	//Serve static content
+	app.use(express.static(appFolder));
+}
 
 // configure Express
 app.set('views', __dirname + '/views');
