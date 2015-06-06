@@ -52,7 +52,7 @@ angular.module('transcripticApp')
 
     //debugging only.
     self.isAuthenticatedLocal = function () {
-      return $cookies['bionano-platform-token'];
+      return $q.when(angular.isDefined($cookies['bionano-platform-token']));
     };
 
     function triggerWatcher (fn) {

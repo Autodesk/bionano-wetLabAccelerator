@@ -1,5 +1,6 @@
 .welcome-overlay {
   @extend .modal-overlay;
+  min-width: $layout-width-page;
 
   .welcome-call {
     position: absolute;
