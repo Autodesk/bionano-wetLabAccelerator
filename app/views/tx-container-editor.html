@@ -53,7 +53,7 @@
               <ul class="dropdown-menu">
                 <li ng-repeat="(cont, details) in contCtrl.containerOptions">
                   <a ng-click="contCtrl.model.type = cont; notifyContainerChange();"
-                     ng-bind="cont"></a>
+                     ng-bind="details.name"></a>
                 </li>
               </ul>
             </div>

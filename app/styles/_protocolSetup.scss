@@ -17,7 +17,7 @@ tx-protocol-setup {
   }
 
   .protocol-setup-header {
-    padding: 3px 10px;
+    padding: 3px $layout-spacing-sm;
     outline: none;
 
     .setup-heading {

@@ -65,9 +65,7 @@ angular.module('transcripticApp')
           });
         });
 
-        scope.selectLocalContainer = function (localCont) {
-          setContainerName(localCont.name);
-        };
+        scope.selectLocalContainer = selectContainerParam;
 
         //todo - move to protocolUtils?
         scope.createNewContainer = function (newCont) {
