@@ -14,14 +14,13 @@ angular.module('transcripticApp')
     var userInfo = {},
         watchers = [];
 
-    self.authenticate = function (userstring) {
-
-      return Platform.authenticate(userstring).
-        then(Platform.getUserInfo).
+    self.localAuthenticate = function (token) {
+      Platform.getUserInfo(token).
         then(function (retrieved) {
           _.assign(userInfo, retrieved, {
+            token: token,
             email: retrieved.email,
-            name: retrieved.name
+            name : retrieved.name
           });
 
           triggerWatchers();
@@ -34,10 +33,6 @@ angular.module('transcripticApp')
 
     self.isAuthenticated = Platform.isAuthenticated;
 
-    self.isAuthenticatedLocal = function () {
-      return $cookies['bionano-platform-token'];
-    };
-
     //returns promise, resolving to whether successful or not
     self.unauthenticate = function () {
       return Platform.unauthenticate()
@@ -49,11 +44,21 @@ angular.module('transcripticApp')
         .catch(_.constant(false));
     };
 
+    //debugging only. Should check for cookie and use self.localAuthenticate
+    self.authenticate = function (userstring) {
+      return Platform.authenticate(userstring)
+        .then(self.localAuthenticate);
+    };
+
+    //debugging only.
+    self.isAuthenticatedLocal = function () {
+      return $cookies['bionano-platform-token'];
+    };
+
     function triggerWatcher (fn) {
       var toPass = _.isEmpty(userInfo) ? null : _.cloneDeep(userInfo);
       fn(toPass);
     }
-
 
     function triggerWatchers () {
       _.forEach(watchers, triggerWatcher);
@@ -75,8 +80,9 @@ angular.module('transcripticApp')
       return userInfo.name;
     };
 
+    //todo - not working
     self.getUserId = function () {
-      return userInfo.id;
+      return userInfo.token;
     };
 
 
@@ -84,8 +90,10 @@ angular.module('transcripticApp')
 
     var initialAuthToken = $cookies['bionano-platform-token'];
     if (!!initialAuthToken) {
-      console.warn('found initial auth token', initialAuthToken);
-      //self.authenticate(initialAuthToken);
+      console.warn('found user info', initialAuthToken);
+      self.localAuthenticate(initialAuthToken);
+    } else {
+      console.warn('no user info found');
     }
 
   })
@@ -94,16 +102,16 @@ angular.module('transcripticApp')
  */
   .directive('ngShowAuth', function (Authentication, $timeout) {
     var isLoggedIn;
-    Authentication.watch(function(user) {
+    Authentication.watch(function (user) {
       isLoggedIn = !!user;
     });
 
     return {
       restrict: 'A',
-      link: function(scope, el) {
+      link    : function (scope, el) {
         el.addClass('ng-cloak'); // hide until we process it
 
-        function update() {
+        function update () {
           // sometimes if ngCloak exists on same element, they argue, so make sure that
           // this one always runs last for reliability
           $timeout(function () {
@@ -122,14 +130,14 @@ angular.module('transcripticApp')
  */
   .directive('ngHideAuth', function (Authentication, $timeout) {
     var isLoggedIn;
-    Authentication.watch(function(user) {
+    Authentication.watch(function (user) {
       isLoggedIn = !!user;
     });
 
     return {
       restrict: 'A',
-      link: function(scope, el) {
-        function update() {
+      link    : function (scope, el) {
+        function update () {
           el.addClass('ng-cloak'); // hide until we process it
 
           // sometimes if ngCloak exists on same element, they argue, so make sure that

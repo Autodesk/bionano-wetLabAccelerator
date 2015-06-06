@@ -17,6 +17,7 @@ angular.module('transcripticApp')
     });
 
     Authentication.watch(function (info) {
+      console.log(info);
       self.currentAuth = (!!info) ? info : null;
     });
   });
