@@ -86,7 +86,7 @@ function assignContainerNamesFromParameters (protocol) {
 }
 
 function safelyDeleteParameter (protocol, param) {
-  var paramId = _.result(param, 'id'),
+  var paramId    = _.result(param, 'id'),
       paramValue = _.result(param, 'value');
 
   if (!paramId) {
@@ -469,7 +469,7 @@ module.exports = {
   parameterNameById                 : parameterNameById,
   assignContainerNamesFromParameters: assignContainerNamesFromParameters,
   assignParametersToAllFields       : assignParametersToAllFields,
-  safelyDeleteParameter : safelyDeleteParameter,
+  safelyDeleteParameter             : safelyDeleteParameter,
 
   interpolateValue : interpolateValue,
   interpolateObject: interpolateObject,
