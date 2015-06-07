@@ -33,13 +33,13 @@ module.exports = {
         },
         {
           "name"    : "dispense_speed",
-          "type"    : "flowrate",
+          "type"    : "speed",
           "optional": true,
           "default" : {"value": 100, "unit": "microliter/second"}
         },
         {
           "name"    : "aspirate_speed",
-          "type"    : "flowrate",
+          "type"    : "speed",
           "optional": true,
           "default" : {"value": 100, "unit": "microliter/second"}
         },
@@ -104,13 +104,13 @@ module.exports = {
         },
         {
           "name"    : "dispense_speed",
-          "type"    : "flowrate",
+          "type"    : "speed",
           "optional": true,
           "default" : {"value": 100, "unit": "microliter/second"}
         },
         {
           "name"    : "aspirate_speed",
-          "type"    : "flowrate",
+          "type"    : "speed",
           "optional": true,
           "default" : {"value": 100, "unit": "microliter/second"}
         },
@@ -160,13 +160,13 @@ module.exports = {
         },
         {
           "name"    : "aspirate_speed",
-          "type"    : "flowrate",
+          "type"    : "speed",
           "optional": true,
           "default" : {"value": 100, "unit": "microliter/second"}
         },
         {
           "name"    : "dispense_speed",
-          "type"    : "flowrate",
+          "type"    : "speed",
           "optional": true,
           "default" : {"value": 100, "unit": "microliter/second"}
         },
@@ -210,7 +210,7 @@ module.exports = {
         },
         {
           "name"    : "speed",
-          "type"    : "flowrate",
+          "type"    : "speed",
           "optional": true,
           "default" : {"value": 100, "unit": "microliter/second"}
         },

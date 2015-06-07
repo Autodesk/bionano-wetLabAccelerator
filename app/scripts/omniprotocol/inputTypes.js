@@ -136,10 +136,10 @@ module.exports = {
     units                  : ["nanoliter", "microliter", "milliliter"],
     verification           : _.constant(true)
   },
-  "flowrate"    : {
+  "speed"    : {
     category               : "dimensional",
     canParameterize        : true,
-    description            : "Dimensioned value - flow-rate",
+    description            : "Dimensioned value - speed",
     "autoprotocol-category": "Unit",
     units                  : ["microliter/second"],
     verification           : _.constant(true)

@@ -6,11 +6,6 @@ var _                    = require('lodash'),
     omniContainers       = global.omniprotocol.optionEnums.containers,
     omniConv             = global.omniprotocol.conv;
 
-function throwFieldError (message, op, fieldName) {
-  var fieldObj = omniUtils.pluckField(op.fields, fieldName);
-  throw new ConversionError(message, fieldObj, fieldName, op.$index);
-}
-
 function convertInstruction (inst, localParams) {
   //todo - handle validation of each field too?
 

@@ -6,7 +6,7 @@ var _ = require('lodash');
 
 var dimensionalSeparator = ":";
 
-var dimensionalFields = ['duration', 'length', 'temperature', 'volume', 'flowrate', 'acceleration'];
+var dimensionalFields = ['duration', 'length', 'temperature', 'volume', 'speed', 'acceleration'];
 
 function convertDimensionalToAuto (omniDim) {
   return omniDim.value + dimensionalSeparator + omniDim.unit;
