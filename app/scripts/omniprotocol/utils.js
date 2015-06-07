@@ -14,18 +14,30 @@ function pluckFieldValueRaw (fields, fieldName) {
   return _.result(pluckField(fields, fieldName), 'value', _.result(pluckField(fields, fieldName), 'default'));
 }
 
-//todo - deprecate. use id
+//todo - deprecate. use id fn below
 function getContainerFromName (parameters, containerName) {
   return _.find(parameters, {name: containerName});
 }
 
-//todo - deprecate. use id
+//todo - deprecate. use id fn below
 function getContainerTypeFromName (parameters, containerName) {
   return _.result(getContainerFromName(parameters, containerName), 'value.type');
 }
 
-function getContainerTypeFromId (parameters, id) {
+function getContainerNameFromId (parameters, id) {
+  return _.result(_.find(parameters, {id: id}), 'name');
+}
 
+function getContainerValueFromId (parameters, id) {
+  return _.cloneDeep(_.find(parameters, {id: id}));
+}
+
+function getContainerTypeFromId (parameters, id) {
+  return _.result(getContainerValueFromId(parameters, id), 'type');
+}
+
+function getContainerColorFromId (parameters, id) {
+  return _.result(getContainerValueFromId(parameters, id), 'color');
 }
 
 function transformAllFields (protocol, transform) {
@@ -477,6 +489,11 @@ module.exports = {
   //deprecate
   getContainerFromName    : getContainerFromName,
   getContainerTypeFromName: getContainerTypeFromName,
+
+  getContainerValueFromId : getContainerValueFromId,
+  getContainerNameFromId : getContainerNameFromId,
+  getContainerTypeFromId : getContainerTypeFromId,
+  getContainerColorFromId : getContainerColorFromId,
 
   transformAllFields: transformAllFields,
 

@@ -97,65 +97,60 @@ angular.module('transcripticApp')
       return _.result(self.containerFromId(id), 'type');
     };
 
+    //functions for fields with type container
 
-    self.getFieldValFromOpByName = self.getFieldValue;
+    self.getContainerIdFromFieldName = function (op, fieldName) {
+      var containerObj = self.getFieldValue(op, fieldName);
+      return _.result(containerObj, 'container');
+    };
 
+    self.getContainerValueFromFieldName = function (op, fieldName) {
+      var containerId = self.getContainerIdFromFieldName(op, fieldName);
+      return Omniprotocol.utils.parameterValueById(containerId);
+    };
+
+    self.getContainerTypeFromFieldName = function (op, fieldName) {
+      return _.result(self.getContainerValueFromFieldName(op, fieldName), 'type');
+    };
+
+    self.getContainerColorFromFieldName = function (op, fieldName) {
+      return _.result(self.getContainerValueFromFieldName(op, fieldName), 'type');
+    };
 
     //wells - pipette operations
 
-    //todo - refactor to new format
-    //given an aliquot+ fieldName, get the wells, and can pass container to filter to one container
+    //given an aliquot/aliquot+ fieldName, get the wells, and can pass container to filter to one container
     self.pluckWellsFromAliquots = function (op, fieldName, container) {
-      var fieldVal       = self.getFieldValue(op.fields, fieldName),
-          filterFunction = _.isUndefined(container) ? _.constant(true) : _.matches({container: container});
-      return _.pluck(_.filter(fieldVal, filterFunction), 'well');
+      var fieldVal       = self.getFieldValue(op.fields, fieldName);
+
+      // when support aliquot++, and know format, allow filtering by container
+      // var filterFunction = _.isUndefined(container) ? _.constant(true) : _.matches({container: container});
+
+      return _.result(fieldVal, 'wells');
     };
 
     //future, need to handle aliquot++... but this handles aliquot and aliquot+
-    self.containerFromAliquot = function (op, fieldName) {
+    self.containerIdFromAliquot = function (op, fieldName) {
       var fieldVal = self.getFieldValue(op.fields, fieldName);
       return _.result(fieldVal, 'container');
     };
 
-    //todo - refactor for new format
-    //todo - handle having id, not name
-    self.getFirstContainerFromAliquots = function (op, fieldName) {
-      var fieldVal = self.getFieldValue(op.fields, fieldName);
-      return _.result(fieldVal, '[0].container');
+    //supoprt for container is pending aliquot++
+    self.getContainerTypeFromAliquots = function (op, fieldName, container) {
+      var containerId = self.containerIdFromAliquot(op, fieldName, container);
+      return self.containerTypeFromId(containerId);
     };
 
-    self.getContainerTypeFromAliquots = function (op, fieldName) {
-      var containerName = self.getFirstContainerFromAliquots(op, fieldName);
-      //todo - use id
-      return Omniprotocol.utils.getContainerTypeFromName(self.protocol.parameters, containerName);
+    //supoprt for container is pending aliquot++
+    self.getContainerColorFromAliquots = function (op, fieldName, container) {
+      var containerId = self.containerIdFromAliquot(op, fieldName, container);
+      return self.containerColorFromId(containerId);
     };
 
-    self.getContainerColorFromAliquots = function (op, fieldName) {
-      var containerName = self.getFirstContainerFromAliquots(op, fieldName);
-      //todo - use id
-      return self.getContainerColorFromContainerName(containerName);
-    };
-
-    //functions for fields with type container
-
-    //todo - refactor to to expect value of format { container : <>, containerName: <> }
-
-    //todo - use id
-    self.getContainerTypeFromFieldName = function (op, fieldName) {
-      var containerName = self.getFieldValFromOpByName(op, fieldName);
-      return Omniprotocol.utils.getContainerTypeFromName(self.protocol.parameters, containerName);
-    };
-
-    //todo - use id
-    self.getContainerColorFromFieldName = function (op, fieldName) {
-      var containerName = self.getFieldValFromOpByName(op, fieldName);
-      return self.getContainerColorFromContainerName(containerName);
-    };
-
-    //todo - deprecate
-    self.getContainerColorFromContainerName = function (containerName) {
-      var cont = Omniprotocol.utils.getContainerFromName(self.protocol.parameters, containerName);
-      return _.result(cont, 'value.color');
+    //unclear how to handle container for aliquot++
+    self.getContainerNameFromAliquots = function (op, fieldName, container) {
+      var containerId = self.containerIdFromAliquot(op, fieldName, container);
+      return self.paramNameFromParamId(containerId);
     };
 
     //utils
