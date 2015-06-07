@@ -85,12 +85,6 @@ angular.module('transcripticApp')
       $scope.$on('editor:parameterChange', function (e, newparams) {
         getAndSetContainerColor(newparams);
       });
-
-      function getAndSetContainerColor (parameters) {
-        parameters          = _.isUndefined(parameters) ? ProtocolHelper.currentProtocol.parameters : parameters;
-        var cont            = Omniprotocol.utils.getContainerFromName(parameters, self.containerName);
-        self.containerColor = _.result(cont, 'value.color');
-      }
     };
 
     self.init();
@@ -104,6 +98,12 @@ angular.module('transcripticApp')
           listener();
         }
       });
+    }
+
+    function getAndSetContainerColor (parameters) {
+      parameters          = _.isUndefined(parameters) ? ProtocolHelper.currentProtocol.parameters : parameters;
+      var cont            = Omniprotocol.utils.getContainerFromName(parameters, self.containerName);
+      self.containerColor = _.result(cont, 'value.color');
     }
 
     function updateWellsContainerName (newName, oldName) {

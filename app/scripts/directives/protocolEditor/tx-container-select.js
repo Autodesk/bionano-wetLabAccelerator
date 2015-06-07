@@ -39,6 +39,9 @@ angular.module('transcripticApp')
         //listen for changes so that can propagate container type
         scope.$watch('containerSelectCtrl.model.container', scope.containerSelectCtrl.handleChange);
 
+        //listen for changes to parameter, update container type
+        scope.$on('editor:parameterChange', scope.containerSelectCtrl.handleChange);
+
         scope.createNewContainer = function (newCont) {
           var param = ProtocolUtils.createContainer({
             value: {
