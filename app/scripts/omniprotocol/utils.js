@@ -102,9 +102,10 @@ function safelyDeleteParameter (protocol, param) {
   transformAllFields(protocol, function (field) {
     if (field.parameter == paramId) {
       field.value = paramValue;
+      delete field.parameter;
     }
     else if (field.type == 'container' && _.result(field, 'value.container') == paramId) {
-      field.value = '';
+      field.value = {};
     }
     else if (_.startsWith(field.type, 'aliquot')) {
       //future - handle aliquot++
