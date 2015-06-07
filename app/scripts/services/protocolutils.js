@@ -14,44 +14,18 @@ angular.module('transcripticApp')
 
     self.protocol = ProtocolHelper.currentProtocol;
 
-    //parameters
+    //parameter helpers
 
-    self.paramById = function (id) {
-      return _.find(self.protocol.parameters, {id : id});
-    };
+    self.paramById = _.partial(Omniprotocol.utils.parameterById, self.protocol);
 
-    self.paramValueFromParamId = function (id) {
-      return _.result(self.paramById(id), 'value');
-    };
+    self.paramValueFromParamId = _.partial(Omniprotocol.utils.parameterValueById, self.protocol);
 
-    self.paramNameFromParamId = function (id) {
-      return _.result(self.paramById(id), 'name');
-    };
+    self.paramNameFromParamId = _.partial(Omniprotocol.utils.parameterNameById, self.protocol);
 
-    self.deleteParameter = function (param) {
-      var paramId = _.result(param, 'id'),
-          paramValue = _.result(param, 'value');
+    //expects a parameter object
+    self.deleteParameter = _.partial(Omniprotocol.utils.safelyDeleteParameter, self.protocol);
 
-      if (!paramId) {
-        return;
-      }
-
-      Omniprotocol.utils.transformAllFields(self.protocol, function (field) {
-        if (field.parameter == paramId) {
-          field.value = paramValue;
-        }
-      });
-
-      _.remove(self.protocol.parameters, {id: paramId});
-    };
-
-
-
-    //NOT RECOMMENDED! should by tied by ID
-    self.paramByName = function (name) {
-      return _.find(self.protocol.parameters, {name : name});
-    };
-
+    //field helpers
 
     //workhorse - given op and fieldname, get field value, checking for parameter
     self.getFieldValue = function (op, fieldName) {
@@ -60,6 +34,13 @@ angular.module('transcripticApp')
 
       return !!parameter ? self.paramValueFromParamId(parameter) : _.result(field, 'value');
     };
+
+    //NOT RECOMMENDED! should by tied by ID
+    self.paramByName = function (name) {
+      return _.find(self.protocol.parameters, {name : name});
+    };
+
+    //container helpers
 
     self.containerFromId = function (id) {
       return _.result(self.paramById(id), 'value');
@@ -72,6 +53,11 @@ angular.module('transcripticApp')
     self.containerTypeFromId = function (id) {
       return _.result(self.containerFromId(id), 'type');
     };
+
+
+
+
+
 
     self.getFieldValFromOpByName = self.getFieldValue;
 

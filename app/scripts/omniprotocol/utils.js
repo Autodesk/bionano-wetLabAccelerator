@@ -24,6 +24,10 @@ function getContainerTypeFromName (parameters, containerName) {
   return _.result(getContainerFromName(parameters, containerName), 'value.type');
 }
 
+function getContainerTypeFromId (parameters, id) {
+
+}
+
 function transformAllFields (protocol, transform) {
   _.forEach(protocol.groups, function (group, groupIndex) {
     _.forEach(group.steps, function (step, stepIndex) {
@@ -31,7 +35,7 @@ function transformAllFields (protocol, transform) {
         //todo - handle indices - folded and unfolded
         var indices = {
           group: groupIndex,
-          op: stepIndex
+          op   : stepIndex
         };
         transform(field, step, group, indices);
       });
@@ -44,10 +48,22 @@ function transformAllFields (protocol, transform) {
  Parameters
  ********/
 
+function parameterById (protocol, id) {
+  return _.find(protocol.parameters, {id: id});
+}
+
+function parameterValueById (protocol, id) {
+  return _.result(parameterById(protocol, id), 'value');
+}
+
+function parameterNameById (protocol, id) {
+  return _.result(parameterById(protocol, id), 'name');
+}
+
 //note that this does not handle fields which don't use 'parameter' key, e.g. containers / aliquots
 function assignParametersToAllFields (protocol) {
   _.forEach(protocol.parameters, function (param) {
-    var paramId = _.result(param, 'id'),
+    var paramId    = _.result(param, 'id'),
         paramValue = _.result(param, 'value');
 
     if (!paramId) {
@@ -65,6 +81,25 @@ function assignParametersToAllFields (protocol) {
 
 function assignContainerNamesFromParameters (protocol) {
   //todo
+
+  return protocol;
+}
+
+function safelyDeleteParameter (protocol, param) {
+  var paramId = _.result(param, 'id'),
+      paramValue = _.result(param, 'value');
+
+  if (!paramId) {
+    return;
+  }
+
+  transformAllFields(protocol, function (field) {
+    if (field.parameter == paramId) {
+      field.value = paramValue;
+    }
+  });
+
+  _.remove(protocol.parameters, {id: paramId});
 
   return protocol;
 }
@@ -215,7 +250,7 @@ function unfoldGroup (group, groupIndex) {
     _.forEach(group.steps, function (step, stepIndex) {
       var indices = {
         loop: loopIndex,
-        step : (loopIndex * group.steps.length) + stepIndex
+        step: (loopIndex * group.steps.length) + stepIndex
       };
       _.isNumber(groupIndex) && _.assign(indices, {group: groupIndex});
 
@@ -423,13 +458,18 @@ module.exports = {
   pluckField        : pluckField,
   pluckFieldValueRaw: pluckFieldValueRaw,
 
+  //deprecate
   getContainerFromName    : getContainerFromName,
   getContainerTypeFromName: getContainerTypeFromName,
 
-  transformAllFields : transformAllFields,
+  transformAllFields: transformAllFields,
 
-  assignContainerNamesFromParameters : assignContainerNamesFromParameters,
-  assignParametersToAllFields : assignParametersToAllFields,
+  parameterById                     : parameterById,
+  parameterValueById                : parameterValueById,
+  parameterNameById                 : parameterNameById,
+  assignContainerNamesFromParameters: assignContainerNamesFromParameters,
+  assignParametersToAllFields       : assignParametersToAllFields,
+  safelyDeleteParameter : safelyDeleteParameter,
 
   interpolateValue : interpolateValue,
   interpolateObject: interpolateObject,

@@ -135,8 +135,9 @@ angular.module('transcripticApp')
         scope.receiveVerifications = function (vers) {
           scope.hasVerifications = !!vers.length;
           scope.verifications    = vers;
-          //todo - shouldn't be binding to the parameter directly...
-          //fixme - using index is a hack, should be using whole verification (can refactor once can remove the $watch on all parameters)
+          //note, that this is not ideal, but bind verification to the parameter directly. we clear this later in pre-process in protocolHelper
+          //note - need to bind by name, because verifications only know about container name, not id
+          //fixme - using index is a hack, should be using whole verification (can refactor once can remove the $watch on all parameters, because really slow)
           _.forEach(vers, function (ver, verIndex) {
             _.assign(_.find(scope.setupCtrl.parameters, {name: ver.container}), {verification: verIndex});
           });
