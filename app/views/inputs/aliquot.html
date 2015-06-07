@@ -19,7 +19,7 @@
 
       <div popover-transclude
            is-open="aliquotCtrl.showingPlates"
-           title="Select one or more wells"
+           title="{{aliquotCtrl.aliquotMultiple ? 'Select one or more wells' : 'Select one well'}}"
            ng-if="aliquotCtrl.showingPlates">
         <tx-plate ng-show="aliquotCtrl.containerType"
                   style="width: 600px;"

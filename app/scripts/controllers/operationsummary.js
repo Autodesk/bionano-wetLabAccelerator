@@ -17,7 +17,7 @@ angular.module('transcripticApp')
 
     //general helper functions
 
-    self.getFieldValueByName = applyOpToFn(ProtocolUtils.getFieldvalue);
+    self.getFieldValueByName = applyOpToFn(ProtocolUtils.getFieldValue);
 
     self.readableDimensional = function (dimObj) {
       if (_.isUndefined(dimObj)) {
