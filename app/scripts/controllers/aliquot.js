@@ -50,7 +50,6 @@ angular.module('transcripticApp')
 
       //watch changes to container obj and merge with model
       $scope.$watch('aliquotCtrl.containerObj', function (newObj, oldObj) {
-        console.log('contObj change', _.result(newObj, 'container') , _.result(oldObj, 'container'));
         var newContId = _.result(newObj, 'container'),
             oldContId = _.result(oldObj, 'container');
 

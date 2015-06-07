@@ -106,7 +106,7 @@ angular.module('transcripticApp')
 
     self.getContainerValueFromFieldName = function (op, fieldName) {
       var containerId = self.getContainerIdFromFieldName(op, fieldName);
-      return Omniprotocol.utils.parameterValueById(containerId);
+      return self.paramValueFromParamId(containerId);
     };
 
     self.getContainerTypeFromFieldName = function (op, fieldName) {
@@ -121,7 +121,7 @@ angular.module('transcripticApp')
 
     //given an aliquot/aliquot+ fieldName, get the wells, and can pass container to filter to one container
     self.pluckWellsFromAliquots = function (op, fieldName, container) {
-      var fieldVal       = self.getFieldValue(op.fields, fieldName);
+      var fieldVal       = self.getFieldValue(op, fieldName);
 
       // when support aliquot++, and know format, allow filtering by container
       // var filterFunction = _.isUndefined(container) ? _.constant(true) : _.matches({container: container});
@@ -131,7 +131,7 @@ angular.module('transcripticApp')
 
     //future, need to handle aliquot++... but this handles aliquot and aliquot+
     self.containerIdFromAliquot = function (op, fieldName) {
-      var fieldVal = self.getFieldValue(op.fields, fieldName);
+      var fieldVal = self.getFieldValue(op, fieldName);
       return _.result(fieldVal, 'container');
     };
 
