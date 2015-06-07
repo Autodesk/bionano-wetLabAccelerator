@@ -13,7 +13,6 @@ angular.module('transcripticApp')
       restrict        : 'E',
       require         : 'ngModel',
       scope           : {
-        paramId: '=', //use this instead of 'parameter' because don't want to set 'parameter' on the field (or will be handled as such, not as container)
         type   : '=?containerType',
         model  : '=ngModel'
       },
@@ -28,79 +27,35 @@ angular.module('transcripticApp')
 
         //expose changes to container-type
         self.handleChange = function () {
-          var relevantParam = ProtocolUtils.paramById(self.paramId);
+          var relevantParam = ProtocolUtils.paramById(_.result(self.model, 'container'));
           if (relevantParam) {
-            self.model = _.result(relevantParam, 'name');
-            self.type = _.result(relevantParam, 'value.type');
-            self.color = _.result(relevantParam, 'value.color');
-          } else {
-            //try getting by name...
-            relevantParam = ProtocolUtils.paramByName(self.model);
-
-            self.type = _.result(relevantParam, 'value.type');
-            self.color = _.result(relevantParam, 'value.color');
-
-            //reset model if parameter was bound, but no longer is (container was deleted)
-            if (angular.isDefined(self.paramId) && _.isUndefined(relevantParam)) {
-              self.model = undefined;
-              delete self.paramId;
-            }
+            //expose type outside directive
+            self.type  = _.result(relevantParam, 'value.type');
           }
         };
       },
       link            : function postLink (scope, element, attrs, ngModel) {
 
         //listen for changes so that can propagate container type
-        scope.$watch('containerSelectCtrl.model', scope.containerSelectCtrl.handleChange);
+        scope.$watch('containerSelectCtrl.model.container', scope.containerSelectCtrl.handleChange);
 
-        //listen to changes to parameters
-        scope.$on('editor:containerChange', scope.containerSelectCtrl.handleChange);
-
-        //todo - handle differently (see also protocol-field)
-        //note - this is run before value is set on model, so timeout
-        scope.$on('editor:parameterNameChange', function () {
-          $timeout(function () {
-            var relevantParam               = ProtocolUtils.paramById(scope.containerSelectCtrl.paramId);
-            scope.containerSelectCtrl.model = _.result(relevantParam, 'name');
-          });
-        });
-
-        scope.selectLocalContainer = selectContainerParam;
-
-        //todo - move to protocolUtils?
         scope.createNewContainer = function (newCont) {
-          var param = {
-            id   : UUIDGen(),
-            name : "myContainer",
-            type : 'container',
+          var param = ProtocolUtils.createContainer({
             value: {
               type: newCont.shortname
             }
-          };
-
-          $rootScope.$broadcast('editor:protocol:addContainer', param);
-
-          //hack-ish...
-          $timeout(function () {
-            selectContainerParam(param);
           });
+          scope.selectContainerParam(param);
         };
 
-        function selectContainerParam (param) {
-          scope.containerSelectCtrl.paramId = param.id;
-          setContainerName(param.name);
-        }
+        scope.selectContainerParam = function (param) {
+          ngModel.$setViewValue({container: _.result(param, 'id')});
+        };
 
-        function setContainerName (name) {
-          ngModel.$setViewValue(name);
-          scope.showingContainers = false;
-        }
+        scope.containerColorFromId = ProtocolUtils.containerColorFromId;
 
-        //in case container parameter id  undefined, this will work if they haven't changed the name of the parameter
-        if (_.isUndefined(scope.containerSelectCtrl.paramId)) {
-          var param            = ProtocolUtils.paramByName(scope.containerSelectCtrl.model);
-          scope.containerSelectCtrl.paramId = _.result(param, 'id');
-        }
+        scope.containerNameFromId = ProtocolUtils.paramNameFromParamId;
+
       }
     };
   });

@@ -50,7 +50,6 @@ angular.module('transcripticApp')
       });
     };
 
-
     self.definedColors = {
       'maraschino': '#c5535b',
       'tangerine' : '#f28500',

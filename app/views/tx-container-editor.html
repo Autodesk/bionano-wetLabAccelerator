@@ -1,8 +1,5 @@
-<input disabled
-       type="color"
-       class="color-swatch"
-       ng-required="true"
-       ng-model="contCtrl.model.color">
+<span class="color-swatch"
+      ng-style="{'background-color' : contCtrl.model.color}"></span>
 <span ng-bind="contCtrl.model.type"></span>
 <a class="field-details-button"
    ng-click="contCtrl.modalShow = !contCtrl.modalShow">

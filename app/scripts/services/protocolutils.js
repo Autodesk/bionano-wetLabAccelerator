@@ -8,7 +8,7 @@
  * Service in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .service('ProtocolUtils', function (ProtocolHelper, UUIDGen, Omniprotocol) {
+  .service('ProtocolUtils', function ($rootScope, ProtocolHelper, ContainerHelper, UUIDGen, Omniprotocol) {
 
     var self = this;
 
@@ -39,11 +39,25 @@ angular.module('transcripticApp')
 
       self.protocol.parameters.push(parameter);
 
+      $rootScope.$broadcast('editor:toggleSetupVisibility', true);
+
       return parameter;
     };
 
+    self.createContainer = function (param) {
+      return self.createParameter(_.merge({}, param, {
+        type : 'container',
+        value: {
+          color: ContainerHelper.randomColor()
+        }
+      }));
+    };
+
     //expects a parameter object
-    self.deleteParameter = _.partial(Omniprotocol.utils.safelyDeleteParameter, self.protocol);
+    self.deleteParameter = function (param) {
+      Omniprotocol.utils.safelyDeleteParameter(self.protocol, param);
+
+    };
 
     //field helpers
 

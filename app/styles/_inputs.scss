@@ -147,15 +147,19 @@
   }
 }
 
-input[type="color"].color-swatch {
+//can use on a div with ng-style background-color
+.color-swatch {
   -webkit-appearance: none;
-  width: 1.25em;
-  height: 1.25em;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
   border-radius: 100%;
   padding: 0;
+  margin: 0 3px 2px 0;
   color: transparent;
   background-color: transparent;
   border: 0;
+  vertical-align: text-top;
 
   &::-webkit-color-swatch-wrapper {
     padding: 0;

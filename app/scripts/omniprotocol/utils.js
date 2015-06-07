@@ -477,12 +477,11 @@ module.exports = {
 
   transformAllFields: transformAllFields,
 
-  parameterById                     : parameterById,
-  parameterValueById                : parameterValueById,
-  parameterNameById                 : parameterNameById,
-  assignContainerNamesFromParameters: assignContainerNamesFromParameters,
-  assignParametersToAllFields       : assignParametersToAllFields,
-  safelyDeleteParameter             : safelyDeleteParameter,
+  parameterById              : parameterById,
+  parameterValueById         : parameterValueById,
+  parameterNameById          : parameterNameById,
+  assignParametersToAllFields: assignParametersToAllFields,
+  safelyDeleteParameter      : safelyDeleteParameter,
 
   interpolateValue : interpolateValue,
   interpolateObject: interpolateObject,

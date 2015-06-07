@@ -90,6 +90,10 @@ angular.module('transcripticApp')
 
         //CHANGE CHECKING / CONTAINERS
 
+        scope.$on('editor:toggleSetupVisibility', function (e, val) {
+          scope.isVisible = !!val;
+        });
+
         scope.$on('editor:toggleGroupVisibility', function (e, val) {
           scope.isVisible = !!val;
         });
@@ -97,26 +101,16 @@ angular.module('transcripticApp')
         //todo - this will be problematic when handling verifications on the parameter b/c deep equality
         scope.$watch('setupCtrl.parameters', function (newval, oldval) {
           $rootScope.$broadcast('editor:parameterChange', newval);
+          scope.checkContainerChange();
         }, true);
 
         scope.checkContainerChange = function () {
           var containerList = _.filter(scope.setupCtrl.parameters, {type: 'container'});
           if (containerList.length != oldContainerLength) {
             ContainerHelper.setLocal(containerList);
-            scope.notifyContainerChange();
             oldContainerLength = containerList.length;
           }
         };
-
-        //mostly for tx-container-select
-        scope.notifyContainerChange = function () {
-          $rootScope.$broadcast('editor:containerChange');
-        };
-
-        scope.$on('editor:protocol:addContainer', function (event, param) {
-          scope.setupCtrl.addContainer(param);
-          scope.isVisible = true;
-        });
 
         scope.$on('editor:newprotocol', function () {
           $rootScope.$broadcast('editor:parameterChange', scope.setupCtrl.parameters);

@@ -8,7 +8,6 @@
  * Controller of the transcripticApp
  *
  * todo - can probably clean this up a lot using ProtocolHelper - containerType + containerName stuff is weird
- * //note - older code was meant to accomodate multiple containers. Should only allow for one container. paramId stuff works with this assumption, and updates all wellObjs to the new container name.
  */
 angular.module('transcripticApp')
   .controller('fieldAliquotCtrl', function ($scope, Omniprotocol, ProtocolHelper, ProtocolUtils) {
