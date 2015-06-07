@@ -64,7 +64,8 @@ function parameterNameById (protocol, id) {
 function assignParametersToAllFields (protocol) {
   _.forEach(protocol.parameters, function (param) {
     var paramId    = _.result(param, 'id'),
-        paramValue = _.result(param, 'value');
+        paramValue = _.result(param, 'value'),
+        paramName  = _.result(param, 'name'); //if a container
 
     if (!paramId) {
       return;
@@ -74,14 +75,17 @@ function assignParametersToAllFields (protocol) {
       if (field.parameter == paramId) {
         field.value = paramValue;
       }
+      else if (field.type == 'container' && _.result(field, 'value.container') == paramId) {
+        _.set(field, 'value.containerName', paramName);
+      }
+      else if (_.startsWith(field.type, 'aliquot')) {
+        //future - handle aliquot++
+        if (_.result(field, 'value.container') == paramId) {
+          _.set(field, 'value.containerName', paramName);
+        }
+      }
     });
   });
-  return protocol;
-}
-
-function assignContainerNamesFromParameters (protocol) {
-  //todo
-
   return protocol;
 }
 
@@ -90,12 +94,21 @@ function safelyDeleteParameter (protocol, param) {
       paramValue = _.result(param, 'value');
 
   if (!paramId) {
-    return;
+    return protocol;
   }
 
   transformAllFields(protocol, function (field) {
     if (field.parameter == paramId) {
       field.value = paramValue;
+    }
+    else if (field.type == 'container' && _.result(field, 'value.container') == paramId) {
+      field.value = '';
+    }
+    else if (_.startsWith(field.type, 'aliquot')) {
+      //future - handle aliquot++
+      if (_.result(field, 'value.container') == paramId) {
+        field.value = {};
+      }
     }
   });
 

@@ -239,7 +239,7 @@ module.exports = {
       "requirements": {},
       "transforms"  : [
         {
-          "container": "container"
+          "container": "object"
         }
       ],
       "fields"      : [
@@ -304,10 +304,10 @@ module.exports = {
       "requirements": {},
       "transforms"  : [
         {
-          "wells": "source"
+          "wells": "from"
         },
         {
-          "wells": "destination"
+          "wells": "to"
         }
       ],
       "fields"      : [
@@ -376,7 +376,7 @@ module.exports = {
       "requirements": {},
       "transforms"  : [
         {
-          "container": "container"
+          "container": "object"
         }
       ],
       "fields"      : [

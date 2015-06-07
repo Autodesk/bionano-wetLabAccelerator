@@ -86,7 +86,6 @@ angular.module('transcripticApp')
       _.flow(
         assertContainersNamed,
         Omniprotocol.utils.assignParametersToAllFields,
-        Omniprotocol.utils.assignContainerNamesFromParameters,
         clearVerifications
       )(protocol);
 

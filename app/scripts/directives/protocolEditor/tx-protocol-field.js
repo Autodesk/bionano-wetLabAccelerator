@@ -32,7 +32,7 @@ angular.module('tx.protocolEditor')
           return _.indexOf(parameterizables, fieldType) >= 0;
         };
 
-        //fixme - should use utils for this, binding will be broken on new protocol
+        //fixme - this binding may break... if in view only, ok though?
         self.parameters = ProtocolHelper.currentProtocol.parameters;
 
         self.selectParameter = function (param, event) {

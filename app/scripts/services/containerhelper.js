@@ -41,8 +41,6 @@ angular.module('transcripticApp')
       });
 
       $rootScope.$applyAsync();
-
-      console.log(self.remote);
     };
 
     self.setLocal = function (local) {
@@ -52,11 +50,6 @@ angular.module('transcripticApp')
       });
     };
 
-    self.getContainer = function (name) {
-      return _.find(self.containers, function (cont) {
-        return _.result(cont.metadata, 'name') == id;
-      });
-    };
 
     self.definedColors = {
       'maraschino': '#c5535b',

@@ -115,6 +115,8 @@ angular.module('transcripticApp')
 
     //functions for fields with type container
 
+    //todo - refactor to to expect value of format { container : <>, containerName: <> }
+
     //todo - use id
     self.getContainerTypeFromFieldName = function (op, fieldName) {
       var containerName = self.getFieldValFromOpByName(op, fieldName);

@@ -15,7 +15,7 @@ tx-protocol-op {
     color: $black;
     cursor: all-scroll;
     width: 100%;
-    padding: 3px $layout-spacing-sm;
+    padding: 3px $op-padding;
     display: flex;
     justify-content: space-between;
 
@@ -36,7 +36,7 @@ tx-protocol-op {
 
     > tx-protocol-field {
       margin: 3px 0;
-      padding: 0 10px;
+      padding: 0 $op-padding;
     }
   }
 

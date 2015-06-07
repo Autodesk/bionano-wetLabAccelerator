@@ -7,7 +7,7 @@
  * # txProtocolSetup
  */
 angular.module('transcripticApp')
-  .directive('txProtocolSetup', function ($rootScope, TranscripticAuth, UUIDGen, Container, Omniprotocol, ContainerHelper, ProtocolHelper) {
+  .directive('txProtocolSetup', function ($rootScope, TranscripticAuth, UUIDGen, Container, Omniprotocol, ContainerHelper, ProtocolHelper, ProtocolUtils) {
     return {
       templateUrl     : 'views/tx-protocol-setup.html',
       restrict        : 'E',
@@ -70,7 +70,7 @@ angular.module('transcripticApp')
         };
 
         self.deleteParam = function (param) {
-          _.remove(self.parameters, param);
+          ProtocolUtils.deleteParameter(param);
           $scope.checkContainerChange();
         };
 
