@@ -48,12 +48,14 @@ function transformAllFields (protocol, transform) {
  Parameters
  ********/
 
+//returns a reference
 function parameterById (protocol, id) {
   return _.find(protocol.parameters, {id: id});
 }
 
+//returns a cloned value
 function parameterValueById (protocol, id) {
-  return _.result(parameterById(protocol, id), 'value');
+  return _.cloneDeep(_.result(parameterById(protocol, id), 'value'));
 }
 
 function parameterNameById (protocol, id) {

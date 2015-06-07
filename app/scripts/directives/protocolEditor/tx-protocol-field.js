@@ -66,6 +66,10 @@ angular.module('tx.protocolEditor')
           return !!self.field.parameter;
         };
 
+        self.paramName = function () {
+          return ProtocolUtils.paramNameFromParamId(self.field.parameter);
+        };
+
         //dropdown
 
         var hideDropDown;
@@ -153,10 +157,10 @@ angular.module('tx.protocolEditor')
               }
             }
 
-            //handle parameter as input
-            if (scope.fieldCtrl.field.parameter) {
-              var relevantParam = ProtocolUtils.paramById(scope.fieldCtrl.field.parameter);
-              scope.fieldCtrl.selectParameter(relevantParam);
+            //handle parameter as input, assign current value
+            var paramId = scope.fieldCtrl.field.parameter;
+            if (paramId) {
+              scope.fieldCtrl.selectParameter(ProtocolUtils.paramById(paramId));
             }
 
           }
