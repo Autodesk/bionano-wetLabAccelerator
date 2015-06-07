@@ -35,60 +35,32 @@ angular.module('transcripticApp')
 
 
         self.addParam = function (param) {
-          self.parameters.push({
-            id : UUIDGen(),
-            name: monotonicName(param.type),
-            type: param.type,
-            readable: param.readable
-          });
-          $scope.showParameters = false;
+          ProtocolUtils.createParameter(param);
         };
 
         self.addContainer = function (param) {
-          var parameter = {
-            id : UUIDGen(),
-            name: monotonicName('container'),
-            type : 'container',
-            value: {
-              color: ContainerHelper.randomColor(),
-              isNew: true
-            }
-          };
-
           if (_.isString(param)) {
-            parameter.value.type = param;
-          } else if (_.isObject(param)) {
-            _.merge(parameter, param);
+            console.warn('passed string to add container', param);
           }
 
-          self.parameters.push(parameter);
-          $scope.checkContainerChange();
+          ProtocolUtils.createContainer(param);
         };
 
         self.clearParamValue = function (param) {
-          _.assign(param, {value: null});
+          ProtocolUtils.clearParameterValue(param);
         };
 
         self.deleteParam = function (param) {
           ProtocolUtils.deleteParameter(param);
-          $scope.checkContainerChange();
         };
 
         self.handleChangeParamType = function (param) {
           self.clearParamValue(param);
-          $scope.checkContainerChange();
         };
-
-        //todo - better guarantee unique
-        function monotonicName (type) {
-          return '' + type + (_.filter(self.parameters, {type : type}).length + 1);
-        }
 
       },
       link            : function postLink (scope, element, attrs) {
         var oldContainerLength;
-
-        //CHANGE CHECKING / CONTAINERS
 
         scope.$on('editor:toggleSetupVisibility', function (e, val) {
           scope.isVisible = !!val;
@@ -98,12 +70,22 @@ angular.module('transcripticApp')
           scope.isVisible = !!val;
         });
 
+        //CHANGE CHECKING / CONTAINERS
+
         //todo - this will be problematic when handling verifications on the parameter b/c deep equality
         scope.$watch('setupCtrl.parameters', function (newval, oldval) {
           $rootScope.$broadcast('editor:parameterChange', newval);
           scope.checkContainerChange();
         }, true);
 
+        scope.$on('editor:newprotocol', function () {
+          $rootScope.$broadcast('editor:parameterChange', scope.setupCtrl.parameters);
+          scope.checkContainerChange()
+        });
+
+        //check and update containerhelper
+        //changes to containers themselves will be propagated by reference automatically
+        //doens't really account for programmatic changes (i.e. within one digest) that are not picked up by the watch
         scope.checkContainerChange = function () {
           var containerList = _.filter(scope.setupCtrl.parameters, {type: 'container'});
           if (containerList.length != oldContainerLength) {
@@ -111,11 +93,6 @@ angular.module('transcripticApp')
             oldContainerLength = containerList.length;
           }
         };
-
-        scope.$on('editor:newprotocol', function () {
-          $rootScope.$broadcast('editor:parameterChange', scope.setupCtrl.parameters);
-          scope.checkContainerChange()
-        });
 
         //VERIFICATIONS
 

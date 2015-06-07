@@ -27,6 +27,11 @@ angular.module('transcripticApp')
 
     self.paramNameFromParamId = _.partial(Omniprotocol.utils.parameterNameById, self.protocol);
 
+
+    //parameter manipulation
+
+    //note that setupCtrl has a running check on the parameters to check e.g. for container changes and update the ContainerHelper. could maybe move that here if everything goes through this...
+
     //either pass type as string, or must include field 'type'
     //might make sense to eventually move this to utils, but need naming + UUIDGen
     self.createParameter = function (param) {
@@ -44,19 +49,23 @@ angular.module('transcripticApp')
       return parameter;
     };
 
+    //must pass object
     self.createContainer = function (param) {
-      return self.createParameter(_.merge({}, param, {
-        type : 'container',
+      return self.createParameter(_.merge({
         value: {
+          isNew: true,
           color: ContainerHelper.randomColor()
         }
-      }));
+      }, param, {type: 'container'}));
     };
 
     //expects a parameter object
     self.deleteParameter = function (param) {
       Omniprotocol.utils.safelyDeleteParameter(self.protocol, param);
+    };
 
+    self.clearParameterValue = function (param) {
+      delete param.value;
     };
 
     //field helpers
