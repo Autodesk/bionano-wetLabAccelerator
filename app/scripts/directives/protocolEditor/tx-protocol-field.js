@@ -104,7 +104,7 @@ angular.module('tx.protocolEditor')
             else if (type == 'option') {
               scope.modelOptions = _.uniq(scope.fieldCtrl.field.options);
             }
-            else if (type == 'aliquot+') {
+            else if (_.startsWith(type, 'aliquot')) {
               partial = 'aliquot';
             }
 

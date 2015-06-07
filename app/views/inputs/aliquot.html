@@ -4,7 +4,7 @@
                        ng-model="aliquotCtrl.containerName">
   </tx-container-select>
 
-  <div ng-show="!!aliquotCtrl.containerName && !aliquotCtrl.containerType"
+  <div ng-show="aliquotCtrl.containerName && !aliquotCtrl.containerType"
        class="text-danger"
        style="display: inline-block;">(missing container type)</div>
 

@@ -87,11 +87,10 @@ module.exports = {
     "autoprotocol-category": "WellGroup",
     verification           : _.constant(true)
   },
-  //note - this is a transcriptic type, currently not in use
   "aliquot++": {
     category               : "container",
     canParameterize        : false,
-    description            : "Group of multiple aliquots",
+    description            : "Group of multiple aliquots, across multiple containers",
     "autoprotocol-category": "list(WellGroup)",
     verification           : _.constant(true)
   },

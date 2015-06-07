@@ -24,14 +24,12 @@ module.exports = {
           "type": "volume"
         },
         {
-          "name"           : "from",
-          "type"           : "aliquot+",
-          "singleContainer": false
+          "name": "from",
+          "type": "aliquot++"
         },
         {
-          "name"           : "to",
-          "type"           : "aliquot+",
-          "singleContainer": false
+          "name": "to",
+          "type": "aliquot++"
         },
         {
           "name"    : "dispense_speed",
@@ -101,9 +99,8 @@ module.exports = {
           "type": "aliquot"
         },
         {
-          "name"           : "to",
-          "type"           : "aliquot+",
-          "singleContainer": false
+          "name": "to",
+          "type": "aliquot++"
         },
         {
           "name"    : "dispense_speed",
@@ -154,9 +151,8 @@ module.exports = {
           "default": {"value": 10.0, "unit": "microliter"}
         },
         {
-          "name"           : "from",
-          "type"           : "aliquot+",
-          "singleContainer": false
+          "name": "from",
+          "type": "aliquot++"
         },
         {
           "name": "to",
@@ -203,9 +199,8 @@ module.exports = {
       ],
       "fields"      : [
         {
-          "name"           : "wells",
-          "type"           : "aliquot+",
-          "singleContainer": false
+          "name": "wells",
+          "type": "aliquot++"
         },
         {
           "name"    : "volume",
@@ -254,9 +249,8 @@ module.exports = {
           "default": "lb-broth-noAB"
         },
         {
-          "name"           : "columns",
-          "type"           : "columnVolumes",
-          "singleContainer": true
+          "name": "columns",
+          "type": "columnVolumes"
         }
       ]
     }
@@ -277,9 +271,8 @@ module.exports = {
       ],
       "fields"      : [
         {
-          "name"           : "wells",
-          "type"           : "aliquot+",
-          "singleContainer": false
+          "name": "wells",
+          "type": "aliquot++"
         },
         {
           "name"   : "volume",
@@ -316,8 +309,8 @@ module.exports = {
           "type": "aliquot"
         },
         {
-          "name"    : "to",
-          "type"    : "aliquot"
+          "name": "to",
+          "type": "aliquot"
         },
         {
           "name"   : "volume",
@@ -350,8 +343,8 @@ module.exports = {
           "type": "aliquot"
         },
         {
-          "name"    : "to",
-          "type"    : "aliquot+"
+          "name": "to",
+          "type": "aliquot+"
         },
         {
           "name"    : "min_colony_count",
@@ -661,8 +654,7 @@ module.exports = {
         },
         {
           "name"           : "wells",
-          "type"           : "aliquot+",
-          "singleContainer": true
+          "type"           : "aliquot+"
         },
         {
           "name"        : "wavelength",
@@ -707,8 +699,7 @@ module.exports = {
         },
         {
           "name"           : "wells",
-          "type"           : "aliquot+",
-          "singleContainer": true
+          "type"           : "aliquot+"
         },
         {
           "name"        : "excitation",
@@ -764,8 +755,7 @@ module.exports = {
         },
         {
           "name"           : "wells",
-          "type"           : "aliquot+",
-          "singleContainer": true
+          "type"           : "aliquot+"
         }
       ]
     }
@@ -800,9 +790,8 @@ module.exports = {
           "default": "gelSeparate_${unfolded}"
         },
         {
-          "name"           : "objects",
-          "type"           : "aliquot+",
-          "singleContainer": false
+          "name": "objects",
+          "type": "aliquot++"
         },
         {
           "name"   : "matrix",

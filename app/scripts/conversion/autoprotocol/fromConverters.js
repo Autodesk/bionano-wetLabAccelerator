@@ -49,6 +49,8 @@ converterField.aliquot = _.flow(autoUtils.flattenAliquots, _.first);
 
 converterField['aliquot+'] = autoUtils.flattenAliquots;
 
+converterField['aliquot++'] = autoUtils.flattenAliquots;
+
 converterField.columnVolumes = function (input) {
   return _.flatten(_.map(input, function (colVol) {
     return _.map(colVol.columns, function (col) {
