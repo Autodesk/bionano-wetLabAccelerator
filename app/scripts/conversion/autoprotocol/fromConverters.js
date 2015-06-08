@@ -256,12 +256,16 @@ converterInstruction.distribute = function (op) {
 
 converterInstruction.mix = function (op) {
   var wells          = omniConv.pluckFieldValueTransformed(op, 'wells', converterField),
-      optionalFields = ['repetitions', 'volume', 'speed'],
+      volume         = omniConv.pluckFieldValueTransformed(op, 'volume', converterField),
+      repetitions    = omniConv.pluckFieldValueTransformed(op, 'repetitions', converterField),
+      optionalFields = ['speed'],
       optionalObj    = omniConv.getFieldsIfSet(op, optionalFields, true, converterField);
 
   var mixes = _.map(wells, function (well) {
     return _.assign({
-      well: well
+      well       : well,
+      volume     : volume,
+      repetitions: repetitions
     }, optionalObj);
   });
 
