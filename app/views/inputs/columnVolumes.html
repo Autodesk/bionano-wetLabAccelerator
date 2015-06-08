@@ -1,8 +1,10 @@
-<a class="field-details-button"
-   ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible">
-  details...
+<a class="field-action-text"
+   ng-class="{'invalid' : !fieldCtrl.model[0].columns.length}"
+   ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible"
+   ng-bind="fieldCtrl.model.length ? (fieldCtrl.model.length + ' groups') : 'details...'">
 </a>
 <tx-modal ng-show="fieldCtrl.detailsVisible"
+          ng-if="fieldCtrl.detailsVisible"
           title="Column Volumes">
   <div ng-controller="columnVolumesCtrl as colvolCtrl"
        ng-init="colvolCtrl.onInit()">
@@ -52,7 +54,7 @@
            style="display: inline-block;"
            ng-click="colvolCtrl.addColumn()">
           <span class="glyphicon glyphicon-plus"></span>
-          Add Column
+          Add Column Group
         </a>
       </div>
     </div>

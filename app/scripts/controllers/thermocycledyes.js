@@ -12,6 +12,8 @@ angular.module('transcripticApp')
 
     var self = this;
 
+    //be sure to use ng-if on containing element for field values, since should only assume model is accurate when not using parameters
+
     //todo - container needs to be dynamic!
 
     this.dyeOptions = DyeOptions;

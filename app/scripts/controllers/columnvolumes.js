@@ -11,6 +11,8 @@ angular.module('transcripticApp')
   .controller('columnVolumesCtrl', function ($scope) {
     var self = this;
 
+    //be sure to use ng-if on containing element for field values, since should only assume model is accurate when not using parameters
+
     //todo - support more colors
     self.colors = [
       '#FF0000',
@@ -33,7 +35,11 @@ angular.module('transcripticApp')
       }
       self.groups = $scope.fieldCtrl.model;
       self.assignColors();
-      self.colvolActive = (self.groups.length > 1) ? 0 : -1;
+
+      if (!self.groups.length) {
+        self.addColumn();
+      }
+      self.colvolActive = (self.groups.length > 0) ? 0 : -1;
     };
 
     //todo - prevent adding too many empty groups

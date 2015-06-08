@@ -70,6 +70,9 @@ angular.module('tx.protocolEditor')
           return ProtocolUtils.paramNameFromParamId(self.field.parameter);
         };
 
+        //only avilable after link
+        self.assignFieldValue = $scope.assignFieldValue;
+
         //dropdown
 
         var hideDropDown;

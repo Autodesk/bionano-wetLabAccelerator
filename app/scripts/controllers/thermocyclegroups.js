@@ -11,6 +11,8 @@ angular.module('transcripticApp')
   .controller('thermocycleGroupsCtrl', function ($scope) {
     var self = this;
 
+    //be sure to use ng-if on containing element for field values, since should only assume model is accurate when not using parameters
+
     self.addGroup = function () {
       self.groups.push({
         type : 'thermocycleGroup',
