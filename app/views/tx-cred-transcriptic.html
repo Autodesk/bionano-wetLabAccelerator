@@ -24,7 +24,8 @@
     </div>
 
     <div ng-show="authForm.$invalid || authCtrl.credValid === false || authCtrl.showAuth">
-      <p class="text-sm">Protocols are verified and Run at Transcriptic, Inc. Creating a Transcriptic account is free. An estimate of costs will be displayed prior to running a protocol.
+      <p class="text-sm">Protocols are verified and Run at Transcriptic, Inc. Creating a Transcriptic account is free.
+        An estimate of costs will be displayed prior to running a protocol.
         <a class="action-text" href="https://secure.transcriptic.com/users/sign_up" target="_blank">I don't have a
           Transcriptic Account.</a>
       </p>
@@ -80,33 +81,38 @@
   </form>
 
   <div class="column-8 div-centered">
+    <div ng-hide="authCtrl.credValid">
 
-    <p class="text-sm">
-      <a class="action-text"
-         href="https://secure.transcriptic.com/users/edit"
-         target="_blank">Help me fetch my Transcriptic credentials...</a>
-    </p>
-
-    <div style="margin: 15px 0">
-      <div class="pull-right">
-        <button class="btn action-button"
-                ng-disabled="!authForm.$valid || !authCtrl.allowAuthSaved"
-                ng-click="authCtrl.validateAuth()">Verify
-        </button>
-      </div>
-
-      <input type="checkbox"
-             class="pull-left"
-             ng-model="authCtrl.allowAuthSaved"
-             ng-init="authCtrl.allowAuthSaved = true">
-
-      <p style="margin: 0 85px 0 25px;">
-        Autodesk may use and store my Transcriptic credentials for verifying andrunning my protocol, subject to the
+      <p class="text-sm">
         <a class="action-text"
-           href="http://www.autodesk.com/company/legal-notices-trademarks/privacy-statement/autodesk-privacy-statement-2015-english"
-           target="_blank">Autodesk Privacy Statement</a>
+           href="https://secure.transcriptic.com/users/edit"
+           target="_blank">Help me fetch my Transcriptic credentials...</a>
       </p>
+
+      <div style="margin: 15px 0">
+        <div class="pull-right">
+          <button class="btn action-button"
+                  ng-disabled="!authForm.$valid || !authCtrl.allowAuthSaved"
+                  ng-click="authCtrl.validateAuth()">Validate
+          </button>
+        </div>
+
+        <input type="checkbox"
+               class="pull-left"
+               ng-model="authCtrl.allowAuthSaved"
+               ng-init="authCtrl.allowAuthSaved = true">
+
+        <p style="margin: 0 100px 0 25px;">
+          Autodesk may use and store my Transcriptic credentials for verifying and running my protocol, subject to the
+          <a class="action-text"
+             href="http://www.autodesk.com/company/legal-notices-trademarks/privacy-statement/autodesk-privacy-statement-2015-english"
+             target="_blank">Autodesk Privacy Statement</a>
+        </p>
+      </div>
     </div>
+
+    <p class="thin"
+       ng-show="authCtrl.credValid">Protocols are verified and run at Transcriptic, Inc. Verification is free. An estimate of costs will be displayed prior to running a protocol.</p>
   </div>
 
 </div>

@@ -81,6 +81,15 @@ angular.module('transcripticApp')
     };
 
     self.convertToAutoprotocol = function (protocol) {
+
+      //pre-process the protocol
+      _.flow(
+        assertContainersNamed,
+        Omniprotocol.utils.assignParametersToAllFields,
+        clearVerifications
+      )(protocol);
+
+
       try {
         return Autoprotocol.fromAbstraction(protocol);
       } catch (e) {
@@ -129,6 +138,25 @@ angular.module('transcripticApp')
       return _.every(['id', 'name', 'type', 'author'], function (field) {
         return !_.isEmpty(_.result(protocol.metadata, field));
       });
+    }
+
+    /******* utilities ********/
+
+    function assertContainersNamed (protocol) {
+      _(protocol.parameters)
+        .filter({type: 'container'})
+        .forEach(function (param, index) {
+          param.name = param.name || 'container' + index;
+        })
+        .value();
+      return protocol;
+    }
+
+    function clearVerifications (protocol) {
+      _.forEach(protocol.parameters, function (param) {
+        delete param.verification;
+      });
+      return protocol;
     }
 
 

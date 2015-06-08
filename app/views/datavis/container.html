@@ -1,8 +1,12 @@
-<p>{{summaryCtrl.getFieldValueByName('object')}}</p>
-<div ng-class="'plate-wrap-' + summaryCtrl.operation.operation">
-  <tx-plate container="summaryCtrl.getContainerTypeFromFieldName('object')"
-            no-brush="true"
-            no-select="true"
-            style="width: 100%"
-            group-data="{name : 'testing', wells : 'all', color: summaryCtrl.getContainerColorFromFieldName('object')}"></tx-plate>
+<div class="clearfix">
+  <p ng-style="{color: summaryCtrl.getContainerColorFromFieldName('from')}"
+     ng-bind="summaryCtrl.getContainerNameFromFieldName('from')"></p>
+
+  <div ng-class="'plate-wrap-' + summaryCtrl.operation.operation">
+    <tx-plate container="summaryCtrl.getContainerTypeFromFieldName('object')"
+              no-brush="true"
+              no-select="true"
+              style="width: 100%"
+              group-data="{name : '', wells : 'all', color: summaryCtrl.getContainerColorFromFieldName('object')}"></tx-plate>
+  </div>
 </div>

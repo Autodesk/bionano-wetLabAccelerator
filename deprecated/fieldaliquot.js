@@ -10,7 +10,7 @@
  * todo - can probably clean this up a lot using ProtocolHelper - containerType + containerName stuff is weird
  */
 angular.module('transcripticApp')
-  .controller('fieldAliquotCtrl', function ($scope, Omniprotocol, ProtocolHelper) {
+  .controller('fieldAliquotCtrl', function ($scope, Omniprotocol, ProtocolHelper, ProtocolUtils) {
     var self = this;
 
     self.handleAliquotSelection = function (wells, transpose) {
@@ -32,7 +32,7 @@ angular.module('transcripticApp')
         assignModel(mapped);
       }
 
-      self.wellsIn = wells;
+      self.wellsIn         = wells;
       self.field.transpose = transpose;
     };
 
@@ -42,10 +42,11 @@ angular.module('transcripticApp')
       if (_.isUndefined(self.field.value)) {
         self.field.value = [];
       }
-      self.model           = self.field.value;
+      self.model = self.field.value;
+
       self.aliquotMultiple = (self.field.type != 'aliquot');
 
-      //todo - handle single container in view
+      //todo - handle single container in view (everything as single container)
       self.singleContainer = _.result(self.field, 'singleContainer');
 
       var model           = self.model,
@@ -59,13 +60,19 @@ angular.module('transcripticApp')
         setWellsInput(pruneWellsFromContainer(firstContainer));
       }
 
+      //in case container parameter id undefined, this will work if they haven't changed the name of the parameter
+      if (_.isUndefined(self.field.paramId)) {
+        var param            = ProtocolUtils.paramByName(self.containerName);
+        self.field.paramId = _.result(param, 'id');
+      }
+
+      var relevantParam = ProtocolUtils.paramById(self.field.paramId),
+          paramName = _.result(relevantParam, 'name');
+      paramName && updateWellsContainerName(paramName);
+
       $scope.$on('editor:parameterNameChange', function (event, oldName, newName) {
-        //verify - may need to more explicitly make sure this runs after the $watch...
-        _.forEach(self.model, function (wellObj) {
-          if (wellObj.container == oldName) {
-            wellObj.container = newName;
-          }
-        });
+        //note this will only get changes while directive is active
+        updateWellsContainerName(newName, oldName);
       });
 
       $scope.$watch('aliquotCtrl.containerName', function (newContainer) {
@@ -78,13 +85,9 @@ angular.module('transcripticApp')
       $scope.$on('editor:parameterChange', function (e, newparams) {
         getAndSetContainerColor(newparams);
       });
-
-      function getAndSetContainerColor (parameters) {
-        parameters          = _.isUndefined(parameters) ? ProtocolHelper.currentProtocol.parameters : parameters;
-        var cont            = Omniprotocol.utils.getContainerFromName(parameters, self.containerName);
-        self.containerColor = _.result(cont, 'value.color');
-      }
     };
+
+    self.init();
 
     //so hack!
     //need to wait for tx-container-select to propagate type before setting input, because container will re-render and render selection empty
@@ -93,6 +96,22 @@ angular.module('transcripticApp')
         if (!!newval) {
           self.wellsIn = wells;
           listener();
+        }
+      });
+    }
+
+    function getAndSetContainerColor (parameters) {
+      parameters          = _.isUndefined(parameters) ? ProtocolHelper.currentProtocol.parameters : parameters;
+      var cont            = Omniprotocol.utils.getContainerFromName(parameters, self.containerName);
+      self.containerColor = _.result(cont, 'value.color');
+    }
+
+    function updateWellsContainerName (newName, oldName) {
+      _.forEach(self.model, function (wellObj) {
+        if (_.isUndefined(oldName)) {
+          wellObj.container = newName;
+        } else if (wellObj.container == oldName) {
+          wellObj.container = newName;
         }
       });
     }

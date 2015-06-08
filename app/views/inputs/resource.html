@@ -4,12 +4,13 @@
 </a>
 
 <tx-modal ng-show="fieldCtrl.detailsVisible"
+          ng-if="fieldCtrl.detailsVisible"
           title="Catalog Resource">
   <div class="catalog-browser"
        ng-controller="CatalogResourceCtrl as catCtrl"
        ng-init="catCtrl.init()">
 
-    <div tx-class-auth="ng-hide">
+    <div tx-class-auth="ng-hide" class="column-8 div-centered">
       <p class="text-sm">You must be logged into Transcriptic to search for resources.</p>
     </div>
 

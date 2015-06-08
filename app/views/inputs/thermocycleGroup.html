@@ -3,6 +3,7 @@
    ng-bind="(fieldCtrl.model.steps.length) ? ('' + (fieldCtrl.model.cycles || 1) + ' cycle' + ((fieldCtrl.model.cycles != 1) ? 's' : '') + ' @ ' + fieldCtrl.model.steps.length + ' steps') : 'details...'">
 </a>
 <tx-modal ng-show="fieldCtrl.detailsVisible"
+          ng-if="fieldCtrl.detailsVisible"
           title="Thermocycle Group">
   <div ng-controller="thermocycleGroupsCtrl as thermoCtrl"
        class="column-wrap div-centered column-16">
@@ -77,7 +78,7 @@
       </div>
 
       <div style="text-align: center; padding-top: 15px;">
-        <a class="field-action-text"
+        <a class="field-action-text text-warning"
            style="display: inline-block"
            ng-click="thermoCtrl.addStep(fieldCtrl.model); fieldCtrl.detailsVisible = true">
           + Add Step

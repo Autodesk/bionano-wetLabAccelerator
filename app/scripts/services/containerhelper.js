@@ -41,20 +41,12 @@ angular.module('transcripticApp')
       });
 
       $rootScope.$applyAsync();
-
-      console.log(self.remote);
     };
 
     self.setLocal = function (local) {
       self.local.length = 0;
       _.forEach(local, function (cont) {
         self.local.push(cont);
-      });
-    };
-
-    self.getContainer = function (name) {
-      return _.find(self.containers, function (cont) {
-        return _.result(cont.metadata, 'name') == id;
       });
     };
 

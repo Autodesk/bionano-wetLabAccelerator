@@ -2,7 +2,8 @@
      ng-init="thermoCtrl.onInit();
               containerType = summaryCtrl.getContainerTypeFromFieldName('object');
               initialContainerColor = summaryCtrl.getContainerColorFromFieldName('object');
-              initialGroupData = summaryCtrl.getFieldValueByName('dyes')">
+              initialDyesData = summaryCtrl.getFieldValueByName('dyes');
+              initialGroupData = initialDyesData || {name : '', wells: 'all', color: initialContainerColor}">
 
   <p ng-if="thermoCtrl.graphData" class="thin">
     qPCR visualization forthcoming...

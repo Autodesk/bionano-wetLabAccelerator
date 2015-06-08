@@ -126,7 +126,7 @@
             },
             {
               "name": "dispense_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -138,7 +138,7 @@
             },
             {
               "name": "aspirate_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -242,7 +242,7 @@
             },
             {
               "name": "dispense_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -254,7 +254,7 @@
             },
             {
               "name": "aspirate_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -358,7 +358,7 @@
             },
             {
               "name": "dispense_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -370,7 +370,7 @@
             },
             {
               "name": "aspirate_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -474,7 +474,7 @@
             },
             {
               "name": "dispense_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -486,7 +486,7 @@
             },
             {
               "name": "aspirate_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -593,7 +593,7 @@
             },
             {
               "name": "dispense_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -605,7 +605,7 @@
             },
             {
               "name": "aspirate_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -709,7 +709,7 @@
             },
             {
               "name": "dispense_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -721,7 +721,7 @@
             },
             {
               "name": "aspirate_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -825,7 +825,7 @@
             },
             {
               "name": "dispense_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -837,7 +837,7 @@
             },
             {
               "name": "aspirate_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -941,7 +941,7 @@
             },
             {
               "name": "dispense_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,
@@ -953,7 +953,7 @@
             },
             {
               "name": "aspirate_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "default": {
                 "value": 100,

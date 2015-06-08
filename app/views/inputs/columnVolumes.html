@@ -1,8 +1,10 @@
-<a class="field-details-button"
-   ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible">
-  details...
+<a class="field-action-text"
+   ng-class="{'invalid' : !fieldCtrl.model[0].columns.length}"
+   ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible"
+   ng-bind="fieldCtrl.model.length ? (fieldCtrl.model.length + ' groups') : 'details...'">
 </a>
 <tx-modal ng-show="fieldCtrl.detailsVisible"
+          ng-if="fieldCtrl.detailsVisible"
           title="Column Volumes">
   <div ng-controller="columnVolumesCtrl as colvolCtrl"
        ng-init="colvolCtrl.onInit()">
@@ -29,7 +31,8 @@
                    ng-model="group.color">
           </div>
           <div class="tx-table-item-field">
-            <span ng-repeat="col in group.columns" ng-bind="col + ($last ? '' : ', ')"></span>
+            <span ng-repeat="col in group.columns | orderBy:col"
+                  ng-bind="(colvolCtrl.parseInt(col) + 1) + ($last ? '' : ', ')"></span>
           </div>
           <div class="tx-table-item-field">
             <tx-protocol-field ng-model="group.volume"
@@ -47,11 +50,11 @@
       </div>
 
       <div style="text-align: center; padding-top: 20px;">
-        <a class="field-action-text div-centered"
+        <a class="field-action-text text-warning div-centered"
            style="display: inline-block;"
            ng-click="colvolCtrl.addColumn()">
           <span class="glyphicon glyphicon-plus"></span>
-          Add Column
+          Add Column Group
         </a>
       </div>
     </div>

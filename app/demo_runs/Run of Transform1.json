@@ -116,7 +116,7 @@
                                 },
                                 "name": "dispense_speed",
                                 "optional": true,
-                                "type": "flowrate"
+                                "type": "speed"
                             },
                             {
                                 "default": {
@@ -125,7 +125,7 @@
                                 },
                                 "name": "aspirate_speed",
                                 "optional": true,
-                                "type": "flowrate"
+                                "type": "speed"
                             },
                             {
                                 "default": {
@@ -215,7 +215,7 @@
                                 },
                                 "name": "dispense_speed",
                                 "optional": true,
-                                "type": "flowrate"
+                                "type": "speed"
                             },
                             {
                                 "default": {
@@ -224,7 +224,7 @@
                                 },
                                 "name": "aspirate_speed",
                                 "optional": true,
-                                "type": "flowrate"
+                                "type": "speed"
                             },
                             {
                                 "default": {
@@ -699,7 +699,7 @@
                                 },
                                 "name": "dispense_speed",
                                 "optional": true,
-                                "type": "flowrate"
+                                "type": "speed"
                             },
                             {
                                 "default": {
@@ -708,7 +708,7 @@
                                 },
                                 "name": "aspirate_speed",
                                 "optional": true,
-                                "type": "flowrate"
+                                "type": "speed"
                             },
                             {
                                 "default": {
@@ -835,7 +835,7 @@
                                 },
                                 "name": "dispense_speed",
                                 "optional": true,
-                                "type": "flowrate"
+                                "type": "speed"
                             },
                             {
                                 "default": {
@@ -844,7 +844,7 @@
                                 },
                                 "name": "aspirate_speed",
                                 "optional": true,
-                                "type": "flowrate"
+                                "type": "speed"
                             },
                             {
                                 "default": {

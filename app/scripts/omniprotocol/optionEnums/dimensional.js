@@ -3,6 +3,6 @@ module.exports = {
   "volume"      : ["nanoliter", "microliter", "milliliter"],
   "length"      : ["nanometer"],
   "temperature" : ["celsius"],
-  "flowrate"    : ["microliter/second"],
+  "speed"    : ["microliter/second"],
   "acceleration": ["g", "meter/second^2"]
 };

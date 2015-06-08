@@ -17,7 +17,7 @@ tx-protocol-setup {
   }
 
   .protocol-setup-header {
-    padding: 3px 10px;
+    padding: 3px $layout-spacing-sm;
     outline: none;
 
     .setup-heading {
@@ -150,6 +150,7 @@ tx-protocol-setup {
   .parameter-option {
   }
 
+  //don't allow parameters in setup, because you're making parameters
   .field-parameter-toggler {
     display: none;
   }

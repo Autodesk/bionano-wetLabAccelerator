@@ -1,5 +1,9 @@
 <div ng-init="volume = summaryCtrl.getFieldValueByName('volume');
               resource = summaryCtrl.getFieldValueByName('resource')">
+
+  <p ng-style="{color: summaryCtrl.getContainerColorFromWellField('wells')}"
+     ng-bind="summaryCtrl.getContainerNameFromWellField('wells')"></p>
+
   <tx-plate container="summaryCtrl.getContainerTypeFromWellField('wells')"
             no-brush="true"
             no-select="true"
