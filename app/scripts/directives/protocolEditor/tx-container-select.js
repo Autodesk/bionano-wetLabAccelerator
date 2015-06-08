@@ -13,8 +13,8 @@ angular.module('transcripticApp')
       restrict        : 'E',
       require         : 'ngModel',
       scope           : {
-        type   : '=?containerType',
-        model  : '=ngModel'
+        type : '=?containerType',
+        model: '=ngModel'
       },
       bindToController: true,
       controllerAs    : 'containerSelectCtrl',
@@ -30,7 +30,9 @@ angular.module('transcripticApp')
           var relevantParam = ProtocolUtils.paramById(_.result(self.model, 'container'));
           if (relevantParam) {
             //expose type outside directive
-            self.type  = _.result(relevantParam, 'value.type');
+            self.type = _.result(relevantParam, 'value.type');
+          } else {
+            self.type = '';
           }
         };
       },

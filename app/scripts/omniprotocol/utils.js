@@ -107,12 +107,18 @@ function safelyDeleteParameter (protocol, param) {
       delete field.parameter;
     }
     else if (field.type == 'container' && _.result(field, 'value.container') == paramId) {
-      field.value = {};
+      _.assign(field.value, {
+        container : null,
+        containerName: null
+      });
     }
     else if (_.startsWith(field.type, 'aliquot')) {
       //future - handle aliquot++
       if (_.result(field, 'value.container') == paramId) {
-        field.value = {};
+        _.assign(field.value, {
+          container : null,
+          containerName: null
+        });
       }
     }
   });
