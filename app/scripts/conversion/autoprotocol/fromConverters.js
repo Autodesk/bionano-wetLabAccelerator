@@ -45,10 +45,15 @@ function mapSomeDimensionalFields (input, defaults, dimensional, nondimensional)
 //todo - might want to make each type explicit, rather than implicit use of _.identity
 //only include special conversions, otherwise just use value (_.identity)
 
+converterField.container = function (input, fieldObj) {
+  return _.result(input, 'containerName');
+};
+
 converterField.aliquot = _.flow(autoUtils.flattenAliquots, _.first);
 
 converterField['aliquot+'] = autoUtils.flattenAliquots;
 
+//future - need to handle differently, but right now this basically is just aliquot+
 converterField['aliquot++'] = autoUtils.flattenAliquots;
 
 converterField.columnVolumes = function (input) {
@@ -78,15 +83,15 @@ converterField.thermocycleGroup = function (input, fieldObj) {
           duration: convertDimensionalWithDefault(step.duration, inputDefault.duration),
           read    : _.result(step, 'read', false)
         }, (!!step.isGradient ?
-        {
-          gradient: {
-            top: convertDimensionalWithDefault(step.gradientStart, inputDefault.gradientStart),
-            end: convertDimensionalWithDefault(step.gradientEnd, inputDefault.gradientEnd)
+          {
+            gradient: {
+              top: convertDimensionalWithDefault(step.gradientStart, inputDefault.gradientStart),
+              end: convertDimensionalWithDefault(step.gradientEnd, inputDefault.gradientEnd)
+            }
+          } :
+          {
+            temperature: convertDimensionalWithDefault(step.temperature, inputDefault.temperature)
           }
-        } :
-        {
-          temperature: convertDimensionalWithDefault(step.temperature, inputDefault.temperature)
-        }
         )
       );
     })
@@ -158,8 +163,8 @@ converterInstruction.absorbance   = _.flow(simpleMapOperation,
 
 converterInstruction.transfer = function (op) {
 
-  var fromWells      = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'from')),
-      toWells        = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'to')),
+  var fromWells      = omniConv.pluckFieldValueTransformed(op, 'from', converterField),
+      toWells        = omniConv.pluckFieldValueTransformed(op, 'to', converterField),
       volume         = omniConv.pluckFieldValueTransformed(op, 'volume', converterField),
       optionalFields = ['dispense_speed', 'aspirate_speed', 'mix_before', 'mix_after'],
       optionalObj    = omniConv.getFieldsIfSet(op, optionalFields, true, converterField),
@@ -200,7 +205,7 @@ converterInstruction.transfer = function (op) {
 };
 
 converterInstruction.consolidate = function (op) {
-  var fromWells          = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'from')),
+  var fromWells          = omniConv.pluckFieldValueTransformed(op, 'from', converterField),
       toWell             = omniConv.pluckFieldValueTransformed(op, 'to', converterField),
       volume             = omniConv.pluckFieldValueTransformed(op, 'volume', converterField),
       optionalFromFields = ['aspirate_speed'],
@@ -226,7 +231,7 @@ converterInstruction.consolidate = function (op) {
 
 converterInstruction.distribute = function (op) {
   var fromWell          = omniConv.pluckFieldValueTransformed(op, 'from', converterField),
-      toWells           = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'to')),
+      toWells           = omniConv.pluckFieldValueTransformed(op, 'to', converterField),
       volume            = omniConv.pluckFieldValueTransformed(op, 'volume', converterField),
       optionalToFields  = ['dispense_speed'],
       optionalAllFields = ['aspirate_speed', 'mix_before'],
@@ -266,8 +271,8 @@ converterInstruction.mix = function (op) {
 converterInstruction.dispense = simpleMapOperation;
 
 converterInstruction.provision = function (op) {
-  var wells = autoUtils.flattenAliquots(omniUtils.pluckFieldValueRaw(op.fields, 'wells')),
-      volume = omniConv.pluckFieldValueTransformed(op, 'volume', converterField),
+  var wells      = omniConv.pluckFieldValueTransformed(op, 'wells', converterField),
+      volume     = omniConv.pluckFieldValueTransformed(op, 'volume', converterField),
       resourceId = _.result(omniUtils.pluckFieldValueRaw(op.fields, 'resource'), 'id');
 
   if (!resourceId) {
@@ -275,12 +280,12 @@ converterInstruction.provision = function (op) {
   }
 
   return {
-    op: 'provision',
-    resource_id : resourceId,
-    to: _.map(wells, function (well) {
+    op         : 'provision',
+    resource_id: resourceId,
+    to         : _.map(wells, function (well) {
       return {
-        well: well,
-        volume : volume
+        well  : well,
+        volume: volume
       };
     })
   };
