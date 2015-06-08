@@ -17,7 +17,7 @@ angular.module('transcripticApp')
 
     //general helper functions
 
-    self.getFieldValueByName = applyOpToFn(ProtocolUtils.getFieldValFromOpByName);
+    self.getFieldValueByName = applyOpToFn(ProtocolUtils.getFieldValue);
 
     self.readableDimensional = function (dimObj) {
       if (_.isUndefined(dimObj)) {
@@ -30,7 +30,7 @@ angular.module('transcripticApp')
 
     self.pluckWellsFromContainer = applyOpToFn(ProtocolUtils.pluckWellsFromAliquots);
 
-    self.getContainerFromWellField = applyOpToFn(ProtocolUtils.getFirstContainerFromAliquots);
+    self.getContainerNameFromWellField = applyOpToFn(ProtocolUtils.getContainerNameFromAliquots);
 
     self.getContainerTypeFromWellField = applyOpToFn(ProtocolUtils.getContainerTypeFromAliquots);
 
@@ -38,11 +38,11 @@ angular.module('transcripticApp')
 
     //functions for fields with type container
 
+    self.getContainerNameFromFieldName = applyOpToFn(ProtocolUtils.getContainerNameFromFieldName);
+
     self.getContainerTypeFromFieldName = applyOpToFn(ProtocolUtils.getContainerTypeFromFieldName);
 
     self.getContainerColorFromFieldName = applyOpToFn(ProtocolUtils.getContainerColorFromFieldName);
-
-    self.getContainerColorFromContainerName = ProtocolUtils.getContainerColorFromContainerName;
 
     function applyOpToFn (utilFn) {
       return function () {

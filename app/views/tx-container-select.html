@@ -1,12 +1,16 @@
 <div dropdown>
   <a dropdown-toggle
      class="field-action-text"
-     ng-class="{'invalid' : !containerSelectCtrl.model}"
-     ng-bind="containerSelectCtrl.model || 'select...'"></a>
+     ng-class="{'invalid' : !containerSelectCtrl.model.container}">
+    <span ng-if="containerSelectCtrl.model.container"
+          class="color-swatch"
+          ng-style="{'background-color' : containerColorFromId(containerSelectCtrl.model.container)}"></span>
+    <span ng-bind="containerNameFromId(containerSelectCtrl.model.container) || 'select...'"></span>
+  </a>
   <ul class="dropdown-menu">
     <li ng-repeat="c in containerSelectCtrl.localContainers">
-      <a ng-class="{'active' : c.name == containerSelectCtrl.model}"
-         ng-click="selectLocalContainer(c)">
+      <a ng-class="{'active' : c.id == containerSelectCtrl.model.container}"
+         ng-click="selectContainerParam(c)">
         <input disabled
                type="color"
                class="color-swatch"

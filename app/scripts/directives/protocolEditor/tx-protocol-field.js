@@ -8,7 +8,7 @@
  *
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolField', function ($http, $compile, $timeout, Omniprotocol, Autoprotocol, ProtocolHelper) {
+  .directive('txProtocolField', function ($http, $compile, $timeout, Omniprotocol, Autoprotocol, ProtocolHelper, ProtocolUtils, UUIDGen) {
     return {
       templateUrl     : 'views/tx-protocol-field.html',
       restrict        : 'E',
@@ -32,52 +32,48 @@ angular.module('tx.protocolEditor')
           return _.indexOf(parameterizables, fieldType) >= 0;
         };
 
+        //fixme - verify by loading in a new protocol
+        //this binding may break... if in view only, angular will handle...
         self.parameters = ProtocolHelper.currentProtocol.parameters;
 
-        var parameterListeners = [];
-
         self.selectParameter = function (param, event) {
-          self.field.parameter = param.name;
-          self.model           = _.cloneDeep(param.value);
-
-          var parameterChangeListener = $scope.$on('editor:parameterChange', function (e, params) {
-            var relevantParam = _.find(params, {name: self.field.parameter}),
-                paramVal      = _.result(relevantParam, 'value');
-
-            //check undefined in case name changed, then let other listener handle
-            if (!_.isUndefined(paramVal)) {
-              self.model = _.cloneDeep(paramVal);
-            }
-          });
-
-          parameterListeners.push(parameterChangeListener);
-
-          var parameterNameChangeListener = $scope.$on('editor:parameterNameChange', function (e, oldName, newName) {
-            if (oldName == self.field.parameter) {
-              self.field.parameter = newName;
-            }
-          });
-
-          parameterListeners.push(parameterNameChangeListener);
+          self.field.parameter     = param.id;
+          //initially set the model to the parameter
+          self.model               = _.cloneDeep(param.value);
         };
 
         self.createNewParameter = function () {
-          var paramName = 'my_' + self.field.type,
-              param     = {
-                name : paramName,
-                type : self.field.type,
-                value: _.isUndefined(self.model) ? _.cloneDeep(self.field.default) : _.cloneDeep(self.model)
-              };
-          ProtocolHelper.currentProtocol.parameters.push(param);
+          var param = ProtocolUtils.createParameter({
+            type: self.field.type,
+            value: _.isUndefined(self.model) ?
+              _.cloneDeep(self.field.default) :
+              _.cloneDeep(self.model)
+          });
+
           self.selectParameter(param);
         };
 
         self.clearParameter = function () {
+          //assign current value
+          var paramId = self.field.parameter;
+          paramId && $scope.assignFieldValue(ProtocolUtils.paramValueFromParamId(paramId));
+
+          //clear parameter from field
           delete self.field.parameter;
-          _.forEach(parameterListeners, function (listener) {
-            _.isFunction(listener) && listener();
-          });
         };
+
+        self.isParameterized = function () {
+          return !!self.field.parameter;
+        };
+
+        self.paramName = function () {
+          return ProtocolUtils.paramNameFromParamId(self.field.parameter);
+        };
+
+        //only avilable after link
+        self.assignFieldValue = $scope.assignFieldValue;
+
+        //dropdown
 
         var hideDropDown;
 
@@ -115,7 +111,7 @@ angular.module('tx.protocolEditor')
             else if (type == 'option') {
               scope.modelOptions = _.uniq(scope.fieldCtrl.field.options);
             }
-            else if (type == 'aliquot+') {
+            else if (_.startsWith(type, 'aliquot')) {
               partial = 'aliquot';
             }
 
@@ -141,6 +137,13 @@ angular.module('tx.protocolEditor')
             scope.hasOpCtrl = !_.isUndefined(opCtrl);
             scope.opCtrl    = opCtrl;
 
+            scope.assignFieldValue = function (value, clearParameter) {
+              if (clearParameter === true) {
+                scope.fieldCtrl.clearParameter();
+              }
+              ngModel.$setViewValue(value);
+            };
+
             //have dimensional here instead of own conroller because needs ngModel controller
             //if dimensional, ensure that unit is defined when changed
             //kinda a hack, but nice guarantee and easier than lots of object passing in conversion later
@@ -157,10 +160,10 @@ angular.module('tx.protocolEditor')
               }
             }
 
-            //handle parameter as input
-            if (scope.fieldCtrl.field.parameter) {
-              var relevantParam = _.find(ProtocolHelper.currentProtocol.parameters, {name: scope.fieldCtrl.field.parameter});
-              scope.fieldCtrl.selectParameter(relevantParam);
+            //handle parameter as input, assign current value
+            var paramId = scope.fieldCtrl.field.parameter;
+            if (paramId) {
+              scope.fieldCtrl.selectParameter(ProtocolUtils.paramById(paramId));
             }
 
           }

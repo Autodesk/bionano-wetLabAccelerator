@@ -1,6 +1,6 @@
 <div class="clearfix">
   <p ng-style="{color: summaryCtrl.getContainerColorFromWellField('source')}"
-     ng-bind="summaryCtrl.getContainerFromWellField('source')"></p>
+     ng-bind="summaryCtrl.getContainerNameFromWellField('source')"></p>
   <div class="clearfix">
     <tx-plate container="summaryCtrl.getContainerTypeFromWellField('source')"
               no-brush="true"
@@ -18,5 +18,5 @@
   </div>
   <p class="pull-right"
      ng-style="{color: summaryCtrl.getContainerColorFromWellField('dest')}"
-     ng-bind="summaryCtrl.getContainerFromWellField('dest')"></p>
+     ng-bind="summaryCtrl.getContainerNameFromWellField('dest')"></p>
 </div>

@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('resultsDispenseCtrl', function ($scope, ContainerOptions, WellConv, Omniprotocol) {
+  .controller('resultsDispenseCtrl', function ($scope, ContainerOptions, WellConv, Omniprotocol, ProtocolUtils) {
     var self = this;
 
     self.getGroupDataFromColVols = function (fieldName, containerFieldName) {
@@ -16,7 +16,7 @@ angular.module('transcripticApp')
       var contType      = $scope.summaryCtrl.getContainerTypeFromFieldName(containerFieldName),
           contObj       = _.result(ContainerOptions, contType),
           wellsInColumn = _.result(contObj, 'col_count', 24),
-          colvols       = Omniprotocol.utils.pluckFieldValueRaw($scope.summaryCtrl.operation.fields, fieldName);
+          colvols       = $scope.summaryCtrl.getFieldValueByName(fieldName);
 
       return _.map(colvols, function (colvol) {
         return {

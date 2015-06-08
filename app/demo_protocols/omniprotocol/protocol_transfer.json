@@ -117,13 +117,13 @@
             },
             {
               "name": "dispense_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "value": { "value" : 100, "unit" : "microliter/second" }
             },
             {
               "name": "aspirate_speed",
-              "type": "flowrate",
+              "type": "speed",
               "optional": true,
               "value": { "value" : 100, "unit" : "microliter/second" }
             },

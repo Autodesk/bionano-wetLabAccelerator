@@ -1,11 +1,10 @@
-<div ng-controller="fieldAliquotCtrl as aliquotCtrl"
-     ng-init="aliquotCtrl.init()">
+<div ng-controller="AliquotCtrl as aliquotCtrl">
   <tx-container-select container-type="aliquotCtrl.containerType"
                        style="display: inline-block"
-                       ng-model="aliquotCtrl.containerName">
+                       ng-model="aliquotCtrl.containerObj">
   </tx-container-select>
 
-  <div ng-show="!!aliquotCtrl.containerName && !aliquotCtrl.containerType"
+  <div ng-show="aliquotCtrl.containerObj.container && !aliquotCtrl.containerType"
        class="text-danger"
        style="display: inline-block;">(missing container type)</div>
 
@@ -20,12 +19,12 @@
 
       <div popover-transclude
            is-open="aliquotCtrl.showingPlates"
-           title="Select one or more wells"
+           title="{{aliquotCtrl.aliquotMultiple ? 'Select one or more wells' : 'Select one well'}}"
            ng-if="aliquotCtrl.showingPlates">
         <tx-plate ng-show="aliquotCtrl.containerType"
-                  style="width: 500px;"
+                  style="width: 600px;"
                   container="aliquotCtrl.containerType"
-                  group-data="{'name' : aliquotCtrl.containerName, wells: 'all', color: aliquotCtrl.containerColor}"
+                  group-data="{'name' : aliquotCtrl.containerNameFromObj(aliquotCtrl.containerObj), wells: 'all', color: aliquotCtrl.containerColorFromObj(aliquotCtrl.containerObj)}"
                   no-brush="!aliquotCtrl.aliquotMultiple"
                   select-persist="aliquotCtrl.aliquotMultiple"
                   on-select="aliquotCtrl.handleAliquotSelection($wells, $transpose)"

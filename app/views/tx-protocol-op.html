@@ -19,7 +19,7 @@
     <div class="dropdown group-items"
          dropdown>
       <span class="operation-dropdown-toggle glyphicon glyphicon-cog"
-
+            squelch-event="click"
             dropdown-toggle></span>
       <ul class="dropdown-menu dropdown-menu-right">
         <li>
@@ -47,6 +47,7 @@
   <div class="operation-fields"
        ng-if="opCtrl.isVisible">
     <tx-protocol-field ng-model="opCtrl.op.description"
+                       prevent-variable="true"
                        field="{name: 'description', type: 'string'}">
     </tx-protocol-field>
     <tx-protocol-field ng-repeat="field in opCtrl.op.fields"

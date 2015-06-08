@@ -17,6 +17,7 @@
   "parameters": [
     {
       "name": "myAbsorbance",
+      "id" : "329832398hf2398fh23f98h23f23f",
       "type": "length",
       "value": {
         "value": 600,
@@ -33,6 +34,7 @@
       "description": "Wavelength used for fluorescence readings"
     },
     {
+      "id" : "2938r238fh239f8n239f23f32nf23f",
       "type": "container",
       "value": {
         "isNew": true,
