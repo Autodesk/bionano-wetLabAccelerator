@@ -38,6 +38,8 @@ angular.module('transcripticApp')
 
     //functions for fields with type container
 
+    self.getContainerNameFromFieldName = applyOpToFn(ProtocolUtils.getContainerNameFromFieldName);
+
     self.getContainerTypeFromFieldName = applyOpToFn(ProtocolUtils.getContainerTypeFromFieldName);
 
     self.getContainerColorFromFieldName = applyOpToFn(ProtocolUtils.getContainerColorFromFieldName);

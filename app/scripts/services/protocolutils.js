@@ -109,12 +109,17 @@ angular.module('transcripticApp')
       return self.paramValueFromParamId(containerId);
     };
 
+    self.getContainerNameFromFieldName = function (op, fieldName) {
+      var containerId = self.getContainerIdFromFieldName(op, fieldName);
+      return self.paramNameFromParamId(containerId);
+    };
+
     self.getContainerTypeFromFieldName = function (op, fieldName) {
       return _.result(self.getContainerValueFromFieldName(op, fieldName), 'type');
     };
 
     self.getContainerColorFromFieldName = function (op, fieldName) {
-      return _.result(self.getContainerValueFromFieldName(op, fieldName), 'type');
+      return _.result(self.getContainerValueFromFieldName(op, fieldName), 'color');
     };
 
     //wells - pipette operations

@@ -4,7 +4,7 @@
               colvols = summaryCtrl.getFieldValueByName('columns');
               groupData = dispCtrl.getGroupDataFromColVols('columns', 'object');">
 
-  Dispense {{summaryCtrl.getFieldValueByName('reagent')}} to {{summaryCtrl.getFieldValueByName('object')}}
+  Dispense {{summaryCtrl.getFieldValueByName('reagent')}} to {{summaryCtrl.getContainerNameFromFieldName('object')}}
   <tx-plate container="containerType"
             no-brush="true"
             no-select="true"
