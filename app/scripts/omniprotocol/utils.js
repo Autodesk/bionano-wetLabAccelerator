@@ -228,7 +228,8 @@ function getScaffoldProtocol () {
       "author"     : {},
       "description": "",
       "tags"       : [],
-      "db"         : {}
+      "db"         : {},
+      "verison"    : "1.0.0"
     },
     "parameters": [],
     "groups"    : []
@@ -476,10 +477,10 @@ module.exports = {
   pluckField        : pluckField,
   pluckFieldValueRaw: pluckFieldValueRaw,
 
-  getContainerValueFromId : getContainerValueFromId,
+  getContainerValueFromId: getContainerValueFromId,
   getContainerNameFromId : getContainerNameFromId,
   getContainerTypeFromId : getContainerTypeFromId,
-  getContainerColorFromId : getContainerColorFromId,
+  getContainerColorFromId: getContainerColorFromId,
 
   transformAllFields: transformAllFields,
 
