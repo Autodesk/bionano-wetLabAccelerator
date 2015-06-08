@@ -14,16 +14,6 @@ function pluckFieldValueRaw (fields, fieldName) {
   return _.result(pluckField(fields, fieldName), 'value', _.result(pluckField(fields, fieldName), 'default'));
 }
 
-//todo - deprecate. use id fn below
-function getContainerFromName (parameters, containerName) {
-  return _.find(parameters, {name: containerName});
-}
-
-//todo - deprecate. use id fn below
-function getContainerTypeFromName (parameters, containerName) {
-  return _.result(getContainerFromName(parameters, containerName), 'value.type');
-}
-
 function getContainerNameFromId (parameters, id) {
   return _.result(_.find(parameters, {id: id}), 'name');
 }
@@ -485,10 +475,6 @@ function getTransformsWell (protocol, well) {
 module.exports = {
   pluckField        : pluckField,
   pluckFieldValueRaw: pluckFieldValueRaw,
-
-  //deprecate
-  getContainerFromName    : getContainerFromName,
-  getContainerTypeFromName: getContainerTypeFromName,
 
   getContainerValueFromId : getContainerValueFromId,
   getContainerNameFromId : getContainerNameFromId,
