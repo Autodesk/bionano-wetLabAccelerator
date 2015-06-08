@@ -14,15 +14,14 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var session = require('express-session');
 
 //Environmental variables
+var PLATFORM_URL = 'platform.bionano.autodesk.com';
 var PORT = parseInt(process.env.PORT) || 8000;
 var appFolder = (process.env.APP || path.dirname(__dirname)) + '/dist';
 var FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID || '861870727182803';
 var FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET || 'd4d8026adb8f40d795c8f379b8661a69';
 var HOST = process.env.HTTP_HOST || "http://localhost:" + PORT;
-
 var LOCAL = process.env.LOCAL || false; //Local serving
-
-var RPC_HOST = process.env.RPC_HOST || "platform.bionano.autodesk.com";
+var RPC_HOST = process.env.RPC_HOST || PLATFORM_URL;
 var RPC_PORT = parseInt(process.env.RPC_PORT) || 443;
 
 log.info({port:PORT, appFolder:appFolder, 'process.env.APP': process.env.APP, FACEBOOK_APP_ID:FACEBOOK_APP_ID, FACEBOOK_APP_SECRET:FACEBOOK_APP_SECRET});
@@ -52,7 +51,6 @@ function rpc(method, params, callback) {
 		//the whole response has been recieved, so we just print it out here
 		response.on('end', function () {
 			try {
-				console.log("parsing: " + str);
 				var responseData = JSON.parse(str);
 				callback(responseData);
 			} catch(err) {
@@ -69,7 +67,7 @@ function rpc(method, params, callback) {
 		req = http.request(options, local_callback);
 	}
 	req.on('error', function (err) {
-		console.error(err);
+		log.error(err);
 		var errorResponse = JSON.parse(JSON.stringify(requestObj));
 		errorResponse.error = {message: 'Error in request', data:err, code:-32603};
 		callback(errorResponse);
@@ -83,7 +81,6 @@ var app = express();
 
 // app.use(require('express-bunyan-logger')());
 app.use(require('express-bunyan-logger').errorLogger());
-
 
 /* Passport */
 
@@ -121,27 +118,26 @@ passport.use(new FacebookStrategy({
 			done:done
 		});
 		profile._json['accessToken'] = accessToken;
-		console.log('profile._json=' + JSON.stringify(profile._json));
+		log.info({'profile_json': profile._json});
 		rpc('authenticate', {type:"facebook", data:profile._json}, function(jsonrpc) {
-			console.log('Result from rpc authenticate: ' + JSON.stringify(jsonrpc));
+			log.info({'Result from rpc authenticate': jsonrpc});
 			return done(null, jsonrpc.result);
 		});
 	}
 ));
 
-// if (LOCAL) {
+if (LOCAL) {
 	app.use(express.static(path.dirname(__dirname) + '/.tmp'));
 	app.use('/bower_components', express.static(path.dirname(__dirname) + '/bower_components'));
 	app.use(express.static(path.dirname(__dirname) + '/app'));
-// } else {
-// 	//Serve static content
-// 	app.use(express.static(appFolder));
-// }
+} else {
+	//Serve static content
+	app.use(express.static(appFolder));
+}
 
 // configure Express
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-// app.use(logger());
 app.use(cookieParser());
 app.use(bodyParser());
 // Initialize Passport!  Also use passport.session() middleware, to support
@@ -151,10 +147,6 @@ app.get('/', function(req, res){
 	res.render('index', { user: req.user });
 	res.sendfile(appFolder + '/index.html');
 });
-
-// app.get('/account', ensureAuthenticated, function(req, res){
-//   res.render('account', { user: req.user });
-// });
 
 app.get('/login', function(req, res){
 	res.render('login');
@@ -180,7 +172,7 @@ app.get('/auth/facebook',
 app.get('/auth/facebook/callback',
 	passport.authenticate('facebook', { failureRedirect: '/' }),
 	function(req, res) {
-		console.log("AUTHENTICATED, req.user=", req.user);
+		log.info({"AUTHENTICATED, req.user":req.user});
 		res.cookie('bionano-platform-token', req.user.token);
 	res.redirect('/');
 	});
@@ -195,16 +187,6 @@ app.get('/checks', function(req, res){
 	res.send('OK');
 });
 
-// Simple route middleware to ensure user is authenticated.
-//   Use this route middleware on any resource that needs to be protected.  If
-//   the request is authenticated (typically via a persistent login session),
-//   the request will proceed.  Otherwise, the user will be redirected to the
-//   login page.
-// function ensureAuthenticated(req, res, next) {
-//   if (req.isAuthenticated()) { return next(); }
-//   res.redirect('/login')
-// }
-
 var server = app.listen(PORT, '0.0.0.0', function () {
 	var host = server.address().address;
 	log.info('Listening at http://localhost:%s', PORT);
@@ -216,4 +198,3 @@ process.on( 'SIGINT', function() {
 	server.close();
 	process.exit(0);
 })
-
