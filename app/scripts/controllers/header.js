@@ -8,7 +8,7 @@
  * Controller of the transcripticApp
  */
 angular.module('transcripticApp')
-  .controller('HeaderCtrl', function ($scope, $location, Authentication) {
+  .controller('HeaderCtrl', function ($scope, $window, $location, Authentication) {
 
     var self = this;
 
@@ -20,4 +20,10 @@ angular.module('transcripticApp')
       console.log(info);
       self.currentAuth = (!!info) ? info : null;
     });
+
+    self.unauthenticate = function () {
+      Authentication.unauthenticate().then(function () {
+        $window.location.href = '/logout';
+      })
+    }
   });

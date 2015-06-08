@@ -44,7 +44,6 @@ angular.module('transcripticApp')
       return pc.isAuthenticated();
     };
 
-    //deprecated. You should use platform /facebook instead. this is for debugging.
     self.unauthenticate = function () {
       return $q.when(pc.unauthenticate());
     };
