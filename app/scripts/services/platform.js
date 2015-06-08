@@ -24,7 +24,10 @@ angular.module('transcripticApp')
         'get_user',
         'set_user_value',
         'get_user_value',
+        'get_all_value_fields',
         'get_all_project_ids',
+        'getAllProjectMetadata',
+        'getAllProjectIds',
         'getProject,',
         'getProjectMetadata,',
         'saveProject,,',
@@ -70,6 +73,10 @@ angular.module('transcripticApp')
         .then(function (rpc) {
           return rpc.result;
         });
+    };
+
+    self.getAllProjectMetadata = function () {
+      return pc.getAllProjectMetadata();
     };
 
     self.getProject = function (id) {

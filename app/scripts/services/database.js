@@ -143,6 +143,22 @@ angular.module('transcripticApp')
     };
 
     self.getAllProjectMetadata = function getAllProjectMetadata (useCache) {
+      return Platform.getAllProjectMetadata()
+        .then(function (metas) {
+          return _.mapValues(metas, function (meta) {
+            return {metadata : meta};
+          })
+        })
+        .then(function (metadatas) {
+          return $q.all(_.map(metadatas, saveProjectToCache))
+            //in case one rejects, let the rest fall through
+            //hack
+            .catch(function () {
+              console.error('error loading all project metadata', cache);
+              return _.map(_.keys(metadatas), retrieveFromCache);
+            });
+        });
+      /*
       return self.getAllProjectIds(useCache).
         then(function (ids) {
           return $q.all(_.map(ids, self.getProjectMetadata))
@@ -153,6 +169,7 @@ angular.module('transcripticApp')
               return _.map(ids, retrieveFromCache);
             });
         });
+        */
     };
 
     self.getAllProjectMetadataOfType = function getAllProjectMetadataOfType (type, useCache) {

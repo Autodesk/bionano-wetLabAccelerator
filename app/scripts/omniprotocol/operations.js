@@ -205,7 +205,6 @@ module.exports = {
         {
           "name"    : "volume",
           "type"    : "volume",
-          "optional": true,
           "default" : {"value": 50, "unit": "microliter"}
         },
         {
@@ -217,7 +216,6 @@ module.exports = {
         {
           "name"    : "repetitions",
           "type"    : "integer",
-          "optional": true,
           "default" : 10
         }
       ]

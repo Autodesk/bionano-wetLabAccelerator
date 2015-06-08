@@ -114,7 +114,7 @@ angular.module('transcripticApp')
 
     // helpers //
 
-    //todo - handle tags + versioning
+    //todo - this really belongs in omniprotocol utils
     function generateNewProtocolMetadata () {
       return {
         id    : UUIDGen(),
@@ -125,7 +125,8 @@ angular.module('transcripticApp')
           id  : Authentication.getUserId()
         },
         "tags": [],
-        "db"  : {}
+        "db"  : {},
+        "version" : "1.0.0"
       }
     }
 

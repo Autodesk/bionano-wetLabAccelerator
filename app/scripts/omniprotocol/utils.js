@@ -107,12 +107,18 @@ function safelyDeleteParameter (protocol, param) {
       delete field.parameter;
     }
     else if (field.type == 'container' && _.result(field, 'value.container') == paramId) {
-      field.value = {};
+      _.assign(field.value, {
+        container : null,
+        containerName: null
+      });
     }
     else if (_.startsWith(field.type, 'aliquot')) {
       //future - handle aliquot++
       if (_.result(field, 'value.container') == paramId) {
-        field.value = {};
+        _.assign(field.value, {
+          container : null,
+          containerName: null
+        });
       }
     }
   });
@@ -228,7 +234,8 @@ function getScaffoldProtocol () {
       "author"     : {},
       "description": "",
       "tags"       : [],
-      "db"         : {}
+      "db"         : {},
+      "verison"    : "1.0.0"
     },
     "parameters": [],
     "groups"    : []
@@ -476,10 +483,10 @@ module.exports = {
   pluckField        : pluckField,
   pluckFieldValueRaw: pluckFieldValueRaw,
 
-  getContainerValueFromId : getContainerValueFromId,
+  getContainerValueFromId: getContainerValueFromId,
   getContainerNameFromId : getContainerNameFromId,
   getContainerTypeFromId : getContainerTypeFromId,
-  getContainerColorFromId : getContainerColorFromId,
+  getContainerColorFromId: getContainerColorFromId,
 
   transformAllFields: transformAllFields,
 
