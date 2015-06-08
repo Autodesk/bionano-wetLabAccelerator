@@ -61,7 +61,8 @@
       <span ng-bind="headerCtrl.currentAuth.name || headerCtrl.currentAuth.email || 'Log In'"></span>
     </div>
     <ul class="dropdown-menu dropdown-menu-right">
-      <li><a ng-href="{{headerCtrl.currentAuth ? '/logout' : '/auth/facebook'}}">{{headerCtrl.currentAuth ? 'Log Out' : 'Log In with Facebook'}}</a></li>
+      <li ng-if="headerCtrl.currentAuth"><a ng-click="headerCtrl.unauthenticate()">Log Out</a></li>
+      <li ng-if="!headerCtrl.currentAuth"><a href="/auth/facebook">Log In with Facebook</a></li>
       <li><a target="_blank" href="https://beta.autodesk.com/project/forum/default.html?cap=EBE8FAD9213E432F91C052C218D09B79">Help</a></li>
       <li><a target="_blank" href="https://beta.autodesk.com/project/forum/topic.html?cap=EBE8FAD9213E432F91C052C218D09B79&forid={E77A72F0-800D-47C9-876C-B22B07F77FB2}">Feedback</a></li>
     </ul>

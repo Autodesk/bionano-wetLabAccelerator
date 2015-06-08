@@ -15,7 +15,7 @@ angular.module('transcripticApp')
         watchers = [];
 
     self.localAuthenticate = function (token) {
-      Platform.getUserInfo(token).
+      Platform.getUserInfo().
         then(function (retrieved) {
           _.assign(userInfo, retrieved, {
             token: token,

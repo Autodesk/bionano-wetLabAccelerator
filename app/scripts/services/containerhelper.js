@@ -22,7 +22,9 @@ angular.module('transcripticApp')
 
     TranscripticAuth.watch(function (info) {
       //hack - should get in pages if possible...
-      _.result(info, 'organization', false) && Container.list({per_page: 200}).$promise.then(self.setRemote);
+      if (_.result(info, 'organization', false)) {
+        Container.list({per_page: 200}).$promise.then(self.setRemote);
+      }
     });
 
     self.setRemote = function (remote, noReset) {

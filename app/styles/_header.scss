@@ -81,6 +81,7 @@ header.site-header {
       display: inline-block;
       margin: 0 $layout-width-padding-side;
       font-size: $header-nav-font-size;
+      font-weight: $font-weight-bold;
       color: $light-grey;
       opacity: 0.6;
       transition: opacity $transition-long-time $transition-long-ease;
