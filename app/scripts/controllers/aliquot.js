@@ -41,7 +41,7 @@ angular.module('transcripticApp')
       self.singleContainer = self.field.type != 'aliquot++';
 
       //setup containerObj for container-select directive
-      self.containerObj = _.assign({}, self.model);
+      self.containerObj = self.model;
 
       //setup input wells
       setWellsInput(self.model.wells);

@@ -150,9 +150,15 @@ angular.module('tx.communication')
           'organization': 'transcripticOrg'
         };
 
-        var promises = $q.all(_.map(keymap, function (dbkey, txkey) {
-          Platform.userValue(dbkey, self[txkey]);
-        }));
+        var promises = Authentication.isAuthenticated().then(function (isAuth) {
+          if (!isAuth) {
+            return $q.reject('not authenticated');
+          }
+
+          return $q.all(_.map(keymap, function (dbkey, txkey) {
+            Platform.userValue(dbkey, self[txkey]);
+          }));
+        });
 
         (shouldUpdate === true) && triggerWatchers();
 
