@@ -19,8 +19,8 @@
     </div>
 
     <div ng-show="authCtrl.credValid === false && authForm.$valid">
-      <p class="text-sm text-warning">Your credentials are not validating with transcriptic. Be sure you have entered
-        them correctly.</p>
+      <p ng-show="!authCtrl.validating" class="text-sm text-warning">Your credentials are not validating with Transcriptic. Be sure you have entered them correctly.</p>
+      <p ng-show="!authCtrl.allowAuthSaved" class="text-sm text-warning">Transcriptic information cannot be verified until grant Autodesk the ability to use your credentials.</p>
     </div>
 
     <div ng-show="authForm.$invalid || authCtrl.credValid === false || authCtrl.showAuth">

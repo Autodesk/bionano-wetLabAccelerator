@@ -131,7 +131,7 @@ angular.module('transcripticApp')
 
     function assignNecessaryMetadataToProtocol (protocol) {
       var oldMetadata = _.cloneDeep(protocol.metadata);
-      return _.assign(protocol.metadata, generateNewProtocolMetadata(), oldMetadata);
+      return _.assign(protocol.metadata, {name : "My Protocol"}, generateNewProtocolMetadata(), oldMetadata);
     }
 
     function protocolHasNecessaryMetadataToSave (protocol) {
