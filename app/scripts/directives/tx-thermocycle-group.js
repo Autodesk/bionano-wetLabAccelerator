@@ -136,9 +136,6 @@ angular.module('transcripticApp')
                 return timeAfter;
               }, 0);
 
-          console.log('made variables', combinedLength, withSpacings, graphData);
-
-
           xScale.domain([0, combinedLength]);
           yScale.domain(tempRange);
 
@@ -171,14 +168,8 @@ angular.module('transcripticApp')
               }
             });
 
-          lines.each(function (d) {
-            console.log(d);
-          });
-
           lines.exit()
             .remove();
-
-          console.log('made lines');
         }
 
 
