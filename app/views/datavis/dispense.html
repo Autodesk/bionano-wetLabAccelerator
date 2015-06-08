@@ -11,9 +11,10 @@
             group-data="groupData">
   </tx-plate>
 
-  <p ng-repeat="colvol in colvols">
+  <p ng-repeat="colvol in colvols ">
     Columns
-    <span ng-repeat="col in colvol.columns" ng-bind="(dispCtrl.parseInt(col) + 1) + ($last ? '' : ', ')"></span>
+    <span ng-repeat="col in colvol.columns | orderBy:col"
+          ng-bind="(dispCtrl.parseInt(col) + 1) + ($last ? '' : ', ')"></span>
     -
     <span ng-bind="summaryCtrl.readableDimensional(colvol.volume)"></span>
   </p>

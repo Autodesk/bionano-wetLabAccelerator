@@ -83,5 +83,7 @@ angular.module('transcripticApp')
       _.forEach(self.groups, function (group, index) {
         _.assign(group, {color: self.colors[index]})
       });
-    }
+    };
+
+    self.parseInt = _.parseInt;
   });
