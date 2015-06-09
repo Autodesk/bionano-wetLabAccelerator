@@ -66,7 +66,7 @@ angular.module('transcripticApp')
         })
         .map(function (data, index) {
           return {
-            projectId: _.result(RunHelper.currentRun, 'transcripticProjectId'),
+            projectId: _.result(RunHelper.currentRun, 'metadata.transcripticProjectId'),
             runId    : _.result(data, 'instruction.run.id'),
             dataref  : datarefName,
             id       : _.result(data, 'id', '')

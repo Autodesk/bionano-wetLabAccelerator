@@ -1,4 +1,5 @@
 <a class="field-details-button"
+   ng-class="{'invalid' : !fieldCtrl.model.name}"
    ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible">
   {{fieldCtrl.model.name || 'select...'}}
 </a>
