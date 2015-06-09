@@ -6,7 +6,7 @@
     </div>
     <div class="maincolumn flex-grower">
       <div class="pull-right"
-           style="position: relative;"
+           style="position: relative; cursor: pointer;"
            ng-class="{'open' : downloadOptionsVisible}"
            ng-mouseenter="downloadOptionsVisible = true"
            ng-mouseleave="downloadOptionsVisible = false">
@@ -30,9 +30,11 @@
       </div>
 
       <div>
-        <span ng-bind="'Results: ' + resultsCtrl.run.metadata.name"></span>
+        <span ng-bind="'Results: ' + resultsCtrl.run.metadata.name"
+              ng-click="toggleModal()"></span>
 
-        <div class="glyphicon-ellipse" ng-click='toggleModal()'>
+        <div class="glyphicon-ellipse"
+             ng-click="toggleModal()">
           <span class="glyphicon glyphicon-option-horizontal"></span>
         </div>
         <tx-modal class="centered"

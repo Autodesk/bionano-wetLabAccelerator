@@ -42,6 +42,7 @@ angular.module('tx.protocolEditor')
         self.optsDraggableInstruction = {
           handle: '.operation-header',
           axis  : 'y',
+          zIndex: 100000,
           revert: true,
           start : function (e, ui) {
             var opScope = angular.element(e.target).scope(),
@@ -63,6 +64,7 @@ angular.module('tx.protocolEditor')
         self.optsDraggableGroup = {
           handle        : '.protocol-group-header',
           axis          : 'y',
+          zIndex: 100000,
           revert        : true,
           revertDuration: 0,
           start         : function (e, ui) {

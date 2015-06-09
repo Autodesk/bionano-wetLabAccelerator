@@ -202,7 +202,8 @@
     padding: $input-hover-padding-vert $input-hover-padding-hori;
     margin: (-$input-hover-padding-vert) (-$input-hover-padding-hori);
 
-    .option-button-label {
+    .option-button-label,
+    .option-button-caret {
       color: $white;
     }
 

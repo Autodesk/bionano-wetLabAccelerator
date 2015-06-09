@@ -18,7 +18,7 @@ angular.module('transcripticApp')
 
     //todo - better guarantee unique
     function monotonicName (type) {
-      return '' + type + (_.filter(self.protocol.parameters, {type: type}).length + 1);
+      return '' + type + ' ' + (_.filter(self.protocol.parameters, {type: type}).length + 1);
     }
 
     self.paramById = _.partial(Omniprotocol.utils.parameterById, self.protocol);

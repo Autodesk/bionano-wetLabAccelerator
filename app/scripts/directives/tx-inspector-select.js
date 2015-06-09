@@ -10,7 +10,7 @@ angular.module('transcripticApp')
   .directive('txInspectorSelect', function ($parse, $rootScope) {
 
       var elements = [],
-          lastSelected = 0,
+          lastSelected = -1,
           selectedClass = 'inspector-select';
 
       function registerElement (element) {
@@ -28,7 +28,7 @@ angular.module('transcripticApp')
 
         element.on( (attrs['selectTrigger'] || 'click') , function () {
           if (lastSelected != selectElementIndex) {
-            elements[lastSelected].removeClass(selectedClass);
+            (lastSelected >= 0) && elements[lastSelected].removeClass(selectedClass);
             element.addClass(selectedClass);
 
             $rootScope.$broadcast('txInspector:update', {
