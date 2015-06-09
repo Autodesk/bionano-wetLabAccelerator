@@ -23,7 +23,7 @@
          ng-show="contentCtrl.protocols.length">
       <h5 class="contentMenu-heading">Protocols</h5>
 
-      <div ng-repeat="protocol in contentCtrl.protocols | orderBy:'metadata.name'">
+      <div ng-repeat="protocol in contentCtrl.protocols | orderBy:'metadata.date'">
         <a ng-click="contentCtrl.openProtocol(protocol)"
            class="contentMenu-item"
            ng-bind="protocol.metadata.name || 'Untitled Protocol'"></a>
@@ -45,10 +45,5 @@
          ng-show="!contentCtrl.protocols.length">
       <p>No protocols or runs to display. Select "New Protocol" to continue.</p>
     </div>
-  </div>
-
-  <div class="contentMenu-loading"
-       ng-hide-auth>
-    <p>Login or create an account to save protocols and runs</p>
   </div>
 </div>

@@ -101,7 +101,7 @@ angular.module('transcripticApp')
           runCompleted = (runStatus == 'complete'),
           runCancelled = (runStatus == 'cancelled');
 
-      console.log(_.isUndefined(runInfo), _.isEmpty(runData), !runCompleted, runId, projectId, runData, runObj);
+      //console.log(_.isUndefined(runInfo), _.isEmpty(runData), !runCompleted, runId, projectId, runData, runObj);
 
       if ((_.isUndefined(runInfo) || _.isEmpty(runData) || !runCompleted) && !runCancelled && (runId && projectId)) {
         var requestPayload = {project: projectId, run: runId};
@@ -163,7 +163,7 @@ angular.module('transcripticApp')
       return {
         id      : UUIDGen(),
         name    : 'Run of ' + _.result(protocol, 'metadata.name', 'WLA Protocol'),
-        date    : (new Date()).toString(),
+        date    : '' + (new Date()).valueOf(),
         type    : 'run',
         author  : {
           name: Authentication.getUsername(),

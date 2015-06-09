@@ -59,5 +59,11 @@
       top: 40px;
       right: 45px;
     }
+
+    &-results {
+      left: calc(50% + 46px);
+      top: 40px;
+      height: 150px;
+    }
   }
 }
