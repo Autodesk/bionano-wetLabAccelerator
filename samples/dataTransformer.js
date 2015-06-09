@@ -1,6 +1,6 @@
 var fs       = require('fs');
 var _        = require('lodash');
-var op       = require('./app/scripts/omniprotocol/_exports.js');
+var op       = require('../app/scripts/omniprotocol/_exports.js');
 var filePath = 'wla-all.json';
 
 console.log('\n\n\n\n\n\n\n\n\n\n\n\n');
@@ -21,6 +21,13 @@ var tokenMap = {
   '31': '1c3518b1-f999-49f3-bfe0-538f75a9b4f7',
   '36': '043954d4-e413-4334-ab26-15ab99312136'
 };
+
+var desiredProjects = [
+  "28f2366c-a0b9-4c74-a1b3-0d1cdcd3f03b",
+  "1fccac8a-0b5f-4c7c-812f-4c5ea24f6012",
+  "28527dcb-8b74-4b4e-91fe-8c721734e3a9",
+  "4e8df924-69d2-4be7-a4f5-0007d4383eeb"
+];
 
 var protocols  = {},
     runs       = {},
@@ -82,13 +89,23 @@ _.forEach(db, function (projects, uid) {
 
 var projects = _.assign({}, runs, protocols);
 
-console.log(_.keys(projects).length);
+//write given list of IDs
+var desired = {};
+_.forEach(desiredProjects, function (id) {
+  fs.writeFileSync('wla-sample-' + id + '-metadata.json', JSON.stringify(_.result(projects[id], 'metadata'), null, 2));
+  fs.writeFileSync('wla-sample-' + id + '.json', JSON.stringify(projects[id], null, 2));
+});
 
-fs.writeFileSync('wla-transformed.json', JSON.stringify(projects, null, 2));
 
+//write all transformed files
+//fs.writeFileSync('wla-transformed.json', JSON.stringify(projects, null, 2));
+
+/*
+//write for each user
 _.forEach(_.keys(projectMap), function (uid) {
   fs.writeFileSync('wla-transformed-' + uid + '.json', JSON.stringify(projectMap[uid], null, 2));
 });
+*/
 
 
 //todo - write to file

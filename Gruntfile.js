@@ -384,9 +384,7 @@ module.exports = function (grunt) {
             'views/**/*.html',
             'images/**/*.{webp}',
             'fonts/**/*.*',
-            'demo_runs/**/*.*',
-            'demo_viruses/**/*.*',
-            'demo_protocols/**/*.*',
+            'initialProjects/**/*',
             'scripts/omniprotocol.js' //copy browserified scripts
           ]
         }, {
