@@ -136,15 +136,22 @@ angular.module('transcripticApp')
               console.warn('error sending run', err);
               if (err.status == 401) {
                 Notify({
-                  message: 'You must log in and provide your credentials to verify your protocol with Transcriptic',
+                  message: 'You must provide your credentials to verify your protocol with Transcriptic',
                   error  : true
                 });
+                $rootScope.$broadcast('editor:toggleRunModal', true);
+                closeModal = false;
               } else if (err.status == 0) {
                 Notify({
                   message: 'Request timed out. Please try it again.',
                   error  : true
                 });
                 closeModal = false;
+              } else if (err.status == 503) {
+                Notify({
+                  message: 'Transcriptic could not handle your run. Contact them directly',
+                  error  : true
+                });
               }
             })
             .then(function () {
