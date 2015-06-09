@@ -73,11 +73,12 @@ angular.module('transcripticApp')
       }).$promise.then(function (submissionResult) {
           console.log(submissionResult);
 
-          //todo - transition to metadata for these
+          _.assign(run.metadata, {
+            transcripticProjectId: transcripticProject,
+            transcripticRunId    : submissionResult.id
+          });
 
           _.assign(run, {
-            transcripticProjectId: transcripticProject,
-            transcripticRunId    : submissionResult.id,
             transcripticRunInfo  : _.cloneDeep(submissionResult)
           });
 
@@ -92,8 +93,8 @@ angular.module('transcripticApp')
     };
 
     self.updateRunInfo = function (runObj) {
-      var runId        = _.result(runObj, 'transcripticRunId'),
-          projectId    = _.result(runObj, 'transcripticProjectId'),
+      var runId        = _.result(runObj, 'metadata.transcripticRunId'),
+          projectId    = _.result(runObj, 'metadata.transcripticProjectId'),
           runData      = _.result(runObj, 'data'),
           runInfo      = _.result(runObj, 'transcripticRunInfo'),
           runStatus    = _.result(runInfo, 'status', ''),
@@ -157,12 +158,11 @@ angular.module('transcripticApp')
       return run;
     }
 
-    //todo - handle tags + versioning
     //note - does not handle protocol, need to attach that separately (not in metadata)
     function generateNewRunMetadata (protocol) {
       return {
         id      : UUIDGen(),
-        name    : 'Run of ' + _.result(protocol, 'metadata.name', 'CX1 Protocol'),
+        name    : 'Run of ' + _.result(protocol, 'metadata.name', 'WLA Protocol'),
         date    : (new Date()).toString(),
         type    : 'run',
         author  : {
@@ -175,7 +175,8 @@ angular.module('transcripticApp')
           author: _.result(protocol, 'metadata.author', null)
         },
         "tags"  : [],
-        "db"    : {}
+        "db"    : {},
+        "version" : "1.0.0"
       }
     }
 
