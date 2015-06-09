@@ -1,0 +1,1948 @@
+{
+  "groups": [
+    {
+      "loop": 1,
+      "metadata": {
+        "description": ""
+      },
+      "name": "Setup and Run Transformation",
+      "steps": [
+        {
+          "description": "Transfer competent E. coli from tube to transform plate for assembly",
+          "fields": [
+            {
+              "name": "volume",
+              "parameter": "e5cdfa3a-0b45-457a-942e-5251f123c41d",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 50
+              }
+            },
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot++",
+              "value": {
+                "container": "1b1ec1de-50de-4345-9105-5206580f56cd",
+                "containerName": "ecoli_source",
+                "wells": [
+                  "A1"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot++",
+              "value": {
+                "container": "731df568-696f-4eaf-a241-6e0ab52b25e8",
+                "containerName": "transform_plate",
+                "wells": [
+                  "A1"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter/second",
+                "value": 100
+              },
+              "name": "dispense_speed",
+              "optional": true,
+              "type": "speed"
+            },
+            {
+              "default": {
+                "unit": "microliter/second",
+                "value": 100
+              },
+              "name": "aspirate_speed",
+              "optional": true,
+              "type": "speed"
+            },
+            {
+              "default": {
+                "repetitions": 5,
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 100
+                },
+                "volume": {
+                  "unit": "microliter",
+                  "value": 10
+                }
+              },
+              "name": "mix_before",
+              "optional": true,
+              "type": "mixwrap"
+            },
+            {
+              "default": {
+                "repetitions": 5,
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 100
+                },
+                "volume": {
+                  "unit": "microliter",
+                  "value": 10
+                }
+              },
+              "name": "mix_after",
+              "optional": true,
+              "type": "mixwrap"
+            },
+            {
+              "default": false,
+              "name": "one_tip",
+              "optional": true,
+              "type": "boolean"
+            }
+          ],
+          "operation": "transfer",
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ]
+        },
+        {
+          "description": "Transfer competent E. coli from tube to transform plate for assembly as a control",
+          "fields": [
+            {
+              "name": "volume",
+              "parameter": "e5cdfa3a-0b45-457a-942e-5251f123c41d",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 50
+              }
+            },
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot++",
+              "value": {
+                "container": "f100eec0-9510-478f-a34e-0b0f5f82faf1",
+                "containerName": "ecoli_control_source",
+                "wells": [
+                  "A1"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot++",
+              "value": {
+                "container": "731df568-696f-4eaf-a241-6e0ab52b25e8",
+                "containerName": "transform_plate",
+                "wells": [
+                  "B1"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter/second",
+                "value": 100
+              },
+              "name": "dispense_speed",
+              "optional": true,
+              "type": "speed"
+            },
+            {
+              "default": {
+                "unit": "microliter/second",
+                "value": 100
+              },
+              "name": "aspirate_speed",
+              "optional": true,
+              "type": "speed"
+            },
+            {
+              "default": {
+                "repetitions": 5,
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 100
+                },
+                "volume": {
+                  "unit": "microliter",
+                  "value": 10
+                }
+              },
+              "name": "mix_before",
+              "optional": true,
+              "type": "mixwrap"
+            },
+            {
+              "default": {
+                "repetitions": 5,
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 100
+                },
+                "volume": {
+                  "unit": "microliter",
+                  "value": 10
+                }
+              },
+              "name": "mix_after",
+              "optional": true,
+              "type": "mixwrap"
+            },
+            {
+              "default": false,
+              "name": "one_tip",
+              "optional": true,
+              "type": "boolean"
+            }
+          ],
+          "operation": "transfer",
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ]
+        },
+        {
+          "description": "Transfer PVIB plasmid to Grab and Go Competent E. coli",
+          "fields": [
+            {
+              "name": "volume",
+              "parameter": "1bb00b8a-dab0-4b73-b9f9-ce7e2de471c8",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 1
+              }
+            },
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot++",
+              "value": {
+                "container": "16e928a0-7d2f-4cd9-a486-7ba7b93f6112",
+                "containerName": "plasmid_source",
+                "wells": [
+                  "A1"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot++",
+              "value": {
+                "container": "731df568-696f-4eaf-a241-6e0ab52b25e8",
+                "containerName": "transform_plate",
+                "wells": [
+                  "A1"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter/second",
+                "value": 100
+              },
+              "name": "dispense_speed",
+              "optional": true,
+              "type": "speed"
+            },
+            {
+              "default": {
+                "unit": "microliter/second",
+                "value": 100
+              },
+              "name": "aspirate_speed",
+              "optional": true,
+              "type": "speed"
+            },
+            {
+              "default": {
+                "repetitions": 5,
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 100
+                },
+                "volume": {
+                  "unit": "microliter",
+                  "value": 10
+                }
+              },
+              "name": "mix_before",
+              "optional": true,
+              "type": "mixwrap"
+            },
+            {
+              "default": {
+                "repetitions": 5,
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 100
+                },
+                "volume": {
+                  "unit": "microliter",
+                  "value": 10
+                }
+              },
+              "name": "mix_after",
+              "optional": true,
+              "type": "mixwrap"
+            },
+            {
+              "default": false,
+              "name": "one_tip",
+              "optional": true,
+              "type": "boolean"
+            }
+          ],
+          "operation": "transfer",
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "loop": 1,
+      "metadata": {
+        "description": ""
+      },
+      "name": "Setup Growth Plate",
+      "steps": [
+        {
+          "description": "Dispense a reagent into columns of a container",
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate"
+              }
+            },
+            {
+              "default": "lb-broth-noAB",
+              "name": "reagent",
+              "options": [
+                "autoclaved-water",
+                "water",
+                "bleach-10p",
+                "ethanol-70p",
+                "lb-broth-100ug-ml-amp",
+                "lb-broth-50ug-ml-kan",
+                "lb-broth-30ug-ml-kan",
+                "lb-broth-25ug-ml-cm",
+                "lb-broth-100ug-ml-specto",
+                "lb-broth-50ug-ml-kan-25ug-ml-cm",
+                "lb-broth-15ug-ml-tet",
+                "lb-broth-noAB",
+                "sob",
+                "soc",
+                "tb-broth-100ug-ml-amp",
+                "tb-broth-50ug-ml-kan",
+                "pbs",
+                "te-ph7.5",
+                "orange145",
+                "orange60"
+              ],
+              "type": "option"
+            },
+            {
+              "name": "columns",
+              "singleContainer": true,
+              "type": "columnVolumes",
+              "value": [
+                {
+                  "color": "#FF0000",
+                  "columns": [
+                    "0",
+                    "1",
+                    "2"
+                  ],
+                  "volume": {
+                    "unit": "microliter",
+                    "value": 200
+                  }
+                }
+              ]
+            }
+          ],
+          "operation": "dispense",
+          "transforms": [
+            {
+              "container": "container"
+            }
+          ]
+        },
+        {
+          "description": "Dispense a reagent into columns of a container",
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate"
+              }
+            },
+            {
+              "default": "lb-broth-noAB",
+              "name": "reagent",
+              "options": [
+                "autoclaved-water",
+                "water",
+                "bleach-10p",
+                "ethanol-70p",
+                "lb-broth-100ug-ml-amp",
+                "lb-broth-50ug-ml-kan",
+                "lb-broth-30ug-ml-kan",
+                "lb-broth-25ug-ml-cm",
+                "lb-broth-100ug-ml-specto",
+                "lb-broth-50ug-ml-kan-25ug-ml-cm",
+                "lb-broth-15ug-ml-tet",
+                "lb-broth-noAB",
+                "sob",
+                "soc",
+                "tb-broth-100ug-ml-amp",
+                "tb-broth-50ug-ml-kan",
+                "pbs",
+                "te-ph7.5",
+                "orange145",
+                "orange60"
+              ],
+              "type": "option",
+              "value": "lb-broth-100ug-ml-amp"
+            },
+            {
+              "name": "columns",
+              "singleContainer": true,
+              "type": "columnVolumes",
+              "value": [
+                {
+                  "color": "#FF0000",
+                  "columns": [
+                    "3",
+                    "4",
+                    "5"
+                  ],
+                  "volume": {
+                    "unit": "microliter",
+                    "value": 200
+                  }
+                }
+              ]
+            }
+          ],
+          "operation": "dispense",
+          "transforms": [
+            {
+              "container": "container"
+            }
+          ]
+        },
+        {
+          "description": "Distribute liquid from source well(s) to destination wells(s), either 1-to-n, n-to-1, or n-to-n",
+          "fields": [
+            {
+              "name": "volume",
+              "parameter": "1bb00b8a-dab0-4b73-b9f9-ce7e2de471c8",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 1
+              }
+            },
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "731df568-696f-4eaf-a241-6e0ab52b25e8",
+                "containerName": "transform_plate",
+                "wells": [
+                  "A1"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot++",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "A1",
+                  "A4",
+                  "B1",
+                  "B4",
+                  "C1",
+                  "C4",
+                  "D1",
+                  "D4",
+                  "E1",
+                  "E4",
+                  "F1",
+                  "F4",
+                  "G1",
+                  "G4",
+                  "H1",
+                  "H4"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter/second",
+                "value": 100
+              },
+              "name": "dispense_speed",
+              "optional": true,
+              "type": "speed"
+            },
+            {
+              "default": {
+                "unit": "microliter/second",
+                "value": 100
+              },
+              "name": "aspirate_speed",
+              "optional": true,
+              "type": "speed"
+            },
+            {
+              "default": {
+                "repetitions": 5,
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 100
+                },
+                "volume": {
+                  "unit": "microliter",
+                  "value": 10
+                }
+              },
+              "name": "mix_before",
+              "optional": true,
+              "type": "mixwrap"
+            }
+          ],
+          "operation": "distribute",
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ]
+        },
+        {
+          "description": "Distribute liquid from source well(s) to destination wells(s), either 1-to-n, n-to-1, or n-to-n",
+          "fields": [
+            {
+              "name": "volume",
+              "parameter": "1bb00b8a-dab0-4b73-b9f9-ce7e2de471c8",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 1
+              }
+            },
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "731df568-696f-4eaf-a241-6e0ab52b25e8",
+                "containerName": "transform_plate",
+                "wells": [
+                  "B1"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot++",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "A2",
+                  "A5",
+                  "B2",
+                  "B5",
+                  "C2",
+                  "C5",
+                  "D2",
+                  "D5",
+                  "E2",
+                  "E5",
+                  "F2",
+                  "F5",
+                  "G2",
+                  "G5",
+                  "H2",
+                  "H5"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter/second",
+                "value": 100
+              },
+              "name": "dispense_speed",
+              "optional": true,
+              "type": "speed"
+            },
+            {
+              "default": {
+                "unit": "microliter/second",
+                "value": 100
+              },
+              "name": "aspirate_speed",
+              "optional": true,
+              "type": "speed"
+            },
+            {
+              "default": {
+                "repetitions": 5,
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 100
+                },
+                "volume": {
+                  "unit": "microliter",
+                  "value": 10
+                }
+              },
+              "name": "mix_before",
+              "optional": true,
+              "type": "mixwrap"
+            }
+          ],
+          "operation": "distribute",
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "loop": 1,
+      "metadata": {
+        "description": ""
+      },
+      "name": "Setup LB Agar Plate",
+      "steps": [
+        {
+          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "fields": [
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "G1"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "containerName": "lb_noAB_agar_plate",
+                "wells": [
+                  "A1"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter",
+                "value": 50
+              },
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 50
+              }
+            }
+          ],
+          "operation": "spread",
+          "transforms": [
+            {
+              "wells": "from"
+            },
+            {
+              "wells": "to"
+            }
+          ]
+        },
+        {
+          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "fields": [
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "G1"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "containerName": "lb_noAB_agar_plate",
+                "wells": [
+                  "B1"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter",
+                "value": 50
+              },
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 150
+              }
+            }
+          ],
+          "operation": "spread",
+          "transforms": [
+            {
+              "wells": "from"
+            },
+            {
+              "wells": "to"
+            }
+          ]
+        },
+        {
+          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "fields": [
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "G2"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "containerName": "lb_noAB_agar_plate",
+                "wells": [
+                  "A2"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter",
+                "value": 50
+              },
+              "name": "volume",
+              "type": "volume"
+            }
+          ],
+          "operation": "spread",
+          "transforms": [
+            {
+              "wells": "from"
+            },
+            {
+              "wells": "to"
+            }
+          ]
+        },
+        {
+          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "fields": [
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "G2"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "containerName": "lb_noAB_agar_plate",
+                "wells": [
+                  "B2"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter",
+                "value": 50
+              },
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 150
+              }
+            }
+          ],
+          "operation": "spread",
+          "transforms": [
+            {
+              "wells": "from"
+            },
+            {
+              "wells": "to"
+            }
+          ]
+        },
+        {
+          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "fields": [
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "G3"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "containerName": "lb_noAB_agar_plate",
+                "wells": [
+                  "A3"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter",
+                "value": 50
+              },
+              "name": "volume",
+              "type": "volume"
+            }
+          ],
+          "operation": "spread",
+          "transforms": [
+            {
+              "wells": "from"
+            },
+            {
+              "wells": "to"
+            }
+          ]
+        },
+        {
+          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "fields": [
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "G3"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "containerName": "lb_noAB_agar_plate",
+                "wells": [
+                  "B3"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter",
+                "value": 50
+              },
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 150
+              }
+            }
+          ],
+          "operation": "spread",
+          "transforms": [
+            {
+              "wells": "from"
+            },
+            {
+              "wells": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "loop": 1,
+      "metadata": {
+        "description": ""
+      },
+      "name": "Setup LB Amp Agar Plate",
+      "steps": [
+        {
+          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "fields": [
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "H1"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "containerName": "lb_amp_agar_plate",
+                "wells": [
+                  "A1"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter",
+                "value": 50
+              },
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 50
+              }
+            }
+          ],
+          "operation": "spread",
+          "transforms": [
+            {
+              "wells": "from"
+            },
+            {
+              "wells": "to"
+            }
+          ]
+        },
+        {
+          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "fields": [
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "H1"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "containerName": "lb_amp_agar_plate",
+                "wells": [
+                  "B1"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter",
+                "value": 50
+              },
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 150
+              }
+            }
+          ],
+          "operation": "spread",
+          "transforms": [
+            {
+              "wells": "from"
+            },
+            {
+              "wells": "to"
+            }
+          ]
+        },
+        {
+          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "fields": [
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "H2"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "containerName": "lb_amp_agar_plate",
+                "wells": [
+                  "A2"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter",
+                "value": 50
+              },
+              "name": "volume",
+              "type": "volume"
+            }
+          ],
+          "operation": "spread",
+          "transforms": [
+            {
+              "wells": "from"
+            },
+            {
+              "wells": "to"
+            }
+          ]
+        },
+        {
+          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "fields": [
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "H2"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "containerName": "lb_amp_agar_plate",
+                "wells": [
+                  "B2"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter",
+                "value": 50
+              },
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 150
+              }
+            }
+          ],
+          "operation": "spread",
+          "transforms": [
+            {
+              "wells": "from"
+            },
+            {
+              "wells": "to"
+            }
+          ]
+        },
+        {
+          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "fields": [
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "H3"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "containerName": "lb_amp_agar_plate",
+                "wells": [
+                  "A3"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter",
+                "value": 50
+              },
+              "name": "volume",
+              "type": "volume"
+            }
+          ],
+          "operation": "spread",
+          "transforms": [
+            {
+              "wells": "from"
+            },
+            {
+              "wells": "to"
+            }
+          ]
+        },
+        {
+          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "fields": [
+            {
+              "name": "from",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "H3"
+                ]
+              }
+            },
+            {
+              "name": "to",
+              "transpose": 0,
+              "type": "aliquot",
+              "value": {
+                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "containerName": "lb_amp_agar_plate",
+                "wells": [
+                  "B3"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "microliter",
+                "value": 50
+              },
+              "name": "volume",
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 150
+              }
+            }
+          ],
+          "operation": "spread",
+          "transforms": [
+            {
+              "wells": "from"
+            },
+            {
+              "wells": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "loop": 18,
+      "metadata": {
+        "description": ""
+      },
+      "name": "Incubate Growth Plate",
+      "steps": [
+        {
+          "description": "Measure absorbance of a specified wavelength (between 300 nm - 1000 nm)",
+          "fields": [
+            {
+              "default": "absorbance_${unfolded}",
+              "name": "dataref",
+              "type": "string"
+            },
+            {
+              "name": "wells",
+              "transpose": 0,
+              "type": "aliquot+",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "A1",
+                  "A2",
+                  "A3",
+                  "A4",
+                  "A5",
+                  "A6",
+                  "B1",
+                  "B2",
+                  "B3",
+                  "B4",
+                  "B5",
+                  "B6",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "D1",
+                  "D2",
+                  "D3",
+                  "D4",
+                  "D5",
+                  "D6",
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "E5",
+                  "E6",
+                  "F1",
+                  "F2",
+                  "F3",
+                  "F4",
+                  "F5",
+                  "F6"
+                ]
+              }
+            },
+            {
+              "default": {
+                "unit": "nanometer",
+                "value": 600
+              },
+              "name": "wavelength",
+              "restrictions": {
+                "value": {
+                  "max": 1000,
+                  "min": 300
+                }
+              },
+              "type": "length"
+            },
+            {
+              "default": 25,
+              "name": "num_flashes",
+              "optional": true,
+              "readable": "number flashes",
+              "type": "integer"
+            }
+          ],
+          "operation": "absorbance",
+          "transformations": [
+            {
+              "wells": "wells"
+            }
+          ]
+        },
+        {
+          "description": "Measure luminescence in wells of a plate between 380nm - 600 nm",
+          "fields": [
+            {
+              "default": "luminescence_${unfolded}",
+              "name": "dataref",
+              "type": "string"
+            },
+            {
+              "name": "wells",
+              "transpose": 0,
+              "type": "aliquot+",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate",
+                "wells": [
+                  "A1",
+                  "A2",
+                  "A3",
+                  "A4",
+                  "A5",
+                  "A6",
+                  "B1",
+                  "B2",
+                  "B3",
+                  "B4",
+                  "B5",
+                  "B6",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "D1",
+                  "D2",
+                  "D3",
+                  "D4",
+                  "D5",
+                  "D6",
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "E5",
+                  "E6",
+                  "F1",
+                  "F2",
+                  "F3",
+                  "F4",
+                  "F5",
+                  "F6"
+                ]
+              }
+            }
+          ],
+          "operation": "luminescence",
+          "transformations": [
+            {
+              "wells": "wells"
+            }
+          ]
+        },
+        {
+          "description": "Cover a plate with a specified lid",
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate"
+              }
+            },
+            {
+              "default": "standard",
+              "name": "lid",
+              "options": [
+                "standard",
+                "universal",
+                "low_evaporation"
+              ],
+              "type": "option",
+              "value": "universal"
+            }
+          ],
+          "operation": "cover",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
+        },
+        {
+          "description": "keep (cells, bacteria, etc.) at a suitable temperature so that they develop",
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate"
+              }
+            },
+            {
+              "default": "ambient",
+              "name": "where",
+              "options": [
+                "ambient",
+                "warm_37",
+                "cold_4",
+                "cold_20",
+                "cold_80"
+              ],
+              "type": "option",
+              "value": "warm_37"
+            },
+            {
+              "default": {
+                "unit": "minute",
+                "value": 60
+              },
+              "name": "duration",
+              "type": "duration"
+            },
+            {
+              "default": 0,
+              "name": "co2",
+              "optional": true,
+              "restrictions": {
+                "value": {
+                  "max": 100,
+                  "min": 0
+                }
+              },
+              "type": "integer"
+            },
+            {
+              "default": false,
+              "name": "shaking",
+              "type": "boolean",
+              "value": true
+            }
+          ],
+          "operation": "incubate",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
+        },
+        {
+          "description": "Uncover a container",
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "containerName": "growth_plate"
+              }
+            }
+          ],
+          "operation": "uncover",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "loop": 3,
+      "metadata": {
+        "description": ""
+      },
+      "name": "Incubate LB Agar Plate",
+      "steps": [
+        {
+          "description": "Scan an image of a plate",
+          "fields": [
+            {
+              "default": "imagePlate_${unfolded}",
+              "name": "dataref",
+              "type": "string"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "containerName": "lb_noAB_agar_plate"
+              }
+            },
+            {
+              "default": "top",
+              "name": "mode",
+              "options": [
+                "top",
+                "bottom"
+              ],
+              "type": "option"
+            }
+          ],
+          "operation": "image_plate",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
+        },
+        {
+          "description": "Cover a plate with a specified lid",
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "containerName": "lb_noAB_agar_plate"
+              }
+            },
+            {
+              "default": "standard",
+              "name": "lid",
+              "options": [
+                "standard",
+                "universal",
+                "low_evaporation"
+              ],
+              "type": "option",
+              "value": "universal"
+            }
+          ],
+          "operation": "cover",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
+        },
+        {
+          "description": "keep (cells, bacteria, etc.) at a suitable temperature so that they develop",
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "containerName": "lb_noAB_agar_plate"
+              }
+            },
+            {
+              "default": "ambient",
+              "name": "where",
+              "options": [
+                "ambient",
+                "warm_37",
+                "cold_4",
+                "cold_20",
+                "cold_80"
+              ],
+              "type": "option",
+              "value": "warm_37"
+            },
+            {
+              "default": {
+                "unit": "minute",
+                "value": 60
+              },
+              "name": "duration",
+              "type": "duration",
+              "value": {
+                "unit": "hour",
+                "value": 6
+              }
+            },
+            {
+              "default": 0,
+              "name": "co2",
+              "optional": true,
+              "restrictions": {
+                "value": {
+                  "max": 100,
+                  "min": 0
+                }
+              },
+              "type": "integer"
+            },
+            {
+              "default": false,
+              "name": "shaking",
+              "type": "boolean",
+              "value": false
+            }
+          ],
+          "operation": "incubate",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
+        },
+        {
+          "description": "Uncover a container",
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "containerName": "lb_noAB_agar_plate"
+              }
+            }
+          ],
+          "operation": "uncover",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "loop": 3,
+      "metadata": {
+        "description": ""
+      },
+      "name": "Incubate LB Amp Agar Plate",
+      "steps": [
+        {
+          "description": "Scan an image of a plate",
+          "fields": [
+            {
+              "default": "imagePlate_${unfolded}",
+              "name": "dataref",
+              "type": "string"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "containerName": "lb_amp_agar_plate"
+              }
+            },
+            {
+              "default": "top",
+              "name": "mode",
+              "options": [
+                "top",
+                "bottom"
+              ],
+              "type": "option"
+            }
+          ],
+          "operation": "image_plate",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
+        },
+        {
+          "description": "Cover a plate with a specified lid",
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "containerName": "lb_amp_agar_plate"
+              }
+            },
+            {
+              "default": "standard",
+              "name": "lid",
+              "options": [
+                "standard",
+                "universal",
+                "low_evaporation"
+              ],
+              "type": "option",
+              "value": "universal"
+            }
+          ],
+          "operation": "cover",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
+        },
+        {
+          "description": "keep (cells, bacteria, etc.) at a suitable temperature so that they develop",
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "containerName": "lb_amp_agar_plate"
+              }
+            },
+            {
+              "default": "ambient",
+              "name": "where",
+              "options": [
+                "ambient",
+                "warm_37",
+                "cold_4",
+                "cold_20",
+                "cold_80"
+              ],
+              "type": "option",
+              "value": "warm_37"
+            },
+            {
+              "default": {
+                "unit": "minute",
+                "value": 60
+              },
+              "name": "duration",
+              "type": "duration",
+              "value": {
+                "unit": "hour",
+                "value": 6
+              }
+            },
+            {
+              "default": 0,
+              "name": "co2",
+              "optional": true,
+              "restrictions": {
+                "value": {
+                  "max": 100,
+                  "min": 0
+                }
+              },
+              "type": "integer"
+            },
+            {
+              "default": false,
+              "name": "shaking",
+              "type": "boolean",
+              "value": false
+            }
+          ],
+          "operation": "incubate",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
+        },
+        {
+          "description": "Uncover a container",
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "containerName": "lb_amp_agar_plate"
+              }
+            }
+          ],
+          "operation": "uncover",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "author": {
+      "id": "31"
+    },
+    "date": "1433197026622",
+    "description": "Transformation Test of Zymo10B with PVIB",
+    "id": "1fccac8a-0b5f-4c7c-812f-4c5ea24f6012",
+    "name": "Transformation Test of Zymo10B with PVIB",
+    "tags": [
+      "Transformation",
+      "Zymo 10B E. coli",
+      "PVIB plasmid"
+    ],
+    "type": "protocol",
+    "version": "1.0.0"
+  },
+  "name": "simpleTransform1",
+  "parameters": [
+    {
+      "name": "ecoli_source",
+      "type": "container",
+      "value": {
+        "color": "#3163f3",
+        "id": "ct17sx5p38nwqf",
+        "isNew": false,
+        "name": "Zymo 10B - 2015-06-01",
+        "storage": false,
+        "type": "micro-1.5"
+      },
+      "id": "1b1ec1de-50de-4345-9105-5206580f56cd"
+    },
+    {
+      "name": "ecoli_control_source",
+      "type": "container",
+      "value": {
+        "color": "#fa96ab",
+        "id": "ct17sxafqttwzb",
+        "isNew": false,
+        "name": "Zymo 10B - 2015-06-01 2",
+        "storage": false,
+        "type": "micro-1.5"
+      },
+      "id": "f100eec0-9510-478f-a34e-0b0f5f82faf1"
+    },
+    {
+      "name": "transform_plate",
+      "type": "container",
+      "value": {
+        "color": "#d2fae4",
+        "isNew": true,
+        "storage": "cold_4",
+        "type": "96-flat"
+      },
+      "id": "731df568-696f-4eaf-a241-6e0ab52b25e8"
+    },
+    {
+      "name": "growth_plate",
+      "type": "container",
+      "value": {
+        "color": "#799352",
+        "isNew": true,
+        "storage": "cold_4",
+        "type": "96-flat"
+      },
+      "id": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b"
+    },
+    {
+      "name": "ecoli_to_transform_volume",
+      "type": "volume",
+      "value": {
+        "unit": "microliter",
+        "value": 50
+      },
+      "id": "e5cdfa3a-0b45-457a-942e-5251f123c41d"
+    },
+    {
+      "name": "plasmid_to_transform",
+      "type": "volume",
+      "value": {
+        "unit": "microliter",
+        "value": 1
+      },
+      "id": "1bb00b8a-dab0-4b73-b9f9-ce7e2de471c8"
+    },
+    {
+      "name": "plasmid_source",
+      "type": "container",
+      "value": {
+        "color": "#493f1f",
+        "id": "ct17p6qcyguqgs",
+        "isNew": false,
+        "name": "pVIB plasmid - 2015-04-27",
+        "storage": "cold_4",
+        "type": "micro-1.5"
+      },
+      "id": "16e928a0-7d2f-4cd9-a486-7ba7b93f6112"
+    },
+    {
+      "name": "lb_noAB_agar_plate",
+      "type": "container",
+      "value": {
+        "color": "#857cce",
+        "id": "ct17sxfsz39sum",
+        "isNew": false,
+        "name": "LB Agar",
+        "storage": "cold_4",
+        "type": "6-flat"
+      },
+      "id": "475dce81-6ac9-45ce-a046-ab4e2310d2a1"
+    },
+    {
+      "name": "lb_amp_agar_plate",
+      "type": "container",
+      "value": {
+        "color": "#6a2dcc",
+        "id": "ct17sxftry3grf",
+        "isNew": false,
+        "name": "LB Agar Amp100",
+        "type": "6-flat"
+      },
+      "id": "32e2c916-b78b-438b-af69-8ebac1f42de2"
+    }
+  ]
+}
