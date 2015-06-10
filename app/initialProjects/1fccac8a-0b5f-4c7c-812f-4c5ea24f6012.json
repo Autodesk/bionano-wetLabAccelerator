@@ -1,4 +1,128 @@
 {
+  "metadata": {
+    "author": {
+      "name": "Aaron Berliner",
+      "id": "31"
+    },
+    "date": "1433949961633",
+    "description": "Transformation Test of Zymo10B with PVIB",
+    "id": "1fccac8a-0b5f-4c7c-812f-4c5ea24f6012",
+    "name": "Transformation Test of Zymo10B with PVIB Default",
+    "tags": [
+    "Transformation",
+    "Zymo 10B E. coli",
+    "PVIB plasmid"
+  ],
+    "type": "protocol",
+    "db": {},
+    "version": "1.0.0"
+  },
+  "parameters": [
+    {
+      "name": "ecoli_source",
+      "type": "container",
+      "value": {
+        "color": "#3163f3",
+        "id": "ct17sx5p38nwqf",
+        "isNew": false,
+        "name": "Zymo 10B - 2015-06-01",
+        "storage": false,
+        "type": "micro-1.5"
+      },
+      "id": "90190c8d-5c3e-4f90-8f93-1f72df20a007"
+    },
+    {
+      "name": "ecoli_control_source",
+      "type": "container",
+      "value": {
+        "color": "#fa96ab",
+        "id": "ct17sxafqttwzb",
+        "isNew": false,
+        "name": "Zymo 10B - 2015-06-01 2",
+        "storage": false,
+        "type": "micro-1.5"
+      },
+      "id": "033d80bf-b2f6-4f93-9b72-fc591be33695"
+    },
+    {
+      "name": "transform_plate",
+      "type": "container",
+      "value": {
+        "color": "#f28500",
+        "isNew": true,
+        "storage": "cold_4",
+        "type": "96-flat"
+      },
+      "id": "5c466d5b-dc18-4aff-8c4c-a5babc7eaae9"
+    },
+    {
+      "name": "growth_plate",
+      "type": "container",
+      "value": {
+        "color": "#799352",
+        "isNew": true,
+        "storage": "cold_4",
+        "type": "96-flat"
+      },
+      "id": "f03756e5-3d0d-4de7-b299-bea74ea47fbf"
+    },
+    {
+      "name": "ecoli_to_transform_volume",
+      "type": "volume",
+      "value": {
+        "unit": "microliter",
+        "value": 50
+      },
+      "id": "3e2d121c-1c29-4c7b-8601-728c65b13c22"
+    },
+    {
+      "name": "plasmid_to_transform",
+      "type": "volume",
+      "value": {
+        "unit": "microliter",
+        "value": 1
+      },
+      "id": "7d61f261-0b66-41f4-a95f-6e981af2426c"
+    },
+    {
+      "name": "plasmid_source",
+      "type": "container",
+      "value": {
+        "color": "#493f1f",
+        "id": "ct17p6qcyguqgs",
+        "isNew": false,
+        "name": "pVIB plasmid - 2015-04-27",
+        "storage": "cold_4",
+        "type": "micro-1.5"
+      },
+      "id": "14426242-6096-424c-b0e5-0accc57e0a15"
+    },
+    {
+      "name": "lb_noAB_agar_plate",
+      "type": "container",
+      "value": {
+        "color": "#857cce",
+        "id": "ct17sxfsz39sum",
+        "isNew": false,
+        "name": "LB Agar",
+        "storage": "cold_4",
+        "type": "6-flat"
+      },
+      "id": "c0daa890-9629-4850-abfb-c7d2f3102ad4"
+    },
+    {
+      "name": "lb_amp_agar_plate",
+      "type": "container",
+      "value": {
+        "color": "#6a2dcc",
+        "id": "ct17sxftry3grf",
+        "isNew": false,
+        "name": "LB Agar Amp100",
+        "type": "6-flat"
+      },
+      "id": "c24da6de-c546-4cd9-9065-0135dfe8b41f"
+    }
+  ],
   "groups": [
     {
       "loop": 1,
@@ -12,7 +136,7 @@
           "fields": [
             {
               "name": "volume",
-              "parameter": "e5cdfa3a-0b45-457a-942e-5251f123c41d",
+              "parameter": "3e2d121c-1c29-4c7b-8601-728c65b13c22",
               "type": "volume",
               "value": {
                 "unit": "microliter",
@@ -24,7 +148,7 @@
               "transpose": 0,
               "type": "aliquot++",
               "value": {
-                "container": "1b1ec1de-50de-4345-9105-5206580f56cd",
+                "container": "90190c8d-5c3e-4f90-8f93-1f72df20a007",
                 "containerName": "ecoli_source",
                 "wells": [
                   "A1"
@@ -36,7 +160,7 @@
               "transpose": 0,
               "type": "aliquot++",
               "value": {
-                "container": "731df568-696f-4eaf-a241-6e0ab52b25e8",
+                "container": "5c466d5b-dc18-4aff-8c4c-a5babc7eaae9",
                 "containerName": "transform_plate",
                 "wells": [
                   "A1"
@@ -115,7 +239,7 @@
           "fields": [
             {
               "name": "volume",
-              "parameter": "e5cdfa3a-0b45-457a-942e-5251f123c41d",
+              "parameter": "3e2d121c-1c29-4c7b-8601-728c65b13c22",
               "type": "volume",
               "value": {
                 "unit": "microliter",
@@ -127,7 +251,7 @@
               "transpose": 0,
               "type": "aliquot++",
               "value": {
-                "container": "f100eec0-9510-478f-a34e-0b0f5f82faf1",
+                "container": "033d80bf-b2f6-4f93-9b72-fc591be33695",
                 "containerName": "ecoli_control_source",
                 "wells": [
                   "A1"
@@ -139,7 +263,7 @@
               "transpose": 0,
               "type": "aliquot++",
               "value": {
-                "container": "731df568-696f-4eaf-a241-6e0ab52b25e8",
+                "container": "5c466d5b-dc18-4aff-8c4c-a5babc7eaae9",
                 "containerName": "transform_plate",
                 "wells": [
                   "B1"
@@ -218,7 +342,7 @@
           "fields": [
             {
               "name": "volume",
-              "parameter": "1bb00b8a-dab0-4b73-b9f9-ce7e2de471c8",
+              "parameter": "7d61f261-0b66-41f4-a95f-6e981af2426c",
               "type": "volume",
               "value": {
                 "unit": "microliter",
@@ -230,7 +354,7 @@
               "transpose": 0,
               "type": "aliquot++",
               "value": {
-                "container": "16e928a0-7d2f-4cd9-a486-7ba7b93f6112",
+                "container": "14426242-6096-424c-b0e5-0accc57e0a15",
                 "containerName": "plasmid_source",
                 "wells": [
                   "A1"
@@ -242,7 +366,7 @@
               "transpose": 0,
               "type": "aliquot++",
               "value": {
-                "container": "731df568-696f-4eaf-a241-6e0ab52b25e8",
+                "container": "5c466d5b-dc18-4aff-8c4c-a5babc7eaae9",
                 "containerName": "transform_plate",
                 "wells": [
                   "A1"
@@ -332,7 +456,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate"
               }
             },
@@ -397,7 +521,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate"
               }
             },
@@ -461,7 +585,7 @@
           "fields": [
             {
               "name": "volume",
-              "parameter": "1bb00b8a-dab0-4b73-b9f9-ce7e2de471c8",
+              "parameter": "7d61f261-0b66-41f4-a95f-6e981af2426c",
               "type": "volume",
               "value": {
                 "unit": "microliter",
@@ -473,7 +597,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "731df568-696f-4eaf-a241-6e0ab52b25e8",
+                "container": "5c466d5b-dc18-4aff-8c4c-a5babc7eaae9",
                 "containerName": "transform_plate",
                 "wells": [
                   "A1"
@@ -485,7 +609,7 @@
               "transpose": 0,
               "type": "aliquot++",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "A1",
@@ -557,7 +681,7 @@
           "fields": [
             {
               "name": "volume",
-              "parameter": "1bb00b8a-dab0-4b73-b9f9-ce7e2de471c8",
+              "parameter": "7d61f261-0b66-41f4-a95f-6e981af2426c",
               "type": "volume",
               "value": {
                 "unit": "microliter",
@@ -569,7 +693,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "731df568-696f-4eaf-a241-6e0ab52b25e8",
+                "container": "5c466d5b-dc18-4aff-8c4c-a5babc7eaae9",
                 "containerName": "transform_plate",
                 "wells": [
                   "B1"
@@ -581,7 +705,7 @@
               "transpose": 0,
               "type": "aliquot++",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "A2",
@@ -658,14 +782,14 @@
       "name": "Setup LB Agar Plate",
       "steps": [
         {
-          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
           "fields": [
             {
               "name": "from",
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "G1"
@@ -677,7 +801,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
                 "containerName": "lb_noAB_agar_plate",
                 "wells": [
                   "A1"
@@ -690,32 +814,28 @@
                 "value": 50
               },
               "name": "volume",
-              "type": "volume",
-              "value": {
-                "unit": "microliter",
-                "value": 50
-              }
+              "type": "volume"
             }
           ],
           "operation": "spread",
           "transforms": [
             {
-              "wells": "from"
+              "wells": "source"
             },
             {
-              "wells": "to"
+              "wells": "destination"
             }
           ]
         },
         {
-          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
           "fields": [
             {
               "name": "from",
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "G1"
@@ -727,7 +847,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
                 "containerName": "lb_noAB_agar_plate",
                 "wells": [
                   "B1"
@@ -743,29 +863,29 @@
               "type": "volume",
               "value": {
                 "unit": "microliter",
-                "value": 150
+                "value": 100
               }
             }
           ],
           "operation": "spread",
           "transforms": [
             {
-              "wells": "from"
+              "wells": "source"
             },
             {
-              "wells": "to"
+              "wells": "destination"
             }
           ]
         },
         {
-          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
           "fields": [
             {
               "name": "from",
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "G2"
@@ -777,7 +897,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
                 "containerName": "lb_noAB_agar_plate",
                 "wells": [
                   "A2"
@@ -796,22 +916,22 @@
           "operation": "spread",
           "transforms": [
             {
-              "wells": "from"
+              "wells": "source"
             },
             {
-              "wells": "to"
+              "wells": "destination"
             }
           ]
         },
         {
-          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
           "fields": [
             {
               "name": "from",
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "G2"
@@ -823,7 +943,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
                 "containerName": "lb_noAB_agar_plate",
                 "wells": [
                   "B2"
@@ -839,29 +959,29 @@
               "type": "volume",
               "value": {
                 "unit": "microliter",
-                "value": 150
+                "value": 100
               }
             }
           ],
           "operation": "spread",
           "transforms": [
             {
-              "wells": "from"
+              "wells": "source"
             },
             {
-              "wells": "to"
+              "wells": "destination"
             }
           ]
         },
         {
-          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
           "fields": [
             {
               "name": "from",
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "G3"
@@ -873,7 +993,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
                 "containerName": "lb_noAB_agar_plate",
                 "wells": [
                   "A3"
@@ -892,22 +1012,22 @@
           "operation": "spread",
           "transforms": [
             {
-              "wells": "from"
+              "wells": "source"
             },
             {
-              "wells": "to"
+              "wells": "destination"
             }
           ]
         },
         {
-          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
           "fields": [
             {
               "name": "from",
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "G3"
@@ -919,7 +1039,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
                 "containerName": "lb_noAB_agar_plate",
                 "wells": [
                   "B3"
@@ -935,17 +1055,17 @@
               "type": "volume",
               "value": {
                 "unit": "microliter",
-                "value": 150
+                "value": 100
               }
             }
           ],
           "operation": "spread",
           "transforms": [
             {
-              "wells": "from"
+              "wells": "source"
             },
             {
-              "wells": "to"
+              "wells": "destination"
             }
           ]
         }
@@ -959,14 +1079,14 @@
       "name": "Setup LB Amp Agar Plate",
       "steps": [
         {
-          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
           "fields": [
             {
               "name": "from",
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "H1"
@@ -978,7 +1098,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
                 "containerName": "lb_amp_agar_plate",
                 "wells": [
                   "A1"
@@ -991,32 +1111,28 @@
                 "value": 50
               },
               "name": "volume",
-              "type": "volume",
-              "value": {
-                "unit": "microliter",
-                "value": 50
-              }
+              "type": "volume"
             }
           ],
           "operation": "spread",
           "transforms": [
             {
-              "wells": "from"
+              "wells": "source"
             },
             {
-              "wells": "to"
+              "wells": "destination"
             }
           ]
         },
         {
-          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
           "fields": [
             {
               "name": "from",
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "H1"
@@ -1028,7 +1144,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
                 "containerName": "lb_amp_agar_plate",
                 "wells": [
                   "B1"
@@ -1044,29 +1160,29 @@
               "type": "volume",
               "value": {
                 "unit": "microliter",
-                "value": 150
+                "value": 100
               }
             }
           ],
           "operation": "spread",
           "transforms": [
             {
-              "wells": "from"
+              "wells": "source"
             },
             {
-              "wells": "to"
+              "wells": "destination"
             }
           ]
         },
         {
-          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
           "fields": [
             {
               "name": "from",
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "H2"
@@ -1078,7 +1194,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
                 "containerName": "lb_amp_agar_plate",
                 "wells": [
                   "A2"
@@ -1097,22 +1213,22 @@
           "operation": "spread",
           "transforms": [
             {
-              "wells": "from"
+              "wells": "source"
             },
             {
-              "wells": "to"
+              "wells": "destination"
             }
           ]
         },
         {
-          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
           "fields": [
             {
               "name": "from",
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "H2"
@@ -1124,7 +1240,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
                 "containerName": "lb_amp_agar_plate",
                 "wells": [
                   "B2"
@@ -1140,29 +1256,29 @@
               "type": "volume",
               "value": {
                 "unit": "microliter",
-                "value": 150
+                "value": 100
               }
             }
           ],
           "operation": "spread",
           "transforms": [
             {
-              "wells": "from"
+              "wells": "source"
             },
             {
-              "wells": "to"
+              "wells": "destination"
             }
           ]
         },
         {
-          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
           "fields": [
             {
               "name": "from",
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "H3"
@@ -1174,7 +1290,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
                 "containerName": "lb_amp_agar_plate",
                 "wells": [
                   "A3"
@@ -1193,22 +1309,22 @@
           "operation": "spread",
           "transforms": [
             {
-              "wells": "from"
+              "wells": "source"
             },
             {
-              "wells": "to"
+              "wells": "destination"
             }
           ]
         },
         {
-          "description": "Spread the specified volume of the source aliquot across the surace of the agar contained in the object container",
+          "description": "Spread the specified volume of the source aliquot across the surface of the agar contained in the object container",
           "fields": [
             {
               "name": "from",
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "H3"
@@ -1220,7 +1336,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
                 "containerName": "lb_amp_agar_plate",
                 "wells": [
                   "B3"
@@ -1236,17 +1352,17 @@
               "type": "volume",
               "value": {
                 "unit": "microliter",
-                "value": 150
+                "value": 100
               }
             }
           ],
           "operation": "spread",
           "transforms": [
             {
-              "wells": "from"
+              "wells": "source"
             },
             {
-              "wells": "to"
+              "wells": "destination"
             }
           ]
         }
@@ -1272,7 +1388,7 @@
               "transpose": 0,
               "type": "aliquot+",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "A1",
@@ -1356,7 +1472,7 @@
               "transpose": 0,
               "type": "aliquot+",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate",
                 "wells": [
                   "A1",
@@ -1413,7 +1529,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate"
               }
             },
@@ -1443,7 +1559,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate"
               }
             },
@@ -1501,7 +1617,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b",
+                "container": "f03756e5-3d0d-4de7-b299-bea74ea47fbf",
                 "containerName": "growth_plate"
               }
             }
@@ -1516,7 +1632,7 @@
       ]
     },
     {
-      "loop": 3,
+      "loop": 1,
       "metadata": {
         "description": ""
       },
@@ -1534,7 +1650,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
                 "containerName": "lb_noAB_agar_plate"
               }
             },
@@ -1562,7 +1678,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
                 "containerName": "lb_noAB_agar_plate"
               }
             },
@@ -1592,7 +1708,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
                 "containerName": "lb_noAB_agar_plate"
               }
             },
@@ -1654,7 +1770,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "475dce81-6ac9-45ce-a046-ab4e2310d2a1",
+                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
                 "containerName": "lb_noAB_agar_plate"
               }
             }
@@ -1665,11 +1781,44 @@
               "container": "object"
             }
           ]
+        },
+        {
+          "description": "Scan an image of a plate",
+          "fields": [
+            {
+              "default": "imagePlate_${unfolded}",
+              "name": "dataref",
+              "type": "string"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
+                "containerName": "lb_noAB_agar_plate"
+              }
+            },
+            {
+              "default": "top",
+              "name": "mode",
+              "options": [
+                "top",
+                "bottom"
+              ],
+              "type": "option"
+            }
+          ],
+          "operation": "image_plate",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
         }
       ]
     },
     {
-      "loop": 3,
+      "loop": 1,
       "metadata": {
         "description": ""
       },
@@ -1687,7 +1836,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
                 "containerName": "lb_amp_agar_plate"
               }
             },
@@ -1715,7 +1864,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
                 "containerName": "lb_amp_agar_plate"
               }
             },
@@ -1745,7 +1894,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
                 "containerName": "lb_amp_agar_plate"
               }
             },
@@ -1807,7 +1956,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "32e2c916-b78b-438b-af69-8ebac1f42de2",
+                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
                 "containerName": "lb_amp_agar_plate"
               }
             }
@@ -1818,131 +1967,42 @@
               "container": "object"
             }
           ]
+        },
+        {
+          "description": "Scan an image of a plate",
+          "fields": [
+            {
+              "default": "imagePlate_${unfolded}",
+              "name": "dataref",
+              "type": "string"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": {
+                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
+                "containerName": "lb_amp_agar_plate"
+              }
+            },
+            {
+              "default": "top",
+              "name": "mode",
+              "options": [
+                "top",
+                "bottom"
+              ],
+              "type": "option"
+            }
+          ],
+          "operation": "image_plate",
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ]
         }
       ]
     }
   ],
-  "metadata": {
-    "author": {
-      "id": "31"
-    },
-    "date": "1433197026622",
-    "description": "Transformation Test of Zymo10B with PVIB",
-    "id": "1fccac8a-0b5f-4c7c-812f-4c5ea24f6012",
-    "name": "Transformation Test of Zymo10B with PVIB",
-    "tags": [
-      "Transformation",
-      "Zymo 10B E. coli",
-      "PVIB plasmid"
-    ],
-    "type": "protocol",
-    "version": "1.0.0"
-  },
-  "name": "simpleTransform1",
-  "parameters": [
-    {
-      "name": "ecoli_source",
-      "type": "container",
-      "value": {
-        "color": "#3163f3",
-        "id": "ct17sx5p38nwqf",
-        "isNew": false,
-        "name": "Zymo 10B - 2015-06-01",
-        "storage": false,
-        "type": "micro-1.5"
-      },
-      "id": "1b1ec1de-50de-4345-9105-5206580f56cd"
-    },
-    {
-      "name": "ecoli_control_source",
-      "type": "container",
-      "value": {
-        "color": "#fa96ab",
-        "id": "ct17sxafqttwzb",
-        "isNew": false,
-        "name": "Zymo 10B - 2015-06-01 2",
-        "storage": false,
-        "type": "micro-1.5"
-      },
-      "id": "f100eec0-9510-478f-a34e-0b0f5f82faf1"
-    },
-    {
-      "name": "transform_plate",
-      "type": "container",
-      "value": {
-        "color": "#d2fae4",
-        "isNew": true,
-        "storage": "cold_4",
-        "type": "96-flat"
-      },
-      "id": "731df568-696f-4eaf-a241-6e0ab52b25e8"
-    },
-    {
-      "name": "growth_plate",
-      "type": "container",
-      "value": {
-        "color": "#799352",
-        "isNew": true,
-        "storage": "cold_4",
-        "type": "96-flat"
-      },
-      "id": "6b61fbf5-72f0-40bb-bb01-243e7da45c7b"
-    },
-    {
-      "name": "ecoli_to_transform_volume",
-      "type": "volume",
-      "value": {
-        "unit": "microliter",
-        "value": 50
-      },
-      "id": "e5cdfa3a-0b45-457a-942e-5251f123c41d"
-    },
-    {
-      "name": "plasmid_to_transform",
-      "type": "volume",
-      "value": {
-        "unit": "microliter",
-        "value": 1
-      },
-      "id": "1bb00b8a-dab0-4b73-b9f9-ce7e2de471c8"
-    },
-    {
-      "name": "plasmid_source",
-      "type": "container",
-      "value": {
-        "color": "#493f1f",
-        "id": "ct17p6qcyguqgs",
-        "isNew": false,
-        "name": "pVIB plasmid - 2015-04-27",
-        "storage": "cold_4",
-        "type": "micro-1.5"
-      },
-      "id": "16e928a0-7d2f-4cd9-a486-7ba7b93f6112"
-    },
-    {
-      "name": "lb_noAB_agar_plate",
-      "type": "container",
-      "value": {
-        "color": "#857cce",
-        "id": "ct17sxfsz39sum",
-        "isNew": false,
-        "name": "LB Agar",
-        "storage": "cold_4",
-        "type": "6-flat"
-      },
-      "id": "475dce81-6ac9-45ce-a046-ab4e2310d2a1"
-    },
-    {
-      "name": "lb_amp_agar_plate",
-      "type": "container",
-      "value": {
-        "color": "#6a2dcc",
-        "id": "ct17sxftry3grf",
-        "isNew": false,
-        "name": "LB Agar Amp100",
-        "type": "6-flat"
-      },
-      "id": "32e2c916-b78b-438b-af69-8ebac1f42de2"
-    }
-  ]
+  "name": "simpleTransform1"
 }
