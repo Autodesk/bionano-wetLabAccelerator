@@ -9,41 +9,15 @@
     "id": "1fccac8a-0b5f-4c7c-812f-4c5ea24f6012",
     "name": "Transformation Test of Zymo10B with PVIB Default",
     "tags": [
-    "Transformation",
-    "Zymo 10B E. coli",
-    "PVIB plasmid"
-  ],
+      "Transformation",
+      "Zymo 10B E. coli",
+      "PVIB plasmid"
+    ],
     "type": "protocol",
     "db": {},
     "version": "1.0.0"
   },
   "parameters": [
-    {
-      "name": "ecoli_source",
-      "type": "container",
-      "value": {
-        "color": "#3163f3",
-        "id": "ct17sx5p38nwqf",
-        "isNew": false,
-        "name": "Zymo 10B - 2015-06-01",
-        "storage": false,
-        "type": "micro-1.5"
-      },
-      "id": "90190c8d-5c3e-4f90-8f93-1f72df20a007"
-    },
-    {
-      "name": "ecoli_control_source",
-      "type": "container",
-      "value": {
-        "color": "#fa96ab",
-        "id": "ct17sxafqttwzb",
-        "isNew": false,
-        "name": "Zymo 10B - 2015-06-01 2",
-        "storage": false,
-        "type": "micro-1.5"
-      },
-      "id": "033d80bf-b2f6-4f93-9b72-fc591be33695"
-    },
     {
       "name": "transform_plate",
       "type": "container",
@@ -85,42 +59,79 @@
       "id": "7d61f261-0b66-41f4-a95f-6e981af2426c"
     },
     {
+      "id": "9048d5ba-6140-4f9b-b0f4-97e2b591a03c",
+      "name": "ecoli_source",
+      "type": "resource",
+      "category": "custom",
+      "canParameterize": true,
+      "description": "Resource from the transcriptic catalog",
+      "value": {
+        "id": "rs16pbjc4r7vvz",
+        "name": "Zymo 10B",
+        "organization_id": null,
+        "commercial": true,
+        "description": null,
+        "kind": "Reagent",
+        "properties": {},
+        "design": {},
+        "metadata": {},
+        "kit_item": {
+          "kit": {
+            "id": "kit16pbjc4ppkpm",
+            "name": "Zymo 10B"
+          }
+        }
+      }
+    },
+    {
+      "id": "2eea3405-5531-4f2f-b893-4279a9e74225",
       "name": "plasmid_source",
-      "type": "container",
+      "type": "resource",
+      "category": "custom",
+      "canParameterize": true,
+      "description": "Resource from the transcriptic catalog",
       "value": {
-        "color": "#493f1f",
-        "id": "ct17p6qcyguqgs",
-        "isNew": false,
-        "name": "pVIB plasmid - 2015-04-27",
-        "storage": "cold_4",
-        "type": "micro-1.5"
-      },
-      "id": "14426242-6096-424c-b0e5-0accc57e0a15"
+        "id": "rs17jv3cxqum9y",
+        "name": "pVIB plasmid",
+        "organization_id": null,
+        "commercial": true,
+        "description": null,
+        "kind": "Sequence",
+        "properties": {},
+        "design": {},
+        "metadata": {
+          "split_ids": [],
+          "sequence_length": 0
+        },
+        "kit_item": {
+          "kit": {
+            "id": "kit17jv3dqypkz2",
+            "name": "pVIB"
+          }
+        }
+      }
     },
     {
-      "name": "lb_noAB_agar_plate",
+      "id": "888fd851-ea1a-4d30-9866-fef9333823b0",
+      "name": "lb_agar_plate",
       "type": "container",
       "value": {
-        "color": "#857cce",
-        "id": "ct17sxfsz39sum",
-        "isNew": false,
-        "name": "LB Agar",
-        "storage": "cold_4",
-        "type": "6-flat"
-      },
-      "id": "c0daa890-9629-4850-abfb-c7d2f3102ad4"
+        "isNew": true,
+        "color": "#00FFFF",
+        "type": "6-flat",
+        "storage": "cold_4"
+      }
     },
     {
+      "id": "9f6fc415-7d52-48a7-968f-bba24e645a15",
       "name": "lb_amp_agar_plate",
       "type": "container",
       "value": {
-        "color": "#6a2dcc",
-        "id": "ct17sxftry3grf",
-        "isNew": false,
-        "name": "LB Agar Amp100",
-        "type": "6-flat"
-      },
-      "id": "c24da6de-c546-4cd9-9065-0135dfe8b41f"
+        "isNew": true,
+        "color": "#addfad",
+        "type": "6-flat",
+        "storage": "cold_4"
+      }
     }
   ],
   "groups": [
@@ -132,313 +143,126 @@
       "name": "Setup and Run Transformation",
       "steps": [
         {
-          "description": "Transfer competent E. coli from tube to transform plate for assembly",
-          "fields": [
-            {
-              "name": "volume",
-              "parameter": "3e2d121c-1c29-4c7b-8601-728c65b13c22",
-              "type": "volume",
-              "value": {
-                "unit": "microliter",
-                "value": 50
-              }
-            },
-            {
-              "name": "from",
-              "transpose": 0,
-              "type": "aliquot++",
-              "value": {
-                "container": "90190c8d-5c3e-4f90-8f93-1f72df20a007",
-                "containerName": "ecoli_source",
-                "wells": [
-                  "A1"
-                ]
-              }
-            },
-            {
-              "name": "to",
-              "transpose": 0,
-              "type": "aliquot++",
-              "value": {
-                "container": "5c466d5b-dc18-4aff-8c4c-a5babc7eaae9",
-                "containerName": "transform_plate",
-                "wells": [
-                  "A1"
-                ]
-              }
-            },
-            {
-              "default": {
-                "unit": "microliter/second",
-                "value": 100
-              },
-              "name": "dispense_speed",
-              "optional": true,
-              "type": "speed"
-            },
-            {
-              "default": {
-                "unit": "microliter/second",
-                "value": 100
-              },
-              "name": "aspirate_speed",
-              "optional": true,
-              "type": "speed"
-            },
-            {
-              "default": {
-                "repetitions": 5,
-                "speed": {
-                  "unit": "microliter/second",
-                  "value": 100
-                },
-                "volume": {
-                  "unit": "microliter",
-                  "value": 10
-                }
-              },
-              "name": "mix_before",
-              "optional": true,
-              "type": "mixwrap"
-            },
-            {
-              "default": {
-                "repetitions": 5,
-                "speed": {
-                  "unit": "microliter/second",
-                  "value": 100
-                },
-                "volume": {
-                  "unit": "microliter",
-                  "value": 10
-                }
-              },
-              "name": "mix_after",
-              "optional": true,
-              "type": "mixwrap"
-            },
-            {
-              "default": false,
-              "name": "one_tip",
-              "optional": true,
-              "type": "boolean"
-            }
-          ],
-          "operation": "transfer",
+          "operation": "provision",
+          "requirements": {},
           "transforms": [
             {
-              "wells": "to"
-            },
-            {
-              "wells": "from"
+              "wells": "wells"
             }
-          ]
-        },
-        {
-          "description": "Transfer competent E. coli from tube to transform plate for assembly as a control",
+          ],
           "fields": [
             {
-              "name": "volume",
-              "parameter": "3e2d121c-1c29-4c7b-8601-728c65b13c22",
-              "type": "volume",
-              "value": {
-                "unit": "microliter",
-                "value": 50
-              }
-            },
-            {
-              "name": "from",
-              "transpose": 0,
-              "type": "aliquot++",
-              "value": {
-                "container": "033d80bf-b2f6-4f93-9b72-fc591be33695",
-                "containerName": "ecoli_control_source",
-                "wells": [
-                  "A1"
-                ]
-              }
-            },
-            {
-              "name": "to",
-              "transpose": 0,
+              "name": "wells",
               "type": "aliquot++",
               "value": {
                 "container": "5c466d5b-dc18-4aff-8c4c-a5babc7eaae9",
-                "containerName": "transform_plate",
                 "wells": [
+                  "A1",
                   "B1"
-                ]
+                ],
+                "containerName": "transform_plate"
+              },
+              "transpose": 0
+            },
+            {
+              "name": "volume",
+              "type": "volume",
+              "default": {
+                "value": 50,
+                "unit": "microliter"
+              },
+              "parameter": "3e2d121c-1c29-4c7b-8601-728c65b13c22",
+              "value": {
+                "unit": "microliter",
+                "value": 50
               }
             },
             {
-              "default": {
-                "unit": "microliter/second",
-                "value": 100
-              },
-              "name": "dispense_speed",
-              "optional": true,
-              "type": "speed"
-            },
-            {
-              "default": {
-                "unit": "microliter/second",
-                "value": 100
-              },
-              "name": "aspirate_speed",
-              "optional": true,
-              "type": "speed"
-            },
-            {
-              "default": {
-                "repetitions": 5,
-                "speed": {
-                  "unit": "microliter/second",
-                  "value": 100
-                },
-                "volume": {
-                  "unit": "microliter",
-                  "value": 10
+              "name": "resource",
+              "type": "resource",
+              "parameter": "9048d5ba-6140-4f9b-b0f4-97e2b591a03c",
+              "value": {
+                "id": "rs16pbjc4r7vvz",
+                "name": "Zymo 10B",
+                "organization_id": null,
+                "commercial": true,
+                "description": null,
+                "kind": "Reagent",
+                "properties": {},
+                "design": {},
+                "metadata": {},
+                "kit_item": {
+                  "kit": {
+                    "id": "kit16pbjc4ppkpm",
+                    "name": "Zymo 10B"
+                  }
                 }
-              },
-              "name": "mix_before",
-              "optional": true,
-              "type": "mixwrap"
-            },
-            {
-              "default": {
-                "repetitions": 5,
-                "speed": {
-                  "unit": "microliter/second",
-                  "value": 100
-                },
-                "volume": {
-                  "unit": "microliter",
-                  "value": 10
-                }
-              },
-              "name": "mix_after",
-              "optional": true,
-              "type": "mixwrap"
-            },
-            {
-              "default": false,
-              "name": "one_tip",
-              "optional": true,
-              "type": "boolean"
+              }
             }
           ],
-          "operation": "transfer",
-          "transforms": [
-            {
-              "wells": "to"
-            },
-            {
-              "wells": "from"
-            }
-          ]
+          "op_description": "Dispense a Transcriptic catalog resource into specified wells"
         },
         {
-          "description": "Transfer PVIB plasmid to Grab and Go Competent E. coli",
+          "operation": "provision",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "wells"
+            }
+          ],
           "fields": [
             {
+              "name": "wells",
+              "type": "aliquot++",
+              "value": {
+                "container": "5c466d5b-dc18-4aff-8c4c-a5babc7eaae9",
+                "wells": [
+                  "A1"
+                ],
+                "containerName": "transform_plate"
+              },
+              "transpose": 0
+            },
+            {
               "name": "volume",
-              "parameter": "7d61f261-0b66-41f4-a95f-6e981af2426c",
               "type": "volume",
+              "default": {
+                "value": 50,
+                "unit": "microliter"
+              },
+              "parameter": "7d61f261-0b66-41f4-a95f-6e981af2426c",
               "value": {
                 "unit": "microliter",
                 "value": 1
               }
             },
             {
-              "name": "from",
-              "transpose": 0,
-              "type": "aliquot++",
+              "name": "resource",
+              "type": "resource",
+              "parameter": "2eea3405-5531-4f2f-b893-4279a9e74225",
               "value": {
-                "container": "14426242-6096-424c-b0e5-0accc57e0a15",
-                "containerName": "plasmid_source",
-                "wells": [
-                  "A1"
-                ]
-              }
-            },
-            {
-              "name": "to",
-              "transpose": 0,
-              "type": "aliquot++",
-              "value": {
-                "container": "5c466d5b-dc18-4aff-8c4c-a5babc7eaae9",
-                "containerName": "transform_plate",
-                "wells": [
-                  "A1"
-                ]
-              }
-            },
-            {
-              "default": {
-                "unit": "microliter/second",
-                "value": 100
-              },
-              "name": "dispense_speed",
-              "optional": true,
-              "type": "speed"
-            },
-            {
-              "default": {
-                "unit": "microliter/second",
-                "value": 100
-              },
-              "name": "aspirate_speed",
-              "optional": true,
-              "type": "speed"
-            },
-            {
-              "default": {
-                "repetitions": 5,
-                "speed": {
-                  "unit": "microliter/second",
-                  "value": 100
+                "id": "rs17jv3cxqum9y",
+                "name": "pVIB plasmid",
+                "organization_id": null,
+                "commercial": true,
+                "description": null,
+                "kind": "Sequence",
+                "properties": {},
+                "design": {},
+                "metadata": {
+                  "split_ids": [],
+                  "sequence_length": 0
                 },
-                "volume": {
-                  "unit": "microliter",
-                  "value": 10
+                "kit_item": {
+                  "kit": {
+                    "id": "kit17jv3dqypkz2",
+                    "name": "pVIB"
+                  }
                 }
-              },
-              "name": "mix_before",
-              "optional": true,
-              "type": "mixwrap"
-            },
-            {
-              "default": {
-                "repetitions": 5,
-                "speed": {
-                  "unit": "microliter/second",
-                  "value": 100
-                },
-                "volume": {
-                  "unit": "microliter",
-                  "value": 10
-                }
-              },
-              "name": "mix_after",
-              "optional": true,
-              "type": "mixwrap"
-            },
-            {
-              "default": false,
-              "name": "one_tip",
-              "optional": true,
-              "type": "boolean"
+              }
             }
           ],
-          "operation": "transfer",
-          "transforms": [
-            {
-              "wells": "to"
-            },
-            {
-              "wells": "from"
-            }
-          ]
+          "op_description": "Dispense a Transcriptic catalog resource into specified wells"
         }
       ]
     },
@@ -801,8 +625,8 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
-                "containerName": "lb_noAB_agar_plate",
+                "container": "888fd851-ea1a-4d30-9866-fef9333823b0",
+                "containerName": "lb_agar_plate",
                 "wells": [
                   "A1"
                 ]
@@ -814,7 +638,11 @@
                 "value": 50
               },
               "name": "volume",
-              "type": "volume"
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 50
+              }
             }
           ],
           "operation": "spread",
@@ -847,8 +675,8 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
-                "containerName": "lb_noAB_agar_plate",
+                "container": "888fd851-ea1a-4d30-9866-fef9333823b0",
+                "containerName": "lb_agar_plate",
                 "wells": [
                   "B1"
                 ]
@@ -897,8 +725,8 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
-                "containerName": "lb_noAB_agar_plate",
+                "container": "888fd851-ea1a-4d30-9866-fef9333823b0",
+                "containerName": "lb_agar_plate",
                 "wells": [
                   "A2"
                 ]
@@ -943,8 +771,8 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
-                "containerName": "lb_noAB_agar_plate",
+                "container": "888fd851-ea1a-4d30-9866-fef9333823b0",
+                "containerName": "lb_agar_plate",
                 "wells": [
                   "B2"
                 ]
@@ -993,8 +821,8 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
-                "containerName": "lb_noAB_agar_plate",
+                "container": "888fd851-ea1a-4d30-9866-fef9333823b0",
+                "containerName": "lb_agar_plate",
                 "wells": [
                   "A3"
                 ]
@@ -1039,8 +867,8 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
-                "containerName": "lb_noAB_agar_plate",
+                "container": "888fd851-ea1a-4d30-9866-fef9333823b0",
+                "containerName": "lb_agar_plate",
                 "wells": [
                   "B3"
                 ]
@@ -1098,7 +926,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
+                "container": "9f6fc415-7d52-48a7-968f-bba24e645a15",
                 "containerName": "lb_amp_agar_plate",
                 "wells": [
                   "A1"
@@ -1111,7 +939,11 @@
                 "value": 50
               },
               "name": "volume",
-              "type": "volume"
+              "type": "volume",
+              "value": {
+                "unit": "microliter",
+                "value": 50
+              }
             }
           ],
           "operation": "spread",
@@ -1144,7 +976,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
+                "container": "9f6fc415-7d52-48a7-968f-bba24e645a15",
                 "containerName": "lb_amp_agar_plate",
                 "wells": [
                   "B1"
@@ -1194,7 +1026,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
+                "container": "9f6fc415-7d52-48a7-968f-bba24e645a15",
                 "containerName": "lb_amp_agar_plate",
                 "wells": [
                   "A2"
@@ -1240,7 +1072,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
+                "container": "9f6fc415-7d52-48a7-968f-bba24e645a15",
                 "containerName": "lb_amp_agar_plate",
                 "wells": [
                   "B2"
@@ -1290,7 +1122,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
+                "container": "9f6fc415-7d52-48a7-968f-bba24e645a15",
                 "containerName": "lb_amp_agar_plate",
                 "wells": [
                   "A3"
@@ -1336,7 +1168,7 @@
               "transpose": 0,
               "type": "aliquot",
               "value": {
-                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
+                "container": "9f6fc415-7d52-48a7-968f-bba24e645a15",
                 "containerName": "lb_amp_agar_plate",
                 "wells": [
                   "B3"
@@ -1650,8 +1482,8 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
-                "containerName": "lb_noAB_agar_plate"
+                "container": "888fd851-ea1a-4d30-9866-fef9333823b0",
+                "containerName": "lb_agar_plate"
               }
             },
             {
@@ -1678,8 +1510,8 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
-                "containerName": "lb_noAB_agar_plate"
+                "container": "888fd851-ea1a-4d30-9866-fef9333823b0",
+                "containerName": "lb_agar_plate"
               }
             },
             {
@@ -1708,8 +1540,8 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
-                "containerName": "lb_noAB_agar_plate"
+                "container": "888fd851-ea1a-4d30-9866-fef9333823b0",
+                "containerName": "lb_agar_plate"
               }
             },
             {
@@ -1734,7 +1566,7 @@
               "type": "duration",
               "value": {
                 "unit": "hour",
-                "value": 6
+                "value": 18
               }
             },
             {
@@ -1770,8 +1602,8 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
-                "containerName": "lb_noAB_agar_plate"
+                "container": "888fd851-ea1a-4d30-9866-fef9333823b0",
+                "containerName": "lb_agar_plate"
               }
             }
           ],
@@ -1794,8 +1626,8 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "c0daa890-9629-4850-abfb-c7d2f3102ad4",
-                "containerName": "lb_noAB_agar_plate"
+                "container": "888fd851-ea1a-4d30-9866-fef9333823b0",
+                "containerName": "lb_agar_plate"
               }
             },
             {
@@ -1836,7 +1668,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
+                "container": "9f6fc415-7d52-48a7-968f-bba24e645a15",
                 "containerName": "lb_amp_agar_plate"
               }
             },
@@ -1864,7 +1696,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
+                "container": "9f6fc415-7d52-48a7-968f-bba24e645a15",
                 "containerName": "lb_amp_agar_plate"
               }
             },
@@ -1894,7 +1726,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
+                "container": "9f6fc415-7d52-48a7-968f-bba24e645a15",
                 "containerName": "lb_amp_agar_plate"
               }
             },
@@ -1920,7 +1752,7 @@
               "type": "duration",
               "value": {
                 "unit": "hour",
-                "value": 6
+                "value": 18
               }
             },
             {
@@ -1956,7 +1788,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
+                "container": "9f6fc415-7d52-48a7-968f-bba24e645a15",
                 "containerName": "lb_amp_agar_plate"
               }
             }
@@ -1980,7 +1812,7 @@
               "name": "object",
               "type": "container",
               "value": {
-                "container": "c24da6de-c546-4cd9-9065-0135dfe8b41f",
+                "container": "9f6fc415-7d52-48a7-968f-bba24e645a15",
                 "containerName": "lb_amp_agar_plate"
               }
             },

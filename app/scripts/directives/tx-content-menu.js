@@ -18,8 +18,7 @@ angular.module('transcripticApp')
         var initialProjects = [
           "28f2366c-a0b9-4c74-a1b3-0d1cdcd3f03b",
           "1fccac8a-0b5f-4c7c-812f-4c5ea24f6012",
-          "28527dcb-8b74-4b4e-91fe-8c721734e3a9",
-          "b6320abe-ecb1-4ecf-bed1-50de0bc43212"
+          "99f4b302-1c2b-4b13-bf76-ee74e84b4db8"
         ];
 
         $q.all(_.map(initialProjects, function (id) {
