@@ -54,7 +54,7 @@ angular.module('transcripticApp')
     self.getUserInfo = function () {
       return pc.get_user()
         .then(function (result) {
-          return _assign(result.data, {uid: result.uid});
+          return _.assign(result.data, {uid: result.uid});
         });
     };
 
