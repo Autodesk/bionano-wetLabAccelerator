@@ -7,7 +7,7 @@
  * # txOperationgroup
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolGroup', function (DragDropManager) {
+  .directive('txProtocolGroup', function (DragDropManager, $rootScope) {
     return {
       templateUrl     : 'views/tx-protocol-group.html',
       restrict        : 'E',
@@ -19,6 +19,10 @@ angular.module('tx.protocolEditor')
       controllerAs    : 'groupCtrl',
       controller      : function ($scope, $element, $attrs) {
         var self = this;
+
+        self.verifyProtocol = function () {
+          $rootScope.$broadcast('editor:initiateVerification');
+        };
 
         self.duplicateStep = function (step) {
           var index = _.indexOf(self.group, step);

@@ -14,7 +14,7 @@ angular.module('transcripticApp')
         cache = {},
         pathToId = 'metadata.id';
 
-    //todo - expose cache for binding
+    self.cache = cache;
 
     //todo - all functions should ensure that have already authenticated - use a facade of platform?
 

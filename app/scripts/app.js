@@ -95,6 +95,7 @@ angular
         redirectTo: '/'
       });
   })
-  .run(function (Authentication, Platform, Database, $http, $timeout) {
-
+  .run(function (Authentication, Platform, Database, $document) {
+    //lazy load the background image
+    angular.element($document[0].body).addClass('with-background');
   });

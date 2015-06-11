@@ -147,15 +147,11 @@ angular.module('transcripticApp')
     };
 
     function createNewRunObject (protocol) {
-      var run = _.assign(Omniprotocol.utils.getScaffoldRun(), {
+      return _.assign(Omniprotocol.utils.getScaffoldRun(), {
         protocol    : _.cloneDeep(protocol),
-        autoprotocol: ProtocolHelper.convertToAutoprotocol(protocol)
+        autoprotocol: ProtocolHelper.convertToAutoprotocol(protocol),
+        metadata: generateNewRunMetadata(protocol)
       });
-
-      //assign metadata
-      _.assign(run.metadata, generateNewRunMetadata(protocol), run.metadata);
-
-      return run;
     }
 
     //note - does not handle protocol, need to attach that separately (not in metadata)

@@ -127,9 +127,17 @@ angular.module('transcripticApp')
           'Content-Type': 'image/jpeg'
         }
       })
-        .error(function (data) {
-          console.log('resource request timed out');
-          resource.status = 'Request timed out. Please Download'
+        .error(function (data, status) {
+          console.log('resource request error', data, status);
+          if (status == 0) {
+            resource.status = 'Request timed out. Please Download';
+          }
+          else if (status > 400) {
+            resource.status = "You don't have access to view this file...";
+          }
+          else {
+            resource.status = "There was an error downloading this image. Try downloading it, or visit Transcriptic directly."
+          }
         })
         .success(function (data, headers) {
           console.log('received!');
