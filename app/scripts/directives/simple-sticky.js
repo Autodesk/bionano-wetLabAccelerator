@@ -11,6 +11,7 @@
  *
  * @attr simpleSticky {number} number of pixels from edge
  * @attr sticky-class {string} toggle a class on the element
+ * @attr potentially-tallest {number} flag in case element might be tallest in the page. Fixing will change page height + cause jank. Give number for extra space to accommodate.
  *
  * @example
  *
@@ -18,7 +19,7 @@
  */
   //todo - attr.alignWith to give element to match?
 angular.module('transcripticApp')
-  .directive('simpleSticky', function ($window, $timeout) {
+  .directive('simpleSticky', function ($window, $document, $timeout) {
 
     var windowEl = angular.element($window);
 
@@ -73,7 +74,8 @@ angular.module('transcripticApp')
             fromEdgeNormal = element.css(affixToBottom ? 'bottom' : 'top'),
             fromEdgeStart  = calcStartFromEdge(element[0], affixToBottom),//this doesn't work great with flexbox layouts...
             isAffixed      = false,
-            shouldCheck    = false;
+            shouldCheck    = false,
+            elHeight = element.height() + (parseInt(attrs.potentiallyTallest, 10) || 0);
 
         //hack to handle flexbox layout... timeout to run after initial check
         //especially should run if fromEdgeStart == 0
@@ -81,15 +83,30 @@ angular.module('transcripticApp')
           shouldCheck = true;
         }, 50);
 
+        var heightChecker = function () {
+          elHeight = element.height() + (parseInt(attrs.potentiallyTallest, 10) || 0)
+        };
+
+        if (angular.isDefined(attrs.potentiallyTallest)) {
+          $timeout(heightChecker, 50);
+          //todo - ideally, would only run on resize
+          addCheck(heightChecker, scope);
+        }
+
         //check if affix state has changed
         var positionChecker = function checkPosition (pageYOffset, forceCheck) {
+
+          console.log(element.height(), elHeight, $window.innerHeight, pageYOffset + fromEdgeAffix, fromEdgeStart);
+          //console.log(fromEdgeStart, element[0].getBoundingClientRect().top, getYOffset(), element[0].getBoundingClientRect().top  + getYOffset(), pageYOffset, fromEdgeAffix, pageYOffset + fromEdgeAffix, (pageYOffset + fromEdgeAffix) > fromEdgeStart);
 
           if (shouldCheck || !!forceCheck) {
             fromEdgeStart = calcStartFromEdge(element[0], affixToBottom);
             shouldCheck   = false;
           }
 
-          //console.log(fromEdgeStart, element[0].getBoundingClientRect().top, getYOffset(), element[0].getBoundingClientRect().top  + getYOffset(), pageYOffset, fromEdgeAffix, pageYOffset + fromEdgeAffix, (pageYOffset + fromEdgeAffix) > fromEdgeStart);
+          if (elHeight > $document[0].body.getBoundingClientRect().height) {
+            return;
+          }
 
           var shouldAffix;
 

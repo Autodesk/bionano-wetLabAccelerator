@@ -1,19 +1,25 @@
 .operation-list {
   width: $layout-opList-width;
-  float: left;
   display: block;
-  max-height: calc(100vh - 80px);
 }
 
 tx-operation-list {
   display: block;
+  width: $layout-opList-width;
   margin-left: -$oplist-padding-left;
+  //handling of sticky when page height > screen
+  max-height: calc(100vh - 80px);
+  overflow-y: scroll;
 
   .operation-list-heading {
     font-weight: $font-weight-light;
     padding: 0 $oplist-padding-left;
     margin: 0 0 0.25em;
     border: 0;
+  }
+
+  &.sticky {
+    padding: 15px 0 90px; //padding-top, 0, sticky + padding-top + accomodate footer
   }
 }
 
