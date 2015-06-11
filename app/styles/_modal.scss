@@ -72,7 +72,14 @@
     .centered & {
       display: table;
     }
+  }
 
+  a {
+    color: $white;
+
+    &:hover {
+      color: $light-grey;
+    }
   }
 
   .modal-constrain & {
