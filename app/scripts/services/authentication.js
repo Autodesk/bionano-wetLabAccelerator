@@ -19,6 +19,7 @@ angular.module('transcripticApp')
         then(function (retrieved) {
           _.assign(userInfo, retrieved, {
             token: token,
+            uid: retrieved.uid,
             email: retrieved.email,
             name : retrieved.name
           });
@@ -80,9 +81,8 @@ angular.module('transcripticApp')
       return userInfo.name;
     };
 
-    //todo - not working
     self.getUserId = function () {
-      return userInfo.token;
+      return userInfo.uid;
     };
 
 
