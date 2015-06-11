@@ -96,7 +96,7 @@ angular.module('transcripticApp')
         //check if affix state has changed
         var positionChecker = function checkPosition (pageYOffset, forceCheck) {
 
-          console.log(element.height(), elHeight, $window.innerHeight, pageYOffset + fromEdgeAffix, fromEdgeStart);
+          //console.log(element.height(), elHeight, $window.innerHeight, pageYOffset + fromEdgeAffix, fromEdgeStart);
           //console.log(fromEdgeStart, element[0].getBoundingClientRect().top, getYOffset(), element[0].getBoundingClientRect().top  + getYOffset(), pageYOffset, fromEdgeAffix, pageYOffset + fromEdgeAffix, (pageYOffset + fromEdgeAffix) > fromEdgeStart);
 
           if (shouldCheck || !!forceCheck) {
