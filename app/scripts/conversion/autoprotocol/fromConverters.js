@@ -174,7 +174,7 @@ converterInstruction.transfer = function (op) {
   if (fromWells.length != toWells.length) {
 
     if (fromWells.length == 1) {
-      _.fill(fromWells, fromWells[0], 0, toWells.length);
+      fromWells = _.map(_.range(toWells.length), _.constant(fromWells[0]));
     } else {
       console.warn('transfer wells dont match up', toWells, fromWells);
       throwFieldError('transfer wells dont match up', op, 'to');
