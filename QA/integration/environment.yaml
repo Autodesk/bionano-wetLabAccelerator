@@ -38,6 +38,21 @@ environments:
     consumersecret: a2846bd3-1c24-40e8-abd1-00eaf1f26e74
     login:
     password:
+    uri_root: https://wla-qa.dokku.bionano.autodesk.com
+    token: "MJeTXKeSnDz8dr3khIqA9vJD+Hg="
+
+    # assets are specific to the environment, whereas images of those assets are not
+    assets:
+      bluething: 'urn:'
+      yellowCar: 'urn:'
+      1jj2: 'urn'
+
+  prod:
+    browser: chrome
+    consumerkey: d0a95598-8357-4668-90f8-37d887517b3b
+    consumersecret: a2846bd3-1c24-40e8-abd1-00eaf1f26e74
+    login:
+    password:
     uri_root: https://wla.bionano.autodesk.com
     token: "MJeTXKeSnDz8dr3khIqA9vJD+Hg="
 

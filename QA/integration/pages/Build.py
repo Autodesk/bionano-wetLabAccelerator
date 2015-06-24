@@ -3,6 +3,7 @@ import time
 from selenium.webdriver.common.by import By
 
 from pages import Page
+from ProtocolSetup import ProtocolSetup
 
 DRIVER = None
 EDIT_METADATA_BUTTON_XPATH = (By.XPATH, "//div[@class='glyphicon-ellipse']")
@@ -10,7 +11,6 @@ OPERATION_LIST_CLASS_NAME = (By.CLASS_NAME, "operation-list-item")
 SIDE_PANEL_CLASS_NAME = (By.CLASS_NAME, "sidepanel")
 MAIN_COLUMN_CLASS_NAME = (By.CLASS_NAME, "maincolumn")
 
-ADD_PARAMETER_BUTTON = (By.CLASS_NAME, "add-parameter")
 PROTOCOL_INSTRUCTIONS_CLASS_NAME = (By.CLASS_NAME, "protocol-instructions")
 EDITOR_BOTTOM_CLASS_NAME = (By.CLASS_NAME, "editor-bottom-space")
 
@@ -106,79 +106,83 @@ class Build(Page):
         return self.findElement(PROTOCOL_INSTRUCTIONS_CLASS_NAME)
 
 
-class ProtocolSetup(Page):
-    def __init__(self, driver):
-        self.DRIVER = driver
+# SETUP_ROW = (By.CLASS_NAME, "setup-variable")
+# PROTOCOL_SETUP_HEADER = (By.CLASS_NAME, "protocol-setup-header")
+# ADD_PARAMETER_BUTTON = (By.CLASS_NAME, "add-parameter")
+#
+# class ProtocolSetup(Page):
+#     def __init__(self, driver):
+#         self.DRIVER = driver
+#
+#     def getParameters(self):
+#         parameterElements = self.DRIVER.find_elements(SETUP_ROW)
+#         parameters = []
+#         for parameterElement in parameterElements:
+#             if self.containsClass(parameterElement, "ng-scope") and self.containsClass(parameterElement, "setup-variable-placeholder") == False:
+#                 setupParameter = SetupParameter(parameterElement)
+#                 parameters.append(setupParameter)
+#
+#         return parameters
+#
+#     def isExpanded(self):
+#         return self.containsClass(self.getSetupHeaderElement().find_element_by_xpath('..'), "open")
+#
+#     def collapse(self):
+#         self.action("collapse protocol setup")
+#         if self.isExpanded():
+#             self.getSetupHeaderElement().click()
+#
+#     def expand(self):
+#         self.action("expand protocol setup")
+#         if self.isExpanded() == False:
+#             self.getSetupHeaderElement().click()
+#
+#     def getSetupHeaderElement(self):
+#         return self.findElement(PROTOCOL_SETUP_HEADER)
+#
+#
+#     def addParameter(self, parameterType):
+#         self.action("add parameter: " + parameterType)
+#         self.getAddParameterElement().click()
+#         self.getAddParameterElement().find_element_by_xpath(".//a[text()='" + parameterType + "']").click()
+#         newParam = self.getParameters()[-1]
+#         print(newParam.getParameterType())
+#         return newParam
+#
+#     def getAddParameterElements(self):
+#         self.getAddParameterElement().click()
+#         parameters = self.getAddParameterElement().find_elements_by_xpath(".//a")
+#         for parameter in parameters:
+#             print(parameter.text)
+#
+#     def getAddParameterElement(self):
+#         return self.findElement(ADD_PARAMETER_BUTTON)
+#
+#     def listParameters(self):
+#         for parameter in self.getParameters():
+#             print(parameter.getParameterType() + ": " + parameter.getVariableName())
+#
 
-    def getParameters(self):
-        parameterElements = self.DRIVER.find_elements_by_class_name("setup-variable")
-        parameters = []
-        for parameterElement in parameterElements:
-            if self.containsClass(parameterElement, "ng-scope") and self.containsClass(parameterElement, "setup-variable-placeholder") == False:
-                setupParameter = SetupParameter(parameterElement)
-                parameters.append(setupParameter)
 
-        return parameters
-
-    def isExpanded(self):
-        return self.containsClass(self.getSetupHeaderElement().find_element_by_xpath('..'), "open")
-
-    def collapse(self):
-        self.action("collapse protocol setup")
-        if self.isExpanded():
-            self.getSetupHeaderElement().click()
-
-    def expand(self):
-        self.action("expand protocol setup")
-        if self.isExpanded() == False:
-            self.getSetupHeaderElement().click()
-
-    def getSetupHeaderElement(self):
-        return self.DRIVER.find_element_by_class_name("protocol-setup-header")
-
-
-    def addParameter(self, parameterType):
-        self.action("add parameter: " + parameterType)
-        self.getAddParameterElement().click()
-        self.getAddParameterElement().find_element_by_xpath(".//a[text()='" + parameterType + "']").click()
-        newParam = self.getParameters()[-1]
-        print(newParam.getParameterType())
-        return newParam
-
-    def getAddParameterElements(self):
-        self.getAddParameterElement().click()
-        parameters = self.getAddParameterElement().find_elements_by_xpath(".//a")
-        for parameter in parameters:
-            print(parameter.text)
-
-    def getAddParameterElement(self):
-        return self.findElement(ADD_PARAMETER_BUTTON)
-
-    def listParameters(self):
-        for parameter in self.getParameters():
-            print(parameter.getParameterType() + ": " + parameter.getVariableName())
-
-
-
-class SetupParameter(Page):
-    def __init__(self, parameterElement):
-        self.parameterElement = parameterElement
-
-    def getParameterType(self):
-        return self.parameterElement.find_element_by_class_name("parameter-type").text
-
-    def getVariableName(self):
-        return self.getVariableNameInputField().get_attribute("value")
-
-    def setVariableName(self, variableName):
-        self.getVariableNameInputField().click()
-        self.setField(self.getVariableNameInputField(), variableName)
-        # self.getVariableNameInputField().send_keys(variableName)
-        # self.getVariableNameInputField().send_keys(Keys.ENTER)
-
-    def getVariableNameInputField(self):
-        return self.parameterElement.find_element_by_xpath("./input[@ng-model='param.name']")
-
+# class SetupParameter(Page):
+#     def __init__(self, parameterElement):
+#         self.parameterElement = parameterElement
+#
+#     def getParameterType(self):
+#         return self.parameterElement.find_element_by_class_name("parameter-type").text
+#
+#     def getVariableName(self):
+#         return self.getVariableNameInputField().get_attribute("value")
+#
+#     def setVariableName(self, variableName):
+#         self.getVariableNameInputField().click()
+#         self.setField(self.getVariableNameInputField(), variableName)
+#         # self.getVariableNameInputField().send_keys(variableName)
+#         # self.getVariableNameInputField().send_keys(Keys.ENTER)
+#
+#     def getVariableNameInputField(self):
+#         return self.parameterElement.find_element_by_xpath("./input[@ng-model='param.name']")
+#
 
 class ProtocolInstructions(Page):
     def __init__(self, driver):
@@ -236,3 +240,27 @@ class OperationInstruction2(Page):
 
     def getOperation(self):
         return self.element.find_element(By.XPATH, ".//span[contains(@class, 'operation-name')]")
+
+    def getFields(self):
+        fieldElements = self.element.find_elements(By.TAG_NAME, "tx-protocol-field")
+        operationFields = []
+        for fieldElement in fieldElements:
+            operationFields.append(OperationField(fieldElement))
+        return operationFields
+
+
+
+OPERATION_FIELD_LABEL = (By.CLASS_NAME, "field-label")
+OPERATION_FIELD_VALUE = (By.CLASS_NAME, "field-value")
+class OperationField(Page):
+    def __init__(self, fieldElement):
+        self.fieldElement = fieldElement
+
+    def getName(self):
+        return self.fieldElement.find_element(*OPERATION_FIELD_LABEL).text
+
+    def getValue(self):
+        return self.fieldElement.find_element(*OPERATION_FIELD_VALUE).text
+
+    def toString(self):
+        return self.getName() + ": " + self.getValue()
