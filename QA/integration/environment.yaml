@@ -10,7 +10,7 @@ chromedriver: /usr/bin/chromedriver
 default_tolerance: 8
 browser: firefox
 
-url_postfix: bionano.autodesk.com
+url_postfix: dokku.bionano.autodesk.com
 
 remoteWebDriverURL: http://sfoush302a0L4
 
