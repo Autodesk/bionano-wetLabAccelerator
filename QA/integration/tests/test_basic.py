@@ -122,30 +122,30 @@ class TestBasicInteractions(TestBase):
 
         self.verifyEqual(actualParameters, expectedParameters, "all parameters that were added are in setup section")
     #
-    # def test_add_operation(self):
-    #     """
-    #     test adding an operation and configuring it
-    #     """
-    #     self.signIn()
-    #     instructions = self.protocolInstructions
-    #
-    #     contentMenu = self.contentMenu
-    #     contentMenu.openAndAddProtocol()
-    #
-    #     build = self.build
-    #     for operationName in EXPECTED_OPERATION_NAMES:
-    #         operationInstruction = build.addOperation2(operationName)
-    #         displayedName = operationInstruction.getName()
-    #         self.verifyIsDisplayed(operationInstruction, "operation instruction: " + displayedName)
-    #
-    #         operationInstruction.expand()
-    #
-    #         self.verifyTrue(operationInstruction.isExpanded(), "operation instruction: " + displayedName + " is expanded")
-    #
-    #         self.verifyTrue(operationInstruction.getDescription() != "", "operation description is not blank")
-    #
-    #         operationInstruction.collapse()
-    #         self.verifyFalse(operationInstruction.isExpanded(), "operation instruction: " + displayedName + " is collapsed")
+    def test_add_operation(self):
+        """
+        test adding an operation and configuring it
+        """
+        self.indexPage.signInWithFacebook("yann.bertaud@autodesk.com", "foobar123")
+        instructions = self.protocolInstructions
+
+        contentMenu = self.contentMenu
+        contentMenu.openAndAddProtocol()
+
+        build = self.build
+        for operationName in EXPECTED_OPERATION_NAMES:
+            operationInstruction = build.addOperation(operationName)
+            displayedName = operationInstruction.getName()
+            self.verifyIsDisplayed(operationInstruction, "operation instruction: " + displayedName)
+
+            operationInstruction.expand()
+
+            self.verifyTrue(operationInstruction.isExpanded(), "operation instruction: " + displayedName + " is expanded")
+
+            self.verifyTrue(operationInstruction.getDescription() != "", "operation description is not blank")
+
+            operationInstruction.collapse()
+            self.verifyFalse(operationInstruction.isExpanded(), "operation instruction: " + displayedName + " is collapsed")
 
     #
     # def test_executeScript(self):

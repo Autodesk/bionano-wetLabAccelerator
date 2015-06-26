@@ -49,7 +49,7 @@ class IndexPage(Page):
     def open(self):
         """Load the page"""
         uri = self.BASE_URL #+ "?document=%s&accessToken=%s&env=%s" % (self.DOCUMENT, self.TOKEN, helpers.environment().capitalize())
-        print("opening url: " + uri)
+        self.action("opening url: " + uri)
         self.DRIVER.get(uri)
         self.waitForElement(WELCOME_SPLASH_SCREEN_XPATH)
 
