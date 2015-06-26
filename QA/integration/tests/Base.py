@@ -35,7 +35,6 @@ class _BaseTest(TestCase):
             print("environ except")
             env = config['environment']
 
-        print("environment: " + env)
         return env
 
     def assertSameImage(self, page, prefix=None):
@@ -163,8 +162,8 @@ class _BaseTest(TestCase):
         width = config['viewport']['width']
         height = config['viewport']['height']
        # print("setting browser window size to: " + str(width) + "," + str(height))
-        self.DRIVER.maximize_window()
-        #self.DRIVER.set_window_size(width, height)
+       #  self.DRIVER.maximize_window()
+        self.DRIVER.set_window_size(width, height)
 
 class _BaseFirefoxTest(_BaseTest):
     """For firefox tests, the driver"""

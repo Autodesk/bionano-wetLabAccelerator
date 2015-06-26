@@ -8,6 +8,7 @@ from helpers import environment
 
 from PIL import Image
 from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
@@ -40,60 +41,108 @@ class Page:
 
     def __init__(self, driver):
         self.DRIVER = driver
-        print(self.BASE_URL)
 
     def action(self, actionDescription):
         print("  Action - " + actionDescription)
 
-    def exception(self, message):
+    def error(self, message):
+        print("  ERROR - " + message)
+
+    def raiseException(self, message):
         print("  EXCEPTION - " + message)
         raise Exception(message)
 
-    def findElement(self, locatorTuple):
+
+    ## finds element using the locator tuple in the form of (By.XPATH, "//div[@class='foo']")
+    ## optionally takes parent element which is a webElement
+    ## returns a WebElement or exception occurs if not found
+    def findElement(self, locatorTuple, parentElement = None):
+        message = "could not locate element by " + locatorTuple[0] + ": " + locatorTuple[1]
         try:
-            element = self.DRIVER.find_element(*locatorTuple)
+            # self.waitForElement(locatorTuple)
+            time.sleep(2)
+            if parentElement.__class__.__name__ == "WebElement":
+                message = "could not locate child element of " + self.getElementAttributes(parentElement) + " by: " + locatorTuple[0] + ": " + locatorTuple[1]
+                element = parentElement.find_element(*locatorTuple)
+            else:
+                element = self.DRIVER.find_element(*locatorTuple)
+
+
             #print(self.getElementAttributes(element))
             return element
         except WebDriverException as e:
-            self.exception("could not locate element: " + str(locatorTuple) + e.message)
+            self.raiseException(message + e.message)
 
-    def findElements(self, locatorTuple):
-        return self.DRIVER.find_elements(*locatorTuple)
+    def findElements(self, locatorTuple, parentElement = None):
+        message = "could not locate elements by " + locatorTuple[0] + ": " + locatorTuple[1]
+        try:
+            if parentElement.__class__.__name__ == "WebElement":
+                message = "could not locate child elements of " + self.getElementAttributes(parentElement) + " by " + locatorTuple[0] + ": " + locatorTuple[1]
+                elements = parentElement.find_elements(*locatorTuple)
+            else:
+                elements = self.DRIVER.find_elements(*locatorTuple)
+            return elements
+        except WebDriverException as e:
+            self.raiseException(message + e.message)
 
-    def findElementByXpath(self, xpath):
-        return self.findElement((By.XPATH, xpath))
-
-    def findElementById(self, id):
-        return self.findElement((By.ID, id))
 
     def findElementByAttributeValue(self, elementType, attribute, value):
         return self.DRIVER.find_element_by_xpath("//" + elementType + "[@" + attribute + "='" + value + "']")
 
-    def click(self, element, description):
-        attributes = self.getElementAttributes(element)
-        self.action("click on " + description + " element: " + attributes)
-        if isinstance(element, tuple):
-            element = self.findElement(element)
 
-        self.executeScript("window.scrollTo(0," + str(element.location['y']) + ")")
-        #
-        # print(element.location_once_scrolled_into_view)
-        element.click()
-        # try:
-        #     element.click()
-        # except WebDriverException as e:
-        #     message = "could not click on " + description + ", element: " + attributes + "\n" + e.message
-        #     print("FAIL - " + message)
-        #     raise Exception(message)
+    ## takes a WebElement or locator tuple in the form of elementOrLocatorTupleToElement((By.XPATH, "//div[@class='fii']"))
+    ## if tuple then uses findElement(locatorTuple) to return a WebElement
+    ## otherwise returns element WebElement
+    def elementOrLocatorTupleToElement(self, elementOrLocatorTuple):
+        if isinstance(elementOrLocatorTuple, tuple):
+            element = self.findElement(elementOrLocatorTuple)
+        elif elementOrLocatorTuple.__class__.__name__ == "WebElement":
+            element = elementOrLocatorTuple
+        return element
+
+    def findChildElement(self, element, locatorTuple):
+        return element.find_element(locatorTuple)
+
+    def elementExists(self, locatorTuple, parentElement = None):
+        try:
+            if parentElement.__class__.__name__ == "WebElement":
+                element = parentElement.find_element(*locatorTuple)
+            else:
+                element = self.DRIVER.find_element(*locatorTuple)
+        except NoSuchElementException:
+            return False
+
+        return element.is_displayed()
+
+    def click(self, elementOrLocatorTuple, description):
+        # if elementOrLocatorTuple variable is a locator tuple, ie (By.ID, "foobar") convert it to a WebElement
+        element = self.elementOrLocatorTupleToElement(elementOrLocatorTuple)
+        attributes = self.getElementAttributes(element)
+
+        self.action("click on '" + description + "'") # element: " + attributes)
+
+        #self.executeScript("window.scrollTo(0," + str(element.location['y']) + ")")
+        try:
+            element.click()
+        except WebDriverException as e:
+            message = "could not click on '" + description + "', element: " + attributes + "\n" + e.message
+            self.raiseException(message)
 
     def getElementAttributes(self, element):
-        attributes = self.DRIVER.execute_script('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', element)
-        strAttributes = "<" + element.tag_name + " "
-        for key, value in attributes.iteritems():
-            strAttributes = strAttributes + " " + key + "='" + value + "'" + " "
+        try:
+            self.DRIVER = element.parent
 
-        strAttributes = strAttributes + ">"
-        return strAttributes
+            attributes = self.DRIVER.execute_script('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', element)
+            strAttributes = "<" + element.tag_name
+            for key, value in attributes.iteritems():
+                strAttributes = strAttributes + " " + key + "='" + value + "'"
+
+            strAttributes = strAttributes + ">"
+            return strAttributes
+        except Exception  as e:
+            print("error " + e.message + "\ngetting attributes for <" + element.tag_name + ">" + element.text + "</" + element.tag_name + ">")
+            # self.error("could not get element attributes")
+            return ""
 
     def executeScript(self, script):
         #self.action("executing script: '" + script + "'")
@@ -129,10 +178,12 @@ class Page:
             print("time out waiting for element: " + str(locatorTuple))
             return False
 
-    def setField(self, element, value, description = "textfield"):
+    def setField(self, elementOrLocatorTuple, value, description = "textfield"):
+        element = self.elementOrLocatorTupleToElement(elementOrLocatorTuple)
         self.action("set " + description + " to " + value)
+        element.clear()
         element.send_keys(value)
-        element.send_keys(Keys.ENTER)
+        #element.send_keys(Keys.ENTER)
 
     def dragAndDrop(self, source, target, descriptionSource, descriptionTarget):
         self.action("drag " + descriptionSource + " to " + descriptionTarget)
@@ -170,7 +221,10 @@ class Page:
     def containsClass(self, element, className):
         return className in element.get_attribute('class').split(" ")
 
-    def snapshot(self, dest=None):
+    def isDisplayed(self, elementOrLocatorTuple):
+        return self.elementOrLocatorTupleToElement(elementOrLocatorTuple).is_displayed()
+
+    def snapshot(self, dest = None):
         """Take a snapshot of the browser's viewport"""
         if dest:
             filename = dest
