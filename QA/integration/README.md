@@ -58,7 +58,7 @@ Below is an example of a TestCase with multiple tests, that limits to Firefox. N
         start = datetime.datetime.now()
         self.driver.get('http://www.autodesk.com')
         end = datetime.datetime.now()
-        self.assertTrue((end-start).seconds < 2),
+        self.assertTrue((end-start).seconds < 2)```
 
 ## Managing Assets
 
