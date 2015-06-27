@@ -24,7 +24,7 @@ class _BaseTest(TestCase):
             self.setupIE()
         if browser == "remote":
             self.setupRemote()
-        print("browser: " + browser)
+        print("\nbrowser: " + browser)
 
     def environment(self):
         """Return the environment for this test. This allows us to specify

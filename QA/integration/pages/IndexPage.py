@@ -51,11 +51,13 @@ class IndexPage(Page):
         uri = self.BASE_URL #+ "?document=%s&accessToken=%s&env=%s" % (self.DOCUMENT, self.TOKEN, helpers.environment().capitalize())
         self.action("opening url: " + uri)
         self.DRIVER.get(uri)
-        self.waitForElement(WELCOME_SPLASH_SCREEN_XPATH)
+        # time.sleep(2)
+        # self.waitForElement(WELCOME_SPLASH_SCREEN_XPATH, 15, description = "splash screen")
 
     def dismissWelcomeSplashScreen(self):
         if self.elementExists(WELCOME_SPLASH_SCREEN_XPATH):
             self.click(WELCOME_SPLASH_SCREEN_XPATH, "Welcome splash screen")
+            time.sleep(1)
 
     def clickLoginDropdown(self):
         self.click(LOGIN_DROPDOWN, "Login dropdown")

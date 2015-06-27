@@ -26,6 +26,9 @@ ${VENVDIR}: requirements.txt
 
 all: tests
 
+allTests: ${VENVDIR}
+	${VENVDIR}/bin/nosetests -s --tc-format=yaml --tc-file=environment.yaml --tc=environment:${TEST_ENVIRONMENT} --tc=browser:${TEST_BROWSER} --nocapture ${TEST}
+
 tests: ${VENVDIR}
 	${VENVDIR}/bin/nosetests -s --tc-format=yaml --tc-file=environment.yaml --tc=environment:${TEST_ENVIRONMENT} --tc=browser:${TEST_BROWSER} --nocapture ${TEST} tests/test_basic.py
 
