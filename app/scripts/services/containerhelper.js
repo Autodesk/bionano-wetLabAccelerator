@@ -23,12 +23,12 @@ angular.module('transcripticApp')
     TranscripticAuth.watch(function (info) {
       //hack - should get in pages if possible...
       if (_.result(info, 'organization', false)) {
-        Container.list({per_page: 200}).$promise.then(self.setRemote);
+        Container.list({per_page: 300}).$promise.then(self.setRemote);
       }
     });
 
-    self.setRemote = function (remote, noReset) {
-      if (noReset !== false ) {
+    self.setRemote = function (remote, forceReset) {
+      if (forceReset === true) {
         self.remote.length = 0;
       }
 
@@ -63,7 +63,7 @@ angular.module('transcripticApp')
       'plum'      : '#DDA0DD'
     };
 
-    var calls = 0;
+    var calls        = 0;
     self.randomColor = function () {
       calls = (calls + 1) % _.keys(self.definedColors).length;
       return _.values(self.definedColors)[calls];
