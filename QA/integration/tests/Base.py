@@ -152,8 +152,11 @@ class _BaseTest(TestCase):
         selenium_logger.setLevel(logging.WARNING)
 
     def setupRemote(self):
+        remoteWebDriverURL = config['remoteWebDriverURL'] + ':4444/wd/hub'
+
+        print("\nusing Remote webdriver at " + remoteWebDriverURL)
         self.DRIVER = webdriver.Remote(
-            command_executor=config['remoteWebDriverURL'] + ':4444/wd/hub',
+            command_executor=remoteWebDriverURL,
             desired_capabilities=DesiredCapabilities.CHROME
         )
         self.setWindowSize()
