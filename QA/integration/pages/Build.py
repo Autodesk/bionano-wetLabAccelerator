@@ -62,7 +62,7 @@ class Build(Page):
             return OperationInstruction(newOperationInstructionElement)
         except Exception as e:
             message = "operation instruction named: " + operationName + " could not be found"
-            self.exception(message)
+            self.raiseException(message)
             #raise Exception(message)
 
         # if len(operationInstructions) > 0:

@@ -59,8 +59,8 @@ class Page:
     def findElement(self, locatorTuple, parentElement = None):
         message = "could not locate element by " + locatorTuple[0] + ": " + locatorTuple[1]
         try:
-            # self.waitForElement(locatorTuple)
-            time.sleep(2)
+            self.waitForElement(locatorTuple, 15)
+            #time.sleep(2)
             if parentElement.__class__.__name__ == "WebElement":
                 message = "could not locate child element of " + self.getElementAttributes(parentElement) + " by: " + locatorTuple[0] + ": " + locatorTuple[1]
                 element = parentElement.find_element(*locatorTuple)
@@ -120,13 +120,13 @@ class Page:
         attributes = self.getElementAttributes(element)
 
         self.action("click on '" + description + "'") # element: " + attributes)
-
-        #self.executeScript("window.scrollTo(0," + str(element.location['y']) + ")")
-        try:
-            element.click()
-        except WebDriverException as e:
-            message = "could not click on '" + description + "', element: " + attributes + "\n" + e.message
-            self.raiseException(message)
+        self.executeScript("window.scrollTo(0," + str(element.location['y']) + ")")
+        element.click()
+        # try:
+        #     element.click()
+        # except WebDriverException as e:
+        #     message = "could not click on '" + description + "', element: " + attributes + "\n" + e.message
+        #     self.raiseException(message)
 
     def getElementAttributes(self, element):
         try:
@@ -157,14 +157,16 @@ class Page:
     def waitForElementByXpath(self, xpath):
         return self.waitForElement((By.XPATH, xpath))
 
-    def waitForElement(self, locatorTuple):
+    def waitForElement(self, locatorTuple, timeout = TIMEOUT, description = None ):
         try:
-            # print("    waiting for element: " + str(locatorTuple))
-            WebDriverWait(self.DRIVER, self.TIMEOUT).until(
+            WebDriverWait(self.DRIVER, timeout).until(
                 expected_conditions.presence_of_element_located(locatorTuple))
             return True
         except WebDriverException:
-            print("time out waiting for element: " + str(locatorTuple))
+            if description != None and description != "":
+                print("time out waiting for " + description + ", locator: " + str(locatorTuple))
+            else:
+                print("time out waiting for element: " + str(locatorTuple))
             return False
 
     def waitForElementVisible(self, locatorTuple):
@@ -180,10 +182,9 @@ class Page:
 
     def setField(self, elementOrLocatorTuple, value, description = "textfield"):
         element = self.elementOrLocatorTupleToElement(elementOrLocatorTuple)
-        self.action("set " + description + " to " + value)
+        self.action("set " + description + " to '" + str(value) + "'")
         element.clear()
         element.send_keys(value)
-        #element.send_keys(Keys.ENTER)
 
     def dragAndDrop(self, source, target, descriptionSource, descriptionTarget):
         self.action("drag " + descriptionSource + " to " + descriptionTarget)

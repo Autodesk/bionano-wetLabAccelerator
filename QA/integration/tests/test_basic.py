@@ -38,10 +38,10 @@ class TestBasicInteractions(TestBase):
         contentMenu = self.contentMenu
         contentMenu.open()
 
-        self.verifyTrue(contentMenu.isOpen(), "content menu is open")
+        self.verifyTrue(contentMenu.isOpen(), "Content Menu is open")
         contentMenu.addProtocol()
-
-        self.verifyFalse(contentMenu.isOpen(), "content menu is closed after adding protocol")
+        time.sleep(1)
+        self.verifyFalse(contentMenu.isOpen(), "Content Menu is closed after adding protocol")
         build = self.build
         time.sleep(3)
 
@@ -142,7 +142,7 @@ class TestBasicInteractions(TestBase):
 
             self.verifyTrue(operationInstruction.isExpanded(), "operation instruction: " + displayedName + " is expanded")
 
-            self.verifyTrue(operationInstruction.getDescription() != "", "operation description is not blank")
+            self.verifyTrue(operationInstruction.getDescription() == "", "operation description is blank")
 
             operationInstruction.collapse()
             self.verifyFalse(operationInstruction.isExpanded(), "operation instruction: " + displayedName + " is collapsed")

@@ -17,12 +17,12 @@ class ContentMenu(Page):
         self.DRIVER = driver
 
     def open(self):
-        self.click(self.getContentMenuButton(), "content menu")
+        self.click(self.getContentMenuButton(), "Content Menu")
         self.waitForElementVisible(NEW_PROTOCOL_XPATH)
 
     def addProtocol(self):
         time.sleep(2)
-        self.click(self.findElement(NEW_PROTOCOL_XPATH), "add protocol")
+        self.click(self.findElement(NEW_PROTOCOL_XPATH), "New Protocol")
         self.waitForElement(SIDE_PANEL)
 
     def isOpen(self):
