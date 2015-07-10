@@ -26,14 +26,22 @@ ${VENVDIR}: requirements.txt
 
 all: tests
 
+# from command line: 'make allTests' which will run all tests
+# or: 'make allTests TEST_BROWSER=chrome TEST_ENVIRONMENT=qa' which tells sets the TEST_BROWSER and TEST_ENVIRONMENT variables
+# or: 'make allTests TEST=tests/test_basic.py' which tells make to run only the tests in tests/test_basic.py
 allTests: ${VENVDIR}
 	${VENVDIR}/bin/nosetests -s --tc-format=yaml --tc-file=environment.yaml --tc=environment:${TEST_ENVIRONMENT} --tc=browser:${TEST_BROWSER} --nocapture ${TEST}
 
+# from command line: 'make tests'
+# or: 'make tests TEST=.test_basic' note the period after the equal sign, which will run the test_basic method within the TestBasicInteractions class
 tests: ${VENVDIR}
-	${VENVDIR}/bin/nosetests -s --tc-format=yaml --tc-file=environment.yaml --tc=environment:${TEST_ENVIRONMENT} --tc=browser:${TEST_BROWSER} --nocapture ${TEST} tests/test_basic.py
+	${VENVDIR}/bin/nosetests -s --tc-format=yaml --tc-file=environment.yaml --tc=environment:${TEST_ENVIRONMENT} --tc=browser:${TEST_BROWSER} --nocapture tests/test_basic.py:TestBasicInteractions${TEST}
 
+# from command line: 'make opTests'
+# or: 'make tests TEST=.test_transfer' note the period after the equal sign, which will run the test_transfer method within the TestOperations class
 opTests: ${VENVDIR}
-	${VENVDIR}/bin/nosetests -s --tc-format=yaml --tc-file=environment.yaml --tc=environment:${TEST_ENVIRONMENT} --tc=browser:${TEST_BROWSER} --nocapture ${TEST} tests/test_operations.py
+    # from command line: make opTests
+	${VENVDIR}/bin/nosetests -s --tc-format=yaml --tc-file=environment.yaml --tc=environment:${TEST_ENVIRONMENT} --tc=browser:${TEST_BROWSER} --nocapture tests/test_operations.py:TestOperations${TEST}
 
 
 # FOR NOW ONLY - to automatically promote images to be blessed
