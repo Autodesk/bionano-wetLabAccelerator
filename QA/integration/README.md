@@ -69,6 +69,26 @@ When pushed to S3, assets are 'tagged' using the date and time of the push. That
  * _make push-assets_ - Running this command will tag the assets, and push them upstream to S3
  * _make assets_ - This allows anyone to fetch the newly pushed assets to S3.f
 
+
+#### Running tests using make
+
+You can use make from the command line to run various tests.
+
+* Run all tests using default settings from the Makefile
+    ```make allTests```
+
+* Run all tests using specific browser (firefox) and test environment qa. The test environment is defined in the environment.yaml
+    ```make allTests TEST_BROWSER=firefox TEST_ENVIRONMENT=qa```
+
+* Run tests from a specific test file
+    ```make allTests TEST=tests/test_basic.py```
+
+* Run tests from a specific test file, specific browser and test environment
+    ```make allTests TEST=tests/test_basic.py TEST_BROWSER=firefox TEST_ENVIRONMENT=qa```
+
+* Run specific test method test_transfer() from class TestOperations in test_operations.py
+    ```make allTests TEST=tests/test_operations.py:TestOperations.test_transfer```
+
 #### Running Tests using Nose
 
 As nose runs all tests, the following is quick documentation around limiting tests - i.e running tests only against the targetted use case.
