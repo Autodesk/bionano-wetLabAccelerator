@@ -1,17 +1,19 @@
 # Understanding the Test Runner
 
-Browser based testing for firefly.js uses the combination of [selenium](http://selenium-python.readthedocs.org/en/latest/) and python's standard [unittest](https://docs.python.org/2/library/unittest.html) library, and is wrapped by the [nose test runner](http://nose.readthedocs.org).
+Browser based testing for WLA uses the combination of [selenium](http://selenium-python.readthedocs.org/en/latest/) and python's standard [unittest](https://docs.python.org/2/library/unittest.html) library, and is wrapped by the [nose test runner](http://nose.readthedocs.org).
 
 ## How It Works
 
-The test framework runs individual tests in their target browsers. Tests themselves can compare images, interact with the browser, and generally assert values.  The framework is based on python's [unittest framework](https://docs.python.org/2/library/unittest.html), combined with [webdriver](http://selenium-python.readthedocs.org/en/latest/api.html).
+The test framework runs individual tests in the specified browser or the default browser set in environment.yaml
 
 The following high-level targets have been exposed through make:
 
+* tests - Run the tests
+
+the make targets below are legacy from Large Model Viewer, not used in WLA
 * assets - Fetch the binary assets (images) used in comparison, from s3
 * push_assets - When generating assets, place the newly created assets in s3. This target will even update the local configuration file, and commit it to the repository.
 * snapshots - Create snapshots of the underlying tests, for comparison
-* tests - Run the tests
 * bless - Copy all of the images from the images to be blessed folder - into the assets tree.
 
 ### Installing Components
@@ -28,28 +30,43 @@ Component installation is controlled by the requirements.txt file in this direct
 
 ### Running Tests
 
-With the _Makefile_ in place the full test suite can be orchestrated from Make. When you run the tests for the first time, you will need to
-fetch all baseline images for comparison. In order to do it type:
+With the _Makefile_ in place the full test suite can be orchestrated from Make.
 
- ```make assets```
+* Run all tests using default settings from the Makefile
+    ```make tests```
 
-That will copy images from aws S3 storage to your local machine.
+* Run all tests using specific browser (firefox) and test environment qa. The test environment is defined in the environment.yaml
+    ```make tests TEST_BROWSER=firefox TEST_ENVIRONMENT=qa```
 
-Then, you can run the tests by typing:
+* Run tests from a specific test file
+    ```make tests TEST=tests/test_basic.py```
 
- ```make tests```
+* Run tests from a specific test file, specific browser and test environment
+    ```make tests TEST=tests/test_basic.py TEST_BROWSER=firefox TEST_ENVIRONMENT=qa```
+
+* Run specific test method test_transfer() from class TestOperations in test_operations.py
+    ```make tests TEST=tests/test_operations.py:TestOperations.test_transfer```
+
+* Run tests within test_basic.py, using the basicTests target defined in the Makefile
+    ```make basicTests```
+
+* Run tests within test_operations.py using the opTests target defined in the Makefile
+    ```make opTests```
+
+you can see additional documentation in the Makefile itself.
 
 ## Writing Tests
 
-The unit test framework instantiates the appropriate browser, based on the the target platform. In other words, tests that inherit from the *_BaseFirefoxTest* class will run in Firefox, whereas tests classes that inherit from *_BaseTest* will run in all browsers.
+The unit test framework instantiates the browser set in the environment.yaml or the browser as specified by the TEST_BROWSER variable.
+Below is an example of a TestCase with multiple tests, notice that it inherits from TestBase.
 
-Below is an example of a TestCase with multiple tests, that limits to Firefox. Notice the reliance on *_BaseFirefoxTest_.
+all methods defined within the class that start with test_ are considered tests and will be run.
 
 ```
   import tests.Base as Base
   import datetime
 
-  class TestHomeFF(Base._BaseFirefoxTest):
+  class TestBasic(TestBase):
 
     def test_loading_google(self):
         self.driver.get('http://www.google.com')
@@ -60,34 +77,7 @@ Below is an example of a TestCase with multiple tests, that limits to Firefox. N
         end = datetime.datetime.now()
         self.assertTrue((end-start).seconds < 2)```
 
-## Managing Assets
 
-Ultimately the test framework compares assets against a set of known good assets. As a result the frequent need arises to generate new assets (images) for comparison.  The _compare_ function, part of the _assertSameImage_ assertion handles creating snapshots of the associated images. Images, once compared need to be **blessed**, placed in the assets tree, and sent upstream for sharing.
-
-When pushed to S3, assets are 'tagged' using the date and time of the push. That 'tag' is inserted by Make into the environment.yaml file. The file is added to get, and needs to be pushed upstream.
-
- * _make push-assets_ - Running this command will tag the assets, and push them upstream to S3
- * _make assets_ - This allows anyone to fetch the newly pushed assets to S3.f
-
-
-#### Running tests using make
-
-You can use make from the command line to run various tests.
-
-* Run all tests using default settings from the Makefile
-    ```make allTests```
-
-* Run all tests using specific browser (firefox) and test environment qa. The test environment is defined in the environment.yaml
-    ```make allTests TEST_BROWSER=firefox TEST_ENVIRONMENT=qa```
-
-* Run tests from a specific test file
-    ```make allTests TEST=tests/test_basic.py```
-
-* Run tests from a specific test file, specific browser and test environment
-    ```make allTests TEST=tests/test_basic.py TEST_BROWSER=firefox TEST_ENVIRONMENT=qa```
-
-* Run specific test method test_transfer() from class TestOperations in test_operations.py
-    ```make allTests TEST=tests/test_operations.py:TestOperations.test_transfer```
 
 #### Running Tests using Nose
 
