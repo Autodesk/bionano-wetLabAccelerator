@@ -9,11 +9,17 @@ from ProtocolSetup import ProtocolSetup
 DESCRIPTION_FIELD = (By.XPATH, ".//tx-protocol-field[@ng-model='opCtrl.op.description']//div[@class='field-value']//input")
 OPERATION = (By.XPATH, ".//span[contains(@class, 'operation-name')]")
 PROTOCOL_FIELD = (By.TAG_NAME, "tx-protocol-field")
+
+OPERATION_FIELD_LABEL = (By.CLASS_NAME, "field-label")
+OPERATION_FIELD_VALUE = (By.CLASS_NAME, "field-value")
+OPERATION_INNER_FIELD = (By.TAG_NAME, "tx-protocol-field-inner")
+DROPDOWN = (By.XPATH, ".//*[contains(@class, 'option-button') or @dropdown]")
+INPUT_FIELD = (By.XPATH, ".//input[@type='text' or @type='number']")
+TRUE_FALSE_BUTTON = (By.CLASS_NAME, "true-false-button")
+
 class OperationInstruction(Page):
     def __init__(self, element):
-        elemString = "<" + element.tag_name + " class='" + element.get_attribute('class') + "'>"
-        # print(elemString)
-
+        self.elemString = "<" + element.tag_name + " class='" + element.get_attribute('class') + "'>"
         self.element = element
         self.DRIVER = element.parent
 
@@ -24,20 +30,20 @@ class OperationInstruction(Page):
         self.setField(self.findElement(DESCRIPTION_FIELD, self.element), descriptionString, "operation description")
 
     def getName(self):
-        return self.getOperation().text
+        return self.getOperationElement().text
 
     def expand(self):
         self.action("expand '" + self.getName() + "' operation")
         if self.isExpanded():
             print("operation '" + self.getName() + "' is already expanded")
         else:
-            self.click()
+            self.clickOperation()
         time.sleep(1)
 
     def collapse(self):
         self.action("collapse '" + self.getName() + "' operation")
         if self.isExpanded():
-            self.click()
+            self.clickOperation()
         else:
             print("operation '" + self.getName() + "' is already collapsed")
 
@@ -48,10 +54,10 @@ class OperationInstruction(Page):
     def is_displayed(self):
         return self.element.is_displayed()
 
-    def click(self):
-        self.getOperation().click()
+    def clickOperation(self):
+        self.getOperationElement().click()
 
-    def getOperation(self):
+    def getOperationElement(self):
         return self.findElement(OPERATION, self.element)
 
     def getOperationFields(self):
@@ -62,27 +68,122 @@ class OperationInstruction(Page):
                 operationFields.append(OperationField(fieldElement))
         return operationFields
 
-    def getOperationFieldOld(self, fieldName):
-        locator = (By.XPATH, ".//tx-protocol-field/div[contains(@class, 'field-label') and text()='" + fieldName + "']/..")
-        return OperationField(self.findElement(locator, self.element))
-
     def getOperationField(self, fieldName):
+        return OperationField(self.getOperationFieldElement(fieldName))
+
+    def getOperationFieldElement(self, fieldName):
         locator = (By.XPATH, ".//tx-protocol-field/div[contains(@class, 'field-label') and text()='" + fieldName + "']/..")
         return self.findElement(locator, self.element)
 
     def setOperationFieldInputField(self, fieldName, value):
         #self.getOperationField(fieldName).find_element(By.TAG_NAME, "input").send_keys(value)
-        self.getOperationFieldOld(fieldName).setInputField(value)
+        self.getOperationField(fieldName).setInputField(value)
 
     def getOperationFieldInputFieldValue(self, fieldName):
-        return self.getOperationFieldOld(fieldName).getValue()
+        return self.getOperationField(fieldName).getValue()
         #return self.getOperationField(fieldName).find_element(By.TAG_NAME, "input").get_attribute("value")
 
     def setOperationField(self, fieldName, value, optionalValue = None):
         self.getOperationField(fieldName).set(value, optionalValue)
 
+    def setVolumeValue(self, value, unit = None):
+        self.getOperationField("volume").setInputField(value)
+        self.setVolumeUnit(unit)
+
+    def setVolumeUnit(self, unit):
+        if unit != None:
+          self.getOperationField('volume').setDropdown(unit)
+
+    # returns the volume value and unit
+    def getVolumeValue(self):
+        return self.getOperationField("volume").getValue()
+
+    def setFromContainerType(self, type):
+        self.setContainerType("from", type)
+
+    def getFromContainerType(self):
+        return self.getContainerType("from")
+
+    def setToContainerType(self, type):
+        self.setContainerType("to", type)
+
+    def getToContainerType(self):
+        return self.getContainerType("to")
+
+    def setContainerType(self, fromTo, type):
+        self.getOperationField(fromTo).setDropdown(type)
+
+    def getContainerType(self, fromTo):
+        return self.getOperationField(fromTo).getDropdownSelectedValue()
+
+    def setDispenseSpeed(self, speed):
+        self.getOperationField("dispense speed").setInputField(speed)
+
+    def getDispenseSpeed(self):
+        return self.getOperationField("dispense speed").getValue()
+
+    def setAspirateSpeed(self, speed):
+        self.getOperationField("aspirate speed").setInputField(speed)
+
+    def getAspirateSpeed(self):
+        return self.getOperationField("aspirate speed").getValue()
+
+
+
+    def setModalField(self, modalDialog, fieldName, fieldValue):
+        locator = (By.XPATH, ".//td[text()='" + fieldName + "']/..//input")
+        field = self.findElement(locator, modalDialog)
+        self.setField(field, fieldValue, fieldName)
+
+
+    def setMixBeforeAfterValues(self, modalTitle, repetitions, speed, volume):
+        editLocator = (By.XPATH, "//tx-protocol-field//*[text()='" + modalTitle + "']/..//tx-protocol-field-inner/a")
+        self.click(editLocator, "click 'edit...' in " + modalTitle + " field")
+        mixModalLocator = (By.XPATH, "//div[@class='modal-heading']/*[text()='" + modalTitle + "']/../..")
+        modalDialog = self.findElement(mixModalLocator)
+        self.setModalField(modalDialog, "volume", volume)
+        self.setModalField(modalDialog, "speed", speed)
+        self.setModalField(modalDialog, "repetitions", repetitions)
+        self.click(modalDialog.find_element(By.CLASS_NAME, "modal-close"),
+                   "click on modal dialog's " + modalTitle + " close button")
+
+    def setMixBefore(self, volume, volumeUnit, speed, speedUnit, repetitions):
+        modalTitle = "mix before"
+        self.setMixBeforeAfterValues(modalTitle, repetitions, speed, volume)
+
+
+    def setMixAfter(self, volume, volumeUnit, speed, speedUnit, repetitions):
+        modalTitle = "mix after"
+        self.setMixBeforeAfterValues(modalTitle, repetitions, speed, volume)
+
+    def getModalValues(self, modalTitle):
+        editLocator = (By.XPATH, "//tx-protocol-field//*[text()='" + modalTitle + "']/..//tx-protocol-field-inner/a")
+        self.click(editLocator, None)
+        mixModalLocator = (By.XPATH, "//div[@class='modal-heading']/*[text()='" + modalTitle + "']/../..")
+        modalDialog = self.findElement(mixModalLocator)
+        modalFields = modalDialog.find_elements(By.TAG_NAME, "tx-protocol-field-inner")
+        values = []
+        for modalField in modalFields:
+            value = ""
+            if self.elementExists(INPUT_FIELD, modalField):
+                inputField = self.findElement(INPUT_FIELD, modalField)
+                value = inputField.get_attribute("value")
+            value += " " + modalField.text
+            values.append(value)
+        self.click(modalDialog.find_element(By.CLASS_NAME, "modal-close"), None)
+        return values
+
+    def getMixBeforeValues(self):
+        return self.getModalValues("mix before")
+
+    def getMixAfterValues(self):
+        return self.getModalValues("mix after")
+
+
+
+
     def getOperationFieldValue(self, fieldName):
-        self.getOperationField(fieldName).getValue()
+        return self.getOperationField(fieldName).getValue()
 
     def getOperationFieldsAsJson(self):
         fieldsJson = []
@@ -92,14 +193,6 @@ class OperationInstruction(Page):
         return fieldsJson
 
 
-OPERATION_FIELD_LABEL = (By.CLASS_NAME, "field-label")
-OPERATION_FIELD_VALUE = (By.CLASS_NAME, "field-value")
-OPERATION_INNER_FIELD = (By.TAG_NAME, "tx-protocol-field-inner")
-DROPDOWN = (By.CLASS_NAME, "option-button")
-DROPDOWN3 = (By.XPATH, ".//*[contains(@class, 'option-button') or @dropdown]")
-DROPDOWN2 = (By.XPATH, ".//div[@dropdown]")
-INPUT_FIELD = (By.XPATH, ".//input[@type='text' or @type='number']")
-TRUE_FALSE_BUTTON = (By.CLASS_NAME, "true-false-button")
 
 class OperationField(Page):
     def __init__(self, fieldElement):
@@ -161,16 +254,16 @@ class OperationField(Page):
         return self.getName() + ": " + self.getValue()
 
     def hasDropdown(self):
-        return self.elementExists(DROPDOWN3, self.innerField)
+        return self.elementExists(DROPDOWN, self.innerField)
 
     def getDropdown(self):
-        return self.findElement(DROPDOWN3, self.innerField)
+        return self.findElement(DROPDOWN, self.innerField)
 
     def setDropdown(self, value):
         dropdown = self.getDropdown()
         dropdown.click()
         optionLocator = (By.XPATH, ".//*[text()='" + value + "']")
-        self.click(self.findElement(optionLocator, self.getDropdown()), self.getName() + " dropdown " + value)
+        self.click(self.findElement(optionLocator, self.getDropdown()), "set '" + self.getName() + "' dropdown to: " + value)
 
     def getDropdownOptions(self):
         dropdown = self.getDropdown()
@@ -184,7 +277,7 @@ class OperationField(Page):
 
     def getDropdownSelectedValue(self):
         if self.hasDropdown():
-            self.dropdown = self.findElement(DROPDOWN3, self.innerField)
+            self.dropdown = self.findElement(DROPDOWN, self.innerField)
             return self.dropdown.text
         else:
             return None
@@ -197,7 +290,7 @@ class OperationField(Page):
         return self.findElement(INPUT_FIELD, self.innerField)
 
     def setInputField(self, value):
-        print(self.getElementAttributes(self.getInputField()))
+        # print(self.getElementAttributes(self.getInputField()))
         self.setField(self.getInputField(), value, self.getName() + " input field")
 
     def getInputFieldValue(self):
@@ -226,3 +319,5 @@ class OperationField(Page):
     def getTrueFalseState(self):
         if self.hasTrueFalseButton():
             return self.getTrueFalseButton().find_element(By.TAG_NAME, "input").get_attribute("aria-checked") == "true"
+
+
