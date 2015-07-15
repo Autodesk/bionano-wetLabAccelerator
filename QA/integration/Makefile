@@ -26,9 +26,9 @@ ${VENVDIR}: requirements.txt
 
 all: tests
 
-# from command line: 'make allTests' which will run all tests
-# or: 'make allTests TEST_BROWSER=chrome TEST_ENVIRONMENT=qa' which tells sets the TEST_BROWSER and TEST_ENVIRONMENT variables
-# or: 'make allTests TEST=tests/test_basic.py' which tells make to run only the tests in tests/test_basic.py
+# from command line: 'make tests' which will run all tests
+# or: 'make tests TEST_BROWSER=chrome TEST_ENVIRONMENT=qa' which tells sets the TEST_BROWSER and TEST_ENVIRONMENT variables
+# or: 'make tests TEST=tests/test_basic.py' which tells make to run only the tests in tests/test_basic.py
 tests: ${VENVDIR}
 	${VENVDIR}/bin/nosetests -s --tc-format=yaml --tc-file=environment.yaml --tc=environment:${TEST_ENVIRONMENT} --tc=browser:${TEST_BROWSER} --nocapture ${TEST}
 

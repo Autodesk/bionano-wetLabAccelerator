@@ -33,24 +33,31 @@ Component installation is controlled by the requirements.txt file in this direct
 With the _Makefile_ in place the full test suite can be orchestrated from Make.
 
 * Run all tests using default settings from the Makefile
+
     ```make tests```
 
 * Run all tests using specific browser (firefox) and test environment qa. The test environment is defined in the environment.yaml
+
     ```make tests TEST_BROWSER=firefox TEST_ENVIRONMENT=qa```
 
 * Run tests from a specific test file
+
     ```make tests TEST=tests/test_basic.py```
 
 * Run tests from a specific test file, specific browser and test environment
+
     ```make tests TEST=tests/test_basic.py TEST_BROWSER=firefox TEST_ENVIRONMENT=qa```
 
 * Run specific test method test_transfer() from class TestOperations in test_operations.py
+
     ```make tests TEST=tests/test_operations.py:TestOperations.test_transfer```
 
 * Run tests within test_basic.py, using the basicTests target defined in the Makefile
+
     ```make basicTests```
 
 * Run tests within test_operations.py using the opTests target defined in the Makefile
+
     ```make opTests```
 
 you can see additional documentation in the Makefile itself.

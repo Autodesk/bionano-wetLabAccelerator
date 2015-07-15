@@ -12,6 +12,14 @@ browser: firefox
 
 url_postfix: dokku.bionano.autodesk.com
 
+facebookEmail: yann.bertaud@autodesk.com
+facebookPassword: foobar123
+
+transcripticAPIKey: BQhS2ng3M2UBf3a5-fts
+transcripticEmail: yann.bertaud@autodesk.com
+transcripticPassword: foobar123
+transcripticOrganization: autodeskyann
+
 remoteWebDriverURL: http://sfoush302a0L4
 
 # or set a single token at the top level

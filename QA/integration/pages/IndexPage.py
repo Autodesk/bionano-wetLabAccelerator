@@ -2,6 +2,7 @@ import time
 
 import helpers
 from pages import Page
+from RunProtocolModal import RunProtocolModal
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
@@ -32,19 +33,9 @@ PROTOCOL_METADATA_MODAL_TAGS_FIELD = (By.XPATH, ".//div[@class='metadata-label' 
 
 SAVE_PROTOCOL = (By.LINK_TEXT, "Save")
 RUN_PROTOCOL = (By.LINK_TEXT, "Run")
-# SIGN_IN_BUTTON_XPATH = (By.XPATH, "//span[text()='Sign In']")
-# READY_TO_START_XPATH = (By.XPATH, "//div[@class='welcome-call']/a")
-# PROTOCOL_LINK_XPATH   = (By.XPATH, "//a[text()='PROTOCOL']")
-# RESULTS_LINK_XPATH    = (By.XPATH, "//a[text()='RESULTS']")
-# LOGO_XPATH            = (By.XPATH, "//a[@class='logo']")
-# SIGN_IN_LINK_XPATH    = (By.XPATH, "//a[@href='#/auth']")
-# LOGIN_BUTTON_XPATH    = (By.XPATH, "//button[text()='Authenticate']")
-# LOGOUT_BUTTON_XPATH   = (By.XPATH, "//button[text()='Unauthenticate']")
-# WELCOME_TEXT_XPATH    = (By.XPATH, "//p[@class='ng-scope']")
-# EMAIL_FIELD        = (By.XPATH, "//input[@ng-model='platformCtrl.userString']")
-# PASSWORD_FIELD_ID     = (By.ID, "fbPassword")
-# CLOSE_MENU_XPATH      = (By.XPATH, "//label[@for='menu-trigger']/span")
 
+
+NOTIFY_MESSAGE = (By.XPATH, "//div[contains(@class, 'notify-message')]/div")
 
 class IndexPage(Page):
     def __init__(self, driver, token):
@@ -103,6 +94,7 @@ class IndexPage(Page):
 
     def runProtocol(self):
         self.click(self.findElement(RUN_PROTOCOL), "Run protocol button")
+        return RunProtocolModal(self.DRIVER)
 
     ### get text values for elements
     def getPageTitleText(self):
@@ -114,7 +106,12 @@ class IndexPage(Page):
     def getProtocolName(self):
         return self.findElement(PROTOCOL_NAME).text
 
+    def getNotifyMessage(self):
+        return self.findElement(NOTIFY_MESSAGE).text
 
+    def getVerificationMessage(self):
+        locator = (By.XPATH, "//span[@ng-bind='opCtrl.verification.message']")
+        return self.findElement(locator).text
 
 
     ### getters for elements on page

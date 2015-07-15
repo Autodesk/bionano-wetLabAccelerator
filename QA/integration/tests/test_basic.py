@@ -26,7 +26,7 @@ class TestBasicInteractions(TestBase):
 
         self.verifyEqual(self.indexPage.getProtocolName(), "Untitled Protocol", "protocol name")
         time.sleep(5)
-        protocolName = time.strftime("%Y-%m-%d %H:%M:%S after facebook sign in")
+        protocolName = self.getTimeStamp() + " after facebook sign in"
         self.indexPage.setProtocolMetadata(protocolName, "test description", "test tags foo bar 234")
         self.verifyEqual(self.indexPage.getProtocolName(), protocolName, "protocol name after change")
         self.verifyEqual(self.indexPage.getProtocolMetadata(), [protocolName, "test description", "test tags foo bar 234"], "protocol metadata")
@@ -83,6 +83,24 @@ class TestBasicInteractions(TestBase):
             self.contentMenu.openProtocol(defaultProtocol)
             time.sleep(1)
             self.verifyEqual(self.indexPage.getProtocolName(), defaultProtocol, "protocol name")
+
+    def test_run_simple_protocol(self):
+        """
+        test that running a simple protocol with single operation that is not configured should give errors
+        """
+        self.indexPage.signInWithFacebook("yann.bertaud@autodesk.com", "foobar123")
+        transferOp = self.build.addOperation("Transfer")
+
+        runProtocolModal = self.indexPage.runProtocol()
+        runProtocolModal.setTranscripticCredentials("yann.bertaud@autodesk.com", "BQhS2ng3M2UBf3a5-fts", "autodeskyann" )
+        runProtocolModal.setProjectName("test project2", True)
+        runProtocolModal.setRunName(self.getTimeStamp() + " test run")
+        runProtocolModal.verify()
+
+        transferOp.expand()
+        print(self.indexPage.getNotifyMessage())
+        self.verifyEqual(self.indexPage.getNotifyMessage(), 'Conversion prevented due to errors, highlighted below', 'notification message')
+        self.verifyEqual(self.indexPage.getVerificationMessage(), "missing value for non-optional field from", "verification message")
 
 
     def test_setup_section(self):
