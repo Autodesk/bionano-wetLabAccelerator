@@ -1,5 +1,5 @@
 ifndef TEST_ENVIRONMENT
-    TEST_ENVIRONMENT=develop
+    TEST_ENVIRONMENT=qa
 endif
 
 ifndef TEST_BROWSER

@@ -27,6 +27,16 @@ class ProtocolSetup(Page):
 
         return parameters
 
+    def getParameterCount(self):
+        return len(self.getParameters())
+
+    def getParameterNames(self):
+        parameterNames = []
+        for parameter in self.getParameters():
+            parameterNames.append(parameter.getVariableName())
+        return parameterNames
+
+
     def isExpanded(self):
         return self.containsClass(self.getSetupHeaderElement().find_element_by_xpath('..'), "open")
 

@@ -43,7 +43,8 @@ class Page:
         self.DRIVER = driver
 
     def action(self, actionDescription):
-        print("  Action - " + actionDescription)
+        if actionDescription != None:
+            print("  Action - " + actionDescription)
 
     def error(self, message):
         print("  ERROR - " + message)
@@ -73,6 +74,9 @@ class Page:
         except WebDriverException as e:
             self.raiseException(message + e.message)
 
+    # def findBNElement(self, locatorTuple, description = None):
+    #     return BNWebElement(self.findElement(locatorTuple), description)
+
     def findElements(self, locatorTuple, parentElement = None):
         message = "could not locate elements by " + locatorTuple[0] + ": " + locatorTuple[1]
         try:
@@ -90,7 +94,7 @@ class Page:
         return self.DRIVER.find_element_by_xpath("//" + elementType + "[@" + attribute + "='" + value + "']")
 
 
-    ## takes a WebElement or locator tuple in the form of elementOrLocatorTupleToElement((By.XPATH, "//div[@class='fii']"))
+    ## takes a WebElement or locator tuple in the form of((By.XPATH, "//div[@class='fii']"))
     ## if tuple then uses findElement(locatorTuple) to return a WebElement
     ## otherwise returns element WebElement
     def elementOrLocatorTupleToElement(self, elementOrLocatorTuple):
@@ -118,15 +122,16 @@ class Page:
         # if elementOrLocatorTuple variable is a locator tuple, ie (By.ID, "foobar") convert it to a WebElement
         element = self.elementOrLocatorTupleToElement(elementOrLocatorTuple)
         attributes = self.getElementAttributes(element)
+        actionDescription = None
+        if description != None:
+            actionDescription = "click on '" + description + "'"
+            if description.lower().startswith("click") or description.lower().startswith("set "):
+                actionDescription = description
 
-        self.action("click on '" + description + "'") # element: " + attributes)
+        self.action(actionDescription)
         self.executeScript("window.scrollTo(0," + str(element.location['y']) + ")")
         element.click()
-        # try:
-        #     element.click()
-        # except WebDriverException as e:
-        #     message = "could not click on '" + description + "', element: " + attributes + "\n" + e.message
-        #     self.raiseException(message)
+
 
     def getElementAttributes(self, element):
         try:
@@ -185,11 +190,15 @@ class Page:
         self.action("set " + description + " to '" + str(value) + "'")
         element.clear()
         element.send_keys(value)
+        element.send_keys(Keys.TAB)
 
     def dragAndDrop(self, source, target, descriptionSource, descriptionTarget):
         self.action("drag " + descriptionSource + " to " + descriptionTarget)
         actionChains = ActionChains(self.DRIVER)
         actionChains.drag_and_drop(source, target).perform()
+
+    def closeModal(self, modalDialogElement):
+        modalDialogElement.find_element(By.CLASS_NAME, "modal-close").click()
 
     def toggle_visibility_by_class(self, classname):
         """Toggle the visibility of the object by a classname selector.
@@ -284,7 +293,7 @@ class Page:
 
         if not os.path.isfile(os.path.join(image_dir, base_image)) and not os.path.isfile(os.path.join(blessed_image_dir, base_image)):
             e = "No images (or baseline) exist for this test."
-            raise AssertionError, e
+            raise (AssertionError, e)
 
         if os.path.isfile(os.path.join(blessed_image_dir, base_image)):
             return os.path.join(blessed_image_dir, base_image)
@@ -299,14 +308,13 @@ class Page:
                 version = self.DRIVER.capabilities['version'].lower()
                 browser = self.DRIVER.capabilities['browserName'].lower()
                 system = sys.platform
-                print ""
                 if prefix:
                     image_dir = os.path.abspath(os.path.join(self.ASSETS_TO_BLESS, prefix))
                 else:
                     image_dir = os.path.abspath(os.path.join(self.ASSETS_TO_BLESS, self.DOCUMENT_NAME))
                 os_version_specific_image = os.path.join(image_dir, '%s-%s-%s.png' % (browser, version, system))
                 self.snapshot(os_version_specific_image)
-                print "OS Version: " + os_version_specific_image
+                print("OS Version: " + os_version_specific_image)
                 return
         except KeyError:
             pass
@@ -324,11 +332,10 @@ class Page:
                 os.unlink(thisone)
             except:
                 pass
-            raise AssertionError, "Images are not of the same size!"
+            raise(AssertionError, "Images are not of the same size!")
 
         # l2 mean
         ed = sum((_d[0] - _d2[0]) ** 2 + (_d[0] - _d2[0]) ** 2 + (_d[0] - _d2[0]) ** 2 for _d, _d2 in zip(d_i, d_i2))
         comparison = ed / len(d_i)
         return comparison
-
 

@@ -24,9 +24,12 @@ class TestBasicInteractions(TestBase):
         self.verifyIsDisplayed(self.indexPage.getProtocolLink(), "protocol link")
         self.verifyIsDisplayed(self.indexPage.getResultsLink(), "results link")
 
-
-
-
+        self.verifyEqual(self.indexPage.getProtocolName(), "Untitled Protocol", "protocol name")
+        time.sleep(5)
+        protocolName = time.strftime("%Y-%m-%d %H:%M:%S after facebook sign in")
+        self.indexPage.setProtocolMetadata(protocolName, "test description", "test tags foo bar 234")
+        self.verifyEqual(self.indexPage.getProtocolName(), protocolName, "protocol name after change")
+        self.verifyEqual(self.indexPage.getProtocolMetadata(), [protocolName, "test description", "test tags foo bar 234"], "protocol metadata")
 
 
     def test_content_menu_signed_in(self):
@@ -40,6 +43,9 @@ class TestBasicInteractions(TestBase):
 
         self.verifyTrue(contentMenu.isOpen(), "Content Menu is open")
         contentMenu.addProtocol()
+        protocolName = time.strftime("%Y-%m-%d %H:%M:%S test setup section")
+        self.indexPage.setProtocolMetadata(protocolName, "test setup section", "test")
+
         time.sleep(1)
         self.verifyFalse(contentMenu.isOpen(), "Content Menu is closed after adding protocol")
         build = self.build
@@ -53,13 +59,40 @@ class TestBasicInteractions(TestBase):
     #     print contentMenu.getProtocolNames()
 
 
+    def test_open_default_protocols_without_signing_in(self):
+        """
+        test opening default protocols without signing in
+        """
+        self.indexPage.dismissWelcomeSplashScreen()
+        expectedDefaultProtocols = ["Transformation Test of Zymo10B with PVIB Default", "E. coli Growth"]
+        self.verifyEqual(self.contentMenu.getProtocolNames(), expectedDefaultProtocols, "default protocol names")
+        ""
+        for defaultProtocol in expectedDefaultProtocols:
+            self.contentMenu.openProtocol(defaultProtocol)
+            time.sleep(1)
+            self.verifyEqual(self.indexPage.getProtocolName(), defaultProtocol, "protocol name")
+
+    def test_open_default_protocols_after_signing_in(self):
+        """
+        test opening default protocols after signing in
+        """
+        self.indexPage.signInWithFacebook("yann.bertaud@autodesk.com", "foobar123")
+        expectedDefaultProtocols = ["Transformation Test of Zymo10B with PVIB Default", "E. coli Growth"]
+        for defaultProtocol in expectedDefaultProtocols:
+            self.verifyTrue(self.contentMenu.containsProtocol(defaultProtocol), "content menu contains protocol name '" + defaultProtocol + "'")
+            self.contentMenu.openProtocol(defaultProtocol)
+            time.sleep(1)
+            self.verifyEqual(self.indexPage.getProtocolName(), defaultProtocol, "protocol name")
+
+
     def test_setup_section(self):
         """
         test the setup section
         """
         self.indexPage.signInWithFacebook("yann.bertaud@autodesk.com", "foobar123")
-
         self.indexPage.clickProtocol()
+        protocolName = time.strftime("%Y-%m-%d %H:%M:%S test setup section")
+        self.indexPage.setProtocolMetadata(protocolName, "test setup section", "test")
         build = self.build
         time.sleep(3)
 
@@ -101,15 +134,6 @@ class TestBasicInteractions(TestBase):
 
         self.verifyEqual(len(protocolSetup.getParameters()), len(parameterOptions), "count of added parameters")
 
-        # volumeSetupParameter = protocolSetup.addParameter("Volume")
-        # volumeSetupParameter.setVariableName("volumeOne")
-        #
-        # self.verifyEqual(len(protocolSetup.getParameters()), parameterCount + 1, "parameter count after adding parameter")
-        # expectedParameterTypeName = "volume, volumeOne"
-        # actualParameterTypeName = volumeSetupParameter.getParameterType() + ", " + volumeSetupParameter.getVariableName()
-        # self.verifyEqual(actualParameterTypeName, expectedParameterTypeName, "parameter type and name")
-        # time.sleep(5)
-
         protocolSetup.collapse()
         self.verifyFalse(protocolSetup.isExpanded(), "protocol setup is closed")
 
@@ -124,7 +148,7 @@ class TestBasicInteractions(TestBase):
     #
     def test_add_operation(self):
         """
-        test adding an operation and configuring it
+        test adding all operation types to protocol
         """
         self.indexPage.signInWithFacebook("yann.bertaud@autodesk.com", "foobar123")
         instructions = self.protocolInstructions
