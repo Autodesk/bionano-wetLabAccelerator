@@ -17,16 +17,13 @@ class TestOperations(TestBase):
         """
         operationName = "Transfer"
 
-        self.indexPage.dismissWelcomeSplashScreen()
         self.indexPage.signInWithFacebook("yann.bertaud@autodesk.com", "foobar123")
 
         contentMenu = self.contentMenu
-        print("protocol count: " + str(len(contentMenu.getProtocolNames())))
 
         contentMenu.openAndAddProtocol()
-        print("protocol count after add: " + str(len(contentMenu.getProtocolNames())))
 
-        protocolName = time.strftime("%Y-%m-%d %H:%M:%S simple transfer protocol")
+        protocolName = self.getTimeStamp() + " simple transfer protocol"
         self.indexPage.setProtocolMetadata(protocolName, "test setup section", "test")
 
         build = self.build
