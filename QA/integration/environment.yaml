@@ -28,22 +28,31 @@ remoteWebDriverURL: http://sfoush302a0L4
 
 environments:
   develop:
+    consumerkey: d0a95598-8357-4668-90f8-37d887517b3b
+    consumersecret: a2846bd3-1c24-40e8-abd1-00eaf1f26e74
     login:
     password: 
     uri_root: https://localhost:9000/#/
-
+    token: "MJeTXKeSnDz8dr3khIqA9vJD+Hg="
 
   qa:
     browser: chrome
+    consumerkey: d0a95598-8357-4668-90f8-37d887517b3b
+    consumersecret: a2846bd3-1c24-40e8-abd1-00eaf1f26e74
     login:
     password:
     uri_root: https://wla-qa.dokku.bionano.autodesk.com
+    token: "MJeTXKeSnDz8dr3khIqA9vJD+Hg="
+
 
   production:
     browser: chrome
+    consumerkey: d0a95598-8357-4668-90f8-37d887517b3b
+    consumersecret: a2846bd3-1c24-40e8-abd1-00eaf1f26e74
     login:
     password:
     uri_root: https://wla.bionano.autodesk.com
+    token: "MJeTXKeSnDz8dr3khIqA9vJD+Hg="
 
 
 # window size defaults
@@ -51,4 +60,7 @@ viewport:
   width: 1400
   height: 1024
 
+# until we have a library for fetching images from autodesk prime - here are some
+# hard coded images
+images:
 
