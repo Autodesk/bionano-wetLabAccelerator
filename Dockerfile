@@ -13,23 +13,33 @@ RUN apt-get install -y nodejs
 RUN npm install -g grunt-cli
 RUN npm install -g bower
 RUN npm install -g forever
+RUN npm install -g nodemon@dev
 
-ENV PORT 9000
-EXPOSE 9000
 ENV APP /app
 
-COPY . $APP/
+COPY package.json /app/package.json
+COPY app/scripts/omniprotocol /app/app/scripts/omniprotocol
+RUN cd /app ; npm install
 
-WORKDIR $APP
+COPY bower.json /app/bower.json
+RUN cd /app ; bower install --allow-root
 
-RUN npm install
-RUN bower install --allow-root
+COPY app /app/app
+COPY deprecated /app/deprecated
+COPY etc /app/etc
+COPY QA /app/QA
+COPY test /app/test
+COPY .travis.yml /app/.travis.yml
+COPY Gruntfile.js /app/Gruntfile.js
 
-RUN grunt build
+RUN cd app ; grunt build
+
+COPY server /app/server
+
+COPY CHECKS /app/CHECKS
+
+WORKDIR /app
+ENV PORT 8000
+EXPOSE 8000
 
 CMD ["node", "server/server.js"]
-
-
-
-
-

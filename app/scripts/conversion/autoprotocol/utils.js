@@ -6,7 +6,7 @@ var _ = require('lodash');
 
 var dimensionalSeparator = ":";
 
-var dimensionalFields = ['duration', 'length', 'temperature', 'volume', 'flowrate', 'acceleration'];
+var dimensionalFields = ['duration', 'length', 'temperature', 'volume', 'speed', 'acceleration'];
 
 function convertDimensionalToAuto (omniDim) {
   return omniDim.value + dimensionalSeparator + omniDim.unit;
@@ -48,11 +48,14 @@ function splitContainerWell (containerWell) {
 //given array of objects with keys container + well, create array of strings in format "container/well", or "well" if
 // ignoreContainer is true
 function flattenAliquots (abstAliquots, ignoreContainer) {
+  var wellArray = _.result(abstAliquots, 'wells', []),
+      containerName = _.result(abstAliquots, 'containerName');
+
   if (ignoreContainer === true) {
-    return _.map(abstAliquots, _.partial(_.result, _, 'well'));
+    return wellArray;
   } else {
-    return _.map(abstAliquots, function (aliquot) {
-      return joinContainerWell(aliquot.container, aliquot.well);
+    return _.map(wellArray, function (well) {
+      return joinContainerWell(containerName, well);
     });
   }
 }
@@ -79,19 +82,6 @@ function pluckOperationContainerFromWells (op, containerKey, wellsKey) {
   return _.assign({}, op, obj)
 }
 
-// deprecate-d
-// type is "wells" or "container", fieldName is field with value
-function createTransform (type, fieldName) {
-  var validTypes = ['wells', 'container'];
-
-  if (!_.includes(validTypes, type)) {
-    throw new Error("invalid transform type")
-  }
-
-  var obj   = {};
-  obj[type] = fieldName;
-  return obj;
-}
 
 module.exports = {
   dimensionalFields               : dimensionalFields,

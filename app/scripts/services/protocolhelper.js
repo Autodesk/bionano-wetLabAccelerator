@@ -81,6 +81,15 @@ angular.module('transcripticApp')
     };
 
     self.convertToAutoprotocol = function (protocol) {
+
+      //pre-process the protocol
+      _.flow(
+        assertContainersNamed,
+        Omniprotocol.utils.assignParametersToAllFields,
+        clearVerifications
+      )(protocol);
+
+
       try {
         return Autoprotocol.fromAbstraction(protocol);
       } catch (e) {
@@ -105,7 +114,7 @@ angular.module('transcripticApp')
 
     // helpers //
 
-    //todo - handle tags + versioning
+    //todo - this really belongs in omniprotocol utils
     function generateNewProtocolMetadata () {
       return {
         id    : UUIDGen(),
@@ -116,19 +125,39 @@ angular.module('transcripticApp')
           id  : Authentication.getUserId()
         },
         "tags": [],
-        "db"  : {}
+        "db"  : {},
+        "version" : "1.0.0"
       }
     }
 
     function assignNecessaryMetadataToProtocol (protocol) {
       var oldMetadata = _.cloneDeep(protocol.metadata);
-      return _.assign(protocol.metadata, generateNewProtocolMetadata(), oldMetadata);
+      return _.assign(protocol.metadata, {name : "My Protocol"}, generateNewProtocolMetadata(), oldMetadata);
     }
 
     function protocolHasNecessaryMetadataToSave (protocol) {
       return _.every(['id', 'name', 'type', 'author'], function (field) {
         return !_.isEmpty(_.result(protocol.metadata, field));
       });
+    }
+
+    /******* utilities ********/
+
+    function assertContainersNamed (protocol) {
+      _(protocol.parameters)
+        .filter({type: 'container'})
+        .forEach(function (param, index) {
+          param.name = param.name || 'container' + index;
+        })
+        .value();
+      return protocol;
+    }
+
+    function clearVerifications (protocol) {
+      _.forEach(protocol.parameters, function (param) {
+        delete param.verification;
+      });
+      return protocol;
     }
 
 

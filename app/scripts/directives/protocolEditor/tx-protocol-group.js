@@ -7,7 +7,7 @@
  * # txOperationgroup
  */
 angular.module('tx.protocolEditor')
-  .directive('txProtocolGroup', function (DragDropManager) {
+  .directive('txProtocolGroup', function (DragDropManager, $rootScope) {
     return {
       templateUrl     : 'views/tx-protocol-group.html',
       restrict        : 'E',
@@ -19,6 +19,10 @@ angular.module('tx.protocolEditor')
       controllerAs    : 'groupCtrl',
       controller      : function ($scope, $element, $attrs) {
         var self = this;
+
+        self.verifyProtocol = function () {
+          $rootScope.$broadcast('editor:initiateVerification');
+        };
 
         self.duplicateStep = function (step) {
           var index = _.indexOf(self.group, step);
@@ -42,6 +46,7 @@ angular.module('tx.protocolEditor')
         self.optsDraggableInstruction = {
           handle: '.operation-header',
           axis  : 'y',
+          zIndex: 100000,
           revert: true,
           start : function (e, ui) {
             var opScope = angular.element(e.target).scope(),
@@ -63,6 +68,7 @@ angular.module('tx.protocolEditor')
         self.optsDraggableGroup = {
           handle        : '.protocol-group-header',
           axis          : 'y',
+          zIndex: 100000,
           revert        : true,
           revertDuration: 0,
           start         : function (e, ui) {

@@ -4,16 +4,17 @@
               colvols = summaryCtrl.getFieldValueByName('columns');
               groupData = dispCtrl.getGroupDataFromColVols('columns', 'object');">
 
-  Dispense {{summaryCtrl.getFieldValueByName('reagent')}} to {{summaryCtrl.getFieldValueByName('object')}}
+  Dispense {{summaryCtrl.getFieldValueByName('reagent')}} to {{summaryCtrl.getContainerNameFromFieldName('object')}}
   <tx-plate container="containerType"
             no-brush="true"
             no-select="true"
             group-data="groupData">
   </tx-plate>
 
-  <p ng-repeat="colvol in colvols">
+  <p ng-repeat="colvol in colvols ">
     Columns
-    <span ng-repeat="col in colvol.columns" ng-bind="(dispCtrl.parseInt(col) + 1) + ($last ? '' : ', ')"></span>
+    <span ng-repeat="col in colvol.columns | orderBy:col"
+          ng-bind="(dispCtrl.parseInt(col) + 1) + ($last ? '' : ', ')"></span>
     -
     <span ng-bind="summaryCtrl.readableDimensional(colvol.volume)"></span>
   </p>

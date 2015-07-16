@@ -17,7 +17,7 @@ angular.module('transcripticApp')
 
     //general helper functions
 
-    self.getFieldValueByName = applyOpToFn(ProtocolUtils.getFieldValFromOpByName);
+    self.getFieldValueByName = applyOpToFn(ProtocolUtils.getFieldValue);
 
     self.readableDimensional = function (dimObj) {
       if (_.isUndefined(dimObj)) {
@@ -30,7 +30,7 @@ angular.module('transcripticApp')
 
     self.pluckWellsFromContainer = applyOpToFn(ProtocolUtils.pluckWellsFromAliquots);
 
-    self.getContainerFromWellField = applyOpToFn(ProtocolUtils.getFirstContainerFromAliquots);
+    self.getContainerNameFromWellField = applyOpToFn(ProtocolUtils.getContainerNameFromAliquots);
 
     self.getContainerTypeFromWellField = applyOpToFn(ProtocolUtils.getContainerTypeFromAliquots);
 
@@ -38,11 +38,11 @@ angular.module('transcripticApp')
 
     //functions for fields with type container
 
+    self.getContainerNameFromFieldName = applyOpToFn(ProtocolUtils.getContainerNameFromFieldName);
+
     self.getContainerTypeFromFieldName = applyOpToFn(ProtocolUtils.getContainerTypeFromFieldName);
 
     self.getContainerColorFromFieldName = applyOpToFn(ProtocolUtils.getContainerColorFromFieldName);
-
-    self.getContainerColorFromContainerName = ProtocolUtils.getContainerColorFromContainerName;
 
     function applyOpToFn (utilFn) {
       return function () {
@@ -66,7 +66,7 @@ angular.module('transcripticApp')
         })
         .map(function (data, index) {
           return {
-            projectId: _.result(RunHelper.currentRun, 'transcripticProjectId'),
+            projectId: _.result(RunHelper.currentRun, 'metadata.transcripticProjectId'),
             runId    : _.result(data, 'instruction.run.id'),
             dataref  : datarefName,
             id       : _.result(data, 'id', '')
@@ -95,6 +95,18 @@ angular.module('transcripticApp')
         resource.id + '?format=raw';
     };
 
+    //todo
+    self.getDatarefUrlPath = function () {
+      var resources = self.getResourcesForOp(),
+          first     = resources[0],
+          url       = TranscripticAuth.organization() + '/' +
+            first.projectId + '/runs/' +
+            first.runId + '/data/' +
+            first.dataref;
+
+      return url;
+    };
+
     //gives full URL
     self.getResourceUrl = function (resource) {
       return Communication.requestUrl(self.getResourceUrlPath(resource));
@@ -108,16 +120,24 @@ angular.module('transcripticApp')
       }, 10000);
 
       return Communication.request(self.getResourceUrlPath(resource), 'get', {
-        timeout: 60000,
+        timeout     : 60000,
         responseType: 'blob',
         headers     : {
           'Accept'      : 'image/jpeg',
           'Content-Type': 'image/jpeg'
         }
       })
-        .error(function (data) {
-          console.log('resource request timed out');
-          resource.status = 'Request timed out. Please Download'
+        .error(function (data, status) {
+          console.log('resource request error', data, status);
+          if (status == 0) {
+            resource.status = 'Request timed out. Please Download';
+          }
+          else if (status > 400) {
+            resource.status = "You don't have access to view this file...";
+          }
+          else {
+            resource.status = "There was an error downloading this image. Try downloading it, or visit Transcriptic directly."
+          }
         })
         .success(function (data, headers) {
           console.log('received!');

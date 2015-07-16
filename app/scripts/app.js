@@ -29,7 +29,18 @@ angular
       .when('/', {
         controller  : 'HomeCtrl',
         controllerAs: 'homeCtrl',
-        templateUrl : 'views/routes/home.html'
+        templateUrl : 'views/routes/home.html',
+        resolve: {
+          'isAuthenticated' : ['Authentication', '$location', function (Authentication, $location) {
+            //todo - may want to actually check? or slow?
+            return Authentication.isAuthenticatedLocal()
+              .then(function (isAuth) {
+              if (isAuth) {
+                $location.path('/protocol');
+              }
+            })
+          }]
+        }
       })
 
       //main routes
@@ -51,9 +62,12 @@ angular
         controller  : 'ResultsCtrl',
         controllerAs: 'resultsCtrl'
       })
+
+      /*
       .when('/auth', {
         templateUrl: 'views/routes/auth.html'
       })
+      */
 
       //testing routes
 
@@ -81,6 +95,7 @@ angular
         redirectTo: '/'
       });
   })
-  .run(function (Authentication, Platform, Database, $http, $timeout) {
-
+  .run(function (Authentication, Platform, Database, $document) {
+    //lazy load the background image
+    angular.element($document[0].body).addClass('with-background');
   });

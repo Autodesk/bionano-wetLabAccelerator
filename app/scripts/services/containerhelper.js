@@ -22,11 +22,13 @@ angular.module('transcripticApp')
 
     TranscripticAuth.watch(function (info) {
       //hack - should get in pages if possible...
-      _.result(info, 'organization', false) && Container.list({per_page: 200}).$promise.then(self.setRemote);
+      if (_.result(info, 'organization', false)) {
+        Container.list({per_page: 300}).$promise.then(self.setRemote);
+      }
     });
 
-    self.setRemote = function (remote, noReset) {
-      if (noReset !== false ) {
+    self.setRemote = function (remote, forceReset) {
+      if (forceReset === true) {
         self.remote.length = 0;
       }
 
@@ -41,20 +43,12 @@ angular.module('transcripticApp')
       });
 
       $rootScope.$applyAsync();
-
-      console.log(self.remote);
     };
 
     self.setLocal = function (local) {
       self.local.length = 0;
       _.forEach(local, function (cont) {
         self.local.push(cont);
-      });
-    };
-
-    self.getContainer = function (name) {
-      return _.find(self.containers, function (cont) {
-        return _.result(cont.metadata, 'name') == id;
       });
     };
 
@@ -69,7 +63,7 @@ angular.module('transcripticApp')
       'plum'      : '#DDA0DD'
     };
 
-    var calls = 0;
+    var calls        = 0;
     self.randomColor = function () {
       calls = (calls + 1) % _.keys(self.definedColors).length;
       return _.values(self.definedColors)[calls];

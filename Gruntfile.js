@@ -79,7 +79,7 @@ module.exports = function (grunt) {
       },
       livereload: {
         options: {
-          open: true,
+          open      : true,
           middleware: function (connect) {
             return [
               connect.static('.tmp'),
@@ -88,26 +88,10 @@ module.exports = function (grunt) {
                 connect.static('./bower_components')
               ),
               connect.static(appConfig.app),
-              require('grunt-connect-proxy/lib/utils').proxyRequest,
               connect.directory(appConfig.app)
             ];
           }
-        },
-        proxies: [
-          {
-            context: '/transcriptic',
-            host: 'secure.transcriptic.com',
-            https: true,
-            port: 443,
-            changeOrigin: true, //change our request to come from their host... doesn't work otherwise
-            headers: {
-              'Access-Control-Accept-Origin' : '*'
-            },
-            rewrite: {
-              '^/transcriptic': ''
-            }
-          }
-        ]
+        }
       },
       test: {
         options: {
@@ -130,15 +114,7 @@ module.exports = function (grunt) {
           port: 9000,
           open: true,
           hostname: '0.0.0.0', //comment out to use localhost, e.g. for ngrok
-          base: '<%= yeoman.dist %>',
-          middleware: function (connect) {
-            //todo - get this integrated --- seems to be undefined in grunt serve:dist
-            return [
-              connect.static(appConfig.dist),
-              require('grunt-connect-proxy/lib/utils').proxyRequest,
-              connect.directory(appConfig.dist)
-            ]
-          }
+          base: '<%= yeoman.dist %>'
         }
       }
     },
@@ -408,9 +384,7 @@ module.exports = function (grunt) {
             'views/**/*.html',
             'images/**/*.{webp}',
             'fonts/**/*.*',
-            'demo_runs/**/*.*',
-            'demo_viruses/**/*.*',
-            'demo_protocols/**/*.*',
+            'initialProjects/**/*',
             'scripts/omniprotocol.js' //copy browserified scripts
           ]
         }, {
@@ -486,7 +460,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'configureProxies:livereload', 'connect:dist:keepalive']);
+      return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
 
     grunt.task.run([
@@ -494,7 +468,6 @@ module.exports = function (grunt) {
       //'wiredep', // doesn't work without internet
       'browserify',
       'uglify:browserified',
-      'configureProxies:livereload',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',

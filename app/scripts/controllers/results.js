@@ -19,7 +19,7 @@ angular.module('transcripticApp')
      */
 
     $scope.$watch(function () {
-      return self.run.transcripticRunId;
+      return _.result(self.run, 'metadata.transcripticRunId');
     }, function (newId) {
       newId && RunHelper.updateRunInfo(self.run);
     });
@@ -50,7 +50,7 @@ angular.module('transcripticApp')
     };
 
     self.generateRunUrl = function (run) {
-      return 'http://secure.transcriptic.com/' + TranscripticAuth.organization() + '/' + run.transcripticProjectId + '/runs/' + run.transcripticRunId;
+      return 'http://secure.transcriptic.com/' + TranscripticAuth.organization() + '/' + _.result(run, 'metadata.transcripticProjectId') + '/runs/' + _.result(run, 'metadata.transcripticRunId');
     };
 
     $scope.modalShown = false;

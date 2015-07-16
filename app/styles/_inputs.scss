@@ -49,7 +49,7 @@
   }
 
   &::-webkit-input-placeholder {
-    color: $warning;
+
   }
 
   &::-webkit-outer-spin-button,
@@ -57,9 +57,15 @@
     -webkit-appearance: none;
     margin: 0;
   }
+
+  &.ng-invalid-required,
+  &.ng-invalid-required::-webkit-input-placeholder {
+    color: $warning;
+  }
 }
 
-.dimensional-unit {}
+.dimensional-unit {
+}
 
 .true-false-button {
   width: 100px;
@@ -91,7 +97,7 @@
     display: block;
     width: 52px;
     height: 21px;
-    top:0;
+    top: 0;
     border-radius: 50px;
     transition: all .4s ease;
     cursor: pointer;
@@ -141,15 +147,19 @@
   }
 }
 
-input[type="color"].color-swatch {
+//can use on a div with ng-style background-color
+.color-swatch {
   -webkit-appearance: none;
-  width: 1.25em;
-  height: 1.25em;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
   border-radius: 100%;
   padding: 0;
+  margin: 0 3px 2px 0;
   color: transparent;
   background-color: transparent;
   border: 0;
+  vertical-align: text-top;
 
   &::-webkit-color-swatch-wrapper {
     padding: 0;
@@ -174,9 +184,11 @@ input[type="color"].color-swatch {
   line-height: 1.2em;
   white-space: nowrap;
 
-  .option-toggle {}
+  .option-toggle {
+  }
 
-  .option-button-label {}
+  .option-button-label {
+  }
 
   .option-button-caret {
     opacity: 0;
@@ -190,7 +202,8 @@ input[type="color"].color-swatch {
     padding: $input-hover-padding-vert $input-hover-padding-hori;
     margin: (-$input-hover-padding-vert) (-$input-hover-padding-hori);
 
-    .option-button-label {
+    .option-button-label,
+    .option-button-caret {
       color: $white;
     }
 
@@ -198,8 +211,11 @@ input[type="color"].color-swatch {
       opacity: 1;
     }
   }
-}
 
+  &.invalid {
+    color: $warning;
+  }
+}
 
 // textarea
 

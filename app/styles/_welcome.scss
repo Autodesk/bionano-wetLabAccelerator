@@ -1,5 +1,6 @@
 .welcome-overlay {
   @extend .modal-overlay;
+  min-width: $layout-width-page;
 
   .welcome-call {
     position: absolute;
@@ -57,6 +58,12 @@
       height: 200px;
       top: 40px;
       right: 45px;
+    }
+
+    &-results {
+      left: calc(50% + 46px);
+      top: 40px;
+      height: 150px;
     }
   }
 }

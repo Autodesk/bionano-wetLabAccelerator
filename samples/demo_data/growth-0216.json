@@ -1,0 +1,4058 @@
+{
+  "ref_0": {
+    "sequence_no": 2,
+    "id": "d1qmc9zg4evpg",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.05248988778821907
+      ],
+      "a2": [
+        0.19801746145100155
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88beqwpa",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T10:14:05.205-08:00",
+      "completed_at": "2015-02-13T10:14:11.982-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw8w9g4f",
+      "operation": {
+        "dataref": "ref_0",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T10:15:00.526-08:00",
+      "executed_at": "2015-02-13T10:15:00.526-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_1": {
+    "sequence_no": 5,
+    "id": "d1qmcw6bgpvzy",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.17455472530963018
+      ],
+      "a2": [
+        0.3115690905930703
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88bevb3e",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T11:21:06.229-08:00",
+      "completed_at": "2015-02-13T11:21:12.989-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw8wsyjx",
+      "operation": {
+        "dataref": "ref_1",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T11:22:32.688-08:00",
+      "executed_at": "2015-02-13T11:22:32.688-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_2": {
+    "sequence_no": 7,
+    "id": "d1qmdgweruuc7",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.16838969124197792
+      ],
+      "a2": [
+        0.3655050869983974
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88bevb3s",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T12:26:40.883-08:00",
+      "completed_at": "2015-02-13T12:26:47.723-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw8x5yj9",
+      "operation": {
+        "dataref": "ref_2",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T12:28:06.663-08:00",
+      "executed_at": "2015-02-13T12:28:06.663-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_3": {
+    "sequence_no": 9,
+    "id": "d1qme4nukwz7c",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.16785003988874947
+      ],
+      "a2": [
+        0.44288861151034237
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88bevb45",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T13:32:17.732-08:00",
+      "completed_at": "2015-02-13T13:32:24.511-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw8xj3mm",
+      "operation": {
+        "dataref": "ref_3",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T13:33:44.557-08:00",
+      "executed_at": "2015-02-13T13:33:44.557-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_4": {
+    "sequence_no": 11,
+    "id": "d1qmeqe6zc4gr",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.1679967224321656
+      ],
+      "a2": [
+        0.5440683546490048
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88bezqfe",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T14:37:53.929-08:00",
+      "completed_at": "2015-02-13T14:38:00.783-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw8xx6py",
+      "operation": {
+        "dataref": "ref_4",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T14:39:21.975-08:00",
+      "executed_at": "2015-02-13T14:39:21.975-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_5": {
+    "sequence_no": 13,
+    "id": "d1qmfb6ykrbq5",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.1632006389377592
+      ],
+      "a2": [
+        0.6465081957688538
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88bezqfs",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T15:43:33.457-08:00",
+      "completed_at": "2015-02-13T15:43:40.156-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw8ya6pa",
+      "operation": {
+        "dataref": "ref_5",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T15:44:59.723-08:00",
+      "executed_at": "2015-02-13T15:44:59.723-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_6": {
+    "sequence_no": 15,
+    "id": "d1qmfwxbtjz2m",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.16248721638480973
+      ],
+      "a2": [
+        0.7314443990429382
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88bezqg5",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T16:49:09.756-08:00",
+      "completed_at": "2015-02-13T16:49:16.607-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw8yn6nm",
+      "operation": {
+        "dataref": "ref_6",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T16:50:35.183-08:00",
+      "executed_at": "2015-02-13T16:50:35.183-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_7": {
+    "sequence_no": 17,
+    "id": "d1qmghpm4umrs",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.16832630020212802
+      ],
+      "a2": [
+        0.8072196119958032
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88bezqgg",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T17:54:45.594-08:00",
+      "completed_at": "2015-02-13T17:54:52.412-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw8yz6mx",
+      "operation": {
+        "dataref": "ref_7",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T17:56:11.370-08:00",
+      "executed_at": "2015-02-13T17:56:11.370-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_8": {
+    "sequence_no": 19,
+    "id": "d1qmh5etdpdb6",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.16867547881629832
+      ],
+      "a2": [
+        0.863768225901157
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88bf64up",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T19:00:20.948-08:00",
+      "completed_at": "2015-02-13T19:00:27.785-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw8zc6m9",
+      "operation": {
+        "dataref": "ref_8",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T19:01:46.376-08:00",
+      "executed_at": "2015-02-13T19:01:46.376-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_9": {
+    "sequence_no": 21,
+    "id": "d1qmhr6w87y3z",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.17180289970591117
+      ],
+      "a2": [
+        0.9128969550671824
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88bf64v2",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T20:05:55.658-08:00",
+      "completed_at": "2015-02-13T20:06:02.404-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw8zq6kk",
+      "operation": {
+        "dataref": "ref_9",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T20:07:20.583-08:00",
+      "executed_at": "2015-02-13T20:07:20.583-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_10": {
+    "sequence_no": 23,
+    "id": "d1qmjbx2utedt",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.17305910010823142
+      ],
+      "a2": [
+        0.9600327794547496
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88bf64vd",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T21:11:30.653-08:00",
+      "completed_at": "2015-02-13T21:11:37.532-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw9249nx",
+      "operation": {
+        "dataref": "ref_10",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T21:12:57.168-08:00",
+      "executed_at": "2015-02-13T21:12:57.168-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_11": {
+    "sequence_no": 25,
+    "id": "d1qmjxp6grj7r",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.17350853399546926
+      ],
+      "a2": [
+        0.9998147299585071
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88bfah8j",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T22:17:05.428-08:00",
+      "completed_at": "2015-02-13T22:17:12.214-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw92gcra",
+      "operation": {
+        "dataref": "ref_11",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T22:18:31.979-08:00",
+      "executed_at": "2015-02-13T22:18:31.979-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_12": {
+    "sequence_no": 27,
+    "id": "d1qmkjebr3s6k",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.17587699155971873
+      ],
+      "a2": [
+        1.0428318261684262
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmc88bfah8w",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          1
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T23:22:40.646-08:00",
+      "completed_at": "2015-02-13T23:22:47.355-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw92ucqm",
+      "operation": {
+        "dataref": "ref_12",
+        "num_flashes": 25,
+        "object": "growth_plate_1",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "A2"
+        ]
+      },
+      "completed_at": "2015-02-13T23:26:25.164-08:00",
+      "executed_at": "2015-02-13T23:26:25.164-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_13": {
+    "sequence_no": 31,
+    "id": "d1qmkpd275bcp",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.08570034072571324
+      ],
+      "a2": [
+        0.09380331171119041
+      ],
+      "a3": [
+        0.08286168947611132
+      ],
+      "a4": [
+        0.05597250890054854
+      ],
+      "b1": [
+        0.09797601380217126
+      ],
+      "b2": [
+        0.09467874396141185
+      ],
+      "b3": [
+        0.08990632345920595
+      ],
+      "b4": [
+        0.05529503826229251
+      ],
+      "c1": [
+        0.08488914370272631
+      ],
+      "c2": [
+        0.084478607619862
+      ],
+      "c3": [
+        0.09077529066393294
+      ],
+      "c4": [
+        0.056849672955813425
+      ],
+      "d1": [
+        0.09267683546769925
+      ],
+      "d2": [
+        0.0869928929571092
+      ],
+      "d3": [
+        0.09549109785905804
+      ],
+      "d4": [
+        0.058849969363557846
+      ],
+      "e1": [
+        0.09419162913967676
+      ],
+      "e2": [
+        0.08944493574698244
+      ],
+      "e3": [
+        0.0840854983578442
+      ],
+      "e4": [
+        0.057717013697032395
+      ],
+      "f1": [
+        0.09152328862481468
+      ],
+      "f2": [
+        0.08626047592028521
+      ],
+      "f3": [
+        0.08561637288511845
+      ],
+      "f4": [
+        0.05770401310386395
+      ],
+      "g1": [
+        0.08713483279836541
+      ],
+      "g2": [
+        0.08895242060930067
+      ],
+      "g3": [
+        0.07170744312319997
+      ],
+      "g4": [
+        0.05916245021363094
+      ],
+      "h1": [
+        0.08551058085010044
+      ],
+      "h2": [
+        0.08777775192382145
+      ],
+      "h3": [
+        0.07074763927741257
+      ],
+      "h4": [
+        0.05739120336529178
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nx4pv3",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-13T23:36:05.072-08:00",
+      "completed_at": "2015-02-13T23:36:38.125-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw9476eu",
+      "operation": {
+        "dataref": "ref_13",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-13T23:37:43.476-08:00",
+      "executed_at": "2015-02-13T23:37:43.476-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_14": {
+    "sequence_no": 34,
+    "id": "d1qmmaqwxqsyt",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.2827913543719196
+      ],
+      "a2": [
+        0.2448576501002836
+      ],
+      "a3": [
+        0.2304448533320384
+      ],
+      "a4": [
+        0.18137548670446396
+      ],
+      "b1": [
+        0.25519430181571384
+      ],
+      "b2": [
+        0.23092612520029832
+      ],
+      "b3": [
+        0.2181871473607917
+      ],
+      "b4": [
+        0.16388727676164766
+      ],
+      "c1": [
+        0.24676356954741374
+      ],
+      "c2": [
+        0.23078802100543597
+      ],
+      "c3": [
+        0.22691923439207104
+      ],
+      "c4": [
+        0.16884479973450486
+      ],
+      "d1": [
+        0.24422356004837953
+      ],
+      "d2": [
+        0.23311789212557965
+      ],
+      "d3": [
+        0.22571935919210032
+      ],
+      "d4": [
+        0.17776520298436335
+      ],
+      "e1": [
+        0.2531910555888953
+      ],
+      "e2": [
+        0.23095824700074513
+      ],
+      "e3": [
+        0.24798222217003413
+      ],
+      "e4": [
+        0.1729886432922423
+      ],
+      "f1": [
+        0.25564928968442124
+      ],
+      "f2": [
+        0.2404701049859805
+      ],
+      "f3": [
+        0.2302629716216745
+      ],
+      "f4": [
+        0.1821545084558837
+      ],
+      "g1": [
+        0.25365175109627147
+      ],
+      "g2": [
+        0.24235027135750037
+      ],
+      "g3": [
+        0.21307577314556614
+      ],
+      "g4": [
+        0.17636848694350513
+      ],
+      "h1": [
+        0.24180325592891092
+      ],
+      "h2": [
+        0.23753318656165953
+      ],
+      "h3": [
+        0.1951512456079624
+      ],
+      "h4": [
+        0.17699665953785151
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nx9499",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-14T00:43:47.126-08:00",
+      "completed_at": "2015-02-14T00:44:20.078-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw95m6c5",
+      "operation": {
+        "dataref": "ref_14",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-14T00:45:39.543-08:00",
+      "executed_at": "2015-02-14T00:45:39.543-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_15": {
+    "sequence_no": 36,
+    "id": "d1qmmwnvagssn",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.43191843781431044
+      ],
+      "a2": [
+        0.36567104262195466
+      ],
+      "a3": [
+        0.35304563741813083
+      ],
+      "a4": [
+        0.1825889778238176
+      ],
+      "b1": [
+        0.38784121254187526
+      ],
+      "b2": [
+        0.3449756223742718
+      ],
+      "b3": [
+        0.332657586718354
+      ],
+      "b4": [
+        0.16739075425353223
+      ],
+      "c1": [
+        0.37471910293386995
+      ],
+      "c2": [
+        0.3486235783186304
+      ],
+      "c3": [
+        0.3425011418561951
+      ],
+      "c4": [
+        0.17218030668627535
+      ],
+      "d1": [
+        0.37663987062859855
+      ],
+      "d2": [
+        0.3516802632874637
+      ],
+      "d3": [
+        0.3430080315832958
+      ],
+      "d4": [
+        0.18453515045439534
+      ],
+      "e1": [
+        0.3780202554629291
+      ],
+      "e2": [
+        0.34281001802245176
+      ],
+      "e3": [
+        0.3549037221179869
+      ],
+      "e4": [
+        0.18022264946947059
+      ],
+      "f1": [
+        0.38066019289225217
+      ],
+      "f2": [
+        0.35696076328953036
+      ],
+      "f3": [
+        0.34158159758580164
+      ],
+      "f4": [
+        0.18402359769583637
+      ],
+      "g1": [
+        0.3717549514337318
+      ],
+      "g2": [
+        0.3619879788012701
+      ],
+      "g3": [
+        0.3027999398628417
+      ],
+      "g4": [
+        0.1791480919684325
+      ],
+      "h1": [
+        0.3625035471712498
+      ],
+      "h2": [
+        0.35581204493915336
+      ],
+      "h3": [
+        0.25399520282039845
+      ],
+      "h4": [
+        0.17729573269839635
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nx949m",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-14T01:50:01.366-08:00",
+      "completed_at": "2015-02-14T01:50:34.335-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw963fmj",
+      "operation": {
+        "dataref": "ref_15",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-14T01:51:54.441-08:00",
+      "executed_at": "2015-02-14T01:51:54.441-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_16": {
+    "sequence_no": 38,
+    "id": "d1qmnhjxxuej8",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.5989541894402897
+      ],
+      "a2": [
+        0.5191768611433439
+      ],
+      "a3": [
+        0.5078397149319066
+      ],
+      "a4": [
+        0.17184807880087727
+      ],
+      "b1": [
+        0.5493769096605235
+      ],
+      "b2": [
+        0.506839522478823
+      ],
+      "b3": [
+        0.49000533581743555
+      ],
+      "b4": [
+        0.15935090773442243
+      ],
+      "c1": [
+        0.5436034596841298
+      ],
+      "c2": [
+        0.5057836683302309
+      ],
+      "c3": [
+        0.4923647599946565
+      ],
+      "c4": [
+        0.16267129891181695
+      ],
+      "d1": [
+        0.5478150218384864
+      ],
+      "d2": [
+        0.5061649266688841
+      ],
+      "d3": [
+        0.4950021363060028
+      ],
+      "d4": [
+        0.1739243480512317
+      ],
+      "e1": [
+        0.5446904391019843
+      ],
+      "e2": [
+        0.49539337630205715
+      ],
+      "e3": [
+        0.500476839621548
+      ],
+      "e4": [
+        0.16659718878662877
+      ],
+      "f1": [
+        0.5346542828617048
+      ],
+      "f2": [
+        0.5052230712837363
+      ],
+      "f3": [
+        0.47887797935581083
+      ],
+      "f4": [
+        0.1767586002232788
+      ],
+      "g1": [
+        0.5303830327624323
+      ],
+      "g2": [
+        0.510575564139483
+      ],
+      "g3": [
+        0.4322436854410424
+      ],
+      "g4": [
+        0.16813394531450213
+      ],
+      "h1": [
+        0.5207827847927172
+      ],
+      "h2": [
+        0.5062303646793852
+      ],
+      "h3": [
+        0.3698564329482175
+      ],
+      "h4": [
+        0.16914657240002812
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nx949y",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-14T02:56:09.816-08:00",
+      "completed_at": "2015-02-14T02:56:42.766-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw96hrvy",
+      "operation": {
+        "dataref": "ref_16",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-14T02:58:02.530-08:00",
+      "executed_at": "2015-02-14T02:58:02.530-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_17": {
+    "sequence_no": 40,
+    "id": "d1qmp5fuj5evu",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.7086675461153387
+      ],
+      "a2": [
+        0.6514550573487217
+      ],
+      "a3": [
+        0.6308873207196831
+      ],
+      "a4": [
+        0.16883043849224652
+      ],
+      "b1": [
+        0.6826748454204967
+      ],
+      "b2": [
+        0.6376427113329393
+      ],
+      "b3": [
+        0.6129371110212264
+      ],
+      "b4": [
+        0.16132755046044117
+      ],
+      "c1": [
+        0.6751611120389849
+      ],
+      "c2": [
+        0.6447917047641387
+      ],
+      "c3": [
+        0.6234104412678537
+      ],
+      "c4": [
+        0.16609365077424135
+      ],
+      "d1": [
+        0.6736780784675795
+      ],
+      "d2": [
+        0.6400111847173493
+      ],
+      "d3": [
+        0.6232477596681465
+      ],
+      "d4": [
+        0.1759585601533419
+      ],
+      "e1": [
+        0.6762964129639847
+      ],
+      "e2": [
+        0.6369213789164206
+      ],
+      "e3": [
+        0.6381663120677089
+      ],
+      "e4": [
+        0.167765270275174
+      ],
+      "f1": [
+        0.668670444628074
+      ],
+      "f2": [
+        0.650283748947362
+      ],
+      "f3": [
+        0.6051023831183692
+      ],
+      "f4": [
+        0.17324139646470263
+      ],
+      "g1": [
+        0.65336586312775
+      ],
+      "g2": [
+        0.6614337217057316
+      ],
+      "g3": [
+        0.5708734098545891
+      ],
+      "g4": [
+        0.17046196357128948
+      ],
+      "h1": [
+        0.6482734796924897
+      ],
+      "h2": [
+        0.6382365022689309
+      ],
+      "h3": [
+        0.5182307135867315
+      ],
+      "h4": [
+        0.16629575658411516
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nxdgn6",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-14T04:02:16.843-08:00",
+      "completed_at": "2015-02-14T04:02:49.884-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw96z36d",
+      "operation": {
+        "dataref": "ref_17",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-14T04:04:08.894-08:00",
+      "executed_at": "2015-02-14T04:04:08.894-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_18": {
+    "sequence_no": 42,
+    "id": "d1qmprcvak79v",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.7772914452882502
+      ],
+      "a2": [
+        0.7304272499842605
+      ],
+      "a3": [
+        0.6989643858009656
+      ],
+      "a4": [
+        0.16713828247769377
+      ],
+      "b1": [
+        0.7551941562072113
+      ],
+      "b2": [
+        0.7264459470249939
+      ],
+      "b3": [
+        0.6818673649502998
+      ],
+      "b4": [
+        0.1571467866108348
+      ],
+      "c1": [
+        0.7480359121848993
+      ],
+      "c2": [
+        0.7252885850182068
+      ],
+      "c3": [
+        0.6890108433432515
+      ],
+      "c4": [
+        0.16041192066220808
+      ],
+      "d1": [
+        0.7503303614807181
+      ],
+      "d2": [
+        0.7267054088439818
+      ],
+      "d3": [
+        0.6946534756208131
+      ],
+      "d4": [
+        0.17473817444971054
+      ],
+      "e1": [
+        0.7480871944116063
+      ],
+      "e2": [
+        0.7078228695268728
+      ],
+      "e3": [
+        0.7045087653041138
+      ],
+      "e4": [
+        0.16285281360276005
+      ],
+      "f1": [
+        0.7445832668078775
+      ],
+      "f2": [
+        0.7202145061515001
+      ],
+      "f3": [
+        0.681241834572902
+      ],
+      "f4": [
+        0.16999260816355158
+      ],
+      "g1": [
+        0.7068647914409615
+      ],
+      "g2": [
+        0.7323256345948658
+      ],
+      "g3": [
+        0.6571131880211163
+      ],
+      "g4": [
+        0.16961418534306374
+      ],
+      "h1": [
+        0.7204766659388364
+      ],
+      "h2": [
+        0.7017011468241001
+      ],
+      "h3": [
+        0.6078055266168455
+      ],
+      "h4": [
+        0.162047276007039
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nxdgnh",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-14T05:08:24.952-08:00",
+      "completed_at": "2015-02-14T05:08:57.912-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw97fcet",
+      "operation": {
+        "dataref": "ref_18",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-14T05:10:18.302-08:00",
+      "executed_at": "2015-02-14T05:10:18.302-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_19": {
+    "sequence_no": 44,
+    "id": "d1qmqc9vqhcqc",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.8296908865793278
+      ],
+      "a2": [
+        0.7837291406152606
+      ],
+      "a3": [
+        0.7645477627041116
+      ],
+      "a4": [
+        0.1633645233313034
+      ],
+      "b1": [
+        0.8023258461214016
+      ],
+      "b2": [
+        0.7796552779164072
+      ],
+      "b3": [
+        0.7434128544985996
+      ],
+      "b4": [
+        0.15849206955952794
+      ],
+      "c1": [
+        0.8012056539686634
+      ],
+      "c2": [
+        0.7878701296907377
+      ],
+      "c3": [
+        0.7695469552604024
+      ],
+      "c4": [
+        0.16058893648863606
+      ],
+      "d1": [
+        0.8042866566109806
+      ],
+      "d2": [
+        0.7924661603873424
+      ],
+      "d3": [
+        0.7704116157448616
+      ],
+      "d4": [
+        0.16959333417190012
+      ],
+      "e1": [
+        0.7971984381082333
+      ],
+      "e2": [
+        0.7753753744147417
+      ],
+      "e3": [
+        0.7600310080823913
+      ],
+      "e4": [
+        0.16505447563254566
+      ],
+      "f1": [
+        0.8037336864987807
+      ],
+      "f2": [
+        0.790123811652274
+      ],
+      "f3": [
+        0.7397866122657711
+      ],
+      "f4": [
+        0.16882078302811304
+      ],
+      "g1": [
+        0.7772384921050542
+      ],
+      "g2": [
+        0.7983443488729993
+      ],
+      "g3": [
+        0.725504999343852
+      ],
+      "g4": [
+        0.16587262722990015
+      ],
+      "h1": [
+        0.7672601290147064
+      ],
+      "h2": [
+        0.7594692174584966
+      ],
+      "h3": [
+        0.6710260140327271
+      ],
+      "h4": [
+        0.15957182737643433
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nxdgnv",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-14T06:14:32.904-08:00",
+      "completed_at": "2015-02-14T06:15:05.859-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw97xrt9",
+      "operation": {
+        "dataref": "ref_19",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-14T06:16:26.572-08:00",
+      "executed_at": "2015-02-14T06:16:26.572-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_20": {
+    "sequence_no": 46,
+    "id": "d1qmqy6raf2kf",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.884456170072623
+      ],
+      "a2": [
+        0.8334440514346851
+      ],
+      "a3": [
+        0.8173967679752735
+      ],
+      "a4": [
+        0.16481033561953823
+      ],
+      "b1": [
+        0.8469561836974865
+      ],
+      "b2": [
+        0.830897259985897
+      ],
+      "b3": [
+        0.796524888834555
+      ],
+      "b4": [
+        0.1590980205516374
+      ],
+      "c1": [
+        0.8374119873328597
+      ],
+      "c2": [
+        0.835290334060258
+      ],
+      "c3": [
+        0.8191571459954163
+      ],
+      "c4": [
+        0.1601840489629748
+      ],
+      "d1": [
+        0.8519008478157759
+      ],
+      "d2": [
+        0.8447785828131573
+      ],
+      "d3": [
+        0.8155844653249159
+      ],
+      "d4": [
+        0.1697757446007843
+      ],
+      "e1": [
+        0.8482952403642491
+      ],
+      "e2": [
+        0.8277987808712508
+      ],
+      "e3": [
+        0.8178905273188352
+      ],
+      "e4": [
+        0.16346697607067226
+      ],
+      "f1": [
+        0.8439580030953793
+      ],
+      "f2": [
+        0.8338297988052765
+      ],
+      "f3": [
+        0.778309016247568
+      ],
+      "f4": [
+        0.1677111004471375
+      ],
+      "g1": [
+        0.8425448879419821
+      ],
+      "g2": [
+        0.8385375211667329
+      ],
+      "g3": [
+        0.7828923496248053
+      ],
+      "g4": [
+        0.1678840145700616
+      ],
+      "h1": [
+        0.8233700435292194
+      ],
+      "h2": [
+        0.7999025504091576
+      ],
+      "h3": [
+        0.7381400796578929
+      ],
+      "h4": [
+        0.1638027842838336
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nxdgp8",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-14T07:20:39.800-08:00",
+      "completed_at": "2015-02-14T07:21:12.746-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw98cxyn",
+      "operation": {
+        "dataref": "ref_20",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-14T07:22:32.372-08:00",
+      "executed_at": "2015-02-14T07:22:32.372-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_21": {
+    "sequence_no": 48,
+    "id": "d1qmrk3v9hdn3",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.935329574007044
+      ],
+      "a2": [
+        0.872505694796835
+      ],
+      "a3": [
+        0.8624043626332859
+      ],
+      "a4": [
+        0.16931291189988643
+      ],
+      "b1": [
+        0.8833804977789254
+      ],
+      "b2": [
+        0.8764940305049553
+      ],
+      "b3": [
+        0.8409567677667168
+      ],
+      "b4": [
+        0.15978565603416417
+      ],
+      "c1": [
+        0.8794337318660013
+      ],
+      "c2": [
+        0.8844062162682257
+      ],
+      "c3": [
+        0.8645923928273076
+      ],
+      "c4": [
+        0.16193422083307385
+      ],
+      "d1": [
+        0.8930285348563565
+      ],
+      "d2": [
+        0.8948117358870947
+      ],
+      "d3": [
+        0.8621736946237991
+      ],
+      "d4": [
+        0.17296950877928832
+      ],
+      "e1": [
+        0.8782434163157836
+      ],
+      "e2": [
+        0.8731381002958807
+      ],
+      "e3": [
+        0.8703581641440954
+      ],
+      "e4": [
+        0.16601332467849864
+      ],
+      "f1": [
+        0.8874035125453978
+      ],
+      "f2": [
+        0.890135433594644
+      ],
+      "f3": [
+        0.8260700529346925
+      ],
+      "f4": [
+        0.16726726317523558
+      ],
+      "g1": [
+        0.8751134634714202
+      ],
+      "g2": [
+        0.8879801933686748
+      ],
+      "g3": [
+        0.8366141226790313
+      ],
+      "g4": [
+        0.171170033553012
+      ],
+      "h1": [
+        0.8676074208632775
+      ],
+      "h2": [
+        0.8413499306441028
+      ],
+      "h3": [
+        0.7814738764522732
+      ],
+      "h4": [
+        0.16432295311349848
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nxhw2d",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-14T08:26:48.485-08:00",
+      "completed_at": "2015-02-14T08:27:21.454-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw98u993",
+      "operation": {
+        "dataref": "ref_21",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-14T08:28:42.488-08:00",
+      "executed_at": "2015-02-14T08:28:42.488-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_22": {
+    "sequence_no": 50,
+    "id": "d1qms6yw3tc4s",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        0.9707772853573972
+      ],
+      "a2": [
+        0.9158065513197681
+      ],
+      "a3": [
+        0.9114747512960895
+      ],
+      "a4": [
+        0.16477621337214296
+      ],
+      "b1": [
+        0.9224166528774639
+      ],
+      "b2": [
+        0.9152657093501887
+      ],
+      "b3": [
+        0.8791247401657262
+      ],
+      "b4": [
+        0.16260277093390108
+      ],
+      "c1": [
+        0.9286947445407404
+      ],
+      "c2": [
+        0.9286531205848686
+      ],
+      "c3": [
+        0.9118826319533172
+      ],
+      "c4": [
+        0.16150902907304085
+      ],
+      "d1": [
+        0.9357621587616042
+      ],
+      "d2": [
+        0.9471621070537535
+      ],
+      "d3": [
+        0.8974174383368262
+      ],
+      "d4": [
+        0.1709066524846715
+      ],
+      "e1": [
+        0.92970919719545
+      ],
+      "e2": [
+        0.9157758297410808
+      ],
+      "e3": [
+        0.9149769369619579
+      ],
+      "e4": [
+        0.16438239192827317
+      ],
+      "f1": [
+        0.9294550518862283
+      ],
+      "f2": [
+        0.9399532416363799
+      ],
+      "f3": [
+        0.8842090964595893
+      ],
+      "f4": [
+        0.1689696420643878
+      ],
+      "g1": [
+        0.9292346916801144
+      ],
+      "g2": [
+        0.9452563096902449
+      ],
+      "g3": [
+        0.8953862491847092
+      ],
+      "g4": [
+        0.17152532038999474
+      ],
+      "h1": [
+        0.9167660858565442
+      ],
+      "h2": [
+        0.8904316144837826
+      ],
+      "h3": [
+        0.8357761148449288
+      ],
+      "h4": [
+        0.16559877725711877
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nxhw2r",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-14T09:32:56.566-08:00",
+      "completed_at": "2015-02-14T09:33:29.486-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw99ajhg",
+      "operation": {
+        "dataref": "ref_22",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-14T09:34:49.555-08:00",
+      "executed_at": "2015-02-14T09:34:49.555-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_23": {
+    "sequence_no": 52,
+    "id": "d1qmssw6v77s5",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        1.002194810074462
+      ],
+      "a2": [
+        0.9438699194052173
+      ],
+      "a3": [
+        0.9498889344668862
+      ],
+      "a4": [
+        0.16464980312879213
+      ],
+      "b1": [
+        0.9516777597561408
+      ],
+      "b2": [
+        0.9456247913559919
+      ],
+      "b3": [
+        0.9195176135735501
+      ],
+      "b4": [
+        0.15775187434569876
+      ],
+      "c1": [
+        0.9608144984611825
+      ],
+      "c2": [
+        0.9724862516870075
+      ],
+      "c3": [
+        0.9543638372145906
+      ],
+      "c4": [
+        0.1604549030888834
+      ],
+      "d1": [
+        0.9652234694665811
+      ],
+      "d2": [
+        0.985773142834813
+      ],
+      "d3": [
+        0.9505674388420944
+      ],
+      "d4": [
+        0.1693711889145362
+      ],
+      "e1": [
+        0.9682240555584849
+      ],
+      "e2": [
+        0.9662099576399715
+      ],
+      "e3": [
+        0.9633678601401267
+      ],
+      "e4": [
+        0.16157156830960792
+      ],
+      "f1": [
+        0.9708507474430826
+      ],
+      "f2": [
+        0.9798833842432139
+      ],
+      "f3": [
+        0.930097246740797
+      ],
+      "f4": [
+        0.1610455362882213
+      ],
+      "g1": [
+        0.9642927875948885
+      ],
+      "g2": [
+        0.9815374850346027
+      ],
+      "g3": [
+        0.9391401768564781
+      ],
+      "g4": [
+        0.16523651381002072
+      ],
+      "h1": [
+        0.9524896983235115
+      ],
+      "h2": [
+        0.9267707473538103
+      ],
+      "h3": [
+        0.8799547141207316
+      ],
+      "h4": [
+        0.1621677730684075
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nxhw34",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-14T10:39:06.230-08:00",
+      "completed_at": "2015-02-14T10:39:39.252-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw99rusw",
+      "operation": {
+        "dataref": "ref_23",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-14T10:41:05.410-08:00",
+      "executed_at": "2015-02-14T10:41:05.410-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_24": {
+    "sequence_no": 54,
+    "id": "d1qmtdtyb8wb2",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        1.0356281053283907
+      ],
+      "a2": [
+        0.9678502582476959
+      ],
+      "a3": [
+        0.9706646489587719
+      ],
+      "a4": [
+        0.16163677050890188
+      ],
+      "b1": [
+        0.9816908842518075
+      ],
+      "b2": [
+        0.9755649450167271
+      ],
+      "b3": [
+        0.9499991661344115
+      ],
+      "b4": [
+        0.15434208327136467
+      ],
+      "c1": [
+        0.9788272522331347
+      ],
+      "c2": [
+        1.004366716777057
+      ],
+      "c3": [
+        0.9823061570545405
+      ],
+      "c4": [
+        0.15772964854672283
+      ],
+      "d1": [
+        0.9901874348261824
+      ],
+      "d2": [
+        1.0180422273964052
+      ],
+      "d3": [
+        0.9846551903461163
+      ],
+      "d4": [
+        0.1657566817489291
+      ],
+      "e1": [
+        0.9849323388084005
+      ],
+      "e2": [
+        0.991562022876106
+      ],
+      "e3": [
+        1.006127147094706
+      ],
+      "e4": [
+        0.15934595183623063
+      ],
+      "f1": [
+        1.0044836231393364
+      ],
+      "f2": [
+        1.0163988399428328
+      ],
+      "f3": [
+        0.9639603566465026
+      ],
+      "f4": [
+        0.1582354223021722
+      ],
+      "g1": [
+        1.0144397813732866
+      ],
+      "g2": [
+        1.0379103639028693
+      ],
+      "g3": [
+        0.9790275720526679
+      ],
+      "g4": [
+        0.16557509857317615
+      ],
+      "h1": [
+        0.9945306022798086
+      ],
+      "h2": [
+        0.9638939918693915
+      ],
+      "h3": [
+        0.9208327562526706
+      ],
+      "h4": [
+        0.16134773303645888
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nxhw3f",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-14T11:45:19.566-08:00",
+      "completed_at": "2015-02-14T11:45:52.454-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw9a863b",
+      "operation": {
+        "dataref": "ref_24",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-14T11:47:12.288-08:00",
+      "executed_at": "2015-02-14T11:47:12.288-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  },
+  "ref_25": {
+    "sequence_no": 56,
+    "id": "d1qmtzr8hvt39",
+    "data_type": "platereader",
+    "data": {
+      "a1": [
+        1.0568274702366578
+      ],
+      "a2": [
+        0.9940062271457137
+      ],
+      "a3": [
+        0.9989925534422632
+      ],
+      "a4": [
+        0.15989613935056443
+      ],
+      "b1": [
+        1.0073900492425514
+      ],
+      "b2": [
+        0.9924457112666012
+      ],
+      "b3": [
+        0.980175482154231
+      ],
+      "b4": [
+        0.157052843488848
+      ],
+      "c1": [
+        1.003725914282099
+      ],
+      "c2": [
+        1.0366560214874523
+      ],
+      "c3": [
+        1.0194682056660964
+      ],
+      "c4": [
+        0.16157252469239478
+      ],
+      "d1": [
+        1.0148781682568815
+      ],
+      "d2": [
+        1.0488217071801915
+      ],
+      "d3": [
+        1.0236250093981103
+      ],
+      "d4": [
+        0.16794870685464613
+      ],
+      "e1": [
+        1.033872767289589
+      ],
+      "e2": [
+        1.032796156149821
+      ],
+      "e3": [
+        1.040409789002965
+      ],
+      "e4": [
+        0.161030832715251
+      ],
+      "f1": [
+        1.045186039635881
+      ],
+      "f2": [
+        1.0534633471629946
+      ],
+      "f3": [
+        1.011219359890416
+      ],
+      "f4": [
+        0.15895752143133113
+      ],
+      "g1": [
+        1.0471672554623952
+      ],
+      "g2": [
+        1.0725654464619037
+      ],
+      "g3": [
+        1.016831455947461
+      ],
+      "g4": [
+        0.16615041729175997
+      ],
+      "h1": [
+        1.025375818048787
+      ],
+      "h2": [
+        1.0090451564968703
+      ],
+      "h3": [
+        0.9478042016303527
+      ],
+      "h4": [
+        0.1601748941892649
+      ]
+    },
+    "parameters": {},
+    "metadata": {},
+    "attachments": [],
+    "title": null,
+    "sources": [
+      {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    ],
+    "container_type": {
+      "name": "96-well flat-bottom plate",
+      "well_count": 96,
+      "well_type": null,
+      "well_depth_mm": null,
+      "well_volume_ul": "360.0",
+      "well_coating": null,
+      "sterile": null,
+      "capabilities": [
+        "spin",
+        "incubate",
+        "absorbance",
+        "fluorescence",
+        "luminescence"
+      ],
+      "shortname": "96-flat",
+      "col_count": 12,
+      "is_tube": false
+    },
+    "warp": {
+      "id": "w1qmkk3nxpaem",
+      "device_id": "infinite1",
+      "command": {
+        "name": "PlateReader.ReadAbsorbance",
+        "plateType": "Generic96",
+        "wells": [
+          0,
+          12,
+          24,
+          36,
+          48,
+          60,
+          72,
+          84,
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85,
+          2,
+          14,
+          26,
+          38,
+          50,
+          62,
+          74,
+          86,
+          3,
+          15,
+          27,
+          39,
+          51,
+          63,
+          75,
+          87
+        ],
+        "wavelength": "6.000000000000001E-7:meter",
+        "numFlashes": 25
+      },
+      "state": "Completed",
+      "created_at": "2015-02-14T12:51:29.176-08:00",
+      "completed_at": "2015-02-14T12:52:02.117-08:00"
+    },
+    "instruction": {
+      "id": "i17e5zw9anc8q",
+      "operation": {
+        "dataref": "ref_25",
+        "num_flashes": 25,
+        "object": "growth_plate_2",
+        "op": "absorbance",
+        "wavelength": "600:nanometer",
+        "wells": [
+          "A1",
+          "B1",
+          "C1",
+          "D1",
+          "E1",
+          "F1",
+          "G1",
+          "H1",
+          "A2",
+          "B2",
+          "C2",
+          "D2",
+          "E2",
+          "F2",
+          "G2",
+          "H2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "E3",
+          "F3",
+          "G3",
+          "H3",
+          "A4",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "F4",
+          "G4",
+          "H4"
+        ]
+      },
+      "completed_at": "2015-02-14T12:52:50.576-08:00",
+      "executed_at": "2015-02-14T12:52:50.576-08:00",
+      "run": {
+        "id": "r17e5zw8rsvsd",
+        "status": "complete",
+        "title": "growthV2_2script"
+      }
+    }
+  }
+}

@@ -11,6 +11,8 @@ angular.module('transcripticApp')
   .controller('CatalogResourceCtrl', function ($scope, $rootScope, Catalog) {
     var self = this;
 
+    //be sure to use ng-if on containing element for field values, since should only assume model is accurate when not using parameters
+
     self.init = function () {
       Catalog.query().then(function (data) {
         self.catalogResults    = data.data.results;
@@ -38,6 +40,7 @@ angular.module('transcripticApp')
     });
 
     self.selectItem = function (item) {
+      //todo - refactor to fieldCtrl.assignFieldValue
       $scope.fieldCtrl.model = item;
       $rootScope.$broadcast('$modalClose');
     };

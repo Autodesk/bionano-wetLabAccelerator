@@ -100,51 +100,62 @@ angular.module('transcripticApp')
           return projectIdPromise
             .then(function (project) {
               self.project = project;
-
-              return funcToRun(self.protocol, project.id)
-                .then(function runSuccess (d) {
-                  console.log(d);
-                  self.response = d;
-                  self.error    = false;
-
-                  if (isRun) {
-                    $rootScope.$broadcast('editor:runSubmitted', d);
-                  } else {
-                    $rootScope.$broadcast('editor:verificationSuccess', d);
-                  }
-
-                }, function runFailure (e) {
-                  console.log(e);
-
-                  //check for our own handling... pas null if conversion didn't work, and will handle local errors upstream
-                  if (_.isNull(e)) {
-                    return;
-                  }
-
-                  self.error = true;
-
-                  //use as simple check for something like a 404 error - i.e. not protocol error but $http error
-                  if (_.isEmpty(e.data) || _.isEmpty(e.data.protocol)) {
-                    self.response = {"error": "Request did not go through... check the console"};
-                  } else {
-                    $rootScope.$broadcast('editor:verificationFailure', e.data.protocol);
-                    self.response = e.data.protocol;
-                  }
-                });
+              return funcToRun(self.protocol, project.id);
             })
-            .catch(function (err) {
+            .then(function runSuccess (d) {
+              console.log(d);
+              self.response = d;
+              self.error    = false;
+
+              if (isRun) {
+                $rootScope.$broadcast('editor:runSubmitted', d);
+              } else {
+                $rootScope.$broadcast('editor:verificationSuccess', d);
+              }
+            })
+            .catch(function runFailure (err) {
               console.warn('error sending run', err);
+
+              //check for our own handling... pas null if conversion didn't work, and will handle local errors upstream
+              if (_.isNull(err)) {
+                return;
+              }
+
+              self.error = true;
+
+              //credentials invalid
               if (err.status == 401) {
                 Notify({
-                  message: 'You must provide your Transcriptic credentials to verify your protocol',
+                  message: 'You must provide your credentials to verify your protocol with Transcriptic',
                   error  : true
                 });
-              } else if (err.status == 0) {
+                $rootScope.$broadcast('editor:toggleRunModal', true);
+                closeModal = false;
+              }
+              //check for timeout / no internet
+              else if (err.status == 0) {
                 Notify({
                   message: 'Request timed out. Please try it again.',
                   error  : true
                 });
                 closeModal = false;
+              }
+              //error in validation. this should be rare
+              else if (err.status == 503) {
+                Notify({
+                  message: 'Transcriptic could not handle your run. Contact them directly',
+                  error  : true
+                });
+              }
+              //use as simple check for something like a 404 error - i.e. not protocol error but $http error
+              //todo - verify we need this check
+              else if (_.isEmpty(err.data) || _.isEmpty(err.data.protocol)) {
+                self.response = {"error": "Request did not go through... check the console"};
+              }
+              //validation went through, had problems, so propagate
+              else {
+                $rootScope.$broadcast('editor:verificationFailure', err.data.protocol);
+                self.response = err.data.protocol;
               }
             })
             .then(function () {

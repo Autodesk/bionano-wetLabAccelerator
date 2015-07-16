@@ -1,0 +1,18 @@
+{
+    "author": {
+      "name": "Aaron Berliner",
+      "id": "31"
+    },
+    "date": "1433949961633",
+    "description": "Transformation Test of Zymo10B with PVIB",
+    "id": "1fccac8a-0b5f-4c7c-812f-4c5ea24f6012",
+    "name": "Transformation Test of Zymo10B with PVIB Default",
+    "tags": [
+    "Transformation",
+    "Zymo 10B E. coli",
+    "PVIB plasmid"
+  ],
+    "type": "protocol",
+    "db": {},
+    "version": "1.0.0"
+  }

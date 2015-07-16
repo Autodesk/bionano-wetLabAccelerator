@@ -14,17 +14,17 @@ angular.module('transcripticApp')
 
     self.graphLabels = {
       "absorbance"  : {
-        xlabel: "timepoint",
+        xlabel: "Timepoint",
         ylabel: "Absorbance Units (AU)",
         title : "Absorbance Readings"
       },
       "fluorescence": {
-        xlabel: "timepoint",
+        xlabel: "Timepoint",
         ylabel: "Relative Light Units (RLU)",
         title : "Fluorescence Readings"
       },
       "luminescence": {
-        xlabel: "timepoint",
+        xlabel: "Timepoint",
         ylabel: "Relative Light Units (RLU)",
         title : "Luminescence Readings"
       }
@@ -44,8 +44,8 @@ angular.module('transcripticApp')
       self.selectContainer(self.containers[0]);
 
       var unfoldedIndex = _.result(newIndices, 'unfolded');
-      if (_.isNumber(unfoldedIndex))
-      //todo - perf... maybe look at the autoprotocol or something?
+      if (_.isNumber(unfoldedIndex)) {
+        //todo - perf... maybe look at the autoprotocol or something?
         var unfolded  = Omniprotocol.utils.unfoldProtocol($scope.summaryCtrl.protocol),
             timepoint = _.reduce(unfolded, function (opIndexOfType, operation, flatIndex) {
               if (operation.operation == self.opName && flatIndex < unfoldedIndex) {
@@ -54,7 +54,8 @@ angular.module('transcripticApp')
               return opIndexOfType;
             }, 0);
 
-      self.selectTimepoint(timepoint);
+        self.selectTimepoint(timepoint);
+      }
     });
 
     /*

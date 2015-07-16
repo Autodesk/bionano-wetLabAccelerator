@@ -3,10 +3,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
 from pages.IndexPage import IndexPage
-from pages.IndexPage import ContentMenu
+from pages.ContentMenu import ContentMenu
+from pages.ProtocolSetup import ProtocolSetup
+from pages.SetupParameter import SetupParameter
 from pages.Build import Build
-from pages.Build import ProtocolSetup
-from pages.Build import SetupParameter
+#from pages.Build import SetupParameter
 from pages.Build import ProtocolInstructions
 import helpers
 
@@ -24,20 +25,14 @@ class TestBase(Base._BaseTest):
         #     err = "Please set a MODEL_NAME on your test class, for the model to test against."
         #     raise AttributeError, err
         Base._BaseTest.setUp(self, "chrome")
-        self.page = IndexPage(self.DRIVER, self.get_token())
-        self.page.open()
+        self.indexPage = IndexPage(self.DRIVER, self.get_token())
+        self.indexPage.open()
 
         self.build = Build(self.DRIVER)
         self.contentMenu = ContentMenu(self.DRIVER)
         self.protocolInstructions = ProtocolInstructions(self.DRIVER)
         # self.protocolSetup = ProtocolSetup(self.DRIVER)
 
-        try:
-            print("waiting for welcome text")
-            WebDriverWait(self.DRIVER, self.TIMEOUT).until(
-                expected_conditions.presence_of_element_located(WELCOME_TEXT_XPATH))
-        except:
-            self.fail("could not find welcome text " + WELCOME_TEXT_XPATH[1])
 
 
     def verifyIsDisplayed(self, element, description):
@@ -55,7 +50,10 @@ class TestBase(Base._BaseTest):
         self.assertFalse(actual, description)
 
     def verifyEqual(self, actual, expected, description):
-        verifyString = description + " is equal to " + str(expected)
+        if isinstance(expected, str):
+            verifyString = description + " is equal to '" + expected + "'"
+        else:
+            verifyString = description + " is equal to " + str(expected)
         self.verifyString(actual, expected, verifyString)
         self.assertEqual(actual, expected, verifyString)
 
@@ -63,9 +61,12 @@ class TestBase(Base._BaseTest):
         passFail = "FAIL"
         if actual == expect:
             passFail = "PASS"
-        print("  " + passFail + " - verify " + verifyString)
+        if verifyString.lower().startswith("verify") == False:
+            verifyString = "verify " + verifyString
+        print("  " + passFail + " - " + verifyString)
         if actual != expect:
             print("    expect: " + str(expect))
             print("    actual: " + str(actual))
 
         return passFail == "PASS"
+

@@ -72,7 +72,14 @@
     .centered & {
       display: table;
     }
+  }
 
+  a[dropdown-toggle] {
+    color: $white;
+
+    &:hover {
+      color: $light-grey;
+    }
   }
 
   .modal-constrain & {

@@ -1,0 +1,18 @@
+{
+  "cells": {
+    "id": "ct17ab4pbtpjmh",
+    "store": {
+      "where": "cold_20"
+    }
+  },
+  "pcr": {
+    "new": "96-pcr",
+    "store": {
+      "where": "ambient"
+    }
+  },
+  "primer": {
+    "id": "ct17ab4ppqsrmv",
+    "discard": true
+  }
+}

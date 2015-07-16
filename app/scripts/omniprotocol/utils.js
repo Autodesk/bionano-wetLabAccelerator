@@ -14,22 +14,124 @@ function pluckFieldValueRaw (fields, fieldName) {
   return _.result(pluckField(fields, fieldName), 'value', _.result(pluckField(fields, fieldName), 'default'));
 }
 
-function getContainerFromName (parameters, containerName) {
-  return _.find(parameters, {name: containerName});
+function getContainerNameFromId (parameters, id) {
+  return _.result(_.find(parameters, {id: id}), 'name');
 }
 
-function getContainerTypeFromName (parameters, containerName) {
-  return _.result(getContainerFromName(parameters, containerName), 'value.type');
+function getContainerValueFromId (parameters, id) {
+  return _.cloneDeep(_.find(parameters, {id: id}));
 }
+
+function getContainerTypeFromId (parameters, id) {
+  return _.result(getContainerValueFromId(parameters, id), 'type');
+}
+
+function getContainerColorFromId (parameters, id) {
+  return _.result(getContainerValueFromId(parameters, id), 'color');
+}
+
+function transformAllFields (protocol, transform) {
+  _.forEach(protocol.groups, function (group, groupIndex) {
+    _.forEach(group.steps, function (step, stepIndex) {
+      _.forEach(step.fields, function (field) {
+        //todo - handle indices - folded and unfolded
+        var indices = {
+          group: groupIndex,
+          op   : stepIndex
+        };
+        transform(field, step, group, indices);
+      });
+    });
+  });
+  return protocol;
+}
+
+/******
+ Parameters
+ ********/
+
+//returns a reference
+function parameterById (protocol, id) {
+  return _.find(_.result(protocol, 'parameters'), {id: id});
+}
+
+//returns a cloned value
+function parameterValueById (protocol, id) {
+  return _.cloneDeep(_.result(parameterById(protocol, id), 'value'));
+}
+
+function parameterNameById (protocol, id) {
+  return _.result(parameterById(protocol, id), 'name');
+}
+
+//note that this does not handle fields which don't use 'parameter' key, e.g. containers / aliquots
+function assignParametersToAllFields (protocol) {
+  _.forEach(protocol.parameters, function (param) {
+    var paramId    = _.result(param, 'id'),
+        paramValue = _.result(param, 'value'),
+        paramName  = _.result(param, 'name'); //if a container
+
+    if (!paramId) {
+      return;
+    }
+
+    transformAllFields(protocol, function (field) {
+      if (field.parameter == paramId) {
+        field.value = paramValue;
+      }
+      else if (field.type == 'container' && _.result(field, 'value.container') == paramId) {
+        _.set(field, 'value.containerName', paramName);
+      }
+      else if (_.startsWith(field.type, 'aliquot')) {
+        //future - handle aliquot++
+        if (_.result(field, 'value.container') == paramId) {
+          _.set(field, 'value.containerName', paramName);
+        }
+      }
+    });
+  });
+  return protocol;
+}
+
+function safelyDeleteParameter (protocol, param) {
+  var paramId    = _.result(param, 'id'),
+      paramValue = _.result(param, 'value');
+
+  if (!paramId) {
+    return protocol;
+  }
+
+  transformAllFields(protocol, function (field) {
+    if (field.parameter == paramId) {
+      field.value = paramValue;
+      delete field.parameter;
+    }
+    else if (field.type == 'container' && _.result(field, 'value.container') == paramId) {
+      _.assign(field.value, {
+        container : null,
+        containerName: null
+      });
+    }
+    else if (_.startsWith(field.type, 'aliquot')) {
+      //future - handle aliquot++
+      if (_.result(field, 'value.container') == paramId) {
+        _.assign(field.value, {
+          container : null,
+          containerName: null
+        });
+      }
+    }
+  });
+
+  _.remove(protocol.parameters, {id: paramId});
+
+  return protocol;
+}
+
 
 /*******
  Interpolation
  ******/
-
-//given parameter name, and list of parameters, gives parameter's value
-function interpolateParameter (name, parameters) {
-  return _.result(_.result(parameters, name), 'value');
-}
 
 //interpolates a string using the params passed
 function interpolateValue (value, params) {
@@ -132,7 +234,8 @@ function getScaffoldProtocol () {
       "author"     : {},
       "description": "",
       "tags"       : [],
-      "db"         : {}
+      "db"         : {},
+      "verison"    : "1.0.0"
     },
     "parameters": [],
     "groups"    : []
@@ -172,7 +275,7 @@ function unfoldGroup (group, groupIndex) {
     _.forEach(group.steps, function (step, stepIndex) {
       var indices = {
         loop: loopIndex,
-        step : (loopIndex * group.steps.length) + stepIndex
+        step: (loopIndex * group.steps.length) + stepIndex
       };
       _.isNumber(groupIndex) && _.assign(indices, {group: groupIndex});
 
@@ -380,8 +483,18 @@ module.exports = {
   pluckField        : pluckField,
   pluckFieldValueRaw: pluckFieldValueRaw,
 
-  getContainerFromName    : getContainerFromName,
-  getContainerTypeFromName: getContainerTypeFromName,
+  getContainerValueFromId: getContainerValueFromId,
+  getContainerNameFromId : getContainerNameFromId,
+  getContainerTypeFromId : getContainerTypeFromId,
+  getContainerColorFromId: getContainerColorFromId,
+
+  transformAllFields: transformAllFields,
+
+  parameterById              : parameterById,
+  parameterValueById         : parameterValueById,
+  parameterNameById          : parameterNameById,
+  assignParametersToAllFields: assignParametersToAllFields,
+  safelyDeleteParameter      : safelyDeleteParameter,
 
   interpolateValue : interpolateValue,
   interpolateObject: interpolateObject,

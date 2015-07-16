@@ -23,10 +23,10 @@
          ng-show="contentCtrl.protocols.length">
       <h5 class="contentMenu-heading">Protocols</h5>
 
-      <div ng-repeat="protocol in contentCtrl.protocols | orderBy:'metadata.name'">
+      <div ng-repeat="protocol in contentCtrl.protocols | orderBy:'metadata.date'">
         <a ng-click="contentCtrl.openProtocol(protocol)"
            class="contentMenu-item"
-           ng-bind="protocol.metadata.name"></a>
+           ng-bind="protocol.metadata.name || 'Untitled Protocol'"></a>
       </div>
     </div>
 
@@ -37,7 +37,7 @@
       <div ng-repeat="run in contentCtrl.runs | orderBy:'metadata.date'">
         <a ng-click="contentCtrl.openRun(run)"
            class="contentMenu-item"
-           ng-bind="run.metadata.name"></a>
+           ng-bind="run.metadata.name || 'Untitled Run'"></a>
       </div>
     </div>
 

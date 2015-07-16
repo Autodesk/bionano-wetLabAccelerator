@@ -1,12 +1,13 @@
 <div class="results">
 
-  <div class="page-labels flex-horizontal" ng-show="resultsCtrl.run.protocol.groups">
+  <div class="page-labels flex-horizontal"
+       ng-show="resultsCtrl.run.protocol.groups.length">
     <div class="sidepanel flex-child">
       <p>Protocol Overview</p>
     </div>
     <div class="maincolumn flex-grower">
       <div class="pull-right"
-           style="position: relative;"
+           style="position: relative; cursor: pointer;"
            ng-class="{'open' : downloadOptionsVisible}"
            ng-mouseenter="downloadOptionsVisible = true"
            ng-mouseleave="downloadOptionsVisible = false">
@@ -30,9 +31,11 @@
       </div>
 
       <div>
-        <span ng-bind="'Results: ' + resultsCtrl.run.metadata.name"></span>
+        <span ng-bind="'Results: ' + resultsCtrl.run.metadata.name"
+              ng-click="toggleModal()"></span>
 
-        <div class="glyphicon-ellipse" ng-click='toggleModal()'>
+        <div class="glyphicon-ellipse"
+             ng-click="toggleModal()">
           <span class="glyphicon glyphicon-option-horizontal"></span>
         </div>
         <tx-modal class="centered"
@@ -80,7 +83,7 @@
     </div>
   </div>
 
-  <div class="flex-horizontal flex-grower" ng-show="resultsCtrl.run.protocol.groups">
+  <div class="flex-horizontal flex-grower" ng-show="resultsCtrl.run.protocol.groups.length">
 
     <div class="sidepanel flex-vertical">
       <tx-protocol-mini protocol="resultsCtrl.run.protocol"
@@ -93,7 +96,7 @@
 
     <div class="maincolumn flex-grower maxout-scroll-vertical results-summary">
       <div class="results-summary-wrap"
-           simple-sticky="20"
+           simple-sticky="50"
            sticky-class="sticky">
         <div ng-show="!resultsCtrl.currentInfo || resultsCtrl.currentInfo == 'status'">
           <h4 class="status-heading"
@@ -107,11 +110,13 @@
 
         <div ng-if="resultsCtrl.currentInfo && resultsCtrl.currentInfo != 'status'">
           <div>
-            <span class="pull-right">Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</span>
+            <div class="summary-header">
+              <span class="pull-right">Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</span>
 
-            <p><span><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></span></p>
+              <p><span><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></span></p>
 
-            <p ng-bind="resultsCtrl.currentGroup.description"></p>
+              <p ng-bind="resultsCtrl.currentGroup.description"></p>
+            </div>
 
             <tx-operation-summary protocol="resultsCtrl.run.protocol"
                                   indices="resultsCtrl.currentInfo"
@@ -124,7 +129,7 @@
     </div>
   </div>
 
-  <div ng-hide="resultsCtrl.run.protocol.groups">
+  <div ng-hide="resultsCtrl.run.protocol.groups.length">
     Select a protocol... (you must be logged in and initiated a run from this app)
   </div>
 

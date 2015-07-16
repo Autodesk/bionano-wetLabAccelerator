@@ -73,11 +73,12 @@ angular.module('transcripticApp')
       }).$promise.then(function (submissionResult) {
           console.log(submissionResult);
 
-          //todo - transition to metadata for these
+          _.assign(run.metadata, {
+            transcripticProjectId: transcripticProject,
+            transcripticRunId    : submissionResult.id
+          });
 
           _.assign(run, {
-            transcripticProjectId: transcripticProject,
-            transcripticRunId    : submissionResult.id,
             transcripticRunInfo  : _.cloneDeep(submissionResult)
           });
 
@@ -92,15 +93,15 @@ angular.module('transcripticApp')
     };
 
     self.updateRunInfo = function (runObj) {
-      var runId        = _.result(runObj, 'transcripticRunId'),
-          projectId    = _.result(runObj, 'transcripticProjectId'),
+      var runId        = _.result(runObj, 'metadata.transcripticRunId'),
+          projectId    = _.result(runObj, 'metadata.transcripticProjectId'),
           runData      = _.result(runObj, 'data'),
           runInfo      = _.result(runObj, 'transcripticRunInfo'),
           runStatus    = _.result(runInfo, 'status', ''),
           runCompleted = (runStatus == 'complete'),
           runCancelled = (runStatus == 'cancelled');
 
-      console.log(_.isUndefined(runInfo), _.isEmpty(runData), !runCompleted, runId, projectId, runData, runObj);
+      //console.log(_.isUndefined(runInfo), _.isEmpty(runData), !runCompleted, runId, projectId, runData, runObj);
 
       if ((_.isUndefined(runInfo) || _.isEmpty(runData) || !runCompleted) && !runCancelled && (runId && projectId)) {
         var requestPayload = {project: projectId, run: runId};
@@ -146,24 +147,19 @@ angular.module('transcripticApp')
     };
 
     function createNewRunObject (protocol) {
-      var run = _.assign(Omniprotocol.utils.getScaffoldRun(), {
+      return _.assign(Omniprotocol.utils.getScaffoldRun(), {
         protocol    : _.cloneDeep(protocol),
-        autoprotocol: ProtocolHelper.convertToAutoprotocol(protocol)
+        autoprotocol: ProtocolHelper.convertToAutoprotocol(protocol),
+        metadata: generateNewRunMetadata(protocol)
       });
-
-      //assign metadata
-      _.assign(run.metadata, generateNewRunMetadata(protocol), run.metadata);
-
-      return run;
     }
 
-    //todo - handle tags + versioning
     //note - does not handle protocol, need to attach that separately (not in metadata)
     function generateNewRunMetadata (protocol) {
       return {
         id      : UUIDGen(),
-        name    : 'Run of ' + _.result(protocol, 'metadata.name', 'CX1 Protocol'),
-        date    : (new Date()).toString(),
+        name    : 'Run of ' + _.result(protocol, 'metadata.name', 'WLA Protocol'),
+        date    : '' + (new Date()).valueOf(),
         type    : 'run',
         author  : {
           name: Authentication.getUsername(),
@@ -175,7 +171,8 @@ angular.module('transcripticApp')
           author: _.result(protocol, 'metadata.author', null)
         },
         "tags"  : [],
-        "db"    : {}
+        "db"    : {},
+        "version" : "1.0.0"
       }
     }
 

@@ -1,0 +1,95 @@
+{
+  "refs" : {
+    "water" : {
+      "new": "96-deep",
+      "store": {
+        "where": "warm_37"
+      }
+    },
+    "plate0": {
+      "new": "96-deep",
+      "store": {
+        "where": "warm_37"
+      }},
+    "plate1": {
+      "new": "96-deep",
+      "store": {
+        "where": "warm_37"
+      }
+    },
+    "my_plate": {
+      "new": "96-deep",
+      "store": {
+        "where": "warm_37"
+      }
+    }
+  },
+  "instructions" : [
+    {"op": "pipette",
+      "groups": [
+        {
+          "distribute": {
+            "from": "water/0",
+            "to": [
+              { "well": "plate0/A1",
+                "volume": "50:microliter" },
+              { "well": "plate0/A2",
+                "volume": "50:microliter" },
+              { "well": "plate0/A3",
+                "volume": "50:microliter" }
+            ]
+          }
+        }, {
+          "transfer": [
+            {
+              "from": "plate0/A1",
+              "to": "plate1/A1",
+              "volume": "5:microliter"
+            },
+            {
+              "from": "plate0/A1",
+              "to": "plate1/A2",
+              "volume": "5:microliter"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "op": "thermocycle",
+      "object": "my_plate",
+      "dyes": {
+        "SYBR": ["A1","A2","A3","A4","A5"],
+        "CY5": ["A2","A3","A5","A7","A11"]
+      },
+      "dataref": "qpcr_data_2",
+      "volume": "20:microliter",
+      "groups": [{
+        "cycles": 1,
+        "steps": [{
+          "duration": "120:second",
+          "temperature": "95:celsius"
+        }]
+      }, {
+        "cycles": 36,
+        "steps": [{
+          "duration": "15:second",
+          "gradient": {
+            "top": "96:celsius",
+            "bottom": "94:celsius"
+          }
+        }, {
+          "duration": "30:second",
+          "temperature": "60:celsius",
+          "read": true
+        }]
+      }],
+      "melting": {
+        "start": "65:celsius",
+        "end": "95:celsius",
+        "increment": "0.5:celsius",
+        "rate": "1:second"
+      }
+    }
+  ]
+}

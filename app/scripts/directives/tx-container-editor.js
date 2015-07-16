@@ -36,21 +36,14 @@ angular.module('transcripticApp')
             id : null,
             name : null
           });
-          $scope.notifyContainerChange();
         };
 
         self.selectRemoteContainer = function (remote) {
           self.name = remote.name || remote.id;
           _.assign(self.model, remote);
-          $scope.notifyContainerChange();
         };
       },
       link: function postLink(scope, element, attrs) {
-
-        //mostly for tx-container-select
-        scope.notifyContainerChange = function () {
-          $rootScope.$broadcast('editor:containerChange');
-        };
 
       }
     };

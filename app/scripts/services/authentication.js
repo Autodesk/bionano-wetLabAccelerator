@@ -14,24 +14,16 @@ angular.module('transcripticApp')
     var userInfo = {},
         watchers = [];
 
-    self.authenticate = function (userstring) {
-
-      //todo - store userstring / token as a cookie?
-
-      return Platform.authenticate(userstring).
-        then(function () {
-          return Platform.userValue('userstring', userstring);
-        }).
-        then(Platform.getUserInfo).
+    self.localAuthenticate = function (token) {
+      Platform.getUserInfo().
         then(function (retrieved) {
           _.assign(userInfo, retrieved, {
-            token : userstring,
-            name: retrieved.name
+            token: token,
+            uid: retrieved.uid,
+            email: retrieved.email,
+            name : retrieved.name
           });
 
-          $cookies['authToken'] = userstring;
-
-          //todo - verify creds are different before triggering
           triggerWatchers();
         }).
         catch(function (err) {
@@ -40,16 +32,28 @@ angular.module('transcripticApp')
         });
     };
 
+    self.isAuthenticated = Platform.isAuthenticated;
+
     //returns promise, resolving to whether successful or not
     self.unauthenticate = function () {
       return Platform.unauthenticate()
         .then(function () {
           userInfo = {};
-          $cookies['authToken'] = '';
           triggerWatchers();
           return true;
         })
         .catch(_.constant(false));
+    };
+
+    //debugging only. Should check for cookie and use self.localAuthenticate
+    self.authenticate = function (userstring) {
+      return Platform.authenticate(userstring)
+        .then(self.localAuthenticate);
+    };
+
+    //debugging only.
+    self.isAuthenticatedLocal = function () {
+      return $q.when(angular.isDefined($cookies['bionano-platform-token']));
     };
 
     function triggerWatcher (fn) {
@@ -57,19 +61,15 @@ angular.module('transcripticApp')
       fn(toPass);
     }
 
-
     function triggerWatchers () {
-      angular.forEach(watchers, triggerWatcher);
+      _.forEach(watchers, triggerWatcher);
     }
 
     self.watch = function (cb, $scope) {
       triggerWatcher(cb);
       watchers.push(cb);
       var unbind = function () {
-        var i = watchers.indexOf(cb);
-        if (i > -1) {
-          watchers.splice(i, 1);
-        }
+        _.remove(watchers, cb);
       };
       if ($scope) {
         $scope.$on('$destroy', unbind);
@@ -82,16 +82,73 @@ angular.module('transcripticApp')
     };
 
     self.getUserId = function () {
-      return userInfo.id;
+      return userInfo.uid;
     };
 
 
     //init - check for cookie, authenticate if present
 
-    var initialAuthToken = $cookies['authToken'];
+    var initialAuthToken = $cookies['bionano-platform-token'];
     if (!!initialAuthToken) {
-      console.warn('found initial auth token', initialAuthToken);
-      self.authenticate(initialAuthToken);
+      console.warn('found user info', initialAuthToken);
+      self.localAuthenticate(initialAuthToken);
+    } else {
+      console.warn('no user info found');
     }
 
+  })
+/**
+ * A directive that shows elements only when user is logged in to the platform
+ */
+  .directive('ngShowAuth', function (Authentication, $timeout) {
+    var isLoggedIn;
+    Authentication.watch(function (user) {
+      isLoggedIn = !!user;
+    });
+
+    return {
+      restrict: 'A',
+      link    : function (scope, el) {
+        el.addClass('ng-cloak'); // hide until we process it
+
+        function update () {
+          // sometimes if ngCloak exists on same element, they argue, so make sure that
+          // this one always runs last for reliability
+          $timeout(function () {
+            el.toggleClass('ng-cloak', !isLoggedIn);
+          }, 0);
+        }
+
+        update();
+        Authentication.watch(update, scope);
+      }
+    };
+  })
+
+/**
+ * A directive that shows elements only when user is logged out of the platform
+ */
+  .directive('ngHideAuth', function (Authentication, $timeout) {
+    var isLoggedIn;
+    Authentication.watch(function (user) {
+      isLoggedIn = !!user;
+    });
+
+    return {
+      restrict: 'A',
+      link    : function (scope, el) {
+        function update () {
+          el.addClass('ng-cloak'); // hide until we process it
+
+          // sometimes if ngCloak exists on same element, they argue, so make sure that
+          // this one always runs last for reliability
+          $timeout(function () {
+            el.toggleClass('ng-cloak', isLoggedIn !== false);
+          }, 0);
+        }
+
+        update();
+        Authentication.watch(update, scope);
+      }
+    };
   });

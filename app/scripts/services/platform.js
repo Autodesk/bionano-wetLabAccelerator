@@ -17,27 +17,34 @@ angular.module('transcripticApp')
 
     if (_.isUndefined(pc)) {
       //todo - should use ES6 proxies when available
-      //hack - shitty proxy requests
       _.forEach([
         'authenticate',
+        'isAuthenticated',
         'unauthenticate',
         'get_user',
         'set_user_value',
         'get_user_value',
+        'get_all_value_fields',
         'get_all_project_ids',
+        'getAllProjectMetadata',
+        'getAllProjectIds',
         'getProject,',
         'getProjectMetadata,',
         'saveProject,,',
         'deleteProject,'
       ], _.partial(_.set, pc, _, $q.reject));
-
     }
 
     /* Facade */
 
     //note - should use Authentication service, not this directly
+    //deprecated. You should use platform / facebook instead. this is for debugging.
     self.authenticate = function (userstring) {
       return pc.authenticate(userstring);
+    };
+
+    self.isAuthenticated = function () {
+      return pc.isAuthenticated();
     };
 
     self.unauthenticate = function () {
@@ -47,7 +54,7 @@ angular.module('transcripticApp')
     self.getUserInfo = function () {
       return pc.get_user()
         .then(function (result) {
-          return result.data;
+          return _.assign(result.data, {uid: result.uid});
         });
     };
 
@@ -66,6 +73,10 @@ angular.module('transcripticApp')
         .then(function (rpc) {
           return rpc.result;
         });
+    };
+
+    self.getAllProjectMetadata = function () {
+      return pc.getAllProjectMetadata();
     };
 
     self.getProject = function (id) {

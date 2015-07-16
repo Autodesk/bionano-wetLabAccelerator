@@ -1,8 +1,5 @@
-<input disabled
-       type="color"
-       class="color-swatch"
-       ng-required="true"
-       ng-model="contCtrl.model.color">
+<span class="color-swatch"
+      ng-style="{'background-color' : contCtrl.model.color}"></span>
 <span ng-bind="contCtrl.model.type"></span>
 <a class="field-details-button"
    ng-click="contCtrl.modalShow = !contCtrl.modalShow">
@@ -29,9 +26,15 @@
                   <a ng-click="contCtrl.selectRemoteContainer(c)"
                      ng-bind="c.name || c.id"></a>
                 </li>
-                <li ng-if="!contCtrl.remoteContainers.length"
+                <li tx-class-auth="ng-hide"
                     class="disabled">
-                  <a>log in for remote containers</a>
+                  <a>Log into Transcriptic for remote containers</a>
+                </li>
+                <li ng-if="!contCtrl.remoteContainers.length"
+                    tx-class-auth="ng-hide"
+                    tx-unauth
+                    class="disabled">
+                  <a>Loading containers...</a>
                 </li>
               </ul>
             </div>
@@ -47,7 +50,7 @@
               <ul class="dropdown-menu">
                 <li ng-repeat="(cont, details) in contCtrl.containerOptions">
                   <a ng-click="contCtrl.model.type = cont; notifyContainerChange();"
-                     ng-bind="cont"></a>
+                     ng-bind="details.name"></a>
                 </li>
               </ul>
             </div>

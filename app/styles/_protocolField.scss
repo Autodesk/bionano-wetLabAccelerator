@@ -78,6 +78,10 @@ tx-protocol-field {
       opacity: 1;
       background-color: $light-grey;
       transition: opacity $transition-short-time $transition-short-ease;
+
+      &:hover {
+        background-color: $primary;
+      }
     }
   }
 

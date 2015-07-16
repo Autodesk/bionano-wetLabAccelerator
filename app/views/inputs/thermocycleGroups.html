@@ -15,6 +15,7 @@
 
   <div>
     <a class="field-action-text"
+       ng-class="{'invalid' : !fieldCtrl.model.length}"
        ng-click="thermoCtrl.addGroup()">
       add group...
     </a>

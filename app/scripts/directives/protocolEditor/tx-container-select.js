@@ -7,13 +7,12 @@
  * # txContainerSelect
  */
 angular.module('transcripticApp')
-  .directive('txContainerSelect', function ($rootScope, $timeout, ContainerHelper, ProtocolHelper) {
+  .directive('txContainerSelect', function ($rootScope, $timeout, ContainerHelper, ProtocolHelper, ProtocolUtils, UUIDGen) {
     return {
       templateUrl     : 'views/tx-container-select.html',
       restrict        : 'E',
       require         : 'ngModel',
       scope           : {
-        //containers: '=',
         type : '=?containerType',
         model: '=ngModel'
       },
@@ -28,59 +27,39 @@ angular.module('transcripticApp')
 
         //expose changes to container-type
         self.handleChange = function () {
-          var index   = _.findIndex(self.localContainers, function (container) {
-                return container.name == self.model && (_.isString(container.name) && container.name.length);
-              }),
-              contVal = _.result(self.localContainers[index], 'value');
-
-          if (index >= 0) {
-            self.type = _.result(contVal, 'type');
-          }
-        };
-
-        self.handleNameChange = function (e, oldName, newName) {
-          if (_.isString(oldName) && oldName.length && self.model == oldName) {
-            self.model = newName;
+          var relevantParam = ProtocolUtils.paramById(_.result(self.model, 'container'));
+          if (relevantParam) {
+            //expose type outside directive
+            self.type = _.result(relevantParam, 'value.type');
+          } else {
+            self.type = '';
           }
         };
       },
       link            : function postLink (scope, element, attrs, ngModel) {
-        // Set up our own watch to listen for both changes in and changes out. ng-change is view change listener so doesn't work here.
-        // Need to also handle changes from upstream e.g. the user changing the JSON
-        //todo - can deprecate this if setting ourselves
-        scope.$watch('containerSelectCtrl.model', scope.containerSelectCtrl.handleChange);
 
-        //listen to changes to parameters
-        scope.$on('editor:containerChange', scope.containerSelectCtrl.handleChange);
+        //listen for changes so that can propagate container type
+        scope.$watch('containerSelectCtrl.model.container', scope.containerSelectCtrl.handleChange);
 
-        scope.$on('editor:parameterNameChange', scope.containerSelectCtrl.handleNameChange);
-
-        scope.selectLocalContainer = function (localCont) {
-          setContainerName(localCont.name);
-        };
+        //listen for changes to parameter, update container type
+        scope.$on('editor:parameterChange', scope.containerSelectCtrl.handleChange);
 
         scope.createNewContainer = function (newCont) {
-          var name  = "myContainer",
-              param = {
-                name : name,
-                type : 'container',
-                value: {
-                  type: newCont.shortname
-                }
-              };
-
-          $rootScope.$broadcast('editor:protocol:addContainer', param);
-
-          //hack-ish...
-          $timeout(function () {
-            setContainerName(name);
-          })
+          var param = ProtocolUtils.createContainer({
+            value: {
+              type: newCont.shortname
+            }
+          });
+          scope.selectContainerParam(param);
         };
 
-        function setContainerName (name) {
-          ngModel.$setViewValue(name);
-          scope.showingContainers = false;
-        }
+        scope.selectContainerParam = function (param) {
+          ngModel.$setViewValue({container: _.result(param, 'id')});
+        };
+
+        scope.containerColorFromId = ProtocolUtils.containerColorFromId;
+
+        scope.containerNameFromId = ProtocolUtils.paramNameFromParamId;
 
       }
     };

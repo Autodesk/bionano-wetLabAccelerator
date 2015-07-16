@@ -3,6 +3,7 @@
    ng-bind="(fieldCtrl.model.steps.length) ? ('' + (fieldCtrl.model.cycles || 1) + ' cycle' + ((fieldCtrl.model.cycles != 1) ? 's' : '') + ' @ ' + fieldCtrl.model.steps.length + ' steps') : 'details...'">
 </a>
 <tx-modal ng-show="fieldCtrl.detailsVisible"
+          ng-if="fieldCtrl.detailsVisible"
           title="Thermocycle Group">
   <div ng-controller="thermocycleGroupsCtrl as thermoCtrl"
        class="column-wrap div-centered column-16">
@@ -34,6 +35,7 @@
           <!--<div class="tx-table-item-field">Grad°</div>-->
           <div class="tx-table-item-field">Time</div>
           <div class="tx-table-item-field">Read</div>
+          <div class="tx-table-item-field"></div>
         </div>
         <div class="tx-table-item"
              ng-repeat="step in fieldCtrl.model.steps">
@@ -68,21 +70,27 @@
             <input type="checkbox"
                    ng-model="step.read">
           </div>
+          <div class="tx-table-item-field">
+            <a class="close"
+               ng-click="thermoCtrl.removeStep(fieldCtrl.model, step)">&times;</a>
+          </div>
         </div>
       </div>
 
-      <a class="field-action-text"
-         style="display: inline-block"
-         ng-click="thermoCtrl.addStep(fieldCtrl.model); fieldCtrl.detailsVisible = true">
-        + Add Step
-      </a>
+      <div style="text-align: center; padding-top: 15px;">
+        <a class="field-action-text text-warning"
+           style="display: inline-block"
+           ng-click="thermoCtrl.addStep(fieldCtrl.model); fieldCtrl.detailsVisible = true">
+          + Add Step
+        </a>
+      </div>
     </div>
 
     <div class="column-8">
       <tx-thermocycle-group group="fieldCtrl.model"></tx-thermocycle-group>
 
       <div style="text-align:center;padding-top: 15px;">
-        <span class="thin text-sm">gradient support forthcoming</span>
+        <span class="thin text-sm">within-plate gradient support forthcoming</span>
       </div>
     </div>
   </div>

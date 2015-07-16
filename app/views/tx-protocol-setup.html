@@ -19,7 +19,7 @@
   <div class="protocol-setup-main"
        ng-show="isVisible">
     <div class="setup-row"
-         ng-repeat="param in setupCtrl.parameters"
+         ng-repeat="param in setupCtrl.parameters track by param.id"
          ng-switch="param.type">
 
       <div class="verification"

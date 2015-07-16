@@ -14,6 +14,7 @@
           <td>
             <tx-protocol-field ng-model="fieldCtrl.model.volume"
                                hide-title="true"
+                               prevent-variable="true"
                                field="{type: 'volume'}">
             </tx-protocol-field>
           </td>
@@ -24,7 +25,8 @@
           <td>
             <tx-protocol-field ng-model="fieldCtrl.model.speed"
                                hide-title="true"
-                               field="{type: 'flowrate'}">
+                               prevent-variable="true"
+                               field="{type: 'speed'}">
             </tx-protocol-field>
           </td>
         </tr>
@@ -34,6 +36,7 @@
           <td>
             <tx-protocol-field ng-model="fieldCtrl.model.repetitions"
                                hide-title="true"
+                               prevent-variable="true"
                                field="{type: 'integer'}">
             </tx-protocol-field>
           </td>

@@ -14,7 +14,7 @@ angular.module('transcripticApp')
         cache = {},
         pathToId = 'metadata.id';
 
-    //todo - expose cache for binding
+    self.cache = cache;
 
     //todo - all functions should ensure that have already authenticated - use a facade of platform?
 
@@ -50,14 +50,10 @@ angular.module('transcripticApp')
       }));
     };
 
-    //remove angular / firebase fields
+    //todo - may want to make this more explicit... want to move dollar prefixed fields
+    //this will remove $$ prefixed fields, which should prevent circular references
     self.removeExtraneousFields = function removeExtraneousFields (object) {
-      if (_.isObject(object)) {
-        return _.omit(object, function (val, key) {
-          return _.startsWith(key, "$");
-        });
-      }
-      return object;
+      return angular.fromJson(angular.toJson(object));
     };
 
     /****
@@ -147,6 +143,22 @@ angular.module('transcripticApp')
     };
 
     self.getAllProjectMetadata = function getAllProjectMetadata (useCache) {
+      return Platform.getAllProjectMetadata()
+        .then(function (metas) {
+          return _.mapValues(metas, function (meta) {
+            return {metadata : meta};
+          })
+        })
+        .then(function (metadatas) {
+          return $q.all(_.map(metadatas, saveProjectToCache))
+            //in case one rejects, let the rest fall through
+            //hack
+            .catch(function () {
+              console.error('error loading all project metadata', cache);
+              return _.map(_.keys(metadatas), retrieveFromCache);
+            });
+        });
+      /*
       return self.getAllProjectIds(useCache).
         then(function (ids) {
           return $q.all(_.map(ids, self.getProjectMetadata))
@@ -157,6 +169,7 @@ angular.module('transcripticApp')
               return _.map(ids, retrieveFromCache);
             });
         });
+        */
     };
 
     self.getAllProjectMetadataOfType = function getAllProjectMetadataOfType (type, useCache) {

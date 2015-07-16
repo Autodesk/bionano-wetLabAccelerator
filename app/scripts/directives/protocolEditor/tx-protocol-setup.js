@@ -7,7 +7,7 @@
  * # txProtocolSetup
  */
 angular.module('transcripticApp')
-  .directive('txProtocolSetup', function ($rootScope, TranscripticAuth, Container, Omniprotocol, ContainerHelper, ProtocolHelper) {
+  .directive('txProtocolSetup', function ($rootScope, TranscripticAuth, UUIDGen, Container, Omniprotocol, ContainerHelper, ProtocolHelper, ProtocolUtils) {
     return {
       templateUrl     : 'views/tx-protocol-setup.html',
       restrict        : 'E',
@@ -35,83 +35,64 @@ angular.module('transcripticApp')
 
 
         self.addParam = function (param) {
-          self.parameters.push({
-            type    : param.type,
-            readable: param.readable
-          });
-          $scope.showParameters = false;
+          ProtocolUtils.createParameter(param);
         };
 
         self.addContainer = function (param) {
-          var parameter = {
-            type : 'container',
-            value: {
-              color: ContainerHelper.randomColor(),
-              isNew: true
-            }
-          };
-
           if (_.isString(param)) {
-            parameter.value.type = param;
-          } else if (_.isObject(param)) {
-            _.merge(parameter, param);
+            console.warn('passed string to add container', param);
           }
 
-          self.parameters.push(parameter);
-          $scope.checkContainerChange();
+          ProtocolUtils.createContainer(param);
         };
 
         self.clearParamValue = function (param) {
-          _.assign(param, {value: null});
+          ProtocolUtils.clearParameterValue(param);
         };
 
         self.deleteParam = function (param) {
-          _.remove(self.parameters, param);
-          $scope.checkContainerChange();
+          ProtocolUtils.deleteParameter(param);
         };
 
         self.handleChangeParamType = function (param) {
           self.clearParamValue(param);
-          $scope.checkContainerChange();
         };
 
       },
       link            : function postLink (scope, element, attrs) {
         var oldContainerLength;
 
+        scope.$on('editor:toggleSetupVisibility', function (e, val) {
+          scope.isVisible = !!val;
+        });
+
+        scope.$on('editor:toggleGroupVisibility', function (e, val) {
+          scope.isVisible = !!val;
+        });
+
         //CHANGE CHECKING / CONTAINERS
 
         //todo - this will be problematic when handling verifications on the parameter b/c deep equality
         scope.$watch('setupCtrl.parameters', function (newval, oldval) {
           $rootScope.$broadcast('editor:parameterChange', newval);
+          scope.checkContainerChange();
         }, true);
 
+        scope.$on('editor:newprotocol', function () {
+          $rootScope.$broadcast('editor:parameterChange', scope.setupCtrl.parameters);
+          scope.checkContainerChange()
+        });
+
+        //check and update containerhelper
+        //changes to containers themselves will be propagated by reference automatically
+        //doens't really account for programmatic changes (i.e. within one digest) that are not picked up by the watch
         scope.checkContainerChange = function () {
           var containerList = _.filter(scope.setupCtrl.parameters, {type: 'container'});
           if (containerList.length != oldContainerLength) {
             ContainerHelper.setLocal(containerList);
-            scope.notifyContainerChange();
             oldContainerLength = containerList.length;
           }
         };
-
-        //mostly for tx-container-select
-        scope.notifyContainerChange = function () {
-          $rootScope.$broadcast('editor:containerChange');
-        };
-
-        scope.$on('editor:protocol:addContainer', function (event, param) {
-          scope.setupCtrl.addContainer(param);
-          scope.isVisible = true;
-        });
-
-        scope.$on('editor:newprotocol', function () {
-          //use protocolhelper to ensure parameters are defined properly (model may not have propagated)
-          var containerList = _.filter(ProtocolHelper.currentProtocol.parameters, {type: 'container'});
-          ContainerHelper.setLocal(containerList);
-          scope.notifyContainerChange();
-          oldContainerLength = containerList.length;
-        });
 
         //VERIFICATIONS
 
@@ -125,8 +106,9 @@ angular.module('transcripticApp')
         scope.receiveVerifications = function (vers) {
           scope.hasVerifications = !!vers.length;
           scope.verifications    = vers;
-          //todo - shouldn't be binding to the parameter directly...
-          //fixme - using index is a hack, should be using whole verification (can refactor once can remove the $watch on all parameters)
+          //note, that this is not ideal, but bind verification to the parameter directly. we clear this later in pre-process in protocolHelper
+          //note - need to bind by name, because verifications only know about container name, not id
+          //fixme - using index is a hack, should be using whole verification (can refactor once can remove the $watch on all parameters, because really slow)
           _.forEach(vers, function (ver, verIndex) {
             _.assign(_.find(scope.setupCtrl.parameters, {name: ver.container}), {verification: verIndex});
           });

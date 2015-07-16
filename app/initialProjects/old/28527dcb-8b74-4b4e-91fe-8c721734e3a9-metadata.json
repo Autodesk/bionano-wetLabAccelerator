@@ -1,0 +1,22 @@
+{
+  "author": {
+    "id": "31"
+  },
+  "date": "1430006919149",
+  "description": "Run of protocol Digesting protocol",
+  "id": "28527dcb-8b74-4b4e-91fe-8c721734e3a9",
+  "name": "Transformation 4/30",
+  "oldId": "292983bac9e8dfa0913091309",
+  "protocol": {
+    "author": {
+      "id": "31"
+    },
+    "id": "b6320abe-ecb1-4ecf-bed1-50de0bc43212",
+    "name": "simpleTransform1"
+  },
+  "success": true,
+  "type": "run",
+  "transcripticRunId": "r17pgsuczjbcx",
+  "transcripticProjectId": "p17pgd7vm554k",
+  "version": "1.0.0"
+}

@@ -16,6 +16,7 @@ class _BaseTest(TestCase):
         env = self.environment()
        #print("os.environ['TEST_BROWSER']: " + os.environ['TEST_BROWSER'])
         browser = config['browser']
+        self.browserDescripton = browser
         if browser == "chrome":
             self.setUpChrome()
         if browser == "firefox":
@@ -24,7 +25,7 @@ class _BaseTest(TestCase):
             self.setupIE()
         if browser == "remote":
             self.setupRemote()
-        print("browser: " + browser)
+        print("\n  browser: " + self.browserDescripton)
 
     def environment(self):
         """Return the environment for this test. This allows us to specify
@@ -32,10 +33,9 @@ class _BaseTest(TestCase):
         try:
             env = os.environ['TEST_ENVIRONMENT']
         except KeyError:
-            print("environ except")
+            #print("environ except")
             env = config['environment']
 
-        print("environment: " + env)
         return env
 
     def assertSameImage(self, page, prefix=None):
@@ -134,6 +134,7 @@ class _BaseTest(TestCase):
         
     def setupIE(self):
         """Bring in the Internet Explorer driver"""
+        print("  browser: IE")
         self.DRIVER = webdriver.Ie()
         
     def __init_(self):
@@ -144,7 +145,6 @@ class _BaseTest(TestCase):
         os.environ["webdriver.chrome.driver"] = chromedriver
         #self.DRIVER = webdriver.Chrome(chromedriver)
         self.DRIVER = webdriver.Chrome()
-
         self.setWindowSize()
 
         # shut off the massive debug logging
@@ -153,8 +153,10 @@ class _BaseTest(TestCase):
         selenium_logger.setLevel(logging.WARNING)
 
     def setupRemote(self):
+        remoteWebDriverURL = config['remoteWebDriverURL'] + ':4444/wd/hub'
+        self.browserDescripton = "remoteWebDriver, remoteWebDriverUrl " + remoteWebDriverURL
         self.DRIVER = webdriver.Remote(
-            command_executor=config['remoteWebDriverURL'] + ':4444/wd/hub',
+            command_executor=remoteWebDriverURL,
             desired_capabilities=DesiredCapabilities.CHROME
         )
         self.setWindowSize()
@@ -163,8 +165,8 @@ class _BaseTest(TestCase):
         width = config['viewport']['width']
         height = config['viewport']['height']
        # print("setting browser window size to: " + str(width) + "," + str(height))
-        self.DRIVER.maximize_window()
-        #self.DRIVER.set_window_size(width, height)
+       #  self.DRIVER.maximize_window()
+        self.DRIVER.set_window_size(width, height)
 
 class _BaseFirefoxTest(_BaseTest):
     """For firefox tests, the driver"""

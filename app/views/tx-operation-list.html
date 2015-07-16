@@ -1,12 +1,10 @@
 <p class="operation-list-heading">Operations</p>
-<div class="operation-list">
-    <a class="operation-list-item drag-handle"
-       ng-repeat="op in operations"
-       ng-bind="op.name"
-       tx-protocol-draggable="draggableOptions"
-       tx-inspector-select
-       select-trigger="mouseenter"
-       select-title="op.name"
-       select-type="'operation'"
-       select-description="op.description"></a>
+<div class="operation-list"
+     tx-inspector-select
+     select-trigger="mouseenter"
+     select-description="'Drag operations into the protocol to add them.'">
+  <a class="operation-list-item drag-handle"
+     ng-repeat="op in operations"
+     ng-bind="op.name"
+     tx-protocol-draggable="draggableOptions"></a>
 </div>
