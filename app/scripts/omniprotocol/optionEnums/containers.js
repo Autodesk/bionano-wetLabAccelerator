@@ -63,6 +63,14 @@ module.exports = {
     col_count  : 3,
     reservation: "ki17reefwqq3sq"
   },
+  //this is a hack - need to actually reserve this one
+  "6-flat-amp"   : {
+    name       : "Pre-poured 6-well LB Agar plate - Amp 100ugml",
+    shortname  : "6-flat-amp",
+    well_count : 6,
+    col_count  : 3,
+    reservation: "kit17sbb845k7c3"
+  },
   "96-deep"  : {
     name          : "96-well extended capacity plate",
     well_count    : 96,
