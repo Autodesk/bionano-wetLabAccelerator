@@ -69,7 +69,7 @@ module.exports = {
     shortname  : "6-flat-amp",
     well_count : 6,
     col_count  : 3,
-    reservation: "kit17sbb845k7c3"
+    reservation: "ki17sbb845ssx9"
   },
   "96-deep"  : {
     name          : "96-well extended capacity plate",
