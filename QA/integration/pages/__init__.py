@@ -9,6 +9,7 @@ from helpers import environment
 from PIL import Image
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import InvalidElementStateException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
@@ -185,12 +186,24 @@ class Page:
             print("time out waiting for element: " + str(locatorTuple))
             return False
 
+    def waitForElementClickable(self, locatorTuple):
+        try:
+            # print("    waiting for element: " + str(locatorTuple) + " to be visible")
+            WebDriverWait(self.DRIVER, self.TIMEOUT).until(
+                expected_conditions.element_to_be_clickable(locatorTuple))
+            return True
+        except WebDriverException:
+            print("time out waiting for element: " + str(locatorTuple))
+            return False
+
     def setField(self, elementOrLocatorTuple, value, description = "textfield"):
         element = self.elementOrLocatorTupleToElement(elementOrLocatorTuple)
+        #self.waitForElementClickable(element)
         self.action("set " + description + " to '" + str(value) + "'")
         element.clear()
         element.send_keys(value)
         element.send_keys(Keys.TAB)
+
 
     def dragAndDrop(self, source, target, descriptionSource, descriptionTarget):
         self.action("drag " + descriptionSource + " to " + descriptionTarget)

@@ -1,3 +1,4 @@
+import time
 import tests.Base as Base
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
@@ -7,6 +8,7 @@ from pages.ContentMenu import ContentMenu
 from pages.ProtocolSetup import ProtocolSetup
 from pages.SetupParameter import SetupParameter
 from pages.Build import Build
+from pages.RunProtocolModal import RunProtocolModal
 #from pages.Build import SetupParameter
 from pages.Build import ProtocolInstructions
 import helpers
@@ -31,9 +33,11 @@ class TestBase(Base._BaseTest):
         self.build = Build(self.DRIVER)
         self.contentMenu = ContentMenu(self.DRIVER)
         self.protocolInstructions = ProtocolInstructions(self.DRIVER)
+
         # self.protocolSetup = ProtocolSetup(self.DRIVER)
 
-
+    def getTimeStamp(self):
+        return time.strftime("%Y-%m-%d %H:%M:%S")
 
     def verifyIsDisplayed(self, element, description):
         verifyString =  description + " is displayed"
