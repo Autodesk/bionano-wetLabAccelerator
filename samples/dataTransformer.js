@@ -1,12 +1,8 @@
 var fs       = require('fs');
 var _        = require('lodash');
 var op       = require('../app/scripts/omniprotocol/_exports.js');
-var filePath = 'wla-all.json';
 
 console.log('\n\n\n\n\n\n\n\n\n\n\n\n');
-
-var fileContents = fs.readFileSync(filePath, 'utf8');
-var db           = JSON.parse(fileContents);
 
 var idMap = {
   '24': '10206001195804600', //max
@@ -33,7 +29,14 @@ var protocols  = {},
     runs       = {},
     projectMap = {};
 
-_.forEach(db, function (projects, uid) {
+/*
+//when loading in the database
+
+var filePath = 'wla-all.json';
+var fileContents = fs.readFileSync(filePath, 'utf8');
+var db           = JSON.parse(fileContents);
+
+//_.forEach(db, function (projects, uid) {
 
   //only have projects that have a type, i.e. have been made in the app
   var filteredProjects = _(projects)
@@ -79,26 +82,28 @@ _.forEach(db, function (projects, uid) {
     })
     .value();
 
-
   if (_.has(idMap, uid)) {
     _.assign(runs, userRuns);
     _.assign(protocols, userProtocols);
     _.set(projectMap, uid, _.assign({}, userRuns, userProtocols))
   }
+
 });
 
 var projects = _.assign({}, runs, protocols);
+*/
 
+/*
 //write given list of IDs
 var desired = {};
 _.forEach(desiredProjects, function (id) {
   fs.writeFileSync('wla-sample-' + id + '-metadata.json', JSON.stringify(_.result(projects[id], 'metadata'), null, 2));
   fs.writeFileSync('wla-sample-' + id + '.json', JSON.stringify(projects[id], null, 2));
 });
-
+*/
 
 //write all transformed files
-//fs.writeFileSync('wla-transformed.json', JSON.stringify(projects, null, 2));
+//fs.writeFileSync('virus.json', JSON.stringify(projects, null, 2));
 
 /*
 //write for each user
@@ -108,8 +113,30 @@ _.forEach(_.keys(projectMap), function (uid) {
 */
 
 
-//todo - write to file
-//todo - ensure IDs mapped properly
+
+
+
+//when loading in file paths
+var filepaths = _.map('1234567'.split(''), function (num) { return 'viruses/PhiX174_Step' + num; });
+var projects = [];
+
+_.forEach(filepaths, function (path) {
+
+  var fileContents = fs.readFileSync(path + '.json', 'utf8');
+  var project = JSON.parse(fileContents);
+
+  var converted = updateProtocol(project);
+
+  _.set(converted, 'metadata.author.id', '31');
+
+  fs.writeFileSync(path + '_conv.json', JSON.stringify(converted, null, 2));
+});
+
+
+
+
+// HELPERS //
+
 
 function updateProtocol (protocol) {
 

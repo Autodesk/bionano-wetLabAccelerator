@@ -1,0 +1,1630 @@
+{
+  "metadata": {
+    "id": "c6c9d5b3-b824-4725-8ab4-18fc282862b4",
+    "date": "1433454890853",
+    "type": "protocol",
+    "author": {},
+    "tags": [],
+    "db": {},
+    "name": "PhiX174_Step7_Plating_and_Growth",
+    "description": "A plating of the PhiX174 serial dilutions will be carried out in junction with a liquid culture growth with PhiX174"
+  },
+  "parameters": [
+    {
+      "type": "container",
+      "value": {
+        "color": "#f28500",
+        "isNew": true,
+        "type": "96-flat",
+        "storage": "cold_20"
+      },
+      "name": "dilution_plate_source"
+    },
+    {
+      "type": "container",
+      "value": {
+        "color": "#00FFFF",
+        "isNew": true,
+        "type": "6-flat",
+        "storage": "cold_4"
+      },
+      "name": "agar_Tdna_plate"
+    },
+    {
+      "type": "container",
+      "value": {
+        "color": "#addfad",
+        "isNew": true,
+        "type": "6-flat",
+        "storage": "cold_4"
+      },
+      "name": "agar_Tdna_control_plate"
+    },
+    {
+      "type": "container",
+      "value": {
+        "color": "#EC0704",
+        "isNew": true,
+        "type": "6-flat",
+        "storage": "cold_4"
+      },
+      "name": "agar_virion_control_plate"
+    },
+    {
+      "type": "container",
+      "value": {
+        "color": "#FFA6C9",
+        "isNew": true,
+        "type": "6-flat",
+        "storage": "cold_4"
+      },
+      "name": "agar_control_plate"
+    },
+    {
+      "type": "volume",
+      "name": "dilution_to_agar_vol",
+      "value": {
+        "unit": "microliter",
+        "value": 200
+      }
+    },
+    {
+      "type": "length",
+      "name": "growth_wavelength",
+      "value": {
+        "unit": "nanometer",
+        "value": 600
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "agar plates setup",
+      "inputs": {},
+      "metadata": {
+        "description": ""
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "dilution_to_agar_vol",
+              "value": {
+                "unit": "microliter",
+                "value": 200
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "dilution_plate_source",
+                  "well": "A5"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "B5"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "C5"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "D5"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "E5"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "F5"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "agar_Tdna_plate",
+                  "well": "A1"
+                },
+                {
+                  "container": "agar_Tdna_plate",
+                  "well": "A2"
+                },
+                {
+                  "container": "agar_Tdna_plate",
+                  "well": "A3"
+                },
+                {
+                  "container": "agar_Tdna_plate",
+                  "well": "B1"
+                },
+                {
+                  "container": "agar_Tdna_plate",
+                  "well": "B2"
+                },
+                {
+                  "container": "agar_Tdna_plate",
+                  "well": "B3"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "dilution_to_agar_vol",
+              "value": {
+                "unit": "microliter",
+                "value": 200
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "dilution_plate_source",
+                  "well": "A6"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "B6"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "C6"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "D6"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "E6"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "F6"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "agar_Tdna_control_plate",
+                  "well": "A1"
+                },
+                {
+                  "container": "agar_Tdna_control_plate",
+                  "well": "A2"
+                },
+                {
+                  "container": "agar_Tdna_control_plate",
+                  "well": "A3"
+                },
+                {
+                  "container": "agar_Tdna_control_plate",
+                  "well": "B1"
+                },
+                {
+                  "container": "agar_Tdna_control_plate",
+                  "well": "B2"
+                },
+                {
+                  "container": "agar_Tdna_control_plate",
+                  "well": "B3"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "dilution_to_agar_vol",
+              "value": {
+                "unit": "microliter",
+                "value": 200
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "dilution_plate_source",
+                  "well": "A7"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "B7"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "C7"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "D7"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "E7"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "F7"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "agar_virion_control_plate",
+                  "well": "A1"
+                },
+                {
+                  "container": "agar_virion_control_plate",
+                  "well": "A2"
+                },
+                {
+                  "container": "agar_virion_control_plate",
+                  "well": "A3"
+                },
+                {
+                  "container": "agar_virion_control_plate",
+                  "well": "B1"
+                },
+                {
+                  "container": "agar_virion_control_plate",
+                  "well": "B2"
+                },
+                {
+                  "container": "agar_virion_control_plate",
+                  "well": "B3"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "dilution_to_agar_vol",
+              "value": {
+                "unit": "microliter",
+                "value": 200
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "dilution_plate_source",
+                  "well": "A8"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "B8"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "C8"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "D8"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "E8"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "F8"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "agar_control_plate",
+                  "well": "A1"
+                },
+                {
+                  "container": "agar_control_plate",
+                  "well": "A2"
+                },
+                {
+                  "container": "agar_control_plate",
+                  "well": "A3"
+                },
+                {
+                  "container": "agar_control_plate",
+                  "well": "B1"
+                },
+                {
+                  "container": "agar_control_plate",
+                  "well": "B2"
+                },
+                {
+                  "container": "agar_control_plate",
+                  "well": "B3"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        }
+      ]
+    },
+    {
+      "name": "dilution_plate liquid culture incubation",
+      "inputs": {},
+      "metadata": {
+        "description": ""
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "absorbance",
+          "requirements": {},
+          "transformations": [
+            {
+              "wells": "wells"
+            }
+          ],
+          "fields": [
+            {
+              "name": "dataref",
+              "type": "string",
+              "default": "absorbance_${unfolded}"
+            },
+            {
+              "name": "wells",
+              "type": "aliquot+",
+              "singleContainer": true,
+              "value": [
+                {
+                  "container": "dilution_plate_source",
+                  "well": "A1"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "A2"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "A3"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "A4"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "B1"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "B2"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "B3"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "B4"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "C1"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "C2"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "C3"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "C4"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "D1"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "D2"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "D3"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "D4"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "E1"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "E2"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "E3"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "E4"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "F1"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "F2"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "F3"
+                },
+                {
+                  "container": "dilution_plate_source",
+                  "well": "F4"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "wavelength",
+              "type": "length",
+              "default": {
+                "value": 600,
+                "unit": "nanometer"
+              },
+              "restrictions": {
+                "value": {
+                  "min": 300,
+                  "max": 1000
+                }
+              },
+              "parameter": "growth_wavelength",
+              "value": {
+                "unit": "nanometer",
+                "value": 600
+              }
+            },
+            {
+              "name": "num_flashes",
+              "readable": "number flashes",
+              "type": "integer",
+              "optional": true,
+              "default": 25
+            }
+          ],
+          "op_description": "Measure absorbance of a specified wavelength (between 300 nm - 1000 nm)"
+        },
+        {
+          "operation": "cover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "dilution_plate_source"
+            },
+            {
+              "name": "lid",
+              "type": "option",
+              "options": [
+                "standard",
+                "universal",
+                "low_evaporation"
+              ],
+              "default": "standard",
+              "value": "universal"
+            }
+          ],
+          "op_description": "Cover a plate with a specified lid"
+        },
+        {
+          "operation": "incubate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "dilution_plate_source"
+            },
+            {
+              "name": "where",
+              "type": "option",
+              "options": [
+                "ambient",
+                "warm_37",
+                "cold_4",
+                "cold_20",
+                "cold_80"
+              ],
+              "default": "ambient",
+              "value": "warm_37"
+            },
+            {
+              "name": "duration",
+              "type": "duration",
+              "default": {
+                "value": 60,
+                "unit": "minute"
+              }
+            },
+            {
+              "name": "co2",
+              "type": "integer",
+              "default": 0,
+              "optional": true,
+              "restrictions": {
+                "value": {
+                  "min": 0,
+                  "max": 100
+                }
+              }
+            },
+            {
+              "name": "shaking",
+              "type": "boolean",
+              "default": false,
+              "value": true
+            }
+          ],
+          "op_description": "keep (cells, bacteria, etc.) at a suitable temperature so that they develop"
+        },
+        {
+          "operation": "uncover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "dilution_plate_source"
+            }
+          ],
+          "op_description": "Uncover a container"
+        }
+      ]
+    },
+    {
+      "name": "agar_Tdna_plate incubation",
+      "inputs": {},
+      "metadata": {
+        "description": ""
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "image_plate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "dataref",
+              "type": "string",
+              "default": "imagePlate_${unfolded}"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_Tdna_plate"
+            },
+            {
+              "name": "mode",
+              "type": "option",
+              "options": [
+                "top",
+                "bottom"
+              ],
+              "default": "top"
+            }
+          ],
+          "op_description": "Scan an image of a plate"
+        },
+        {
+          "operation": "cover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_Tdna_plate"
+            },
+            {
+              "name": "lid",
+              "type": "option",
+              "options": [
+                "standard",
+                "universal",
+                "low_evaporation"
+              ],
+              "default": "standard",
+              "value": "universal"
+            }
+          ],
+          "op_description": "Cover a plate with a specified lid"
+        },
+        {
+          "operation": "incubate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_Tdna_plate"
+            },
+            {
+              "name": "where",
+              "type": "option",
+              "options": [
+                "ambient",
+                "warm_37",
+                "cold_4",
+                "cold_20",
+                "cold_80"
+              ],
+              "default": "ambient",
+              "value": "warm_37"
+            },
+            {
+              "name": "duration",
+              "type": "duration",
+              "default": {
+                "value": 60,
+                "unit": "minute"
+              },
+              "value": {
+                "unit": "hour",
+                "value": 18
+              }
+            },
+            {
+              "name": "co2",
+              "type": "integer",
+              "default": 0,
+              "optional": true,
+              "restrictions": {
+                "value": {
+                  "min": 0,
+                  "max": 100
+                }
+              }
+            },
+            {
+              "name": "shaking",
+              "type": "boolean",
+              "default": false
+            }
+          ],
+          "op_description": "keep (cells, bacteria, etc.) at a suitable temperature so that they develop"
+        },
+        {
+          "operation": "uncover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_Tdna_plate"
+            }
+          ],
+          "op_description": "Uncover a container"
+        },
+        {
+          "operation": "image_plate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "dataref",
+              "type": "string",
+              "default": "imagePlate_${unfolded}"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_Tdna_plate"
+            },
+            {
+              "name": "mode",
+              "type": "option",
+              "options": [
+                "top",
+                "bottom"
+              ],
+              "default": "top"
+            }
+          ],
+          "op_description": "Scan an image of a plate"
+        }
+      ]
+    },
+    {
+      "name": "agar_Tdna_control_plate incubation",
+      "inputs": {},
+      "metadata": {
+        "description": ""
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "image_plate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "dataref",
+              "type": "string",
+              "default": "imagePlate_${unfolded}"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_Tdna_control_plate"
+            },
+            {
+              "name": "mode",
+              "type": "option",
+              "options": [
+                "top",
+                "bottom"
+              ],
+              "default": "top"
+            }
+          ],
+          "op_description": "Scan an image of a plate"
+        },
+        {
+          "operation": "cover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_Tdna_control_plate"
+            },
+            {
+              "name": "lid",
+              "type": "option",
+              "options": [
+                "standard",
+                "universal",
+                "low_evaporation"
+              ],
+              "default": "standard",
+              "value": "universal"
+            }
+          ],
+          "op_description": "Cover a plate with a specified lid"
+        },
+        {
+          "operation": "incubate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_Tdna_control_plate"
+            },
+            {
+              "name": "where",
+              "type": "option",
+              "options": [
+                "ambient",
+                "warm_37",
+                "cold_4",
+                "cold_20",
+                "cold_80"
+              ],
+              "default": "ambient",
+              "value": "warm_37"
+            },
+            {
+              "name": "duration",
+              "type": "duration",
+              "default": {
+                "value": 60,
+                "unit": "minute"
+              },
+              "value": {
+                "unit": "hour",
+                "value": 18
+              }
+            },
+            {
+              "name": "co2",
+              "type": "integer",
+              "default": 0,
+              "optional": true,
+              "restrictions": {
+                "value": {
+                  "min": 0,
+                  "max": 100
+                }
+              }
+            },
+            {
+              "name": "shaking",
+              "type": "boolean",
+              "default": false
+            }
+          ],
+          "op_description": "keep (cells, bacteria, etc.) at a suitable temperature so that they develop"
+        },
+        {
+          "operation": "uncover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_Tdna_control_plate"
+            }
+          ],
+          "op_description": "Uncover a container"
+        },
+        {
+          "operation": "image_plate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "dataref",
+              "type": "string",
+              "default": "imagePlate_${unfolded}"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_Tdna_control_plate"
+            },
+            {
+              "name": "mode",
+              "type": "option",
+              "options": [
+                "top",
+                "bottom"
+              ],
+              "default": "top"
+            }
+          ],
+          "op_description": "Scan an image of a plate"
+        }
+      ]
+    },
+    {
+      "name": "agar_virion_control_plate incubation",
+      "inputs": {},
+      "metadata": {
+        "description": ""
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "image_plate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "dataref",
+              "type": "string",
+              "default": "imagePlate_${unfolded}"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_virion_control_plate"
+            },
+            {
+              "name": "mode",
+              "type": "option",
+              "options": [
+                "top",
+                "bottom"
+              ],
+              "default": "top"
+            }
+          ],
+          "op_description": "Scan an image of a plate"
+        },
+        {
+          "operation": "cover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_virion_control_plate"
+            },
+            {
+              "name": "lid",
+              "type": "option",
+              "options": [
+                "standard",
+                "universal",
+                "low_evaporation"
+              ],
+              "default": "standard",
+              "value": "universal"
+            }
+          ],
+          "op_description": "Cover a plate with a specified lid"
+        },
+        {
+          "operation": "incubate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_virion_control_plate"
+            },
+            {
+              "name": "where",
+              "type": "option",
+              "options": [
+                "ambient",
+                "warm_37",
+                "cold_4",
+                "cold_20",
+                "cold_80"
+              ],
+              "default": "ambient",
+              "value": "warm_37"
+            },
+            {
+              "name": "duration",
+              "type": "duration",
+              "default": {
+                "value": 60,
+                "unit": "minute"
+              },
+              "value": {
+                "unit": "hour",
+                "value": 18
+              }
+            },
+            {
+              "name": "co2",
+              "type": "integer",
+              "default": 0,
+              "optional": true,
+              "restrictions": {
+                "value": {
+                  "min": 0,
+                  "max": 100
+                }
+              }
+            },
+            {
+              "name": "shaking",
+              "type": "boolean",
+              "default": false
+            }
+          ],
+          "op_description": "keep (cells, bacteria, etc.) at a suitable temperature so that they develop"
+        },
+        {
+          "operation": "uncover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_virion_control_plate"
+            }
+          ],
+          "op_description": "Uncover a container"
+        },
+        {
+          "operation": "image_plate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "dataref",
+              "type": "string",
+              "default": "imagePlate_${unfolded}"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_virion_control_plate"
+            },
+            {
+              "name": "mode",
+              "type": "option",
+              "options": [
+                "top",
+                "bottom"
+              ],
+              "default": "top"
+            }
+          ],
+          "op_description": "Scan an image of a plate"
+        }
+      ]
+    },
+    {
+      "name": "agar_virion_control_plate incubation",
+      "inputs": {},
+      "metadata": {
+        "description": ""
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "image_plate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "dataref",
+              "type": "string",
+              "default": "imagePlate_${unfolded}"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_control_plate"
+            },
+            {
+              "name": "mode",
+              "type": "option",
+              "options": [
+                "top",
+                "bottom"
+              ],
+              "default": "top"
+            }
+          ],
+          "op_description": "Scan an image of a plate"
+        },
+        {
+          "operation": "cover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_control_plate"
+            },
+            {
+              "name": "lid",
+              "type": "option",
+              "options": [
+                "standard",
+                "universal",
+                "low_evaporation"
+              ],
+              "default": "standard",
+              "value": "universal"
+            }
+          ],
+          "op_description": "Cover a plate with a specified lid"
+        },
+        {
+          "operation": "incubate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_control_plate"
+            },
+            {
+              "name": "where",
+              "type": "option",
+              "options": [
+                "ambient",
+                "warm_37",
+                "cold_4",
+                "cold_20",
+                "cold_80"
+              ],
+              "default": "ambient",
+              "value": "warm_37"
+            },
+            {
+              "name": "duration",
+              "type": "duration",
+              "default": {
+                "value": 60,
+                "unit": "minute"
+              },
+              "value": {
+                "unit": "hour",
+                "value": 18
+              }
+            },
+            {
+              "name": "co2",
+              "type": "integer",
+              "default": 0,
+              "optional": true,
+              "restrictions": {
+                "value": {
+                  "min": 0,
+                  "max": 100
+                }
+              }
+            },
+            {
+              "name": "shaking",
+              "type": "boolean",
+              "default": false
+            }
+          ],
+          "op_description": "keep (cells, bacteria, etc.) at a suitable temperature so that they develop"
+        },
+        {
+          "operation": "uncover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_control_plate"
+            }
+          ],
+          "op_description": "Uncover a container"
+        },
+        {
+          "operation": "image_plate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "dataref",
+              "type": "string",
+              "default": "imagePlate_${unfolded}"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": "agar_control_plate"
+            },
+            {
+              "name": "mode",
+              "type": "option",
+              "options": [
+                "top",
+                "bottom"
+              ],
+              "default": "top"
+            }
+          ],
+          "op_description": "Scan an image of a plate"
+        }
+      ]
+    }
+  ]
+}
