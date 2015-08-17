@@ -217,6 +217,12 @@ module.exports = {
           "name"    : "repetitions",
           "type"    : "integer",
           "default" : 10
+        },
+        {
+          "name"    : "one_tip",
+          "type"    : "boolean",
+          "optional": true,
+          "default" : false
         }
       ]
     }
