@@ -1,0 +1,1577 @@
+{
+  "metadata": {
+    "id": "de068bd5-015a-4f1e-95fc-371a2377a845",
+    "date": "1433450566057",
+    "type": "protocol",
+    "author": {
+      "id": "31"
+    },
+    "tags": [],
+    "db": {},
+    "name": "PhiX174_Step6_Serial_Dilution",
+    "version": "1.0.0"
+  },
+  "parameters": [
+    {
+      "type": "container",
+      "value": {
+        "color": "#f28500",
+        "isNew": true,
+        "type": "96-flat",
+        "storage": "cold_4"
+      },
+      "name": "growth_plate_source",
+      "id": "b336145e-2bfb-4a7d-99c5-94fe5c0ce23d"
+    },
+    {
+      "type": "container",
+      "value": {
+        "color": "#00FFFF",
+        "isNew": true,
+        "type": "96-flat",
+        "storage": "cold_4"
+      },
+      "name": "dilution_plate",
+      "id": "6b860ae2-17b9-4112-91ba-e23f8516c68e"
+    },
+    {
+      "type": "container",
+      "value": {
+        "color": "#addfad",
+        "isNew": true,
+        "type": "micro-1.5",
+        "storage": "cold_4"
+      },
+      "name": "virion_control_source",
+      "id": "fd0865a8-46a0-4c3b-954d-73a9b599b880"
+    },
+    {
+      "type": "container",
+      "value": {
+        "color": "#EC0704",
+        "isNew": true,
+        "type": "96-flat",
+        "storage": "cold_4"
+      },
+      "name": "transform_plate_source",
+      "id": "ab882766-9cae-45ae-83a5-1b948d92bd8f"
+    },
+    {
+      "type": "volume",
+      "name": "lb_dilution_vol",
+      "value": {
+        "unit": "microliter",
+        "value": 9
+      },
+      "id": "9e74b492-386a-4876-8dd1-8e095b88b417"
+    },
+    {
+      "type": "volume",
+      "name": "viral_source_vol",
+      "value": {
+        "unit": "microliter",
+        "value": 10
+      },
+      "id": "879d73db-7dd6-4fd2-93f8-41f067e09201"
+    },
+    {
+      "type": "volume",
+      "name": "serial_dilution_vol",
+      "value": {
+        "unit": "microliter",
+        "value": 1
+      },
+      "id": "be68f67d-171b-434d-886a-5d2b63b000f5"
+    },
+    {
+      "type": "volume",
+      "name": "growth_to_agar_vol",
+      "value": {
+        "unit": "microliter",
+        "value": 200
+      },
+      "id": "edca9ef1-f6dc-41ea-8585-685e5a18c931"
+    },
+    {
+      "type": "volume",
+      "name": "growth_to_growth_vol",
+      "value": {
+        "unit": "microliter",
+        "value": 50
+      },
+      "id": "a6010f5d-416b-4279-b198-1982cb1ec60e"
+    },
+    {
+      "type": "volume",
+      "name": "fresh_lb_vol",
+      "value": {
+        "unit": "microliter",
+        "value": 150
+      },
+      "id": "55484507-8738-4de1-811d-96f5348875e5"
+    }
+  ],
+  "groups": [
+    {
+      "name": "dilution_plate setup",
+      "inputs": {},
+      "metadata": {
+        "description": ""
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "provision",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "wells"
+            }
+          ],
+          "fields": [
+            {
+              "name": "wells",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "B1",
+                  "B2",
+                  "B3",
+                  "B4",
+                  "B5",
+                  "B6",
+                  "B7",
+                  "B8",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "D1",
+                  "D2",
+                  "D3",
+                  "D4",
+                  "D5",
+                  "D6",
+                  "D7",
+                  "D8",
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "E5",
+                  "E6",
+                  "E7",
+                  "E8",
+                  "F1",
+                  "F2",
+                  "F3",
+                  "F4",
+                  "F5",
+                  "F6",
+                  "F7",
+                  "F8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "volume",
+              "type": "volume",
+              "default": {
+                "value": 50,
+                "unit": "microliter"
+              },
+              "value": {
+                "unit": "microliter",
+                "value": 9
+              },
+              "parameter": "9e74b492-386a-4876-8dd1-8e095b88b417"
+            },
+            {
+              "name": "resource",
+              "type": "resource",
+              "value": {
+                "id": "rs17bafcbmyrmh",
+                "name": "LB",
+                "organization_id": null,
+                "commercial": true,
+                "description": null,
+                "kind": "Reagent",
+                "properties": {},
+                "design": {},
+                "metadata": {},
+                "kit_item": {}
+              }
+            }
+          ],
+          "op_description": "Dispense a Transcriptic catalog resource into specified wells"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "879d73db-7dd6-4fd2-93f8-41f067e09201",
+              "value": {
+                "unit": "microliter",
+                "value": 10
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot++",
+              "value": {
+                "container": "ab882766-9cae-45ae-83a5-1b948d92bd8f",
+                "containerName": "transform_plate_source",
+                "wells": [
+                  "A1"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "A1",
+                  "A5"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false,
+              "value": true
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "879d73db-7dd6-4fd2-93f8-41f067e09201",
+              "value": {
+                "unit": "microliter",
+                "value": 10
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot++",
+              "value": {
+                "container": "ab882766-9cae-45ae-83a5-1b948d92bd8f",
+                "containerName": "transform_plate_source",
+                "wells": [
+                  "B1"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "A2",
+                  "A6"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false,
+              "value": true
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "879d73db-7dd6-4fd2-93f8-41f067e09201",
+              "value": {
+                "unit": "microliter",
+                "value": 10
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot++",
+              "value": {
+                "container": "fd0865a8-46a0-4c3b-954d-73a9b599b880",
+                "containerName": "virion_control_source",
+                "wells": [
+                  "A1"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "A3",
+                  "A7"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false,
+              "value": true
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        }
+      ]
+    },
+    {
+      "name": "run serial dilution",
+      "inputs": {},
+      "metadata": {
+        "description": ""
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "be68f67d-171b-434d-886a-5d2b63b000f5",
+              "value": {
+                "unit": "microliter",
+                "value": 1
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "A1",
+                  "A2",
+                  "A3",
+                  "A4",
+                  "A5",
+                  "A6",
+                  "A7",
+                  "A8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "B1",
+                  "B2",
+                  "B3",
+                  "B4",
+                  "B5",
+                  "B6",
+                  "B7",
+                  "B8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "microliter",
+                  "value": 5
+                },
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 3
+                },
+                "repetitions": 2
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "be68f67d-171b-434d-886a-5d2b63b000f5",
+              "value": {
+                "unit": "microliter",
+                "value": 1
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "B1",
+                  "B2",
+                  "B3",
+                  "B4",
+                  "B5",
+                  "B6",
+                  "B7",
+                  "B8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "microliter",
+                  "value": 5
+                },
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 3
+                },
+                "repetitions": 2
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "be68f67d-171b-434d-886a-5d2b63b000f5",
+              "value": {
+                "unit": "microliter",
+                "value": 1
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "D1",
+                  "D2",
+                  "D3",
+                  "D4",
+                  "D5",
+                  "D6",
+                  "D7",
+                  "D8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "microliter",
+                  "value": 5
+                },
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 3
+                },
+                "repetitions": 2
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "be68f67d-171b-434d-886a-5d2b63b000f5",
+              "value": {
+                "unit": "microliter",
+                "value": 1
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "D1",
+                  "D2",
+                  "D3",
+                  "D4",
+                  "D5",
+                  "D6",
+                  "D7",
+                  "D8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "E5",
+                  "E6",
+                  "E7",
+                  "E8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "microliter",
+                  "value": 5
+                },
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 3
+                },
+                "repetitions": 2
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "be68f67d-171b-434d-886a-5d2b63b000f5",
+              "value": {
+                "unit": "microliter",
+                "value": 1
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "E5",
+                  "E6",
+                  "E7",
+                  "E8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "F1",
+                  "F2",
+                  "F3",
+                  "F4",
+                  "F5",
+                  "F6",
+                  "F7",
+                  "F8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "microliter",
+                  "value": 5
+                },
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 3
+                },
+                "repetitions": 2
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        }
+      ]
+    },
+    {
+      "name": "add growth_plate to dilution_plate",
+      "inputs": {},
+      "metadata": {
+        "description": ""
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "provision",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "wells"
+            }
+          ],
+          "fields": [
+            {
+              "name": "wells",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "A1",
+                  "A2",
+                  "A3",
+                  "A4",
+                  "B1",
+                  "B2",
+                  "B3",
+                  "B4",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "D1",
+                  "D2",
+                  "D3",
+                  "D4",
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "F1",
+                  "F2",
+                  "F3",
+                  "F4"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "volume",
+              "type": "volume",
+              "default": {
+                "value": 50,
+                "unit": "microliter"
+              },
+              "parameter": "55484507-8738-4de1-811d-96f5348875e5",
+              "value": {
+                "unit": "microliter",
+                "value": 150
+              }
+            },
+            {
+              "name": "resource",
+              "type": "resource",
+              "value": {
+                "id": "rs17bafcbmyrmh",
+                "name": "LB",
+                "organization_id": null,
+                "commercial": true,
+                "description": null,
+                "kind": "Reagent",
+                "properties": {},
+                "design": {},
+                "metadata": {},
+                "kit_item": {}
+              }
+            }
+          ],
+          "op_description": "Dispense a Transcriptic catalog resource into specified wells"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "a6010f5d-416b-4279-b198-1982cb1ec60e",
+              "value": {
+                "unit": "microliter",
+                "value": 50
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot++",
+              "value": {
+                "container": "b336145e-2bfb-4a7d-99c5-94fe5c0ce23d",
+                "containerName": "growth_plate_source",
+                "wells": [
+                  "A1",
+                  "A2",
+                  "A3",
+                  "A4",
+                  "B1",
+                  "B2",
+                  "B3",
+                  "B4",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "D1",
+                  "D2",
+                  "D3",
+                  "D4",
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "F1",
+                  "F2",
+                  "F3",
+                  "F4"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "A1",
+                  "A2",
+                  "A3",
+                  "A4",
+                  "B1",
+                  "B2",
+                  "B3",
+                  "B4",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "D1",
+                  "D2",
+                  "D3",
+                  "D4",
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "F1",
+                  "F2",
+                  "F3",
+                  "F4"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "edca9ef1-f6dc-41ea-8585-685e5a18c931",
+              "value": {
+                "unit": "microliter",
+                "value": 200
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot++",
+              "value": {
+                "container": "b336145e-2bfb-4a7d-99c5-94fe5c0ce23d",
+                "containerName": "growth_plate_source",
+                "wells": [
+                  "A5",
+                  "A6",
+                  "A7",
+                  "A8",
+                  "B5",
+                  "B6",
+                  "B7",
+                  "B8",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "D5",
+                  "D6",
+                  "D7",
+                  "D8",
+                  "E5",
+                  "E6",
+                  "E7",
+                  "E8",
+                  "F5",
+                  "F6",
+                  "F7",
+                  "F8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot++",
+              "value": {
+                "container": "6b860ae2-17b9-4112-91ba-e23f8516c68e",
+                "containerName": "dilution_plate",
+                "wells": [
+                  "A5",
+                  "A6",
+                  "A7",
+                  "A8",
+                  "B5",
+                  "B6",
+                  "B7",
+                  "B8",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "D5",
+                  "D6",
+                  "D7",
+                  "D8",
+                  "E5",
+                  "E6",
+                  "E7",
+                  "E8",
+                  "F5",
+                  "F6",
+                  "F7",
+                  "F8"
+                ]
+              },
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "speed",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        }
+      ]
+    }
+  ]
+}

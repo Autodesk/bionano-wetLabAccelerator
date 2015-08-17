@@ -1,0 +1,901 @@
+{
+  "metadata": {
+    "id": "9bc2ad42-16cf-4d07-88cb-8ab7541f10ed",
+    "date": "1433443501539",
+    "type": "protocol",
+    "author": {},
+    "tags": [],
+    "db": {},
+    "name": "PhiX174_Step5_Transformation",
+    "description": "A transformation will be carried out with Gen9 viral DNA digested and ligated into E. coli"
+  },
+  "parameters": [
+    {
+      "type": "container",
+      "value": {
+        "color": "#FFA6C9",
+        "isNew": true,
+        "type": "384-pcr",
+        "storage": "cold_4"
+      },
+      "name": "dna_plate_source"
+    },
+    {
+      "type": "container",
+      "value": {
+        "color": "#00FF00",
+        "isNew": true,
+        "type": "micro-1.5",
+        "storage": "cold_4"
+      },
+      "name": "dna_control_source"
+    },
+    {
+      "type": "container",
+      "value": {
+        "color": "#c5535b",
+        "isNew": true,
+        "type": "96-pcr",
+        "storage": false
+      },
+      "name": "transform_plate"
+    },
+    {
+      "type": "container",
+      "value": {
+        "color": "#f28500",
+        "isNew": true,
+        "type": "micro-1.5",
+        "storage": false
+      },
+      "name": "competent_cell_source"
+    },
+    {
+      "type": "volume",
+      "name": "competent_cell_source_to_transform_plate_vol",
+      "value": {
+        "unit": "microliter",
+        "value": 50
+      }
+    },
+    {
+      "type": "volume",
+      "name": "dna_plate_source_to_transform_plate_vol",
+      "value": {
+        "unit": "microliter",
+        "value": 2
+      }
+    },
+    {
+      "type": "volume",
+      "name": "dna_control_source_to_transform_plate_vol",
+      "value": {
+        "unit": "microliter",
+        "value": 1
+      }
+    },
+    {
+      "type": "columnVolumes",
+      "readable": "Column Volumes",
+      "value": [
+        {
+          "columns": [
+            "0"
+          ],
+          "volume": {
+            "value": 950,
+            "unit": "microliter"
+          },
+          "color": "#FF0000"
+        }
+      ],
+      "name": "soc_column_vol"
+    },
+    {
+      "type": "container",
+      "value": {
+        "color": "#f28500",
+        "isNew": true,
+        "type": "96-deep",
+        "storage": "cold_4"
+      },
+      "name": "transform_incubate_plate"
+    }
+  ],
+  "groups": [
+    {
+      "name": "transform_plate setup",
+      "inputs": {},
+      "metadata": {
+        "description": ""
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "competent_cell_source_to_transform_plate_vol",
+              "value": {
+                "unit": "microliter",
+                "value": 50
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "dna_plate_source",
+                  "well": "A1"
+                },
+                {
+                  "container": "competent_cell_source",
+                  "well": "A1"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "transform_plate",
+                  "well": "A1"
+                },
+                {
+                  "container": "transform_plate",
+                  "well": "B1"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "dna_plate_source_to_transform_plate_vol",
+              "value": {
+                "unit": "microliter",
+                "value": 2
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "dna_plate_source",
+                  "well": "A1"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "transform_plate",
+                  "well": "A1"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "microliter",
+                  "value": 2
+                },
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 3
+                },
+                "repetitions": 5
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "dna_control_source_to_transform_plate_vol",
+              "value": {
+                "unit": "microliter",
+                "value": 1
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "dna_control_source",
+                  "well": "A1"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "transform_plate",
+                  "well": "B1"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              },
+              "value": {
+                "volume": {
+                  "unit": "nanoliter",
+                  "value": 2
+                },
+                "speed": {
+                  "unit": "microliter/second",
+                  "value": 3
+                },
+                "repetitions": 5
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        }
+      ]
+    },
+    {
+      "name": "transform_plate heatshock",
+      "inputs": {},
+      "metadata": {
+        "description": ""
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "seal",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "transform_plate"
+            },
+            {
+              "name": "type",
+              "type": "option",
+              "default": "ultra-clear",
+              "optional": true,
+              "options": [
+                "ultra-clear",
+                "foil"
+              ]
+            }
+          ],
+          "op_description": "Seal a container"
+        },
+        {
+          "operation": "thermocycle",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "container"
+            }
+          ],
+          "fields": [
+            {
+              "name": "dataref",
+              "type": "string",
+              "optional": true,
+              "default": "thermocycle_${unfolded}"
+            },
+            {
+              "name": "object",
+              "type": "container",
+              "value": "transform_plate"
+            },
+            {
+              "name": "volume",
+              "type": "volume",
+              "default": {
+                "value": 10,
+                "unit": "microliter"
+              }
+            },
+            {
+              "name": "groups",
+              "type": "thermocycleGroups",
+              "value": [
+                {
+                  "type": "thermocycleGroup",
+                  "value": {
+                    "cycles": 1,
+                    "steps": [
+                      {
+                        "duration": {
+                          "unit": "minute",
+                          "value": 15
+                        },
+                        "temperature": {
+                          "unit": "celsius",
+                          "value": 2
+                        }
+                      },
+                      {
+                        "duration": {
+                          "unit": "second",
+                          "value": 40
+                        },
+                        "temperature": {
+                          "unit": "celsius",
+                          "value": 42
+                        }
+                      },
+                      {
+                        "duration": {
+                          "unit": "minute",
+                          "value": 2
+                        },
+                        "temperature": {
+                          "unit": "celsius",
+                          "value": 2
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "dyes",
+              "type": "thermocycleDyes",
+              "optional": true,
+              "value": [
+                {
+                  "color": "purple"
+                },
+                {
+                  "color": "blue"
+                },
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "yellow"
+                },
+                {
+                  "color": "red"
+                }
+              ]
+            },
+            {
+              "name": "melting",
+              "type": "thermocycleMelting",
+              "optional": true
+            }
+          ],
+          "op_description": "Thermocycle a container, putting through several temperature cycles, e.g. to run a PCR"
+        },
+        {
+          "operation": "unseal",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "transform_plate"
+            }
+          ],
+          "op_description": "Unseal a container"
+        }
+      ]
+    },
+    {
+      "name": "transform_incubate_plate setup",
+      "inputs": {},
+      "metadata": {
+        "description": ""
+      },
+      "loop": 1,
+      "steps": [
+        {
+          "operation": "dispense",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "container"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "transform_incubate_plate"
+            },
+            {
+              "name": "reagent",
+              "type": "option",
+              "options": [
+                "autoclaved-water",
+                "water",
+                "bleach-10p",
+                "ethanol-70p",
+                "lb-broth-100ug-ml-amp",
+                "lb-broth-50ug-ml-kan",
+                "lb-broth-30ug-ml-kan",
+                "lb-broth-25ug-ml-cm",
+                "lb-broth-100ug-ml-specto",
+                "lb-broth-50ug-ml-kan-25ug-ml-cm",
+                "lb-broth-15ug-ml-tet",
+                "lb-broth-noAB",
+                "sob",
+                "soc",
+                "tb-broth-100ug-ml-amp",
+                "tb-broth-50ug-ml-kan",
+                "pbs",
+                "te-ph7.5",
+                "orange145",
+                "orange60"
+              ],
+              "default": "lb-broth-noAB",
+              "value": "soc"
+            },
+            {
+              "name": "columns",
+              "type": "columnVolumes",
+              "singleContainer": true,
+              "value": [
+                {
+                  "columns": [
+                    "0"
+                  ],
+                  "volume": {
+                    "value": 950,
+                    "unit": "microliter"
+                  },
+                  "color": "#FF0000"
+                }
+              ],
+              "parameter": "soc_column_vol"
+            }
+          ],
+          "op_description": "Dispense a reagent into columns of a container"
+        },
+        {
+          "operation": "transfer",
+          "requirements": {},
+          "transforms": [
+            {
+              "wells": "to"
+            },
+            {
+              "wells": "from"
+            }
+          ],
+          "fields": [
+            {
+              "name": "volume",
+              "type": "volume",
+              "parameter": "competent_cell_source_to_transform_plate_vol",
+              "value": {
+                "unit": "microliter",
+                "value": 50
+              }
+            },
+            {
+              "name": "from",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "transform_plate",
+                  "well": "A1"
+                },
+                {
+                  "container": "transform_plate",
+                  "well": "B1"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "to",
+              "type": "aliquot+",
+              "singleContainer": false,
+              "value": [
+                {
+                  "container": "transform_incubate_plate",
+                  "well": "A1"
+                },
+                {
+                  "container": "transform_incubate_plate",
+                  "well": "B1"
+                }
+              ],
+              "transpose": 0
+            },
+            {
+              "name": "dispense_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "aspirate_speed",
+              "type": "flowrate",
+              "optional": true,
+              "default": {
+                "value": 100,
+                "unit": "microliter/second"
+              }
+            },
+            {
+              "name": "mix_before",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "mix_after",
+              "type": "mixwrap",
+              "optional": true,
+              "default": {
+                "volume": {
+                  "value": 10,
+                  "unit": "microliter"
+                },
+                "repetitions": 5,
+                "speed": {
+                  "value": 100,
+                  "unit": "microliter/second"
+                }
+              }
+            },
+            {
+              "name": "one_tip",
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            }
+          ],
+          "op_description": "Transfer contents from one container to another, either 1-to-n or n-to-n"
+        },
+        {
+          "operation": "cover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "transform_incubate_plate"
+            },
+            {
+              "name": "lid",
+              "type": "option",
+              "options": [
+                "standard",
+                "universal",
+                "low_evaporation"
+              ],
+              "default": "standard",
+              "value": "universal"
+            }
+          ],
+          "op_description": "Cover a plate with a specified lid"
+        },
+        {
+          "operation": "incubate",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "transform_incubate_plate"
+            },
+            {
+              "name": "where",
+              "type": "option",
+              "options": [
+                "ambient",
+                "warm_37",
+                "cold_4",
+                "cold_20",
+                "cold_80"
+              ],
+              "default": "ambient",
+              "value": "warm_37"
+            },
+            {
+              "name": "duration",
+              "type": "duration",
+              "default": {
+                "value": 60,
+                "unit": "minute"
+              }
+            },
+            {
+              "name": "co2",
+              "type": "integer",
+              "default": 0,
+              "optional": true,
+              "restrictions": {
+                "value": {
+                  "min": 0,
+                  "max": 100
+                }
+              }
+            },
+            {
+              "name": "shaking",
+              "type": "boolean",
+              "default": false,
+              "value": true
+            }
+          ],
+          "op_description": "keep (cells, bacteria, etc.) at a suitable temperature so that they develop"
+        },
+        {
+          "operation": "uncover",
+          "requirements": {},
+          "transforms": [
+            {
+              "container": "object"
+            }
+          ],
+          "fields": [
+            {
+              "name": "object",
+              "type": "container",
+              "value": "transform_incubate_plate"
+            }
+          ],
+          "op_description": "Uncover a container"
+        }
+      ]
+    }
+  ]
+}
