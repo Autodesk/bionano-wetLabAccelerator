@@ -28,6 +28,21 @@
           </a>
         </li>
         <li>
+          <a ng-click="opCtrl.showParameterAdd = !opCtrl.showParameterAdd"
+             squelch-event="click">
+            Add parameter
+          </a>
+          <div ng-if="!!opCtrl.showParameterAdd">
+            <input type="text"
+                   class="form-control"
+                   ng-model="opCtrl.newParameterName"
+                   squelch-event="click">
+            <button class="btn btn-default"
+                    ng-click="opCtrl.addParameter(opCtrl.newParameterName)"
+                    ng-disabled="!opCtrl.newParameterName">Add</button>
+          </div>
+        </li>
+        <li>
           <a ng-click="duplicateStep()">
             Duplicate
           </a>
