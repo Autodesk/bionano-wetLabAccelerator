@@ -13,6 +13,22 @@ function throwFieldError (message, op, fieldName) {
   throw new ConversionError(message, fieldObj, fieldName, op.$index);
 }
 
+/*** retrieving custom fields ***/
+
+function getCustomFieldsInOp (op) {
+  return _.filter(op.fields, function (field) {
+    return !!field.isCustomField;
+  });
+}
+
+function getCustomFieldsAsAutoprotocol (op) {
+  //yeah this is pretty hack
+  return _.reduce(getCustomFieldsInOp(op), function (acc, field) {
+    acc[field.name] = field.value;
+    return acc;
+  }, {});
+}
+
 /*******************
  Field Conversion
  *******************/
@@ -168,6 +184,7 @@ converterInstruction.transfer = function (op) {
       volume         = omniConv.pluckFieldValueTransformed(op, 'volume', converterField),
       optionalFields = ['dispense_speed', 'aspirate_speed', 'mix_before', 'mix_after'],
       optionalObj    = omniConv.getFieldsIfSet(op, optionalFields, true, converterField),
+      customFields   = getCustomFieldsAsAutoprotocol(op),
       transfers      = [];
 
   //todo - eventually, fold the pipette operations into one, and delegate based on 1-n, n-1, n-n
@@ -187,7 +204,7 @@ converterInstruction.transfer = function (op) {
       volume: volume,
       to    : toWell,
       from  : fromWells[index]
-    }, optionalObj));
+    }, optionalObj, customFields));
   });
 
   var xfers;
@@ -212,13 +229,14 @@ converterInstruction.consolidate = function (op) {
       optionalAllFields  = ['dispense_speed', 'mix_after'],
       optionalFromObj    = omniConv.getFieldsIfSet(op, optionalFromFields, true, converterField),
       optionalAllObj     = omniConv.getFieldsIfSet(op, optionalAllFields, true, converterField),
+      customFields       = getCustomFieldsAsAutoprotocol(op),
       fromArray          = [];
 
   _.forEach(fromWells, function (fromWell) {
     fromArray.push(_.assign({
       volume: volume,
       well  : fromWell
-    }, optionalFromObj))
+    }, optionalFromObj, customFields))
   });
 
   var consolidates = _.assign({
@@ -237,13 +255,14 @@ converterInstruction.distribute = function (op) {
       optionalAllFields = ['aspirate_speed', 'mix_before'],
       optionalToObj     = omniConv.getFieldsIfSet(op, optionalToFields, true, converterField),
       optionalAllObj    = omniConv.getFieldsIfSet(op, optionalAllFields, true, converterField),
+      customFields      = getCustomFieldsAsAutoprotocol(op),
       toArray           = [];
 
   _.forEach(toWells, function (fromWell) {
     toArray.push(_.assign({
       volume: volume,
       well  : fromWell
-    }, optionalToObj))
+    }, optionalToObj, customFields))
   });
 
   var distributes = _.assign({
@@ -259,14 +278,15 @@ converterInstruction.mix = function (op) {
       volume         = omniConv.pluckFieldValueTransformed(op, 'volume', converterField),
       repetitions    = omniConv.pluckFieldValueTransformed(op, 'repetitions', converterField),
       optionalFields = ['speed'],
-      optionalObj    = omniConv.getFieldsIfSet(op, optionalFields, true, converterField);
+      optionalObj    = omniConv.getFieldsIfSet(op, optionalFields, true, converterField),
+      customFields   = getCustomFieldsAsAutoprotocol(op);
 
   var mixes = _.map(wells, function (well) {
     return _.assign({
       well       : well,
       volume     : volume,
       repetitions: repetitions
-    }, optionalObj);
+    }, optionalObj, customFields);
   });
 
   return wrapInPipette({mix: mixes});
@@ -275,15 +295,16 @@ converterInstruction.mix = function (op) {
 converterInstruction.dispense = simpleMapOperation;
 
 converterInstruction.provision = function (op) {
-  var wells      = omniConv.pluckFieldValueTransformed(op, 'wells', converterField),
-      volume     = omniConv.pluckFieldValueTransformed(op, 'volume', converterField),
-      resourceId = _.result(omniUtils.pluckFieldValueRaw(op.fields, 'resource'), 'id');
+  var wells        = omniConv.pluckFieldValueTransformed(op, 'wells', converterField),
+      volume       = omniConv.pluckFieldValueTransformed(op, 'volume', converterField),
+      resourceId   = _.result(omniUtils.pluckFieldValueRaw(op.fields, 'resource'), 'id'),
+      customFields = getCustomFieldsAsAutoprotocol(op);
 
   if (!resourceId) {
     throwFieldError('missing resource id', op, 'id');
   }
 
-  return {
+  return _.assign({
     op         : 'provision',
     resource_id: resourceId,
     to         : _.map(wells, function (well) {
@@ -292,7 +313,7 @@ converterInstruction.provision = function (op) {
         volume: volume
       };
     })
-  };
+  }, customFields);
 };
 
 converterInstruction.spread = simpleMapOperation;

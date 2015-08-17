@@ -48,6 +48,26 @@ angular.module('tx.protocolEditor')
         //e.g. custom fields which need to accomodate container type, e.g. columnVolumes
         self.getContainerTypeFromFieldName = applyOpToFn(ProtocolUtils.getContainerTypeFromFieldName);
 
+        //hackz on hackz on hackz
+        self.addParameter = function () {
+          self.op.fields.push({
+            name: self.newParameterName,
+            type: 'json',
+            value: "",
+            optional: true,
+            isCustomField: true
+          });
+          self.showParameterAdd = false;
+          self.newParameterName = '';
+        };
+
+        self.removeField = function (field) {
+          if (!field.isCustomField) {
+            return;
+          }
+
+          _.remove(self.op.fields, field);
+        };
 
         function applyOpToFn (utilFn) {
           return _.partial(utilFn, self.op);
