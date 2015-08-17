@@ -269,7 +269,18 @@ converterInstruction.mix = function (op) {
     }, optionalObj);
   });
 
-  return wrapInPipette({mix: mixes});
+  var mixesSplit;
+  if (omniUtils.pluckFieldValueRaw(op.fields, 'one_tip') === true) {
+    mixesSplit = {mix: mixes};
+  } else {
+    mixesSplit = _.map(mixes, function (mix) {
+      return {
+        mix: [mix]
+      };
+    });
+  }
+
+  return wrapInPipette(mixesSplit);
 };
 
 converterInstruction.dispense = simpleMapOperation;
