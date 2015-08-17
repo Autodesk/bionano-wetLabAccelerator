@@ -2,6 +2,7 @@
 
 footer {
   background: $footer-bg;
+  position: relative;
   text-align: center;
   color: $footer-color;
   font-size: $footer-font-size;
@@ -21,12 +22,22 @@ footer {
     }
   }
 
+  .footer-link {
+    padding: 0 10px;
+    color: $grey;
+
+    &:hover {
+      color: $dark-grey;
+    }
+  }
+
   .logo-company {
+    display: inline-block;
+    padding: 0 10px;
 
     img {
       width: 91px;
       height: 15px;
-      margin: 0;
     }
   }
 }
