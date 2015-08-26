@@ -8,7 +8,7 @@
     <button class="btn btn-default"
             ng-class="{'btn-info' : c == spectroCtrl.currentContainerIndex}"
             ng-repeat="c in spectroCtrl.containers"
-            ng-click="spectroCtrl.setCurrentDataContainer(c)">{{c}}</button>
+            ng-click="spectroCtrl.selectContainer(c)">{{c}}</button>
   </div>
 
   <tx-timepointgraph ng-if="spectroCtrl.graphData"
