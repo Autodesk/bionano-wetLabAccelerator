@@ -8,9 +8,9 @@
  * Factory in the transcripticApp.
  */
 angular.module('tx.communication')
-  .factory('Container', function ($resource, Communication, TranscripticAuth) {
+  .factory('Container', function ($resource, Communication) {
 
-    return $resource(Communication.root + ':organization/containers',
+    return $resource(Communication.root + ':organization/samples',
       //defaults
       {
         organization: TranscripticAuth.organization
@@ -39,7 +39,7 @@ angular.module('tx.communication')
          */
         view: Communication.defaultResourceActions({
           method: "GET",
-          url: Communication.root + ':organization/containers/:id'
+          url: Communication.root + ':organization/samples/:id'
         }),
 
         /**

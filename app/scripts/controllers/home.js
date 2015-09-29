@@ -10,7 +10,6 @@
 angular.module('transcripticApp')
   .controller('HomeCtrl', function ($scope, $location) {
     this.hideOverlay = function () {
-      console.log('clciked');
       $location.path('/protocol');
     };
   });

@@ -6,6 +6,8 @@
  * @description
  * # Database
  * Service in the transcripticApp.
+ *
+ * The version in this release relies on localStorage, which is slow and synchronous. A much better implementation would be to use a database running on another thread or remotely.
  */
 angular.module('transcripticApp')
   .service('Database', function ($q, $window, UUIDGen) {
@@ -131,7 +133,7 @@ angular.module('transcripticApp')
     };
 
     self.getAllProjectMetadata = function getAllProjectMetadata () {
-      return self.getAllProjectIds(useCache).
+      return self.getAllProjectIds().
       then(function (ids) {
         return $q.all(_.map(ids, self.getProjectMetadata))
                  //in case one rejects, let the rest fall through
@@ -143,14 +145,14 @@ angular.module('transcripticApp')
       });
     };
 
-    self.getAllProjectMetadataOfType = function getAllProjectMetadataOfType (type, useCache) {
-      return self.getAllProjectMetadata(useCache).then(function (metas) {
+    self.getAllProjectMetadataOfType = function getAllProjectMetadataOfType (type) {
+      return self.getAllProjectMetadata().then(function (metas) {
         return _.filter(metas, {type: type});
       });
     };
 
-    self.getAllProjectsOfType = function (type, useCache) {
-      return self.getAllProjects(useCache).then(function (metas) {
+    self.getAllProjectsOfType = function (type) {
+      return self.getAllProjects().then(function (metas) {
         return _.filter(metas, {type: type});
       });
     };

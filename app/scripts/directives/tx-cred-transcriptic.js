@@ -57,7 +57,7 @@ angular.module('transcripticApp')
             email       : _.result(creds, 'email'),
             key         : _.result(creds, 'key')
           });
-          //will check automatically via validateAuth()
+          //will check automatically via $watch below()
         });
 
         self.forgetCreds = function () {

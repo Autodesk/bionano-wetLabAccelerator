@@ -62,11 +62,14 @@ angular.module('tx.communication')
         };
       };
 
-      Authentication.watch(function (userinfo) {
-        batchUpdate({
-          organization: _.result(userinfo, 'organization', ''),
-          email       : _.result(userinfo, 'email', ''),
-          key         : _.result(userinfo, 'key', '')
+      Authentication.watch(function () {
+        Database.transcripticCredentials().then(function (creds) {
+          console.log(creds);
+          batchUpdate({
+            organization: _.result(creds, 'organization', ''),
+            email       : _.result(creds, 'email', ''),
+            key         : _.result(creds, 'key', '')
+          });
         });
       });
 
