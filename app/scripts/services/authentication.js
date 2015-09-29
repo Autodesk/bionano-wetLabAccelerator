@@ -8,52 +8,27 @@
  * Service in the transcripticApp.
  */
 angular.module('transcripticApp')
-  .service('Authentication', function ($q, $cookies, Platform) {
+  .service('Authentication', function ($q, Database) {
     var self = this;
 
     var userInfo = {},
         watchers = [];
 
-    self.localAuthenticate = function (token) {
-      Platform.getUserInfo().
-        then(function (retrieved) {
-          _.assign(userInfo, retrieved, {
-            token: token,
-            uid: retrieved.uid,
-            email: retrieved.email,
-            name : retrieved.name
-          });
-
-          triggerWatchers();
-        }).
-        catch(function (err) {
-          //todo - handle error
-          console.log(err);
-        });
-    };
-
-    self.isAuthenticated = Platform.isAuthenticated;
+    Database.dummyAccount(function (creds) {
+      _.assign(userInfo, creds);
+      self.isAuthenticated = true;
+      triggerWatchers();
+    });
 
     //returns promise, resolving to whether successful or not
     self.unauthenticate = function () {
-      return Platform.unauthenticate()
-        .then(function () {
-          userInfo = {};
-          triggerWatchers();
-          return true;
-        })
-        .catch(_.constant(false));
+      //you can't do that in this version
+      return $q.when();
     };
 
-    //debugging only. Should check for cookie and use self.localAuthenticate
     self.authenticate = function (userstring) {
-      return Platform.authenticate(userstring)
-        .then(self.localAuthenticate);
-    };
-
-    //debugging only.
-    self.isAuthenticatedLocal = function () {
-      return $q.when(angular.isDefined($cookies['bionano-platform-token']));
+      //you can't do that in this version
+      return $q.when();
     };
 
     function triggerWatcher (fn) {
@@ -84,18 +59,6 @@ angular.module('transcripticApp')
     self.getUserId = function () {
       return userInfo.uid;
     };
-
-
-    //init - check for cookie, authenticate if present
-
-    var initialAuthToken = $cookies['bionano-platform-token'];
-    if (!!initialAuthToken) {
-      console.warn('found user info', initialAuthToken);
-      self.localAuthenticate(initialAuthToken);
-    } else {
-      console.warn('no user info found');
-    }
-
   })
 /**
  * A directive that shows elements only when user is logged in to the platform

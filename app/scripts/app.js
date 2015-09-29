@@ -29,18 +29,7 @@ angular
       .when('/', {
         controller  : 'HomeCtrl',
         controllerAs: 'homeCtrl',
-        templateUrl : 'views/routes/home.html',
-        resolve: {
-          'isAuthenticated' : ['Authentication', '$location', function (Authentication, $location) {
-            //todo - may want to actually check? or slow?
-            return Authentication.isAuthenticatedLocal()
-              .then(function (isAuth) {
-              if (isAuth) {
-                $location.path('/protocol');
-              }
-            })
-          }]
-        }
+        templateUrl : 'views/routes/home.html'
       })
 
       //main routes
@@ -62,40 +51,11 @@ angular
         controller  : 'ResultsCtrl',
         controllerAs: 'resultsCtrl'
       })
-
-      /*
-      .when('/auth', {
-        templateUrl: 'views/routes/auth.html'
-      })
-      */
-
-      //testing routes
-
-      /*
-      .when('/gallery', {
-        templateUrl : 'views/routes/gallery.html',
-        controller  : 'GalleryCtrl',
-        controllerAs: 'galleryCtrl'
-      })
-      .when('/testing', {
-        redirectTo: '/testing/plate'
-      })
-      .when('/testing/plate', {
-        templateUrl : 'views/testing/plate.html',
-        controller  : 'TestingPlateCtrl',
-        controllerAs: 'testCtrl'
-      })
-      .when('/testing/field', {
-        templateUrl : 'views/testing/field.html',
-        controller  : 'TestingFieldCtrl',
-        controllerAs: 'testingFieldCtrl'
-      })
-      */
       .otherwise({
         redirectTo: '/'
       });
   })
-  .run(function (Authentication, Platform, Database, $document) {
+  .run(function (Authentication, Database, $document) {
     //lazy load the background image
     angular.element($document[0].body).addClass('with-background');
   });

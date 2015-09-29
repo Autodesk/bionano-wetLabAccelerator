@@ -25,7 +25,7 @@ angular.module('tx.communication')
     self.organization = "";
 
 
-    this.$get = function ($rootScope, Platform, Authentication, $q) {
+    this.$get = function ($rootScope, Authentication, Database, $q) {
 
       var ignoreWatchers = false;
 
@@ -64,9 +64,9 @@ angular.module('tx.communication')
 
       Authentication.watch(function (userinfo) {
         batchUpdate({
-          organization: _.result(userinfo, 'transcripticOrg', ''),
-          email       : _.result(userinfo, 'transcripticEmail', ''),
-          key         : _.result(userinfo, 'transcripticKey', '')
+          organization: _.result(userinfo, 'organization', ''),
+          email       : _.result(userinfo, 'email', ''),
+          key         : _.result(userinfo, 'key', '')
         });
       });
 
@@ -144,25 +144,13 @@ angular.module('tx.communication')
 
       //save creds to the database
       var persistCreds = function persistCreds (shouldUpdate) {
-        var keymap = {
-          'email'       : 'transcripticEmail',
-          'key'         : 'transcripticKey',
-          'organization': 'transcripticOrg'
-        };
-
-        var promises = Authentication.isAuthenticated().then(function (isAuth) {
-          if (!isAuth) {
-            return $q.reject('not authenticated');
-          }
-
-          return $q.all(_.map(keymap, function (dbkey, txkey) {
-            Platform.userValue(dbkey, self[txkey]);
-          }));
+        return Database.transcripticCredentials(_.assign({}, {
+          email: self.email,
+          key  : self.key,
+          organization: self.organization
+        })).then(function () {
+          (shouldUpdate === true) && triggerWatchers();
         });
-
-        (shouldUpdate === true) && triggerWatchers();
-
-        return promises;
       };
 
       return {
