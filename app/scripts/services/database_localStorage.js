@@ -18,6 +18,7 @@ angular.module('transcripticApp')
          pathToId = 'metadata.id',
          ls_prefix ='wla_';
 
+    //this release does not rely on this cache, though using it could potentially optimize the application. However, running from localStorage, this is likely not to be an issue unless you have a large amount of data saved.
      self.cache = cache;
 
     //this will remove $$ prefixed fields, which should prevent circular references
