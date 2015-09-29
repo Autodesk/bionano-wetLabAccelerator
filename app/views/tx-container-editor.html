@@ -2,7 +2,7 @@
       ng-style="{'background-color' : contCtrl.model.color}"></span>
 <span ng-bind="contCtrl.model.type"></span>
 <a class="field-details-button"
-   ng-click="contCtrl.modalShow = !contCtrl.modalShow">
+   ng-click="contCtrl.toggleModal();">
   edit...
 </a>
 <tx-modal ng-if="contCtrl.modalShow"

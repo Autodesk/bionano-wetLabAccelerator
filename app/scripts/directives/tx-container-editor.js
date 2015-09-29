@@ -42,6 +42,10 @@ angular.module('transcripticApp')
           self.name = remote.name || remote.id;
           _.assign(self.model, remote);
         };
+
+        self.toggleModal = function () {
+          self.modalShow = !self.modalShow;
+        }
       },
       link: function postLink(scope, element, attrs) {
 

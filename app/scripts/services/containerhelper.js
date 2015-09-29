@@ -21,9 +21,11 @@ angular.module('transcripticApp')
     self.containerOptions = ContainerOptions;
 
     TranscripticAuth.watch(function (info) {
-      //hack - should get in pages if possible...
+      //todo - should get in pages if possible... this is obviously slow for large lists
       if (_.result(info, 'organization', false)) {
-        Container.list({per_page: 500}).$promise.then(self.setRemote);
+        Container.list({per_page: 500}).$promise.then(function (containers) {
+          self.setRemote(containers);
+        });
       }
     });
 
