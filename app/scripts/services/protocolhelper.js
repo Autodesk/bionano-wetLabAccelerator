@@ -50,9 +50,6 @@ angular.module('transcripticApp')
     };
 
     self.saveProtocol = function (protocol) {
-      //note - firebase
-      //console.log('saving', protocol, protocol.$id, protocol === self.currentProtocol, self.firebaseProtocols);
-
       if (!protocolHasNecessaryMetadataToSave(protocol)) {
         assignNecessaryMetadataToProtocol(protocol);
       }
