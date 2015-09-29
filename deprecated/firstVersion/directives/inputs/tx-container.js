@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txContainer
+ * @name wetLabAccelerator.directive:txContainer
  * @description
  * # txContainer
  */
 //todo - combine with Ref stanza?? (allowing for new container + handling diff model)
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txContainer', function (Container, ContainerOptions, Auth) {
     return {
       templateUrl: 'views/tx-container.html',

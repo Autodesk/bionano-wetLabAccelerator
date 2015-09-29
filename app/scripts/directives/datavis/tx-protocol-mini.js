@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txProtocolMini
+ * @name wetLabAccelerator.directive:txProtocolMini
  * @description
  * # txProtocolMini
  * //note - jquery use
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txProtocolMini', function ($timeout, $q, Omniprotocol) {
     return {
       templateUrl     : 'views/tx-protocol-mini.html',

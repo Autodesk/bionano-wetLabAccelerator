@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:OrderingCtrl
+ * @name wetLabAccelerator.controller:OrderingCtrl
  * @description
  * # OrderingCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('OrderingCtrl', function ($scope, Project, OrderingOptions, Order) {
 
     var self = this;

@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.AutoprotocolInstruction
+ * @name wetLabAccelerator.AutoprotocolInstruction
  * @description
  * # AutoprotocolInstruction
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  * todo - once written, this should be integrated into Operations service
  */
 angular.module('tx.conversion')

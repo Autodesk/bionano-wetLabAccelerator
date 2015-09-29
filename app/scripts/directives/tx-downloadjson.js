@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txDownloadjson
+ * @name wetLabAccelerator.directive:txDownloadjson
  * @description
  * # txDownloadjson
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txDownloadjson', function ($window, $document) {
     return {
       restrict: 'A',

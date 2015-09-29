@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:eventStopPropagation
+ * @name wetLabAccelerator.directive:eventStopPropagation
  * @description
  * # eventStopPropagation
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('squelchEvent', function () {
     return {
       restrict: 'A',

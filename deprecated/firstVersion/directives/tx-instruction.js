@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txInstruction
+ * @name wetLabAccelerator.directive:txInstruction
  * @description
  * # txInstruction
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txInstruction', function (StorageOptions) {
     return {
       templateUrl: 'views/tx-instruction.html',

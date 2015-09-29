@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:FieldaliquotctrlCtrl
+ * @name wetLabAccelerator.controller:FieldaliquotctrlCtrl
  * @description
  * # FieldaliquotctrlCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  *
  * todo - can probably clean this up a lot using ProtocolHelper - containerType + containerName stuff is weird
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('fieldAliquotCtrl', function ($scope, Omniprotocol, ProtocolHelper, ProtocolUtils) {
     var self = this;
 

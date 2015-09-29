@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txProtocolFieldVariable
+ * @name wetLabAccelerator.directive:txProtocolFieldVariable
  * @description
  * # txProtocolFieldVariable
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txProtocolFieldVariable', function (ProtocolHelper) {
     return {
       template: '<select ng-model="model" ng-options="p.name as p.name for p in params">',

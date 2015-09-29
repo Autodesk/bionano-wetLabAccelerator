@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txColumnVolumes
+ * @name wetLabAccelerator.directive:txColumnVolumes
  * @description
  * # txColumnVolumes
  *
  * //todo - refactor this to being 1-indexed
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txPlateColumns', function (ContainerOptions) {
 
     var rgbaify = function (color, opacity) {

@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name transcripticApp.filter:capfirst
+ * @name wetLabAccelerator.filter:capfirst
  * @function
  * @description
  * # capfirst
- * Filter in the transcripticApp.
+ * Filter in the wetLabAccelerator.
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .filter('capfirst', function () {
     return function (input) {
       return (angular.isString(input) && input.length > 1) ? input.charAt(0).toUpperCase() + input.slice(1) : input;

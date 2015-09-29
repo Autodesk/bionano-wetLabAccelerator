@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:jsonEditor
+ * @name wetLabAccelerator.directive:jsonEditor
  * @description
  * When used on a textarea, allows the direct editing of a JSON object.
  * Invalid JSON will set the value to undefined.
@@ -21,7 +21,7 @@
  */
 //fixme - resets model when don't prototypically inherit / model undefined initially
 //rpobably has to do with compilation / linking orders
-angular.module('transcripticApp').directive('jsonEditor', function ($timeout) {
+angular.module('wetLabAccelerator').directive('jsonEditor', function ($timeout) {
 	return {
 		restrict: 'A',
 		require: 'ngModel',

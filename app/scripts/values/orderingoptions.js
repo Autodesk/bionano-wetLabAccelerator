@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.OrderingOptions
+ * @name wetLabAccelerator.OrderingOptions
  * @description
  * # OrderingOptions
- * Constant in the transcripticApp.
+ * Constant in the wetLabAccelerator.
  */
-angular.module('transcripticApp').constant('OrderingOptions', {
+angular.module('wetLabAccelerator').constant('OrderingOptions', {
   "oligo" : {},
   "synthesis" : {},
   "cloning": {}

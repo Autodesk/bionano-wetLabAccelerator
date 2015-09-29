@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txPlate
+ * @name wetLabAccelerator.directive:txPlate
  * @description
  * d3 plate graph
  *

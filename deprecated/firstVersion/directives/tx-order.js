@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txOrder
+ * @name wetLabAccelerator.directive:txOrder
  * @description
  * # txOrder
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txOrder', function (OligoOptions) {
     return {
       templateUrl: 'views/tx-order.html',

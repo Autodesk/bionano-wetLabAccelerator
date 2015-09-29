@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txRequestresponse
+ * @name wetLabAccelerator.directive:txRequestresponse
  * @description
  * #
  *

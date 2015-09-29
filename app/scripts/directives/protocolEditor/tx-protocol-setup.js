@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txProtocolSetup
+ * @name wetLabAccelerator.directive:txProtocolSetup
  * @description
  * # txProtocolSetup
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txProtocolSetup', function ($rootScope, TranscripticAuth, UUIDGen, Container, Omniprotocol, ContainerHelper, ProtocolHelper, ProtocolUtils) {
     return {
       templateUrl     : 'views/tx-protocol-setup.html',

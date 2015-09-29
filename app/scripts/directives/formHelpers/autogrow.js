@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:autogrow
+ * @name wetLabAccelerator.directive:autogrow
  * @description
  * # autogrow
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('autoGrow', function($timeout) {
     return {
       require: '?ngModel',

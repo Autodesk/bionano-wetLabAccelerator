@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txOperationgroup
+ * @name wetLabAccelerator.directive:txOperationgroup
  * @description
  * # txOperationgroup
  */

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:TestingFieldCtrl
+ * @name wetLabAccelerator.controller:TestingFieldCtrl
  * @description
  * # TestingFieldCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('TestingFieldCtrl', function () {
 
     //thermocycleGroup

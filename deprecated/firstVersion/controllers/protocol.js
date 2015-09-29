@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:MainCtrl
+ * @name wetLabAccelerator.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('ProtocolCtrl', function ($scope, $http, Run, simpleLogin, FBProfile) {
 
     var self = this;

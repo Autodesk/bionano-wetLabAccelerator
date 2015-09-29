@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:ThermocycledyesCtrl
+ * @name wetLabAccelerator.controller:ThermocycledyesCtrl
  * @description
  * # ThermocycledyesCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('ThermocycleDyesCtrl', function ($scope, DyeOptions) {
 
     var self = this;

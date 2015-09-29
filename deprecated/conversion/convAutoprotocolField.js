@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.AutoprotocolField
+ * @name wetLabAccelerator.AutoprotocolField
  * @description
  * # AutoprotocolField
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  */
 angular.module('tx.conversion')
   .service('ConvAutoprotocolField', function (InputTypes, AbstractionUtils, ConversionUtils) {

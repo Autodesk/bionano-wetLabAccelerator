@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.ProtocolEditorHelper
+ * @name wetLabAccelerator.ProtocolEditorHelper
  * @description
  * # ProtocolEditorHelper
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  * todo - move away from firebase
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .service('ProtocolHelperOld', function ($q, $rootScope, $timeout, UUIDGen, simpleLogin, FBProfile, Omniprotocol, Autoprotocol, Authentication, Notify, Platform, Database) {
 
     var self = this;

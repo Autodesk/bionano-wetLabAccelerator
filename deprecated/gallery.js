@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:GalleryCtrl
+ * @name wetLabAccelerator.controller:GalleryCtrl
  * @description
  * # GalleryCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('GalleryCtrl', function ($scope, $http) {
 
     var self = this;

@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.Data
+ * @name wetLabAccelerator.Data
  * @description
  * # Data
- * Factory in the transcripticApp.
+ * Factory in the wetLabAccelerator.
  */
 angular.module('tx.communication')
   .factory('Data', function ($resource, ContainerOptions, Communication, TranscripticAuth) {

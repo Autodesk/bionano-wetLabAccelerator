@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:ColumnvolumesctrlCtrl
+ * @name wetLabAccelerator.controller:ColumnvolumesctrlCtrl
  * @description
  * # ColumnvolumesctrlCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('columnVolumesCtrl', function ($scope) {
     var self = this;
 

@@ -3,7 +3,7 @@
 describe('Controller: GalleryCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('transcripticApp'));
+  beforeEach(module('wetLabAccelerator'));
 
   var GalleryCtrl,
     scope;

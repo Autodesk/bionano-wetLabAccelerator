@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txMixbefore
+ * @name wetLabAccelerator.directive:txMixbefore
  * @description
  * # txMixbefore
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txMixwrap', function () {
     return {
       templateUrl: 'views/tx-mixwrap.html',

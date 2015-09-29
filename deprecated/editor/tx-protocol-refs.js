@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txProtocolRefs
+ * @name wetLabAccelerator.directive:txProtocolRefs
  * @description
  * # txProtocolRefs
  * //todo - refactor to use internal container options, storage options? Should not be specific to transcriptic

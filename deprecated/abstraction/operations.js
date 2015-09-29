@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.operations
+ * @name wetLabAccelerator.operations
  * @metadata
  * # operations
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  * //todo - add scaffolds of each here (once have decided on format for each)
  */
 angular.module('tx.abstraction')

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:GelSeparateCtrl
+ * @name wetLabAccelerator.controller:GelSeparateCtrl
  * @description
  * # GelSeparateCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('GelSeparateCtrl', function ($scope, GelOptions) {
     this.ladders = GelOptions.ladder;
     this.matrices = GelOptions.matrix;

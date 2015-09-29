@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txWelltip
+ * @name wetLabAccelerator.directive:txWelltip
  * @description
  * # txWelltip
  */

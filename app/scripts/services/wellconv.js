@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.wellConversion
+ * @name wetLabAccelerator.wellConversion
  * @description
  * # wellConversion
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .service('WellConv', function () {
 
     /*

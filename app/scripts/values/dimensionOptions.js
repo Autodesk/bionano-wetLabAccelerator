@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.dimensions
+ * @name wetLabAccelerator.dimensions
  * @description
  * # dimensions
- * Constant in the transcripticApp.
+ * Constant in the wetLabAccelerator.
  */
-angular.module('transcripticApp').constant('DimensionOptions', {
+angular.module('wetLabAccelerator').constant('DimensionOptions', {
   "duration": ["millisecond", "second", "minute", "hour"],
   "volume": ["nanoliter", "microliter", "milliliter"],
   "length": ["nanometer"],

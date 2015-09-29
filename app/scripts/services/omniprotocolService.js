@@ -1,1 +1,1 @@
-angular.module('transcripticApp').value('Omniprotocol', omniprotocol);
+angular.module('wetLabAccelerator').value('Omniprotocol', omniprotocol);

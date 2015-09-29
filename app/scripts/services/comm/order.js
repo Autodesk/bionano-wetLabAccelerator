@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.Order
+ * @name wetLabAccelerator.Order
  * @description
  * # Order
- * Factory in the transcripticApp.
+ * Factory in the wetLabAccelerator.
  */
 angular.module('tx.communication')
   .factory('Order', function ($resource, Communication, TranscripticAuth) {

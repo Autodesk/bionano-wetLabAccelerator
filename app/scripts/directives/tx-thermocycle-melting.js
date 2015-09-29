@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txThermocycleMelting
+ * @name wetLabAccelerator.directive:txThermocycleMelting
  * @description
  * # txThermocycleMelting
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txThermocycleMelting', function () {
     return {
       restrict: 'E',

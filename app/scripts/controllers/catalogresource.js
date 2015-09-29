@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:CatalogresourcectrlCtrl
+ * @name wetLabAccelerator.controller:CatalogresourcectrlCtrl
  * @description
  * # CatalogresourcectrlCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('CatalogResourceCtrl', function ($scope, $rootScope, Catalog) {
     var self = this;
 

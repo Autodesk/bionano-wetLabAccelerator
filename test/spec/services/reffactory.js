@@ -3,7 +3,7 @@
 describe('Service: RefFactory', function () {
 
   // load the service's module
-  beforeEach(module('transcripticApp'));
+  beforeEach(module('wetLabAccelerator'));
 
   // instantiate service
   var RefFactory;

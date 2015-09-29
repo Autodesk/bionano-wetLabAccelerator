@@ -3,7 +3,7 @@
 describe('Filter: arrayify', function () {
 
   // load the filter's module
-  beforeEach(module('transcripticApp'));
+  beforeEach(module('wetLabAccelerator'));
 
   // initialize a new instance of the filter before each test
   var arrayify;

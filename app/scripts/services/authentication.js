@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.Authentication
+ * @name wetLabAccelerator.Authentication
  * @description
  * # Authentication
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .service('Authentication', function ($q, Database) {
     var self = this;
 

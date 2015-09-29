@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txRefs
+ * @name wetLabAccelerator.directive:txRefs
  * @description
  * # txRefs
  */
 //todo - need to convert to Ref, probably internally to directive? or external as processing step?
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txRefs', function (Container, ContainerOptions, StorageOptions, Auth) {
     return {
       templateUrl: 'views/tx-refs.html',

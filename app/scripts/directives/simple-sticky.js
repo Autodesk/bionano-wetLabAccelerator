@@ -18,7 +18,7 @@
  * <div class="myStickyDiv" simple-sticky="20" sticky-bottom></div>
  */
   //todo - attr.alignWith to give element to match?
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('simpleSticky', function ($window, $document, $timeout) {
 
     var windowEl = angular.element($window);

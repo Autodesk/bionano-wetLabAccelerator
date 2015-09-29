@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.containers
+ * @name wetLabAccelerator.containers
  * @description
  * # containers
- * Constant in the transcripticApp.
+ * Constant in the wetLabAccelerator.
  */
-angular.module('transcripticApp').constant('ContainerOptions', omniprotocol.optionEnums.containers);
+angular.module('wetLabAccelerator').constant('ContainerOptions', omniprotocol.optionEnums.containers);

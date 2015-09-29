@@ -3,7 +3,7 @@
 describe('Service: ConversionUtils', function () {
 
   // load the service's module
-  beforeEach(module('transcripticApp'));
+  beforeEach(module('wetLabAccelerator'));
 
   // instantiate service
   var ConversionUtils;

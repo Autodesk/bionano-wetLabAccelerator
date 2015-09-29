@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:TestingRestyleCtrl
+ * @name wetLabAccelerator.controller:TestingRestyleCtrl
  * @description
  * # TestingRestyleCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('ProtocolCtrl', function ($scope, $http, ProtocolHelper) {
     var self = this;
 

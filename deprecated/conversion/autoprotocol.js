@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc factory
- * @name transcripticApp.autoprotocol
+ * @name wetLabAccelerator.autoprotocol
  * @description
  * Service converting between abstraction and autoprotocol
  * todo - rename this service

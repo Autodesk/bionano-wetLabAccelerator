@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txOperationPopover
+ * @name wetLabAccelerator.directive:txOperationPopover
  * @description
  * # txOperationPopover
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txOperationPopover', function () {
     return {
       templateUrl: 'views/tx-operation-popover.html',

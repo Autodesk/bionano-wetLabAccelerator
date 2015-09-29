@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name transcripticApp.filter:arrayify
+ * @name wetLabAccelerator.filter:arrayify
  * @function
  * @description
  * # arrayify
- * Filter in the transcripticApp.
+ * Filter in the wetLabAccelerator.
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .filter('arrayify', function () {
     return function (input) {
       for (var i = 0,

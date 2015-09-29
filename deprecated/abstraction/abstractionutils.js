@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.AbstractionUtils
+ * @name wetLabAccelerator.AbstractionUtils
  * @description
  * # AbstractionUtils
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  */
 angular.module('tx.abstraction')
   .service('AbstractionUtils', function () {

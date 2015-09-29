@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:AliquotCtrl
+ * @name wetLabAccelerator.controller:AliquotCtrl
  * @description
  * # AliquotCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('AliquotCtrl', function ($scope, ProtocolUtils) {
     var self = this;
 

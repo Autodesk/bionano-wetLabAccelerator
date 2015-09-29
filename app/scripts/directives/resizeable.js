@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:resizeable
+ * @name wetLabAccelerator.directive:resizeable
  * @description
  *
  *
@@ -21,7 +21,7 @@
  resize-direction="horizontal"></div>
  *
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('resizeable', function ($document) {
     return {
       restrict: 'A',

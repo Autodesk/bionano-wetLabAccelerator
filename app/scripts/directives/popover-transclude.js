@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:popoverTransclude
+ * @name wetLabAccelerator.directive:popoverTransclude
  * @description
  * # popoverTransclude
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('popoverTransclude', function ($document, $timeout, $position) {
     return {
       restrict   : 'A',

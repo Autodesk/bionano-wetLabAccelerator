@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:FirebaseloginCtrl
+ * @name wetLabAccelerator.controller:FirebaseloginCtrl
  * @description
  * # FirebaseloginCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('FirebaseLoginCtrl', function($scope, simpleLogin) {
 
     $scope.email = null;

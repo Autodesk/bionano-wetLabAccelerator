@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.dyeOptions
+ * @name wetLabAccelerator.dyeOptions
  * @description
  * # dyeOptions
- * Constant in the transcripticApp.
+ * Constant in the wetLabAccelerator.
  * //todo - finish verifications
  * //todo - incorporate transformations here
  * //todo - move transformations to ConvAutoprotocolField

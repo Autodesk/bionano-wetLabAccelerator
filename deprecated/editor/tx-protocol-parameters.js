@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txProtocolParameters
+ * @name wetLabAccelerator.directive:txProtocolParameters
  * @description
  * # txProtocolParameters
  * //todo - need to verify value is correct given the type... use tx-protocol-field?

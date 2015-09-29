@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:OperationsummaryctrlCtrl
+ * @name wetLabAccelerator.controller:OperationsummaryctrlCtrl
  * @description
  * # OperationsummaryctrlCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  *
  * todo - rename to match names in protocolUtils
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('operationSummaryCtrl', function ($scope, $sce, Communication, ProtocolHelper, Omniprotocol, ProtocolUtils, TranscripticAuth, RunHelper, $window, $timeout) {
     var self = this;
 

@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txThermocycleGroup
+ * @name wetLabAccelerator.directive:txThermocycleGroup
  * @description
  * # txThermocycleGroup
  *
  * Draws a graph given some thermocycle data
  * //todo - handle gradients..
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txThermocycleGroup', function (Omniprotocol) {
     return {
       restrict: 'E',

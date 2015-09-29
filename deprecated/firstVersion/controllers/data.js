@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:DataCtrl
+ * @name wetLabAccelerator.controller:DataCtrl
  * @description
  * # DataCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('DataCtrl', function ($scope, $q, $http, Auth, Project, Container, Run, Data, DataConv, ContainerOptions) {
 
     var self = this;

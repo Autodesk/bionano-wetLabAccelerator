@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txChangeBroadcaster
+ * @name wetLabAccelerator.directive:txChangeBroadcaster
  * @description
  * # txChangeBroadcaster
  *
  * On a directive with ng-model, $broadcasts an event from $rootScope given as string to this attribute directive, passing the old value and the new value as parameters
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txChangeBroadcaster', function ($rootScope) {
     return {
       require: 'ngModel',

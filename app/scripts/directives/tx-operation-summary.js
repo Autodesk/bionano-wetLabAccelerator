@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txOperationSummary
+ * @name wetLabAccelerator.directive:txOperationSummary
  * @description
  * # txOperationSummary
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txOperationSummary', function ($http, $compile, Omniprotocol, ProtocolHelper) {
 
     var templateMap = {

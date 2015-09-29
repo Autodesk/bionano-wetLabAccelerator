@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txWell
+ * @name wetLabAccelerator.directive:txWell
  * @description
  * Directive for specifying a well, and potentially a container
  *
@@ -21,7 +21,7 @@
 //todo - validation (and therefore passage of container)
 //todo - alphanumeric <--> numeric conversion - handle alpha insensitive
 //todo - refactor to better accomodate specification of columns rather than rows
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txWell', function (ContainerOptions, Container) {
 
     //todo - DRY OUT using WellConv service

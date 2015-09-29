@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txDataref
+ * @name wetLabAccelerator.directive:txDataref
  * @description
  * # txDataref
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txDataref', function () {
     return {
       templateUrl: 'views/tx-dataref.html',

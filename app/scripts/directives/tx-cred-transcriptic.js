@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txCredTranscriptic
+ * @name wetLabAccelerator.directive:txCredTranscriptic
  * @description
  * # txCredTranscriptic
  *
@@ -11,7 +11,7 @@
  *
  * and will expose to formController
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txCredTranscriptic', function (TranscripticAuth, Communication, $q) {
     return {
       templateUrl     : 'views/tx-cred-transcriptic.html',

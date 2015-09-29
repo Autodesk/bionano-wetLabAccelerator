@@ -3,7 +3,7 @@
 describe('Controller: OrderingCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('transcripticApp'));
+  beforeEach(module('wetLabAccelerator'));
 
   var OrderingCtrl,
     scope;

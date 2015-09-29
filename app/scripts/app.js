@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name transcripticApp
+ * @name wetLabAccelerator
  * @description
- * # transcripticApp
+ * # wetLabAccelerator
  *
  * Main module of the application.
  */
 angular
-  .module('transcripticApp', [
+  .module('wetLabAccelerator', [
     'ngAnimate',
     'ngAria',
     'ngCookies',

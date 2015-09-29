@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.simpleLogin
+ * @name wetLabAccelerator.simpleLogin
  * @description
  * # simpleLogin
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .constant('FBURL', 'https://transcriptic.firebaseio.com')
   /**
   * @name firebaseRef

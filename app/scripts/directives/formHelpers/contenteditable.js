@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:contenteditable
+ * @name wetLabAccelerator.directive:contenteditable
  * @description
  * # contenteditable
  * //todo - support a placeholder value as lighter text
  */
-angular.module('transcripticApp').directive('contenteditable', function() {
+angular.module('wetLabAccelerator').directive('contenteditable', function() {
   return {
     restrict: 'A',
     require: '?ngModel' ,

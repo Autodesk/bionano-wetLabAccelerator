@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name transcripticApp.filter:fieldReadable
+ * @name wetLabAccelerator.filter:fieldReadable
  * @function
  * @description
  * # fieldReadable
- * Filter in the transcripticApp.
+ * Filter in the wetLabAccelerator.
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .filter('fieldReadable', function () {
     return function (input) {
       return _.isString(input) ? input.replace(/[_-]/, ' ') : input;

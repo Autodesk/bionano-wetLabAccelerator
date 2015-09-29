@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txInspectorSelect
+ * @name wetLabAccelerator.directive:txInspectorSelect
  * @description
  * # txInspectorSelect
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txInspectorSelect', function ($parse, $rootScope) {
 
       var elements = [],

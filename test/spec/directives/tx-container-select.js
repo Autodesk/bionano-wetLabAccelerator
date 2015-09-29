@@ -3,7 +3,7 @@
 describe('Directive: txContainerSelect', function () {
 
   // load the directive's module
-  beforeEach(module('transcripticApp'));
+  beforeEach(module('wetLabAccelerator'));
 
   var element,
     scope;

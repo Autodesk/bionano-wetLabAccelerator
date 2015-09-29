@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.dyeOptions
+ * @name wetLabAccelerator.dyeOptions
  * @description
  * # dyeOptions
- * Constant in the transcripticApp.
+ * Constant in the wetLabAccelerator.
  */
-angular.module('transcripticApp').constant('DyeOptions', {
+angular.module('wetLabAccelerator').constant('DyeOptions', {
   "channel1" : ["FAM","SYBR"],
   "channel2" : ["VIC","HEX","TET","CALGOLD540"],
   "channel3" : ["ROX","TXR","CALRED610"],

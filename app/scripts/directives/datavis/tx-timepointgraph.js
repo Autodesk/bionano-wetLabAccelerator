@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txTimepointgraph
+ * @name wetLabAccelerator.directive:txTimepointgraph
  * @description
  * Expects data in form
  *

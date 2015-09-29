@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txMeasure
+ * @name wetLabAccelerator.directive:txMeasure
  * @attr dimensionValue
  * @attr label
  * @attr notRequired Force so UI won't show as required (this is less common, so requies flag)
@@ -17,7 +17,7 @@
 
 //todo - ability to pass in parameters to input (sp. min and max)
 //todo - clearer UI when not set - don't set if scope.unrequired
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txMeasure', function (DimensionOptions) {
     return {
       templateUrl: 'views/tx-measure.html',

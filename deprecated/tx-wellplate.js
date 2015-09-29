@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txWellplate
+ * @name wetLabAccelerator.directive:txWellplate
  * @description
  * # txWellplate
  */

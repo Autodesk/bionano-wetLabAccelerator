@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.ContainerHelper
+ * @name wetLabAccelerator.ContainerHelper
  * @description
  * # ContainerHelper
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  *
  * //todo - merge in containerOptions, and expose functionality here
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .service('ContainerHelper', function ($rootScope, TranscripticAuth, Container, ContainerOptions) {
     var self = this;
 

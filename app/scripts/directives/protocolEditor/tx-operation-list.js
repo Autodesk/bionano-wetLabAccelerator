@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txGallery
+ * @name wetLabAccelerator.directive:txGallery
  * @description
  * # txGallery
  * todo - better cloning behavior - see:

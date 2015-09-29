@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.DataConv
+ * @name wetLabAccelerator.DataConv
  * @description
  * # DataConv
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .service('DataConv', function (WellConv, ContainerOptions) {
 
     /**

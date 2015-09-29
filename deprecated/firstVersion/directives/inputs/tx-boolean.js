@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txBoolean
+ * @name wetLabAccelerator.directive:txBoolean
  * @description
  * # txBoolean
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txBoolean', function () {
     return {
       templateUrl: 'views/tx-boolean.html',

@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.Database
+ * @name wetLabAccelerator.Database
  * @description
  * # Database
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  *
  * The version in this release relies on localStorage, which is slow and synchronous. A much better implementation would be to use a database running on another thread or remotely.
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .service('Database', function ($q, $window, UUIDGen) {
 
      var self     = this,

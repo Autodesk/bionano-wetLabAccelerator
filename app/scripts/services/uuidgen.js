@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.UUIDGen
+ * @name wetLabAccelerator.UUIDGen
  * @description
  * # UUIDGen
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .factory('UUIDGen', function () {
     return function () {
       var d    = new Date().getTime();

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:ThermocyclegroupsctrlCtrl
+ * @name wetLabAccelerator.controller:ThermocyclegroupsctrlCtrl
  * @description
  * # ThermocyclegroupsctrlCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('thermocycleGroupsCtrl', function ($scope) {
     var self = this;
 

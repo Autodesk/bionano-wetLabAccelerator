@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:HomeCtrl
+ * @name wetLabAccelerator.controller:HomeCtrl
  * @description
  * # HomeCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('HomeCtrl', function ($scope, $location) {
     this.hideOverlay = function () {
       $location.path('/protocol');

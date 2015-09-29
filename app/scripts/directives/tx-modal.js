@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txModal
+ * @name wetLabAccelerator.directive:txModal
  * @description
  * # txModal
  *
  * can use function scope.$close to close the modal, or you can add a function scope.$onClose() to run when closing the modal
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txModal', function () {
     return {
       templateUrl: 'views/tx-modal.html',

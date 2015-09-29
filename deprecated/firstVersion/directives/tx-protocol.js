@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txProtocol
+ * @name wetLabAccelerator.directive:txProtocol
  * @description
  * # txProtocol
  */
 
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txProtocol', function (InstructionOptions, $window, $timeout) {
     return {
       templateUrl: 'views/tx-protocol.html',

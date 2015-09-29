@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:ResultsdispensectrlCtrl
+ * @name wetLabAccelerator.controller:ResultsdispensectrlCtrl
  * @description
  * # ResultsdispensectrlCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('resultsDispenseCtrl', function ($scope, ContainerOptions, WellConv, Omniprotocol, ProtocolUtils) {
     var self = this;
 

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:OrderCtrl
+ * @name wetLabAccelerator.controller:OrderCtrl
  * @description
  * # OrderCtrl
- * Controller of the transcripticApp, for a specific orer
+ * Controller of the wetLabAccelerator, for a specific orer
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('OrderCtrl', function ($scope, OligoOptions) {
     $scope.purityOptions = OligoOptions.purity;
     $scope.scaleOptions = OligoOptions.scale;

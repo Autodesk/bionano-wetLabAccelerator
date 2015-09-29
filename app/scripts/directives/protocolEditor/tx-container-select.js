@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txContainerSelect
+ * @name wetLabAccelerator.directive:txContainerSelect
  * @description
  * # txContainerSelect
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txContainerSelect', function ($rootScope, $timeout, ContainerHelper, ProtocolHelper, ProtocolUtils, UUIDGen) {
     return {
       templateUrl     : 'views/tx-container-select.html',

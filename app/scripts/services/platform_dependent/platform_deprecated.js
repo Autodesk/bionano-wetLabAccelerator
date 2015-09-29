@@ -2,15 +2,15 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.Platform
+ * @name wetLabAccelerator.Platform
  * @description
  * # Platform
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  *
  * Generally, you should use the database service, and not this directly...
  *
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .service('Platform', function ($q, $window) {
     var self = this,
         pc   = $window.PlatformClient;

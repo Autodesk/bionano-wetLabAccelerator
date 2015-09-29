@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.ConversionUtils
+ * @name wetLabAccelerator.ConversionUtils
  * @description
  * # ConversionUtils
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  */
 angular.module('tx.conversion')
   .service('ConversionUtils', function (InputTypes, AbstractionUtils) {

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:PipetteCtrl
+ * @name wetLabAccelerator.controller:PipetteCtrl
  * @description
  * # PipetteCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('PipetteCtrl', function ($scope) {
 
     function constructPITemplateUrl (key) {

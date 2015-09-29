@@ -4,14 +4,14 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.instructions
+ * @name wetLabAccelerator.instructions
  * @description
  * Enumeration of possible instructions, with minimal schema also provided.
  * todo - descriptiondata
  *    description, etc. for a popover?
  *    requirements (e.g. sealed)
  */
-angular.module('transcripticApp').constant('InstructionOptions', {
+angular.module('wetLabAccelerator').constant('InstructionOptions', {
   //pipetting
   "pipette" : {
     scaffold: {

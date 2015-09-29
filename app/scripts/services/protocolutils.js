@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.ProtocolUtils
+ * @name wetLabAccelerator.ProtocolUtils
  * @description
  * # ProtocolUtils
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .service('ProtocolUtils', function ($rootScope, ProtocolHelper, ContainerHelper, UUIDGen, Omniprotocol) {
 
     var self = this;

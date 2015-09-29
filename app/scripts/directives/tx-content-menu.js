@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txGallery
+ * @name wetLabAccelerator.directive:txGallery
  * @description
  *
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txContentMenu', function (ProtocolHelper, RunHelper, Authentication, Database, $document, $timeout, $location, $q, $http) {
     return {
       templateUrl : 'views/tx-content-menu.html',

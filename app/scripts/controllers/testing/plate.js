@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name transcripticApp.controller:RefsCtrl
+ * @name wetLabAccelerator.controller:RefsCtrl
  * @description
  * # RefsCtrl
- * Controller of the transcripticApp
+ * Controller of the wetLabAccelerator
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .controller('TestingPlateCtrl', function ($scope, $http, WellConv, DataConv, ContainerOptions) {
 
     $scope.containerKeys = _.keys(ContainerOptions);

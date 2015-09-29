@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txProtocolDroppable
+ * @name wetLabAccelerator.directive:txProtocolDroppable
  * @description
  * # txProtocolDroppable
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txProtocolDroppable', function ($parse, DragDropManager) {
     return {
       restrict: 'A',

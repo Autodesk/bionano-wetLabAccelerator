@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.OligoOptions
+ * @name wetLabAccelerator.OligoOptions
  * @description
  * # OligoOptions
- * Constant in the transcripticApp.
+ * Constant in the wetLabAccelerator.
  */
-angular.module('transcripticApp').constant('OligoOptions', {
+angular.module('wetLabAccelerator').constant('OligoOptions', {
   scale : [
     {"value": 25, "unit": "nanomole"},
     {"value": 50, "unit": "nanomole"},

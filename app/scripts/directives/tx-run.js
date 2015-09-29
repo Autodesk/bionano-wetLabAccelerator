@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txRun
+ * @name wetLabAccelerator.directive:txRun
  * @description
  * # txRun
  * //todo - maybe should move verifications / submissions outside of here entirely. also maybe the remote verification listener
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txRun', function ($q, $timeout, $rootScope, TranscripticAuth, Autoprotocol, Omniprotocol, Run, Project, ProtocolHelper, Communication, RunHelper, Notify) {
     return {
       templateUrl : 'views/tx-run.html',

@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txContainerEditor
+ * @name wetLabAccelerator.directive:txContainerEditor
  * @description
  * # txContainerEditor
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txContainerEditor', function ($rootScope, ContainerHelper, Omniprotocol) {
     return {
       templateUrl: 'views/tx-container-editor.html',

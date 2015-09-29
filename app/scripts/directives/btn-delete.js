@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:btnDelete
+ * @name wetLabAccelerator.directive:btnDelete
  * @description
  * # btnDelete
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('btnDelete', function ($timeout) {
     return {
       templateUrl: 'views/btnDelete.html',

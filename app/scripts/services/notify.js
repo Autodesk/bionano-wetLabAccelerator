@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.notify
+ * @name wetLabAccelerator.notify
  * @description
  * # notify
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  */
-angular.module('transcripticApp').service('Notify', function($timeout,$http,$compile,$templateCache,$rootScope) {
+angular.module('wetLabAccelerator').service('Notify', function($timeout,$http,$compile,$templateCache,$rootScope) {
 
   var startTop = 50;
   var verticalSpacing = 0;

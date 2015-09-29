@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name transcripticApp.TranscripticAuth
+ * @name wetLabAccelerator.TranscripticAuth
  * @description
  * # TranscripticAuth
- * Service in the transcripticApp.
+ * Service in the wetLabAccelerator.
  */
 angular.module('tx.communication')
   .provider('TranscripticAuth', function () {

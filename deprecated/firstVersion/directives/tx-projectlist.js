@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name transcripticApp.directive:txProjectlist
+ * @name wetLabAccelerator.directive:txProjectlist
  * @description
  * # txProjectlist
  */
-angular.module('transcripticApp')
+angular.module('wetLabAccelerator')
   .directive('txProjectlist', function (Project, Auth, $timeout) {
     return {
       templateUrl: 'views/tx-projectlist.html',
