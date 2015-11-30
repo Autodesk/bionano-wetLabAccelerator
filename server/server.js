@@ -1,200 +1,153 @@
-#!/usr/bin/env node
-
-//Libraries
-var path = require('path');
-var https = require('https');
-var http = require('http');
-var express = require('express');
-var cookieParser = require("cookie-parser");
+var fs         = require('fs');
+var path       = require('path');
+var https      = require('https');
+var http       = require('http');
+var express    = require('express');
 var bodyParser = require("body-parser");
-var bunyan = require('bunyan');
-var log = bunyan.createLogger({name: 'wetlab'});
-var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
-var session = require('express-session');
+var bunyan     = require('bunyan');
+var log        = bunyan.createLogger({name: 'wetlab'});
+var _          = require('lodash');
 
-//Environmental variables
 var PLATFORM_URL = 'platform.bionano.autodesk.com';
-var PORT = parseInt(process.env.PORT) || 8000;
-var appFolder = (process.env.APP || path.dirname(__dirname)) + '/dist';
-var FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID || '861870727182803';
-var FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET || 'd4d8026adb8f40d795c8f379b8661a69';
-var HOST = process.env.HTTP_HOST || "http://localhost:" + PORT;
-var LOCAL = process.env.LOCAL || false; //Local serving
-var RPC_HOST = process.env.RPC_HOST || PLATFORM_URL;
-var RPC_PORT = parseInt(process.env.RPC_PORT) || 443;
+var PORT         = parseInt(process.env.PORT) || 8000;
+var appFolder    = (process.env.APP || path.dirname(__dirname)) + '/dist';
+var filesFolder  = path.dirname(__dirname) + '/files';
+var HOST         = process.env.HTTP_HOST || "http://localhost:" + PORT;
+var LOCAL        = process.env.LOCAL || false; //Local serving
 
-log.info({port:PORT, appFolder:appFolder, 'process.env.APP': process.env.APP, FACEBOOK_APP_ID:FACEBOOK_APP_ID, FACEBOOK_APP_SECRET:FACEBOOK_APP_SECRET});
-
-function rpc(method, params, callback) {
-	var requestObj = {"method":method, "params":params || {}, "id":"0", "jsonrpc":"2.0"};
-	var headers = {};
-	headers["Content-Type"] = "text/plain";
-	var options = {
-		host: RPC_HOST,
-		path: '/rpc',
-		port: RPC_PORT,
-		method: 'POST',
-		headers: headers,
-		//Normally node.js needs the cert, which is dumb
-		rejectUnauthorized: false,
-		requestCert: true,
-		agent: false,
-	};
-	console.log(options);
-	var local_callback = function(response) {
-		var str = '';
-		//another chunk of data has been recieved, so append it to `str`
-		response.on('data', function(chunk) {
-			str += chunk;
-		});
-		//the whole response has been recieved, so we just print it out here
-		response.on('end', function () {
-			try {
-				var responseData = JSON.parse(str);
-				callback(responseData);
-			} catch(err) {
-				var errorResponse = JSON.parse(JSON.stringify(requestObj));
-				errorResponse.error = {message: 'Failed to parse response: ' + str, data:err, code:-32603};
-				callback(errorResponse);
-			}
-		});
-	}
-	var req;
-	if (RPC_PORT == 443) {
-		req = https.request(options, local_callback);
-	} else {
-		req = http.request(options, local_callback);
-	}
-	req.on('error', function (err) {
-		log.error(err);
-		var errorResponse = JSON.parse(JSON.stringify(requestObj));
-		errorResponse.error = {message: 'Error in request', data:err, code:-32603};
-		callback(errorResponse);
-	});
-	req.write(JSON.stringify(requestObj));
-	req.end();
-}
+log.info({
+  LOCAL            : LOCAL,
+  port             : PORT,
+  appFolder        : appFolder,
+  'process.env.APP': process.env.APP
+});
 
 /* Create the app */
 var app = express();
 
-// app.use(require('express-bunyan-logger')());
 app.use(require('express-bunyan-logger').errorLogger());
 
-/* Passport */
-
-// Passport session setup.
-//   To support persistent login sessions, Passport needs to be able to
-//   serialize users into and deserialize users out of the session.  Typically,
-//   this will be as simple as storing the user ID when serializing, and finding
-//   the user by ID when deserializing.  However, since this example does not
-//   have a database of user records, the complete Facebook profile is serialized
-//   and deserialized.
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
-
-// Use the FacebookStrategy within Passport.
-//   Strategies in Passport require a `verify` function, which accept
-//   credentials (in this case, an accessToken, refreshToken, and Facebook
-//   profile), and invoke a callback with a user object.
-passport.use(new FacebookStrategy({
-		clientID: FACEBOOK_APP_ID,
-		clientSecret: FACEBOOK_APP_SECRET,
-		callbackURL: HOST + "/auth/facebook/callback",
-		profileFields: ['id', 'displayName', 'emails']
-	},
-	function(accessToken, refreshToken, profile, done) {
-		// asynchronous verification, for effect...
-		console.log({
-			accessToken:accessToken,
-			refreshToken:refreshToken,
-			profile:profile,
-			done:done
-		});
-		profile._json['accessToken'] = accessToken;
-		log.info({'profile_json': profile._json});
-		rpc('authenticate', {type:"facebook", data:profile._json}, function(jsonrpc) {
-			log.info({'Result from rpc authenticate': jsonrpc});
-			return done(null, jsonrpc.result);
-		});
-	}
-));
-
-if (LOCAL) {
-	app.use(express.static(path.dirname(__dirname) + '/.tmp'));
-	app.use('/bower_components', express.static(path.dirname(__dirname) + '/bower_components'));
-	app.use(express.static(path.dirname(__dirname) + '/app'));
+if (LOCAL !== false) {
+  app.use(express.static(path.dirname(__dirname) + '/.tmp'));
+  app.use('/bower_components', express.static(path.dirname(__dirname) + '/bower_components'));
+  app.use(express.static(path.dirname(__dirname) + '/app'));
 } else {
-	//Serve static content
-	app.use(express.static(appFolder));
+  //Serve static content
+  app.use(express.static(appFolder));
 }
 
-// configure Express
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-app.use(cookieParser());
-app.use(bodyParser());
-// Initialize Passport!  Also use passport.session() middleware, to support
-app.use(passport.initialize());
-
-app.get('/', function(req, res){
-	res.render('index', { user: req.user });
-	res.sendfile(appFolder + '/index.html');
+var jsonParser = bodyParser.json({
+  limit: (1024 * 1024 * 5)
 });
 
-app.get('/login', function(req, res){
-	res.render('login');
+function makeFilePath (file) {
+  return filesFolder + '/' + file;
+}
+
+app.get('/', function(req, res) {
+  res.render('index');
+  res.sendfile(appFolder + '/index.html');
 });
 
-// GET /auth/facebook
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  The first step in Facebook authentication will involve
-//   redirecting the user to facebook.com.  After authorization, Facebook will
-//   redirect the user back to this application at /auth/facebook/callback
-app.get('/auth/facebook',
-	passport.authenticate('facebook', { scope: ['email'] }),
-	function(req, res) {
-		// The request will be redirected to Facebook for authentication, so this
-		// function will not be called.
-	});
+//get all the projects (may be slow)
+app.get('/files', function(req, res) {
+  var toPluck = req.query.pluck;
 
-// GET /auth/facebook/callback
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function function will be called,
-//   which, in this example, will redirect the user to the home page.
-app.get('/auth/facebook/callback',
-	passport.authenticate('facebook', { failureRedirect: '/' }),
-	function(req, res) {
-		log.info({"AUTHENTICATED, req.user":req.user});
-		res.cookie('bionano-platform-token', req.user.token);
-	res.redirect('/');
-	});
+  fs.readdir(filesFolder, function(err, files) {
+    if (err) {
+      log.error(err);
+    }
 
-app.get('/logout', function(req, res){
-	req.logout();
-	res.clearCookie('bionano-platform-token');
-	res.redirect('/');
+    Promise.all(files.map(function(file) {
+      return new Promise(function(resolve, reject) {
+        var filePath = makeFilePath(file);
+        fs.readFile(filePath, 'utf8', function(err, data) {
+          if (err) {
+            log.error(err);
+            reject(err);
+          }
+          try {
+            var parsed = JSON.parse(data);
+            resolve(parsed);
+          } catch (e) {
+            reject(new Error('invalid JSON for ' + file))
+          }
+        });
+      });
+    })).then(function(files) {
+      if (toPluck) {
+        return files.map(function(file) {
+          return _.result(file, toPluck);
+        });
+      } else {
+        return files;
+      }
+    }).then(function(files) {
+      res.json(files);
+    }).catch(function(err) {
+      log.error(err);
+    })
+  });
 });
 
-app.get('/checks', function(req, res){
-	res.send('OK');
+//get a project
+app.get('/file/:id', function(req, res) {
+  var id = req.params.id;
+
+  fs.readFile(makeFilePath(id + '.json'), 'utf8', function (err, data) {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.send(data);
+    }
+  });
 });
 
-var server = app.listen(PORT, '0.0.0.0', function () {
-	var host = server.address().address;
-	log.info('Listening at http://localhost:%s', PORT);
+//save a project
+app.post('/file/:id', jsonParser, function(req, res) {
+  var id      = req.params.id;
+  var payload = req.body;
+
+  var stringified;
+  try {
+    stringified = JSON.stringify(payload, null, 2);gi
+  } catch (e) {
+    res.status(402).send('invalid json');
+    return;
+  }
+
+  fs.writeFile(makeFilePath(id + '.json'), stringified, function(err, data) {
+    if (err) {
+      res.status(402).send(err);
+    } else {
+      res.json(payload);
+    }
+  });
 });
 
-process.on( 'SIGINT', function() {
-	log.warn( "\nGracefully shutting down from SIGINT (Ctrl-C)");
-	// some other closing procedures go here
-	server.close();
-	process.exit(0);
-})
+//delete a project
+app.delete('/file/:id', function(req, res) {
+  var id = req.params.id;
+  fs.unlink(makeFilePath(id + '.json'), function(err) {
+    if (err) {
+      res.status(500).send('error deleting');
+    } else {
+      res.status(200).send();
+    }
+  })
+});
+
+
+var server = app.listen(PORT, '0.0.0.0', function() {
+  var host = server.address().address;
+  log.info('Listening at http://localhost:%s', PORT);
+});
+
+process.on('SIGINT', function() {
+  log.warn("\nGracefully shutting down from SIGINT (Ctrl-C)");
+  // some other closing procedures go here
+  server.close();
+  process.exit(0);
+});
+
+

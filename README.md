@@ -4,8 +4,8 @@ To get it running you'll need to install (might need to sudo):
 
 - node + npm: http://nodejs.org/
 - grunt + bower: `npm install -g grunt-cli bower`
-- in this directory: `npm install && bower install`
-- run the server: `grunt serve`
+- install packages (run in this directory): `npm install && bower install`
+- build + run the server: `npm run start`
 
 ### Release Notes
 

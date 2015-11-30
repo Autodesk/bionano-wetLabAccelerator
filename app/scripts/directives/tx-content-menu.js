@@ -15,22 +15,6 @@ angular.module('wetLabAccelerator')
       controller  : function postLink ($scope, $element, $attrs) {
         var self = this;
 
-        var initialProjects = [
-          "28f2366c-a0b9-4c74-a1b3-0d1cdcd3f03b",
-          "1fccac8a-0b5f-4c7c-812f-4c5ea24f6012",
-          "99f4b302-1c2b-4b13-bf76-ee74e84b4db8"
-        ];
-
-        $q.all(_.map(initialProjects, function (id) {
-          return getLocalProject(id, true)
-        }))
-          .then(function (projects) {
-            self.demoProjects = _.map(projects, function (proj) {
-              return {metadata: proj, demo: true};
-            });
-            setProjects(_.union(self.demoProjects, self.projects));
-          });
-
         self.toggleMenuVisible = function toggleGalleryVisible (forceVal) {
           $scope.$applyAsync(function () {
             self.isVisible = _.isBoolean(forceVal) ? forceVal : !self.isVisible;
@@ -44,19 +28,14 @@ angular.module('wetLabAccelerator')
           });
         });
 
-        Authentication.watch(function (creds) {
-          self.loadingContent = true;
-          if (creds) {
-            Database.getAllProjectMetadata()
-              .then(function (metadatas) {
-                $scope.$applyAsync(_.partial(setProjects, _.union(self.demoProjects, metadatas)));
-              })
-              .catch(function (err) {
-                console.warn(err);
-              });
-          } else {
-            setProjects(self.demoProjects)
-          }
+        Authentication.watch(function () {
+          Database.getAllProjects()
+            .then(function (projects) {
+              $scope.$applyAsync(_.partial(setProjects, projects));
+            })
+            .catch(function (err) {
+              console.warn(err);
+            });
         });
 
         function setProjects (projects) {
@@ -123,13 +102,6 @@ angular.module('wetLabAccelerator')
             event.preventDefault();
             self.toggleMenuVisible(false);
           }
-        }
-
-        function getLocalProject (id, getMetadata) {
-          return $http.get('initialProjects/' + id + ((getMetadata === true) ? '-metadata' : '') + '.json')
-            .then(function (data) {
-              return data.data;
-            });
         }
       },
       link        : function postLink (scope, element, attrs) {

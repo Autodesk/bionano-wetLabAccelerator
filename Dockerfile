@@ -36,8 +36,6 @@ RUN cd app ; grunt build
 
 COPY server /app/server
 
-COPY CHECKS /app/CHECKS
-
 WORKDIR /app
 ENV PORT 8000
 EXPOSE 8000
