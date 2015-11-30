@@ -32,12 +32,10 @@ COPY test /app/test
 COPY .travis.yml /app/.travis.yml
 COPY Gruntfile.js /app/Gruntfile.js
 
-RUN cd app ; grunt build
-
 COPY server /app/server
 
 WORKDIR /app
 ENV PORT 8000
 EXPOSE 8000
 
-CMD ["node", "server/server.js"]
+CMD npm run start
