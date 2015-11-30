@@ -3,7 +3,7 @@ dist
 .tmp
 .sass-cache
 bower_components/
-.idea/
+.idea
 .DS_Store
 .vagrant
 QA/integration/nosetests.xml

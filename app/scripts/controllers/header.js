@@ -8,7 +8,7 @@
  * Controller of the wetLabAccelerator
  */
 angular.module('wetLabAccelerator')
-  .controller('HeaderCtrl', function ($scope, $window, $location, Authentication) {
+  .controller('HeaderCtrl', function ($scope, $rootScope, $window, $location, Authentication) {
 
     var self = this;
 
@@ -24,6 +24,10 @@ angular.module('wetLabAccelerator')
     self.unauthenticate = function () {
       Authentication.unauthenticate().then(function () {
         $window.location.href = '/logout';
-      })
+      });
+    };
+
+    self.triggerCredentialsModal = function () {
+      $rootScope.$broadcast('editor:toggleRunModal', true);
     }
   });
