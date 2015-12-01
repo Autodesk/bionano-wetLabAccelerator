@@ -6,6 +6,8 @@ bower_components/
 .idea
 .DS_Store
 .vagrant
+presentation/
+samples/
 QA/integration/nosetests.xml
 app/scripts/omniprotocol.js
 app/scripts/omniprotocol/index.js
