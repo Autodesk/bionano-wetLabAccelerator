@@ -33,6 +33,7 @@ COPY .travis.yml /app/.travis.yml
 COPY Gruntfile.js /app/Gruntfile.js
 
 COPY server /app/server
+COPY CHECKS /app/CHECKS
 
 WORKDIR /app
 ENV PORT 8000
