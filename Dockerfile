@@ -25,8 +25,7 @@ COPY bower.json /app/bower.json
 RUN cd /app ; bower install --allow-root
 
 COPY app /app/app
-COPY deprecated /app/deprecated
-COPY etc /app/etc
+COPY files /app/files
 COPY QA /app/QA
 COPY test /app/test
 COPY .travis.yml /app/.travis.yml
