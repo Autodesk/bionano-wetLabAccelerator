@@ -60,4 +60,4 @@ Before you submit your pull request consider the following guidelines:
 
 ### Tests
 
-We are the worst, and have only included minimal tests, in the folder `/QA/`. We would hugely appreciate the contribution of tests. Please make sure that your contributions maintain the fidelity of that test suite.
+We have only included minimal tests, in the folder `/QA/`. We would hugely appreciate the contribution of tests. Please make sure that your contributions maintain the fidelity of that test suite.

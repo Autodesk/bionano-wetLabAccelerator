@@ -1,5 +1,11 @@
 ## Wet Lab Accelerator
 
+Wet Lab Accelerator is a tool for researchers working in synthetic biology and virology, allowing users to design robotic wet lab protocols using a visual UI — no coding or scripting required. Users can create a protocol from scratch, or use a template experiment provided. Set up each step of a protocol using graphical visualizations of wet lab containers, and interact with results through dynamic visualizations. Often-used settings can be parameterized to ease running of variations on the same protocol.
+
+When you are ready to run your protocol, Wet Lab Accelerator generates the vendor-specific code and verifies it. Any issues are clearly highlighted so you can quickly find and correct them. Wet Lab Accelerator is seamlessly integrated with Transcriptic, our first automation partner.
+
+### Installation
+
 To get it running you'll need to install (might need to sudo):
 
 - node + npm: http://nodejs.org/
@@ -9,11 +15,23 @@ To get it running you'll need to install (might need to sudo):
 
 ### Release Notes
 
-This version of Wet Lab Accelerator is for open-source release, running on a standalone server, using locally written files for persistence. The server and application will run independently through Docker, but an internet connection is required to verify and send protocols to Transcriptic.
+This version of Wet Lab Accelerator runs on a standalone server, using locally written files for persistence. The server and application will run independently through Docker, but an internet connection is required to verify and send protocols to Transcriptic. The application is currently freely available at `https://wla.bionano.autodesk.com`, but is not guaranteed to always be available at that domain.
 
-You are free to view the source code and run the application, subject to the License, Autodesk Pre-Release Product Testing Agreement, and other relevant literature. The application is also currently freely available at `https://wla.bionano.autodesk.com`, but is not guaranteed to always be available at that domain.
+#### Code Base
 
-The structure of files largely follows that which is prescribed by scaffolding framework Yeoman, and the Angular generator for that command line application. That said, because of application deadlines, the short lifetime of this application and limited maintenance following its inital demo, there are parts of the application in notably better health than others. For more information about the structure of the application, particularly if you wish to contribute to the codebase, please contact the Authors.
+Wet Lab Accelerator is primarily a front-end web application, written in javascript primarily using web application framework [AngularJS](https://angularjs.org/), with graphical components written using [D3.js](http://d3js.org/).
+
+Stylesheets are written in [SCSS](http://sass-lang.com/).
+
+The server is written in Javascript using [Node](https://nodejs.org/en/) and [Express](http://expressjs.com/en/index.html), and is very simple, largely responsible for just serving static files, and persisting user data as files.
+
+Packages are installed using managers [bower](http://bower.io/) and [npm](https://www.npmjs.com/).
+
+#### Structure
+
+The structure of files largely follows that which is prescribed by scaffolding framework Yeoman, and the [Angular generator](https://github.com/yeoman/generator-angular#readme) for that command line application. 
+
+There are parts of the application in notably better health than others. For more information about the structure of the application, particularly if you wish to contribute to the codebase, please contact the Authors.
 
 ### License
 
@@ -31,3 +49,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+#### Usage agreement
+     
+You are free to view the source code and run the application, subject to the License, Autodesk Pre-Release Product Testing Agreement, and other relevant literature.

@@ -1,4 +1,3 @@
-var path       = require('path');
 /**
  * Copyright 2015 Autodesk Inc.
  *
@@ -15,6 +14,7 @@ var path       = require('path');
  * limitations under the License.
  */
 
+var path       = require('path');
 var fs         = require('fs');
 var https      = require('https');
 var http       = require('http');
