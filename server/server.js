@@ -126,15 +126,15 @@ app.post('/file/:id', jsonParser, function(req, res) {
 
   var stringified;
   try {
-    stringified = JSON.stringify(payload, null, 2);gi
+    stringified = JSON.stringify(payload, null, 2);
   } catch (e) {
-    res.status(402).send('invalid json');
+    res.status(500).send('invalid json');
     return;
   }
 
   fs.writeFile(makeFilePath(id + '.json'), stringified, function(err, data) {
     if (err) {
-      res.status(402).send(err);
+      res.status(500).send(err);
     } else {
       res.json(payload);
     }

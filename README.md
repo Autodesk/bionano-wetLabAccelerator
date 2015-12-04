@@ -23,7 +23,7 @@ Wet Lab Accelerator is primarily a front-end web application, written in javascr
 
 Stylesheets are written in [SCSS](http://sass-lang.com/).
 
-The server is written in Javascript using [Node](https://nodejs.org/en/) and [Express](http://expressjs.com/en/index.html), and is very simple, largely responsible for just serving static files, and persisting user data as files.
+The server is written in Javascript using [Node](https://nodejs.org/en/) and [Express](http://expressjs.com/en/index.html), and is very simple, largely responsible for just serving static files, and persisting user data as files. Note that list of files is flat, and will be shared across all users of an instance, but could be trivially extended to support multiple users through a basic authentication mechanism.
 
 Packages are installed using managers [bower](http://bower.io/) and [npm](https://www.npmjs.com/).
 

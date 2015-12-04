@@ -382,7 +382,7 @@ module.exports = function (grunt) {
             '.htaccess',
             '*.html',
             'views/**/*.html',
-            'images/**/*.{webp}',
+            'images/**/*.{webp,pdf}',
             'fonts/**/*.*',
             'initialProjects/**/*',
             'scripts/omniprotocol.js' //copy browserified scripts
