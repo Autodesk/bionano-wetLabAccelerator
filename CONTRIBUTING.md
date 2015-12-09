@@ -10,6 +10,10 @@ Florencio Mazzoldi - Business Owner
 
 ## Submission Guidelines
 
+### Timing
+
+We will attempt to address all issues and pull requests within one week. It may a bit longer before pull requests are actually merged, as they must be inspected and tested. 
+
 ### Issues
 
 If your issue appears to be a bug, and hasn't been reported, open a new issue.

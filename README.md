@@ -33,6 +33,10 @@ The structure of files largely follows that which is prescribed by scaffolding f
 
 There are parts of the application in notably better health than others. For more information about the structure of the application, particularly if you wish to contribute to the codebase, please contact the Authors.
 
+### Contact
+
+To contact the authors, please email: maxwell.bates@autodesk.com
+
 ### License
 
 Copyright 2015 Autodesk Inc.
