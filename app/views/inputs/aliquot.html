@@ -1,0 +1,38 @@
+<div ng-controller="AliquotCtrl as aliquotCtrl">
+  <tx-container-select container-type="aliquotCtrl.containerType"
+                       style="display: inline-block"
+                       ng-model="aliquotCtrl.containerObj">
+  </tx-container-select>
+
+  <div ng-show="aliquotCtrl.containerObj.container && !aliquotCtrl.containerType"
+       class="text-danger"
+       style="display: inline-block;">(missing container type)</div>
+
+  <div ng-show="aliquotCtrl.containerType"
+       style="display: inline-block; position: relative;">
+    <div ng-click="aliquotCtrl.showingPlates = !aliquotCtrl.showingPlates"
+         ng-init="aliquotCtrl.showingPlates=false;">
+      <a class="field-details-button"
+         ng-class="{'invalid' : !aliquotCtrl.wellsIn.length}">
+        {{aliquotCtrl.showingPlates ? 'hide' : 'edit...'}}
+      </a>
+
+      <div popover-transclude
+           is-open="aliquotCtrl.showingPlates"
+           title="{{aliquotCtrl.aliquotMultiple ? 'Select one or more wells' : 'Select one well'}}"
+           ng-if="aliquotCtrl.showingPlates">
+        <tx-plate ng-show="aliquotCtrl.containerType"
+                  style="width: 600px;"
+                  container="aliquotCtrl.containerType"
+                  group-data="{'name' : aliquotCtrl.containerNameFromObj(aliquotCtrl.containerObj), wells: 'all', color: aliquotCtrl.containerColorFromObj(aliquotCtrl.containerObj)}"
+                  no-brush="!aliquotCtrl.aliquotMultiple"
+                  select-persist="aliquotCtrl.aliquotMultiple"
+                  on-select="aliquotCtrl.handleAliquotSelection($wells, $transpose)"
+                  show-transpose="true"
+                  transpose-input="aliquotCtrl.field.transpose"
+                  wells-input="aliquotCtrl.wellsIn">
+        </tx-plate>
+      </div>
+    </div>
+  </div>
+</div>

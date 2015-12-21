@@ -1,0 +1,29 @@
+<div class="plate-wrap-image_plate">
+  <tx-plate container="summaryCtrl.getContainerTypeFromFieldName('object')"
+            no-brush="true"
+            no-select="true"
+            group-data="{name : '', wells : 'all', color: summaryCtrl.getContainerColorFromFieldName('object')}">
+  </tx-plate>
+</div>
+
+<div ng-init="resources = summaryCtrl.getResourcesForOp()">
+  <div ng-repeat="resource in resources"
+       class="summary-resource">
+
+    <div class="pull-right resource-download">
+      <a download="{{resource.dataref}}"
+         ng-href="{{summaryCtrl.getResourceUrl(resource)}}"
+         class="field-action-text">
+        download
+      </a>
+    </div>
+
+    <img ng-init="!resource.resourceUrl && summaryCtrl.getResource(resource)"
+         ng-src="{{resource.resourceUrl}}"
+         class="resource-image">
+
+    <p ng-show="resource.status && !resource.resourceUrl"
+       ng-bind="resource.status"></p>
+    <p ng-hide="resource.status || resource.resourceUrl">loading...</p>
+  </div>
+</div>

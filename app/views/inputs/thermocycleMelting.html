@@ -1,0 +1,59 @@
+<a class="field-details-button"
+   ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible">
+  details...
+</a>
+
+<tx-modal ng-show="fieldCtrl.detailsVisible"
+          title="Thermocycle Melting">
+  <div class="column-wrap div-centered column-16">
+
+    <div class="column-6">
+      <table class="simple-twocol-table">
+        <tr>
+          <td class="operation-label">start</td>
+          <td>
+            <tx-protocol-field ng-model="fieldCtrl.model.start"
+                               hide-title="true"
+                               field="{type: 'temperature'}">
+            </tx-protocol-field>
+          </td>
+        </tr>
+        <tr>
+          <td class="operation-label">end</td>
+          <td>
+            <tx-protocol-field ng-model="fieldCtrl.model.end"
+                               hide-title="true"
+                               field="{type: 'temperature'}">
+            </tx-protocol-field>
+          </td>
+        </tr>
+        <tr>
+          <td class="operation-label">increment</td>
+          <td>
+            <tx-protocol-field ng-model="fieldCtrl.model.increment"
+                               hide-title="true"
+                               field="{type: 'temperature'}">
+            </tx-protocol-field>
+          </td>
+        </tr>
+        <tr>
+          <td class="operation-label">rate</td>
+          <td>
+            <tx-protocol-field ng-model="fieldCtrl.model.rate"
+                               hide-title="true"
+                               field="{type: 'duration'}">
+            </tx-protocol-field>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="column-10">
+      <tx-thermocycle-melting melting="fieldCtrl.model"></tx-thermocycle-melting>
+    </div>
+
+  </div>
+
+
+
+</tx-modal>

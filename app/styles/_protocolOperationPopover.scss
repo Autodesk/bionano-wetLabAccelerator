@@ -1,0 +1,107 @@
+/*
+Copyright 2015 Autodesk Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+.oppop,
+tx-operation-popover {
+
+  $oppop-fromTop: 15px;
+
+  $oppop-arrow-width: 15px;
+  $oppop-arrow-top: $oppop-arrow-width + $oppop-fromTop;
+
+  $oppop-padding: $layout-spacing-md;
+
+  /*
+  * > & {
+    display: none;
+  }
+
+  *:hover > & {
+    display: block;
+  }
+  */
+
+  //put padding on popover element, and weird arrow placement, so can maintain pointer events and move mouse into popover
+
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  padding-left: $oppop-arrow-width;
+  transform: translateY(-50%);
+  font-size: $font-size-sm;
+  font-weight: $font-weight-light;
+  width: $layout-opSummary-width + ($layout-width-columnspace - $oppop-arrow-width);
+
+  &:after {
+    pointer-events: none;
+    left: -$oppop-arrow-width;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border-color: transparent;
+    border-right-color: $white;
+    border-width: $oppop-arrow-width;
+    margin-top: -$oppop-arrow-width;
+  }
+
+  /*
+  &.ng-enter,
+  &.ng-leave {
+    transition: opacity $transition-out-time $transition-out-ease;
+  }
+
+  &.ng-leave.ng-leave-active,
+  &.ng-enter {
+    opacity: 0;
+  }
+
+  &.ng-enter.ng-enter-active,
+  &.ng-leave {
+    opacity: 1;
+  }
+  */
+
+  .oppop-wrap {
+    background-color: $white;
+    box-shadow: $box-shadow-popover;
+    padding: $oppop-padding;
+
+    tx-operation-summary {
+      padding: $oppop-padding 0 0;
+      border-top: 1px solid $light-grey;
+      margin: $oppop-padding 0 0;
+    }
+
+    tx-operation-summary,
+    .op-description {
+      &:empty {
+        display: none;
+        border: 0;
+      }
+    }
+
+    p,
+    .op-description {
+      margin-bottom: 0;
+    }
+
+    tx-plate {
+      width: 100%;
+    }
+  }
+}

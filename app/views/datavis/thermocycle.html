@@ -1,0 +1,21 @@
+<div ng-controller="resultsThermoCtrl as thermoCtrl"
+     ng-init="thermoCtrl.onInit();
+              containerType = summaryCtrl.getContainerTypeFromFieldName('object');
+              initialContainerColor = summaryCtrl.getContainerColorFromFieldName('object');
+              initialDyesData = summaryCtrl.getFieldValueByName('dyes');
+              initialGroupData = initialDyesData || {name : '', wells: 'all', color: initialContainerColor}">
+
+  <p ng-if="thermoCtrl.graphData" class="thin">
+    qPCR visualization forthcoming...
+    <a ng-href="{{summaryCtrl.getDatarefUrlPath()}}">visit transcriptic for now</a>
+  </p>
+
+  <tx-plate container="containerType"
+            no-select="!thermoCtrl.graphData"
+            plate-data="thermoCtrl.graphData"
+            group-data="initialGroupData"
+            on-hover="thermoCtrl.hoverPlateWells($wells)"
+            focus-wells="thermoCtrl.focusedWells"
+            on-select="thermoCtrl.selectPlateWells($wells)"></tx-plate>
+
+</div>

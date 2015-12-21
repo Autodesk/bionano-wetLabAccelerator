@@ -1,0 +1,115 @@
+<span class="color-swatch"
+      ng-style="{'background-color' : contCtrl.model.color}"></span>
+<span ng-bind="contCtrl.model.type"></span>
+<a class="field-details-button"
+   ng-click="contCtrl.toggleModal();">
+  edit...
+</a>
+<tx-modal ng-if="contCtrl.modalShow"
+          title="Container"
+          ng-show="contCtrl.modalShow">
+  <div class="column-16 div-centered column-wrap">
+    <div class="column-6">
+      <table class="simple-twocol-table">
+        <tr>
+          <td class="operation-label">use</td>
+          <td>
+            <div dropdown>
+              <a ng-bind="contCtrl.model.name || contCtrl.model.id || 'new container'"
+                 dropdown-toggle></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a ng-click="contCtrl.selectNewContainer()">New Container</a>
+                </li>
+                <li class="divider"></li>
+                <li ng-repeat="c in contCtrl.remoteContainers">
+                  <a ng-click="contCtrl.selectRemoteContainer(c)"
+                     ng-bind="c.name || c.id"></a>
+                </li>
+                <li tx-class-auth="ng-hide"
+                    class="disabled">
+                  <a>Log into Transcriptic for remote containers</a>
+                </li>
+                <li ng-if="!contCtrl.remoteContainers.length"
+                    tx-class-auth="ng-hide"
+                    tx-unauth
+                    class="disabled">
+                  <a>Loading containers...</a>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="operation-label">type</td>
+          <td>
+            <div dropdown>
+              <a ng-bind="contCtrl.model.type || 'select...'"
+                 dropdown-toggle
+                 ng-disabled="!contCtrl.model.isNew"></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="(cont, details) in contCtrl.containerOptions">
+                  <a ng-click="contCtrl.model.type = cont; notifyContainerChange();"
+                     ng-bind="details.name"></a>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="operation-label">storage</td>
+          <td>
+            <div dropdown>
+              <a ng-bind="((contCtrl.model.storage === false) ? 'discard' : contCtrl.model.storage) || 'select...'"
+                 dropdown-toggle></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a ng-click="contCtrl.model.storage = false">discard</a>
+                </li>
+                <li class="divider"></li>
+                <li ng-repeat="opt in contCtrl.storageOptions">
+                  <a ng-click="contCtrl.model.storage = opt"
+                     ng-bind="opt"></a>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="operation-label">parameter name</td>
+          <td>
+            <input class="input-unstyled"
+                   placeholder="container name"
+                   ng-model="contCtrl.name">
+          </td>
+        </tr>
+        <tr>
+          <td class="operation-label">color</td>
+          <td>
+            <div dropdown>
+              <a ng-bind="contCtrl.model.color || 'edit...'"
+                 ng-style="{color: contCtrl.model.color}"
+                 dropdown-toggle></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="(name, hex) in contCtrl.containerColorOptions">
+                  <a ng-click="contCtrl.model.color = hex"
+                     ng-style="{'color' : hex}"
+                     ng-bind="name"></a>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="column-10">
+      <tx-plate container="contCtrl.model.type || '384-flat'"
+                no-select="true"
+                hide-tooltip="true"
+                group-data="{name: contCtrl.name, color: contCtrl.model.color, wells : 'all'}"></tx-plate>
+    </div>
+
+  </div>
+
+</tx-modal>

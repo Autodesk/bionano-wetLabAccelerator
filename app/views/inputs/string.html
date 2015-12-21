@@ -1,0 +1,23 @@
+<div style="display: inline-block; position: relative;"
+     squelch-event="click">
+  <input type="text"
+         auto-grow="30"
+         style="max-width: 180px; border-radius: 0; text-overflow: ellipsis;"
+         class="input-styled"
+         ng-model="fieldCtrl.model"
+         ng-focus="fieldCtrl.showTextarea = true"
+         placeholder="{{fieldCtrl.field.default ? fieldCtrl.field.default :'edit...'}}">
+
+  <div popover-transclude
+       squelch-event="click"
+       preferred-placement="bottom"
+       is-open="fieldCtrl.showTextarea"
+       ng-if="fieldCtrl.model.length > 20"
+       title="{{fieldCtrl.field.readable || fieldCtrl.field.name}}">
+    <div contenteditable
+         class="input-unstyled popover-textarea"
+         style="max-width: 300px; max-height: 300px; overflow: scroll;"
+         ng-model="fieldCtrl.model"></div>
+  </div>
+
+</div>

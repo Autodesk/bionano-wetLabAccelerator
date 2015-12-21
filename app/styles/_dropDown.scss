@@ -1,0 +1,98 @@
+/*
+Copyright 2015 Autodesk Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+//todo - move to variables
+
+// The dropdown menu
+[dropdown],
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  z-index: $z-dropdown;
+  display: none;
+  top: 100%;
+  float: left;
+  min-width: 50px;
+  padding: 3px 0;
+  margin:0;
+  list-style: none;
+  font-size: $font-size-sm;
+  text-align: left;
+  background-color: $white;
+  border: none;
+  border-radius: 1px;
+  box-shadow: $box-shadow-dropdown;
+
+  .open > & {
+    display: block;
+    outline: 0;
+  }
+
+  .divider {
+    background: lighten($light-grey, 10);
+    margin: 0.75em 0;
+  }
+
+  > li > a {
+    display: block;
+    padding: 0.25em 2em;
+    clear: both;
+    font-weight: $font-weight-medium;
+    line-height: $line-height-base;
+    color: $black;
+    white-space: nowrap;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      background-color: $white;
+      color: $primary;
+    }
+  }
+
+  > .active > a {
+    &,
+    &:hover,
+    &:focus {
+      color: $primary;
+      background-color: $white;
+      text-decoration: none;
+      outline: 0;
+    }
+  }
+
+  > .disabled > a {
+    cursor: default;
+  }
+
+  &-right {
+    left: auto;
+    right: 0;
+  }
+
+  &-left {
+    left: 0;
+    right: auto;
+  }
+
+  &-center {
+    right: 50%;
+    left: auto;
+    transform: translateX(50%);
+  }
+}

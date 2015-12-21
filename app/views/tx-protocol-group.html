@@ -1,0 +1,89 @@
+<div class="protocol-item-space-top"
+     tx-protocol-droppable="groupCtrl.optsDroppableGroupTop">
+</div>
+<div class="protocol-group-wrap"
+     tx-protocol-droppable="groupCtrl.optsDroppableGroup">
+  <div class="protocol-group-inner"
+       ng-class="{'is-looping' : groupCtrl.group.loop > 1,
+                  'multichild' : groupCtrl.group.steps.length > 1 }"
+       tx-protocol-draggable="groupCtrl.optsDraggableGroup">
+    <div class="group-repeat">
+      <span class="iteration-none"></span>
+
+      <div class="group-repeat-input-wrap">
+        <input class="input-unstyled group-repeat-input"
+               min="1" max="100"
+               type="number"
+               auto-grow="25"
+               ng-model-options="{updateOn: 'blur'}"
+               ng-model="groupCtrl.group.loop">
+      </div>
+    </div>
+    <div class="protocol-group-header"
+         tx-protocol-droppable="groupCtrl.optsDroppableGroupHeader">
+      <input class="group-name input-unstyled"
+             type="text"
+             auto-grow
+             placeholder="Group Name"
+             ng-model="groupCtrl.group.name">
+
+      <div dropdown>
+        <span class="group-dropdown-toggle glyphicon glyphicon-cog"
+              squelch-event="click"
+              dropdown-toggle></span>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li>
+            <a squelch-event="click"
+               ng-click="groupCtrl.showingJSON = !groupCtrl.showingJSON">
+              <div popover-transclude
+                   is-open="groupCtrl.showingJSON"
+                   title="Edit Group Description"
+                   ng-if="groupCtrl.showingJSON">
+                <textarea ng-model="groupCtrl.group.metadata.description"
+                          class="input-unstyled"
+                          style="width: 300px; background: #f9f9f9"
+                          rows="8"></textarea>
+              </div>
+              Edit Description
+            </a>
+          </li>
+          <li>
+            <a ng-click="groupCtrl.verifyProtocol()">
+              Verify Protocol
+            </a>
+          </li>
+          <li>
+            <a ng-click="duplicateGroup()">
+              Duplicate
+            </a>
+          </li>
+          <li>
+            <a ng-click="deleteGroup()">
+              Delete
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="oppop"
+           ng-if="groupCtrl.group.metadata.description">
+        <div class="oppop-wrap">
+          <p class="op-description"
+             ng-bind="groupCtrl.group.metadata.description"></p>
+        </div>
+      </div>
+    </div>
+    <div class="protocol-group-main">
+      <tx-protocol-op ng-repeat="step in groupCtrl.group.steps"
+                      tx-protocol-draggable="groupCtrl.optsDraggableInstruction"
+                      tx-protocol-droppable="groupCtrl.optsDroppableInstruction"
+                      protocol-step="groupCtrl.group.steps[$index]"
+                      tx-inspector-select
+                      select-trigger="mouseenter"
+                      select-title="step.operation || 'Unnamed'"
+                      select-type="'step:'"
+                      select-description="step.metadata.description">
+      </tx-protocol-op>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<a class="header-link"
+   ng-disabled="actionCtrl.protocolForm.$error.json || (!actionCtrl.protocol.groups.length && !actionCtrl.protocol.parameters.length)"
+   ng-click="actionCtrl.protocol.groups.length && actionCtrl.saveProtocol()">
+  Save
+</a>
+<div class="header-link"
+     dropdown>
+  <a dropdown-toggle>Download</a>
+  <ul class="dropdown-menu">
+    <li>
+      <a tx-downloadjson
+         filename="{{(actionCtrl.protocol.metadata.name ? actionCtrl.protocol.metadata.name : 'protocol') + '_omniprotocol.json'}}"
+         download-model="actionCtrl.protocol">
+        Omniprotocol
+      </a>
+    </li>
+    <li>
+      <a tx-downloadjson
+         filename="{{(actionCtrl.protocol.metadata.name ? actionCtrl.protocol.metadata.name : 'protocol') + '_autoprotocol.json'}}"
+         download-model="actionCtrl.protocol"
+         download-formatter="actionCtrl.autoprotocolConvertFunction">
+        Autoprotocol
+      </a>
+    </li>
+  </ul>
+</div>
+<a class="header-link"
+   ng-click="toggleModal()">
+  Run
+</a>
+
+<tx-modal ng-show="modalShown" title="Run protocol">
+  <tx-run></tx-run>
+</tx-modal>

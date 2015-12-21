@@ -1,0 +1,9 @@
+{
+  "name": "omniprotocol",
+  "version": "0.1.0",
+  "description": "Local npm package so that autoprotocol package can reference without publishing package to NPM",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Autodesk Inc.",
+  "license": ""
+}

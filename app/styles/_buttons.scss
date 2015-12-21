@@ -1,0 +1,82 @@
+/*
+Copyright 2015 Autodesk Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+//buttons
+
+.action-text {
+  &,
+  &:visited {
+    color: $primary;
+  }
+
+  &:hover {
+    color: $primary-active;
+  }
+}
+
+//use with .btn
+.action-button {
+  border: 0;
+  border-radius: 1em;
+  padding: 0.35em 1.25em;
+  margin: 0.25em 0.25em;
+  color: $white;
+  font-size: $font-size-md;
+  font-weight: $font-weight-light;
+  background-color: $primary;
+  //transition: color $transition-short-time $transition-short-ease, background-color $transition-short-time $transition-short-ease;
+
+  &:focus,
+  &:active,
+  &:hover {
+    outline: none;
+    color: $white;
+    background-color: $primary-active;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    background-color: $primary-disabled;
+  }
+}
+
+.field-action-text,
+.field-details-button {
+  display: inline-block;
+  padding: 0;
+  border-radius: 1em;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  background-color: transparent;
+  //transition: color $transition-short-time $transition-short-ease, background-color $transition-short-time $transition-short-ease;
+
+  &:focus,
+  &:active,
+  &:hover {
+    background-color: $primary;
+    color: $white;
+    border-radius: 1em;
+    //need special values esp. for auto-grow directive because inputs are usually just large enough to show input
+    box-sizing: content-box;
+    padding: $input-hover-padding-vert $input-hover-padding-hori;
+    margin: (-$input-hover-padding-vert) (-$input-hover-padding-hori);
+  }
+
+  &.invalid {
+    color: $warning;
+  }
+}
+
+.field-details-button {}

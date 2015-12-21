@@ -1,0 +1,18 @@
+<div class='modal-overlay' ng-click="hideModal()"></div>
+<div class='modal-dialog'
+     ng-style='dialogStyle'>
+  <div class="modal-wrapper">
+
+     <span class='modal-close'
+           ng-click='hideModal()'>&times</span>
+
+    <div class="modal-heading">
+      <h4 class="modal-title thin"
+            ng-show="title"
+            ng-bind="title"></h4>
+    </div>
+
+    <modal-transclude class='modal-transclude'></modal-transclude>
+  </div>
+
+</div>

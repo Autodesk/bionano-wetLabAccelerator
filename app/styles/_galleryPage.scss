@@ -1,0 +1,106 @@
+/*
+Copyright 2015 Autodesk Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+.gallery-page {
+
+  $width-sidepanel: 250px;
+  $width-flyout: 300px;
+
+  .sidepanel {
+    width: $width-sidepanel;
+  }
+
+  .maincolumn {
+    overflow-x: visible;
+  }
+
+  .gallery-filters {
+
+  }
+
+  .filter-category {
+    .filter-type {
+
+    }
+
+    .filter-options {
+
+    }
+
+    .filter-option {
+
+    }
+  }
+
+  .gallery-items {
+
+    .gallery-item {
+
+      display: block;
+      background: $white;
+      position:relative;
+      box-shadow: 0 0 10px $grey;
+      padding: 1em;
+      margin-bottom: 1em;
+
+      &.active {
+        &:after {
+          left: 100%;
+          top: 50%;
+          border: solid transparent;
+          content: " ";
+          height: 0;
+          width: 0;
+          position: absolute;
+          pointer-events: none;
+          border-color: rgba(255, 255, 255, 0);
+          border-left-color: $white;
+          border-width: 15px;
+          margin-top: -15px;
+        }
+      }
+
+      .item-image {
+
+      }
+
+      .item-name {
+
+      }
+
+      .item-author {
+
+      }
+
+      .item-description {
+
+      }
+    }
+  }
+
+  .gallery-flyout-wrap {
+    width: $width-flyout;
+    position: relative;
+  }
+
+  .gallery-flyout {
+    width: 100%;
+    margin-left: 15px;
+    padding: 1em;
+    display: block;
+    background: $white;
+    box-shadow: 0 0 10px $grey;
+  }
+}

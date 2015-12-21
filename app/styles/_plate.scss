@@ -1,0 +1,168 @@
+/*
+Copyright 2015 Autodesk Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+tx-plate,
+tx-plate-columns {
+
+  $color-disabled: #aaaaaa;
+  $color-default: #dddddd;
+  $color-active: #d7ab34;
+  $color-add: $primary;
+  $color-remove: #dd263b;
+  $color-focused: #dd8888;
+  $color-hover: lighten($color-add, 15);
+
+  //defaults, can also define inline
+  display: block;
+  position: relative;
+  width: 600px;
+  max-width: 100%;
+  margin: 0 auto;
+  height: auto; //425, but handled dynamically by directive
+  line-height: 0; //weird hack to prevent bottom black border
+
+  svg {
+    display: inline-block;
+    overflow: visible;
+  }
+
+  //todo - deprecate
+  .plate {
+    background: $white;
+  }
+
+  &.plate-empty {
+    border: 1px solid lighten($light-grey, 5);
+
+    svg {
+      background: transparentize($light-grey, 0.75);
+    }
+  }
+
+  .axis {
+    path {
+      stroke: none;
+      fill: none;
+    }
+    line {
+      stroke: none;
+      fill: none;
+    }
+    text {
+      fill: #ccc;
+      font-size: $font-size-sm;
+    }
+  }
+
+  .well {
+    fill: transparent;
+    stroke-width: 0.5px;
+    stroke: transparentize($color-default, 1);
+    transition: stroke 0.15s ease-out, stroke-width 0.15s ease-out;
+
+    &:hover {
+      fill: $color-hover !important; //important to override inline-style use of color
+    }
+
+    //todo - brushing class
+
+    &.selected,
+    &.brushSelected {
+      stroke: $color-active;
+      stroke-width: 3px;
+    }
+
+    &.hidden {
+      fill: #ccc !important;
+    }
+
+    &.wellFocused {
+      fill: $color-focused !important;
+    }
+  }
+
+  &.brushing {
+    .well.brushActive {
+      stroke: $color-add;
+      stroke-width: 3px;
+    }
+
+    .well.brushActive.brushSelected {
+      stroke: $color-remove !important;
+    }
+  }
+
+  .extent {
+    fill: transparent;
+    //fill: #000;
+    //fill-opacity: .125;
+    //stroke: #fff;
+  }
+
+  .brush {}
+
+  &.no-select,
+  &.no-brush {
+    .brush {
+      pointer-events: none;
+      display: none;
+    }
+  }
+
+  .wellTooltip {
+    position: absolute;
+    display: inline-block;
+    background: $primary;
+    border: 2px solid $white;
+    border-radius: 1em;
+    box-shadow: 0 0 2px rgba(25, 25, 25, 0.25);
+    text-align: center;
+    font-size: 11px;
+    padding: 0.75em 10px;
+    color: white;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .plate-footer {
+    padding: 6px;
+    text-align: center;
+    font-size: $font-size-sm;
+    color: $grey;
+
+    span {
+      padding: 0 15px;
+      cursor: pointer;
+
+      &.disabled {
+        color: $light-grey;
+        cursor: default;
+      }
+    }
+  }
+
+  &.no-labels {
+    text,
+    .plate-footer {
+      display: none;
+    }
+  }
+
+  &.no-select {
+    .plate-footer {
+      display: none;
+    }
+  }
+}

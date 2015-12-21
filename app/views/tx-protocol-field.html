@@ -1,0 +1,53 @@
+<div class="field-label"
+     ng-if="!fieldCtrl.hideTitle"
+     ng-class="{optional: fieldCtrl.field.optional == true}"
+     ng-bind="(fieldCtrl.field.readable || fieldCtrl.field.name) | fieldReadable">
+</div>
+<div class="field-value"
+     ng-mouseleave="fieldCtrl.closeDropdown()"
+     ng-mouseenter="fieldCtrl.cancelDropdown()">
+
+  <div class="pull-right field-remover"
+       ng-if="fieldCtrl.field.isCustomField"
+       ng-click="opCtrl.removeField(fieldCtrl.field)">
+    <span class="glyphicon glyphicon-remove"></span>
+  </div>
+
+  <div class="pull-right field-parameter-toggler"
+       ng-if="!fieldCtrl.preventVariable && fieldCtrl.parameterAllowed(fieldCtrl.field.type)"
+       ng-click="fieldCtrl.paramListVisible = !fieldCtrl.paramListVisible"
+       ng-class="{'active' : fieldCtrl.isParameterized(),
+                   'open' : fieldCtrl.paramListVisible}">
+
+    <span class="glyphicon glyphicon-usd"></span>
+
+    <ul class="field-parameter-dropdown dropdown-menu">
+      <li ng-show="fieldCtrl.isParameterized()"
+          ng-click="fieldCtrl.clearParameter()">
+        <a>standard entry</a>
+      </li>
+      <li class="divider"
+          ng-show="fieldCtrl.isParameterized()"></li>
+      <li ng-repeat="p in fieldCtrl.parameters | filter:{type: fieldCtrl.field.type} as filteredParams"
+          ng-class="{active : p.name == fieldCtrl.field.parameter}"
+          ng-click="fieldCtrl.selectParameter(p, $event)">
+        <a ng-bind="p.name"></a>
+      </li>
+      <li class="divider"
+          ng-if="filteredParams.length && !fieldCtrl.isParameterized()"></li>
+      <li ng-if="!fieldCtrl.isParameterized()"
+          ng-click="fieldCtrl.createNewParameter()">
+        <a>create new parameter...</a>
+      </li>
+    </ul>
+  </div>
+
+  <div ng-show="fieldCtrl.isParameterized()"
+       class="field-value-inner field-parameter">
+    <span ng-bind="fieldCtrl.paramName()"></span>
+  </div>
+  <div ng-hide="fieldCtrl.isParameterized()"
+       class="field-value-inner">
+    <tx-protocol-field-inner></tx-protocol-field-inner>
+  </div>
+</div>

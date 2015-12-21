@@ -1,0 +1,136 @@
+<div class="results">
+
+  <div class="page-labels flex-horizontal"
+       ng-show="resultsCtrl.run.protocol.groups.length">
+    <div class="sidepanel flex-child">
+      <p>Protocol Overview</p>
+    </div>
+    <div class="maincolumn flex-grower">
+      <div class="pull-right"
+           style="position: relative; cursor: pointer;"
+           ng-class="{'open' : downloadOptionsVisible}"
+           ng-mouseenter="downloadOptionsVisible = true"
+           ng-mouseleave="downloadOptionsVisible = false">
+        <ul class="dropdown-menu">
+          <li><a tx-downloadjson
+                 filename="{{(resultsCtrl.run.metadata.name ? resultsCtrl.run.metadata.name : 'run_data') + '.json'}}"
+                 download-model="resultsCtrl.run">
+            Everything
+          </a></li>
+          <li><a tx-downloadjson
+                 filename="{{(resultsCtrl.run.metadata.name || 'run') + '.json'}}"
+                 download-model="resultsCtrl.run.data">
+            Run Data (JSON)
+          </a></li>
+          <li><a download
+                 ng-href="{{resultsCtrl.generateRunCsvUrl(resultsCtrl.run)}}">
+            Run Data (CSV)
+          </a></li>
+        </ul>
+        <span>Download</span>
+      </div>
+
+      <div>
+        <span ng-bind="'Results: ' + resultsCtrl.run.metadata.name"
+              ng-click="toggleModal()"></span>
+
+        <div class="glyphicon-ellipse"
+             ng-click="toggleModal()">
+          <span class="glyphicon glyphicon-option-horizontal"></span>
+        </div>
+        <tx-modal class="centered"
+                  title="Run Metadata"
+                  ng-show='modalShown'
+                  on-close="resultsCtrl.onModalClose()">
+
+          <div class="column-wrap">
+            <div class="metadata-table">
+              <div class="table-row">
+                <div class="metadata-label">Name</div>
+                <div class="metadata-field">
+                  <input type="text"
+                         class="input-unstyled"
+                         placeholder="name of run"
+                         ng-model="resultsCtrl.run.metadata.name">
+                </div>
+                <div class="metadata-spacer"></div>
+              </div>
+              <div class="table-row">
+                <div class="metadata-label">Description</div>
+                <div class="metadata-field">
+                  <input type="text"
+                         class="input-unstyled metadata-field"
+                         placeholder="enter notes for this run"
+                         ng-model="resultsCtrl.run.metadata.description">
+                </div>
+                <div class="metadata-spacer"></div>
+              </div>
+              <div class="table-row">
+                <div class="metadata-label">Tags</div>
+                <div class="metadata-field">
+                  <input type="text"
+                         class="input-unstyled"
+                         ng-list
+                         placeholder="enter tags associated with this run"
+                         ng-model="resultsCtrl.run.metadata.tags">
+                </div>
+                <div class="metadata-spacer"></div>
+              </div>
+            </div>
+          </div>
+        </tx-modal>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-horizontal flex-grower" ng-show="resultsCtrl.run.protocol.groups.length">
+
+    <div class="sidepanel flex-vertical">
+      <tx-protocol-mini protocol="resultsCtrl.run.protocol"
+                        status="resultsCtrl.run.transcripticRunInfo"
+                        current-operation="resultsCtrl.currentInfo"
+                        show-timelines="true"
+                        show-arrow="true"
+                        auto-scroll></tx-protocol-mini>
+    </div>
+
+    <div class="maincolumn flex-grower maxout-scroll-vertical results-summary">
+      <div class="results-summary-wrap"
+           simple-sticky="50"
+           sticky-class="sticky">
+        <div ng-show="!resultsCtrl.currentInfo || resultsCtrl.currentInfo == 'status'">
+          <h4 class="status-heading"
+              ng-bind="resultsCtrl.run.transcripticRunInfo.status | capfirst"></h4>
+
+          <p>This run is {{resultsCtrl.run.transcripticRunInfo.status}}.</p>
+          <a target="_blank"
+             class="action-text"
+             ng-href="{{resultsCtrl.generateRunUrl(resultsCtrl.run)}}">Manage run at Transcriptic...</a>
+        </div>
+
+        <div ng-if="resultsCtrl.currentInfo && resultsCtrl.currentInfo != 'status'">
+          <div>
+            <div class="summary-header">
+              <span class="pull-right">Iteration {{resultsCtrl.currentInfo.loop + 1}} of {{resultsCtrl.currentGroup.loop || '1'}}</span>
+
+              <p><span><strong>{{resultsCtrl.currentOperation.operation | capfirst}}</strong></span></p>
+
+              <p ng-bind="resultsCtrl.currentGroup.description"></p>
+            </div>
+
+            <tx-operation-summary protocol="resultsCtrl.run.protocol"
+                                  indices="resultsCtrl.currentInfo"
+                                  run-data="resultsCtrl.run.data"
+                                  operation="resultsCtrl.currentOperation">
+            </tx-operation-summary>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-hide="resultsCtrl.run.protocol.groups.length">
+    Select a protocol... (you must be logged in and initiated a run from this app)
+  </div>
+
+</div>

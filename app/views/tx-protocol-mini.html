@@ -1,0 +1,54 @@
+<div class="protocol-mini"
+     ng-class="{'arrow-visible' : miniCtrl.showArrow}">
+  <div class="mini-protocol-status"
+       ng-if="miniCtrl.status">
+    <div class="protocol-group">
+      <div class="status-instruction"
+           ng-bind="miniCtrl.status.status"
+           ng-click="handleStatusSelect($event)">
+      </div>
+    </div>
+  </div>
+  <div class="mini-protocol-wrap"
+       ng-class="{'has-timelines' : miniCtrl.showTimelines}">
+    <div class="protocol-group"
+         ng-repeat="group in miniCtrl.protocol.groups"
+         ng-init="groupIndex = $index;
+                  multichild = group.steps.length > 1;
+                  looping = group.loop > 1"
+         ng-class="{'looping' : looping,
+                    'multichild' : multichild,
+                    'has-arrow' : !$last}">
+
+      <div class="loop-number" ng-show="looping">{{group.loop}}x</div>
+
+      <div ng-if="!multichild && !looping"
+           class="protocol-instruction"
+           ng-click="handleStepSelect($event, groupIndex)">
+        {{(group.name || group.steps[0].operation) | capfirst}}
+      </div>
+
+      <div ng-if="looping || multichild">
+        <div class="mini-group-name">{{group.name || 'group'}}</div>
+        <div class="mini-group-repeater"
+             ng-repeat="loop in miniCtrl.createGroupRepeater(group.loop)"
+             ng-init="loopIndex = $index">
+          <div class="protocol-instruction"
+               ng-repeat="step in group.steps"
+               ng-init="stepIndex = $index"
+               ng-class="{'has-arrow' : !$last}"
+               ng-click="handleStepSelect($event, groupIndex, stepIndex, loopIndex)">
+            {{step.operation | capfirst}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mini-timelines"></div>
+
+  </div>
+
+  <div class="mini-arrow"
+       ng-style="{transform : 'translateY(' + arrowTranslate + 'px)'}"></div>
+</div>

@@ -1,0 +1,24 @@
+<input class="input-styled dimensional-unit"
+       ng-model="fieldCtrl.model.value"
+       ng-required="fieldCtrl.model.unit || !fieldCtrl.field.optional"
+       type="number"
+       min="0"
+       auto-grow="30"
+       placeholder="{{fieldCtrl.field.default.value || '-'}}">
+<div class="option-button"
+     ng-hide="fieldCtrl.hideUnit"
+     ng-class="{'invalid' : !(fieldCtrl.model.unit || fieldCtrl.field.optional)}"
+     dropdown>
+    <div class="option-toggle"
+         dropdown-toggle>
+       <span class="option-button-label"
+             ng-bind="fieldCtrl.model.unit ? fieldCtrl.model.unit : (fieldCtrl.field.default.unit ? fieldCtrl.field.default.unit : unitOptions[0])"></span>
+      <span class="option-button-caret glyphicon glyphicon-menu-down"></span>
+    </div>
+    <ul class="dropdown-menu dropdown-menu-center">
+      <li ng-repeat="unit in unitOptions"
+          ng-click="fieldCtrl.model.unit = unit">
+        <a ng-bind="unit"></a>
+      </li>
+    </ul>
+</div>

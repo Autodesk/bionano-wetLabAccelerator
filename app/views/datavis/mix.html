@@ -1,0 +1,10 @@
+<div>
+  <p ng-style="{color: summaryCtrl.getContainerColorFromWellField('wells')}"
+     ng-bind="summaryCtrl.getContainerNameFromWellField('wells')"></p>
+
+  <tx-plate container="summaryCtrl.getContainerTypeFromWellField('wells')"
+            no-brush="true"
+            no-select="true"
+            group-data="{name : '', wells : summaryCtrl.pluckWellsFromContainer('wells') , color: summaryCtrl.getContainerColorFromWellField('wells')}">
+  </tx-plate>
+</div>

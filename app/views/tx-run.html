@@ -1,0 +1,111 @@
+<div class="column-wrap">
+
+  <div class="column-8 div-centered">
+    <h4 class="thin"
+        style="text-align: center;"
+        ng-show="!!runCtrl.processing">Processing...</h4>
+  </div>
+
+  <form name="protocolRunInfo"
+        ng-hide="runCtrl.response.quote"
+        class="metadata-table">
+    <fieldset ng-disabled="transcripticCred.$invalid">
+
+      <div class="metadata-table">
+        <div class="table-row">
+          <div class="metadata-label">Run name</div>
+          <div class="metadata-field">
+            <input type="text"
+                   class="input-unstyled"
+                   ng-model="runCtrl.runTitle"
+                   placeholder="Run Title...">
+          </div>
+          <div class="metadata-spacer"></div>
+        </div>
+        <div class="table-row" style="height: 2em;">
+          <div class="metadata-label">Project</div>
+          <div class="metadata-field" style="vertical-align: middle;">
+            <div dropdown
+                 dropdown-append-to-body>
+              <span ng-bind="runCtrl.project.name"></span>
+              <input type="text"
+                     ng-if="creatingNewProject"
+                     ng-model="runCtrl.project"
+                     placeholder="Project Name...">
+              <a class="field-action-text"
+                 dropdown-toggle
+                 ng-bind="runCtrl.project ? 'change...' : 'select...'"></a>
+              <ul class="dropdown-menu"
+                  style="z-index: 999999">
+                <li ng-if="!runCtrl.projects.length">
+                  <a>Loading...</a>
+                </li>
+                <li ng-repeat="proj in runCtrl.projects">
+                  <a ng-bind="proj.name"
+                     ng-click="runCtrl.selectProject(proj)"></a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a ng-click="runCtrl.project = ''; creatingNewProject = true;">Create new project...</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="metadata-spacer"></div>
+        </div>
+      </div>
+
+      <div class="column-8 div-centered">
+        <div class="pull-right">
+          <button class="btn action-button"
+                  ng-disabled="!(runCtrl.runTitle && runCtrl.project && runCtrl.protocol && transcripticCred.$valid)"
+                  ng-click="runCtrl.analyze()">Verify
+          </button>
+
+          <button class="btn action-button"
+                  ng-disabled="!(runCtrl.runTitle && runCtrl.project && runCtrl.protocol && transcripticCred.$valid)"
+                  ng-click="runCtrl.startRun()">Run
+          </button>
+        </div>
+      </div>
+
+    </fieldset>
+  </form>
+
+  <div class="column-8 div-centered clearfix"
+       ng-show="runCtrl.response.quote">
+    <table class="simple-twocol-table run-response-table">
+      <tr>
+        <td>Run Title</td>
+        <td ng-bind="runCtrl.runTitle || 'Untitled Run'"></td>
+      </tr>
+      <tr>
+        <td>Project Name</td>
+        <td ng-bind="runCtrl.project.name"></td>
+      </tr>
+      <tr ng-repeat="item in runCtrl.response.quote.items">
+        <td ng-bind="item.title"></td>
+        <td ng-bind="item.cost | currency"></td>
+      </tr>
+      <tr>
+        <td>Tax Rate</td>
+        <td ng-bind="runCtrl.response.quote.tax_rate + '%'"></td>
+      </tr>
+      <tr>
+        <td>Total Cost</td>
+        <td ng-bind="runCtrl.response.total_cost  | currency"></td>
+      </tr>
+    </table>
+
+    <p class="text-sm">Cost estimate is provided by Transcriptic, Inc. Clicking "Run it!" will result in your job being sent to Transcriptic for processing. All costs are billed by Transcriptic. Please visit Transcriptic.com for more information on pricing and to manage jobs.</p>
+
+    <button class="btn action-button pull-right"
+            ng-click="runCtrl.submit()">
+      Run it!
+    </button>
+  </div>
+
+  <tx-cred-transcriptic ng-form="transcripticCred"></tx-cred-transcriptic>
+
+</div>
+

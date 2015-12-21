@@ -1,0 +1,45 @@
+<button class="btn btn-default pull-right"
+        ng-click="openGrowthCurve()">Open Growth Curve</button>
+
+<select class="form-control"
+        ng-options="k as k for k in containerKeys"
+        ng-change="onContainerChange()"
+        ng-model="currentContainer"></select>
+
+<hr>
+
+<div class="btn-group"
+     ng-if="containers.length > 1">
+  <button class="btn btn-default"
+          ng-class="{'btn-info' : c == currentContainerReference}"
+          ng-repeat="c in containers"
+          ng-click="setCurrentDataContainer(c)">{{c}}</button>
+</div>
+
+<input ng-model="timepointSlider"
+       min="0"
+       max="{{numberTimepoints - 1}}"
+       ng-change="selectTimepoint(timepointSlider)"
+       type="range"/>
+
+<tx-timepointgraph data="currentData"
+                   series-selected="currentWells"
+                   is-linear="loadedDemo"
+                   on-hover="onGraphHover($well)"
+                   style="display: block;">
+</tx-timepointgraph>
+
+<tx-plate container="currentContainer"
+          plate-data="currentData[currentTimepoint]"
+          on-hover="hoverPlateWells($wells)"
+          focus-wells="focusedWells"
+          on-select="selectPlateWells($wells)"></tx-plate>
+
+<tx-plate container="currentContainer"
+          plate-data="currentData[currentTimepoint]"
+          select-persist="true"
+          group-data="groupData"
+          prefer-groups="true"
+          show-transpose="true"
+          on-hover="hoverPlateWells($wells)"
+          on-select="selectPlateWells($wells)"></tx-plate>

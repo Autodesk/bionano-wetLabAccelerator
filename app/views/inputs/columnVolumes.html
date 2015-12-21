@@ -1,0 +1,62 @@
+<a class="field-action-text"
+   ng-class="{'invalid' : !fieldCtrl.model[0].columns.length}"
+   ng-click="fieldCtrl.detailsVisible = !fieldCtrl.detailsVisible"
+   ng-bind="fieldCtrl.model.length ? (fieldCtrl.model.length + ' groups') : 'details...'">
+</a>
+<tx-modal ng-show="fieldCtrl.detailsVisible"
+          ng-if="fieldCtrl.detailsVisible"
+          title="Column Volumes">
+  <div ng-controller="columnVolumesCtrl as colvolCtrl"
+       ng-init="colvolCtrl.onInit()">
+
+    <div class="column-12 div-centered">
+      <tx-plate-columns group-data="fieldCtrl.model"
+                        container-type="opCtrl.getContainerTypeFromFieldName('object') || '384-flat'"
+                        on-click="colvolCtrl.handleColumnSelection($column)"></tx-plate-columns>
+
+      <div class="tx-table">
+        <div class="tx-table-header">
+          <div class="tx-table-item-field"
+               ng-repeat="field in ['', 'Columns', 'Volume', ''] track by $index"
+               ng-bind="field"></div>
+        </div>
+        <div class="tx-table-item columnVolumes-group"
+             ng-repeat="group in colvolCtrl.groups"
+             ng-class="{'selected' : colvolCtrl.colvolActive == $index}"
+             ng-click="colvolCtrl.activateGroup($index)">
+          <div class="tx-table-item-field">
+            <input type="color"
+                   class="color-swatch"
+                   disabled
+                   ng-model="group.color">
+          </div>
+          <div class="tx-table-item-field">
+            <span ng-repeat="col in group.columns | orderBy:col"
+                  ng-bind="(colvolCtrl.parseInt(col) + 1) + ($last ? '' : ', ')"></span>
+          </div>
+          <div class="tx-table-item-field">
+            <tx-protocol-field ng-model="group.volume"
+                               prevent-variable="true"
+                               hide-title="true"
+                               field="{type: 'volume'}">
+            </tx-protocol-field>
+          </div>
+          <div class="tx-table-item-field">
+            <span class="close"
+                  style="color: white; opacity: 0.75;"
+                  ng-click="colvolCtrl.deleteGroup(group)">&times;</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; padding-top: 20px;">
+        <a class="field-action-text text-warning div-centered"
+           style="display: inline-block;"
+           ng-click="colvolCtrl.addColumn()">
+          <span class="glyphicon glyphicon-plus"></span>
+          Add Column Group
+        </a>
+      </div>
+    </div>
+  </div>
+</tx-modal>

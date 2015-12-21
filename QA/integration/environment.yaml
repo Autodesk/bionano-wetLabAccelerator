@@ -1,0 +1,37 @@
+---
+
+
+
+environment: develop
+chromedriver: /usr/bin/chromedriver
+default_tolerance: 8
+browser: firefox
+
+url_postfix: dokku.bionano.autodesk.com
+
+transcripticAPIKey: transcriptic-key
+transcripticEmail: your.email@foo.com
+transcripticPassword: yourpassword
+transcripticOrganization: yourorg
+
+# this is url for the laptop sitting in the closet for remote web driver
+remoteWebDriverURL: http://yourmachine
+
+# or set a single token at the top level
+# token:
+
+environments:
+  develop:
+    uri_root: https://localhost:9000/#/
+
+
+
+# window size defaults
+viewport:
+  width: 1400
+  height: 1024
+
+# until we have a library for fetching images from autodesk prime - here are some
+# hard coded images
+images:
+

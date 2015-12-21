@@ -1,0 +1,172 @@
+/*
+Copyright 2015 Autodesk Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+tx-protocol-setup {
+  display: block;
+  position: relative;
+  padding-top: $layout-spacing-md;
+  padding-bottom: $layout-spacing-md;
+  font-size: $font-size-md;
+  border-bottom: $drop-hover-border-phantom;
+
+  &.drop-hover {
+    border-bottom: $drop-hover-border;
+  }
+
+  //div to aid drag and drop (padding outside wrap)
+  .protocol-setup-wrap {
+    position: relative;
+    @include arrow-bottom($step-background-inactive, $step-background-active, $activeClass: 'open');
+  }
+
+  .protocol-setup-header {
+    padding: 3px $layout-spacing-sm;
+    outline: none;
+
+    .setup-heading {
+      font-weight: $font-weight-light;
+      color: $black;
+    }
+  }
+
+  .protocol-setup-main {
+    display: block;
+    width: 100%;
+  }
+
+  .setup-row {
+    display: block;
+    position: relative;
+
+    &:hover {
+      .setup-parameter-delete {
+        opacity: 1;
+      }
+    }
+
+    //shown when no parameters exist
+    &.setup-variable-placeholder {
+      padding: 3px 0 8px;
+
+      span {
+        display: block;
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
+
+  .setup-parameter-delete {
+    opacity: 0;
+    position: absolute;
+    right: $layout-spacing-md;
+    top: 3px;
+    z-index: 5;
+
+    &:hover + .parameter-inner {
+      background-color: $primary;
+
+      .parameter-info,
+      .parameter-value,
+      .parameter-type,
+      .parameter-name {
+        color: $white;
+      }
+    }
+  }
+
+  .parameter-inner {
+    position: relative;
+    width: 100%;
+    padding: 3px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .parameter-info,
+  .parameter-value,
+  .parameter-type,
+  .parameter-name {
+    width: 50%;
+    display: inline-block;
+  }
+
+  .parameter-info,
+  .parameter-type {
+    text-align: right;
+    padding-right: $layout-spacing-md;
+  }
+
+  .parameter-name,
+  .parameter-value {
+    text-align: left;
+    padding-left: $layout-spacing-md;
+  }
+
+  .parameter-info {
+    font-weight: $font-weight-light;
+    display: flex;
+    flex-direction: row;
+
+    .parameter-type {
+      color: $grey;
+      white-space: nowrap;
+    }
+
+    .parameter-name {
+      color: $dark-grey;
+    }
+  }
+
+  .parameter-value {
+    text-align: left;
+    color: $black;
+
+    .field-value {
+      width: 100%;
+      padding: 0;
+    }
+  }
+
+  .add-parameter {
+    background: transparent;
+    color: $warning;
+    text-align: center;
+    width: 130px;
+    margin: 0 auto;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    position: relative;
+
+    &:hover {
+      color: $white;
+      background: $primary;
+    }
+  }
+
+  .parameter-list {
+  }
+
+  .parameter-option {
+  }
+
+  //don't allow parameters in setup, because you're making parameters
+  .field-parameter-toggler {
+    display: none;
+  }
+}

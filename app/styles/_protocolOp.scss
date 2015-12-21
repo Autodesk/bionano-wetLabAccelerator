@@ -1,0 +1,101 @@
+/*
+Copyright 2015 Autodesk Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+tx-protocol-op {
+
+  $header-margin-bottom: $step-header-space - $drop-hover-border-width;
+
+  align-items: center;
+  width: 100%;
+  margin: $step-header-space 3em;
+  border-bottom: $drop-hover-border-phantom;
+
+  box-sizing: border-box;
+
+  @include arrow-bottom($step-background-inactive, $step-background-active, $includeBackground: true, $activeClass: 'open');
+
+  .operation-header {
+    color: $black;
+    cursor: all-scroll;
+    width: 100%;
+    padding: 3px $op-padding;
+    display: flex;
+    justify-content: space-between;
+
+    .operation-name {
+      font-weight: $font-weight-light;
+    }
+  }
+
+  .operation-label {
+
+    &.optional {
+      opacity: 0.75;
+    }
+  }
+
+  .operation-fields {
+    width: 100%;
+
+    > tx-protocol-field {
+      margin: 3px 0;
+      padding: 0 $op-padding;
+    }
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &.drop-hover {
+    &:last-child {
+      border-bottom: $drop-hover-border;
+    }
+
+    .show-group & {
+      border-bottom: $drop-hover-border;
+    }
+
+    &:only-child {
+      background-color: $bg-primary-semitransparent;
+      border-bottom: $drop-hover-border-phantom;
+
+      .show-group & {
+        background-color: $step-background-inactive;
+      }
+    }
+  }
+
+  &:only-child .group-items {
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .operation-dropdown-toggle {
+    top: 4px;
+    display: none;
+  }
+
+  &:hover {
+    .operation-dropdown-toggle {
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,103 @@
+<div class="protocol-setup-wrap"
+     ng-class="{'open' : isVisible}">
+  <div class="protocol-setup-header"
+       ng-click="isVisible = !isVisible">
+
+    <div class="verification"
+         ng-class="{'expanded' : false}"
+         ng-if="hasVerifications && !isVisible">
+      <div class="verification-alert">
+        <span class="glyphicon glyphicon-alert"></span>
+      </div>
+      <div class="verification-flag">
+        <span>Expand to see verifications</span>
+      </div>
+    </div>
+
+    <span class="setup-heading">Setup</span>
+  </div>
+  <div class="protocol-setup-main"
+       ng-show="isVisible">
+    <div class="setup-row"
+         ng-repeat="param in setupCtrl.parameters track by param.id"
+         ng-switch="param.type">
+
+      <div class="verification"
+           ng-if="param.verification > -1">
+        <div class="verification-alert">
+          <span class="glyphicon glyphicon-alert"></span>
+        </div>
+        <div class="verification-flag">
+          <span ng-bind="verifications[param.verification].message"></span>
+        </div>
+      </div>
+
+      <a class="setup-parameter-delete close"
+         ng-click="setupCtrl.deleteParam(param)">&times;</a>
+
+      <div class="parameter-inner">
+        <div class="parameter-info">
+          <div class="parameter-type">{{param.readable || param.type}}</div>
+          <div class="parameter-name">
+            <input class="input-styled"
+                   type="text"
+                   placeholder="name"
+                   ng-model="param.name"
+                   tx-change-broadcaster="editor:parameterNameChange">
+          </div>
+        </div>
+
+        <div class="parameter-value">
+          <tx-container-editor class="setup-container"
+                               ng-model="param.value"
+                               container-name="param.name"
+                               ng-switch-when="container">
+          </tx-container-editor>
+          <tx-protocol-field ng-switch-default
+                             field="param"
+                             ng-model="param.value"
+                             hide-title="true"
+                             prevent-variable="true">
+          </tx-protocol-field>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="setup-row setup-variable-placeholder"
+         ng-if="!setupCtrl.parameters.length">
+      <span class="thin">There are no parameters to display.</span>
+    </div>
+
+    <div class="setup-row">
+      <div class="add-parameter dropdown"
+           ng-click="showParameters = !showParameters"
+           ng-class="{'open' : showParameters}">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add Parameter
+        <ul class="dropdown-menu parameter-list dropdown-menu-center"
+            ng-mouseleave="showParameters = false">
+          <li>
+            <a class="parameter-option"
+               ng-click="setupCtrl.addContainer()">{{'container' | capfirst}}</a>
+          </li>
+          <li class="divider"></li>
+          <li ng-repeat="item in setupCtrl.paramTypes['dimensional']">
+            <a class="parameter-option"
+               ng-click="setupCtrl.addParam(item)">{{item.type | capfirst}}</a>
+          </li>
+          <li class="divider"></li>
+          <li ng-repeat="item in setupCtrl.paramTypes['primitive']">
+            <a class="parameter-option"
+               ng-click="setupCtrl.addParam(item)">{{item.type | capfirst}}</a>
+          </li>
+          <li class="divider"></li>
+          <li ng-repeat="item in setupCtrl.paramTypes['custom']">
+            <a class="parameter-option"
+               ng-click="setupCtrl.addParam(item)">{{(item.readable || item.type) | capfirst}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

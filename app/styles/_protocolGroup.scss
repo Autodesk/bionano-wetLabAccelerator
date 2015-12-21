@@ -1,0 +1,258 @@
+/*
+Copyright 2015 Autodesk Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+.protocol-group {
+
+  $border-color-inactive: $light-grey;
+  $border-inner: 1px solid $border-color-inactive;
+  $padding-internal: $layout-spacing-sm;
+
+  display: block;
+  position: relative;
+  margin: 0;
+  font-size: 14px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &-wrap {
+    &.drop-hover .protocol-group-main {
+      background-color: $bg-primary-semitransparent;
+    }
+  }
+
+  &-inner {
+
+  }
+
+  &-header {
+    display: none;
+    position: relative;
+    line-height: 1em;
+    cursor: row-resize;
+    flex-direction: row;
+    justify-content: space-between;
+    background: transparent;
+    padding: $step-header-space $step-header-space ($step-header-space - $drop-hover-border-width);
+    border-bottom: $drop-hover-border-phantom;
+
+    &.drop-hover {
+      border-bottom: $drop-hover-border;
+    }
+
+    .group-name {
+      min-height: 1em;
+      min-width: 85px;
+      cursor: text;
+    }
+
+    .group-dropdown-items {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .oppop {
+      opacity: 0;
+    }
+
+    &:hover {
+      .oppop {
+        opacity: 1;
+      }
+    }
+  }
+
+  &-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .group-repeat {
+    background: transparent;
+    position: absolute;
+    right: 24px;
+    top: 2px;
+    color: $grey;
+    z-index: 10;
+
+    .iteration-none {
+      display: inline-block;
+      margin: 3px 2px 0;
+      width: 22px;
+      height: 17px;
+      cursor: default;
+      background: url('/images/zero_iterations.png');
+    }
+
+    .group-repeat-input-wrap {
+      display: inline-block;
+      position: relative;
+
+      &:after {
+        pointer-events: none;
+        content: 'x';
+        font-size: 12px;
+        cursor: none;
+        position: absolute;
+        bottom: 2px;
+        right: 0;
+      }
+
+      &:hover,
+      &.selected {
+        background: $primary;
+        color: $white;
+
+        &:after {
+          content: '';
+        }
+      }
+    }
+
+    .group-repeat-input {
+      text-align: right;
+      padding-right: 7px;
+      min-width: 25px;
+    }
+
+    &:hover {
+      .iteration-none {
+        display: none;
+      }
+    }
+  }
+
+  //handle states here
+
+  &-inner {
+    &:not(.is-looping) {
+      .group-repeat-input-wrap {
+        display: none;
+      }
+
+      .group-repeat:hover {
+        .iteration-none {
+          display: none;
+        }
+        .group-repeat-input-wrap {
+          display: inline-block;
+        }
+      }
+    }
+
+    &.multichild {
+      background: transparent;
+      border: 2px solid $white;
+
+      .protocol-group-header {
+        display: flex;
+      }
+    }
+
+    &:not(.multichild) {
+      .group-repeat {
+        display: none;
+      }
+      *:hover > & {
+        .group-repeat {
+          display: block;
+        }
+      }
+    }
+
+    &.is-looping {
+      .iteration-none {
+        display: none;
+      }
+      .group-repeat {
+        display: block;
+      }
+    }
+  }
+
+
+
+  &:hover {
+    .group-repeat {
+      display: block;
+    }
+  }
+
+  //op stuff
+
+  tx-protocol-op:after {
+    margin-top: $drop-hover-border-width;
+  }
+
+  &:last-child {
+    tx-protocol-op:last-child:after {
+      border: none;
+    }
+  }
+
+  .multichild tx-protocol-op:last-child:after {
+    margin-top: $drop-hover-border-width * 2;
+  }
+
+  //variations
+
+  &-placeholder {
+    border: 3px dashed $white;
+    padding: 1em;
+    text-align: center;
+    font-weight: $font-weight-bold;
+    color: $white;
+    text-shadow: 0 0 3px transparentize($black, 0.85);
+
+    &.drop-hover {
+      border-color: $primary;
+      background-color: $bg-primary-semitransparent;
+    }
+  }
+}
+
+// stuff shared by op and group
+
+.group-dropdown-toggle,
+.operation-dropdown-toggle {
+  color: $grey;
+  cursor: pointer;
+  top: 2px;
+
+  &:hover {
+    color: $primary;
+  }
+}
+
+//todo - move so more explicit that protocol-op uses this too
+.protocol-item-space-top {
+  background: transparent;
+  height: $layout-spacing-md;
+
+  &.drop-hover {
+    border-bottom: $drop-hover-border;
+  }
+
+  :first-child > & {
+    display: none;
+  }
+}

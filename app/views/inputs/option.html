@@ -1,0 +1,17 @@
+<div class="option-button"
+     squelch-event="click"
+     ng-class="{'invalid' : !fieldCtrl.model && !fieldCtrl.field.optional}"
+     dropdown>
+  <div class="option-toggle"
+       dropdown-toggle>
+    <span class="option-button-label"
+          ng-bind="fieldCtrl.model || fieldCtrl.field.default || 'select...'"></span>
+    <span class="option-button-caret glyphicon glyphicon-menu-down"></span>
+  </div>
+  <ul class="dropdown-menu dropdown-menu-center">
+    <li ng-repeat="option in modelOptions"
+        ng-click="fieldCtrl.model = option">
+      <a ng-bind="option"></a>
+    </li>
+  </ul>
+</div>

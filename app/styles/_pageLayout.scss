@@ -1,0 +1,160 @@
+/*
+Copyright 2015 Autodesk Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+body {
+  display: flex;
+  min-height: 100vh;
+  min-width: $layout-width-page;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content:center;
+  background-image: radial-gradient(at bottom right,#CCCCCC,#FFFFFF);
+  background-attachment: fixed;
+
+  &.with-background:before {
+    content: " ";
+    background-image: url('/images/phix-background.png');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    opacity: 0.9;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+  }
+
+  .page-container {
+    width: $layout-width-page;
+    margin: auto auto;
+    padding: 0 $layout-container-padding-side 0 $layout-container-padding-left;
+  }
+
+  header {
+    align-self: flex-start;
+    height: $layout-height-header;
+    min-width: $layout-width-page;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  main {
+    padding-top: $layout-height-header + $layout-main-spacing-top;
+    flex-grow: 1;
+    align-self: center;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  footer {
+    width: 100%;
+    align-self: flex-end;
+  }
+}
+
+.flex-child,
+.flex-horizontal,
+.flex-vertical {
+  display: flex;
+  align-items: stretch;
+}
+
+.flex-horizontal {
+  flex-direction: row;
+}
+
+.flex-vertical {
+  flex-direction: column;
+}
+
+.flex-grower {
+  flex-grow: 1;
+  //flex-basis: 0;
+}
+
+.flex-align-end {
+  align-self: flex-end;
+}
+
+.flex-align-start {
+  align-self: flex-start;
+}
+
+.flex-align-center {
+  align-self: center;
+}
+
+.scroll-y {
+  overflow-y: scroll;
+}
+
+.scroll-x {
+  overflow-x: scroll;
+}
+
+.maxout-scroll-vertical {
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
+.sidepanel,
+.maincolumn {
+  margin: 25px 0 0;
+}
+
+.sidepanel {}
+
+.maincolumn {}
+
+// build page
+
+.protocol-steps {
+  float: left;
+  width: $layout-operations-width;
+  //padding to handle overflow-x hidden
+  padding-left: $layout-operations-padding-left;
+  padding-right: $layout-operations-padding-right;
+}
+
+//columns
+
+@for $i from (1 + 1) through 16 {
+  .column-#{$i} {
+    width: widthFromColumns($i);
+    display: inline-block;
+    position: relative;
+    min-height: 1px;
+    padding-left: $layout-width-column-gutter;
+    padding-right: $layout-width-column-gutter;
+    vertical-align: top;
+  }
+}
+
+.column-wrap {
+  padding: 0;
+  margin: 0 (-$layout-width-column-gutter);
+  @include clearfix();
+}
+
+.div-centered {
+  margin: 0 auto;
+  display: block;
+  padding: 0;
+}

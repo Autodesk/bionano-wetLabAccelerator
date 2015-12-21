@@ -1,0 +1,7 @@
+<div class="notify-message" ng-class="[$classes]">
+  <div ng-show="!$messageTemplate">
+    {{$message}}
+  </div>
+  <div ng-show="$messageTemplate" class="notify-message-template"></div>
+  <button type="button" class="notify-close" ng-click="$close()">&times;</button>
+</div>"

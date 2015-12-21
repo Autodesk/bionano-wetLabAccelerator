@@ -1,0 +1,84 @@
+/*
+Copyright 2015 Autodesk Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+.welcome-overlay {
+  @extend .modal-overlay;
+  min-width: $layout-width-page;
+
+  .welcome-call {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+    color: $white;
+
+    h3 {
+      font-size: 2.5em;
+    }
+
+    .action-button {
+      display: inline-block;
+      box-shadow: $box-shadow-accent;
+    }
+  }
+
+  .help-tip {
+    color: white;
+    font-size: $font-size-md;
+    border-left: 1px solid $white;
+    position: absolute;
+
+    &-right {
+      border-left: none;
+      border-right: 1px solid $white;
+    }
+
+    &-text {
+      width: 200px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 1em;
+      margin: 0;
+    }
+
+    &.help-tip-right .help-tip-text {
+      left: auto;
+      right: 0;
+      text-align: right;
+    }
+
+    //specific kinds
+
+    &-hamburger {
+      height: 200px;
+      top: 90px;
+      left: 18px;
+    }
+
+    &-user {
+      height: 200px;
+      top: 40px;
+      right: 45px;
+    }
+
+    &-results {
+      left: calc(50% + 46px);
+      top: 40px;
+      height: 150px;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+<div dropdown>
+  <a dropdown-toggle
+     class="field-action-text"
+     ng-class="{'invalid' : !containerSelectCtrl.model.container}">
+    <span ng-if="containerSelectCtrl.model.container"
+          class="color-swatch"
+          ng-style="{'background-color' : containerColorFromId(containerSelectCtrl.model.container)}"></span>
+    <span ng-bind="containerNameFromId(containerSelectCtrl.model.container) || 'select...'"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li ng-repeat="c in containerSelectCtrl.localContainers">
+      <a ng-class="{'active' : c.id == containerSelectCtrl.model.container}"
+         ng-click="selectContainerParam(c)">
+        <input disabled
+               type="color"
+               class="color-swatch"
+               ng-model="c.value.color">
+        <span ng-bind="c.name"></span>
+      </a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">New...</li>
+    <li ng-repeat="c in containerSelectCtrl.containerOptions">
+      <a ng-click="createNewContainer(c)"
+         ng-bind="c.name"></a>
+    </li>
+  </ul>
+</div>

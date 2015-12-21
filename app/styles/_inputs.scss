@@ -1,0 +1,254 @@
+/*
+Copyright 2015 Autodesk Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+.form-control {
+  &.ng-invalid,
+  &.ng-error {
+    //bootstrap
+    border-color: #843534;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+  }
+}
+
+.input-styled {
+  -webkit-appearance: none;
+  display: inline-block;
+  border: $input-border-width solid transparent;
+  max-width: 100%;
+  margin: -$input-border-width;
+  padding: 0;
+  outline: 0;
+  background: transparent;
+  line-height: 1.2em;
+  color: $black;
+  cursor: text;
+
+  &:hover,
+  &:focus {
+    border-color: $primary;
+    -webkit-appearance: none;
+    border-radius: 1em;
+    //need special values esp. for auto-grow directive because inputs are usually just large enough to show input
+    box-sizing: content-box;
+    padding: $input-hover-padding-vert 0 $input-hover-padding-vert $input-hover-padding-hori;
+    margin: (-$input-hover-padding-vert - $input-border-width) $input-hover-padding-hori (-$input-hover-padding-vert - $input-border-width) (-$input-hover-padding-hori);
+  }
+
+  &:hover {
+    background: $primary;
+    color: $white;
+    &::-webkit-input-placeholder {
+      color: $white;
+    }
+  }
+
+  &:focus {
+    background: transparent;
+    color: inherit;
+
+    &::-webkit-input-placeholder {
+      color: transparent;
+    }
+  }
+
+  &::-webkit-input-placeholder {
+
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &.ng-invalid-required,
+  &.ng-invalid-required::-webkit-input-placeholder {
+    color: $warning;
+  }
+}
+
+.dimensional-unit {
+}
+
+.true-false-button {
+  width: 100px;
+  height: 21px;
+  background: $light-grey;
+  border-radius: 50px;
+  position: relative;
+  font-size: $font-size-sm;
+
+  &:before {
+    content: 'TRUE';
+    color: $grey;
+    position: relative;
+    left: 10px;
+    top: 1px;
+    z-index: 0;
+  }
+
+  &:after {
+    content: 'FALSE';
+    color: $grey;
+    position: relative;
+    left: 4px;
+    top: 1px;
+    z-index: 0;
+  }
+
+  & label {
+    display: block;
+    width: 52px;
+    height: 21px;
+    top: 0;
+    border-radius: 50px;
+    transition: all .4s ease;
+    cursor: pointer;
+    position: absolute;
+    left: 48px;
+    z-index: 1;
+    background: $dark-grey;
+    color: $white;
+
+    &:after {
+      content: 'FALSE';
+      position: relative;
+      left: 6px;
+      top: 2px;
+    }
+  }
+
+  & input[type=checkbox]:checked + label {
+    width: 48px;
+    left: 0;
+    background: $primary;
+
+    &:after {
+      content: 'TRUE';
+      left: 7px;
+    }
+  }
+
+  input[type=checkbox] {
+    visibility: hidden;
+  }
+}
+
+.input-unstyled {
+  display: inline-block;
+  -webkit-appearance: none;
+  outline: 0;
+  border: 0;
+  background: transparent;
+  max-width: 100%;
+  cursor: text;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+//can use on a div with ng-style background-color
+.color-swatch {
+  -webkit-appearance: none;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 100%;
+  padding: 0;
+  margin: 0 3px 2px 0;
+  color: transparent;
+  background-color: transparent;
+  border: 0;
+  vertical-align: text-top;
+
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border: 1px solid transparent;
+  }
+  &::-webkit-color-swatch {
+    border: 1px solid transparent;
+    border-radius: 100%;
+  }
+}
+
+.option-button {
+
+  justify-content: center;
+  align-items: baseline;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  padding: 0;
+  outline: 0;
+  line-height: 1.2em;
+  white-space: nowrap;
+
+  .option-toggle {
+  }
+
+  .option-button-label {
+  }
+
+  .option-button-caret {
+    opacity: 0;
+    font-size: $font-size-sm;
+  }
+
+  &:hover {
+    background: $primary;
+    color: $white;
+    border-radius: 1em;
+    padding: $input-hover-padding-vert $input-hover-padding-hori;
+    margin: (-$input-hover-padding-vert) (-$input-hover-padding-hori);
+
+    .option-button-label,
+    .option-button-caret {
+      color: $white;
+    }
+
+    .option-button-caret {
+      opacity: 1;
+    }
+  }
+
+  &.invalid {
+    color: $warning;
+  }
+}
+
+// textarea
+
+//to be used with input-unstyled on a textarea, can be used with json-editor directive
+.popover-textarea {
+  min-width: 300px;
+  background-color: transparent;
+  color: $black;
+  transition-duration: $transition-short-time;
+  transition-property: background-color, border-color;
+  margin-bottom: $layout-spacing-md;
+
+  &:focus,
+  &:active {
+    background-color: darken($white, 3);
+  }
+
+  &.ng-invalid {
+    background-color: transparentize($error, 0.85);
+  }
+}
