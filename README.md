@@ -1,3 +1,4 @@
+[![Docker Repository on Quay](https://quay.io/repository/autodesk/bionano-wetlabaccelerator/status "Docker Repository on Quay")](https://quay.io/repository/autodesk/bionano-wetlabaccelerator)
 ## Wet Lab Accelerator
 
 Wet Lab Accelerator is a tool for researchers working in synthetic biology and virology, allowing users to design robotic wet lab protocols using a visual UI — no coding or scripting required. Users can create a protocol from scratch, or use a template experiment provided. Set up each step of a protocol using graphical visualizations of wet lab containers, and interact with results through dynamic visualizations. Often-used settings can be parameterized to ease running of variations on the same protocol.
@@ -15,7 +16,7 @@ To get it running you'll need to install (might need to sudo):
 
 ### Release Notes
 
-This version of Wet Lab Accelerator runs on a standalone server, using locally written files for persistence. The server and application will run independently through Docker, but an internet connection is required to verify and send protocols to Transcriptic. The application is currently freely available at `https://wla.bionano.autodesk.com`, but is not guaranteed to always be available at that domain.
+This version of Wet Lab Accelerator runs on a standalone server, using locally written files for persistence. The server and application will run independently through Docker, but an internet connection is required to verify and send protocols to Transcriptic. The application is currently freely available at [wla.bionano.autodesk.com](https://wla.bionano.autodesk.com), but is not guaranteed to always be available at that domain.
 
 #### Code Base
 
@@ -35,7 +36,7 @@ There are parts of the application in notably better health than others. For mor
 
 ### Contact
 
-To contact the authors, please email: maxwell.bates@autodesk.com
+To contact the authors, please email: maintainers.bionano-webLabAccelerator@autodesk.com
 
 ### License
 

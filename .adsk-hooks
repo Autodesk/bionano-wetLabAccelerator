@@ -1,0 +1,8 @@
+{
+	"sync": [{
+		"source_branch": "opensource",
+		"target_url": "https://github.com/Autodesk/bionano-wetLabAccelerator",
+		"target_branch": "master",
+		"force": "true"
+	}]
+}
