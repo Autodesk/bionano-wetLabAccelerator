@@ -26,7 +26,7 @@
  * The version in this release relies on localStorage, which is slow and synchronous. A much better implementation would be to use a database running on another thread or remotely.
  */
 angular.module('wetLabAccelerator')
-  .service('Database', function ($q, $window, UUIDGen) {
+  .service('LocalStorage', function ($q, $window, UUIDGen) {
 
      var self     = this,
          ls = $window.localStorage,
