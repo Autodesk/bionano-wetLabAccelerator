@@ -1,6 +1,6 @@
 #Docker file for local building and serving only
 FROM ubuntu:14.04
-MAINTAINER Dion Whitehead Amago <dion.amago@autodesk.com>
+MAINTAINER Maxwell Bates <maxwell.bates@autodesk.com>
 
 RUN apt-get update
 RUN apt-get install curl -y
@@ -26,8 +26,6 @@ RUN cd /app ; bower install --allow-root
 
 COPY app /app/app
 COPY files /app/files
-COPY QA /app/QA
-COPY test /app/test
 COPY .travis.yml /app/.travis.yml
 COPY Gruntfile.js /app/Gruntfile.js
 
@@ -35,7 +33,5 @@ COPY server /app/server
 COPY CHECKS /app/CHECKS
 
 WORKDIR /app
-ENV PORT 8000
-EXPOSE 8000
 
 CMD npm run start
