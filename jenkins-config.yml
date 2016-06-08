@@ -44,7 +44,7 @@ zip-excludes-input-dirs: .
 
 # set false to only push a image tagged for the envrionment
 tag-latest: true
-lib-prefix: quay.io/bionano/
+lib-prefix: quay.io/autodesk/
 lib-push-config: --config /var/jenkins_home/.docker-config-autodesk-org
 
 
