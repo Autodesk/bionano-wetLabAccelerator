@@ -1,4 +1,4 @@
-service-name: wetlabaccelerator
+service-name: bionano
 # NOTE set this value in the Jenkins job as it varies by environment
 environment: ""
 
