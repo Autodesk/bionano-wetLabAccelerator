@@ -1,0 +1,5 @@
+wetlabaccelerator:
+  build: .
+  ports:
+    - "3800:8000"
+   
