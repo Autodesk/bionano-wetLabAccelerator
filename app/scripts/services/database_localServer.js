@@ -26,7 +26,7 @@
  * The version in this release relies on localStorage, which is slow and synchronous. A much better implementation would be to use a database running on another thread or remotely.
  */
 angular.module('wetLabAccelerator')
-  .service('Database', function ($q, $http, $window, UUIDGen) {
+  .service('Database', function ($q, $http, $window, UUIDGen, LocalStorage) {
 
     var self     = this;
     var pathToId = 'metadata.id';
@@ -62,19 +62,7 @@ angular.module('wetLabAccelerator')
      * @description getter/setter for transcriptic credentials. Pass object with kPlatfeys {email, organization, key} to set
      * @returns {Promise<Object>} Promise with {email, organization, key}
      */
-    self.transcripticCredentials = function transcripticCredentials (creds) {
-      var requiredKeys = ['email', 'key', 'organization'];
-
-      if (_.isObject(creds)) {
-        if (_.every(requiredKeys, _.partial(_.has, creds))) {
-          return dbSet(transcripticKey, creds);
-        } else {
-          console.warn('missing some credentials - require: ' + requiredKeys.join(' '), creds);
-        }
-      }
-
-      return dbGet(transcripticKey);
-    };
+    self.transcripticCredentials = LocalStorage.transcripticCredentials;
 
     /****
      basic CRUD
