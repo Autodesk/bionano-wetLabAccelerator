@@ -9,7 +9,7 @@ test-docker-project: ""
 # parameters used when calling cloudformation update-stack
 # NOTE set this value in the Jenkins job as it varies by environment
 cfn-stack-name: ""
-cfn-param-compose-file: docker-compose.yml
+cfn-param-compose-file: docker-compose.yml -f docker-compose.override-aws.yml
 cfn-param-compose-start-params: ""
 # NOTE set this value in the Jenkins job as it varies by environment
 cfn-param-compose-cmd-prefix: ""
