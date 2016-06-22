@@ -53,7 +53,7 @@ if (LOCAL !== false) {
 }
 
 var jsonParser = bodyParser.json({
-  limit: (1024 * 1024 * 5)
+  limit: (1024 * 1024 * 30)
 });
 
 function makeFilePath (file) {
