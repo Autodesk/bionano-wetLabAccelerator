@@ -1,0 +1,2 @@
+wetlabaccelerator:
+  image: quay.io/autodesk/bionano_wetlabaccelerator${BNR_ENV_TAG}
